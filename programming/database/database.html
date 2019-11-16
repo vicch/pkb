@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Database</title>
+<!-- 2017-05-19 Fri 08:57 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Database</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. SQL</a>
+<ul>
+<li><a href="#sec-1-1">1.1. <code>DISTINCT</code></a></li>
+<li><a href="#sec-1-2">1.2. <code>HAVING</code></a></li>
+<li><a href="#sec-1-3">1.3. <code>JOIN</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. 索引</a>
+<ul>
+<li><a href="#sec-2-1">2.1. 聚集</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. 事务</a></li>
+<li><a href="#sec-4">4. 优化</a>
+<ul>
+<li><a href="#sec-4-1">4.1. Denormalization</a></li>
+<li><a href="#sec-4-2">4.2. Sharding</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5. NoSQL</a></li>
+<li><a href="#sec-6">6. Quote</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> SQL</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> <code>DISTINCT</code></h3>
+<div class="outline-text-3" id="text-1-1">
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-sql"><span class="org-keyword">SELECT</span> <span class="org-builtin">COUNT</span>(<span class="org-keyword">DISTINCT</span> city) <span class="org-builtin">FROM</span> address;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><code>SELECT</code> 多列时， <code>DISTINCT</code> 作用于所有列的整合结果</label>
+<pre class="src src-sql"><span class="org-comment"># | a |  b  |</span>
+<span class="org-comment"># |---+-----|</span>
+<span class="org-comment"># | 1 | foo |</span>
+<span class="org-comment"># | 1 | bar |</span>
+<span class="org-comment"># | 2 | foo |</span>
+<span class="org-comment"># | 2 | foo |</span>
+
+<span class="org-keyword">SELECT</span> <span class="org-keyword">DISTINCT</span> a, b <span class="org-builtin">FROM</span> test;
+<span class="org-comment"># | 1 | foo |</span>
+<span class="org-comment"># | 1 | bar |</span>
+<span class="org-comment"># | 2 | foo |</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> <code>HAVING</code></h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+<code>WHERE</code> 不能用于聚合函数， <code>HAVING</code> 可以聚合函数的条件。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">示例：查询租住的公寓多于一间的房客</label>
+<pre class="src src-sql"><span class="org-keyword">SELECT</span> tenant_id
+<span class="org-builtin">FROM</span> tenant_apartment
+<span class="org-keyword">GROUP</span> <span class="org-keyword">BY</span> tenant_id
+<span class="org-keyword">HAVING</span> <span class="org-builtin">COUNT</span>(*) &gt; 1;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> <code>JOIN</code></h3>
+<div class="outline-text-3" id="text-1-3">
+
+<div class="figure">
+<p><img src="../images/database/01.jpg" alt="01.jpg" />
+</p>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Implicit join</th>
+<th scope="col" class="left">等同于 <code>INNER JOIN</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>(INNER) JOIN</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>LEFT (OUTER) JOIN</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>RIGHT (OUTER) JOIN</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FULL OUTER JOIN</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 索引</h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li>对表中一列或多列的值进行排序的一种数据结构。
+</li>
+<li>可以加快查找、排序的速度。
+</li>
+<li>但需要更多的存储空间，插入、修改数据时要花费更多的时间。
+</li>
+</ul>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>唯一索引</b></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>主键索引</b></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>（非）聚集索引</b></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>多列索引</b></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>适合创建索引的列</b></th>
+<th scope="col" class="left">主键（强调唯一性）。</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">外键（加快连接表速度）。</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">经常用于 <code>WHERE</code> 条件的列。</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">经常根据范围进行搜索的列。</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">经常排序的列。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>不适合创建索引的列</b></td>
+<td class="left">修改性能的要求大于检索性能的列。</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 聚集</h3>
+<div class="outline-text-3" id="text-2-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>聚集索引</b></th>
+<th scope="col" class="left">Clustered index</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">索引中键值的逻辑顺序与数据的物理存储顺序一致，因此每个表只有唯一的聚集索引。</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">如按照拼音查字，由于字典正文本身就是按照拼音顺序排列的，因此不需要再去查其他目录。</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">叶子结点即存储真实的数据行，不再有另外单独的数据页。</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">能够迅速缩小查询范围，避免全表扫描。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>非聚集索引</b></td>
+<td class="left">Non-clustered index</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">如按照部首查字，偏旁部首的目录与正文的顺序不相关，需要先查到页码，再去找正文的位置。</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">叶子结点包含索引字段值及指向数据页数据行的逻辑指针。</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> 使用场景</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left"><b>聚集索引</b></th>
+<th scope="col" class="left"><b>非聚集索引</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">主键列</td>
+<td class="left">Y</td>
+<td class="left">Y</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">外键列</td>
+<td class="left">Y</td>
+<td class="left">Y</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">一个或极少不同值</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">小数目的不同值</td>
+<td class="left">Y</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">大数目的不同值</td>
+<td class="left">&#xa0;</td>
+<td class="left">Y</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">查找条件为范围</td>
+<td class="left">Y</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">分组排序</td>
+<td class="left">Y</td>
+<td class="left">Y</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">频繁更新的列</td>
+<td class="left">&#xa0;</td>
+<td class="left">Y</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">频繁修改索引的列</td>
+<td class="left">&#xa0;</td>
+<td class="left">Y</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 事务</h2>
+<div class="outline-text-2" id="text-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>Atomicity</b></th>
+<th scope="col" class="left">一个事务中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>Consistency</b></td>
+<td class="left">在事务开始之前和事务结束以后，数据库的完整性没有被破坏。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>Isolation</b></td>
+<td class="left">防止多个事务并发执行时，由于交叉执行而导致数据的不一致。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>Durability</b></td>
+<td class="left">事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 优化</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Denormalization</h3>
+<div class="outline-text-3" id="text-4-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>Normalization</b></th>
+<th scope="col" class="left">减少冗余</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left"><code>JOIN</code> 查询耗时较多</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>Denormalization</b></td>
+<td class="left">减少 <code>JOIN</code> 查询耗时</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>INSERT</code> 和 <code>UPDATE</code> 耗时较多</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">数据冗余，可能存在不一致</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">占用更多存储空间</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">常用于需要扩展（scalable）的系统</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Sharding</h3>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> NoSQL</h2>
+<div class="outline-text-2" id="text-5">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>关系型数据库</b></th>
+<th scope="col" class="left">保证数据的一致性，读写操作都是事务的（ACID），适合于对一致性有要求的系统，如银行系统。</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">维护数据一致性的代价是读写性能比较差。</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">有固定的表结构，扩展性差，不能应付数据结构的巨大改动。</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">适合海量数据的持久化存储。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>NoSQL 数据库</b></td>
+<td class="left">没有固定的表结构。</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">严格上不是一种数据库，而是一种数据结构化存储方法的集合。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>SNS 的特点</b></td>
+<td class="left">对数据的一致性要求不高（用户看到的内容更新不一致，或者差几秒，是可以容忍的）。</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">对数据库的并发读写能力要求高。</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">大型应用的升级、功能增加，经常需要数据结构的巨大改动。</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Quote</h2>
+<div class="outline-text-2" id="text-6">
+<div class="org-quote-container">
+<blockquote>
+<p>
+The key challenge in data modeling is balancing the needs of the application, the performance characteristics of the database engine, and the data retrieval patterns. When designing data models, always consider the application usage of the data (i.e. queries, updates, and processing of the data) as well as the inherent structure of the data itself. <a href="https://docs.mongodb.com/v3.0/core/data-modeling-introduction/">(source)</a>
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2017-05-19 Fri 08:57</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

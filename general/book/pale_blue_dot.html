@@ -1,0 +1,617 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Pale Blue Dot</title>
+<!-- 2017-04-14 Fri 21:29 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Pale Blue Dot</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. 目录</a></li>
+<li><a href="#sec-2">2. 序言</a></li>
+<li><a href="#sec-3">3. 第一章</a></li>
+<li><a href="#sec-4">4. 第二章</a></li>
+<li><a href="#sec-5">5. 人造飞行器</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 目录</h2>
+<div class="outline-text-2" id="text-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">序言</th>
+<th scope="col" class="left">漂泊者</th>
+<th scope="col" class="left">Wanderers: An Introduction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">第一章</td>
+<td class="left">你在这里</td>
+<td class="left">You Are Here</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">第二章</td>
+<td class="left">光行差</td>
+<td class="left">Abberations of Light</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 序言</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-quote-container">
+<blockquote>
+<p>
+从一开头，我们就是漂泊者。自从人类出现以来，在 99.9% 的时间里我们都是猎人和采集者，也是在沙漠与草原上的流浪汉。那时没有边防卫士，也没有海关官员。到处都是待开发的土地。约束我们的只是大地、海洋和天空——加上偶尔碰到的粗暴邻居。在最近 1 万年间——这在我们的漫长历史中只是一瞬间——我们已经放弃了游牧生活。我们已经栽培植物和驯养动物。
+</p>
+
+<p>
+We were wanderers from the beginning. For 99.9 percent of the time since our species came to be, we were hunters and foragers, wanderers on the savannahs and the steppes. There were no border guards then, no customs officials. The frontier was everywhere. We were bounded only by the Earth and the ocean and the sky - plus occasional grumpy neighbors. In the last ten thousand years - an instant in our long history - we've abandoned the nomadic fife. We've domesticated the plants and animals.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+由于自然淘汰，精心培育起来的对事物的好奇心已成为我们赖以生存的基本要素。漫长的夏季、温暖的冬天、丰硕的收成、充足的猎物——哪一样都不能永久存在。我们没有能力预测未来。灾难事件惯常在我们不知不觉之中，偷偷地袭击我们。你自己的、你所在的群体的，甚至你的种族的生活，可能全靠少数不守本分的人来决定，被一种他们难以说清或理解的渴望，吸引到未曾发现过的土地或新的世界。
+</p>
+
+<p>
+This appeal has been meticulously crafted by natural selection as an essential element in our survival. Long summers, mild winters, rich harvests, plentiful game - none of them lasts forever. It is beyond our powers to predict the future. Catastrophic events have a way of sneaking up on us, of catching us unaware. Your own life, or your band's, or even your species' might be owed to a restless few - drawn, by a craving they can hardly articulate or understand, to undiscovered lands and new worlds.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+人类从旧世界向新世界的第一次大规模迁移，大约出现在 11,500 年前的最后一次冰期。当时极区冰盖扩大；导致海洋变浅，于是人们可以在陆地上从西伯利亚走到阿拉斯加。1000 年之后，有人到达南美洲的南端，即火地岛。远在哥伦布之前，印度尼西亚的英勇移民就驾着有桨的独木舟探测西太平洋，而来自明代中国的一支庞大的远洋帆船队在印度洋往返航行，绕过好望角，并进入大西洋。从 15 世纪到 17 世纪，欧洲的帆船发现新大陆，并环绕地球航行。在 18 世纪和 19 世纪，美国与俄罗斯的探险家、商人和移民，分别向西和向东跨越两个大洲，争着奔向太平洋。无论当事人可能是如何轻率无知，这种探险与开发的热忱具有明显的存在价值。它并不局限于一个民族或种族。它是全人类所有成员共有的天赋。人们的大规模迁徙——有的是自愿的，但大部分并不是——形成了人类的生存状况。今天我们中间逃离战争、迫害和饥荒的人，比人类历史上的任何时候都多。在今后几十年，随着地球上气候的演变，看来会有更大量的人因环境恶劣而逃亡。
+</p>
+
+<p>
+The first large-scale human migration from the Old World to the New happened during the last ice age, around 11,500 years ago, when the growing polar ice caps shallowed the oceans and made it possible to walk on dry land from Siberia to Alaska. A thousand years later, we were in Tierra del Fuego, the southern tip of South America. Long before Columbus, Indonesian argonauts in outrigger canoes explored the western Pacific, and a great fleet of ocean going junks from Ming Dynasty China crisscrossed the Indian Ocean, rounded the Cape of Good Hope, and entered the Atlantic Ocean. In the 15th through 17th centuries, European sailing ships discovered new continents and circumnavigated the planet. In the 18th and 19th centuries, American and Russian explorers, traders, and settlers raced west and east across two vast continents to the Pacific. This zest to explore and exploit, however thoughtless its agents may have been, has clear survival value. It is not restricted to any one nation or ethnic group. It is an endowment that all members of the human species hold in common. Vast migrations of people - some voluntary, most not - have shaped the human condition. More of us flee from war, oppression, and famine today than at any other time in human history. As the Earth's climate changes in the coming decade. there are likely to be far greater numbers of environmental refugees.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+我们的远古祖先观察星星；注意到有五颗星并不像所谓的「恒」星那样按刻板的方式升起和下落。这五颗星有奇特而复杂的运动。接连几个月，它们似乎是缓慢地在恒星之间游荡。它们有时绕出一个个圆圈。今天我们称它们为行星，在希腊文中这个词的意思是游荡者。
+</p>
+
+<p>
+Our distant ancestors, watching the stars, noted five that did more than rise and set in stolid procession, as the so-called "fixed" stars did. These five had a curious and complex motion. Over the months they seemed to wander slowly among the stars. Sometimes they did loops. Today we call them planets, the Greek word for wanderers.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 第一章</h2>
+<div class="outline-text-2" id="text-3">
+<div class="org-quote-container">
+<blockquote>
+<p>
+空间飞船已经远离家园，越过最外层行星的轨道，并高悬黄道面上空。飞船正以每小时时 64,000 千米的速度飞离太阳。但是在 1990 年 2 月初，它接到了来自地球的一个紧急指令。它恭顺地掉转照相机，指向现在已经相距很远的行星。它拍摄了 60 张照片，并在磁带记录器上以数字的方式把它们储存起来。然后在 3 月、4 月和 5 月，它缓慢地把数据用无线电波传回地球。空间飞船离地球 59 亿千米，远到每个象素以光速传播也要经过 5.5 小时才能为我们收到。
+</p>
+
+<p>
+The spacecraft was a long way from home, beyond the orbit of the outermost planet and high above the ecliptic plane. The ship was speeding away from the Sun at 40,000 miles per hour. But in early February of 1990, it was overtaken by an urgent message from Earth. Obediently, it turned its cameras back toward the now-distant planets. It snapped 60 pictures and stored them in digital form on its tape recorder. Then, slowly, in March, April, and May, it radioed the data back to Earth. The spacecraft was 3.7 billion miles away from Earth, so far away that it took etch pixel 5.5 hours, traveling at the speed of light, to reach us.
+</p>
+</blockquote>
+</div>
+
+<p>
+两艘「旅行者」飞行器考察了 4 颗行星和将近 60 颗卫星，它们是人类工程技术的胜利，也是美国空间计划的一个荣誉。在当代许多别的事情被人遗忘的时候，它们仍将永垂史册。
+</p>
+
+<p>
+The two Voyager robots have explored four planets and nearly sixty moons. They are triumphs of human engineering and one of the glories of the American space program. They will be in the history books when much else about our time forgotten.
+#+END_QUOTE
+</p>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+几乎每个人都学过，大地是一个圆球，我们都由重力吸附在它上面。然而我们所在世界的真实情景，却直到「阿波罗」对整个地球拍摄了一幅装满镜框的著名照片后才真正看清。这张照片是「阿波罗 17 号」的宇航员在人类最近一次飞往月球拍摄的。在这张照片上没有人类的迹象，看不出我们对地球表面的改造，也看不出我们的机器和我们自身。在行星的尺度上说（更不用谈恒星与星系了），人类是微不足道的，它只不过是在一块偏僻与孤独的岩石和金属混合体上面的一薄层生命。
+</p>
+
+<p>
+While almost everyone is taught that the Earth is a sphere with all of us somehow glued to it by gravity, the reality of our circumstance did not really begin to sink in until the famous frame-filling Apollo photograph of the whole Earth - the one taken by the Apollo 17 astronauts on the last journey of humans to the Moon. There is no sign of humans in this picture, not our reworking of the Earth's surface, not our machines, not ourselves. On the scale of worlds - to say nothing of stars or galaxies - humans are inconsequential, a thin film of life on an obscure and solitary lump of rock and metal.
+</p>
+</blockquote>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/pale_blue_dot/01.jpg" alt="01.jpg" />
+</p>
+<p><span class="figure-number">Figure 1:</span> The Blue Marble</p>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+淡蓝色一部分来自海洋，一部分来自天空。虽然玻璃杯里的水是透明的，但它吸收的红光比蓝光稍多。如果你观察的是几十米或更深的水，红光被吸收掉了，反射到空中的主要是蓝光。绘画大师达·芬奇说得有点道理，物体越远，它看起来越蓝。因为空气向四周散射的蓝光远多于红光。地球光点的蓝色来自它的很厚的，但也是透明的大气层，以及它的由液态水组成的深海。
+</p>
+
+<p>
+The blue comes partly from the sea, partly from the sky. While water in a glass is transparent, It absorbs slightly more red light than blue. If you have tens of meters of the stuff or more, the red light is absorbed out and what gets reflected back to space is mainly blue. Something Leonardo da Vinci excelled at portraying - the more distant the object, the bluer it seems. Because the air scatters blue light around much better than it does red. So the bluish cast of this dot comes from its thick but transparent atmosphere and its deep oceans of liquid water. 
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+从那个远方的有利地点看来，地球似乎没有任何令人感兴趣的特点。但是对于我们，情况就不同了。再看看那个光点，它就在这里。这是家园，这是我们。你所爱的每一个人，你认识的每一个人，你听说过的每一个人，曾经有过的每一个人，都在它上面度过他们的一生。我们的欢乐与痛苦聚集在一起，数以千计的自以为是的宗教、意识形态和经济学说，每一个猎人与采集者，每一个英雄与懦夫，每一个文明的缔造者与毁灭者，每一个国王与农夫，每一对年轻情侣，每一个母亲和父亲，满怀希望的孩子、发明家和探险家，每一个德高望重的教师，每一个腐败的政客，人类历史上的每一个圣人和罪犯，都在这里——一个悬浮于阳光中的尘埃小点上生活。我们虚构的妄自尊大，我们在宇宙拥有某种特权地位的错觉，都受到这个苍白光点的挑战。在庞大的包容一切的暗黑宇宙中，我们的行星是一个孤独的斑点。
+</p>
+
+<p>
+From this distant vantage point, the Earth might not seem of any particular interest. But for us, it's different. Look again at that dot. That's here. That's home. That's us. On it everyone you love, everyone you know, everyone you ever heard of, every human being who ever was, lived out their lives. The aggregate of our joy and suffering, thousands of confident religions, ideologies, and economic doctrines, every hunter and forager, every hero and coward, every creator and destroyer of civilization, ever king and peasant, every young couple in love, every mother and father, hopeful child, inventor and explorer, every teacher of morals, every corrupt politician, every saint and sinner in the history of our species lived there - on a mote of dust suspended in a sunbeam. Our posturings, our imagined self-importance, the delusion that we have some privileged position in the Universe, are challenged by this point of pale light. Our planet is a lonely speck in the great enveloping cosmic dark.
+</p>
+</blockquote>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/pale_blue_dot/02.png" alt="02.png" />
+</p>
+<p><span class="figure-number">Figure 2:</span> Pale Blue Dot</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 第二章</h2>
+<div class="outline-text-2" id="text-4">
+<div class="org-quote-container">
+<blockquote>
+<p>
+再一次回头那淡蓝色光点，竭力使你自己相信，上帝是为了居住在这粒尘埃上约 1000 万种生物中的一种而创造了整个宇宙。现在更进一步：设想一切事物都只是为了这种生物的个别生灵，或人类两性之一，或某种族或某宗教教派而创造出来的。如果这并不使你感到靠不住，那就另取一个光点吧。设想它上面居住着另一种形式的智慧生命。他们也坚持有一个上帝为他们的利益创造了一切。你对他们的主张会认真对待吗？
+</p>
+
+<p>
+Look back again at the pale blue dot. Try to convince yourself that God created the whole Universe for one of the 10 million or so species of life that inhabit that speck of dust. Now take it a step further: Imagine that everything was made just for a single shade of that species, or gender, or ethnic or religious subdivision. If this doesn't strike you as unlikely, pick another dot. Imagine it to be inhabited by a different form of intelligent life. They, too, cherish the notion of a God who has created everything for their benefit. How seriously do you take their claim?
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+科学史中许多重大争议是与人类是否特殊有关。几乎总是这样，常常开始便假设我们是特殊的。然而对这个前提进行严格检验后，结果表明——往往会令人沮丧——我们并不特殊。
+</p>
+
+<p>
+Many of the central debates in the history of science seem to be, in part at least, contests over whether humans are special. Almost always, the going-in assumption is that we are special. After the premise is closely examined, though, it turns out - in dishearteningly many cases - that we are not.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+我们的祖先在露天居住。他们对夜空是熟悉的，就像我们大多数人对令人喜爱的电视节目一样。天体的运行不只是一种令人肃然起敬地点头和喷喷称道的规则，它还是确定时刻和季节的唯一办法。对猎人和采集者以及农业民族来说，观察天象是一桩生死攸关的大事。太阳、月亮、行星和恒星都是构造精美的宇宙时钟的一部分，这对我们是何等幸运的事情！看起来这不是偶然的。它们都为了一个目的，即为我们的利益而安装起来。既然太空中的发光体都绕着我们出没，难道我们是在宇宙的中心还不是显而易见的吗？我们的重要地位得到日常天象观测的证实。这种令人心满意足的论证，使地球是宇宙中心的想法成为超越文化的真理。天文学家托勒密在公元 2 世纪宣称地球「正是在宇宙的中心」，亚里士多德、柏拉图、圣奥古斯丁、阿奎那，以及在 17 世纪之前 3000 年间所有文明国家的几乎全部的伟大哲学家与科学家都有这种错觉。地心假说能够适当地说明在公元 2 世纪以及 16 世纪所知道的行星运动现象。
+</p>
+
+<p>
+Our ancestors lived out of doors. They were as familiar with the night sky as most of us are with our favorite television programs. The motion of the heavenly bodies was not merely a diversion, eliciting a reverential nod and grunt; it was the only way to tell the time of day and the seasons. For hunters and gatherers, as well as for agricultural peoples, knowing about the sky was a matter of life and death. How lucky for us that the Sun, the Moon, the planets, and the stars are part of some elegantly configured cosmic clockwork! It seemed to be no accident. They were put here for a purpose, for our benefit. And if the lights in the sky rise and set around us, isn't it evident that we're at the center of the Universe? This satisfying demonstration of our importance, buttressed by daily observations of the heavens, made the geocentrist conceit a transcultural truth. The great astronomer Claudius Ptolemaeus (Ptolemy), in the second century taught that the Earth lay "right in the middle of the heavens." Aristotle, Plato, St. Augustine, St. Thomas Aquinas, and almost all the great philosophers and scientists of all cultures over the 3,000 years ending in the 17th century bought into this delusion. With later modifications, the geocentric hypothesis adequately accounted for the facts of planetary motion as known in the second century, and in the 16th.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+在 16 世纪中叶，从哥白尼开始，一场辩论正式出现了。把太阳而不是地球当作宇宙中心的图象，被认为是危险的。许多学者被迫很快向教廷保证，这种新奇的假说对传统观念并不构成严重的威胁。作为一种平分秋色的折衷方案，可以把日心体系只当作便于计算的设想，而不是真正的天文现实。这样一来，你就可以继续作计算，而不触犯当局。
+</p>
+
+<p>
+Beginning with Copernicus in the middle 16th century, the issue was formally joined. The picture of the Sun rather than the Earth at the center of the Universe was understood to be dangerous. Obligingly, many scholars were quick to assure the religious hierarchy that this newfangled hypothesis represented no serious challenge to conventional wisdom. In a kind of split-brain compromise, the Sun-centered system was treated as a mere computational convenience, not an astronomical reality. Then you could calculate away and not affront the Authorities.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+17 世纪初期的神学家贝拉明写道：「信仰自由是有害的。它只不过是犯错误的自由。」
+</p>
+
+<p>
+Robert Cardinal Bellarmine, the theologian in the early 17th century, wrote, "Freedom of belief is pernicious, It is nothing but the freedom to be wrong."
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+如果地球是在绕太阳运动，那么每隔 6 个月，我们的视线从地球轨道的一侧移到另一侧时，附近的恒星就会在更远恒星的背景上，看起来是在移动。但是没有发现过这种「周年视差」。哥白尼学说的支持者辩解说，这是因为恒星极为遥远——可能比地球离太阳要远出 100 万倍。也许将来更好的望远镜会发现周年视差。地心说学者们把这当作拯救一个有毛病的假说的一根可以抓住的稻草。到 1837 年，直接的观测用最明确的方式证明了地球确实绕日运转。争议已久的周年视差终于发现了，不是用更好的论证，而是用更好的仪器发现的。这是因为说清楚它的含义，比起解释光行差更为直截了当。周年视差的发现非常重要，它给地心学说的棺材敲进了最后一根钉子。
+</p>
+
+<p>
+If the Earth was going around the Sun, nearby stars should seem to move against the background of more distant stars as, every six months, we shift our perspective from one side of the Earth's orbit to the other. No such "annual parallax" had been found. The Copernicans argued that this was because the stars were extremely far away - maybe a million times more distant than the Earth is from the Sun. Perhaps better telescopes, in future times, would find an annual parallax. The geocentrists considered this a desperate attempt to save a flawed hypothesis. Not until 1837 did direct observations of the stars prove in the clearest way that the Earth is indeed circling the Sun. The long-debated annual parallax was at last discovered - not by better arguments, but by better instruments. Because explaining what it means is much more straightforward than explaining the aberration of light, its discovery was very important. It pounded the final nail into the coffin of geocentrism.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> 人造飞行器</h2>
+<div class="outline-text-2" id="text-5">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">编号</th>
+<th scope="col" class="left">历程</th>
+<th scope="col" class="left">轨道</th>
+<th scope="col" class="left">特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">先驱者 10 号</td>
+<td class="left">1972/03 发射</td>
+<td class="left">背向银河中心</td>
+<td class="left">携带先驱者镀金铝板</td>
+</tr>
+
+<tr>
+<td class="left">Pioneer 10</td>
+<td class="left">&#xa0;</td>
+<td class="left">金牛座毕宿五</td>
+<td class="left">1998/02 之前离地球最远的人造飞行器</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">先驱者 11 号</td>
+<td class="left">1973/04 发射</td>
+<td class="left">朝向银河中心</td>
+<td class="left">携带先驱者镀金铝板</td>
+</tr>
+
+<tr>
+<td class="left">Pioneer 11</td>
+<td class="left">1974/12 木星</td>
+<td class="left">天鹰座</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">1979/09 土星（首次接近）</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">旅行者 2 号</td>
+<td class="left">1977/08 发射</td>
+<td class="left">在黄道面中</td>
+<td class="left">携带旅行者金唱片</td>
+</tr>
+
+<tr>
+<td class="left">Voyager 2</td>
+<td class="left">1979/07 木星</td>
+<td class="left">&#xa0;</td>
+<td class="left">「最多产」的航天器</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">1981/08 土星</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">0000/00 土卫六</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">1986/01 天王星（首次接近）</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">1989/08 海王星（首次接近）</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">旅行者 1 号</td>
+<td class="left">1977/09 发射</td>
+<td class="left">高于黄道面</td>
+<td class="left">携带旅行者金唱片</td>
+</tr>
+
+<tr>
+<td class="left">Voyager 1</td>
+<td class="left">1979/01 木星</td>
+<td class="left">&#xa0;</td>
+<td class="left">第一艘离开太阳系的人造飞行器</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">1980/11 土星</td>
+<td class="left">&#xa0;</td>
+<td class="left">1998/02 至今离地球最远的人造飞行器</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">0000/00 土卫六</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">1990/02 拍摄「暗淡蓝点」照片</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">伽利略号</td>
+<td class="left">1989/10 发射</td>
+<td class="left">&#xa0;</td>
+<td class="left">首次围绕木星公转、对木星大气作出探测</td>
+</tr>
+
+<tr>
+<td class="left">Galileo</td>
+<td class="left">1995/00 进入木星轨道</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">2003/09 坠落木星大气层</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">卡西尼－惠更斯号</td>
+<td class="left">1997/10 发射</td>
+<td class="left">&#xa0;</td>
+<td class="left">惠更斯号进入土卫六大气并着陆</td>
+</tr>
+
+<tr>
+<td class="left">Cassini-Huygens</td>
+<td class="left">2004/07 进入木星轨道</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">新视野号</td>
+<td class="left">2006/01 发射</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">New Horizons</td>
+<td class="left">2015/07 进入冥王星轨道</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">朱诺号</td>
+<td class="left">2011/08 发射</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">Juno</td>
+<td class="left">2016/07 进入土星轨道</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2017-04-14 Fri 21:29</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

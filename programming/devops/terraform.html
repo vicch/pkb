@@ -1,0 +1,1194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Terraform</title>
+<!-- 2018-04-08 Sun 20:25 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Terraform</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Configuration</a>
+<ul>
+<li><a href="#sec-1-1">1.1. 文件</a></li>
+<li><a href="#sec-1-2">1.2. Interpolation</a></li>
+<li><a href="#sec-1-3">1.3. Interpolation 函数</a>
+<ul>
+<li><a href="#sec-1-3-1">1.3.1. <code>file()</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-1-4">1.4. 元参数</a>
+<ul>
+<li><a href="#sec-1-4-1">1.4.1. <code>lifecycle</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-1-5">1.5. <code>provider</code></a></li>
+<li><a href="#sec-1-6">1.6. <code>resource</code></a></li>
+<li><a href="#sec-1-7">1.7. <code>variable</code></a></li>
+<li><a href="#sec-1-8">1.8. <code>data</code></a>
+<ul>
+<li><a href="#sec-1-8-1">1.8.1. <code>template_file</code></a></li>
+<li><a href="#sec-1-8-2">1.8.2. <code>terraform_remote_state</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-1-9">1.9. <code>output</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. AWS</a>
+<ul>
+<li><a href="#sec-2-1">2.1. <code>aws_autoscaling_group</code></a>
+<ul>
+<li><a href="#sec-2-1-1">2.1.1. 资源</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-2">2.2. <code>aws_autoscaling_schedule</code></a>
+<ul>
+<li><a href="#sec-2-2-1">2.2.1. 资源</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-3">2.3. <code>aws_db_instance</code></a>
+<ul>
+<li><a href="#sec-2-3-1">2.3.1. 资源</a></li>
+<li><a href="#sec-2-3-2">2.3.2. 属性</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-4">2.4. <code>aws_elb</code></a>
+<ul>
+<li><a href="#sec-2-4-1">2.4.1. 资源</a></li>
+<li><a href="#sec-2-4-2">2.4.2. 属性</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-5">2.5. <code>aws_instance</code></a>
+<ul>
+<li><a href="#sec-2-5-1">2.5.1. 资源</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-6">2.6. <code>aws_launch_configuration</code></a>
+<ul>
+<li><a href="#sec-2-6-1">2.6.1. 资源</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-7">2.7. <code>aws_s3_bucket</code></a>
+<ul>
+<li><a href="#sec-2-7-1">2.7.1. 资源</a></li>
+<li><a href="#sec-2-7-2">2.7.2. 属性</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-8">2.8. <code>aws_security_group</code></a>
+<ul>
+<li><a href="#sec-2-8-1">2.8.1. 资源</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-9">2.9. <code>aws_security_group_rule</code></a></li>
+<li><a href="#sec-2-10">2.10. <code>data</code></a>
+<ul>
+<li><a href="#sec-2-10-1">2.10.1. <code>aws_availability_zones</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-3">3. State</a>
+<ul>
+<li><a href="#sec-3-1">3.1. 远程状态</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. Module</a></li>
+<li><a href="#sec-5">5. Command</a>
+<ul>
+<li><a href="#sec-5-1">5.1. <code>graph</code></a></li>
+<li><a href="#sec-5-2">5.2. <code>output</code></a></li>
+<li><a href="#sec-5-3">5.3. <code>plan</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6. Environment</a></li>
+<li><a href="#sec-7">7. Terragrunt</a>
+<ul>
+<li><a href="#sec-7-1">7.1. 配置</a></li>
+</ul>
+</li>
+<li><a href="#sec-8">8. Link</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Configuration</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> 文件</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Terraform 配置使用 HCL (HashiCorp Confguration Language) 声明式语言，脚本扩展名为 <code>.tf</code> 。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Interpolation</h3>
+<div class="outline-text-3" id="text-1-2">
+<div class="org-src-container">
+
+<pre class="src src-terraform"><span class="org-comment-delimiter">// </span><span class="org-comment">&#21464;&#37327;</span>
+<span class="org-string">"</span><span class="org-variable-name">${var.&lt;variable_name&gt;}</span><span class="org-string">"</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#36164;&#28304;&#23646;&#24615;</span>
+<span class="org-string">"</span><span class="org-variable-name">${&lt;resource_type&gt;.&lt;resource_name&gt;.&lt;attribute&gt;}</span><span class="org-string">"</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#21482;&#35835;&#25968;&#25454;</span>
+<span class="org-string">"</span><span class="org-variable-name">${data.&lt;data_type&gt;.&lt;data_name&gt;.&lt;attribute&gt;}</span><span class="org-string">"</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#27169;&#22359;&#36755;&#20986;</span>
+<span class="org-string">"</span><span class="org-variable-name">${module.&lt;module_name&gt;.&lt;output_name&gt;}</span><span class="org-string">"</span>
+</pre>
+</div>
+
+<p>
+当一个资源引用了另一个资源的属性时，就产生了一个依赖关系，Terraform 会解读资源的依赖关系，以决定创建资源的顺序。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Interpolation 函数</h3>
+<div class="outline-text-3" id="text-1-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>file()</code></th>
+<th scope="col" class="left">读取文件，返回字符串</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-1-3-1" class="outline-4">
+<h4 id="sec-1-3-1"><span class="section-number-4">1.3.1</span> <code>file()</code></h4>
+<div class="outline-text-4" id="text-1-3-1">
+<div class="org-src-container">
+
+<pre class="src src-terraform"><span class="org-string">"</span><span class="org-variable-name">${file("&lt;file_path&gt;")}</span><span class="org-string">"</span>
+</pre>
+</div>
+
+<p>
+Terraform 将文件路径解读为当前目录的相对路径，在模块中使用 <code>file()</code> 时，需要使用 <code>${path.module}</code> 表示模块目录的相对路径，而非引用位置的相对路径。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-terraform"><span class="org-string">"</span><span class="org-variable-name">${file("${path.module}</span>/&lt;file_path&gt;<span class="org-string">")}"</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> 元参数</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+多种资源使用的参数。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>lifecycle</code></th>
+<th scope="col" class="left">定义资源的 lifecycle 行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-1-4-1" class="outline-4">
+<h4 id="sec-1-4-1"><span class="section-number-4">1.4.1</span> <code>lifecycle</code></h4>
+<div class="outline-text-4" id="text-1-4-1">
+<div class="org-src-container">
+
+<pre class="src src-terraform"><span class="org-type">lifecycle</span> {
+  <span class="org-variable-name">create_before_destroy</span> = &lt;bool&gt; <span class="org-comment-delimiter">// </span><span class="org-comment">True &#34920;&#31034;&#22312;&#21024;&#38500;&#29616;&#26377;&#36164;&#28304;&#21069;&#65292;&#20808;&#22686;&#21152;&#26367;&#20195;&#36164;&#28304;</span>
+                                 <span class="org-comment-delimiter">// </span><span class="org-comment">&#35774;&#32622;&#20026; true &#26102;&#65292;&#27492;&#36164;&#28304;&#20381;&#36182;&#30340;&#25152;&#26377;&#36164;&#28304;&#20063;&#24517;&#39035;&#35774;&#32622;&#20026; true</span>
+  <span class="org-variable-name">prevent_destroy</span>       = &lt;bool&gt; <span class="org-comment-delimiter">// </span><span class="org-comment">True &#34920;&#31034;&#38450;&#27490;&#36164;&#28304;&#34987;&#21024;&#38500;&#65292;&#23581;&#35797;&#21024;&#38500;&#26102;&#20250;&#25253;&#38169;</span>
+  <span class="org-variable-name">ignore_changes</span>        = [<span class="org-string">"&lt;string&gt;"</span>, ...]
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> <code>provider</code></h3>
+<div class="outline-text-3" id="text-1-5">
+<div class="org-src-container">
+
+<pre class="src src-terraform"><span class="org-function-name">provider</span> <span class="org-string">"&lt;name&gt;"</span> {   <span class="org-comment"># e.g. aws</span>
+  <span class="org-variable-name">region</span> = <span class="org-string">"&lt;region&gt;"</span> <span class="org-comment"># e.g. us-east-1</span>
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> <code>resource</code></h3>
+<div class="outline-text-3" id="text-1-6">
+<div class="org-src-container">
+
+<pre class="src src-terraform"><span class="org-function-name">resource</span> <span class="org-string">"&lt;provider_resource&gt;"</span> <span class="org-string">"&lt;name&gt;"</span> {
+  &lt;config_name&gt; = <span class="org-string">"&lt;config_value&gt;"</span>
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> <code>variable</code></h3>
+<div class="outline-text-3" id="text-1-7">
+<div class="org-src-container">
+<label class="org-src-name">定义变量</label>
+<pre class="src src-terraform"><span class="org-function-name">variable</span> <span class="org-string">"&lt;name&gt;"</span> {
+  <span class="org-variable-name">description</span> = <span class="org-string">"&lt;desc&gt;"</span>
+  <span class="org-variable-name">type</span>        = <span class="org-string">"&lt;type&gt;"</span>  <span class="org-comment-delimiter">// </span><span class="org-comment">string, list, map</span>
+                          <span class="org-comment-delimiter">// </span><span class="org-comment">&#22914;&#26524;&#26410;&#25351;&#23450;&#65292;&#21017;&#26681;&#25454;&#40664;&#35748;&#20540;&#29468;&#27979;&#31867;&#22411;</span>
+                          <span class="org-comment-delimiter">// </span><span class="org-comment">&#22914;&#26524;&#27809;&#26377;&#40664;&#35748;&#20540;&#65292;&#21017;&#40664;&#35748;&#20026; string</span>
+  <span class="org-variable-name">default</span>     = <span class="org-string">"&lt;value&gt;"</span> <span class="org-comment-delimiter">// </span><span class="org-comment">&#22914;&#26524;&#26410;&#36890;&#36807;&#21629;&#20196;&#36873;&#39033;&#25110;&#29615;&#22659;&#21464;&#37327;&#25351;&#23450;&#20540;&#65292;&#21017;&#20351;&#29992;&#40664;&#35748;&#20540;</span>
+                          <span class="org-comment-delimiter">// </span><span class="org-comment">&#22914;&#26524;&#27809;&#26377;&#40664;&#35748;&#20540;&#65292;&#21017;&#21629;&#20196;&#20250;&#25552;&#31034;&#36755;&#20837;&#20540;</span>
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">引用变量</label>
+<pre class="src src-terraform"><span class="org-string">"</span><span class="org-variable-name">${var.&lt;variable_name&gt;}</span><span class="org-string">"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-8" class="outline-3">
+<h3 id="sec-1-8"><span class="section-number-3">1.8</span> <code>data</code></h3>
+<div class="outline-text-3" id="text-1-8">
+<p>
+A data source represents a piece of read-only information that is fetched from the provider.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-terraform"><span class="org-function-name">data</span> <span class="org-string">"&lt;type&gt;"</span> <span class="org-string">"&lt;name&gt;"</span> {
+}
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-1-8-1" class="outline-4">
+<h4 id="sec-1-8-1"><span class="section-number-4">1.8.1</span> <code>template_file</code></h4>
+<div class="outline-text-4" id="text-1-8-1">
+<div class="org-src-container">
+
+<pre class="src src-terraform"><span class="org-function-name">data</span> <span class="org-string">"template_file"</span> <span class="org-string">"&lt;name&gt;"</span> {
+  <span class="org-variable-name">template</span> = <span class="org-string">"</span><span class="org-variable-name">${file("&lt;file_path&gt;")}</span><span class="org-string">"</span>
+  <span class="org-type">vars</span> {
+    &lt;var_name&gt; = <span class="org-string">"&lt;var_value&gt;"</span>
+    ...
+  }
+}
+
+<span class="org-comment"># &#27169;&#26495;&#25991;&#20214;&#20869;&#24341;&#29992;&#21464;&#37327;&#65288;&#35821;&#27861;&#19982; bash &#33050;&#26412;&#24341;&#29992;&#29615;&#22659;&#21464;&#37327;&#30456;&#21516;&#65289;</span>
+<span class="org-variable-name">${&lt;var_name&gt;}</span>
+
+<span class="org-comment"># &#24341;&#29992;&#27169;&#26495;&#25991;&#20214;&#30340;&#36755;&#20986;</span>
+<span class="org-variable-name">user_data</span> = <span class="org-string">"</span><span class="org-variable-name">${data.template_file.&lt;name&gt;.rendered}</span><span class="org-string">"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-8-2" class="outline-4">
+<h4 id="sec-1-8-2"><span class="section-number-4">1.8.2</span> <code>terraform_remote_state</code></h4>
+<div class="outline-text-4" id="text-1-8-2">
+<p>
+用于读取<a href="#terraform_remote_state">远程状态</a>文件。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-9" class="outline-3">
+<h3 id="sec-1-9"><span class="section-number-3">1.9</span> <code>output</code></h3>
+<div class="outline-text-3" id="text-1-9">
+<div class="org-src-container">
+
+<pre class="src src-terraform"><span class="org-function-name">output</span> <span class="org-string">"&lt;name&gt;"</span> {
+  <span class="org-variable-name">value</span> = <span class="org-string">"&lt;value&gt;"</span>
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> AWS</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> <code>aws_autoscaling_group</code></h3>
+<div class="outline-text-3" id="text-2-1">
+</div><div id="outline-container-sec-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1"><span class="section-number-4">2.1.1</span> 资源</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<div class="org-src-container">
+
+<pre class="src src-terraform"><span class="org-function-name">resource</span> <span class="org-string">"aws_autoscaling_group"</span> <span class="org-string">"&lt;name&gt;"</span> {
+  <span class="org-variable-name">name</span> = <span class="org-string">"&lt;name&gt;"</span>
+
+  <span class="org-comment"># ASG references launch configuration</span>
+  <span class="org-variable-name">launch_configuration</span> = <span class="org-string">"&lt;launch_configuration_id&gt;"</span>
+  <span class="org-variable-name">availability_zones</span>   = [<span class="org-string">"&lt;zone&gt;"</span>, ...]
+
+  <span class="org-variable-name">min_size</span> = &lt;int&gt;
+  <span class="org-variable-name">max_size</span> = &lt;int&gt;
+
+  <span class="org-comment-delimiter">// </span><span class="org-comment">&#26032;&#23454;&#20363;&#21551;&#21160;&#26102;&#27880;&#20876;&#21040; ELB</span>
+  <span class="org-variable-name">load_balancers</span>    = [<span class="org-string">"&lt;elb_name&gt;"</span>, ...]
+
+  <span class="org-comment-delimiter">// </span><span class="org-comment">&#20581;&#24247;&#26816;&#26597;&#26041;&#24335;</span>
+  <span class="org-variable-name">health_check_type</span> = <span class="org-string">"&lt;type&gt;"</span> <span class="org-comment-delimiter">// </span><span class="org-comment">EC2 &#25110; ELB</span>
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> <code>aws_autoscaling_schedule</code></h3>
+<div class="outline-text-3" id="text-2-2">
+</div><div id="outline-container-sec-2-2-1" class="outline-4">
+<h4 id="sec-2-2-1"><span class="section-number-4">2.2.1</span> 资源</h4>
+<div class="outline-text-4" id="text-2-2-1">
+<div class="org-src-container">
+
+<pre class="src src-terraform"><span class="org-function-name">resource</span> <span class="org-string">"aws_autoscaling_schedule"</span> <span class="org-string">"&lt;name&gt;"</span> {
+  <span class="org-variable-name">autoscaling_group_name</span> = <span class="org-string">"&lt;asg_name&gt;"</span>
+  <span class="org-variable-name">scheduled_action_name</span>  = <span class="org-string">"&lt;action_name&gt;"</span>
+
+  <span class="org-variable-name">start_time</span> = <span class="org-string">"&lt;time_string&gt;"</span> <span class="org-comment"># yyyy-mm-ddThh:mm:ssZ</span>
+  <span class="org-variable-name">end_time</span>   = <span class="org-string">"&lt;time_string&gt;"</span> <span class="org-comment"># yyyy-mm-ddThh:mm:ssZ</span>
+  <span class="org-variable-name">recurrence</span> = <span class="org-string">"&lt;cron_string&gt;"</span>
+
+  <span class="org-variable-name">min_size</span>         = &lt;int&gt;
+  <span class="org-variable-name">max_size</span>         = &lt;int&gt;
+  <span class="org-variable-name">desired_capacity</span> = &lt;int&gt;
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> <code>aws_db_instance</code></h3>
+<div class="outline-text-3" id="text-2-3">
+</div><div id="outline-container-sec-2-3-1" class="outline-4">
+<h4 id="sec-2-3-1"><span class="section-number-4">2.3.1</span> 资源</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<div class="org-src-container">
+
+<pre class="src src-terraform"><span class="org-function-name">resource</span> <span class="org-string">"aws_db_instance"</span> <span class="org-string">"&lt;name&gt;"</span> {
+  <span class="org-variable-name">name</span>              = <span class="org-string">"&lt;name&gt;"</span>
+  <span class="org-variable-name">instance_class</span>    = <span class="org-string">"&lt;instance_class&gt;"</span> <span class="org-comment"># e.g. db.t2.micro</span>
+  <span class="org-variable-name">allocated_storage</span> = &lt;number&gt; <span class="org-comment"># Number of GB</span>
+  <span class="org-variable-name">engine</span>            = <span class="org-string">"&lt;engine&gt;"</span> <span class="org-comment"># e.g. mysql</span>
+  <span class="org-variable-name">username</span>          = <span class="org-string">"&lt;username&gt;"</span>
+  <span class="org-variable-name">password</span>          = <span class="org-string">"&lt;password&gt;"</span>
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-3-2" class="outline-4">
+<h4 id="sec-2-3-2"><span class="section-number-4">2.3.2</span> 属性</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>address</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>port</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> <code>aws_elb</code></h3>
+<div class="outline-text-3" id="text-2-4">
+</div><div id="outline-container-sec-2-4-1" class="outline-4">
+<h4 id="sec-2-4-1"><span class="section-number-4">2.4.1</span> 资源</h4>
+<div class="outline-text-4" id="text-2-4-1">
+<div class="org-src-container">
+
+<pre class="src src-terraform"><span class="org-function-name">resource</span> <span class="org-string">"aws_elb"</span> <span class="org-string">"&lt;name&gt;"</span> {
+  <span class="org-variable-name">name</span> = <span class="org-string">"&lt;name&gt;"</span>
+
+  <span class="org-variable-name">availability_zones</span> = [<span class="org-string">"&lt;zone&gt;"</span>, ...]
+  <span class="org-variable-name">security_groups</span>    = [<span class="org-string">"&lt;security_group_id&gt;"</span>, ...]
+
+  <span class="org-type">listener</span> {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#25509;&#25910;&#35268;&#21017;</span>
+    <span class="org-variable-name">lb_port</span>           = &lt;port&gt;
+    <span class="org-variable-name">lb_protocol</span>       = <span class="org-string">"&lt;protocol&gt;"</span>
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#36335;&#30001;&#35268;&#21017;</span>
+    <span class="org-variable-name">instance_port</span>     = &lt;port&gt;
+    <span class="org-variable-name">instance_protocol</span> = <span class="org-string">"&lt;protocol&gt;"</span>
+  }
+
+  <span class="org-comment-delimiter">// </span><span class="org-comment">&#38745;&#24577;&#23454;&#20363;&#21015;&#34920;</span>
+  <span class="org-variable-name">instances</span> = [<span class="org-string">"&lt;instance_id&gt;"</span>, ...]
+
+  <span class="org-comment-delimiter">// </span><span class="org-comment">&#20581;&#24247;&#26816;&#26597;&#65288;&#30446;&#26631;&#21709;&#24212; 200 &#26102;&#20026;&#20581;&#24247;&#65289;</span>
+  <span class="org-type">health_check</span> {
+    <span class="org-variable-name">healthy_threshold</span>   = &lt;int&gt;
+    <span class="org-variable-name">unhealthy_threshold</span> = &lt;int&gt;
+    <span class="org-variable-name">timeout</span>  = &lt;seconds&gt;
+    <span class="org-variable-name">interval</span> = &lt;seconds&gt;
+    <span class="org-variable-name">target</span>   = <span class="org-string">"&lt;protocol&gt;:&lt;port&gt;&lt;path&gt;"</span> <span class="org-comment-delimiter">// </span><span class="org-comment">protocol = HTTP, HTTPS, TCP, SSL</span>
+  }
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">健康检查需要实例或 ASG 包含发送规则：</label>
+<pre class="src src-terraform"><span class="org-type">egress</span> {
+  <span class="org-variable-name">from_port</span>   = 0
+  <span class="org-variable-name">to_port</span>     = 0
+  <span class="org-variable-name">protocol</span>    = <span class="org-string">"-1"</span>
+  <span class="org-variable-name">cidr_blocks</span> = [<span class="org-string">"0.0.0.0/0"</span>]
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-4-2" class="outline-4">
+<h4 id="sec-2-4-2"><span class="section-number-4">2.4.2</span> 属性</h4>
+<div class="outline-text-4" id="text-2-4-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>dns_name</code></th>
+<th scope="col" class="left">DNS 名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> <code>aws_instance</code></h3>
+<div class="outline-text-3" id="text-2-5">
+</div><div id="outline-container-sec-2-5-1" class="outline-4">
+<h4 id="sec-2-5-1"><span class="section-number-4">2.5.1</span> 资源</h4>
+<div class="outline-text-4" id="text-2-5-1">
+<div class="org-src-container">
+
+<pre class="src src-terraform"><span class="org-function-name">resource</span> <span class="org-string">"aws_instance"</span> <span class="org-string">"&lt;name&gt;"</span> {
+  <span class="org-variable-name">ami</span>           = <span class="org-string">"&lt;ami_id&gt;"</span>        <span class="org-comment-delimiter">// </span><span class="org-comment">AMI ID</span>
+  <span class="org-variable-name">instance_type</span> = <span class="org-string">"&lt;instance_type&gt;"</span> <span class="org-comment-delimiter">// </span><span class="org-comment">&#23454;&#20363;&#31867;&#22411;</span>
+
+  <span class="org-variable-name">vpc_security_group_ids</span> = [<span class="org-string">"&lt;security_group_id&gt;"</span>, ...]
+
+  <span class="org-comment-delimiter">// </span><span class="org-comment">&#23454;&#20363;&#21551;&#21160;&#26102;&#36816;&#34892;&#30340;&#33050;&#26412;</span>
+  <span class="org-variable-name">user_data</span> = &lt;&lt;-EOF
+<span class="org-string">              &lt;script&gt;</span>
+<span class="org-string">              EOF</span>
+  <span class="org-type">tags</span> {
+    &lt;tag_name&gt; = <span class="org-string">"&lt;tag_value&gt;"</span>
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> <code>aws_launch_configuration</code></h3>
+<div class="outline-text-3" id="text-2-6">
+</div><div id="outline-container-sec-2-6-1" class="outline-4">
+<h4 id="sec-2-6-1"><span class="section-number-4">2.6.1</span> 资源</h4>
+<div class="outline-text-4" id="text-2-6-1">
+<div class="org-src-container">
+
+<pre class="src src-terraform"><span class="org-function-name">resource</span> <span class="org-string">"aws_launch_configuration"</span> <span class="org-string">"&lt;name&gt;"</span> {
+  <span class="org-variable-name">image_id</span>        = <span class="org-string">"&lt;ami_id&gt;"</span>
+  <span class="org-variable-name">instance_type</span>   = <span class="org-string">"&lt;instance_type&gt;"</span>
+  <span class="org-variable-name">security_groups</span> = [<span class="org-string">"&lt;security_group_id&gt;"</span>, ...]
+
+  <span class="org-comment-delimiter">// </span><span class="org-comment">&#23454;&#20363;&#21551;&#21160;&#26102;&#36816;&#34892;&#30340;&#33050;&#26412;</span>
+  <span class="org-variable-name">user_data</span> = &lt;&lt;-EOF
+<span class="org-string">              &lt;script&gt;</span>
+<span class="org-string">              EOF</span>
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-7" class="outline-3">
+<h3 id="sec-2-7"><span class="section-number-3">2.7</span> <code>aws_s3_bucket</code></h3>
+<div class="outline-text-3" id="text-2-7">
+</div><div id="outline-container-sec-2-7-1" class="outline-4">
+<h4 id="sec-2-7-1"><span class="section-number-4">2.7.1</span> 资源</h4>
+<div class="outline-text-4" id="text-2-7-1">
+<div class="org-src-container">
+
+<pre class="src src-terraform"><span class="org-function-name">resource</span> <span class="org-string">"aws_s3_bucket"</span> <span class="org-string">"&lt;name&gt;"</span> {
+  <span class="org-variable-name">bucket</span> = <span class="org-string">"&lt;bucket_name&gt;"</span>
+
+  <span class="org-type">versioning</span> {
+    <span class="org-variable-name">enabled</span> = &lt;bool&gt;
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-7-2" class="outline-4">
+<h4 id="sec-2-7-2"><span class="section-number-4">2.7.2</span> 属性</h4>
+<div class="outline-text-4" id="text-2-7-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>arn</code></th>
+<th scope="col" class="left">Amazon Resource Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-8" class="outline-3">
+<h3 id="sec-2-8"><span class="section-number-3">2.8</span> <code>aws_security_group</code></h3>
+<div class="outline-text-3" id="text-2-8">
+</div><div id="outline-container-sec-2-8-1" class="outline-4">
+<h4 id="sec-2-8-1"><span class="section-number-4">2.8.1</span> 资源</h4>
+<div class="outline-text-4" id="text-2-8-1">
+<div class="org-src-container">
+
+<pre class="src src-terraform"><span class="org-function-name">resource</span> <span class="org-string">"aws_security_group"</span> <span class="org-string">"&lt;name&gt;"</span> {
+  <span class="org-variable-name">name</span> = <span class="org-string">"&lt;name&gt;"</span>
+
+  <span class="org-comment-delimiter">// </span><span class="org-comment">&#25509;&#25910;&#35268;&#21017;</span>
+  <span class="org-variable-name">ingress</span> = {
+    <span class="org-variable-name">from_port</span>   = &lt;port&gt;
+    <span class="org-variable-name">to_port</span>     = &lt;port&gt;
+    <span class="org-variable-name">protocol</span>    = <span class="org-string">"&lt;protocol&gt;"</span>
+    <span class="org-variable-name">cidr_blocks</span> = [<span class="org-string">"&lt;cidr_block&gt;"</span>, ...]
+  }
+
+  <span class="org-comment-delimiter">// </span><span class="org-comment">&#21457;&#36865;&#35268;&#21017;</span>
+  <span class="org-variable-name">egress</span> = {
+    <span class="org-variable-name">from_port</span>   = &lt;port&gt;
+    <span class="org-variable-name">to_port</span>     = &lt;port&gt;
+    <span class="org-variable-name">protocol</span>    = <span class="org-string">"&lt;protocol&gt;"</span>
+    <span class="org-variable-name">cidr_blocks</span> = [<span class="org-string">"&lt;cidr_block&gt;"</span>, ...]
+  }
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-terraform"><span class="org-function-name">resource</span> <span class="org-string">"aws_security_group"</span> <span class="org-string">"test"</span> {
+  <span class="org-variable-name">name</span> = <span class="org-string">"test"</span>
+  <span class="org-variable-name">ingress</span> = {
+    <span class="org-variable-name">from_port</span>   = 8080
+    <span class="org-variable-name">to_port</span>     = 8080
+    <span class="org-variable-name">protocol</span>    = <span class="org-string">"tcp"</span>
+    <span class="org-variable-name">cidr_blocks</span> = [<span class="org-string">"0.0.0.0/0"</span>]
+  }
+}
+</pre>
+</div>
+
+<p>
+<code>ingress</code> 和 <code>egress</code> 为 inline 形式属性，建议使用资源 <code>aws_security_group_rule</code> 单独定义，以便于添加规则。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-terraform"><span class="org-function-name">output</span> <span class="org-string">"&lt;output_name&gt;"</span> {
+  <span class="org-variable-name">value</span> = <span class="org-string">"</span><span class="org-variable-name">${aws_security_group.&lt;name&gt;.id}</span><span class="org-string">"</span>
+}
+
+<span class="org-function-name">resource</span> <span class="org-string">"aws_security_group_rule"</span> <span class="org-string">"&lt;name&gt;"</span> {
+  <span class="org-variable-name">security_group_id</span> = <span class="org-string">"</span><span class="org-variable-name">${module.&lt;module_name&gt;.&lt;output_name&gt;}</span><span class="org-string">"</span>
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-9" class="outline-3">
+<h3 id="sec-2-9"><span class="section-number-3">2.9</span> <code>aws_security_group_rule</code></h3>
+<div class="outline-text-3" id="text-2-9">
+<div class="org-src-container">
+
+<pre class="src src-terraform"><span class="org-function-name">resource</span> <span class="org-string">"aws_security_group_rule"</span> <span class="org-string">"&lt;name&gt;"</span> {
+  <span class="org-variable-name">security_group_id</span> = <span class="org-string">"&lt;group_id&gt;"</span>
+
+  <span class="org-variable-name">type</span>        = <span class="org-string">"&lt;type&gt;"</span> <span class="org-comment"># ingress, egress</span>
+  <span class="org-variable-name">from_port</span>   = &lt;port&gt;
+  <span class="org-variable-name">to_port</span>     = &lt;port&gt;
+  <span class="org-variable-name">protocol</span>    = <span class="org-string">"&lt;protocol&gt;"</span>
+  <span class="org-variable-name">cidr_blocks</span> = [<span class="org-string">"&lt;cidr_block&gt;"</span>, ...]
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-10" class="outline-3">
+<h3 id="sec-2-10"><span class="section-number-3">2.10</span> <code>data</code></h3>
+<div class="outline-text-3" id="text-2-10">
+</div><div id="outline-container-sec-2-10-1" class="outline-4">
+<h4 id="sec-2-10-1"><span class="section-number-4">2.10.1</span> <code>aws_availability_zones</code></h4>
+<div class="outline-text-4" id="text-2-10-1">
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-terraform"><span class="org-variable-name">availability_zones</span> = <span class="org-string">"</span><span class="org-variable-name">${data.aws_availability_zones.all.names}</span><span class="org-string">"</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> State</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Terraform 运行后会在当前目录下生成 <code>terraform.tfstate</code> 状态文件，包含被创建的架构的信息，内容为明文 JSON，是从 Terraform 模板中的资源到真实资源（如 AWS 资源的 ID）的映射。再次运行时，Terraform 通过这些映射获取真实资源当前的状态，与模板资源进行对比，以决定需要进行的操作。
+</p>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> 远程状态</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+Terraform 支持将状态文件加密存储到远程，每次运行时自动获取和保存状态文件。Terraform 支持 S3、Azure 和 HashiCorp 等存储服务。
+</p>
+
+<p>
+远程状态存储可以解决共享和明文保存敏感数据的问题，但是不支持锁机制，无法避免竞态问题。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">状态存储</label>
+<pre class="src src-terraform"><span class="org-type">terraform</span> {
+  backend <span class="org-string">"s3"</span> {
+    <span class="org-variable-name">bucket</span> = <span class="org-string">"&lt;bucket_name&gt;"</span>
+    <span class="org-variable-name">key</span>    = <span class="org-string">"&lt;state_file_path&gt;"</span>
+    <span class="org-variable-name">region</span> = <span class="org-string">"&lt;region&gt;"</span>
+  }
+}
+
+<span class="org-comment"># &#36755;&#20986;&#23646;&#24615;</span>
+<span class="org-function-name">output</span> <span class="org-string">"&lt;output_name&gt;"</span> {
+  <span class="org-variable-name">value</span> = <span class="org-string">"&lt;value&gt;"</span>
+}
+</pre>
+</div>
+
+<p>
+使用数据源 <code>terraform_remote_state</code> 可以以只读方式获取其他 Terraform 模板的状态文件。
+<a id="terraform_remote_state" name="terraform_remote_state"></a>
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">状态读取</label>
+<pre class="src src-terraform"><span class="org-function-name">data</span> <span class="org-string">"terraform_remote_state"</span> <span class="org-string">"&lt;data_name&gt;"</span> {
+  <span class="org-variable-name">backend</span> = <span class="org-string">"s3"</span>
+  <span class="org-type">config</span> {
+    <span class="org-variable-name">bucket</span> = <span class="org-string">"&lt;bucket_name&gt;"</span>
+    <span class="org-variable-name">key</span>    = <span class="org-string">"&lt;state_file_path&gt;"</span>
+    <span class="org-variable-name">region</span> = <span class="org-string">"&lt;region&gt;"</span>
+  }
+}
+
+<span class="org-comment"># Interpolation</span>
+<span class="org-string">"</span><span class="org-variable-name">${data.terraform_remote_state.&lt;data_name&gt;.&lt;output_name&gt;}</span><span class="org-string">"</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/terraform_up_and_running/04.png" alt="04.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Module</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+任一目录下的一组 Terraform 模板都可以认为是一个模块（module），一个模块可以复用其他模块的代码。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">使用模块</label>
+<pre class="src src-terraform"><span class="org-function-name">module</span> <span class="org-string">"&lt;name&gt;"</span> {
+  <span class="org-variable-name">source</span> = <span class="org-string">"&lt;source&gt;"</span> <span class="org-comment"># &#30456;&#23545;&#36335;&#24452;&#65292;e.g. ../../modules/&lt;service&gt;</span>
+                      <span class="org-comment"># Git URL&#65292;e.g. git::git@github.com:foo/modules.git/service?ref=v0.0.1</span>
+                      <span class="org-comment"># ref &#21487;&#20197;&#25351;&#23450; commit&#65288;sha1 hash&#65289;&#12289;&#20998;&#25903;&#21517;&#12289;&#26631;&#31614;&#21517;</span>
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">模块变量</label>
+<pre class="src src-terraform"><span class="org-comment"># /modules/&lt;service&gt;/vars.tf</span>
+<span class="org-comment"># &#22768;&#26126;&#21464;&#37327;</span>
+<span class="org-function-name">variable</span> <span class="org-string">"&lt;var_name&gt;"</span> {}
+
+<span class="org-comment"># /modules/&lt;service&gt;/main.tf</span>
+<span class="org-comment"># &#20351;&#29992;&#21464;&#37327;</span>
+<span class="org-string">"</span><span class="org-variable-name">${var.&lt;var_name&gt;}</span><span class="org-string">"</span>
+
+<span class="org-comment"># /services/&lt;service&gt;/main.tf</span>
+<span class="org-comment"># &#24341;&#29992;&#27169;&#22359;&#65292;&#21464;&#37327;&#36171;&#20540;</span>
+<span class="org-function-name">module</span> <span class="org-string">"&lt;name&gt;"</span> {
+  <span class="org-variable-name">source</span> = <span class="org-string">"../../modules/&lt;service&gt;"</span>
+  &lt;var_name&gt; = <span class="org-string">"&lt;var_value&gt;"</span>
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Command</h2>
+<div class="outline-text-2" id="text-5">
+<div class="org-src-container">
+
+<pre class="src src-sh">terraform &lt;command&gt; &lt;options&gt;
+    -var &lt;name&gt;=<span class="org-string">"&lt;value&gt;"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#20256;&#20837;&#33050;&#26412;&#21464;&#37327;</span>
+    -var-file &lt;path&gt;      <span class="org-comment-delimiter"># </span><span class="org-comment">&#36890;&#36807;&#25991;&#20214;&#20256;&#20837;&#33050;&#26412;&#21464;&#37327;</span>
+</pre>
+</div>
+
+<p>
+Terraform 命令只应用于当前目录下的 <code>.tf</code> 文件。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>流程</b></th>
+<th scope="col" class="left"><code>init</code></th>
+<th scope="col" class="left">初始化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>plan</code></td>
+<td class="left">预览变化，语法检查</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>apply</code></td>
+<td class="left">执行变化</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>destroy</code></td>
+<td class="left">销毁所有资源</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>输出</b></td>
+<td class="left"><code>output</code></td>
+<td class="left">输出输出变量值</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>graph</code></td>
+<td class="left">输出依赖关系图</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>模块</b></td>
+<td class="left"><code>get</code></td>
+<td class="left">下载、更新模块</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> <code>graph</code></h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+输出格式为图描述语言 DOT。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> <code>output</code></h3>
+<div class="outline-text-3" id="text-5-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">terrform output [&lt;name&gt;]
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> <code>plan</code></h3>
+<div class="outline-text-3" id="text-5-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> 资源 diff</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>+</code></th>
+<th scope="col" class="left">增加</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>-</code></td>
+<td class="left">删除</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>~</code></td>
+<td class="left">修改</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-/+</code></td>
+<td class="left">替换</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Environment</h2>
+<div class="outline-text-2" id="text-6">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> 环境变量</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>AWS_ACCESS_KEY_ID</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>AWS_SECRET_ACCESS_KEY</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>TF_VAR_&lt;name&gt;</code></td>
+<td class="left">传入脚本变量</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Terraform 支持 AWS CLI/SDK 的 auth 机制（ <code>~/.aws/credentials</code> ）。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Terragrunt</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+A thin wrapper for Terraform that manages remote state automatically and provides locking by using Amazon DynamoDB. For any commands that could change the Terraform state (e.g. <code>apply</code> and <code>destroy</code>), Terragrunt will acquire and release a lock using DynamoDB.
+</p>
+</div>
+
+<div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> 配置</h3>
+<div class="outline-text-3" id="text-7-1">
+<div class="org-src-container">
+
+<pre class="src src-terraform"><span class="org-comment"># /root/terraform.tfvars</span>
+<span class="org-variable-name">terragrunt</span> = {
+  <span class="org-type">remote_state</span> {
+    <span class="org-variable-name">backend</span> = <span class="org-string">"s3"</span>
+    <span class="org-type">config</span> {
+      <span class="org-variable-name">bucket</span>         = <span class="org-string">"&lt;bucket_name&gt;"</span>
+      <span class="org-variable-name">key</span>            = <span class="org-string">"</span><span class="org-variable-name">${path_relative_to_include()}</span><span class="org-string">/terraform.tfstate"</span>
+      <span class="org-variable-name">region</span>         = <span class="org-string">"&lt;region&gt;"</span>
+      <span class="org-variable-name">encrypt</span>        = &lt;bool&gt;
+      <span class="org-variable-name">dynamodb_table</span> = <span class="org-string">"&lt;table_name&gt;"</span>
+    }
+  }
+}
+
+<span class="org-comment"># /root/&lt;path&gt;/terrform.tfvars</span>
+<span class="org-variable-name">terragrunt</span> = {
+  <span class="org-type">include</span> {
+    <span class="org-variable-name">path</span> = <span class="org-string">"</span><span class="org-variable-name">${find_in_parent_folders()}</span><span class="org-string">"</span>
+  }
+}
+
+<span class="org-comment"># /root/&lt;path&gt;/main.tf</span>
+<span class="org-type">terraform</span> {
+  backend <span class="org-string">"s3"</span> {}
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Link</h2>
+<div class="outline-text-2" id="text-8">
+<ol class="org-ol">
+<li><a href="https://www.terraform.io/docs/index.html">Terraform Documentation</a>
+</li>
+<li><a href="https://github.com/gruntwork-io/terragrunt">Terragrunt</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2018-04-08 Sun 20:25</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

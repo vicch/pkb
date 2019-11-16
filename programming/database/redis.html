@@ -1,0 +1,1970 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Redis</title>
+<!-- 2016-06-17 Fri 14:10 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Redis</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Redis</a>
+<ul>
+<li><a href="#sec-1-1">1.1. Redis vs Memcached</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. 数据类型</a>
+<ul>
+<li><a href="#sec-2-1">2.1. 字符串</a></li>
+<li><a href="#sec-2-2">2.2. 列表</a></li>
+<li><a href="#sec-2-3">2.3. 散列表</a></li>
+<li><a href="#sec-2-4">2.4. 集合</a></li>
+<li><a href="#sec-2-5">2.5. 有序集合</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. 数据结构</a>
+<ul>
+<li><a href="#sec-3-1">3.1. SDS</a></li>
+<li><a href="#sec-3-2">3.2. 双向链表</a></li>
+<li><a href="#sec-3-3">3.3. 字典</a></li>
+<li><a href="#sec-3-4">3.4. 跳跃表</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. 配置</a></li>
+<li><a href="#sec-5">5. 命令</a>
+<ul>
+<li><a href="#sec-5-1">5.1. 服务器</a></li>
+<li><a href="#sec-5-2">5.2. 键</a></li>
+<li><a href="#sec-5-3">5.3. 过期时间</a></li>
+<li><a href="#sec-5-4">5.4. 排序</a></li>
+<li><a href="#sec-5-5">5.5. 事务</a></li>
+<li><a href="#sec-5-6">5.6. Rehash</a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6. PHP</a>
+<ul>
+<li><a href="#sec-6-1">6.1. Key</a>
+<ul>
+<li><a href="#sec-6-1-1">6.1.1. <code>ttl()</code></a></li>
+<li><a href="#sec-6-1-2">6.1.2. <code>expireAt()</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-6-2">6.2. String</a>
+<ul>
+<li><a href="#sec-6-2-1">6.2.1. <code>set()</code></a></li>
+<li><a href="#sec-6-2-2">6.2.2. <code>setex()</code></a></li>
+<li><a href="#sec-6-2-3">6.2.3. <code>get()</code></a></li>
+<li><a href="#sec-6-2-4">6.2.4. <code>delete()</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-6-3">6.3. Hash</a>
+<ul>
+<li><a href="#sec-6-3-1">6.3.1. <code>hSet()</code></a></li>
+<li><a href="#sec-6-3-2">6.3.2. <code>hGet()</code></a></li>
+<li><a href="#sec-6-3-3">6.3.3. <code>hGetAll()</code></a></li>
+<li><a href="#sec-6-3-4">6.3.4. <code>hIncrBy()</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-6-4">6.4. List</a>
+<ul>
+<li><a href="#sec-6-4-1">6.4.1. <code>lPop()</code> <code>rPop()</code></a></li>
+<li><a href="#sec-6-4-2">6.4.2. <code>lPush()</code> <code>rPush()</code></a></li>
+<li><a href="#sec-6-4-3">6.4.3. <code>lSet()</code></a></li>
+<li><a href="#sec-6-4-4">6.4.4. <code>lLen()</code></a></li>
+<li><a href="#sec-6-4-5">6.4.5. <code>lRange()</code></a></li>
+<li><a href="#sec-6-4-6">6.4.6. <code>lTrim()</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-7">7. 资源</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Redis</h2>
+<div class="outline-text-2" id="text-1">
+<dl class="org-dl">
+<dt> Redis </dt><dd>REmote DIctionary Server。<br  />
+                  作为数据库开发，但是已经广泛用于缓存、队列系统。
+</dd>
+</dl>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">特性</th>
+<th scope="col" class="left">适用于</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">过期时间，持久化支持，丰富的数据类型</td>
+<td class="left">缓存系统</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">列表类型键，阻塞式读取</td>
+<td class="left">队列系统</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">「发布／订阅」消息模式</td>
+<td class="left">聊天室等</td>
+</tr>
+</tbody>
+</table>
+
+<hr  />
+
+<p>
+存储方式
+</p>
+<ul class="org-ul">
+<li>以字典结构存储数据，并允许通过 TCP 协议读写数据
+</li>
+<li>字典结构使得程序中的数据形式，与其在 Redis 中的存储形式可以尽量接近
+</li>
+<li>数据可以直接映射到 Redis 中，而不需要类似关系数据库的存储方式（建立多个表并在读取时进行联合）
+</li>
+</ul>
+
+<p>
+键空间
+</p>
+<ul class="org-ul">
+<li>Redis 是一个键值对数据库，采用字典结构以键值对的形式存储数据
+</li>
+<li>每个数据库都有一个与之相对应的字典，这个字典被称为键空间（key space）
+</li>
+<li>当添加一个键值对到数据库时（不论键值对是什么类型），程序就将该键值对添加到键空间
+</li>
+</ul>
+
+<hr  />
+
+<p>
+持久化
+</p>
+<ul class="org-ul">
+<li>支持数据的持久化，可以定期将内存中的数据保持在磁盘中，重启之后可以再次加载使用
+</li>
+<li>当物理内存用完时，可以将最近没有使用的数据交换到磁盘
+</li>
+</ul>
+
+<hr  />
+
+<p>
+内存预分配策略
+</p>
+<ul class="org-ul">
+<li>对字符串进行 <code>APPEND</code> 操作时，会自动分配等于新字符串大小的额外空间
+</li>
+<li>再对同一个字符串进行 <code>APPEND</code> ，如果追加内容的长度不超过已有的长度，就不需要再次进行内存分配
+</li>
+<li>如果 <code>APPEND</code> 操作很多，字符串长度又很大，就需要定时释放预分配空间，减少内存占用
+</li>
+</ul>
+
+<hr  />
+
+<p>
+多数据库
+</p>
+<ul class="org-ul">
+<li>从 0 开始的数字索引代表，默认支持 16 个数据库
+</li>
+<li>类似命名空间，与关系数据库的「数据库」概念不同
+<ul class="org-ul">
+<li>不支持自定义数据库名字，只能手动记录数据库与数据的对应关系
+</li>
+<li>不支持每个数据库使用不同密码
+</li>
+<li>数据库不完全隔离， <code>FLUSHALL</code> 可以清空所有数据库数据
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Redis vs Memcached</h3>
+<div class="outline-text-3" id="text-1-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">Memcached</th>
+<th scope="col" class="left">Redis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">本质</td>
+<td class="left">内存型缓存系统</td>
+<td class="left">内存型 NoSQL 数据库</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">存储方式</td>
+<td class="left">所有数据存储在内存中</td>
+<td class="left">不是所有的数据都存储在内存</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">数据类型</td>
+<td class="left">键值对</td>
+<td class="left">键值对，还支持列表、集合、散列表等</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">过期时间</td>
+<td class="left">可以设置</td>
+<td class="left">可以设置</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">备份</td>
+<td class="left">没有备份</td>
+<td class="left">支持备份（master-slave 模式）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">CPU</td>
+<td class="left">可以使用多核，支持多线程</td>
+<td class="left">只使用单核，单线程模型</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Redis 和 MC 在性能方面没有高低之分，两者的性能都不是瓶颈。两者的区别在于功能上，如高级数据类型、持久化等。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> 内存使用效率</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">简单键值存储的情况</th>
+<th scope="col" class="left">Memcached 内存利用率更高</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">采用 hash 结构</td>
+<td class="left">Redis 内存利用率更高</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 数据类型</h2>
+<div class="outline-text-2" id="text-2">
+
+<div class="figure">
+<p><img src="../images/redis/01.png" alt="01.png" />
+</p>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">底层实现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">字符串</td>
+<td class="left">SDS</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">列表</td>
+<td class="left">双向链表、压缩列表</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">散列表</td>
+<td class="left">字典、压缩列表</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">集合</td>
+<td class="left">字典</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">有序集合</td>
+<td class="left">跳跃表、压缩列表</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+键值对
+</p>
+<ul class="org-ul">
+<li>每个键都属于一个明确的数据类型，通过建立时的命令确定
+</li>
+<li>使用数据类型不相符的命令操作键时会报错
+</li>
+</ul>
+
+<p>
+键名
+</p>
+<ul class="org-ul">
+<li>键名通常使用 <code>对象类型:对象ID:对象属性</code> 的格式，如 <code>user:1:friends</code> 
+</li>
+<li>键值的长度一般远大于键名的长度，所以尽量使用有意义的键名，不用担心键名占用存储空间
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 字符串</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li>所有数据类型的基础，其他类型可以认为是组织字符串的形式不同；
+</li>
+<li>可以有多种形式，如整数、JSON 化对象、二进制数据（包括任何编码的字符）；
+</li>
+<li>目前一个字符串类型键最大允许存储 512MB 数据；
+</li>
+</ul>
+
+<hr  />
+
+<div class="org-src-container">
+
+<pre class="src src-code">SET  &lt;key&gt; &lt;value&gt; [&lt;expire_sec&gt;] [&lt;expire_ms&gt;] [NX|XX]
+GET  &lt;key&gt;
+MSET &lt;key&gt; &lt;value&gt; [&lt;key&gt; &lt;value&gt;]...
+MGET &lt;key&gt; [&lt;key&gt;]...
+
+APPEND &lt;key&gt; &lt;value&gt; # 尾部追加，不存在则设为 &lt;value&gt;
+
+STRLEN &lt;key&gt;
+
+INCR   &lt;key&gt;       # 值不是整数时会报错
+INCRBY &lt;key&gt; &lt;int&gt;
+DECR   &lt;key&gt;
+DECRBY &lt;key&gt; &lt;int&gt;
+INCRBYFLOAT &lt;key&gt; &lt;float&gt;
+
+GETBIT &lt;key&gt; &lt;offset&gt;          # 如果偏移超过值长度，返回 0
+SETBIT &lt;key&gt; &lt;offset&gt; &lt;value&gt;  # 如果偏移超过值长度，中间的二进制位都设为 0
+BITCOUNT &lt;key&gt; [&lt;start&gt; &lt;end&gt;] # 统计值中（某一范围内）有几个二进制位是 1
+
+# 位运算
+BITOP &lt;operation&gt; &lt;dest_key&gt; &lt;key&gt; [&lt;key&gt;]...
+    &lt;operation&gt; # AND, OR, XOR, NOT
+    &lt;dest_key&gt;  # 结果存储在此键中
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> 列表</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>存储有序的字符串列表；
+</li>
+<li>一个键最多容纳 2^32-1 个元素，索引从 0 开始；
+</li>
+<li>常用操作：两端添加元素、获取列表某一片段，复杂度为 1；
+</li>
+<li>缺点是通过索引访问元素的速度较慢；
+</li>
+</ul>
+
+<p>
+应用
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">栈</th>
+<th scope="col" class="left">同侧进出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">队列</td>
+<td class="left">异侧进出</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">最新记录</td>
+<td class="left">取头部 N 条</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">记录日志</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<hr  />
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>LLEN &lt;key&gt;</code></th>
+<th scope="col" class="left">列表长度，时间复杂度为 1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>LINDEX &lt;key&gt; &lt;index&gt;</code></td>
+<td class="left">返回指定索引的元素</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>LSET &lt;key&gt; &lt;index&gt; &lt;value&gt;</code></td>
+<td class="left">设定指定索引的元素的值</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>RPUSH &lt;key&gt; &lt;value&gt; [&lt;value&gt;]...</code></td>
+<td class="left">表尾插入</td>
+</tr>
+
+<tr>
+<td class="left"><code>LPUSH &lt;key&gt; &lt;value&gt; [&lt;value&gt;]...</code></td>
+<td class="left">表头插入</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>RPOP &lt;key&gt;</code></td>
+<td class="left">表尾弹出</td>
+</tr>
+
+<tr>
+<td class="left"><code>LPOP &lt;key&gt;</code></td>
+<td class="left">表头弹出</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>LRANGE &lt;key&gt; &lt;start&gt; &lt;stop&gt;</code></td>
+<td class="left">返回指定区间，支持负索引</td>
+</tr>
+
+<tr>
+<td class="left"><code>LTRIM &lt;key&gt; &lt;start&gt; &lt;stop&gt;</code></td>
+<td class="left">保留指定区间，删除其他元素，支持负索引</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>LREM &lt;key&gt; &lt;count&gt; &lt;value&gt;</code></td>
+<td class="left">删除值为指定值的元素</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>count &gt; 0</code> 表示从表头删除 N 个</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>count &lt; 0</code> 表示从表尾删除 N 个</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>count = 0</code> 表示全部删除</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>LINSERT &lt;key&gt; BEFORE/AFTER &lt;pivot&gt; &lt;value&gt;</code></td>
+<td class="left">从表头查找值为 <code>pivot</code> 的元素</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">在元素前或后插入新元素</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>RPOPLPUSH &lt;source&gt; &lt;dest&gt;</code></td>
+<td class="left">从 <code>source</code> 列表尾弹出元素，插入 <code>dest</code> 列表头</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> 散列表</h3>
+<div class="outline-text-3" id="text-2-3">
+<ul class="org-ul">
+<li>值采用字典结构，即 <code>字段-&gt;字段值</code> 映射；
+</li>
+<li>一个键包含最多 2^32-1 个字段；
+</li>
+<li>字段值只能是字符串；
+</li>
+<li>适合存储对象：
+<ul class="org-ul">
+<li>键名： <code>obj_type:obj_id</code> ；
+</li>
+<li>字段： <code>prop_name</code> ；
+</li>
+<li>字段值： <code>prop_value</code> ；
+</li>
+</ul>
+</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="../images/redis/04.png" alt="04.png" />
+</p>
+</div>
+
+<hr  />
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>HEXISTS &lt;key&gt; &lt;field&gt;</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>HLEN &lt;key&gt;</code></td>
+<td class="left">获取字段数量</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>HGET &lt;key&gt; &lt;field&gt;</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left"><code>HMGET &lt;key&gt; &lt;field&gt; ...</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left"><code>HGETALL &lt;key&gt;</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>HKEYS &lt;key&gt;</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left"><code>HVALS &lt;key&gt;</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>HSET &lt;key&gt; &lt;field&gt; &lt;value&gt;</code></td>
+<td class="left">设定字段、值，不区分插入和更新</td>
+</tr>
+
+<tr>
+<td class="left"><code>HMSET &lt;key&gt; &lt;field&gt; &lt;value&gt; ...</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>HSETNX &lt;key&gt; &lt;field&gt; &lt;value&gt;</code></td>
+<td class="left">（字段不存在时）设定字段、值</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">相当于 <code>HEXISTS + HSET</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>HINCRBY &lt;key&gt; &lt;field&gt; &lt;int&gt;</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>HDEL &lt;key&gt; &lt;field&gt; ...</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> 集合</h3>
+<div class="outline-text-3" id="text-2-4">
+<ul class="org-ul">
+<li>一组无序且唯一的元素；
+</li>
+<li>常用操作：加入和删除元素、判断某个元素是否存在，并集、交集、差集；
+</li>
+<li>使用值为空的散列表实现，因此一个键最多可以存储 2^32-1 个元素；
+</li>
+</ul>
+
+<hr  />
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>SCARD &lt;key&gt;</code></th>
+<th scope="col" class="left">获取元素个数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>SISMEMBER &lt;key&gt; &lt;member&gt;</code></td>
+<td class="left">判断元素是否存在</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>SMEMBERS &lt;key&gt;</code></td>
+<td class="left">获取所有元素</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>SRANDMEMBER &lt;key&gt; &lt;count&gt;</code></td>
+<td class="left">随机获取元素</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>count &gt; 0</code> 表示返回 N 个不重复元素</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>count &lt; 0</code> 表示返回 N 绝对值个可能重复的元素</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>SADD &lt;key&gt; &lt;member&gt; ...</code></td>
+<td class="left">添加元素，已经存在的元素则忽略</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>SPOP &lt;key&gt;</code></td>
+<td class="left">随机弹出一个元素</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>SREM &lt;key&gt; &lt;member&gt;</code></td>
+<td class="left">删除元素</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>SDIFF &lt;key&gt; ...</code></td>
+<td class="left">计算差集</td>
+</tr>
+
+<tr>
+<td class="left"><code>SINTER &lt;key&gt; ...</code></td>
+<td class="left">计算并集</td>
+</tr>
+
+<tr>
+<td class="left"><code>SUNION &lt;key&gt; ...</code></td>
+<td class="left">计算交集</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>SDIFFSTORE &lt;dest&gt; &lt;key&gt; ...</code></td>
+<td class="left">集合计算，并存储结果到目标集合</td>
+</tr>
+
+<tr>
+<td class="left"><code>SINTERSTORE &lt;dest&gt; &lt;key&gt; ...</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left"><code>SUNIONSTORE &lt;dest&gt; &lt;key&gt; ...</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> 有序集合</h3>
+<div class="outline-text-3" id="text-2-5">
+<ul class="org-ul">
+<li>在集合类型的基础上，每个元素关联一个分数，不同元素的分数可以相同；
+</li>
+<li>常用操作：获得分数最高（低）的 N 个元素，获得指定分数范围内的元素；
+</li>
+<li>使用散列表和跳跃表实现；
+</li>
+<li>读取位于中间部分的元素的时间复杂度为 logN，优于列表类型，但比列表类型更耗费内存；
+</li>
+</ul>
+
+<p>
+分数
+</p>
+<ul class="org-ul">
+<li>可以是整数或双精度浮点数；
+</li>
+<li>命令中默认包含端点值，前加 <code>(</code> 表示不包含端点；
+</li>
+<li><code>-inf</code> <code>+inf</code> 表示无穷小（大）；
+</li>
+</ul>
+
+<hr  />
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>ZCARD &lt;key&gt;</code></th>
+<th scope="col" class="left">获取元素数量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>ZSCORE &lt;key&gt; &lt;member&gt;</code></td>
+<td class="left">获取指定元素分数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>ZADD &lt;key&gt; &lt;score&gt; &lt;member&gt; ...</code></td>
+<td class="left">增加元素，覆盖已存在元素</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>ZINCRBY &lt;key&gt; &lt;value&gt; &lt;member&gt;</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>ZREM &lt;key&gt; &lt;member&gt; ...</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>ZCOUNT &lt;key&gt; &lt;min&gt; &lt;max&gt;</code></th>
+<th scope="col" class="left">获取指定分数范围内的元素数量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>ZRANK &lt;key&gt; &lt;member&gt;</code></td>
+<td class="left">获取元素排名，正序</td>
+</tr>
+
+<tr>
+<td class="left"><code>ZREVRANK &lt;key&gt; &lt;member&gt;</code></td>
+<td class="left">获取元素排名，逆序</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>ZREMRANGEBYSCORE &lt;key&gt; &lt;min&gt; &lt;max&gt;</code></td>
+<td class="left">删除分数范围内的元素</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">&#36820;&#22238;&#25351;&#23450;&#20998;&#25968;&#33539;&#22260;&#20869;&#30340;&#20803;&#32032;</span>
+ZRANGEBYSCORE    &lt;key&gt; &lt;min&gt; &lt;max&gt; [WITHSCORES] [LIMIT &lt;offset&gt; &lt;count&gt;] <span class="org-comment-delimiter"># </span><span class="org-comment">&#27491;&#24207;&#25490;&#21015;</span>
+ZREVRANGEBYSCORE &lt;key&gt; &lt;max&gt; &lt;min&gt; [WITHSCORES] [LIMIT &lt;offset&gt; &lt;count&gt;] <span class="org-comment-delimiter"># </span><span class="org-comment">&#36870;&#24207;&#25490;&#21015;</span>
+    &lt;offset&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#22312;&#33719;&#24471;&#30340;&#20803;&#32032;&#21015;&#34920;&#19978;&#20559;&#31227;</span>
+    &lt;count&gt;  <span class="org-comment-delimiter"># </span><span class="org-comment">&#21482;&#33719;&#21462;&#21069; N &#20010;&#20803;&#32032;</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">&#36820;&#22238;&#20998;&#25968;&#25490;&#21517;&#22312;&#25351;&#23450;&#33539;&#22260;&#20869;&#30340;&#20803;&#32032;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#20998;&#25968;&#30456;&#21516;&#26102;&#65292;&#25353;&#29031;&#20803;&#32032;&#20540;&#23383;&#20856;&#25490;&#24207;</span>
+ZRANGE    &lt;key&gt; &lt;start&gt; &lt;stop&gt; [WITHSCORES] <span class="org-comment-delimiter"># </span><span class="org-comment">&#27491;&#24207;</span>
+ZREVRANGE &lt;key&gt; &lt;start&gt; &lt;stop&gt; [WITHSCORES] <span class="org-comment-delimiter"># </span><span class="org-comment">&#36870;&#24207;</span>
+    &lt;start&gt;, &lt;stop&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#32034;&#24341;&#20174; 0 &#24320;&#22987;&#65292;&#36127;&#25968;&#34920;&#31034;&#20174;&#21518;&#21521;&#21069;</span>
+    WITHSCORES      <span class="org-comment-delimiter"># </span><span class="org-comment">&#36820;&#22238;&#20803;&#32032;&#21644;&#20998;&#25968;</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">ZINTERSTORE &lt;dest&gt; &lt;numkeys&gt; &lt;key&gt; ... [WEIGHTS &lt;weight&gt; ...] [AGGREGATE SUM|MIN|MAX]
+ZUNIONSTORE &lt;dest&gt; &lt;numkeys&gt; &lt;key&gt; ... [WEIGHTS &lt;weight&gt; ...] [AGGREGATE SUM|MIN|MAX]
+    &lt;dest&gt;    <span class="org-comment-delimiter"># </span><span class="org-comment">&#23384;&#20648;&#32467;&#26524;&#30340;&#38190;</span>
+    WEIGHTS   <span class="org-comment-delimiter"># </span><span class="org-comment">&#36827;&#34892;&#35745;&#31639;&#26102;&#65292;&#27599;&#20010;&#38598;&#21512;&#20013;&#20998;&#25968;&#30340;&#26435;&#37325;</span>
+    AGGREGATE <span class="org-comment-delimiter"># </span><span class="org-comment">&#20915;&#23450;&#32467;&#26524;&#38598;&#20013;&#30340;&#20803;&#32032;&#20998;&#25968;</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 数据结构</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> SDS</h3>
+<div class="outline-text-3" id="text-3-1">
+<dl class="org-dl">
+<dt> SDS </dt><dd>Simple Dynamic String<br  />
+</dd>
+</dl>
+
+<p>
+使用 SDS 表示字符串，而不是 C 字符串的优点：
+</p>
+<ul class="org-ul">
+<li>更高效的长度计算
+</li>
+<li>更高效的追加操作
+</li>
+<li>二进制安全
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-keyword">typedef</span> <span class="org-type">char</span> *<span class="org-type">sds</span>;
+<span class="org-keyword">struct</span> <span class="org-type">sdshdr</span> {
+    <span class="org-type">int</span> <span class="org-variable-name">len</span>;    <span class="org-comment-delimiter">// </span><span class="org-comment">&#24050;&#21344;&#29992;&#38271;&#24230;</span>
+    <span class="org-type">int</span> <span class="org-variable-name">free</span>;   <span class="org-comment-delimiter">// </span><span class="org-comment">&#21097;&#20313;&#21487;&#29992;&#38271;&#24230;</span>
+    <span class="org-type">char</span> <span class="org-variable-name">buf</span>[]; <span class="org-comment-delimiter">// </span><span class="org-comment">&#23454;&#38469;&#20445;&#23384;&#23383;&#31526;&#20018;&#25968;&#25454;&#30340;&#22320;&#26041;</span>
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> 双向链表</h3>
+<div class="outline-text-3" id="text-3-2">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-keyword">typedef</span> <span class="org-keyword">struct</span> <span class="org-type">listNode</span> {
+    <span class="org-keyword">struct</span> <span class="org-type">listNode</span> *<span class="org-variable-name">prev</span>;
+    <span class="org-keyword">struct</span> <span class="org-type">listNode</span> *<span class="org-variable-name">next</span>;
+    <span class="org-type">void</span> *<span class="org-variable-name">value</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">&#33410;&#28857;&#20540;&#31867;&#22411;&#19981;&#20570;&#38480;&#21046;</span>
+} <span class="org-type">listNode</span>;
+
+<span class="org-keyword">typedef</span> <span class="org-keyword">struct</span> <span class="org-type">list</span> {
+    <span class="org-type">listNode</span> *<span class="org-variable-name">head</span>;    <span class="org-comment-delimiter">// </span><span class="org-comment">&#34920;&#22836;</span>
+    <span class="org-type">listNode</span> *<span class="org-variable-name">tail</span>;    <span class="org-comment-delimiter">// </span><span class="org-comment">&#34920;&#23614;</span>
+    <span class="org-type">unsigned</span> <span class="org-type">long</span> <span class="org-variable-name">len</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">&#33410;&#28857;&#25968;&#37327;</span>
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#20989;&#25968;&#25351;&#38024;&#65292;&#22240;&#20026;&#19981;&#21516;&#31867;&#22411;&#30340;&#20540;&#65292;&#38656;&#35201;&#19981;&#21516;&#30340;&#20989;&#25968;&#22788;&#29702;</span>
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#21015;&#34920;&#21487;&#20197;&#25351;&#23450;&#25191;&#34892;&#36825;&#20123;&#25805;&#20316;&#30340;&#20989;&#25968;</span>
+    <span class="org-type">void</span> *(*<span class="org-function-name">dup</span>)(<span class="org-type">void</span> *<span class="org-variable-name">ptr</span>);            <span class="org-comment-delimiter">// </span><span class="org-comment">&#22797;&#21046;&#20989;&#25968;</span>
+    <span class="org-type">void</span> (*<span class="org-function-name">free</span>)(<span class="org-type">void</span> *<span class="org-variable-name">ptr</span>);            <span class="org-comment-delimiter">// </span><span class="org-comment">&#37322;&#25918;&#20989;&#25968;</span>
+    <span class="org-type">int</span> (*<span class="org-function-name">match</span>)(<span class="org-type">void</span> *<span class="org-variable-name">ptr</span>, <span class="org-type">void</span> *<span class="org-variable-name">key</span>); <span class="org-comment-delimiter">// </span><span class="org-comment">&#27604;&#23545;&#20989;&#25968;</span>
+} <span class="org-type">list</span>;
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#36845;&#20195;&#22120;</span>
+<span class="org-keyword">typedef</span> <span class="org-keyword">struct</span> <span class="org-type">listIter</span> {
+    <span class="org-type">listNode</span> *<span class="org-variable-name">next</span>;
+    <span class="org-type">int</span> <span class="org-variable-name">direction</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">&#36845;&#20195;&#26041;&#21521;</span>
+} <span class="org-type">listIter</span>;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> 字典</h3>
+<div class="outline-text-3" id="text-3-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> 一般实现方式</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">链表、数组</th>
+<th scope="col" class="left">适合元素个数不多的情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">散列表</td>
+<td class="left">高效、简单</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">平衡树</td>
+<td class="left">复杂，更稳定的性能，更高效的排序操作</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Redis 使用散列表实现字典。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/redis/02.png" alt="02.png" />
+</p>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-keyword">typedef</span> <span class="org-keyword">struct</span> <span class="org-type">dict</span> {
+    <span class="org-type">dictType</span> *<span class="org-variable-name">type</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">&#20381;&#36182;&#20110;&#31867;&#22411;&#30340;&#22788;&#29702;&#20989;&#25968;</span>
+    <span class="org-type">void</span> *<span class="org-variable-name">privdata</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">&#31867;&#22411;&#22788;&#29702;&#20989;&#25968;&#30340;&#31169;&#26377;&#25968;&#25454;</span>
+    <span class="org-type">dictht</span> <span class="org-variable-name">ht</span>[2];   <span class="org-comment-delimiter">// </span><span class="org-comment">&#27599;&#20010;&#23383;&#20856;&#20351;&#29992;&#20004;&#20010; Hash &#34920;&#65292;&#29992;&#20110;&#23454;&#29616;&#28176;&#36827;&#24335; rehash</span>
+    <span class="org-type">int</span> <span class="org-variable-name">rehashidx</span>;  <span class="org-comment-delimiter">// </span><span class="org-comment">&#35760;&#24405; rehash &#36827;&#24230;&#30340;&#26631;&#24535;&#65292;-1 &#34920;&#31034; rehash &#26410;&#36827;&#34892;</span>
+    <span class="org-type">int</span> <span class="org-variable-name">iterators</span>;  <span class="org-comment-delimiter">// </span><span class="org-comment">&#24403;&#21069;&#27491;&#22312;&#36816;&#20316;&#30340;&#23433;&#20840;&#36845;&#20195;&#22120;&#25968;&#37327;</span>
+} <span class="org-type">dict</span>;
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#25955;&#21015;&#34920;</span>
+<span class="org-keyword">typedef</span> <span class="org-keyword">struct</span> <span class="org-type">dictht</span> {
+    <span class="org-type">dictEntry</span> **<span class="org-variable-name">table</span>;      <span class="org-comment-delimiter">// </span><span class="org-comment">&#34920;&#33410;&#28857;&#25351;&#38024;&#25968;&#32452;&#65288;&#26742;&#65289;&#65292;&#27599;&#20010;&#20803;&#32032;&#26159;&#19968;&#20010;&#25351;&#21521;&#34920;&#33410;&#28857;&#30340;&#25351;&#38024;</span>
+                            <span class="org-comment-delimiter">// </span><span class="org-comment">&#31354;&#38388;&#20998;&#37197;&#23558;&#22312;&#31532;&#19968;&#27425;&#24448;&#23383;&#20856;&#28155;&#21152;&#38190;&#20540;&#23545;&#26102;&#65288;&#25110; rehash &#26102;&#65289;&#36827;&#34892;</span>
+    <span class="org-type">unsigned</span> <span class="org-type">long</span> <span class="org-variable-name">size</span>;     <span class="org-comment-delimiter">// </span><span class="org-comment">&#25351;&#38024;&#25968;&#32452;&#30340;&#22823;&#23567;</span>
+    <span class="org-type">unsigned</span> <span class="org-type">long</span> <span class="org-variable-name">sizemask</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">&#25351;&#38024;&#25968;&#32452;&#30340;&#38271;&#24230;&#25513;&#30721;&#65292;&#29992;&#20110;&#35745;&#31639;&#32034;&#24341;&#20540;</span>
+    <span class="org-type">unsigned</span> <span class="org-type">long</span> <span class="org-variable-name">used</span>;     <span class="org-comment-delimiter">// </span><span class="org-comment">&#34920;&#24403;&#21069;&#30340;&#33410;&#28857;&#25968;&#37327;</span>
+} <span class="org-type">dictht</span>;
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#25955;&#21015;&#34920;&#33410;&#28857;</span>
+<span class="org-keyword">typedef</span> <span class="org-keyword">struct</span> <span class="org-type">dictEntry</span> {
+    <span class="org-type">void</span> *<span class="org-variable-name">key</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">&#38190;</span>
+    <span class="org-keyword">union</span> {    <span class="org-comment-delimiter">// </span><span class="org-comment">&#20540;</span>
+        <span class="org-type">void</span> *<span class="org-variable-name">val</span>;
+        <span class="org-type">uint64_t</span> <span class="org-variable-name">u64</span>;
+        <span class="org-type">int64_t</span> <span class="org-variable-name">s64</span>;
+    } <span class="org-variable-name">v</span>;
+    <span class="org-keyword">struct</span> <span class="org-type">dictEntry</span> *<span class="org-variable-name">next</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">&#38142;&#22320;&#22336;&#27861;&#65306;&#29992;&#19968;&#20010;&#38142;&#34920;&#36830;&#25509; Hash &#20540;&#30896;&#25758;&#30340;&#22810;&#20010;&#38190;</span>
+} <span class="org-type">dictEntry</span>;
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 3:</span> 散列算法</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">MurmurHash2 32 bit 算法</th>
+<th scope="col" class="left">用于数据库、集群、散列键、阻塞操作等</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">基于 djb 算法的一个大小写无关散列算法</td>
+<td class="left">用于命令表以及 Lua 脚本缓存</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> 跳跃表</h3>
+<div class="outline-text-3" id="text-3-4">
+<dl class="org-dl">
+<dt> 跳跃表 </dt><dd>一种随机化的数据，以有序的方式在层次化的链表中保存元素。<br  />
+            效率类似平衡树（查找、删除、添加等操作复杂度为 <code>logN</code> ），比平衡树简单、直观。<br  />
+            节点分为多个层，程序总是从高层先开始访问，然后随着元素值范围的缩小，慢慢降低层次。
+</dd>
+</dl>
+
+
+<div class="figure">
+<p><img src="../images/redis/03.png" alt="03.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 配置</h2>
+<div class="outline-text-2" id="text-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>maxmemory</code></td>
+<td class="left">最大可用内存（字节）</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>maxmemory-policy</code></td>
+<td class="left">内存不足时，删除键的策略</td>
+<td class="left"><code>volatile-lru</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>maxmemory-samples</code></td>
+<td class="left">删除键时的取样数量</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">不会比较所有的键，而是随机取 n 个键之后进行比较</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<code>maxmemory-policy</code>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>allkeys-lru</code></th>
+<th scope="col" class="left">对所有键使用 LRU 算法选取</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>allkeys-random</code></td>
+<td class="left">对所有键随机选取</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>volatile-lru</code></td>
+<td class="left">对设置生存时间的键使用 LRU 算法选取</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>volatile-random</code></td>
+<td class="left">对设置生存时间的键随机选取</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>volatile-ttl</code></td>
+<td class="left">生存时间最近的键</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>noeviction</code></td>
+<td class="left">不删除键，返回错误</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> 命令</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+命令不区分大小写。
+</p>
+
+<p>
+所有命令都是原子操作
+</p>
+<ul class="org-ul">
+<li>多个客户端连接时，不会出现竞态条件（race condition）问题
+</li>
+<li>如果一个功能需要组合使用多个命令，则需要使用事务，或自定义原子操作
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> 服务器</h3>
+<div class="outline-text-3" id="text-5-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>SELECT &lt;index&gt;</code></th>
+<th scope="col" class="left">切换到指定数据库，0 为起始</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>FLUSHDB</code></td>
+<td class="left">清空当前数据库的所有 key</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FLUSHALL</code></td>
+<td class="left">清空所有数据库的所有 key</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>DBSIZE</code></td>
+<td class="left">返回当前数据库的 key 数量</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> 键</h3>
+<div class="outline-text-3" id="text-5-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>KEYS &lt;pattern&gt;</code></th>
+<th scope="col" class="left">查找符合模式的 key；会遍历所有键，影响性能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>EXISTS &lt;key&gt;</code></td>
+<td class="left">判断指定 key 是否存在</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>TYPE &lt;key&gt;</code></td>
+<td class="left">返回指定 key 的数据类型</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>DEL &lt;key&gt; ...</code></td>
+<td class="left">删除一个或多个 key</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> 过期时间</h3>
+<div class="outline-text-3" id="text-5-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>TTL &lt;key&gt;</code></th>
+<th scope="col" class="left">返回过期前剩余时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>EXPIRE &lt;key&gt; &lt;seconds&gt;</code></td>
+<td class="left">设定过期时间</td>
+</tr>
+
+<tr>
+<td class="left"><code>PEXPIRE &lt;key&gt; &lt;mseconds&gt;</code></td>
+<td class="left">毫秒</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>EXPIREAT &lt;key&gt; &lt;stamp&gt;</code></td>
+<td class="left">设定过期时间戳</td>
+</tr>
+
+<tr>
+<td class="left"><code>PEXPIREAT &lt;key&gt; &lt;stamp&gt;</code></td>
+<td class="left">毫秒</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>PERSIST &lt;key&gt;</code></td>
+<td class="left">取消过期时间</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>SET</code> 和 <code>GETSET</code> 命令也会取消 key 的过期时间</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-5-4" class="outline-3">
+<h3 id="sec-5-4"><span class="section-number-3">5.4</span> 排序</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+对列表、集合、有序集合排序。有序集合只按照元素值排序，忽略分数。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-code">SORT &lt;key&gt;
+    BY &lt;pattern&gt;
+    LIMIT &lt;offset&gt; &lt;count&gt;
+    GET &lt;pattern&gt;
+    ASC | DESC
+    ALPHA
+    STORE &lt;dest&gt;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-5" class="outline-3">
+<h3 id="sec-5-5"><span class="section-number-3">5.5</span> 事务</h3>
+<div class="outline-text-3" id="text-5-5">
+<p>
+事务不包含回滚功能。
+</p>
+
+<p>
+错误处理
+</p>
+<ul class="org-ul">
+<li>语法错误，所有命令不执行
+</li>
+<li>运行时错误，正确的命令继续执行
+</li>
+</ul>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>MULTI</code></th>
+<th scope="col" class="left">事务开始</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>EXEC</code></td>
+<td class="left">执行事务队列</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>WATCH &lt;key&gt;</code></td>
+<td class="left">监视 key</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">如果一个 key 被修改或删除，则下一个事务会被打断，不会执行</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">并不会阻止修改和删除行为，事务被打断后，需要被重新执行</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">自动过期的 key 不被 <code>WATCH</code> 命令认为是修改或删除</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>UNWATCH</code></td>
+<td class="left">取消所有对 key 的监视</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-5-6" class="outline-3">
+<h3 id="sec-5-6"><span class="section-number-3">5.6</span> Rehash</h3>
+<div class="outline-text-3" id="text-5-6">
+<p>
+在 Hash 表的大小不能满足需求，造成过多 Hash 碰撞后进行扩容的操作。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> PHP</h2>
+<div class="outline-text-2" id="text-6">
+</div><div id="outline-container-sec-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Key</h3>
+<div class="outline-text-3" id="text-6-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>ttl()</code></th>
+<th scope="col" class="left">返回 key 剩余生存时间（秒）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>expireAt()</code></td>
+<td class="left">设置过期时间戳</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-6-1-1" class="outline-4">
+<h4 id="sec-6-1-1"><span class="section-number-4">6.1.1</span> <code>ttl()</code></h4>
+<div class="outline-text-4" id="text-6-1-1">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-function-name">ttl</span>( $<span class="org-variable-name">key</span> )
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="right" />
+
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left">返回值</td>
+<td class="right">&gt;=0</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="right">-1</td>
+<td class="left">key 没有 ttl</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="right">-2</td>
+<td class="left">key 不存在</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-6-1-2" class="outline-4">
+<h4 id="sec-6-1-2"><span class="section-number-4">6.1.2</span> <code>expireAt()</code></h4>
+<div class="outline-text-4" id="text-6-1-2">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-function-name">expireAt</span>( $<span class="org-variable-name">key</span>, <span class="org-type">int</span> $<span class="org-variable-name">stamp</span> )
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> String</h3>
+<div class="outline-text-3" id="text-6-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>set()</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>setex()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>get()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>delete()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-6-2-1" class="outline-4">
+<h4 id="sec-6-2-1"><span class="section-number-4">6.2.1</span> <code>set()</code></h4>
+<div class="outline-text-4" id="text-6-2-1">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-function-name">set</span>( $<span class="org-variable-name">key</span>, $<span class="org-variable-name">value</span> )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-2-2" class="outline-4">
+<h4 id="sec-6-2-2"><span class="section-number-4">6.2.2</span> <code>setex()</code></h4>
+<div class="outline-text-4" id="text-6-2-2">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-function-name">setex</span>( $<span class="org-variable-name">key</span>, $<span class="org-variable-name">ttl</span>, $<span class="org-variable-name">value</span> )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-2-3" class="outline-4">
+<h4 id="sec-6-2-3"><span class="section-number-4">6.2.3</span> <code>get()</code></h4>
+<div class="outline-text-4" id="text-6-2-3">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-function-name">get</span>( $<span class="org-variable-name">key</span> )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-2-4" class="outline-4">
+<h4 id="sec-6-2-4"><span class="section-number-4">6.2.4</span> <code>delete()</code></h4>
+<div class="outline-text-4" id="text-6-2-4">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-function-name">delete</span>( $<span class="org-variable-name">key</span>, ... )
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-3" class="outline-3">
+<h3 id="sec-6-3"><span class="section-number-3">6.3</span> Hash</h3>
+<div class="outline-text-3" id="text-6-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>hSet</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>hGet()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>hGetAll()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>hIncrBy()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-6-3-1" class="outline-4">
+<h4 id="sec-6-3-1"><span class="section-number-4">6.3.1</span> <code>hSet()</code></h4>
+<div class="outline-text-4" id="text-6-3-1">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-function-name">hSet</span>( $<span class="org-variable-name">key</span>, $<span class="org-variable-name">hashKey</span>, $<span class="org-variable-name">value</span> )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-3-2" class="outline-4">
+<h4 id="sec-6-3-2"><span class="section-number-4">6.3.2</span> <code>hGet()</code></h4>
+<div class="outline-text-4" id="text-6-3-2">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-function-name">hGet</span>( $<span class="org-variable-name">key</span>, $<span class="org-variable-name">hashKey</span> )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-3-3" class="outline-4">
+<h4 id="sec-6-3-3"><span class="section-number-4">6.3.3</span> <code>hGetAll()</code></h4>
+<div class="outline-text-4" id="text-6-3-3">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-function-name">hgetall</span>( $<span class="org-variable-name">key</span> )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-3-4" class="outline-4">
+<h4 id="sec-6-3-4"><span class="section-number-4">6.3.4</span> <code>hIncrBy()</code></h4>
+<div class="outline-text-4" id="text-6-3-4">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-function-name">hIncrBy</span>( $<span class="org-variable-name">key</span>, $<span class="org-variable-name">member</span>, <span class="org-type">int</span> $<span class="org-variable-name">value</span> )
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-4" class="outline-3">
+<h3 id="sec-6-4"><span class="section-number-3">6.4</span> List</h3>
+<div class="outline-text-3" id="text-6-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>lPop()</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>rPop()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>lPush()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>rPush()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>lSet()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>lLen()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>lRange()</code></td>
+<td class="left">返回列表中的一段</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>lTrim()</code></td>
+<td class="left">裁剪列表</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-6-4-1" class="outline-4">
+<h4 id="sec-6-4-1"><span class="section-number-4">6.4.1</span> <code>lPop()</code> <code>rPop()</code></h4>
+<div class="outline-text-4" id="text-6-4-1">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-function-name">lPop</span>( $<span class="org-variable-name">key</span> )
+<span class="org-function-name">rPop</span>( $<span class="org-variable-name">key</span> )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-4-2" class="outline-4">
+<h4 id="sec-6-4-2"><span class="section-number-4">6.4.2</span> <code>lPush()</code> <code>rPush()</code></h4>
+<div class="outline-text-4" id="text-6-4-2">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-function-name">lPush</span>( $<span class="org-variable-name">key</span>, $<span class="org-variable-name">value</span> )
+<span class="org-function-name">rPush</span>( $<span class="org-variable-name">key</span>, $<span class="org-variable-name">value</span> )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-4-3" class="outline-4">
+<h4 id="sec-6-4-3"><span class="section-number-4">6.4.3</span> <code>lSet()</code></h4>
+<div class="outline-text-4" id="text-6-4-3">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-function-name">lSet</span>( $<span class="org-variable-name">key</span>, $<span class="org-variable-name">index</span>, $<span class="org-variable-name">value</span> )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-4-4" class="outline-4">
+<h4 id="sec-6-4-4"><span class="section-number-4">6.4.4</span> <code>lLen()</code></h4>
+<div class="outline-text-4" id="text-6-4-4">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-function-name">lLen</span>( $<span class="org-variable-name">key</span> )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-4-5" class="outline-4">
+<h4 id="sec-6-4-5"><span class="section-number-4">6.4.5</span> <code>lRange()</code></h4>
+<div class="outline-text-4" id="text-6-4-5">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-function-name">lRange</span>( $<span class="org-variable-name">key</span>, $<span class="org-variable-name">start</span>, $<span class="org-variable-name">end</span> )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-4-6" class="outline-4">
+<h4 id="sec-6-4-6"><span class="section-number-4">6.4.6</span> <code>lTrim()</code></h4>
+<div class="outline-text-4" id="text-6-4-6">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-function-name">lTrim</span>( $<span class="org-variable-name">key</span>, $<span class="org-variable-name">start</span>, $<span class="org-variable-name">stop</span> )
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> 资源</h2>
+<div class="outline-text-2" id="text-7">
+<ol class="org-ol">
+<li><a href="http://redisdoc.com/">Redis 命令参考</a>
+</li>
+<li><a href="https://github.com/phpredis/phpredis">PhpRedis</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2016-06-17 Fri 14:10</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,835 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Algorithm</title>
+<!-- 2017-04-23 Sun 09:32 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
+
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Algorithm</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. 复杂度</a></li>
+<li><a href="#sec-2">2. 方法</a>
+<ul>
+<li><a href="#sec-2-1">2.1. 递归</a>
+<ul>
+<li><a href="#sec-2-1-1">2.1.1. 欧几里得算法</a></li>
+<li><a href="#sec-2-1-2">2.1.2. 汉诺塔问题</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-2">2.2. 分治法</a>
+<ul>
+<li><a href="#sec-2-2-1">2.2.1. 求数组中最大元素</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-3">3. 查找</a>
+<ul>
+<li><a href="#sec-3-1">3.1. 顺序（线性）查找</a></li>
+<li><a href="#sec-3-2">3.2. 二分（折半）查找</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. 排序</a>
+<ul>
+<li><a href="#sec-4-1">4.1. 稳定性</a></li>
+<li><a href="#sec-4-2">4.2. 内部排序</a></li>
+<li><a href="#sec-4-3">4.3. Quick sort</a></li>
+<li><a href="#sec-4-4">4.4. Merge sort</a></li>
+<li><a href="#sec-4-5">4.5. Heap sort</a></li>
+<li><a href="#sec-4-6">4.6. Selection sort</a></li>
+<li><a href="#sec-4-7">4.7. Bubble sort</a></li>
+<li><a href="#sec-4-8">4.8. Insertion sort</a></li>
+<li><a href="#sec-4-9">4.9. Bucket sort</a></li>
+<li><a href="#sec-4-10">4.10. Radix sort</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5. 链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 复杂度</h2>
+<div class="outline-text-2" id="text-1">
+
+<div class="figure">
+<p><img src="../images/algorithm/01.png" alt="01.png" />
+</p>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">描述</th>
+<th scope="col" class="left">特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">$O(1)$</td>
+<td class="left">常数</td>
+<td class="left">&#xa0;</td>
+<td class="left">大部分指令只执行有限常数次</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">$O(\log{N})$</td>
+<td class="left">对数</td>
+<td class="left">随着 N 的增会逐渐稳定，可以认为小于一个大的常数</td>
+<td class="left">将大的问题分解成一系列小的问题，每一步都将问题的规模缩减成几分之一</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">$O(N)$</td>
+<td class="left">线性</td>
+<td class="left">对于必须处理 N 个输入的算法是最优的</td>
+<td class="left">对每个输入元素都进行有限常数次处理</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">$O(N\log{N})$</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">将问题分解成子问题，独立地解决各个子问题，最后将结果综合起来</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">$O(N^2)$</td>
+<td class="left">二次</td>
+<td class="left">&#xa0;</td>
+<td class="left">需要处理输入数据项的二元组，很可能表现为一个嵌套循环</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">$O(2^N)$</td>
+<td class="left">指数</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">$O(N!)$</td>
+<td class="left">阶乘</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<hr  />
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>最坏情况性能</b></th>
+<th scope="col" class="left">可以对程序的运行时间作出保证。</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">具有良好的最坏情况性能，是算法设计的一个基本目标。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>平均情况性能</b></td>
+<td class="left">可以对程序的运行时间作出预测。</td>
+</tr>
+</tbody>
+</table>
+
+<hr  />
+
+<p>
+要减少一个程序的运行时间，注意力应该集中在使内层循环的指令数最少。
+</p>
+
+<p>
+要进行有效的分析，关键是要对应用建立一个合理的模型。算法分析的结果依赖于要针对的场景，如要检索的目标数据可能被检索到的比例，需要根据不同的场景选择不同的算法。
+</p>
+
+<p>
+同一抽象概念的不同实现方法，可以导致极大的性能差异。即使一个库函数的执行性能良好，它也不能保证使所有的应用程序的性能都达到最佳。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 方法</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 递归</h3>
+<div class="outline-text-3" id="text-2-1">
+<div class="org-src-container">
+<label class="org-src-name">递归和循环往往是可以相互转化的</label>
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">factorial</span>(<span class="org-type">int</span> <span class="org-variable-name">n</span>)
+{
+    <span class="org-keyword">if</span> (n == 0) <span class="org-keyword">return</span> 1;
+    <span class="org-keyword">return</span> n * factorial (n - 1);
+}
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#31561;&#20215;&#20110;</span>
+<span class="org-keyword">for</span> (t = 1, i = 1; i &lt;= N; i++) t *= i;
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>递归与其他方法相比，不能节省存储空间，也不会更快。
+</li>
+<li>递归的优点是更紧凑，更容易写和读，有时可以避免对局部变量的需要。
+</li>
+<li>最适合用于递归定义的数据结构，如树。
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1"><span class="section-number-4">2.1.1</span> 欧几里得算法</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+计算最大公约数：
+</p>
+<ul class="org-ul">
+<li><code>A % B</code> 是 <code>A</code> 和 <code>B</code> 的最大公约数的整数倍
+</li>
+<li><code>A</code> 和 <code>B</code> 的最大公约数，等于 <code>B</code> 和 <code>A % B</code> 的最大公约数
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">gcd</span>(<span class="org-type">int</span> <span class="org-variable-name">m</span>, <span class="org-type">int</span> <span class="org-variable-name">n</span>)
+  {
+    <span class="org-keyword">if</span> (n == 0) <span class="org-keyword">return</span> m;
+    <span class="org-keyword">return</span> gcd (n, m % n);
+  }
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-1-2" class="outline-4">
+<h4 id="sec-2-1-2"><span class="section-number-4">2.1.2</span> 汉诺塔问题</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<p>
+把第 N 个盘子移到右边的方法：
+</p>
+<ul class="org-ul">
+<li>递归地将 N 之上的所有盘子移到左边，
+</li>
+<li>将 N 移到右边，
+</li>
+<li>递归地将其他盘子移回到 N 之上。
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">void</span> <span class="org-function-name">hanoi</span>(<span class="org-type">int</span> <span class="org-variable-name">N</span>, <span class="org-type">int</span> <span class="org-variable-name">d</span>) <span class="org-comment-delimiter">// </span><span class="org-comment">d = direction</span>
+  {
+    <span class="org-keyword">if</span> (N == 0) <span class="org-keyword">return</span>;
+    hanoi (N-1, -d);
+    shift (N, d);
+    hanoi (N-1, -d);
+  }
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> 分治法</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>divide-and-conquer
+</li>
+<li>一种泛型，使用两个递归调用，每一个调用处理输入一半的信息
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-2-2-1" class="outline-4">
+<h4 id="sec-2-2-1"><span class="section-number-4">2.2.1</span> 求数组中最大元素</h4>
+<div class="outline-text-4" id="text-2-2-1">
+<ul class="org-ul">
+<li>数组中的最大元素，等于前半部分中的最大元素，与后半部分中的最大元素中较大的一个。
+</li>
+<li>递归地将数组平均分为两部分，找出每一部分最大的元素。
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">Item</span> <span class="org-function-name">max</span>(<span class="org-type">Item</span> <span class="org-variable-name">a</span>[], <span class="org-type">int</span> <span class="org-variable-name">l</span>, <span class="org-type">int</span> <span class="org-variable-name">r</span>)
+{
+    <span class="org-keyword">if</span> (l == r) <span class="org-keyword">return</span> a[l];
+    <span class="org-type">int</span> <span class="org-variable-name">m</span> = (l + r) / 2;
+    <span class="org-type">Item</span> <span class="org-variable-name">u</span> = max(a, l, m);
+    <span class="org-type">Item</span> <span class="org-variable-name">v</span> = max(a, m, r);
+    <span class="org-keyword">return</span> (u &gt; v) ? u : v;
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 查找</h2>
+<div class="outline-text-2" id="text-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">时间复杂度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">顺序（线性）查找</td>
+<td class="left">$O(N)$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">二分（折半）查找</td>
+<td class="left">$O(\log{N})$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">无序数组的插入</td>
+<td class="left">$O(1)$</td>
+</tr>
+
+<tr>
+<td class="left">无序数组的删除</td>
+<td class="left">$O(N)$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">有序数组的插入</td>
+<td class="left">$O(N)$</td>
+</tr>
+
+<tr>
+<td class="left">有序数组的删除</td>
+<td class="left">$O(N)$</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> 顺序（线性）查找</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+不成功的查找需要 N 次检查，成功的查找平均需要 N/2 次检查。如果在已排序的表中进行查找，则不成功的查找也降至平均需要 N/2 次检查。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> 二分（折半）查找</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+适用于已排序的表。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">search</span>(<span class="org-type">int</span> <span class="org-variable-name">a</span>[], <span class="org-type">int</span> <span class="org-variable-name">v</span>, <span class="org-type">int</span> <span class="org-variable-name">l</span>, <span class="org-type">int</span> <span class="org-variable-name">r</span>)
+  {
+    <span class="org-keyword">while</span> (r &gt;= 1)
+      {
+        <span class="org-type">int</span> <span class="org-variable-name">m</span> = (l + r) / 2;
+        <span class="org-keyword">if</span> (v == a[m]) <span class="org-keyword">return</span> m;
+        <span class="org-keyword">if</span> (v &lt; a[m]) r = m - 1 <span class="org-keyword">else</span> l = m + 1;
+      }
+    <span class="org-keyword">return</span> -1;
+  }
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 排序</h2>
+<div class="outline-text-2" id="text-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left"><b>最快</b></th>
+<th scope="col" class="left"><b>平均</b></th>
+<th scope="col" class="left"><b>最差</b></th>
+<th scope="col" class="left"><b>空间（最差）</b></th>
+<th scope="col" class="left"><b>稳定性</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Quicksort">Quick sort</a></td>
+<td class="left">$O(n\log{n})$</td>
+<td class="left">$O(n\log{n})$</td>
+<td class="left">$O(n^2)$</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">不稳定</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Merge_sort">Merge sort</a></td>
+<td class="left">$O(n\log{n})$</td>
+<td class="left">$O(n\log{n})$</td>
+<td class="left">$O(n\log{n})$</td>
+<td class="left">$O(n)$</td>
+<td class="left">稳定</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Heapsort">Heap sort</a></td>
+<td class="left">$O(n\log{n})$</td>
+<td class="left">$O(n\log{n})$</td>
+<td class="left">$O(n\log{n})$</td>
+<td class="left">$O(1)$</td>
+<td class="left">不稳定</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Timsort">Tim sort</a></td>
+<td class="left">$O(n)$</td>
+<td class="left">$O(n\log{n})$</td>
+<td class="left">$O(n\log{n})$</td>
+<td class="left">$O(n)$</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Selection_sort">Selection sort</a></td>
+<td class="left">$O(n^2)$</td>
+<td class="left">$O(n^2)$</td>
+<td class="left">$O(n^2)$</td>
+<td class="left">$O(1)$</td>
+<td class="left">不稳定</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Bubble_sort">Bubble sort</a></td>
+<td class="left">$O(n)$</td>
+<td class="left">$O(n^2)$</td>
+<td class="left">$O(n^2)$</td>
+<td class="left">$O(1)$</td>
+<td class="left">稳定</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Insertion_sort">Insertion sort</a></td>
+<td class="left">$O(n)$</td>
+<td class="left">$O(n^2)$</td>
+<td class="left">$O(n^2)$</td>
+<td class="left">$O(1)$</td>
+<td class="left">稳定</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Shellsort">Shell sort</a></td>
+<td class="left">$O(n)$</td>
+<td class="left">$O((n\log{n})^2)$</td>
+<td class="left">$O((n\log{n})^2)$</td>
+<td class="left">$O(1)$</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Bucket_sort">Bucket sort</a></td>
+<td class="left">$O(n+k)$</td>
+<td class="left">$O(n+k)$</td>
+<td class="left">$O(n^2)$</td>
+<td class="left">$O(n)$</td>
+<td class="left">稳定</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Radix_sort">Radix sort</a></td>
+<td class="left">$O(nk)$</td>
+<td class="left">$O(nk)$</td>
+<td class="left">$O(nk)$</td>
+<td class="left">$O(n+k)$</td>
+<td class="left">稳定</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> 稳定性</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+两个相等的数，排序前在序列中的前后顺序，和排序后相同，则为稳定。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> 内部排序</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+待排序数据完全存放在内存中。适合不太大的元素序列。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> Quick sort</h3>
+<div class="outline-text-3" id="text-4-3">
+<ol class="org-ol">
+<li>选择一个特殊值（pivot）。
+</li>
+<li>将所有数值按照大于或小于特殊值，分为两部分，递归排序每一部分。
+</li>
+<li>将所有部分按顺序拼接起来。
+</li>
+
+<li>pivot 不能确保是中位数，最差情况需要 $O(n^2)$ 时间。
+</li>
+<li>初始混乱度越低，性能越低，最差情况，即初始就是排序完成状态，需要 $O(n^2)$ 时间。
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-sec-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> Merge sort</h3>
+<div class="outline-text-3" id="text-4-4">
+<ol class="org-ol">
+<li>递归地将数组分为两部分，直到每一部分只剩一个元素（认为已经是有序的数组）。
+</li>
+<li>不断合并两个有序数组，直到所有数组被合并。
+</li>
+</ol>
+
+<p>
+基于分治法，类似 MapReduce。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-5" class="outline-3">
+<h3 id="sec-4-5"><span class="section-number-3">4.5</span> Heap sort</h3>
+<div class="outline-text-3" id="text-4-5">
+<p>
+创建一个最大（小）堆，不断从堆顶取出数值，组成排序后的数据。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-6" class="outline-3">
+<h3 id="sec-4-6"><span class="section-number-3">4.6</span> Selection sort</h3>
+<div class="outline-text-3" id="text-4-6">
+<p>
+每一次循环将未排序部分的最小（大）值移动到头部已排序部分，从前向后使序列逐步有序。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-7" class="outline-3">
+<h3 id="sec-4-7"><span class="section-number-3">4.7</span> Bubble sort</h3>
+<div class="outline-text-3" id="text-4-7">
+<p>
+不断比较两个相邻元素，如果后一个数值较小（大）则交换。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-8" class="outline-3">
+<h3 id="sec-4-8"><span class="section-number-3">4.8</span> Insertion sort</h3>
+<div class="outline-text-3" id="text-4-8">
+<p>
+在序列前 N 个数值已经有序的基础上，第 N 次循环时，将第 N+1 个数值移动到已排序部分的合适位置。
+</p>
+
+<ol class="org-ol">
+<li>在第 N 次循环，将第 N+1 个数值与它前面的数值进行比较，
+</li>
+<li>如果顺序不正确，则交换两个数值，继续向前比较，直到到达正确的位置。
+</li>
+
+<li>渐进复杂度等于冒泡排序，但是性能更优，交换次数几乎是线性增加的。
+</li>
+<li>适用于数据量很小，起始顺序混乱度低的场合。
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-sec-4-9" class="outline-3">
+<h3 id="sec-4-9"><span class="section-number-3">4.9</span> Bucket sort</h3>
+<div class="outline-text-3" id="text-4-9">
+<p>
+适合数值范围小或有限的排序。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-10" class="outline-3">
+<h3 id="sec-4-10"><span class="section-number-3">4.10</span> Radix sort</h3>
+<div class="outline-text-3" id="text-4-10">
+<p>
+将所有待比较数值（一般为整数）统一为同样的数位长度（数位较短的数前面补零），从最低位开始，依次进行排序。
+</p>
+
+<ul class="org-ul">
+<li>时间复杂度为 $O(nk)$，其中 \(k\) 为数字位数。
+</li>
+<li>适合数值范围小或有限的排序。
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> 链接</h2>
+<div class="outline-text-2" id="text-5">
+<ol class="org-ol">
+<li><a href="http://www.roading.org/category/introduction-to-algorithm-third-edition.html">Adoo's blog - Introduction to Algorithm - third edition</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2017-04-23 Sun 09:32</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

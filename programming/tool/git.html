@@ -1,0 +1,1859 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-05-12 Sun 18:46 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Git</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Git</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orge8974ce">1 概念</a>
+<ul>
+<li><a href="#org4b7d519">1.1 组成</a></li>
+<li><a href="#org517334c">1.2 HEAD 指针</a></li>
+</ul>
+</li>
+<li><a href="#orge3c4f48">2 协议</a></li>
+<li><a href="#orgc97b921">3 操作</a></li>
+<li><a href="#orgccb6866">4 文件</a></li>
+<li><a href="#orga7a1061">5 分支</a>
+<ul>
+<li><a href="#orge4556ff">5.1 创建</a></li>
+<li><a href="#org9643c76">5.2 切换</a>
+<ul>
+<li><a href="#org40667fd">5.2.1 冲突</a></li>
+</ul>
+</li>
+<li><a href="#org14bbe0b">5.3 合并</a>
+<ul>
+<li><a href="#orgccc226f">5.3.1 冲突</a></li>
+<li><a href="#org7825cc7">5.3.2 三向合并</a></li>
+<li><a href="#org7d1b12f">5.3.3 Fast forward</a></li>
+</ul>
+</li>
+<li><a href="#org95420f5">5.4 远程分支</a></li>
+<li><a href="#org4fe1119">5.5 追踪</a></li>
+<li><a href="#org852c6e9">5.6 分支模式</a>
+<ul>
+<li><a href="#org86f117b">5.6.1 Long-running 模式</a></li>
+<li><a href="#org292f29b">5.6.2 Feature 模式</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge2feb5f">6 配置</a>
+<ul>
+<li><a href="#orgbba3def">6.1 <code>.gitignore</code></a></li>
+</ul>
+</li>
+<li><a href="#org3391b48">7 命令</a>
+<ul>
+<li><a href="#orgc24613b">7.1 命令列表</a></li>
+<li><a href="#org0af8402">7.2 <code>add</code></a></li>
+<li><a href="#org338bfa9">7.3 <code>blame</code></a></li>
+<li><a href="#orga513591">7.4 <code>branch</code></a></li>
+<li><a href="#org64abfe9">7.5 <code>checkout</code></a></li>
+<li><a href="#org07405fe">7.6 <code>cherry-pick</code></a></li>
+<li><a href="#org6b5c7a5">7.7 <code>clone</code></a></li>
+<li><a href="#org9f501d2">7.8 <code>commit</code></a></li>
+<li><a href="#org90b2709">7.9 <code>config</code></a></li>
+<li><a href="#org27c7e01">7.10 <code>diff</code></a></li>
+<li><a href="#orgb565689">7.11 <code>fetch</code></a></li>
+<li><a href="#org517b378">7.12 <code>init</code></a></li>
+<li><a href="#org85e7655">7.13 <code>log</code></a></li>
+<li><a href="#org3f39efb">7.14 <code>merge</code></a></li>
+<li><a href="#orgb9cfb50">7.15 <code>mergetool</code></a></li>
+<li><a href="#org99031d2">7.16 <code>mv</code></a></li>
+<li><a href="#orga113be3">7.17 <code>pull</code></a></li>
+<li><a href="#org2a5239b">7.18 <code>push</code></a></li>
+<li><a href="#orge6fd429">7.19 <code>rebase</code></a></li>
+<li><a href="#org1a55832">7.20 <code>remote</code></a></li>
+<li><a href="#orga207c5d">7.21 <code>reset</code></a></li>
+<li><a href="#orgb104260">7.22 <code>revert</code></a></li>
+<li><a href="#org40483f6">7.23 <code>rev-parse</code></a></li>
+<li><a href="#org5f6438b">7.24 <code>rm</code></a></li>
+<li><a href="#org3800c30">7.25 <code>shortlog</code></a></li>
+<li><a href="#org5cd5ce5">7.26 <code>show</code></a></li>
+<li><a href="#orgefd1547">7.27 <code>stage</code></a></li>
+<li><a href="#org03ecd3a">7.28 <code>stash</code></a></li>
+<li><a href="#org2558c4f">7.29 <code>status</code></a></li>
+<li><a href="#org20a5e91">7.30 <code>tag</code></a></li>
+<li><a href="#orgfad5a1d">7.31 <code>whatchanged</code></a></li>
+</ul>
+</li>
+<li><a href="#org24fdb59">8 常用</a>
+<ul>
+<li><a href="#orgfdc1733">8.1 创建仓库</a></li>
+<li><a href="#orga97e9ac">8.2 Hotfix</a></li>
+<li><a href="#org65c59e8">8.3 删除所有已合并分支</a></li>
+<li><a href="#org74cf16b">8.4 同步 fork</a></li>
+<li><a href="#orgd06ac35">8.5 查找删除记录</a></li>
+<li><a href="#org9571d64">8.6 撤销修改</a></li>
+</ul>
+</li>
+<li><a href="#org41c4c71">9 词汇表</a></li>
+<li><a href="#org130d4b1">10 链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge8974ce" class="outline-2">
+<h2 id="orge8974ce"><span class="section-number-2">1</span> 概念</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+分布式版本控制系统
+</p>
+<ul class="org-ul">
+<li>整个项目的数据和历史都在本地。</li>
+<li>大部分操作只需要本地文件，不需要网络连接。</li>
+</ul>
+
+<p>
+Git 是一个文件系统的快照（snapshot），如果文件没有被修改，只保存一个指向之前已经保存过的文件的链接（link）。
+</p>
+</div>
+
+<div id="outline-container-org4b7d519" class="outline-3">
+<h3 id="org4b7d519"><span class="section-number-3">1.1</span> 组成</h3>
+<div class="outline-text-3" id="text-1-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Repository (Git directory)</th>
+<th scope="col" class="org-left">本地仓库：metadata、对象数据库</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Workspace</td>
+<td class="org-left">工作空间：项目的某一个版本，用于在本地修改的文件</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Index / Staging area</td>
+<td class="org-left">暂存区：单一文件，记录将要提交的信息</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Remote</td>
+<td class="org-left">远程仓库</td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="figure">
+<p><img src="../images/git/03.png" alt="03.png" />
+</p>
+</div>
+
+<ul class="org-ul">
+<li>被修改的文件用 <code>stage</code> 命令加入到 index。</li>
+<li>index 记录和保留这些修改，直到执行 <code>commit</code> 命令。</li>
+<li>index 中的修改可以被删除和替换。</li>
+</ul>
+
+
+<dl class="org-dl">
+<dt>Index</dt><dd>短暂存在（transitory）的、动态的二进制文件。
+<ul class="org-ul">
+<li>描述仓库在某一时刻的目录结构。</li>
+<li>不在仓库之间共享，专属于一个仓库。</li>
+</ul></dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-org517334c" class="outline-3">
+<h3 id="org517334c"><span class="section-number-3">1.2</span> HEAD 指针</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+指向当前使用的分支的指针，默认指向 master 分支。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge3c4f48" class="outline-2">
+<h2 id="orge3c4f48"><span class="section-number-2">2</span> 协议</h2>
+<div class="outline-text-2" id="text-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>http(s)://example.com/path/to/repo.git/</code></th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>ssh://example.com/path/to/repo.git/</code></td>
+<td class="org-left">SSH 协议</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>user@example.com:/path/to/repo.git/</code></td>
+<td class="org-left">SSH 协议</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>git://example.com/path/to/repo.git/</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>ftp(s)://example.com/path/to/repo.git/</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>rsync://example.com/path/to/repo.git/</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>file:///opt/git/project.git</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+参考文档：<a href="https://git-scm.com/book/en/v2/Git-on-the-Server-The-Protocols">Git on the Server - The Protocols</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc97b921" class="outline-2">
+<h2 id="orgc97b921"><span class="section-number-2">3</span> 操作</h2>
+<div class="outline-text-2" id="text-3">
+
+<div class="figure">
+<p><img src="../images/git/01.png" alt="01.png" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/git/13.png" alt="13.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgccb6866" class="outline-2">
+<h2 id="orgccb6866"><span class="section-number-2">4</span> 文件</h2>
+<div class="outline-text-2" id="text-4">
+
+<div class="figure">
+<p><img src="../images/git/02.png" alt="02.png" />
+</p>
+</div>
+
+<p>
+文件状态
+</p>
+<ul class="org-ul">
+<li>untracked</li>
+<li>tracked
+<ul class="org-ul">
+<li>committed / unmodified</li>
+<li>modified</li>
+<li>staged</li>
+</ul></li>
+</ul>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">unmodified</th>
+<th scope="col" class="org-left">修改的数据已经保存在本地数据库，重新回到未被修改状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">modified</td>
+<td class="org-left">文件被修改，但未提交到本地数据库</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">staged</td>
+<td class="org-left">标记被修改的文件的当前版本，以加入到下一次的提交快照中</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">只有 staged 文件会被提交</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">staged 文件再次被修改而未 stage 时， <code>commit</code> 会提交上次 stage 时文件的版本，而不是最后修改的版本</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">committed</td>
+<td class="org-left">Staging area 中的文件快照被永久保存到 Git 目录</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orga7a1061" class="outline-2">
+<h2 id="orga7a1061"><span class="section-number-2">5</span> 分支</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Git 的 commit 快照之间通过指针相连，每一个快照的指针指向它的 upstream。创建一个分支，就是创建一个指向最后一个提交的指针。
+</p>
+</div>
+
+<div id="outline-container-orge4556ff" class="outline-3">
+<h3 id="orge4556ff"><span class="section-number-3">5.1</span> 创建</h3>
+<div class="outline-text-3" id="text-5-1">
+<div class="org-src-container">
+<pre class="src src-sh">git branch &lt;branch&gt;
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/git/06.png" alt="06.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9643c76" class="outline-3">
+<h3 id="org9643c76"><span class="section-number-3">5.2</span> 切换</h3>
+<div class="outline-text-3" id="text-5-2">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 1: </span>切换分支</label><pre class="src src-sh">git checkout &lt;branch&gt;
+</pre>
+</div>
+
+<p>
+<code>branch</code> 命令不自动切换到新的分支，即不移动 HEAD 指针，需要用 <code>checkout</code> 命令移动 HEAD 指针，切换到新分支。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/git/07.png" alt="07.png" />
+</p>
+</div>
+
+<hr />
+
+<p>
+切换到新分支后，之后的提交会使指针在这一分支上延续。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/git/08.png" alt="08.png" />
+</p>
+</div>
+</div>
+
+<div id="outline-container-org40667fd" class="outline-4">
+<h4 id="org40667fd"><span class="section-number-4">5.2.1</span> 冲突</h4>
+<div class="outline-text-4" id="text-5-2-1">
+<p>
+如果当前分支有未提交、并与准备检出的分支有冲突的修改，Git 不允许切换分支。解决方法：
+</p>
+
+<ul class="org-ul">
+<li>stashing</li>
+<li>commit amending</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org14bbe0b" class="outline-3">
+<h3 id="org14bbe0b"><span class="section-number-3">5.3</span> 合并</h3>
+<div class="outline-text-3" id="text-5-3">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 2: </span>将 A 合并入 B 时，先检出 B，然后运行 <code>merge</code> 命令</label><pre class="src src-sh">git checkout branch_b
+git merge branch_a
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgccc226f" class="outline-4">
+<h4 id="orgccc226f"><span class="section-number-4">5.3.1</span> 冲突</h4>
+<div class="outline-text-4" id="text-5-3-1">
+<p>
+合并的两个分支中对同一个文件有不同的修改时，会出现冲突。当合并出现冲突时，Git 不自动提交，冲突的文件被标为 <code>unmerged</code> 。
+</p>
+
+<p>
+处理冲突的方法：
+</p>
+<ol class="org-ol">
+<li>手动处理冲突的文件，并移除 <code>&lt;&lt;&lt;&lt;</code> <code>=====</code> <code>&gt;&gt;&gt;&gt;&gt;</code> 行</li>
+<li>对处理后的文件执行 <code>git add</code> ，将其标为 <code>resolved</code></li>
+<li><code>git commit</code></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org7825cc7" class="outline-4">
+<h4 id="org7825cc7"><span class="section-number-4">5.3.2</span> 三向合并</h4>
+<div class="outline-text-4" id="text-5-3-2">
+<p>
+如果 A 和 B 不在同一条提交时间线上，Git 会自动找到它们的共同 upstream，进行三向合并。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/git/09.png" alt="09.png" />
+</p>
+</div>
+
+<p>
+三向合并的结果是一个新的快照，Git 自动提交这个快照，并将当前分支指向它。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/git/10.png" alt="10.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7d1b12f" class="outline-4">
+<h4 id="org7d1b12f"><span class="section-number-4">5.3.3</span> Fast forward</h4>
+<div class="outline-text-4" id="text-5-3-3">
+<p>
+将 B 合并入当前分支 A 时，如果 A 和 B 在同一条提交时间线上，且 A 是 B 的 upstream：
+</p>
+
+
+<div class="figure">
+<p><img src="../images/git/11.png" alt="11.png" />
+</p>
+</div>
+
+<p>
+由于没有需要处理的分歧，Git 直接将 A 的指针移动到 B，称为 fast forward：
+</p>
+
+
+<div class="figure">
+<p><img src="../images/git/12.png" alt="12.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org95420f5" class="outline-3">
+<h3 id="org95420f5"><span class="section-number-3">5.4</span> 远程分支</h3>
+<div class="outline-text-3" id="text-5-4">
+<ul class="org-ul">
+<li>在本地仓库但无法移动，网络通信时会自动更新。</li>
+<li>名称为 <code>&lt;remote&gt;/&lt;branch&gt;</code> ，e.g. <code>origin/master</code> 。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org4fe1119" class="outline-3">
+<h3 id="org4fe1119"><span class="section-number-3">5.5</span> 追踪</h3>
+<div class="outline-text-3" id="text-5-5">
+<p>
+如果当前分支与远程分支存在追踪关系， <code>git pull</code> 就可以省略远程分支名。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git pull &lt;remote&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#26412;&#22320;&#24403;&#21069;&#20998;&#25903;&#19982;&#20854;&#36861;&#36394;&#30340;&#25351;&#23450;&#36828;&#31243;&#20179;&#24211;&#30340;&#20998;&#25903;&#21512;&#24182;</span>
+git pull          <span class="org-comment-delimiter"># </span><span class="org-comment">&#22914;&#26524;&#21482;&#26377;&#19968;&#20010;&#36861;&#36394;&#20998;&#25903;&#65292;&#36828;&#31243;&#20179;&#24211;&#21517;&#20063;&#21487;&#30465;&#30053;</span>
+</pre>
+</div>
+
+<p>
+<code>git clone</code> 时所有本地分支默认与远程仓库的同名分支建立追踪关系，比如本地的 <code>master</code> 分支自动追踪 <code>origin/master</code> 分支。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 3: </span>手动建立追踪</label><pre class="src src-sh">git branch --set-upstream &lt;branch&gt; &lt;remote&gt;/&lt;branch&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org852c6e9" class="outline-3">
+<h3 id="org852c6e9"><span class="section-number-3">5.6</span> 分支模式</h3>
+<div class="outline-text-3" id="text-5-6">
+</div><div id="outline-container-org86f117b" class="outline-4">
+<h4 id="org86f117b"><span class="section-number-4">5.6.1</span> Long-running 模式</h4>
+<div class="outline-text-4" id="text-5-6-1">
+<p>
+在一条提交时间线上保留多个分支，代表不同稳定性的版本。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/git/04.png" alt="04.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org292f29b" class="outline-4">
+<h4 id="org292f29b"><span class="section-number-4">5.6.2</span> Feature 模式</h4>
+<div class="outline-text-4" id="text-5-6-2">
+<p>
+为开发某个功能而建立的、存在时间短的分支，开发完成后应合并入主提交时间线。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/git/05.png" alt="05.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge2feb5f" class="outline-2">
+<h2 id="orge2feb5f"><span class="section-number-2">6</span> 配置</h2>
+<div class="outline-text-2" id="text-6">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>.gitconfig</code></th>
+<th scope="col" class="org-left">在用户主目录下为全局配置</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">在项目目录下为项目配置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>.gitignore</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-orgbba3def" class="outline-3">
+<h3 id="orgbba3def"><span class="section-number-3">6.1</span> <code>.gitignore</code></h3>
+<div class="outline-text-3" id="text-6-1">
+<ul class="org-ul">
+<li>Git 忽略的文件，修改时不会被列为 <code>untracked</code> 。</li>
+<li>用 Glob 格式表示文件名。</li>
+<li>一般包括开发环境文件、临时文件、缓存、日志、第三方库。</li>
+</ul>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 4: </span>示例</label><pre class="src src-sh">*.[oa]       <span class="org-comment-delimiter"># </span><span class="org-comment">&#24573;&#30053;&#20197; .o &#25110; .a &#32467;&#23614;&#30340;&#25991;&#20214;</span>
+<span class="org-negation-char">!</span>lib.a       <span class="org-comment-delimiter"># </span><span class="org-comment">&#24573;&#30053;&#25490;&#38500;&#26465;&#20214;&#65292;&#19978;&#19968;&#26465;&#35268;&#21017;&#30340;&#29305;&#20363;</span>
+/TODO        <span class="org-comment-delimiter"># </span><span class="org-comment">&#24573;&#30053;&#26681;&#30446;&#24405;&#19979;&#25351;&#23450;&#25991;&#20214;</span>
+build/       <span class="org-comment-delimiter"># </span><span class="org-comment">&#24573;&#30053;&#25351;&#23450;&#30446;&#24405;&#19979;&#25152;&#26377;&#25991;&#20214;</span>
+doc/*.txt    <span class="org-comment-delimiter"># </span><span class="org-comment">&#24573;&#30053;&#25351;&#23450;&#30446;&#24405;&#19979;&#21305;&#37197;&#27169;&#24335;&#30340;&#25991;&#20214;&#65292;&#20294;&#19981;&#36882;&#24402;&#21040;&#23376;&#30446;&#24405;</span>
+doc/**/*.txt <span class="org-comment-delimiter"># </span><span class="org-comment">&#24573;&#30053;&#25351;&#23450;&#30446;&#24405;&#19979;&#21305;&#37197;&#27169;&#24335;&#30340;&#25991;&#20214;&#65292;&#36882;&#24402;&#21040;&#23376;&#30446;&#24405;</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3391b48" class="outline-2">
+<h2 id="org3391b48"><span class="section-number-2">7</span> 命令</h2>
+<div class="outline-text-2" id="text-7">
+</div><div id="outline-container-orgc24613b" class="outline-3">
+<h3 id="orgc24613b"><span class="section-number-3">7.1</span> 命令列表</h3>
+<div class="outline-text-3" id="text-7-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><a href="#org9c9204a"><code>add</code></a></th>
+<th scope="col" class="org-left">将目录、文件添加指定文件到暂存区</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>archive</code></td>
+<td class="org-left">生成可供发布的压缩包</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>blame</code></td>
+<td class="org-left">显示指定文件的修改历史（修改人、修改内容）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#org3c03354"><code>branch</code></a></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#org53d9327"><code>checkout</code></a></td>
+<td class="org-left">移动 HEAD 指针，切换到分支</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#org9ceb589"><code>cherry-pick</code></a></td>
+<td class="org-left">将指定 commit 合并入当前分支</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#org9e5a57d"><code>clone</code></a></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#org08d94b4"><code>commit</code></a></td>
+<td class="org-left">提交所有暂存区中的文件</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#org78998e8"><code>config</code></a></td>
+<td class="org-left">配置 Git</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#orge78c48d"><code>diff</code></a></td>
+<td class="org-left">显示文件差异</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#orgdede46d"><code>fetch</code></a></td>
+<td class="org-left">从远程仓库获取更新数据</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#org31c31d9"><code>init</code></a></td>
+<td class="org-left">初始化</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#org332718f"><code>log</code></a></td>
+<td class="org-left">显示 commit 历史</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#org607f13c"><code>merge</code></a></td>
+<td class="org-left">将指定分支合并入当前分支</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#org0ff8efb"><code>mergetool</code></a></td>
+<td class="org-left">打开图形化合并工具处理冲突</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#org8c56485"><code>mv</code></a></td>
+<td class="org-left">重命名文件，并将操作放入暂存区</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#org1270f33"><code>pull</code></a></td>
+<td class="org-left">取远程分支的更新，并与本地分支合并</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#org9bfeb4c"><code>push</code></a></td>
+<td class="org-left">将指定分支同步到远程仓库</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#orgb40c4c5"><code>rebase</code></a></td>
+<td class="org-left">在指定分支上重做当前分支与其进入不同分支后经历的变化</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>reflog</code></td>
+<td class="org-left">显示所有操作记录</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#orgeab359d"><code>remote</code></a></td>
+<td class="org-left">管理远程主机</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#org24edb13"><code>reset</code></a></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>revert</code></td>
+<td class="org-left">撤销指定 commit，用新的 commit 抵消所有修改</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#org7f28f76"><code>rm</code></a></td>
+<td class="org-left">删除工作区文件，并将删除操作放入暂存区</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>shortlog</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#orgdf22a5e"><code>show</code></a></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#orge62465d"><code>stage</code></a></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#orgd12165a"><code>stash</code></a></td>
+<td class="org-left">临时保存已修改的文件</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#org0f53b19"><code>status</code></a></td>
+<td class="org-left">检查文件状态，显示分支信息</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="#orgd1a6a5e"><code>tag</code></a></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>whatchanged</code></td>
+<td class="org-left">显示指定文件的历史</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org0af8402" class="outline-3">
+<h3 id="org0af8402"><span class="section-number-3">7.2</span> <code>add</code></h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+<a id="org9c9204a"></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git add &lt;options&gt; &lt;path&gt; ...
+    -A <span class="org-comment-delimiter"># </span><span class="org-comment">&#25552;&#20132;&#20840;&#37096;&#20462;&#25913;&#30340;&#25991;&#20214;</span>
+    -p <span class="org-comment-delimiter"># </span><span class="org-comment">&#20998;&#27425;&#30830;&#35748;&#12289;&#25552;&#20132;&#22810;&#22788;&#21464;&#21270;</span>
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>track 一个文件或一个目录下所有文件，使文件从 <code>untracked</code> 变为 <code>tracked</code> 。</li>
+<li>stage 一个文件，将一个 <code>modified</code> 文件加入到 staging area，使文件从 <code>modified</code> 变为 <code>staged</code> ；</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org338bfa9" class="outline-3">
+<h3 id="org338bfa9"><span class="section-number-3">7.3</span> <code>blame</code></h3>
+<div class="outline-text-3" id="text-7-3">
+<div class="org-src-container">
+<pre class="src src-sh">git blame &lt;file&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga513591" class="outline-3">
+<h3 id="orga513591"><span class="section-number-3">7.4</span> <code>branch</code></h3>
+<div class="outline-text-3" id="text-7-4">
+<p>
+<a id="org3c03354"></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git branch    <span class="org-comment-delimiter"># </span><span class="org-comment">&#21015;&#20986;&#25152;&#26377;&#26412;&#22320;&#20998;&#25903;</span>
+git branch -r <span class="org-comment-delimiter"># </span><span class="org-comment">&#21015;&#20986;&#25152;&#26377;&#36828;&#31243;&#20998;&#25903;</span>
+git branch -a <span class="org-comment-delimiter"># </span><span class="org-comment">&#21015;&#20986;&#25152;&#26377;&#26412;&#22320;&#21644;&#36828;&#31243;&#20998;&#25903;</span>
+git branch -v <span class="org-comment-delimiter"># </span><span class="org-comment">&#21015;&#20986;&#20998;&#25903;&#12289;&#24403;&#21069;&#20998;&#25903;&#21644;&#27599;&#20010;&#20998;&#25903;&#30340;&#26368;&#21518;&#19968;&#27425;&#25552;&#20132;&#20449;&#24687;</span>
+
+git branch --merge [&lt;branch&gt;]     <span class="org-comment-delimiter"># </span><span class="org-comment">&#21015;&#20986;&#24050;&#21512;&#24182;&#20837;&#24403;&#21069;&#25110;&#25351;&#23450;&#20998;&#25903;&#30340;&#20998;&#25903;</span>
+git branch --no-merged [&lt;branch&gt;] <span class="org-comment-delimiter"># </span><span class="org-comment">&#21015;&#20986;&#26410;&#21512;&#24182;&#20837;&#24403;&#21069;&#25110;&#25351;&#23450;&#20998;&#25903;&#30340;&#20998;&#25903;</span>
+
+git branch &lt;branch&gt;          <span class="org-comment-delimiter"># </span><span class="org-comment">&#26032;&#24314;&#20998;&#25903;&#65292;&#20294;&#19981; checkout</span>
+git branch &lt;branch&gt; &lt;commit&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#26032;&#24314;&#20998;&#25903;&#65292;&#24182;&#25351;&#21521;&#25351;&#23450; commit</span>
+
+git branch -d &lt;branch&gt;  <span class="org-comment-delimiter"># </span><span class="org-comment">&#21024;&#38500;&#20998;&#25903;&#65292;&#20294;&#24573;&#30053;&#26410;&#21512;&#24182;&#20837;&#24403;&#21069;&#20998;&#25903;&#30340;&#20998;&#25903;</span>
+git branch -D &lt;branch&gt;  <span class="org-comment-delimiter"># </span><span class="org-comment">&#24378;&#21046;&#21024;&#38500;&#20998;&#25903;&#65292;&#21253;&#25324;&#26410;&#21512;&#24182;&#20837;&#24403;&#21069;&#20998;&#25903;&#30340;&#20998;&#25903;</span>
+git branch -dr &lt;branch&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#21024;&#38500;&#36828;&#31243;&#20998;&#25903;</span>
+
+git branch -M &lt;branch&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#24378;&#21046;&#31227;&#21160;&#65288;&#37325;&#21629;&#21517;&#65289;&#20998;&#25903;</span>
+
+git branch --track &lt;branch&gt; &lt;remote&gt;/&lt;branch&gt;        <span class="org-comment-delimiter"># </span><span class="org-comment">&#26032;&#24314;&#20998;&#25903;&#65292;&#24182;&#19982;&#25351;&#23450;&#30340;&#36828;&#31243;&#20998;&#25903;&#24314;&#31435;&#36861;&#36394;&#20851;&#31995;</span>
+git branch --set-upstream &lt;branch&gt; &lt;remote&gt;/&lt;branch&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#22312;&#25351;&#23450;&#20998;&#25903;&#19982;&#36828;&#31243;&#20998;&#25903;&#20043;&#38388;&#24314;&#31435;&#36861;&#36394;&#20851;&#31995;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org64abfe9" class="outline-3">
+<h3 id="org64abfe9"><span class="section-number-3">7.5</span> <code>checkout</code></h3>
+<div class="outline-text-3" id="text-7-5">
+<p>
+<a id="org53d9327"></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git checkout - <span class="org-comment-delimiter"># </span><span class="org-comment">&#20999;&#25442;&#21040;&#19978;&#19968;&#20010;&#20998;&#25903;</span>
+
+git checkout -b &lt;branch&gt;              <span class="org-comment-delimiter"># </span><span class="org-comment">&#26032;&#24314;&#20998;&#25903;&#24182; checkout</span>
+git checkout -b &lt;branch_1&gt; &lt;branch_2&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#22312; branch_2 &#22522;&#30784;&#19978;&#26032;&#24314;&#20998;&#25903; branch_1</span>
+git checkout -b &lt;branch&gt; &lt;tag&gt;        <span class="org-comment-delimiter"># </span><span class="org-comment">&#26032;&#24314;&#20998;&#25903;&#24182;&#25351;&#21521;&#26631;&#31614;</span>
+
+git checkout -f &lt;branch&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#24378;&#21046;&#20999;&#25442;&#21040;&#20998;&#25903;</span>
+
+git checkout .               <span class="org-comment-delimiter"># </span><span class="org-comment">&#24674;&#22797;&#26242;&#23384;&#21306;&#25152;&#26377;&#25991;&#20214;&#21040;&#24037;&#20316;&#21306;</span>
+git checkout &lt;file&gt;          <span class="org-comment-delimiter"># </span><span class="org-comment">&#20174;&#26242;&#23384;&#21306;&#24674;&#22797;&#25351;&#23450;&#25991;&#20214;&#21040;&#24037;&#20316;&#21306;</span>
+git checkout &lt;commit&gt; &lt;file&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#20174;&#25351;&#23450; commit &#24674;&#22797;&#25351;&#23450;&#25991;&#20214;&#21040;&#26242;&#23384;&#21306;&#21644;&#24037;&#20316;&#21306;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org07405fe" class="outline-3">
+<h3 id="org07405fe"><span class="section-number-3">7.6</span> <code>cherry-pick</code></h3>
+<div class="outline-text-3" id="text-7-6">
+<p>
+<a id="org9ceb589"></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git cherry-pick &lt;commit&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6b5c7a5" class="outline-3">
+<h3 id="org6b5c7a5"><span class="section-number-3">7.7</span> <code>clone</code></h3>
+<div class="outline-text-3" id="text-7-7">
+<p>
+<a id="org9e5a57d"></a>
+</p>
+
+<p>
+下载项目代码库的整个代码历史。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git clone &lt;url&gt;       <span class="org-comment-delimiter"># </span><span class="org-comment">&#40664;&#35748;&#29983;&#25104;&#19968;&#20010;&#19982;&#36828;&#31243;&#20179;&#24211;&#21516;&#21517;&#30340;&#30446;&#24405;</span>
+git clone &lt;url&gt; &lt;dir&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#25351;&#23450;&#29983;&#25104;&#30340;&#30446;&#24405;&#21517;</span>
+
+git clone -o &lt;remote&gt; &lt;url&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#25351;&#23450;&#36828;&#31243;&#20179;&#24211;&#21517;&#65292;&#40664;&#35748;&#20026; origin</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9f501d2" class="outline-3">
+<h3 id="org9f501d2"><span class="section-number-3">7.8</span> <code>commit</code></h3>
+<div class="outline-text-3" id="text-7-8">
+<p>
+<a id="org08d94b4"></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git commit &lt;options&gt; [&lt;path&gt;]
+    -a       <span class="org-comment-delimiter"># </span><span class="org-comment">stage &#25152;&#26377; tracked &#19988;&#34987;&#20462;&#25913;&#30340;&#25991;&#20214;&#24182;&#25552;&#20132;&#65292;&#30465;&#30053; git add</span>
+    -m &lt;msg&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#28155;&#21152; commit &#20449;&#24687;</span>
+    -v       <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#20887;&#20313; commit &#20449;&#24687;&#65292;&#21152;&#20837; git diff &#32467;&#26524;</span>
+    --amend  <span class="org-comment-delimiter"># </span><span class="org-comment">&#20351;&#29992;&#26032;&#30340; commit &#26367;&#20195;&#19978;&#19968;&#27425;&#25552;&#20132;</span>
+             <span class="org-comment-delimiter"># </span><span class="org-comment">&#22914;&#26524;&#26080;&#21464;&#21270;&#65292;&#21017; -m &lt;msg&gt; &#20462;&#22797;&#19978;&#19968;&#27425; commit &#20449;&#24687;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org90b2709" class="outline-3">
+<h3 id="org90b2709"><span class="section-number-3">7.9</span> <code>config</code></h3>
+<div class="outline-text-3" id="text-7-9">
+<p>
+<a id="org78998e8"></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git config &lt;options&gt;
+    -l, --list                <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#25152;&#26377;&#37197;&#32622;</span>
+    -e &lt;scope&gt; &lt;name&gt; &lt;value&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#20462;&#25913;&#37197;&#32622;</span>
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> <code>&lt;scope&gt;</code></caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>--global</code></th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>--system</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>--local</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> <code>&lt;name&gt;</code></caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>user.email</code></th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>user.name</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>credential.helper</code></td>
+<td class="org-left">保存密码一段时间，eg. <code>cache --timeout=3600</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>push.default</code></td>
+<td class="org-left">默认 <code>push</code> 方式</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org27c7e01" class="outline-3">
+<h3 id="org27c7e01"><span class="section-number-3">7.10</span> <code>diff</code></h3>
+<div class="outline-text-3" id="text-7-10">
+<p>
+<a id="orge78c48d"></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git diff      <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#24037;&#20316;&#21306;&#21644;&#26242;&#23384;&#21306;&#30340;&#24046;&#24322;&#65292;&#21363;&#36824;&#26410; stage &#30340;&#20462;&#25913;</span>
+git diff HEAD <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#24037;&#20316;&#21306;&#21644;&#26368;&#21518;&#19968;&#20010; commit &#30340;&#24046;&#24322;</span>
+
+git diff &lt;branch&gt; &lt;branch&gt;           <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#20004;&#20010; &#20998;&#25903;&#30340; diff</span>
+git diff &lt;branch&gt; &lt;branch&gt; -- &lt;path&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#20004;&#20010;&#20998;&#25903;&#26576;&#25991;&#20214;&#30340; diff</span>
+
+git diff --staged        <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#26242;&#23384;&#21306;&#21644;&#19978;&#19968;&#27425; commit &#30340;&#24046;&#24322;&#65292;&#21363;&#24050;&#32463; stage &#30340;&#20462;&#25913;</span>
+git diff --cached &lt;file&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#25351;&#23450;&#25991;&#20214;&#26242;&#23384;&#21306;&#21644;&#19978;&#19968;&#27425; commit &#30340;&#24046;&#24322;</span>
+
+git diff --shortstat <span class="org-string">"@{0 day ago}"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#20170;&#22825;&#20462;&#25913;&#30340;&#20195;&#30721;&#34892;&#25968;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb565689" class="outline-3">
+<h3 id="orgb565689"><span class="section-number-3">7.11</span> <code>fetch</code></h3>
+<div class="outline-text-3" id="text-7-11">
+<p>
+<a id="orgdede46d"></a>
+</p>
+
+<p>
+通常用来查看其他人的进程，取回的代码对本地的开发代码没有影响。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git fetch &lt;remote&gt;          <span class="org-comment-delimiter"># </span><span class="org-comment">&#21462;&#22238;&#25152;&#26377;&#20998;&#25903;&#26356;&#26032;</span>
+git fetch &lt;remote&gt; &lt;branch&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#21462;&#22238;&#25351;&#23450;&#20998;&#25903;&#26356;&#26032;</span>
+
+git fetch --prune &lt;remote&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#22914;&#26524;&#36828;&#31243;&#20998;&#25903;&#34987;&#21024;&#38500;&#65292;&#20063;&#21024;&#38500;&#26412;&#22320;&#20998;&#25903;</span>
+git fetch -p
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org517b378" class="outline-3">
+<h3 id="org517b378"><span class="section-number-3">7.12</span> <code>init</code></h3>
+<div class="outline-text-3" id="text-7-12">
+<p>
+<a id="org31c31d9"></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git init       <span class="org-comment-delimiter"># </span><span class="org-comment">&#22312;&#24403;&#21069;&#30446;&#24405;&#26032;&#24314; Git &#20195;&#30721;&#24211;</span>
+git init &lt;dir&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#26032;&#24314;&#30446;&#24405;&#24182;&#23558;&#20854;&#21021;&#22987;&#21270;&#20026; Git &#20195;&#30721;&#24211;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org85e7655" class="outline-3">
+<h3 id="org85e7655"><span class="section-number-3">7.13</span> <code>log</code></h3>
+<div class="outline-text-3" id="text-7-13">
+<p>
+<a id="org332718f"></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git log          <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#24403;&#21069;&#20998;&#25903; commit &#21382;&#21490;</span>
+git log -&lt;n&gt;     <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#20043;&#21069; n &#27425; commit &#21382;&#21490;</span>
+git log --stat   <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034; commit &#21382;&#21490;&#21450;&#23545;&#24212;&#30340;&#21464;&#26356;&#25991;&#20214;</span>
+git log --pretty
+git log --online
+
+git log -S &lt;keyword&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#25628;&#32034; commit &#21382;&#21490;</span>
+
+git log -p &lt;file&gt;       <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#25351;&#23450;&#25991;&#20214;&#30340; diff &#21382;&#21490;</span>
+git log --follow &lt;file&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#25351;&#23450;&#25991;&#20214;&#30340; commit &#21382;&#21490;</span>
+
+git log &lt;commit&gt; HEAD --pretty=format:%s <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#25351;&#23450; commit &#20043;&#21518;&#30340;&#21382;&#21490;&#65292;&#27599;&#20010; commit &#26174;&#31034;&#19968;&#34892;</span>
+git log &lt;commit&gt; HEAD --grep &lt;keyword&gt;   <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#25351;&#23450; commit &#20043;&#21518;&#30340;&#25552;&#20132;&#20449;&#24687;&#21253;&#21547;&#20851;&#38190;&#35789;&#30340;&#21382;&#21490;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3f39efb" class="outline-3">
+<h3 id="org3f39efb"><span class="section-number-3">7.14</span> <code>merge</code></h3>
+<div class="outline-text-3" id="text-7-14">
+<p>
+<a id="org607f13c"></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git merge &lt;branch&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb9cfb50" class="outline-3">
+<h3 id="orgb9cfb50"><span class="section-number-3">7.15</span> <code>mergetool</code></h3>
+<div class="outline-text-3" id="text-7-15">
+<p>
+<a id="org0ff8efb"></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git mergetool
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org99031d2" class="outline-3">
+<h3 id="org99031d2"><span class="section-number-3">7.16</span> <code>mv</code></h3>
+<div class="outline-text-3" id="text-7-16">
+<p>
+<a id="org8c56485"></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git mv &lt;old&gt; &lt;new&gt;
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>等同于 <code>git rm</code> 旧文件并 <code>git add</code> 新文件。</li>
+<li>Git 不能自动获知文件被重命名。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orga113be3" class="outline-3">
+<h3 id="orga113be3"><span class="section-number-3">7.17</span> <code>pull</code></h3>
+<div class="outline-text-3" id="text-7-17">
+<p>
+<a id="org1270f33"></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git pull &lt;remote&gt; &lt;remote_branch&gt;                <span class="org-comment-delimiter"># </span><span class="org-comment">&#19982;&#26412;&#22320;&#24403;&#21069;&#20998;&#25903;&#21512;&#24182;</span>
+git pull &lt;remote&gt; &lt;remote_branch&gt;:&lt;local_branch&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#19982;&#26412;&#22320;&#25351;&#23450;&#20998;&#25903;&#21512;&#24182;</span>
+
+git pull -p <span class="org-comment-delimiter"># </span><span class="org-comment">&#22914;&#26524;&#26377;&#36828;&#31243;&#20998;&#25903;&#34987;&#21024;&#38500;&#65292;&#22312;&#26412;&#22320;&#20063;&#21024;&#38500;&#20998;&#25903;</span>
+
+git pull --rebase &lt;remote&gt; &lt;remote_branch&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#20351;&#29992; rebase &#27169;&#24335;&#21512;&#24182;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2a5239b" class="outline-3">
+<h3 id="org2a5239b"><span class="section-number-3">7.18</span> <code>push</code></h3>
+<div class="outline-text-3" id="text-7-18">
+<p>
+<a id="org9bfeb4c"></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git push                                         <span class="org-comment-delimiter"># </span><span class="org-comment">&#25512;&#36865;&#24403;&#21069;&#20998;&#25903;&#65292;&#21040;&#21807;&#19968;&#30340;&#36861;&#36394;&#30340;&#36828;&#31243;&#20998;&#25903;</span>
+git push &lt;remote&gt;                                <span class="org-comment-delimiter"># </span><span class="org-comment">&#25512;&#36865;&#24403;&#21069;&#20998;&#25903;&#65292;&#21040;&#36861;&#36394;&#30340;&#36828;&#31243;&#20998;&#25903;</span>
+git push &lt;remote&gt; &lt;branch&gt;                       <span class="org-comment-delimiter"># </span><span class="org-comment">&#25512;&#36865;&#25351;&#23450;&#26412;&#22320;&#20998;&#25903;&#65292;&#21040;&#36861;&#36394;&#30340;&#36828;&#31243;&#20998;&#25903;</span>
+git push &lt;remote&gt; &lt;local_branch&gt;:&lt;remote_branch&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#25512;&#36865;&#25351;&#23450;&#26412;&#22320;&#20998;&#25903;&#65292;&#21040;&#25351;&#23450;&#36828;&#31243;&#20998;&#25903;</span>
+
+git push &lt;options&gt;
+    -all        <span class="org-comment-delimiter"># </span><span class="org-comment">&#25512;&#36865;&#26412;&#22320;&#25152;&#26377;&#20998;&#25903;&#21040;&#36828;&#31243;&#20179;&#24211;&#65288;&#19981;&#31649;&#26159;&#21542;&#23384;&#22312;&#23545;&#24212;&#36828;&#31243;&#20998;&#25903;&#65289;</span>
+    -f, --force <span class="org-comment-delimiter"># </span><span class="org-comment">&#24378;&#21046;&#26356;&#26032;&#65288;&#35206;&#30422;&#65289;&#36828;&#31243;&#20998;&#25903;&#65292;&#21363;&#20351;&#26377;&#20914;&#31361;&#25110;&#36828;&#31243;&#29256;&#26412;&#26356;&#26032;</span>
+    -u &lt;remote&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#25351;&#23450;&#40664;&#35748;&#36828;&#31243;&#20179;&#24211;</span>
+
+git push &lt;remote&gt; --delete &lt;branch&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#21024;&#38500;&#36828;&#31243;&#20998;&#25903;</span>
+git push &lt;remote&gt; :&lt;branch&gt;         <span class="org-comment-delimiter"># </span><span class="org-comment">&#25512;&#36865;&#31354;&#30340;&#20998;&#25903;&#21040;&#36828;&#31243;&#20998;&#25903;&#65292;&#30456;&#24403;&#20110;&#21024;&#38500;&#36828;&#31243;&#20998;&#25903;</span>
+
+git push &lt;remote&gt; &lt;tag&gt;             <span class="org-comment-delimiter"># </span><span class="org-comment">&#25512;&#36865;&#25351;&#23450;&#26631;&#31614;</span>
+git push &lt;remote&gt; --tags            <span class="org-comment-delimiter"># </span><span class="org-comment">&#25512;&#36865;&#25152;&#26377;&#26631;&#31614;</span>
+git push &lt;remote&gt; :refs/tags/&lt;tag&gt;  <span class="org-comment-delimiter"># </span><span class="org-comment">&#21024;&#38500;&#36828;&#31243;&#26631;&#31614;</span>
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>Simple 方式：不带参数的 <code>git push</code> 只推送当前分支，Git 2.0 之后默认采用。</li>
+<li>Matching 方式：不带参数的 <code>git push</code> 推送所有有对应的远程分支的本地分支，Git 2.0 之前默认采用。</li>
+</ul>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 5: </span>修改 <code>push</code> 方式：</label><pre class="src src-sh">git config --global push.default matching
+git config --global push.default simple
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge6fd429" class="outline-3">
+<h3 id="orge6fd429"><span class="section-number-3">7.19</span> <code>rebase</code></h3>
+<div class="outline-text-3" id="text-7-19">
+<p>
+<a id="orgb40c4c5"></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git rebase &lt;branch&gt;
+</pre>
+</div>
+
+<p>
+除 <code>merge</code> 之外的将一个分支合并进另一个分支的方式，与 <code>merge</code> 的结果相同，但 <code>rebase</code> 的历史记录更简洁。
+</p>
+
+<p>
+分支在 <code>rebase</code> 结束后会被删除，因此 <code>rebase</code> 最好只在本地进行，否则其他 <code>pull</code> 过此分支的人会收到影响，提交历史会变得混乱。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1a55832" class="outline-3">
+<h3 id="org1a55832"><span class="section-number-3">7.20</span> <code>remote</code></h3>
+<div class="outline-text-3" id="text-7-20">
+<p>
+<a id="orgeab359d"></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git remote    <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#25152;&#26377;&#36828;&#31243;&#20179;&#24211;</span>
+git remote -v <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#25152;&#26377;&#36828;&#31243;&#20179;&#24211;&#21644;&#22320;&#22336;</span>
+
+git remote show &lt;name&gt;            <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#25351;&#23450;&#36828;&#31243;&#20179;&#24211;&#20449;&#24687;</span>
+git remote add &lt;name&gt; &lt;url&gt;       <span class="org-comment-delimiter"># </span><span class="org-comment">&#28155;&#21152;&#36828;&#31243;&#20179;&#24211;</span>
+git remote remove &lt;name&gt; [&lt;url&gt;]  <span class="org-comment-delimiter"># </span><span class="org-comment">&#21024;&#38500;&#36828;&#31243;&#20179;&#24211;</span>
+git remote rename &lt;name1&gt; &lt;name2&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#37325;&#21629;&#21517;&#36828;&#31243;&#20179;&#24211;</span>
+
+git remote update
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga207c5d" class="outline-3">
+<h3 id="orga207c5d"><span class="section-number-3">7.21</span> <code>reset</code></h3>
+<div class="outline-text-3" id="text-7-21">
+<p>
+<a id="org24edb13"></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git reset &lt;file&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#37325;&#32622;&#26242;&#23384;&#21306;&#30340;&#25351;&#23450;&#25991;&#20214;&#21040;&#19978;&#19968;&#27425; commit&#65292;&#20294;&#24037;&#20316;&#21306;&#20445;&#25345;&#19981;&#21464;</span>
+
+git reset &lt;options&gt; &lt;commit&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#37325;&#32622;&#24403;&#21069;&#20998;&#25903; HEAD &#25351;&#38024;&#21040;&#25351;&#23450; commit</span>
+    --soft  <span class="org-comment-delimiter">#</span>
+    --mixed <span class="org-comment-delimiter"># </span><span class="org-comment">&#65288;&#40664;&#35748;&#65289;&#37325;&#32622;&#32531;&#23384;&#21306;&#65292;&#19981;&#25913;&#21464;&#24037;&#20316;&#21306;&#65288;&#20445;&#30041;&#20462;&#25913;&#65289;</span>
+    --hard  <span class="org-comment-delimiter"># </span><span class="org-comment">&#37325;&#32622;&#32531;&#23384;&#21306;&#21644;&#24037;&#20316;&#21306;&#65288;&#20002;&#24323;&#20462;&#25913;&#65289;</span>
+    --keep  <span class="org-comment-delimiter"># </span><span class="org-comment">&#32531;&#23384;&#21306;&#21644;&#24037;&#20316;&#21306;&#20445;&#25345;&#19981;&#21464;</span>
+    --merge <span class="org-comment-delimiter">#</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb104260" class="outline-3">
+<h3 id="orgb104260"><span class="section-number-3">7.22</span> <code>revert</code></h3>
+<div class="outline-text-3" id="text-7-22">
+<div class="org-src-container">
+<pre class="src src-sh">git revert &lt;commit&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org40483f6" class="outline-3">
+<h3 id="org40483f6"><span class="section-number-3">7.23</span> <code>rev-parse</code></h3>
+<div class="outline-text-3" id="text-7-23">
+<p>
+返回 SHA hash。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git rev-parse &lt;branch&gt;|&lt;pointer&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5f6438b" class="outline-3">
+<h3 id="org5f6438b"><span class="section-number-3">7.24</span> <code>rm</code></h3>
+<div class="outline-text-3" id="text-7-24">
+<p>
+<a id="org7f28f76"></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git rm &lt;options&gt; &lt;path&gt;/&lt;glob_pattern&gt; ...
+    -f       <span class="org-comment-delimiter"># </span><span class="org-comment">&#24378;&#21046;&#21024;&#38500;</span>
+    --cached <span class="org-comment-delimiter"># </span><span class="org-comment">&#20572;&#27490;&#36861;&#36394;&#65292;&#20174; Git &#20013;&#31227;&#38500;&#25991;&#20214;&#65292;&#20294;&#19981;&#20174;&#30828;&#30424;&#21024;&#38500;</span>
+             <span class="org-comment-delimiter"># </span><span class="org-comment">&#22914;&#29992;&#20110; .gitignore &#20013;&#36951;&#28431;&#30340;&#25991;&#20214;</span>
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>取消文件 <code>tracked</code> 状态并移出 working 目录（从硬盘删除）。</li>
+<li>等同于先 <code>rm</code> 文件并 <code>commit</code> 。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org3800c30" class="outline-3">
+<h3 id="org3800c30"><span class="section-number-3">7.25</span> <code>shortlog</code></h3>
+<div class="outline-text-3" id="text-7-25">
+<div class="org-src-container">
+<pre class="src src-sh">git shortlog -sn <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#25152;&#26377;&#25552;&#20132;&#36807;&#30340;&#29992;&#25143;&#65292;&#25353;&#25552;&#20132;&#27425;&#25968;&#25490;&#24207;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5cd5ce5" class="outline-3">
+<h3 id="org5cd5ce5"><span class="section-number-3">7.26</span> <code>show</code></h3>
+<div class="outline-text-3" id="text-7-26">
+<p>
+<a id="orgdf22a5e"></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git show &lt;commit&gt;             <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#25351;&#23450; commit &#30340;&#20803;&#25968;&#25454;&#21644;&#20462;&#25913;&#20869;&#23481;</span>
+git show --name-only &lt;commit&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#25351;&#23450; commit &#20462;&#25913;&#30340;&#25991;&#20214;</span>
+git show &lt;commit&gt;:&lt;file&gt;      <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#25351;&#23450; commit &#20013;&#25351;&#23450;&#25991;&#20214;&#30340;&#20462;&#25913;</span>
+
+git show &lt;tag&gt;    <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#26631;&#31614;&#20449;&#24687;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgefd1547" class="outline-3">
+<h3 id="orgefd1547"><span class="section-number-3">7.27</span> <code>stage</code></h3>
+<div class="outline-text-3" id="text-7-27">
+<p>
+<a id="orge62465d"></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git stage
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org03ecd3a" class="outline-3">
+<h3 id="org03ecd3a"><span class="section-number-3">7.28</span> <code>stash</code></h3>
+<div class="outline-text-3" id="text-7-28">
+<p>
+<a id="orgd12165a"></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git stash apply &lt;stash&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#37325;&#26032;&#24212;&#29992;&#25351;&#23450; stash &#30340;&#20462;&#25913;&#65292;&#19981;&#25351;&#23450;&#26102;&#65292;&#40664;&#35748;&#21462;&#26368;&#36817;&#30340; stash</span>
+git stash drop &lt;stash&gt;  <span class="org-comment-delimiter"># </span><span class="org-comment">&#21024;&#38500;&#25351;&#23450; stash</span>
+git stash list          <span class="org-comment-delimiter"># </span><span class="org-comment">&#21015;&#20986;&#25152;&#26377; stash</span>
+git stash pop &lt;stash&gt;   <span class="org-comment-delimiter"># </span><span class="org-comment">&#37325;&#26032;&#24212;&#29992;&#25351;&#23450; stash &#30340;&#20462;&#25913;&#65292;&#24182;&#21024;&#38500; stash</span>
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>执行 <code>stash</code> 后， <code>status</code> 会显示没有需要提交的文件。</li>
+<li>在一个分支上执行 <code>stash</code> 后，可以在其他分支上用 <code>stash apply</code> 应用修改，无法顺利应用的修改会导致合并冲突。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2558c4f" class="outline-3">
+<h3 id="org2558c4f"><span class="section-number-3">7.29</span> <code>status</code></h3>
+<div class="outline-text-3" id="text-7-29">
+<p>
+<a id="org0f53b19"></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git status
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org20a5e91" class="outline-3">
+<h3 id="org20a5e91"><span class="section-number-3">7.30</span> <code>tag</code></h3>
+<div class="outline-text-3" id="text-7-30">
+<p>
+<a id="orgd1a6a5e"></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git tag [&lt;options&gt;] &lt;tag&gt; [&lt;commit&gt;]
+    &lt;empty&gt;      <span class="org-comment-delimiter"># </span><span class="org-comment">&#22312;&#24403;&#21069;&#25110;&#25351;&#23450; commit &#26032;&#24314;&#26631;&#31614;</span>
+    -a           <span class="org-comment-delimiter">#</span>
+    -m &lt;message&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#28155;&#21152;&#26631;&#31614;&#20449;&#24687;</span>
+
+git tag [&lt;options&gt;]
+    &lt;empty&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#21015;&#20986;&#25152;&#26377;&#26631;&#31614;</span>
+
+git tag -d &lt;tag&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#21024;&#38500;&#26412;&#22320;&#26631;&#31614;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfad5a1d" class="outline-3">
+<h3 id="orgfad5a1d"><span class="section-number-3">7.31</span> <code>whatchanged</code></h3>
+<div class="outline-text-3" id="text-7-31">
+<div class="org-src-container">
+<pre class="src src-sh">git whatchanged &lt;file&gt;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org24fdb59" class="outline-2">
+<h2 id="org24fdb59"><span class="section-number-2">8</span> 常用</h2>
+<div class="outline-text-2" id="text-8">
+</div><div id="outline-container-orgfdc1733" class="outline-3">
+<h3 id="orgfdc1733"><span class="section-number-3">8.1</span> 创建仓库</h3>
+<div class="outline-text-3" id="text-8-1">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 6: </span>将已有项目加入到 Git</label><pre class="src src-sh">git init              <span class="org-comment-delimiter"># </span><span class="org-comment">&#22312;&#39033;&#30446;&#30446;&#24405;&#19979;&#29983;&#25104; .git/ &#23376;&#30446;&#24405;&#21644;&#21021;&#22987;&#25991;&#20214;</span>
+git add &lt;files&gt;       <span class="org-comment-delimiter"># </span><span class="org-comment">&#21152;&#20837;&#25991;&#20214;&#21040; Git &#24182;&#21021;&#22987;&#25552;&#20132;                       </span>
+git commit -m <span class="org-string">"..."</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 7: </span>从远程 clone 仓库到本地</label><pre class="src src-sh">git clone &lt;url&gt; &lt;dir&gt;
+</pre>
+</div>
+
+<p>
+如果不指定本地目录名，则新建与项目同名的目录，并检出最新工作目录。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga97e9ac" class="outline-3">
+<h3 id="orga97e9ac"><span class="section-number-3">8.2</span> Hotfix</h3>
+<div class="outline-text-3" id="text-8-2">
+<ol class="org-ol">
+<li>从工作分支切换到生产分支，更新分支。</li>
+<li>创建 hotfix 分支，修复问题。</li>
+<li>合并 hotfix 分支，推送。</li>
+<li>切换回工作分支。</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org65c59e8" class="outline-3">
+<h3 id="org65c59e8"><span class="section-number-3">8.3</span> 删除所有已合并分支</h3>
+<div class="outline-text-3" id="text-8-3">
+<div class="org-src-container">
+<pre class="src src-sh">git branch --merged | egrep -v <span class="org-string">"(^\*|master|dev)"</span> | xargs git branch -d
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org74cf16b" class="outline-3">
+<h3 id="org74cf16b"><span class="section-number-3">8.4</span> 同步 fork</h3>
+<div class="outline-text-3" id="text-8-4">
+<div class="org-src-container">
+<pre class="src src-sh">git remote add upstream git://...
+git fetch upstream
+git checkout master
+git merge upstream/master master
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd06ac35" class="outline-3">
+<h3 id="orgd06ac35"><span class="section-number-3">8.5</span> 查找删除记录</h3>
+<div class="outline-text-3" id="text-8-5">
+<div class="org-src-container">
+<pre class="src src-sh">git log -c -S <span class="org-string">"&lt;deleted_text&gt;"</span> /path/to/file
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9571d64" class="outline-3">
+<h3 id="org9571d64"><span class="section-number-3">8.6</span> 撤销修改</h3>
+<div class="outline-text-3" id="text-8-6">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 8: </span>撤销一个文件的修改到 <code>HEAD</code> 。</label><pre class="src src-sh">git checkout /path/to/file
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org41c4c71" class="outline-2">
+<h2 id="org41c4c71"><span class="section-number-2">9</span> 词汇表</h2>
+<div class="outline-text-2" id="text-9">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">branch</th>
+<th scope="col" class="org-left">分支</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">checkout</td>
+<td class="org-left">检出</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">commit</td>
+<td class="org-left">提交</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">conflict</td>
+<td class="org-left">冲突</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">merge</td>
+<td class="org-left">合并</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">pull</td>
+<td class="org-left">拉取</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">push</td>
+<td class="org-left">推送</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">remote</td>
+<td class="org-left">远程</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">repository</td>
+<td class="org-left">仓库</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">snapshot</td>
+<td class="org-left">快照</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">working directory</td>
+<td class="org-left">工作目录</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org130d4b1" class="outline-2">
+<h2 id="org130d4b1"><span class="section-number-2">10</span> 链接</h2>
+<div class="outline-text-2" id="text-10">
+<ol class="org-ol">
+<li><a href="https://git-scm.com/docs">Git Reference</a></li>
+<li><a href="https://www.atlassian.com/git/workflows">Comparing Workflows</a></li>
+<li><a href="http://nvie.com/posts/a-successful-git-branching-model/">A successful Git branching model</a></li>
+</ol>
+
+<hr />
+
+<ol class="org-ol">
+<li><a href="http://makandracards.com/makandra/527-squash-several-git-commits-into-a-single-commit">Squash several Git commits into a single commit</a></li>
+<li><a href="http://longair.net/blog/2009/04/16/git-fetch-and-merge/">Fetch and merge, don't pull</a></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2019-05-12 Sun 18:46</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

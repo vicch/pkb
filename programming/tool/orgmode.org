@@ -1,0 +1,401 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Org-mode
+
+* 按键缩写
+
+| =C-=  | =Ctrl=   |
+|-------+----------|
+| =M-=  | =Alt=    |
+|-------+----------|
+| =S-=  | =Shift=  |
+|-------+----------|
+| =RET= | =Return= |
+
+* 快捷键
+** 控制
+
+| =C-x= =u=       | 撤销     |
+|-----------------+----------|
+| =C-x= =C-s=     | 保存     |
+|-----------------+----------|
+| =C-c= =C-e=     | 导出     |
+|-----------------+----------|
+| =C-x= =RET= =f= | 设置编码 |
+
+| =M-w= | 复制 |
+|-------+------|
+| =C-y= | 粘贴 |
+|-------+------|
+| =C-w= | 剪切 |
+
+** 大纲
+
+| =Tab=       | 循环切换当前大纲状态 |
+| =S-Tab=     | 循环切换所有大纲状态 |
+|-------------+----------------------|
+| =C-c= =C-n= | 上一标题             |
+| =C-c= =C-p= | 下一标题             |
+|-------------+----------------------|
+| =C-c= =C-f= | 上一标题（同级）     |
+| =C-c= =C-b= | 下一标题（同级）     |
+|-------------+----------------------|
+| =C-c= =C-u= | 上一级标题           |
+|-------------+----------------------|
+| =C-c= =C-j= | 大纲浏览状态         |
+
+** 表格
+
+| =M-S-Up=          | 删除行                     |
+| =M-S-Down=        | 添加行                     |
+| =M-S-Left=        | 删除列                     |
+| =M-S-Right=       | 添加列                     |
+|-------------------+----------------------------|
+| =M-Up=            | 上移一行                   |
+| =M-Down=          | 下移一行                   |
+| =M-Left=          | 左移一列                   |
+| =M-Right=         | 右移一列                   |
+|-------------------+----------------------------|
+| =C-c= =C-x= =M-w= | 复制单元格                 |
+| =C-c= =C-x= =C-w= | 剪切单元格                 |
+| =C-c= =C-x= =C-y= | 粘贴单元格                 |
+|-------------------+----------------------------|
+| =M-Return=        | 光标之后内容移到下方单元格 |
+|-------------------+----------------------------|
+| =C-c= =-=         | 下方插入分隔行             |
+| =C-c= =Return=    | 下方插入分隔行             |
+
+| =C-c= =~=                         | 创建表格、识别表格 |
+|-----------------------------------+--------------------|
+| =C-c= @@html:<code>&#39;</code>@@ | 编辑表格           |
+
+** 文本
+
+#+CAPTION: 文本块
+| =<s= =Tab= | =#+BEGIN_SRC ... #+END_SRC=         |
+|------------+-------------------------------------|
+| =<e= =Tab= | =#+BEGIN_EXAMPLE ... #+END_EXAMPLE= |
+|------------+-------------------------------------|
+| =<q= =Tab= | =#+BEGIN_QUOTE ... #+END_QUOTE=     |
+
+#+CAPTION: 文本行
+| =C-S-Backspace= | 删除整行 |
+
+** 搜索
+
+| =C-s= | 开始搜索，到下一处 |
+
+* 特殊格式
+
+| HTML     | =@@html:= ... =@@=     |
+|----------+------------------------|
+| 链接     | =[[<link>][<label>]]=              |
+|          | =[[file:<targer>.org::<anchor>][<label>]]=              |
+|          | =[[file:<target>.html#<anchor>][<label>]]=              |
+|----------+------------------------|
+| 锚点     | =<<anchor>>=           |
+|          | =[[<anchor>][<label>]]=              |
+|----------+------------------------|
+| 代码     | ~=code=~               |
+|          | =~code~=               |
+|----------+------------------------|
+| 定义列表 | =- name :: definition= |
+
+| 表格中转义 @@html:<code>&#124;</code>@@ | =@@html:<code>&#124;</code>@@= |
+|-----------------------------------------+--------------------------------|
+| 段落内换行                              | =\\=                           |
+
+| 图片、表格标题 | =#+CAPTION: <text>=                |
+|----------------+------------------------------------|
+| HTML 属性      | =#+ATTR_HTML: :<attr> <value> ...= |
+|                | e.g. =#+ATTR_HTML: :class special= |
+
+* 代码块
+
+#+CAPTION: 不输出代码块（直接嵌入生成的文件，不用每次输出时重新生成）
+#+BEGIN_SRC code
+\#+BEGIN_SRC ... :exports none
+#+END_SRC
+
+* MathJax
+
+#+CAPTION: 行内
+#+BEGIN_SRC text
+$ ... $
+\( ... \)
+#+END_SRC
+
+#+CAPTION: 段落
+#+BEGIN_SRC text
+\begin{equation} ... \end{equation}
+$$ ... $$
+\[ ... \]
+#+END_SRC
+
+** Debug
+
+#+BEGIN_SRC lisp
+;; site-lisp/org/lisp/ox-html.el
+;; line 1031
+tex2jax: {
+    inlineMath: [ ['$', '$'], [\"\\\\(\",\"\\\\)\"] ],
+    ...
+}
+#+END_SRC
+
+* PlantUML
+** 安装
+
+1 - 安装 Graphviz 和 PlantUML
+
+2 - 将 plantuml.jar 放置到 =emacs/etc/=
+
+#+CAPTION: 3 - 修改 =config/.emacs=
+#+BEGIN_SRC lisp
+;; PlantUML, active Org-babel languages
+(org-babel-do-load-languages
+  'org-babel-load-languages
+  '(;; other Babel languages
+    (plantuml . t)))
+(setq org-plantuml-jar-path
+  (expand-file-name "../etc/plantuml.jar"))
+#+END_SRC
+
+** 使用
+
+#+BEGIN_SRC code
+\#+BEGIN_SRC plantuml :file ../images/.svg
+!include ../styles/plantuml-style
+...
+\#+END_SRC
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC code
+\#+BEGIN_SRC plantuml :file ../images/工作日志_0505_01.svg
+!include ../styles/plantuml-style
+
+start
+:读 Redis 经验值
+换算为旧等级;
+:读 MCQ 经验值
+换算为新等级;
+if (新等级 > 旧等级) then (Y)
+  :写新等级到平台;
+else (N)
+endif
+stop
+\#+END_SRC
+#+END_SRC
+
+** =skinparam=
+
+[[http://plantuml.com/skinparam.html][skinparam]]
+
+#+CAPTION: 示例
+#+BEGIN_SRC sh
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+...
+@enduml
+#+END_SRC
+
+| =monochrome= | Boolean | 单色主题 |
+|--------------+---------+----------|
+| =shadowing=  | Boolean | 显示阴影 |
+|--------------+---------+----------|
+|              |         |          |
+
+** 资源
+
+[[http://sdntutorials.com/steps-to-install-plantuml-on-windows-7/][Steps To Install PlantUML On Windows 7]] \\
+[[http://plantuml.com/][PlantUML in a nutshell]] \\
+
+* Ditaa
+
+#+CAPTION: 使用
+#+BEGIN_SRC code
+\#+BEGIN_SRC ditaa :file <path> :cmdline <options>
+...
+\#+END_SRC
+#+END_SRC
+
+#+CAPTION: Options
+| =-E=         | Prevents the separation of common edges of shapes |
+|--------------+---------------------------------------------------|
+| =-S=         | Turns off the drop-shadow effect                  |
+|--------------+---------------------------------------------------|
+| =-s <float>= | Scale                                             |
+
+* Latex
+** 安装
+
+1 - 安装 [[http://miktex.org/download][MikTEX]] ，注意安装路径中不能有空格
+
+2 - 将 AUCTex 文件覆盖到 emacs 文件夹下
+
+#+CAPTION: 4 - 测试代码
+#+BEGIN_SRC text
+\#+BEGIN_SRC latex :file ../images/test.png
+\LaTeX
+\#+END_SRC
+#+END_SRC
+
+3 - 安装 [[http://www.imagemagick.org/script/binary-releases.php#windows][ImageMagick]]
+
+4 - 安装 [[http://ghostscript.com/download/gsdnld.html][Ghostscript]]
+
+** 配置
+
+#+CAPTION: 使用 Latex
+#+BEGIN_SRC text
+(load "auctex.el" nil t t)
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((latex . t)))
+#+END_SRC
+
+#+CAPTION: 默认样式
+#+BEGIN_SRC text
+(setq org-format-latex-options
+ '(:foreground "Black"
+   :background "Transparent"
+   :scale 2.0
+   :html-foreground "Black"
+   :html-background "Transparent"
+   :html-scale 2.0
+   :matchers ("begin" "$1" "$$" "\\(" "\\[")))
+#+END_SRC
+
+#+CAPTION: 使用 TikZ
+#+BEGIN_SRC text
+(add-to-list 'org-latex-packages-alist '("" "tikz" "") t)
+(setq
+ org-format-latex-header
+ (concat
+  org-format-latex-header
+  "\n\\usepackage[active,tightpage]{preview}\n\\PreviewEnvironment{tikzpicture}"))
+#+END_SRC
+
+** 使用
+
+遇到错误信息 =Failed to create dvi file from c:/.../*.tex= ，执行该文件，会使用 MikTEX 编辑器打开，尝试手动输出，会提示安装缺失的包。
+
+遇到错误信息 =Failed to create png file from c:/.../*.tex= ，在命令行执行 =dvipng c:/.../*.dvi= （注意后缀变为 =dvi=），会提示安装缺失的包。
+
+-----
+
+#+CAPTION: 加载包
+#+BEGIN_SRC text
+#+LATEX_HEADER: \usepackage{...}
+#+END_SRC
+
+-----
+
+#+CAPTION: 使用 imagemagick 输出 svg
+#+BEGIN_SRC text
+#+HEADER: :imagemagick yes :iminoptions -density 600 :imoutoptions -geometry 400
+#+HEADER: :file ../images/.../.svg
+\#+BEGIN_SRC latex
+\begin{tikzpicture}
+...
+\end{tikzpicture}
+\#+END_SRC
+#+END_SRC
+
+-----
+
+#+CAPTION: 使用 dvisvgm 输出 svg
+#+BEGIN_SRC text
+#+HEADER: :file ../images/.../.svg
+\#+BEGIN_SRC latex
+\begin{tikzpicture}
+...
+\end{tikzpicture}
+\#+END_SRC
+#+END_SRC
+
+使用 dvisvgm 输出 svg，需要先修改 Org-mode 代码。
+
+#+CAPTION: 修改 =site-lisp/org/lisp/ob-latex.el=
+#+BEGIN_SRC lisp
+;; Line 95
+((and (string-match "\\.svg$" out-file) (not imagemagick))
+ (org-create-formula-image
+  body out-file org-format-latex-options in-buffer))
+#+END_SRC
+
+#+CAPTION: 修改 =site-lisp/org/lisp/org.el=
+#+BEGIN_SRC lisp
+;; Line 18623
+(if (featurep 'xemacs)
+    (call-process "dvisvgm" nil nil nil
+          ;;"-fg" fg "-bg" bg
+          ;;"-T" "tight"
+          ;;"-Z" "1.5"
+          "-o" pngfile
+          "--no-fonts"
+          dvifile)
+    (call-process "dvisvgm" nil nil nil
+          ;;"-fg" fg "-bg" bg
+          ;;"-D" dpi
+          ;;"-x" scale "-y" scale
+          ;;"-T" "tight"
+          ;;"-Z" "1.5"
+          "-o" pngfile
+          "--no-fonts"
+          dvifile))
+#+END_SRC
+* 修改
+
+#+CAPTION: =<blockquote>= 输出标题：
+#+BEGIN_SRC lisp
+; \site-lisp\org\lisp\ox-html.el line 2979
+(defun org-html-quote-block (quote-block contents info)
+  "Transcode a QUOTE-BLOCK element from Org to HTML.
+CONTENTS holds the contents of the block.  INFO is a plist
+holding contextual information."
+  ; (format "<blockquote>\n%s</blockquote>" contents))
+  (let ((caption (org-export-get-caption quote-block)))
+   (format
+    "<div class=\"org-quote-container\">\n%s%s\n</div>"
+    (if (not caption) ""
+      (format "<label class=\"org-src-name\">%s</label>"
+        (org-export-data caption info)))
+    (format "<blockquote>\n%s</blockquote>" contents))))
+#+END_SRC
+
+* 安装
+** MacOS
+
+#+BEGIN_SRC sh
+brew cask install emacs
+ln -s ~/Dropbox/portable/orgmode/config/.emacs ~/.emacs
+#+END_SRC
+
+* 链接
+
+1. [[http://home.fnal.gov/~neilsen/notebook/orgExamples/org-examples.html][Emacs org-mode examples and cookbook]]
+1. [[http://orgmode.org/worg/org-tutorials/index.html][Org tutorials]]
+1. [[http://orgmode.org/manual/index.html][The Org Manual]]
+1. [[http://orgmode.org/orgcard.txt][Org-Mode Reference Card]]
+1. [[http://orgmode.org/worg/org-faq.html][Org-mode Frequently Asked Questions]]
+1. [[http://doc.norang.ca/org-mode.html][Org Mode - Organize Your Life In Plain Text!]]
+1. [[http://www.cnblogs.com/holbrook/archive/2012/04/12/2444992.html][Org-mode: 最好的文档编辑利器]]
+1. [[http://aaronbedra.com/emacs.d/][Aaron Bedra's Emacs 24 Configuration]]
+
+-----
+
+1. [[http://orgmode.org/worg/org-symbols.html][Symbols in Org-mode]]
+1. [[http://www.yann-ollivier.org/latex/texsymbols.pdf][The Comprehensive LaTeX Symbol List]]
+1. [[http://detexify.kirelabs.org/classify.html][Detexify]]
+
+-----
+
+1. [[http://www.martinkeefe.com/math/mathjax3][MATHJAX GUIDE - MATH SYMBOLS AND MATH FONTS]]
+1. [[http://www.suluclac.com/Wiki+MathJax+Syntax][Wiki MathJax Syntax]]
+1. [[http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference][MathJax basic tutorial and quick reference]]
+
+-----
+
+1. [[http://ditaa.sourceforge.net/][Ditaa]]

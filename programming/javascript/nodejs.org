@@ -1,0 +1,54 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Node.js
+
+* =npm=
+** =init=
+
+初始化 =package.json= 。
+
+#+BEGIN_SRC sh
+npm init
+#+END_SRC
+
+** =install=
+
+下载 =package.json= 中声明的依赖模块到 =node_modules= 。生成 =package-lock.json= ，用于锁定依赖的确切版本。
+
+#+BEGIN_SRC sh
+npm install <options> <package>
+  -g          # Install globally
+  --save-dev
+  --save-prod
+#+END_SRC
+
+** =run=
+
+#+BEGIN_SRC sh
+npm run <command>
+    start # 运行开发版本
+    test  # 运行测试
+        -- --coverage # 直接返回结果，不等待输入
+    build # 编译生产版本
+#+END_SRC
+* =axios=
+
+[[https://www.npmjs.com/package/axios][axios | npm]]
+
+#+CAPTION: =Api.js=
+#+BEGIN_SRC js
+import Axios from 'axios';
+export default Axios.create({
+  baseURL: 'https://api.example.com',
+  headers: { ... } // Authentication etc.
+});
+#+END_SRC
+
+#+CAPTION: =App.js=
+#+BEGIN_SRC js
+import Api from './Api.js';
+async () => {
+  const response = await Api.get('/foo/bar', { // API endpoint
+    params: { ... }, // API params
+  });
+}
+#+END_SRC

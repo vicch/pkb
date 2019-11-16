@@ -1,0 +1,62 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Network
+
+* OSI
+
+file:../images/network/05.png
+
+file:../images/network/06.png
+
+* 协议
+
+file:../images/network/01.png
+
+file:../images/network/04.png
+
+* DNS
+
+file:../images/network/07.jpg
+
+* Socket
+
+- 对 TCP/IP 协议的抽象、封装和应用。
+- 不是协议，而是一个调用接口（API），使程序员更方便地使用 TCP/IP 协议栈。
+- Internet 上的主机一般运行了多个服务软件，每种服务都打开一个 socket，并绑定到一个端口，socket 提供了进程通信的端点，应用程序通过 socket 向网络发出请求或者应答网络请求。
+
+file:../images/network/02.jpg
+
+** 连接过程
+
+1. 服务器监听：服务器端 socket 处于等待连接的状态，实时监控网络状态。
+2. 客户端请求：客户端 socket 提出连接请求，要连接的目标是服务器端 socket。
+3. 连接确认：
+   - 服务器端 socket 监听、接收到客户端 socket 的连接请求。
+   - 服务器端建立一个新的线程，把服务器端 socket 的描述发给客户端。
+   - 客户端确认此描述，连接建立。
+
+file:../images/network/03.png
+
+** 基本函数接口
+
+| =create=  |   |
+|-----------+---|
+| =listen=  |   |
+|-----------+---|
+| =connect= |   |
+|-----------+---|
+| =accept=  |   |
+|-----------+---|
+| =send=    |   |
+|-----------+---|
+| =read=    |   |
+|-----------+---|
+| =write=   |   |
+
+* 链接
+
+1. [[http://www.tcpipguide.com/index.htm][The TCP/IP Guide]]
+
+-----
+
+1. [[https://www.petekeen.net/dns-the-good-parts][DNS: The Good Parts]]
+1. [[http://www.integralist.co.uk/posts/dnsbasics.html][DNS 101]]

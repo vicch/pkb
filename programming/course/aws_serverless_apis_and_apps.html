@@ -1,0 +1,2912 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-09-06 Fri 18:53 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AWS Serverless APIs and Apps</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">AWS Serverless APIs and Apps</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgbfc150d">1 Get Started</a>
+<ul>
+<li><a href="#org7ffb9e8">1.1 What is Serverless Development?</a></li>
+<li><a href="#org807ac54">1.2 AWS Signup and First Serverless API</a></li>
+<li><a href="#org0cff214">1.3 Course Structure</a></li>
+</ul>
+</li>
+<li><a href="#org8d9febe">2 Create an API with API Gateway and AWS Lambda</a>
+<ul>
+<li><a href="#orgf382737">2.1 Create a New API</a></li>
+<li><a href="#org4702202">2.2 Handle CORS and <code>OPTIONS</code> Preflight Request</a></li>
+<li><a href="#org8d998df">2.3 Create a HTTP Method</a></li>
+<li><a href="#org16b77fb">2.4 Connect Lambda Functions to API Gateway Endpoints</a></li>
+<li><a href="#org77bcc83">2.5 Access API from Web and Fix CORS Issue</a></li>
+<li><a href="#org2f71c0c">2.6 Understand "Event" in Lambda Function</a></li>
+<li><a href="#org818cb14">2.7 Forward Requests with "Proxy Integration"</a></li>
+<li><a href="#org812244d">2.8 Access Lambda Logs</a></li>
+<li><a href="#org465d448">2.9 Get Started with Mapping Templates</a></li>
+<li><a href="#org9cf4499">2.10 Extract Request Data with Mapping Templates</a></li>
+<li><a href="#orgfc17437">2.11 Map Response Data</a></li>
+<li><a href="#org4e7bedf">2.12 Use Model and Validate Requests</a></li>
+<li><a href="#org68f65ca">2.13 Models and Mappings</a></li>
+<li><a href="#org94352a7">2.14 Add <code>DELETE</code> Method Endpoint to the API</a></li>
+<li><a href="#org3d54561">2.15 Use Path Parameters</a></li>
+<li><a href="#org1982871">2.16 Access the API from the Web</a></li>
+</ul>
+</li>
+<li><a href="#org80e7513">3 Data Storage with DynamoDB</a>
+<ul>
+<li><a href="#org6ccd06b">3.1 NoSQL vs SQL</a></li>
+<li><a href="#orgdafbdf5">3.2 Use DynamoDB with Lambda</a></li>
+<li><a href="#org9f7a694">3.3 Create a Table in DynamoDB</a></li>
+<li><a href="#orgef24eba">3.4 Create and Scan Items</a></li>
+<li><a href="#org4b44f94">3.5 Access DynamoDB from Lambda</a></li>
+<li><a href="#orgc0caa4a">3.6 Put Items into DynamoDB Table from Lambda</a></li>
+<li><a href="#orgc9c0e65">3.7 Set Permissions Right</a></li>
+<li><a href="#orgb31105b">3.8 Use API Gateway Data for Item Creation</a></li>
+<li><a href="#org5599d11">3.9 Map the Response and Web Testing</a></li>
+<li><a href="#org157bc0e">3.10 Scan Data in DynamoDB from Lambda</a></li>
+<li><a href="#org42390dc">3.11 Improve the IAM Permissions</a></li>
+<li><a href="#org485edd4">3.12 Get a Single Item from DynamoDB via Lambda</a></li>
+<li><a href="#orgd84eda5">3.13 Prepare Delete Permissions</a></li>
+<li><a href="#org0ce4380">3.14 Give Lambda Logging Permissions</a></li>
+<li><a href="#orgb37ae21">3.15 Delete Items in DynamoDB via Lambda</a></li>
+<li><a href="#orgabc45c7">3.16 Map DynamoDB Responses</a></li>
+</ul>
+</li>
+<li><a href="#orgbb84d5f">4 Authenticate Users with Cognito and API Gateway Authorizers</a>
+<ul>
+<li><a href="#org3d70d3b">4.1 How to Add Authentication to API Gateway</a></li>
+<li><a href="#orgfe0e8fd">4.2 Understand Custom Authorizer</a></li>
+<li><a href="#org6d7c41d">4.3 Create a Custom Authorizer Function</a></li>
+<li><a href="#org39d3d9a">4.4 Use Custom Authorizers</a></li>
+<li><a href="#org41d1e19">4.5 Retrieve Users from Custom Authorizers</a></li>
+<li><a href="#org72acdd7">4.6 Create Cognito User Pool</a></li>
+<li><a href="#org00a36ac">4.7 Understand Cognito Auth Flow</a></li>
+<li><a href="#org0fe2793">4.8 Add Cognito to Frontend App</a></li>
+<li><a href="#org4b0e06d">4.9 Add Signup to Frontend App</a></li>
+<li><a href="#orgc0bdac2">4.10 Add User Confirmation to Frontend App</a></li>
+<li><a href="#org0d6347e">4.11 Add Signin to Frontend App</a></li>
+<li><a href="#org23a8bb7">4.12 Manage User State with Cognito</a></li>
+<li><a href="#org699e4b5">4.13 Use Cognito Authorizer with API Gateway</a></li>
+<li><a href="#org9865332">4.14 Pass the Right User ID to Lambda</a></li>
+<li><a href="#org298b792">4.15 Use Query Params &amp; Cognito from Lambda</a></li>
+<li><a href="#orgd1d0a69">4.16 Pass Query Params from the Frontend</a></li>
+<li><a href="#org30eff9e">4.17 Pass User ID to the <code>DELETE</code> Endpoint</a></li>
+</ul>
+</li>
+<li><a href="#org6187e19">5 Host a Serverless SPA</a>
+<ul>
+<li><a href="#orge458c2a">5.1 AWS S3</a></li>
+<li><a href="#org6b48847">5.2 Create a S3 Bucket</a></li>
+<li><a href="#org41a79e2">5.3 Upload Website to the Bucket</a></li>
+<li><a href="#org1fa607a">5.4 Use S3 for Hosting</a></li>
+<li><a href="#orgb00bdb4">5.5 Turn a S3 Bucket into a Static Website</a></li>
+<li><a href="#orgcd9d0bc">5.6 Set Up Logging</a></li>
+<li><a href="#org43d5576">5.7 Set Up CloudFront Distribution</a></li>
+<li><a href="#org5c35286">5.8 Connect a Domain to CloudFront Distribution</a>
+<ul>
+<li><a href="#org63c9aa9">5.8.1 Request a Certificate with ACM</a></li>
+<li><a href="#org25478f3">5.8.2 Set Custom Certificate in CloudFront Distribution</a></li>
+<li><a href="#orgb02ab07">5.8.3 Set <code>CNAME</code> in CloudFront Distribution</a></li>
+<li><a href="#org3790ea0">5.8.4 Create Hosted Zone in Route53</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org3e860d3">6 Beyond the Basics - An Outlook</a>
+<ul>
+<li><a href="#org58bd2d9">6.1 Document an API</a></li>
+<li><a href="#org6ccb100">6.2 Other AWS Lambda Triggers</a>
+<ul>
+<li><a href="#orgb93af51">6.2.1 Create Lambda Function for S3</a></li>
+</ul>
+</li>
+<li><a href="#orgbe77e2a">6.3 Run Node/Express App via Lambda and API Gateway</a>
+<ul>
+<li><a href="#org54e0e3c">6.3.1 Run Express Application Locally</a></li>
+<li><a href="#orgd03f51c">6.3.2 Integrate Express Application with <code>aws-serverless-express</code></a></li>
+<li><a href="#org294a7f1">6.3.3 Import Express Application to Lambda</a></li>
+<li><a href="#orgd7038ab">6.3.4 Create API to Forward Requests to Lambda</a></li>
+</ul>
+</li>
+<li><a href="#org55de4fe">6.4 Pros and Cons of Serverless Node/Express MPA</a></li>
+<li><a href="#org329c1da">6.5 Serverless Apps and Security</a>
+<ul>
+<li><a href="#org8ae3140">6.5.1 Application-Related Issues</a></li>
+<li><a href="#org35a5845">6.5.2 Infrastructure-Related Issues</a></li>
+</ul>
+</li>
+<li><a href="#org6a9ed78">6.6 Get to Know the Serverless Framework</a></li>
+<li><a href="#org6cd5ff8">6.7 Get to Know SAM (Serverless Application Model) by AWS</a></li>
+<li><a href="#org7e1937d">6.8 Test Serverless Applications with LocalStack</a></li>
+<li><a href="#org9fe5cdb">6.9 Other Useful AWS Services</a></li>
+</ul>
+</li>
+<li><a href="#org938ef62">7 Links</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgbfc150d" class="outline-2">
+<h2 id="orgbfc150d"><span class="section-number-2">1</span> Get Started</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-org7ffb9e8" class="outline-3">
+<h3 id="org7ffb9e8"><span class="section-number-3">1.1</span> What is Serverless Development?</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+In serverless architecture:
+</p>
+
+<ul class="org-ul">
+<li>The frontend of the app can be a SPA (Single Page Application).</li>
+<li>The backend of the app doesn't run on traditional web and database servers, instead it runs completely on AWS (but without any EC2 instances).</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="../images/aws_serverless_apis_and_apps/01.png" alt="01.png" />
+</p>
+</div>
+
+<p>
+Advantages of serverless arch:
+</p>
+
+<ul class="org-ul">
+<li>No capacity or scaling concerns (e.g. what CPU and RAM to use, how many servers to run). Serverless apps have unlimited on-demand capacity which scales automatically, and is paid for code executions.</li>
+<li>No maintenance efforts (e.g. update OS, prevent security issues). Serverless apps run on AWS managed infra.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org807ac54" class="outline-3">
+<h3 id="org807ac54"><span class="section-number-3">1.2</span> AWS Signup and First Serverless API</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Go to <a href="https://console.aws.amazon.com/apigateway/">AWS API Gateway</a> and create an API:
+</p>
+
+<ul class="org-ul">
+<li>Protocol: REST</li>
+<li>API type: New API</li>
+<li>API name: <code>first-api</code></li>
+</ul>
+
+<p>
+Create a resource under the API:
+</p>
+
+<ul class="org-ul">
+<li>Resource name: <code>first-api-test</code></li>
+<li>Resource path: <code>/first-api-test</code> (by default)</li>
+</ul>
+
+<p>
+Create a method under the resource:
+</p>
+
+<ul class="org-ul">
+<li>Method: <code>GET</code></li>
+<li>Integration type: Mock</li>
+</ul>
+
+<p>
+Add some JSON as mock response data under <code>first-api-test</code> &gt; GET &gt; Integration response &gt; Default response &gt; Mapping templates &gt; <code>application/json</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">{
+  <span class="org-string">"message"</span>: <span class="org-string">"success"</span>
+}
+</pre>
+</div>
+
+<p>
+Deploy the API under <code>first-api</code> &gt; Resources &gt; Actions &gt; Deploy API:
+</p>
+
+<ul class="org-ul">
+<li>Deployment stage: New stage</li>
+<li>Stage name: <code>dev</code></li>
+</ul>
+
+<p>
+Confirm the endpoint is working by copying the URL under <code>first-api</code> &gt; Stages &gt; <code>dev</code> &gt; Invoke URL, and append <code>/first-api-test</code> to it: <a href="https://*.execute-api.us-east-1.amazonaws.com/dev/first-api-test">https://*.execute-api.us-east-1.amazonaws.com/dev/first-api-test</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0cff214" class="outline-3">
+<h3 id="org0cff214"><span class="section-number-3">1.3</span> Course Structure</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+The core serverless services of AWS include:
+</p>
+
+<ul class="org-ul">
+<li>Business logic: API Gateway and Lambda</li>
+<li>Data storage: DynamoDB</li>
+<li>Authentication: Cognito</li>
+<li>Content hosting and delivery: S3, CloudFront and Route53</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="../images/aws_serverless_apis_and_apps/02.png" alt="02.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8d9febe" class="outline-2">
+<h2 id="org8d9febe"><span class="section-number-2">2</span> Create an API with API Gateway and AWS Lambda</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-orgf382737" class="outline-3">
+<h3 id="orgf382737"><span class="section-number-3">2.1</span> Create a New API</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Go to <a href="https://console.aws.amazon.com/apigateway/">AWS API Gateway</a> and create an API:
+</p>
+
+<ul class="org-ul">
+<li>Protocol: REST</li>
+<li>API type: New API</li>
+<li>API name: <code>compare-yourself</code></li>
+</ul>
+
+<p>
+Create a resource under the API:
+</p>
+
+<ul class="org-ul">
+<li>Resource name: <code>compare-yourself</code></li>
+<li>Resource path: <code>/compare-yourself</code> (by default)</li>
+<li>Enable API Gateway CORS: true</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org4702202" class="outline-3">
+<h3 id="org4702202"><span class="section-number-3">2.2</span> Handle CORS and <code>OPTIONS</code> Preflight Request</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li><a href="https://developer.mozilla.org/en-US/docs/Glossary/CORS">MDN Web Docs | CORS</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request">MDN Web Docs | Preflight Reqeust</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org8d998df" class="outline-3">
+<h3 id="org8d998df"><span class="section-number-3">2.3</span> Create a HTTP Method</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Create a method under <code>compare-yourself</code> resource:
+</p>
+
+<ul class="org-ul">
+<li>Method: <code>POST</code></li>
+<li>Integration type: Lambda function</li>
+<li>Lambda function: Click <a href="https://console.aws.amazon.com/lambda/home?#/create">Create a Lambda Function</a></li>
+</ul>
+
+<p>
+Create a Lambda function:
+</p>
+
+<ul class="org-ul">
+<li>Option: Author from scratch</li>
+<li>Function name: <code>cy-store-data</code></li>
+<li>Runtime: Node.js 8.10</li>
+<li>Role name: <code>lambda-role</code></li>
+</ul>
+
+<p>
+Change the entry point script:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 1: </span><code>cy-store-data/index.js</code></label><pre class="src src-js">exports.handler = (event, context, callback) =&gt; {
+  callback(<span class="org-constant">null</span>, {message: <span class="org-string">'This is Lambda.'</span>});
+}
+</pre>
+</div>
+
+<p>
+Note that the handler value <code>index.handler</code> must match the entry script name <code>index</code> plus the exported object name <code>handler</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org16b77fb" class="outline-3">
+<h3 id="org16b77fb"><span class="section-number-3">2.4</span> Connect Lambda Functions to API Gateway Endpoints</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+Continue creating the method under <code>compare-yourself</code>:
+</p>
+
+<ul class="org-ul">
+<li>Lambda function: <code>cy-store-data</code></li>
+</ul>
+
+<p>
+Test the method by sending an empty request and confirm the response body to be the hard-coded message.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org77bcc83" class="outline-3">
+<h3 id="org77bcc83"><span class="section-number-3">2.5</span> Access API from Web and Fix CORS Issue</h3>
+<div class="outline-text-3" id="text-2-5">
+<ul class="org-ul">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest">MDN Web Docs | XMLHttpRequest</a></li>
+</ul>
+
+<p>
+Deploy <code>compare-yourself</code> to <code>dev</code> stage, and copy the endpoint URL under Stages &gt; <code>dev</code> &gt; <code>/compare-yourself</code> &gt; <code>POST</code>, e.g. <a href="https://*.execute-api.us-east-1.amazonaws.com/dev/compare-yourself">https://*.execute-api.us-east-1.amazonaws.com/dev/compare-yourself</a>
+</p>
+
+<p>
+Go to <a href="https://codepen.io">CodePen</a> and create a JS snippet to send <code>POST</code> request to the endpoint:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">xhr</span> = <span class="org-keyword">new</span> <span class="org-type">XMLHttpRequest</span>();
+xhr.open(<span class="org-string">'POST'</span>, <span class="org-string">'https://*.execute-api.us-east-1.amazonaws.com/dev/compare-yourself'</span>);
+xhr.onreadystatechange = <span class="org-keyword">function</span>(<span class="org-variable-name">event</span>) {
+  console.log(event.target.response);
+}
+xhr.send();
+</pre>
+</div>
+
+<p>
+On running the script, there will be an error in the console: <code>Access to XMLHttpRequest at 'https://*.execute-api.us-east-1.amazonaws.com/dev/compare-yourself' from origin 'https://cdpn.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.</code>
+</p>
+
+<p>
+This is because the <code>POST</code> response doesn't include the <code>Access-Control-Allow-Origin</code> header (each response needs to include this header). Add the header under Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Resources &gt; <code>/compare-yourself</code> &gt; <code>POST</code> &gt; Method Execution:
+</p>
+
+<ol class="org-ol">
+<li>Method Response &gt; 200 &gt; Response Headers for 200 &gt; Add Header: <code>Access-Control-Allow-Origin</code></li>
+<li>Integration Response &gt; 200 &gt; Header Mappings &gt; <code>Access-Control-Allow-Origin</code>: <code>'*'</code></li>
+</ol>
+
+<p>
+Re-deploy <code>compare-yourself</code> to <code>dev</code> stage. Re-run the script on CodePen and confirm the debug output in console: <code>{"message":"This is Lambda."}</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2f71c0c" class="outline-3">
+<h3 id="org2f71c0c"><span class="section-number-3">2.6</span> Understand "Event" in Lambda Function</h3>
+<div class="outline-text-3" id="text-2-6">
+<p>
+Update Lambda function <code>cy-store-data</code>:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 2: </span><code>cy-store-data/index.js</code></label><pre class="src src-js">exports.handler = (event, context, callback) =&gt; {
+  callback(<span class="org-constant">null</span>, event);
+}
+</pre>
+</div>
+
+<p>
+This passing the <code>event</code> to the callback, this function will respond any request data back. Confirm the result by testing the <code>/compare-yourself</code> resource's <code>POST</code> method.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org818cb14" class="outline-3">
+<h3 id="org818cb14"><span class="section-number-3">2.7</span> Forward Requests with "Proxy Integration"</h3>
+<div class="outline-text-3" id="text-2-7">
+<p>
+Go to Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Resources &gt; <code>/compare-yourself</code> &gt; <code>POST</code> &gt; Integration Request, and enable "Use Lambda Proxy Integration". This will make API gateway to pass the entire request object (instead of the request data only) to the <code>event</code> object of the Lambda function.
+</p>
+
+<p>
+Update the Lambda function to return a custom header and log the request object:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 3: </span><code>cy-compare-yourself/index.js</code></label><pre class="src src-js">exports.handler = (event, context, callback) =&gt; {
+  console.log(event);
+  callback(<span class="org-constant">null</span>, {headers: {<span class="org-string">"Foo"</span>: <span class="org-string">"Bar"</span>}});
+}
+</pre>
+</div>
+
+<p>
+Test the <code>POST</code> method of <code>/compare-yourself</code> resource and confirm the custom header in the response.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org812244d" class="outline-3">
+<h3 id="org812244d"><span class="section-number-3">2.8</span> Access Lambda Logs</h3>
+<div class="outline-text-3" id="text-2-8">
+<p>
+Lambda functions write logs to CloudWatch. Go to <a href="https://console.aws.amazon.com/cloudwatch/home">CloudWatch</a> &gt; Logs &gt; <code>/aws/lambda/cy-store-data</code> and check the latest log stream to find the <code>event</code> object dump:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">{
+  resource: <span class="org-string">'/compare-yourself'</span>,
+  path: <span class="org-string">'/compare-yourself'</span>,
+  httpMethod: <span class="org-string">'POST'</span>,
+  headers: <span class="org-constant">null</span>,
+  ...
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org465d448" class="outline-3">
+<h3 id="org465d448"><span class="section-number-3">2.9</span> Get Started with Mapping Templates</h3>
+<div class="outline-text-3" id="text-2-9">
+<p>
+Go to Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Resources &gt; <code>/compare-yourself</code> &gt; <code>POST</code> &gt; Integration Request, and disable "Use Lambda Proxy Integration".
+</p>
+
+<p>
+Update the Lambda function to extract an <code>age</code> value out of the request data and return a calculated value:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 4: </span><code>cy-compare-yourself/index.js</code></label><pre class="src src-js">exports.handler = (event, context, callback) =&gt; {
+  <span class="org-keyword">const</span> <span class="org-variable-name">age</span> = event.personData.age;
+  callback(<span class="org-constant">null</span>, age * 2);
+}
+</pre>
+</div>
+
+<p>
+Test the <code>POST</code> method of <code>/compare-yourself</code> resource with person data:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">{
+  <span class="org-string">"personData"</span>: {
+    <span class="org-string">"name"</span>: <span class="org-string">"Max"</span>,
+    <span class="org-string">"age"</span>: 28
+  }
+}
+</pre>
+</div>
+
+<p>
+And confirm the response to be <code>56</code>.
+</p>
+
+<p>
+Ideally we want to be able to use the <code>age</code> value by <code>event.age</code> directly. This can be achieved by using "Mapping Templates".
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9cf4499" class="outline-3">
+<h3 id="org9cf4499"><span class="section-number-3">2.10</span> Extract Request Data with Mapping Templates</h3>
+<div class="outline-text-3" id="text-2-10">
+<p>
+Go to Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Resources &gt; <code>/compare-yourself</code> &gt; <code>POST</code> &gt; Integration Request &gt; Mapping Templates:
+</p>
+
+<ul class="org-ul">
+<li>Request body passthrough: select "When there are no templates defined (recommended)"</li>
+<li>Content type: add <code>application/json</code></li>
+<li>Mapping template:</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-js">{
+  <span class="org-string">"age"</span>: $input.json(<span class="org-string">'$.personData.age'</span>) <span class="org-comment-delimiter">// </span><span class="org-comment">Extract personData.age from request JSON body</span>
+}
+</pre>
+</div>
+
+<p>
+Update the Lambda function:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 5: </span><code>cy-store-data/index.js</code></label><pre class="src src-js">exports.handler = (event, context, callback) =&gt; {
+  <span class="org-keyword">const</span> <span class="org-variable-name">age</span> = event.age;
+  callback(<span class="org-constant">null</span>, age * 2);
+}
+</pre>
+</div>
+
+<p>
+Test the <code>POST</code> method of <code>/compare-yourself</code> resource with same person data as above and confirm the response to be <code>56</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfc17437" class="outline-3">
+<h3 id="orgfc17437"><span class="section-number-3">2.11</span> Map Response Data</h3>
+<div class="outline-text-3" id="text-2-11">
+<p>
+Go to Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Resources &gt; <code>/compare-yourself</code> &gt; <code>POST</code> &gt; Integration Response &gt; 200 &gt; Mapping Templates &gt; <code>application/json</code>, set the mapping template to:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">{
+  <span class="org-string">"age"</span>: $input.json(<span class="org-string">'$'</span>) <span class="org-comment-delimiter">// </span><span class="org-comment">Extract whole response body and transform it to JSON object</span>
+}
+</pre>
+</div>
+
+<p>
+Test the <code>POST</code> method of <code>/compare-yourself</code> resource with same person data as above and confirm the response to be:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">{
+  <span class="org-string">"age"</span>: 56
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4e7bedf" class="outline-3">
+<h3 id="org4e7bedf"><span class="section-number-3">2.12</span> Use Model and Validate Requests</h3>
+<div class="outline-text-3" id="text-2-12">
+<p>
+Go to Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Models, and create a model:
+</p>
+
+<ul class="org-ul">
+<li>Model name: <code>CompareData</code></li>
+<li>Content type: <code>application/json</code></li>
+<li>Model schema:</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-js">{
+  <span class="org-string">"$schema"</span>: <span class="org-string">"http://json-schema.org/draft-07/schema#"</span>,
+  <span class="org-string">"title"</span>: <span class="org-string">"CompareData"</span>,
+  <span class="org-string">"type"</span>: <span class="org-string">"object"</span>,
+  <span class="org-string">"properties"</span>: {
+    <span class="org-string">"age"</span>: {<span class="org-string">"type"</span>: <span class="org-string">"integer"</span>},
+    <span class="org-string">"height"</span>: {<span class="org-string">"type"</span>: <span class="org-string">"integer"</span>},
+    <span class="org-string">"income"</span>: {<span class="org-string">"type"</span>: <span class="org-string">"integer"</span>}
+  },
+  <span class="org-string">"required"</span>: [<span class="org-string">"age"</span>, <span class="org-string">"height"</span>, <span class="org-string">"income"</span>]
+}
+</pre>
+</div>
+
+<p>
+Go to Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Resources &gt; <code>/compare-yourself</code> &gt; <code>POST</code> &gt; Method Request, and enable request body validation against the model:
+</p>
+
+<ul class="org-ul">
+<li>Request validator: Validate body</li>
+<li>Request body:
+<ul class="org-ul">
+<li>Content type: <code>application/json</code></li>
+<li>Model name: <code>CompareData</code></li>
+</ul></li>
+</ul>
+
+<p>
+Confirm the validation by testing the <code>POST</code> method with different request bodies:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">{
+  <span class="org-string">"age"</span>: 28
+}
+<span class="org-comment-delimiter">// </span><span class="org-comment">Response status 400: {"message": "Invalid request body"}</span>
+
+{
+  <span class="org-string">"age"</span>: 28,
+  <span class="org-string">"height"</span>: 170,
+  <span class="org-string">"income"</span>: 1000
+}
+<span class="org-comment-delimiter">// </span><span class="org-comment">Response status 200</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org68f65ca" class="outline-3">
+<h3 id="org68f65ca"><span class="section-number-3">2.13</span> Models and Mappings</h3>
+<div class="outline-text-3" id="text-2-13">
+<p>
+Models can also be used in mapping templates.
+</p>
+
+<p>
+Go to Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Resources &gt; <code>/compare-yourself</code> &gt; <code>POST</code> &gt; Integration Request &gt; Mapping Templates &gt; <code>application/json</code> &gt; Generate Template, and select <code>CompareData</code>. Update the mapping template to:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">#set($inputRoot = $input.path(<span class="org-string">'$'</span>))
+{
+  <span class="org-string">"age"</span>: $inputRoot.age
+}
+</pre>
+</div>
+
+<p>
+Go to Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Resources &gt; <code>/compare-yourself</code> &gt; <code>POST</code> &gt; Integration Response &gt; 200 &gt; Mapping Templates &gt; <code>application/json</code> &gt; Generate Template, and select <code>CompareData</code>. Update the mapping template to:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">#set($inputRoot = $input.path(<span class="org-string">'$'</span>))
+{
+  <span class="org-string">"age"</span>: $inputRoot
+}
+</pre>
+</div>
+
+<p>
+Test the <code>POST</code> method with above data and confirm the result is successful.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org94352a7" class="outline-3">
+<h3 id="org94352a7"><span class="section-number-3">2.14</span> Add <code>DELETE</code> Method Endpoint to the API</h3>
+<div class="outline-text-3" id="text-2-14">
+<p>
+Create a Lambda function <code>cy-delete-data</code> and leave the code as default.
+</p>
+
+<p>
+Go to Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Resources &gt; <code>/compare-yourself</code>, create a <code>DELETE</code> method:
+</p>
+
+<ul class="org-ul">
+<li>Integration type: Lambda function</li>
+<li>Lambda function: <code>cy-delete-data</code></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org3d54561" class="outline-3">
+<h3 id="org3d54561"><span class="section-number-3">2.15</span> Use Path Parameters</h3>
+<div class="outline-text-3" id="text-2-15">
+<p>
+Next step is to create a <code>GET</code> method for the <code>/compare-yourself</code> resource, which will support 2 kinds of queries:
+</p>
+
+<ul class="org-ul">
+<li>Query all records by calling <code>/compare-yourself/all</code></li>
+<li>Query a single record by calling <code>/compare-yourself/single</code></li>
+</ul>
+
+<p>
+This can be achieved by creating 2 sub-resources <code>/all</code> and <code>/single</code> under <code>/compare-yourself</code>, however it is more complicated and less flexible. A better solution is to create a sub-resource representing a path parameter.
+</p>
+
+<p>
+Go to Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Resources &gt; <code>/compare-yourself</code>, create a resource:
+</p>
+
+<ul class="org-ul">
+<li>Resource name: <code>type</code></li>
+<li>Resource path: <code>/compare-yourself/{type}</code></li>
+<li>Enable API Gateway CORS: true</li>
+</ul>
+
+<p>
+Create a Lambda function <code>cy-get-data</code> with code:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 6: </span><code>cy-get-data/index.js</code></label><pre class="src src-js">exports.handler = (event, context, callback) =&gt; {
+  <span class="org-keyword">const</span> <span class="org-variable-name">type</span> = event.type;
+  <span class="org-keyword">if</span> (type === <span class="org-string">'all'</span>) {
+    callback(<span class="org-constant">null</span>, <span class="org-string">'All data'</span>);
+  } <span class="org-keyword">else</span> <span class="org-keyword">if</span> (type === <span class="org-string">'single'</span>) {
+    callback(<span class="org-constant">null</span>, <span class="org-string">'Single data'</span>);
+  } <span class="org-keyword">else</span> {
+    callback(<span class="org-constant">null</span>, <span class="org-string">'Error'</span>);
+  }
+};
+</pre>
+</div>
+
+<p>
+Go back to resource <code>/compare-yourself</code> &gt; <code>/{type}</code>, create a <code>GET</code> method:
+</p>
+
+<ul class="org-ul">
+<li>Integration type: Lambda function</li>
+<li>Lambda function: <code>cy-get-data</code></li>
+</ul>
+
+<p>
+Go to <code>GET</code> &gt; Integration Request &gt; Mapping Templates:
+</p>
+
+<ul class="org-ul">
+<li>Request body passthrough: select "When there are no templates defined"</li>
+<li>Content type: add <code>application/json</code></li>
+<li>Mapping template:</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-js">{
+  <span class="org-string">"type"</span>: <span class="org-string">"$input.params('type')"</span> <span class="org-comment-delimiter">// </span><span class="org-comment">Extract the "type" param from URL params</span>
+}
+</pre>
+</div>
+
+<p>
+Test the <code>GET</code> method by setting <code>{type}</code> param to <code>all</code> and <code>single</code> and confirm the result.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1982871" class="outline-3">
+<h3 id="org1982871"><span class="section-number-3">2.16</span> Access the API from the Web</h3>
+<div class="outline-text-3" id="text-2-16">
+<p>
+Go to Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Resources &gt; <code>/compare-yourself</code> &gt; Actions &gt; Enable CORS, to enable CORS on all methods. Do the same thing for <code>/compare-yourself</code> &gt; <code>/{type}</code>. Then deploy the API to <code>dev</code> stage, and get the endpoint URL under <code>/compare-yourself</code> &gt; Stages.
+</p>
+
+<p>
+Go to CodePen and test the <code>POST</code> method with this code:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">xhr</span> = <span class="org-keyword">new</span> <span class="org-type">XMLHttpRequest</span>();
+xhr.open(<span class="org-string">'POST'</span>, <span class="org-string">'https://*.execute-api.us-east-1.amazonaws.com/dev/compare-yourself'</span>);
+xhr.onreadystatechange = <span class="org-keyword">function</span>(<span class="org-variable-name">event</span>) {
+  console.log(event.target.response);
+}
+xhr.setRequestHeader(<span class="org-string">'Content-Type'</span>, <span class="org-string">'application/json'</span>); <span class="org-comment-delimiter">// </span><span class="org-comment">Content type imposed by the model</span>
+xhr.send(JSON.stringify({age: 28, height: 170, income: 2000}));
+<span class="org-comment-delimiter">// </span><span class="org-comment">Response: {"age": 56}</span>
+</pre>
+</div>
+
+<p>
+Also test the <code>GET</code> method with path parameter:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">xhr</span> = <span class="org-keyword">new</span> <span class="org-type">XMLHttpRequest</span>();
+xhr.open(<span class="org-string">'GET'</span>, <span class="org-string">'https://*.execute-api.us-east-1.amazonaws.com/dev/compare-yourself/single'</span>);
+xhr.onreadystatechange = <span class="org-keyword">function</span>(<span class="org-variable-name">event</span>) {
+  console.log(event.target.response);
+}
+xhr.send();
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org80e7513" class="outline-2">
+<h2 id="org80e7513"><span class="section-number-2">3</span> Data Storage with DynamoDB</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-org6ccd06b" class="outline-3">
+<h3 id="org6ccd06b"><span class="section-number-3">3.1</span> NoSQL vs SQL</h3>
+<div class="outline-text-3" id="text-3-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><b>SQL</b></th>
+<th scope="col" class="org-left"><b>NoSQL</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Data Relation</td>
+<td class="org-left">Yes</td>
+<td class="org-left">No</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Data Schema</td>
+<td class="org-left">Strong</td>
+<td class="org-left">Weak/No</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Data Repetition</td>
+<td class="org-left">No</td>
+<td class="org-left">Yes</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Integrity Check</td>
+<td class="org-left">Yes</td>
+<td class="org-left">No</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Flexibility</td>
+<td class="org-left">Low</td>
+<td class="org-left">High</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Scalability</td>
+<td class="org-left">Hard</td>
+<td class="org-left">Easy</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgdafbdf5" class="outline-3">
+<h3 id="orgdafbdf5"><span class="section-number-3">3.2</span> Use DynamoDB with Lambda</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+The communication between DynamoDB and Lambda can be bidirectional:
+</p>
+
+<ul class="org-ul">
+<li>Lambda function can retrieve from and store data to DynomaDB data repository.</li>
+<li>DynamoDB's event source can trigger Lambda function.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org9f7a694" class="outline-3">
+<h3 id="org9f7a694"><span class="section-number-3">3.3</span> Create a Table in DynamoDB</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+Go to <a href="https://console.aws.amazon.com/dynamodb/home">DynamoDB</a> and create a table:
+</p>
+
+<ul class="org-ul">
+<li>Table name: <code>compare-yourself</code></li>
+<li>Partition key: <code>UserId</code></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgef24eba" class="outline-3">
+<h3 id="orgef24eba"><span class="section-number-3">3.4</span> Create and Scan Items</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+Go to DynamoDB &gt; Tables &gt; <code>compare-yourself</code> &gt; Items, and create an item:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">{
+  <span class="org-string">"UserId"</span>: <span class="org-string">"001"</span>,
+  <span class="org-string">"Age"</span>: 28,
+  <span class="org-string">"Height"</span>: 170,
+  <span class="org-string">"Income"</span>: 1000
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4b44f94" class="outline-3">
+<h3 id="org4b44f94"><span class="section-number-3">3.5</span> Access DynamoDB from Lambda</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+<a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html">AWS SDK for JavaScript | API Documentation | <code>DynamoDB</code></a>
+</p>
+
+<p>
+To access DynamoDB (and other AWS services in general) from an external application, the AWS SDK in the corresponding programming language is needed. In Lambda functions though, the AWS SDK is already provided by default.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc0caa4a" class="outline-3">
+<h3 id="orgc0caa4a"><span class="section-number-3">3.6</span> Put Items into DynamoDB Table from Lambda</h3>
+<div class="outline-text-3" id="text-3-6">
+<p>
+<a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#putItem-property">AWS SDK for JavaScript | API Documentation | <code>DynamoDB</code> | <code>putItem()</code></a>
+</p>
+
+<p>
+Update the Lambda function code:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 7: </span><code>cy-store-data/index.js</code></label><pre class="src src-js"><span class="org-comment-delimiter">// </span><span class="org-comment">Best practice of Lambda: init global/static/singleton variables</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">outside of any function, because Lambda functions are cached</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">after invocation, these variables can be reused to improve</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">performance.</span>
+<span class="org-keyword">const</span> <span class="org-variable-name">AWS</span> = require(<span class="org-string">'aws-sdk'</span>);
+<span class="org-keyword">const</span> <span class="org-variable-name">Dynamo</span> = <span class="org-keyword">new</span> <span class="org-type">AWS.DynamoDB</span>({
+  apiVersion: <span class="org-string">'2012-08-10'</span>,
+  region: <span class="org-string">'us-east-1'</span>
+});
+
+exports.handler = (event, context, callback) =&gt; {
+  <span class="org-keyword">const</span> <span class="org-variable-name">params</span> = {
+    TableName: <span class="org-string">'compare-yourself'</span>,
+    Item: {
+      <span class="org-comment-delimiter">// </span><span class="org-comment">Value is always an object, the key indicates the value type</span>
+      UserId: {S: <span class="org-string">'002'</span>},
+      Age: {N: <span class="org-string">'30'</span>},
+      Height: {N: <span class="org-string">'180'</span>},
+      Income: {N: <span class="org-string">'2000'</span>}
+    }
+  };
+
+  <span class="org-comment-delimiter">// </span><span class="org-comment">putItem() is async, needs a callback to handle success or error</span>
+  dynamodb.putItem(params, <span class="org-keyword">function</span>(<span class="org-variable-name">err</span>, <span class="org-variable-name">data</span>) {
+    <span class="org-keyword">if</span> (err) {
+      console.log(err);
+      callback(err);
+    } <span class="org-keyword">else</span> {
+      console.log(data);
+      callback(<span class="org-constant">null</span>, data);
+    }
+  });
+}
+</pre>
+</div>
+
+<p>
+Test the function, and confirm that it throws <code>AccessDeniedException</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc9c0e65" class="outline-3">
+<h3 id="orgc9c0e65"><span class="section-number-3">3.7</span> Set Permissions Right</h3>
+<div class="outline-text-3" id="text-3-7">
+<p>
+By default, Lambda function doesn't have the permission to access DynamoDB. The permission needs to be added to the function's role.
+</p>
+
+<p>
+Go to <code>cy-store-data</code> &gt; Execution Role and click on <a href="https://console.aws.amazon.com/iam/home?#/roles">View the cy-store-data-role-* role</a> to go to IAM &gt; Roles &gt; <code>cy-store-data-role-*</code> &gt; Permissions &gt; Attach Policies, and select <code>AmazonDynamoDBFullAccess</code>.
+</p>
+
+<p>
+Test the function again, and confirm it executes successfully.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb31105b" class="outline-3">
+<h3 id="orgb31105b"><span class="section-number-3">3.8</span> Use API Gateway Data for Item Creation</h3>
+<div class="outline-text-3" id="text-3-8">
+<p>
+Go to Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Resources &gt; <code>/compare-yourself</code> &gt; <code>POST</code> &gt; Integration Request &gt; Mapping Templates &gt; <code>application/json</code>, and update the mapping template to:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">#set($inputRoot = $input.path(<span class="org-string">'$'</span>))
+{
+  <span class="org-string">"age"</span>: <span class="org-string">"$inputRoot.age"</span>, <span class="org-comment-delimiter">// </span><span class="org-comment">Wrap with "" so the value will be passed as string</span>
+  <span class="org-string">"height"</span>: <span class="org-string">"$inputRoot.height"</span>,
+  <span class="org-string">"income"</span>: <span class="org-string">"$inputRoot.income"</span>
+}
+</pre>
+</div>
+
+<p>
+Update the Lambda function to read params from the <code>event</code> object:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 8: </span><code>cy-store-data/index.js</code></label><pre class="src src-js">...
+<span class="org-keyword">const</span> <span class="org-variable-name">params</span> = {
+  TableName: <span class="org-string">'compare-yourself'</span>,
+  Item: {
+    UserId: {S: Math.random().toString()}, <span class="org-comment-delimiter">// </span><span class="org-comment">Value needs to be string</span>
+    Age: {N: event.age}, <span class="org-comment-delimiter">// </span><span class="org-comment">These are already passed in as strings by mapping template</span>
+    Height: {N: event.height},
+    Income: {N: event.income}
+  }
+};
+...
+</pre>
+</div>
+
+<p>
+Go to Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Resources &gt; <code>/compare-yourself</code> &gt; <code>POST</code> &gt; Method Test, and set request body as:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">{
+  <span class="org-string">"age"</span>: 99,
+  <span class="org-string">"height"</span>: 180,
+  <span class="org-string">"income"</span>: 10
+}
+</pre>
+</div>
+
+<p>
+Confirm the response status as 200 and the item being added in DynamoDB.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5599d11" class="outline-3">
+<h3 id="org5599d11"><span class="section-number-3">3.9</span> Map the Response and Web Testing</h3>
+<div class="outline-text-3" id="text-3-9">
+<p>
+Go to Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Actions &gt; Deploy API, and deploy to <code>dev</code> stage.
+</p>
+
+<p>
+Go to CodePen and create a JS snippet to send POST request to the endpoint:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">xhr</span> = <span class="org-keyword">new</span> <span class="org-type">XMLHttpRequest</span>();
+xhr.open(<span class="org-string">'POST'</span>, <span class="org-string">'https://*.execute-api.us-east-1.amazonaws.com/dev/compare-yourself'</span>);
+xhr.onreadystatechange = <span class="org-keyword">function</span>(<span class="org-variable-name">event</span>) {
+  console.log(event.target.response);
+}
+xhr.setRequestHeader(<span class="org-string">'Content-Type'</span>, <span class="org-string">'application/json'</span>);
+xhr.send(JSON.stringify({age: 12, height: 123, income: 1234}));
+</pre>
+</div>
+
+<p>
+Run the script and confirm the response is successful, and the item is created in DynamoDB.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org157bc0e" class="outline-3">
+<h3 id="org157bc0e"><span class="section-number-3">3.10</span> Scan Data in DynamoDB from Lambda</h3>
+<div class="outline-text-3" id="text-3-10">
+<p>
+<a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#scan-property">AWS SDK for JavaScript | API Documentation | <code>DynamoDB</code> | <code>scan()</code></a>
+</p>
+
+<p>
+Update the Lambda function to scan data from DynamoDB:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 9: </span><code>cy-get-data/index.js</code></label><pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">AWS</span> = require(<span class="org-string">'aws-sdk'</span>);
+<span class="org-keyword">const</span> <span class="org-variable-name">dynamodb</span> = <span class="org-keyword">new</span> <span class="org-type">AWS.DynamoDB</span>({
+  apiVersion: <span class="org-string">'2012-08-10'</span>,
+  region: <span class="org-string">'us-east-1'</span>
+});
+
+exports.handler = (event, context, callback) =&gt; {
+  <span class="org-keyword">const</span> <span class="org-variable-name">type</span> = event.type;
+  <span class="org-keyword">if</span> (type === <span class="org-string">'all'</span>) {
+    <span class="org-keyword">const</span> <span class="org-variable-name">params</span> = {
+      TableName: <span class="org-string">'compare-yourself'</span>
+    };
+    dynamodb.scan(params, <span class="org-keyword">function</span>(<span class="org-variable-name">err</span>, <span class="org-variable-name">data</span>) {
+      <span class="org-keyword">if</span> (err) {
+        console.log(err);
+        callback(err);
+      } <span class="org-keyword">else</span> {
+        <span class="org-keyword">const</span> <span class="org-variable-name">items</span> = data.Items.map(<span class="org-keyword">function</span>(<span class="org-variable-name">item</span>) { <span class="org-comment-delimiter">// </span><span class="org-comment">Transform data format</span>
+          <span class="org-keyword">return</span> {
+            age: item.Age.N,
+            height: item.Height.N,
+            income: item.Income.N
+          }
+        });
+        callback(<span class="org-constant">null</span>, items);
+      }
+    });
+  } <span class="org-keyword">else</span> <span class="org-keyword">if</span> (type === <span class="org-string">'single'</span>) {
+    callback(<span class="org-constant">null</span>, <span class="org-string">'Single data'</span>);
+  } <span class="org-keyword">else</span> {
+    callback(<span class="org-constant">null</span>, <span class="org-string">'Error'</span>);
+  }
+};
+</pre>
+</div>
+
+<p>
+Go to IAM &gt; Roles &gt; <code>cy-get-data-role-*</code> &gt; Attach Policies, and attach <code>AmazonDynamoDBFullAccess</code>.
+</p>
+
+<p>
+Test the Lambda function with event:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">{
+  <span class="org-string">"type"</span>: <span class="org-string">"all"</span>
+}
+</pre>
+</div>
+
+<p>
+Confirm the result to be all items from <code>compare-yourself</code> table in DynamoDB.
+</p>
+
+<p>
+Note: <code>scan()</code> function has a maximum dataset size limit of 1 MB.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org42390dc" class="outline-3">
+<h3 id="org42390dc"><span class="section-number-3">3.11</span> Improve the IAM Permissions</h3>
+<div class="outline-text-3" id="text-3-11">
+<p>
+Using policy <code>AmazonDynamoDBFullAccess</code> on all the Lambda functions is more than necessary. Each Lambda function should be granted only the necessary permissions.
+</p>
+
+<p>
+Go to IAM &gt; Policies &gt; Create Policy, create new policy:
+</p>
+
+<ul class="org-ul">
+<li>Service: DynamoDB</li>
+<li>Actions: Scan</li>
+<li>Resources: <code>arn:aws:dynamodb:us-east-1:*:table/compare-yourself</code> (get ARN from DynamoDB &gt; Tables &gt; <code>compare-yourself</code> &gt; Overview &gt; ARN)</li>
+<li>Name: <code>compare-yourself-read</code></li>
+</ul>
+
+<p>
+Go to IAM &gt; Roles &gt; <code>cy-get-data-role-*</code> &gt; Permissions Policies, remove <code>AmazonDynamoDBFullAccess</code> and attach the <code>compare-yourself-read</code> policy.
+</p>
+
+<p>
+Create a policy <code>compare-yourself-write</code> for <code>cy-store-data</code> in the same manner (action is PutItem), and replace the <code>AmazonDynamoDBFullAccess</code> policy with it.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org485edd4" class="outline-3">
+<h3 id="org485edd4"><span class="section-number-3">3.12</span> Get a Single Item from DynamoDB via Lambda</h3>
+<div class="outline-text-3" id="text-3-12">
+<p>
+<a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#getItem-property">AWS SDK for JavaScript | API Documentation | <code>DynamoDB</code> | <code>getItem()</code></a>
+</p>
+
+<p>
+Update the Lambda function to get a single item from DynamoDB:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 10: </span><code>cy-get-data/index.js</code></label><pre class="src src-js">...
+} <span class="org-keyword">else</span> <span class="org-keyword">if</span> (type === <span class="org-string">'single'</span>) {
+  <span class="org-keyword">const</span> <span class="org-variable-name">params</span> = {
+    TableName: <span class="org-string">'compare-yourself'</span>,
+    Key: {
+      UserId: {S: <span class="org-string">'001'</span>} <span class="org-comment-delimiter">// </span><span class="org-comment">Hard-code ID for now</span>
+    }
+  };
+  dynamodb.getItem(params, <span class="org-keyword">function</span>(<span class="org-variable-name">err</span>, <span class="org-variable-name">data</span>) {
+    <span class="org-keyword">if</span> (err) {
+      console.log(err);
+      callback(err);
+    } <span class="org-keyword">else</span> {
+      <span class="org-keyword">const</span> <span class="org-variable-name">item</span> = {
+        age: data.Item.Age.N,
+        height: data.Item.Height.N,
+        income: data.Item.Income.N
+      };
+      callback(<span class="org-constant">null</span>, [item]); <span class="org-comment-delimiter">// </span><span class="org-comment">Return an array</span>
+    }
+  });
+} <span class="org-keyword">else</span> {
+...
+</pre>
+</div>
+
+<p>
+Test the function with event:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">{
+  <span class="org-string">"type"</span>: <span class="org-string">"single"</span>
+}
+</pre>
+</div>
+
+<p>
+And confirm the result:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">{
+  <span class="org-string">"age"</span>: <span class="org-string">"28"</span>,
+  <span class="org-string">"height"</span>: <span class="org-string">"170"</span>,
+  <span class="org-string">"income"</span>: <span class="org-string">"1000"</span>
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd84eda5" class="outline-3">
+<h3 id="orgd84eda5"><span class="section-number-3">3.13</span> Prepare Delete Permissions</h3>
+<div class="outline-text-3" id="text-3-13">
+<p>
+Go to IAM &gt; Policies &gt; Create Policy, create new policy:
+</p>
+
+<ul class="org-ul">
+<li>Service: DynamoDB</li>
+<li>Actions: DeleteItem</li>
+<li>Resources: <code>arn:aws:dynamodb:us-east-1:*:table/compare-yourself</code> (get ARN from DynamoDB &gt; Tables &gt; <code>compare-yourself</code> &gt; Overview &gt; ARN)</li>
+<li>Name: <code>compare-yourself-delete=Go to IAM &gt; Roles &gt; =cy-delete-data-role-*</code> &gt; Permissions Policies, attach the <code>compare-yourself-delete</code> policy.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0ce4380" class="outline-3">
+<h3 id="org0ce4380"><span class="section-number-3">3.14</span> Give Lambda Logging Permissions</h3>
+<div class="outline-text-3" id="text-3-14">
+<p>
+Lambda functions need the <code>AWSLambdaBasicExecutionRole</code> policy to be able to write logs to CloudWatch.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb37ae21" class="outline-3">
+<h3 id="orgb37ae21"><span class="section-number-3">3.15</span> Delete Items in DynamoDB via Lambda</h3>
+<div class="outline-text-3" id="text-3-15">
+<p>
+<a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#deleteItem-property">AWS SDK for JavaScript | API Documentation | <code>DynamoDB</code> | <code>deleteItem()</code></a>
+</p>
+
+<p>
+Update the Lambda function to delete a single item from DynamoDB:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 11: </span><code>cy-delete-data/index.js</code></label><pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">AWS</span> = require(<span class="org-string">'aws-sdk'</span>);
+<span class="org-keyword">const</span> <span class="org-variable-name">dynamodb</span> = <span class="org-keyword">new</span> <span class="org-type">AWS.DynamoDB</span>({
+  apiVersion: <span class="org-string">'2012-08-10'</span>,
+  region: <span class="org-string">'us-east-1'</span>
+});
+
+exports.handler = (event, context, callback) =&gt; {
+  <span class="org-keyword">const</span> <span class="org-variable-name">params</span> = {
+    TableName: <span class="org-string">'compare-yourself'</span>,
+    Key: {
+      UserId: {S: <span class="org-string">'001'</span>} <span class="org-comment-delimiter">// </span><span class="org-comment">Hard-code ID for now</span>
+    }
+  };
+  dynamodb.deleteItem(params, <span class="org-keyword">function</span>(<span class="org-variable-name">err</span>, <span class="org-variable-name">data</span>) {
+    <span class="org-keyword">if</span> (err) {
+      console.log(err);
+      callback(err);
+    } <span class="org-keyword">else</span> {
+      console.log(data);
+      callback(<span class="org-constant">null</span>, data);
+    }
+  });
+};
+</pre>
+</div>
+
+<p>
+Test the function with any event, and confirm the item being removed from DynamoDB.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgabc45c7" class="outline-3">
+<h3 id="orgabc45c7"><span class="section-number-3">3.16</span> Map DynamoDB Responses</h3>
+<div class="outline-text-3" id="text-3-16">
+<p>
+We used API Model <code>CompareData</code> to validate requests to the <code>POST</code> method, we can also use API Model to impose the response format of the <code>GET</code> method.
+</p>
+
+<p>
+Go to Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Models, and create a model:
+</p>
+
+<ul class="org-ul">
+<li>Model name: <code>CompareDataArray</code></li>
+<li>Content type: <code>application/json</code></li>
+<li>Model schema:</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-js">{
+  <span class="org-string">"$schema"</span>: <span class="org-string">"http://json-schema.org/draft-07/schema#"</span>,
+  <span class="org-string">"title"</span>: <span class="org-string">"CompareDataArray"</span>,
+  <span class="org-string">"type"</span>: <span class="org-string">"array"</span>,
+  <span class="org-string">"items"</span>: {
+    <span class="org-string">"type"</span>: <span class="org-string">"object"</span>,
+    <span class="org-string">"properties"</span>: {
+      <span class="org-string">"age"</span>: {<span class="org-string">"type"</span>: <span class="org-string">"integer"</span>},
+      <span class="org-string">"height"</span>: {<span class="org-string">"type"</span>: <span class="org-string">"integer"</span>},
+      <span class="org-string">"income"</span>: {<span class="org-string">"type"</span>: <span class="org-string">"integer"</span>}
+    },
+    <span class="org-string">"required"</span>: [<span class="org-string">"age"</span>, <span class="org-string">"height"</span>, <span class="org-string">"income"</span>]
+  }
+}
+</pre>
+</div>
+
+<p>
+Go to Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Resources &gt; <code>/compare-yourself/{type}</code> &gt; <code>GET</code> &gt; Method Response &gt; 200 &gt; Response Body for 200 &gt; Models, set the value to be <code>CompareDataArray</code>.
+</p>
+
+<p>
+Go to Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Resources &gt; <code>/compare-yourself/{type}</code> &gt; <code>GET</code> &gt; Integration Response &gt; 200 &gt; Mapping Templates &gt; <code>application/json</code> &gt; Generate Template, and selete <code>CompareDataArray</code>. Update the mapping template to:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">#set($inputRoot = $input.path(<span class="org-string">'$'</span>))
+[
+#foreach($elem <span class="org-keyword">in</span> $inputRoot)
+  {
+    <span class="org-string">"age"</span> : $elem.age,
+    <span class="org-string">"height"</span> : $elem.height,
+    <span class="org-string">"income"</span> : $elem.income
+  }
+<span class="org-preprocessor">#if</span>($foreach.hasNext),#end
+#end
+]
+</pre>
+</div>
+
+<p>
+Test the <code>GET</code> method by setting <code>{type}</code> param to <code>single</code> and confirm the result:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">[
+  {
+    <span class="org-string">"age"</span>: 28,
+    <span class="org-string">"height"</span>: 170,
+    <span class="org-string">"income"</span>: 1000
+  }
+]
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbb84d5f" class="outline-2">
+<h2 id="orgbb84d5f"><span class="section-number-2">4</span> Authenticate Users with Cognito and API Gateway Authorizers</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-org3d70d3b" class="outline-3">
+<h3 id="org3d70d3b"><span class="section-number-3">4.1</span> How to Add Authentication to API Gateway</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+There is an auth setting at Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Resources &gt; Any endpoint method &gt; Method Request &gt; Settings &gt; Authentication. The only auth method option is <code>AWS_IAM</code>, and by selecting it, only users with proper IAM credentials will be able to call the API. This is not the general auth to use, because it makes the API private to only users with credentials.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfe0e8fd" class="outline-3">
+<h3 id="orgfe0e8fd"><span class="section-number-3">4.2</span> Understand Custom Authorizer</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+A custom authorizer is a Lambda function which takes input from API Gateway, and returns:
+</p>
+
+<ul class="org-ul">
+<li>An IAM policy</li>
+<li>A principle ID (or user ID)</li>
+<li>A context object</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org6d7c41d" class="outline-3">
+<h3 id="org6d7c41d"><span class="section-number-3">4.3</span> Create a Custom Authorizer Function</h3>
+<div class="outline-text-3" id="text-4-3">
+<ul class="org-ul">
+<li><a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-lambda-authorizer-input.html">AWS Documentation | Input to an Amazon API Gateway Lambda Authorizer</a></li>
+<li><a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-lambda-authorizer-output.html">AWS Documentation | Output from an Amazon API Gateway Lambda Authorizer</a></li>
+<li><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements.html">AWS Documentation | IAM JSON Policy Elements Reference</a></li>
+</ul>
+
+<p>
+Create a new Lambda function <code>cy-custom-auth</code>:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 12: </span><code>cy-custom-auth/index.js</code></label><pre class="src src-js">exports.handler = (event, context, callback) =&gt; {
+  <span class="org-keyword">const</span> <span class="org-variable-name">token</span> = event.authorizationToken; <span class="org-comment-delimiter">// </span><span class="org-comment">Provided by API Gateway</span>
+  <span class="org-keyword">if</span> (token === <span class="org-string">'allow'</span> || token === <span class="org-string">'deny'</span>) {
+    <span class="org-keyword">const</span> <span class="org-variable-name">policy</span> = genPolicy(token, event.methodArn); <span class="org-comment-delimiter">// </span><span class="org-comment">Provided by API Gateway</span>
+    <span class="org-keyword">const</span> <span class="org-variable-name">principalId</span> = <span class="org-string">'12345'</span>;
+    <span class="org-keyword">const</span> <span class="org-variable-name">context</span> = {
+      simpleAuth: <span class="org-constant">true</span>
+    };
+    <span class="org-keyword">const</span> <span class="org-variable-name">response</span> = {
+      principalId: principalId,
+      policyDocument: policy,
+      context: context
+    };
+    callback(<span class="org-constant">null</span>, response);
+  } <span class="org-keyword">else</span> {
+    callback(<span class="org-string">'Unauthorized'</span>);
+  }
+};
+
+<span class="org-keyword">function</span> <span class="org-function-name">genPolicy</span>(<span class="org-variable-name">effect</span>, <span class="org-variable-name">resource</span>) {
+  <span class="org-keyword">const</span> <span class="org-variable-name">policy</span> = {
+    Version: <span class="org-string">'2012-10-17'</span>,
+    Statement: [
+      {
+        Action: <span class="org-string">'execute-api:Invoke'</span>,
+        Effect: effect,
+        Resource: resource
+      }
+    ]
+  };
+  <span class="org-keyword">return</span> policy;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org39d3d9a" class="outline-3">
+<h3 id="org39d3d9a"><span class="section-number-3">4.4</span> Use Custom Authorizers</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+Create a Lambda authorizer at Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Authorizers &gt; Create New Authorizer:
+</p>
+
+<ul class="org-ul">
+<li>Name: <code>simple-custom-auth</code></li>
+<li>Type: Lambda</li>
+<li>Lambda function: <code>cy-custom-auth</code></li>
+<li>Lambda event payload: Token</li>
+<li>Token source: <code>Authorization</code> (header)</li>
+</ul>
+
+<p>
+Test the authorizer with <code>Authorization:allow</code> and <code>Authorization:deny</code> headers, and confirm the returned policies.
+</p>
+
+<p>
+Apply the custom authorizer to method at Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Resources &gt; <code>/compare-yourself</code> &gt; <code>POST</code> &gt; Method Reqeust &gt; Settings &gt; Authorization, and select <code>simple-custom-auth</code>. And deploy the API.
+</p>
+
+<p>
+Test authentication on CodePen:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">xhr</span> = <span class="org-keyword">new</span> <span class="org-type">XMLHttpRequest</span>();
+xhr.open(<span class="org-string">'POST'</span>, <span class="org-string">'https://*.execute-api.us-east-1.amazonaws.com/dev/compare-yourself'</span>);
+xhr.onreadystatechange = <span class="org-keyword">function</span>(<span class="org-variable-name">event</span>) {
+  console.log(event.target.response);
+}
+xhr.setRequestHeader(<span class="org-string">'Content-Type'</span>, <span class="org-string">'application/json'</span>);
+xhr.setRequestHeader(<span class="org-string">'Authorization'</span>, <span class="org-string">'allow'</span>); <span class="org-comment-delimiter">// </span><span class="org-comment">allow -&gt; 200, deny -&gt; 403, other values -&gt; 401</span>
+xhr.send(JSON.stringify({age: 10, height: 100, income: 1000}));
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org41d1e19" class="outline-3">
+<h3 id="org41d1e19"><span class="section-number-3">4.5</span> Retrieve Users from Custom Authorizers</h3>
+<div class="outline-text-3" id="text-4-5">
+<ul class="org-ul">
+<li><a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html">Amazon API Gateway | API Gateway Mapping Template and Access Logging Variable Reference</a></li>
+</ul>
+
+<p>
+Since the custom authorizer is returning a user ID in the <code>principalId</code> field, we can also pass this value to other Lambda functions that expects a user ID as input, e.g. <code>cy-store-data</code>.
+</p>
+
+<p>
+Add user ID as input to Lambda function at Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Resources &gt; <code>/compare-yourself</code> &gt; <code>POST</code> &gt; Integration Request &gt; Mapping Templates &gt; <code>application/json</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">#set($inputRoot = $input.path(<span class="org-string">'$'</span>))
+{
+  <span class="org-string">"age"</span>: <span class="org-string">"$inputRoot.age"</span>,
+  <span class="org-string">"height"</span>: <span class="org-string">"$inputRoot.height"</span>,
+  <span class="org-string">"income"</span>: <span class="org-string">"$inputRoot.income"</span>,
+  <span class="org-string">"userId"</span>: <span class="org-string">"$context.authorizer.principalId"</span> <span class="org-comment-delimiter">// </span><span class="org-comment">New field</span>
+}
+</pre>
+</div>
+
+<p>
+Update Lambda function <code>cy-store-data</code> to use this field:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 13: </span><code>cy-store-data/index.js</code></label><pre class="src src-js">...
+Item: {
+  UserId: {S: event.userId}, <span class="org-comment-delimiter">// </span><span class="org-comment">Use event.userId</span>
+  Age: {N: event.age},
+  Height: {N: event.height},
+  Income: {N: event.income}
+}
+...
+</pre>
+</div>
+
+<p>
+Deploy the API and test with CodePen:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">xhr</span> = <span class="org-keyword">new</span> <span class="org-type">XMLHttpRequest</span>();
+xhr.open(<span class="org-string">'POST'</span>, <span class="org-string">'https://*.execute-api.us-east-1.amazonaws.com/dev/compare-yourself'</span>);
+xhr.onreadystatechange = <span class="org-keyword">function</span>(<span class="org-variable-name">event</span>) {
+  console.log(event.target.response);
+}
+xhr.setRequestHeader(<span class="org-string">'Content-Type'</span>, <span class="org-string">'application/json'</span>);
+xhr.setRequestHeader(<span class="org-string">'Authorization'</span>, <span class="org-string">'allow'</span>);
+xhr.send(JSON.stringify({age: 20, height: 200, income: 2000}));
+</pre>
+</div>
+
+<p>
+Confirm in DynamoDB that there is a new item with ID <code>12345</code>, which is returned by <code>cy-custom-auth</code> function.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org72acdd7" class="outline-3">
+<h3 id="org72acdd7"><span class="section-number-3">4.6</span> Create Cognito User Pool</h3>
+<div class="outline-text-3" id="text-4-6">
+<p>
+Create a user pool at Amazon Cognito &gt; Manage User Pools &gt; Create a User Pool:
+</p>
+
+<ul class="org-ul">
+<li>Name: <code>compare-yourself</code></li>
+<li>Sign in method: Username, also allow sign in with verified email address</li>
+<li>Standard attributes: Email, required</li>
+<li>Allow users to sign themselves up: Check</li>
+<li>Require verification: Email</li>
+<li>Add an app client:
+<ul class="org-ul">
+<li>App client name: <code>compare-yourself-client</code></li>
+<li>Generate client secret: Uncheck</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org00a36ac" class="outline-3">
+<h3 id="org00a36ac"><span class="section-number-3">4.7</span> Understand Cognito Auth Flow</h3>
+<div class="outline-text-3" id="text-4-7">
+
+<div class="figure">
+<p><img src="../images/aws_serverless_apis_and_apps/03.png" alt="03.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0fe2793" class="outline-3">
+<h3 id="org0fe2793"><span class="section-number-3">4.8</span> Add Cognito to Frontend App</h3>
+<div class="outline-text-3" id="text-4-8">
+<p>
+Unpack the Angular project to a local directory, and start running the app:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ cd compare-yourself
+$ npm install
+$ npm start <span class="org-comment-delimiter"># </span><span class="org-comment">Or "./node_modules/.bin/ng serve" if not working</span>
+</pre>
+</div>
+
+<p>
+Open <a href="http://localhost:4200/">http://localhost:4200/</a> and confirm the app working.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4b0e06d" class="outline-3">
+<h3 id="org4b0e06d"><span class="section-number-3">4.9</span> Add Signup to Frontend App</h3>
+<div class="outline-text-3" id="text-4-9">
+<ul class="org-ul">
+<li><a href="https://docs.aws.amazon.com/cognito/latest/developerguide/setting-up-the-javascript-sdk.html">Amazon Cognito | Adding a JavaScript App to Amazon Cognito User Pools</a></li>
+<li><a href="https://github.com/aws-amplify/amplify-js/tree/master/packages/amazon-cognito-identity-js">GitHub | amplify-js/packages/amazon-cognito-identity-js/</a></li>
+</ul>
+
+<p>
+Frontend apps can access Cognito via SDK. <code>amazon-cognito-identity-js</code> is added as dependency for the Angular app.
+</p>
+
+<p>
+Credentials the app needs to access the Cognito user pool:
+</p>
+
+<ul class="org-ul">
+<li>User pool ID: Amazon Cognito &gt; User Pools &gt; <code>compare-yourself</code> &gt; General Settings &gt; Pool ID</li>
+<li>App client ID: Amazon Cognito &gt; User Pools &gt; <code>compare-yourself</code> &gt; General Settings &gt; App Clients &gt; App Client ID</li>
+</ul>
+
+<p>
+Setup Cognito user pool, which is the entry point of Cognito service:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 14: </span><code>src/app/user/auth.service.ts</code></label><pre class="src src-typescript"><span class="org-keyword">import</span> { CognitoUserPool } <span class="org-keyword">from</span> <span class="org-string">'amazon-cognito-identity-js'</span>;
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Credentials</span>
+<span class="org-keyword">const</span> <span class="org-variable-name">COGNITO_DATA</span> = {
+  UserPoolId: <span class="org-string">'us-east-1_VCndrXGrd'</span>,
+  ClientId: <span class="org-string">'1lg0hhbdrj7e7o8gsmb2lflf5s'</span>
+}
+<span class="org-comment-delimiter">// </span><span class="org-comment">Init user pool object</span>
+<span class="org-keyword">const</span> <span class="org-variable-name">cognitoUserPool</span> = <span class="org-keyword">new</span> <span class="org-type">CognitoUserPool</span>(COGNITO_DATA);
+</pre>
+</div>
+
+<p>
+Prepare the user attributes and call Cognito signup function:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 15: </span><code>src/app/user/auth.service.ts</code></label><pre class="src src-typescript"><span class="org-keyword">import</span> { CognitoUserAttribute, CognitoUser } <span class="org-keyword">from</span> <span class="org-string">'amazon-cognito-identity-js'</span>;
+
+<span class="org-keyword">export</span> <span class="org-keyword">class</span> <span class="org-type">AuthService</span> {
+  registeredUser: CognitoUser;
+
+  signUp(username: <span class="org-keyword">string</span>, email: <span class="org-keyword">string</span>, password: <span class="org-keyword">string</span>): <span class="org-keyword">void</span> {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Array holding the user attributes</span>
+    <span class="org-keyword">const</span> <span class="org-variable-name">attributeList</span>: CognitoUserAttribute[] = [];
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Populate attributes</span>
+    attributeList.push(<span class="org-keyword">new</span> <span class="org-type">CognitoUserAttribute</span>({Name: <span class="org-string">'email'</span>, Value: email}));
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Call sign-up</span>
+    cognitoUserPool.signUp(username, password, attributeList, <span class="org-keyword">null</span>, )cognitoUserPool.signUp(username, password, attributeList, <span class="org-keyword">null</span>, (err, result) =&gt; {
+      <span class="org-keyword">if</span> (err) {
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Error handling</span>
+        <span class="org-keyword">return</span>;
+      }
+      <span class="org-comment-delimiter">// </span><span class="org-comment">Get returned user object</span>
+      <span class="org-keyword">this</span>.registeredUser = result.user;
+    });
+  }
+}
+</pre>
+</div>
+
+<p>
+Run the app and sign up as a new user, confirm the verification email is sent to the email address.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc0bdac2" class="outline-3">
+<h3 id="orgc0bdac2"><span class="section-number-3">4.10</span> Add User Confirmation to Frontend App</h3>
+<div class="outline-text-3" id="text-4-10">
+<p>
+Call Cognito to confirm a registered user with code:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 16: </span><code>src/app/user/auth.service.ts</code></label><pre class="src src-typescript"><span class="org-keyword">export</span> <span class="org-keyword">class</span> <span class="org-type">AuthService</span> {
+  confirmUser(username: <span class="org-keyword">string</span>, code: <span class="org-keyword">string</span>) {
+    <span class="org-keyword">const</span> <span class="org-variable-name">cognitoUser</span> = <span class="org-keyword">new</span> <span class="org-type">CognitoUser</span>({
+      Username: username,
+      Pool: cognitoUserPool
+    });
+    cognitoUser.confirmRegistration(code, <span class="org-keyword">true</span>, (err, result) =&gt; {
+      <span class="org-keyword">if</span> (err) {
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Error handling</span>
+        <span class="org-keyword">return</span>;
+      }
+      <span class="org-comment-delimiter">// </span><span class="org-comment">Redirection</span>
+      <span class="org-keyword">this</span>.router.navigate([<span class="org-string">'/'</span>]);
+    });
+  }
+}
+</pre>
+</div>
+
+<p>
+Sign up in the frontend app, and confirm user with the verification code, and confirm the user's status is <code>CONFIRMED</code> at Amazon Cognito &gt; User Pools &gt; <code>compare-yourself</code> &gt; General Settings &gt; Users and Groups.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0d6347e" class="outline-3">
+<h3 id="org0d6347e"><span class="section-number-3">4.11</span> Add Signin to Frontend App</h3>
+<div class="outline-text-3" id="text-4-11">
+<p>
+Call Cognito to sign in a user:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 17: </span><code>src/app/user/auth.service.ts</code></label><pre class="src src-typescript"><span class="org-keyword">import</span> { AuthenticationDetails, CognitoUserSession } <span class="org-keyword">from</span> <span class="org-string">'amazon-cognito-identity-js'</span>;
+
+<span class="org-keyword">export</span> <span class="org-keyword">class</span> <span class="org-type">AuthService</span> {
+  signIn(username: <span class="org-keyword">string</span>, password: <span class="org-keyword">string</span>): <span class="org-keyword">void</span> {
+    <span class="org-keyword">const</span> <span class="org-variable-name">authDetails</span> = <span class="org-keyword">new</span> <span class="org-type">AuthenticationDetails</span>({
+      Username: username,
+      Password: password
+    });
+    <span class="org-keyword">const</span> <span class="org-variable-name">cognitoUser</span> = <span class="org-keyword">new</span> <span class="org-type">CognitoUser</span>({
+      Username: username,
+      Pool: cognitoUserPool
+    });
+    cognitoUser.authenticateUser(authDetails, {
+      onSuccess: (result: CognitoUserSession) =&gt; {
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Redirection etc.</span>
+      },
+      onFailure: (err) =&gt; {
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Error handling</span>
+      }
+    });
+    <span class="org-keyword">return</span>;
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org23a8bb7" class="outline-3">
+<h3 id="org23a8bb7"><span class="section-number-3">4.12</span> Manage User State with Cognito</h3>
+<div class="outline-text-3" id="text-4-12">
+<p>
+Cognito SDK provides helper functions to get the user's auth state:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 18: </span><code>src/app/user/auth.service.ts</code></label><pre class="src src-typescript"><span class="org-keyword">export</span> <span class="org-keyword">class</span> <span class="org-type">AuthService</span> {
+  <span class="org-comment-delimiter">// </span><span class="org-comment">Return current user</span>
+  getAuthenticatedUser() {
+    <span class="org-keyword">return</span> cognitoUserPool.getCurrentUser();
+  }
+  <span class="org-comment-delimiter">// </span><span class="org-comment">Check if current user is authenticated</span>
+  isAuthenticated() {
+    <span class="org-keyword">const</span> <span class="org-variable-name">user</span> = <span class="org-keyword">this</span>.getAuthenticatedUser();
+    <span class="org-keyword">if</span> (user) {
+      user.getSession((err, session) =&gt; {
+        <span class="org-keyword">if</span> (err) {
+          <span class="org-comment-delimiter">// </span><span class="org-comment">Un-authenticated</span>
+        } <span class="org-keyword">else</span> {
+          <span class="org-keyword">if</span> (session.isValid()) {
+            <span class="org-comment-delimiter">// </span><span class="org-comment">Authenticated</span>
+          } <span class="org-keyword">else</span> {
+            <span class="org-comment-delimiter">// </span><span class="org-comment">Un-authenticated</span>
+          }
+        }
+      });
+    } <span class="org-keyword">else</span> {
+      <span class="org-comment-delimiter">// </span><span class="org-comment">Un-authenticated</span>
+    }
+  }
+  <span class="org-comment-delimiter">// </span><span class="org-comment">Logout current user</span>
+  logout() {
+    <span class="org-keyword">this</span>.getAuthenticatedUser().signOut();
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org699e4b5" class="outline-3">
+<h3 id="org699e4b5"><span class="section-number-3">4.13</span> Use Cognito Authorizer with API Gateway</h3>
+<div class="outline-text-3" id="text-4-13">
+<p>
+API Gateway supports Cognito as authorizer, which can be setup at Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Authorizers &gt; Create New Authorizer:
+</p>
+
+<ul class="org-ul">
+<li>Name: <code>cognito-auth</code></li>
+<li>Type: Cognito</li>
+<li>Cognito user pool: <code>compare-yourself</code></li>
+<li>Token source: <code>Authorization</code> (header)</li>
+</ul>
+
+<p>
+Set the API to use this authorizer at Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Resources &gt; <code>/compare-yourself</code> &gt; <code>POST</code> &gt; Method Request &gt; Settings &gt; Authorization.
+</p>
+
+<p>
+Set the authorizer also for <code>/compare-yourself</code> &gt; <code>DELETE</code>, and <code>/compare-yourself/{type}</code> &gt; <code>GET</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9865332" class="outline-3">
+<h3 id="org9865332"><span class="section-number-3">4.14</span> Pass the Right User ID to Lambda</h3>
+<div class="outline-text-3" id="text-4-14">
+<p>
+With the API endpoints using the Cognito authorizer, frontend app needs to send the token via the <code>Authorization</code> header. Update the <code>POST</code> request logic of the app:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 19: </span><code>src/app/compare/compare.service.ts</code></label><pre class="src src-typescript"><span class="org-keyword">export</span> <span class="org-keyword">class</span> <span class="org-type">CompareService</span> {
+  onStoreData(data: CompareData) {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Get user session</span>
+    <span class="org-keyword">this</span>.authService.getAuthenticatedUser().getSession((err, session) =&gt; {
+      <span class="org-keyword">if</span> (err) {
+        <span class="org-keyword">return</span>;
+      }
+      <span class="org-comment-delimiter">// </span><span class="org-comment">Put in the API endpoint</span>
+      <span class="org-keyword">this</span>.http.post(<span class="org-string">'https://*.execute-api.us-east-1.amazonaws.com/dev/compare-yourself'</span>, data, {
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Pass the session token in header</span>
+        headers: <span class="org-keyword">new</span> <span class="org-type">Headers</span>({<span class="org-string">'Authorization'</span>: session.getIdToken().getJwtToken()})
+      });
+    });
+  }
+}
+</pre>
+</div>
+
+<p>
+Data format returned by Cognito is different with the custom Lambda authorizer, so the API endpoint body mapping needs to be updated at Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Resources &gt; <code>/compare-yourself</code> &gt; <code>POST</code> &gt; Integration Request &gt; Mapping Templates &gt; <code>application/json</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">#set($inputRoot = $input.path(<span class="org-string">'$'</span>))
+{
+  <span class="org-string">"age"</span>: <span class="org-string">"$inputRoot.age"</span>,
+  <span class="org-string">"height"</span>: <span class="org-string">"$inputRoot.height"</span>,
+  <span class="org-string">"income"</span>: <span class="org-string">"$inputRoot.income"</span>,
+  <span class="org-string">"userId"</span>: <span class="org-string">"$context.authorizer.claims.sub"</span> <span class="org-comment-delimiter">// </span><span class="org-comment">Update this</span>
+}
+</pre>
+</div>
+
+<p>
+Go to <a href="http://localhost:4200/compare">http://localhost:4200/compare</a> and submit some data, and confirm the data is stored in DynamoDB. If not successful, add debug output from the Lambda function <code>cy-store-data</code>, and check CloudWatch logs.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org298b792" class="outline-3">
+<h3 id="org298b792"><span class="section-number-3">4.15</span> Use Query Params &amp; Cognito from Lambda</h3>
+<div class="outline-text-3" id="text-4-15">
+<ul class="org-ul">
+<li><a href="https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/CognitoIdentityServiceProvider.html">AWS SDK for JavaScript | API Documentation | <code>CognitoIdentityServiceProvider</code> | <code>getUser()</code></a></li>
+</ul>
+
+<p>
+Authorization can be added to <code>GET</code> and <code>DELETE</code> endpoints by using the body mapping templates.
+</p>
+
+<p>
+This can also be achieved by using query parameters, at Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Resources &gt; <code>/compare-yourself/{type}</code> &gt; <code>GET</code> &gt; Method Request &gt; Request Validator, and set it to "Validate query string parameters and headers".
+</p>
+
+<p>
+Then under URL Query String Parameters, add a parameter:
+</p>
+
+<ul class="org-ul">
+<li>Name: <code>accessToken</code></li>
+<li>Required: checked</li>
+</ul>
+
+<p>
+Then pass the parameter to Lambda function by updating the body mapping at Amazon API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Resources &gt; <code>/compare-yourself/{type}</code> &gt; <code>GET</code> &gt; Integration Request &gt; Mapping Templates &gt; <code>application/json</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">{
+  <span class="org-string">"accessToken"</span>: <span class="org-string">"$input.params('accessToken')"</span>
+}
+</pre>
+</div>
+
+<p>
+Add the same parameter and body mapping for the <code>DELETE</code> method.
+</p>
+
+<p>
+Update Lambda function to get user ID from the access token, by using the AWS SDK <code>CognitoIdentityServiceProvider</code>:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 20: </span><code>cy-get-data/index.js</code></label><pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">cisp</span> = <span class="org-keyword">new</span> <span class="org-type">AWS.CognitoIdentityServiceProvider</span>({apiVersion: <span class="org-string">'2016-04-18'</span>});
+exports.handler = (event, context, callback) =&gt; {
+  ...
+  cisp.getUser({AccessToken: event.accessToken}, (err, result) =&gt; {
+    <span class="org-keyword">if</span> (err) {
+      callback(err);
+    } <span class="org-keyword">else</span> {
+      <span class="org-comment-delimiter">// </span><span class="org-comment">Get the user ID</span>
+      <span class="org-keyword">const</span> <span class="org-variable-name">userId</span> = result.UserAttributes[0].Value;
+      <span class="org-comment-delimiter">// </span><span class="org-comment">Retrieve data from DynamoDB (this is existing code)</span>
+      <span class="org-keyword">const</span> <span class="org-variable-name">params</span> = {
+        TableName: <span class="org-string">'compare-yourself'</span>,
+        Key: {
+          UserId: {
+            S: userId <span class="org-comment-delimiter">// </span><span class="org-comment">Replace the hardcoded user ID</span>
+          }
+        }
+      };
+      dynamodb.getItem(params, <span class="org-keyword">function</span>(<span class="org-variable-name">err</span>, <span class="org-variable-name">data</span>) {
+        <span class="org-keyword">if</span> (err) {
+          callback(err);
+        } <span class="org-keyword">else</span> {
+          <span class="org-keyword">const</span> <span class="org-variable-name">item</span> = {
+            age: data.Item.Age.N,
+            height: data.Item.Height.N,
+            income: data.Item.Income.N
+          };
+          callback(<span class="org-constant">null</span>, [item]);
+        }
+      }); 
+    }
+  });
+};
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd1d0a69" class="outline-3">
+<h3 id="orgd1d0a69"><span class="section-number-3">4.16</span> Pass Query Params from the Frontend</h3>
+<div class="outline-text-3" id="text-4-16">
+<p>
+Update the Angular app to pass the query param <code>accessToken</code> to the API endpoints:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 21: </span><code>src/app/compare/compare.service.ts</code></label><pre class="src src-typescript"><span class="org-keyword">export</span> <span class="org-keyword">class</span> <span class="org-type">CompareService</span> {
+  onRetrieveData(all = <span class="org-keyword">true</span>) {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Same as onStoreData, get the session object</span>
+    <span class="org-keyword">this</span>.authService.getAuthenticatedUser().getSession((err, session) =&gt; {
+      <span class="org-keyword">const</span> <span class="org-variable-name">queryParam</span> = <span class="org-string">'?accessToken='</span> + session.getAccessToken().getJwtToken();
+      <span class="org-keyword">this</span>.http.<span class="org-keyword">get</span>(<span class="org-string">'https://*.execute-api.us-east-1.amazonaws.com/dev/compare-yourself'</span> + urlParam + queryParam, {
+        headers: <span class="org-keyword">new</span> <span class="org-type">Headers</span>({<span class="org-string">'Authorization'</span>: session.getIdToken().getJwtToken()})
+      })
+      ...
+    }
+  }
+}
+</pre>
+</div>
+
+<p>
+Confirm in frontend that the data associated with the user can be retrieved.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org30eff9e" class="outline-3">
+<h3 id="org30eff9e"><span class="section-number-3">4.17</span> Pass User ID to the <code>DELETE</code> Endpoint</h3>
+<div class="outline-text-3" id="text-4-17">
+<p>
+Update the frontend's delete action to pass access token as param to <code>DELETE</code> endpoint, and then update Lambda function to get the user ID from access token.
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 22: </span><code>src/app/compare/compare.service.ts</code></label><pre class="src src-typescript"><span class="org-keyword">export</span> <span class="org-keyword">class</span> <span class="org-type">CompareService</span> {
+  onDeleteData() {
+    <span class="org-keyword">this</span>.authService.getAuthenticatedUser().getSession((err, session) =&gt; {
+      <span class="org-keyword">const</span> <span class="org-variable-name">queryParam</span> = <span class="org-string">'?accessToken='</span> + session.getAccessToken().getJwtToken();
+      <span class="org-keyword">this</span>.http.<span class="org-keyword">delete</span>(<span class="org-string">'https://*.execute-api.us-east-1.amazonaws.com/dev/compare-yourself/'</span> + queryParam, {
+        headers: <span class="org-keyword">new</span> <span class="org-type">Headers</span>({<span class="org-string">'Authorization'</span>: session.getIdToken().getJwtToken()})
+      })
+      ...
+    });
+  }
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 23: </span><code>cy-delete-data/index.js</code></label><pre class="src src-js">
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6187e19" class="outline-2">
+<h2 id="org6187e19"><span class="section-number-2">5</span> Host a Serverless SPA</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+If a website has only static files, it can be hosted entirely on S3.
+</p>
+</div>
+
+<div id="outline-container-orge458c2a" class="outline-3">
+<h3 id="orge458c2a"><span class="section-number-3">5.1</span> AWS S3</h3>
+<div class="outline-text-3" id="text-5-1">
+<ul class="org-ul">
+<li><a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-access-control.html">Identity and Access Management in Amazon S3</a></li>
+<li><a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html">Hosting a Static Website on Amazon S3</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org6b48847" class="outline-3">
+<h3 id="org6b48847"><span class="section-number-3">5.2</span> Create a S3 Bucket</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+Create a bucket at Amazon S3 &gt; Buckets &gt; Create Bucket:
+</p>
+
+<ul class="org-ul">
+<li>Bucket name: <code>&lt;ext&gt;.&lt;domain&gt;.compare-yourself</code>, e.g. <code>dev.victorchen.compare-yourself</code></li>
+<li>Region: US East</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org41a79e2" class="outline-3">
+<h3 id="org41a79e2"><span class="section-number-3">5.3</span> Upload Website to the Bucket</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+The static website needs to be built before being uploaded to S3.
+</p>
+
+<p>
+Optimize the build command:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 24: </span><code>package.json</code></label><pre class="src src-js">{
+  <span class="org-string">"scripts"</span>: {
+    <span class="org-string">"ng"</span>: <span class="org-string">"ng"</span>,
+    <span class="org-string">"start"</span>: <span class="org-string">"ng serve"</span>,
+    <span class="org-string">"build"</span>: <span class="org-string">"ng build --prod"</span>, <span class="org-comment-delimiter">// </span><span class="org-comment">Update this line</span>
+    ...
+  },
+  ...
+}
+</pre>
+</div>
+
+<p>
+Build the project:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">npm run build
+</pre>
+</div>
+
+<p>
+The built files are under <code>dist</code> directory. Upload the files at Amazon S3 &gt; Buckets &gt; <code>dev.victorchen.compare-yourself</code> &gt; Upload.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1fa607a" class="outline-3">
+<h3 id="org1fa607a"><span class="section-number-3">5.4</span> Use S3 for Hosting</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+Public access is granted to buckets and objects through ACLs, bucket policies, or both. Before setting bucket policies, public access needs to by unblocked at Amazon S3 &gt; Buckets &gt; <code>dev.victorchen.compare-yourself</code> &gt; Permissions &gt; Block Public Access &gt; Edit, and uncheck all items.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb00bdb4" class="outline-3">
+<h3 id="orgb00bdb4"><span class="section-number-3">5.5</span> Turn a S3 Bucket into a Static Website</h3>
+<div class="outline-text-3" id="text-5-5">
+<ul class="org-ul">
+<li><a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/example-bucket-policies.html#example-bucket-policies-use-case-2">Amazon Simple Storage Service | Granting Read-Only Permission to an Anonymous User</a></li>
+</ul>
+
+<p>
+Copy the read-only policy example from S3 doc, and replace the ARN:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">{
+  <span class="org-string">"Version"</span>:<span class="org-string">"2012-10-17"</span>,
+  <span class="org-string">"Statement"</span>:[
+    {
+      <span class="org-string">"Sid"</span>:<span class="org-string">"AddPerm"</span>,
+      <span class="org-string">"Effect"</span>:<span class="org-string">"Allow"</span>,
+      <span class="org-string">"Principal"</span>: <span class="org-string">"*"</span>,
+      <span class="org-string">"Action"</span>:[<span class="org-string">"s3:GetObject"</span>],
+      <span class="org-string">"Resource"</span>:[<span class="org-string">"arn:aws:s3:::dev.victorchen.compare-yourself/*"</span>]
+    }
+  ]
+}
+</pre>
+</div>
+
+<p>
+Set the policy to the bucket at S3 &gt; Buckets &gt; <code>dev.victorchen.compare-yourself</code> &gt; Permissions &gt; Bucket Policy.
+</p>
+
+<p>
+Enable static website hosting on the bucket at S3 &gt; Buckets &gt; <code>dev.victorchen.compare-yourself</code> &gt; Properties &gt; Static Website Hosting:
+</p>
+
+<ul class="org-ul">
+<li>Use this bucket to host a website: checked</li>
+<li>Index document: <code>index.html</code></li>
+<li>Error document: <code>index.html</code></li>
+</ul>
+
+<p>
+Click on the generated endpoint URL to confirm the SPA loads.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcd9d0bc" class="outline-3">
+<h3 id="orgcd9d0bc"><span class="section-number-3">5.6</span> Set Up Logging</h3>
+<div class="outline-text-3" id="text-5-6">
+<ul class="org-ul">
+<li><a href="https://docs.aws.amazon.com/AmazonS3/latest/user-guide/server-access-logging.html">Amazon Simple Storage Service | How Do I Enable Server Access Logging for an S3 Bucket?</a></li>
+</ul>
+
+<p>
+Create another bucket to store logs for the static website at S3 &gt; Buckets &gt; Create Bucket:
+</p>
+
+<ul class="org-ul">
+<li>Bucket name: <code>dev.victorchen.compare-yourself.log</code></li>
+<li>Region: US East</li>
+</ul>
+
+<p>
+Enable logging at S3 &gt; Buckets &gt; <code>dev.victorchen.compare-yourself</code> &gt; Properties &gt; Server Access Logging:
+</p>
+
+<ul class="org-ul">
+<li>Enable logging: checked</li>
+<li>Target bucket: <code>dev.victorchen.compare-yourself.log</code></li>
+<li>Target prefix: <code>log</code></li>
+</ul>
+
+<p>
+Logs can take up to hours to be delivered to the target bucket.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org43d5576" class="outline-3">
+<h3 id="org43d5576"><span class="section-number-3">5.7</span> Set Up CloudFront Distribution</h3>
+<div class="outline-text-3" id="text-5-7">
+<p>
+Create a distribution at CloudFront &gt; Distributions &gt; Create Distribution &gt; Web:
+</p>
+
+<ul class="org-ul">
+<li>Original domain name: <code>dev.victorchen.compare-yourself.s3.amazonaws.com</code></li>
+<li>Compress objects automatically: Yes</li>
+<li>Default root object: <code>index.html</code></li>
+<li>Logging: On</li>
+<li>Bucket for logs: <code>dev.victorchen.compare-yourself.log.s3.amazonaws.com</code></li>
+<li>Prefix: <code>cdn</code></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org5c35286" class="outline-3">
+<h3 id="org5c35286"><span class="section-number-3">5.8</span> Connect a Domain to CloudFront Distribution</h3>
+<div class="outline-text-3" id="text-5-8">
+</div><div id="outline-container-org63c9aa9" class="outline-4">
+<h4 id="org63c9aa9"><span class="section-number-4">5.8.1</span> Request a Certificate with ACM</h4>
+<div class="outline-text-4" id="text-5-8-1">
+<p>
+(Not included in the course.)
+</p>
+
+<p>
+To use a domain name not registered with Route 53, a certificate needs to be requested in ACM (AWS Certificate Manager) to prove ownership of the domain name.
+</p>
+
+<p>
+Request a certificate at AWS Certificate Manager &gt; Request a Certificate:
+</p>
+
+<ul class="org-ul">
+<li>Request a public certificate: checked</li>
+<li>Domain name: <code>compare-yourself.victorchen.dev</code></li>
+<li>DNS validation: checked</li>
+</ul>
+
+<p>
+Add the required <code>CNAME</code> record in the domain name's DNS config, and wait for validation to complete.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org25478f3" class="outline-4">
+<h4 id="org25478f3"><span class="section-number-4">5.8.2</span> Set Custom Certificate in CloudFront Distribution</h4>
+<div class="outline-text-4" id="text-5-8-2">
+<p>
+(Not included in the course.)
+</p>
+
+<p>
+Set the distribution to use the certificate just requested, at CloudFront &gt; Distributions &gt; <code>dev.victorchen.compare-yourself.s3.amazonaws.com</code> &gt; Edit &gt; SSL Certificate &gt; Custom SSL Certificate, and select <code>compare-yourself.victorchen.dev</code>, save the change and wait for distribution to be deployed.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb02ab07" class="outline-4">
+<h4 id="orgb02ab07"><span class="section-number-4">5.8.3</span> Set <code>CNAME</code> in CloudFront Distribution</h4>
+<div class="outline-text-4" id="text-5-8-3">
+<p>
+Set the distribution's <code>CNAME</code>, at CloudFront &gt; Distributions &gt; <code>dev.victorchen.compare-yourself.s3.amazonaws.com</code> &gt; Edit &gt; Alternate Domain Names, and enter <code>compare-yourself.victorchen.dev</code>, save the change and wait for distribution to be deployed.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3790ea0" class="outline-4">
+<h4 id="org3790ea0"><span class="section-number-4">5.8.4</span> Create Hosted Zone in Route53</h4>
+<div class="outline-text-4" id="text-5-8-4">
+<p>
+Create a hosted zone at Route53 &gt; Hosted Zones &gt; Create Hosted Zone:
+</p>
+
+<ul class="org-ul">
+<li>Domain name: <code>d368ge8hrwda0q.cloudfront.net</code></li>
+</ul>
+
+<p>
+<code>NS</code> and <code>SOA</code> records are created automatically when the hosted zone is created. Create a record set:
+</p>
+
+<ul class="org-ul">
+<li>Name: Empty</li>
+<li>Alias: Yes</li>
+<li>Alias target: <code>d368ge8hrwda0q.cloudfront.net</code> (the CloudFront distribution, should be shown as an option)</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3e860d3" class="outline-2">
+<h2 id="org3e860d3"><span class="section-number-2">6</span> Beyond the Basics - An Outlook</h2>
+<div class="outline-text-2" id="text-6">
+</div><div id="outline-container-org58bd2d9" class="outline-3">
+<h3 id="org58bd2d9"><span class="section-number-3">6.1</span> Document an API</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+Add documentation at API Gateway &gt; APIs &gt; <code>compare-yourself</code> &gt; Documentation &gt; Create Documentation Part:
+</p>
+
+<ul class="org-ul">
+<li>Type: Method</li>
+<li>Path: <code>/compare-yourself</code></li>
+<li>Method: <code>GET</code></li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-js">{
+    <span class="org-string">"description"</span>: <span class="org-string">"Get all or single user data."</span>
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6ccb100" class="outline-3">
+<h3 id="org6ccb100"><span class="section-number-3">6.2</span> Other AWS Lambda Triggers</h3>
+<div class="outline-text-3" id="text-6-2">
+<ul class="org-ul">
+<li><a href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-services.html">AWS Lambda | Using AWS Lambda with Other Services</a></li>
+</ul>
+
+<p>
+Besides API Gateway, Lambda functions can be triggered by other services.
+</p>
+</div>
+
+<div id="outline-container-orgb93af51" class="outline-4">
+<h4 id="orgb93af51"><span class="section-number-4">6.2.1</span> Create Lambda Function for S3</h4>
+<div class="outline-text-4" id="text-6-2-1">
+<p>
+Create a bucket:
+</p>
+
+<ul class="org-ul">
+<li>Bucket name: <code>dev.victorchen.lambda</code></li>
+</ul>
+
+<p>
+Create a Lambda function:
+</p>
+
+<ul class="org-ul">
+<li>Function name: <code>s3-create</code></li>
+</ul>
+
+<p>
+Add trigger to the Lambda function at Lambda &gt; Functions &gt; <code>s3-create</code> &gt; Add Trigger:
+</p>
+
+<ul class="org-ul">
+<li>Trigger: S3</li>
+<li>Bucket: <code>dev.victorchen.lambda</code></li>
+<li>Event type: All object create event</li>
+</ul>
+
+<p>
+Upload something to the bucket, and confirm the Lambda function invocation at Lambda &gt; Functions &gt; <code>s3-create</code> &gt; Monitoring.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbe77e2a" class="outline-3">
+<h3 id="orgbe77e2a"><span class="section-number-3">6.3</span> Run Node/Express App via Lambda and API Gateway</h3>
+<div class="outline-text-3" id="text-6-3">
+<ul class="org-ul">
+<li><a href="https://github.com/awslabs/aws-serverless-express">GitHub | AWS Serverless Express</a></li>
+</ul>
+</div>
+
+<div id="outline-container-org54e0e3c" class="outline-4">
+<h4 id="org54e0e3c"><span class="section-number-4">6.3.1</span> Run Express Application Locally</h4>
+<div class="outline-text-4" id="text-6-3-1">
+<p>
+Save the <code>express-serverless</code> project locally, and start the Node server with <code>npm run start</code>. Open the URLs in browser:
+</p>
+
+<ul class="org-ul">
+<li><code>localhost:3000</code></li>
+<li><code>localhost:3000/users</code></li>
+</ul>
+
+<p>
+The routes are setup in <code>app.js</code>:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 25: </span><code>app.js</code></label><pre class="src src-js"><span class="org-keyword">var</span> <span class="org-variable-name">routes</span> = require(<span class="org-string">'./routes/index'</span>);
+<span class="org-keyword">var</span> <span class="org-variable-name">users</span> = require(<span class="org-string">'./routes/users'</span>);
+
+app.use(<span class="org-string">'/'</span>, routes);
+app.use(<span class="org-string">'/users'</span>, users);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd03f51c" class="outline-4">
+<h4 id="orgd03f51c"><span class="section-number-4">6.3.2</span> Integrate Express Application with <code>aws-serverless-express</code></h4>
+<div class="outline-text-4" id="text-6-3-2">
+<p>
+<code>aws-serverless-express</code> is a tool that wraps an Express application so it can run on AWS Lambda. Install dependency into the application:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">npm install --save aws-serverless-express
+</pre>
+</div>
+
+<p>
+The generated <code>lambda.js</code> file creates a request handler which passes requests to a server:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 26: </span><code>lambda.js</code></label><pre class="src src-js"><span class="org-string">'use strict'</span>
+<span class="org-keyword">const</span> <span class="org-variable-name">awsServerlessExpress</span> = require(<span class="org-string">'aws-serverless-express'</span>)
+<span class="org-keyword">const</span> <span class="org-variable-name">app</span> = require(<span class="org-string">'./app'</span>)
+<span class="org-keyword">const</span> <span class="org-variable-name">server</span> = awsServerlessExpress.createServer(app)
+
+exports.handler = (event, context) =&gt; { awsServerlessExpress.proxy(server, event, context) }
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org294a7f1" class="outline-4">
+<h4 id="org294a7f1"><span class="section-number-4">6.3.3</span> Import Express Application to Lambda</h4>
+<div class="outline-text-4" id="text-6-3-3">
+<p>
+Create a Lambda function:
+</p>
+
+<ul class="org-ul">
+<li>Function name: <code>serverless-express</code></li>
+</ul>
+
+<p>
+Archive all contents under <code>express-serverless</code> into a <code>.zip</code> archive. Upload the archive at Lambda &gt; Functions &gt; <code>serverless-express</code> &gt; Function Code:
+</p>
+
+<ul class="org-ul">
+<li>Code Entry Type: Upload a <code>.zip</code> File</li>
+<li>Handler: <code>lambda.handler</code></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd7038ab" class="outline-4">
+<h4 id="orgd7038ab"><span class="section-number-4">6.3.4</span> Create API to Forward Requests to Lambda</h4>
+<div class="outline-text-4" id="text-6-3-4">
+<p>
+Create a new API at API Gateway:
+</p>
+
+<ul class="org-ul">
+<li>API name: <code>serverless-express</code></li>
+</ul>
+
+<p>
+Create a method at <code>/</code> to serve requests of the root URL:
+</p>
+
+<ul class="org-ul">
+<li>Method: <code>ANY</code></li>
+<li>Integration type: Lambda function</li>
+<li>Use Lambda proxy integration: Checked</li>
+<li>Lambda function: <code>serverless-express</code></li>
+</ul>
+
+<p>
+Create a proxy resource at <code>/</code> to serve requests of anything other than the root URL:
+</p>
+
+<ul class="org-ul">
+<li>Configure as proxy resource: Checked</li>
+<li>Resource path: <code>/{proxy}</code></li>
+<li>Integration type: Lambda function proxy</li>
+<li>Lambda function: <code>serverless-express</code></li>
+</ul>
+
+<p>
+Deploy the API, open the endpoint and confirm the Express application loads. Note that the stylesheets don't load. This is because all requests (including static file requests) are forwarded to Lambda.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org55de4fe" class="outline-3">
+<h3 id="org55de4fe"><span class="section-number-3">6.4</span> Pros and Cons of Serverless Node/Express MPA</h3>
+<div class="outline-text-3" id="text-6-4">
+<p>
+The Express application via Lambda is stateless, because Lambda functions can't store files or sessions. Other pros and cons are listed on <a href="https://github.com/awslabs/aws-serverless-express#is-aws-serverless-right-for-my-app">GitHub | AWS Serverless Express</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org329c1da" class="outline-3">
+<h3 id="org329c1da"><span class="section-number-3">6.5</span> Serverless Apps and Security</h3>
+<div class="outline-text-3" id="text-6-5">
+</div><div id="outline-container-org8ae3140" class="outline-4">
+<h4 id="org8ae3140"><span class="section-number-4">6.5.1</span> Application-Related Issues</h4>
+<div class="outline-text-4" id="text-6-5-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>Unauthorized access</b></th>
+<th scope="col" class="org-left">Protect API endpoints with Cognito or other auth</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">Restrict API usage with API keys</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>Compromised user data</b></td>
+<td class="org-left">Cognito uses SSL and encrypts stored data</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Application needs to retrieve and expose user data carefully</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+In the frontend app that uses Cognito to authenticate users, the Cognito user pool and client IDs exist in the JS code that anyone can get. With these info, someone can replicate the sign-up and sign-in functions. This is mostly unpreventable yet unharmful, because the user data is still inaccessible thus safe.
+</p>
+
+<p>
+To counter this cross-origin behavior, restrict the allowed origin of the API at API Gateway &gt; APIs &gt; * &gt; Resources &gt; * &gt; Integration Response &gt; * &gt; Header Mappings:
+</p>
+
+<ul class="org-ul">
+<li>Response header: <code>Access-Control-Allow-Origin</code></li>
+<li>Mapping value: (the app's domain name)</li>
+</ul>
+
+<p>
+This protection depends on the browser's respect of CORS headers.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org35a5845" class="outline-4">
+<h4 id="org35a5845"><span class="section-number-4">6.5.2</span> Infrastructure-Related Issues</h4>
+<div class="outline-text-4" id="text-6-5-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>DDos attacks</b></th>
+<th scope="col" class="org-left">API Gateway has built-in throttling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>DB injection</b></td>
+<td class="org-left">AWS SDK has built-in sanitation</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>Stolen AWS credentials</b></td>
+<td class="org-left">Protect AWS account via multi-factor auth etc.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6a9ed78" class="outline-3">
+<h3 id="org6a9ed78"><span class="section-number-3">6.6</span> Get to Know the Serverless Framework</h3>
+<div class="outline-text-3" id="text-6-6">
+<ul class="org-ul">
+<li><a href="https://serverless.com/">Serverless Framework</a></li>
+</ul>
+
+<p>
+Install Serverless framework and create an application:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Install Serverless globally</span>
+npm install -g serverless
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Create a new application</span>
+serverless create --template hello-world
+<span class="org-comment-delimiter"># </span><span class="org-comment">Handler and config files are created</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Deploy to cloud, this requires AWS credentials being setup locally</span>
+serverless deploy
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6cd5ff8" class="outline-3">
+<h3 id="org6cd5ff8"><span class="section-number-3">6.7</span> Get to Know SAM (Serverless Application Model) by AWS</h3>
+<div class="outline-text-3" id="text-6-7">
+<ul class="org-ul">
+<li><a href="https://aws.amazon.com/serverless/sam/">AWS Serverless Application Model</a></li>
+</ul>
+
+<p>
+SAM is a framework used to build serverless applications with AWS resources such as Lambda functions.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7e1937d" class="outline-3">
+<h3 id="org7e1937d"><span class="section-number-3">6.8</span> Test Serverless Applications with LocalStack</h3>
+<div class="outline-text-3" id="text-6-8">
+<ul class="org-ul">
+<li><a href="https://localstack.cloud">LocalStack</a></li>
+</ul>
+
+<p>
+LocalStack is a framework used to build and test Cloud application locally, by running a mock AWS cloud environment.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9fe5cdb" class="outline-3">
+<h3 id="org9fe5cdb"><span class="section-number-3">6.9</span> Other Useful AWS Services</h3>
+<div class="outline-text-3" id="text-6-9">
+<ul class="org-ul">
+<li><a href="https://aws.amazon.com/step-functions/">AWS Step Functions</a></li>
+</ul>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>Step Functions</b></th>
+<th scope="col" class="org-left">Coordinate AWS services into workflows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>Kinesis</b></td>
+<td class="org-left">Collect and process data streams</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>CodeBuild</b></td>
+<td class="org-left">CI, compile and test</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>CodePipeline</b></td>
+<td class="org-left">CD, automate build, test and deploy</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org938ef62" class="outline-2">
+<h2 id="org938ef62"><span class="section-number-2">7</span> Links</h2>
+<div class="outline-text-2" id="text-7">
+<ol class="org-ol">
+<li><a href="https://codepen.io/">CodePen</a></li>
+<li><a href="http://json-schema.org/">JSON Schema</a></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2019-09-06 Fri 18:53</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

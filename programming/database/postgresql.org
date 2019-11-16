@@ -1,0 +1,208 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: PostgreSQL
+
+* 类型
+** 字符串
+
+字符串使用单引号，转义字符串中的单引号使用双单引号：@@html:<code>''</code>@@ 。 
+
+** 日期时间
+
+#+CAPTION: 按格式输出
+#+BEGIN_SRC sql
+SELECT to_char(<column>, '<format>') FROM ...;
+
+# 示例
+SELECT to_char(insert_time, 'YYYY-MM-DD HH24:MI:SS') FROM ...;
+#+END_SRC
+
+[[http://www.postgresql.org/docs/9.1/static/functions-formatting.html][Data Type Formatting Functions]]
+* 命令行
+** =psql=
+
+#+BEGIN_SRC sh
+psql <options>
+
+<options> # 连接
+    -h <host>     # 默认为 127.0.0.1
+    -p <port>     # 默认为 5432
+    -U <user>     # 默认为当前系统用户名
+    -d <database> # 默认为当前系统用户名
+
+<options> # 输入
+    -c <cmd>  # 执行命令
+    -f <file> # 执行文件内的命令
+
+<options> # 输出
+    -o, --output= <file>   # 结果输出到文件
+    -L, --log-file= <file> # 
+
+<options> # 输出格式
+    -F, --field-separator= <string>  # 列分隔符，eg. -F $'\t'
+    -R, --record-separator= <string> # 行分隔符
+    -A, --no-align                   # 不强制对齐列
+    -t, --tuples-only                # 不输出列名和 footer
+    -P, --pset= <name>=<value>
+        footer
+#+END_SRC
+
+** =pg_dump=
+
+#+BEGIN_SRC sh
+pg_dump <options> <database> > <file>
+
+<options> # 连接
+    -h <host>
+    -p <port>
+    -U <user>
+
+<options> # 输出
+    -a, --data-only
+    -s, --schema-only
+    -n, --schema=<schema> # Dump the names schema only
+#+END_SRC
+
+#+CAPTION: 恢复备份
+#+BEGIN_SRC sh
+psql <options> <database> < <file>
+
+<options> # 连接
+    -h <host>
+    -p <port>
+    -U <user>
+#+END_SRC
+
+* 控制台
+
+| *信息*          |                              | SQL               |
+|-----------------+------------------------------+-------------------|
+| =\l=            | 列出所有数据库               | =SHOW DATABASES;= |
+|-----------------+------------------------------+-------------------|
+| =\d=            | 列出当前数据库所有内容       |                   |
+|-----------------+------------------------------+-------------------|
+| =\dt=           | 列出当前数据库所有表         | =SHOW TABLES;=    |
+|-----------------+------------------------------+-------------------|
+| =\d <table>=    | 显示表信息                   | =DESC <table>;=   |
+| =\d+ <table>=   |                              |                   |
+|-----------------+------------------------------+-------------------|
+| =\du=           | 列出所有用户                 |                   |
+|-----------------+------------------------------+-------------------|
+| =\conninfo=     | 显示当前连接信息             |                   |
+|-----------------+------------------------------+-------------------|
+| *输出*          |                              |                   |
+|-----------------+------------------------------+-------------------|
+| =\o <file>=     | 将之后命令行的结果输出到文件 |                   |
+|-----------------+------------------------------+-------------------|
+|                 |                              |                   |
+|-----------------+------------------------------+-------------------|
+| =\c <database>= | 连接其他数据库               |                   |
+|-----------------+------------------------------+-------------------|
+| *其他*          |                              |                   |
+|-----------------+------------------------------+-------------------|
+| =\h <command>=  | 查看 SQL 命令解释            |                   |
+|-----------------+------------------------------+-------------------|
+| =\?=            | 查看 =psql= 命令列表         |                   |
+|-----------------+------------------------------+-------------------|
+| =\q=            | 退出                         |                   |
+
+* 安装
+** 程序
+
+#+CAPTION: 安装客户端
+#+BEGIN_SRC sh
+$ sudo apt-get install postgresql-client
+#+END_SRC
+
+#+CAPTION: 安装服务器
+#+BEGIN_SRC sh
+$ sudo apt-get install postgresql
+#+END_SRC
+
+正常情况下，安装完成后，PostgreSQL 服务器会自动在本机的 5432 端口开启。
+
+#+CAPTION: 安装图形管理界面
+#+BEGIN_SRC sh
+$ sudo apt-get install pgadmin3
+#+END_SRC
+
+** 初始化
+
+初次安装后默认生成：
+
+- 名为 =postgres= 的数据库
+- 名为 =postgres= 的数据库用户
+- 名为 =postgres= 的系统用户
+
+使用 =postgres= 用户来生成其他用户和新数据库。
+
+*** 使用控制台
+
+#+CAPTION: 新建系统用户 =dbuser=
+#+BEGIN_SRC sh
+$ sudo adduser dbuser
+#+END_SRC
+
+#+CAPTION: 切换到 =postgres= 用户，以同名数据库用户身份登录控制台
+#+BEGIN_SRC sh
+$ sudo su - postgres
+$ psql
+#+END_SRC
+
+#+CAPTION: 为 =postgres= 用户设置密码
+#+BEGIN_SRC sh
+> \password postgres
+#+END_SRC
+
+#+CAPTION: 新建数据库用户 =dbuser= 并设置密码
+#+BEGIN_SRC sh
+> CREATE USER dbuser WITH PASSWORD 'password';
+#+END_SRC
+
+#+CAPTION: 新建数据库并指定所有者为 =dbuser= ，并赋予所有权限
+#+BEGIN_SRC sh
+> CREATE DATABASE exampledb OWNER dbuser;
+> GRANT ALL PRIVILEGES ON DATABASE exampledb TO dbuser;
+#+END_SRC
+
+*** 使用 shell 命令
+
+#+CAPTION: 新建数据库用户 =dbuser= ，并指定为超级用户
+#+BEGIN_SRC sh
+$ sudo -u postgres createuser --superuser dbuser
+#+END_SRC
+
+#+CAPTION: 登录控制台，设置 =dbuser= 密码
+#+BEGIN_SRC sh
+$ sudo -u postgres psql
+> \password dbuser
+#+END_SRC
+
+#+CAPTION: 新建数据库，并指定所有者为 =dbuser=
+#+BEGIN_SRC sh
+$ sudo -u postgres createdb -O dbuser exampledb
+#+END_SRC
+
+* Debug
+
+#+CAPTION: 查看并解除锁
+#+BEGIN_SRC sql
+SELECT
+t.schemaname,
+t.relname,
+l.locktype,
+l.page,
+l.virtualtransaction,
+l.pid,
+l.mode,
+l.granted
+FROM pg_locks l
+JOIN pg_stat_all_tables t ON l.relation = t.relid
+WHERE t.schemaname <> 'pg_toast'::name AND t.schemaname <> 'pg_catalog'::name
+ORDER BY t.schemaname, t.relname;
+
+SELECT pg_cancel_backend('<pid>');
+#+END_SRC
+
+* 加密
+
+1. [[https://www.postgresql.org/docs/current/static/pgcrypto.html][pgcrypto]]

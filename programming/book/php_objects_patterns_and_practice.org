@@ -1,0 +1,316 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: PHP Objects, Patterns and Practice
+
+* PHP and Objects
+** The Accidental Success of PHP Objects
+
+OO design often uses a method declaration as a kind of contract. The method demands certain inputs and, reciprocally, promises to give a particular type of data back.
+
+** Advocacy and Agnosticism: The Object Debate
+
+One can create perfectly acceptable working systems using functions and global code. "There's more than one way to do it." This is especially true of smaller scripts, where quickly getting a working example up and running is more important than building a structure that will scale well into a larger system (scratch projects of this sort are often known as "spikes"). The trick is to know when the quick proof of concept is becoming the root of a larger development, and to call a halt before lasting design decisions are made by the sheer weight of code.
+
+It is becoming increasingly hard to work as a PHP programmer without using and understanding PHP's support for objects, not least because the third party libraries used in projects will themselves likely be object-oriented.
+
+* Object Basics
+** Arguments and Types
+*** Primitive Types
+
+It is better to provide a clear and strict interface for a method or function than it is to offer a fuzzily forgiving one. Fuzzy and forgiving functions and methods can promote confusion and thereby breed bugs.
+
+Type matters. The fact that PHP is loosely typed makes it all the more important. One cannot rely on a compiler to prevent type-related bugs. Consider the potential impact of unexpected types when they find their way into the arguments. Don't trust client coders to read your thoughts, and always consider how the methods will deal with incoming garbage.
+
+*** Object Types
+
+When you define a class, you also define a type, but a type can describe an entire family of classes.
+
+** Inheritance
+*** The Inheritance Problem
+
+A complex function/class that needs to differentiate various conditions can be separated into different functions/classes. Then the complexity issue is addressed at a cost, which is duplication. By making child classes inherit from common parent class, duplication can be minimized.
+
+*** Working with Inheritance
+
+Super class's implementation of a method might seem redundant if it is overridden by all children. Nevertheless, it provides basic functionality that new child classes might use. Its presence also provides a guarantee to client code that all children objects will provide this method. It is possible to make this promise in a base class without providing any implementation at all, by using abstract method or interface.
+
+* Advanced Features
+** Static Methods and Properties
+
+Methods like this act as "factories" in that they take raw materials (row data or configuration information) and use them to produce objects. The term *factory* is applied to code designed to generate object instances.
+
+It is not good practice for a parent class to have intimate knowledge of its children.  Problems of this kind - where to acquire key objects and values and how much classes should know about one another - are very common in object-oriented programming.
+** Traits
+*** Defining and Using a Trait
+
+One of the core object-oriented design goals is the removal of duplication. One solution to this kind of duplication is to factor it out into a reusable strategy class. Traits provide another approach - less elegant, perhaps, but certainly effective.
+** Late Static Bindings
+
+ A static method can be used as factory, a way of generating instances of the containing class. Why use a static factory method when a constructor performs the work of creating an object already? Because of a pattern called Identity Map. An Identity Map component generates and manages a new object only if an object with the same distinguishing characteristics is not already under management. If the target object already exists, it is returned. A factory method like =create()= would make a good client for a component of this sort.
+** Handling Errors
+
+Testing for error conditions is relatively trivial, but it must be decided how to respond to them should they arise. Methods that detect errors usually do not have the information to decide how to handle them. Some options:
+
+1. End execution.
+   - Have to take responsibility for bringing an entire script crashing down.
+2. Return an error flag, e.g. a boolean or an integer value of 0 or -1.
+   - Return value is polluted.
+   - Have to rely on the client code to test for the return type. There is no guarantee that the client will be any better equipped to decide how to handle the error.
+** Working with Interceptors
+
+=__call()= method can be useful for delegation - the mechanism by which one object passes method invocations on to a second. With inheritance the relationship between child and parent is fixed, the ability to switch the receiving object at runtime means that _delegation can be more flexible than inheritance_.
+
+#+BEGIN_SRC php
+class Person {
+    private $writer;
+    public function __construct(PersonWriter $writer) {
+        $this->writer = $writer;
+    }
+    public function __call(string $method, array $args) {
+        if (method_exists($this->writer, $method)) {
+            $this->writer->$method($this); // Delegate to writer
+        }
+    }
+    public function getName(): string {
+        return 'Foo Bar';
+    }
+}
+
+class PersonWriter {
+    public function writeName(Person $person) {
+        echo 'Name: ' . $person->getName() . "\n";
+    }
+}
+
+$writer = new PersonWriter();
+$person = new Person($writer);
+$person->writeName();
+#+END_SRC
+
+Although automated delegation can save a lot of legwork, there can be a cost in clarity. Rely too much on delegation, you present the world with a dynamic interface that resists reflection. The logic that governs the interaction between a delegating class and its target can be obscure - buried in methods like =__call()= rather than signaled up front by inheritance relationships or method type hints.
+
+=__get()= and =__set()= interceptor methods can also be used to manage composite properties.
+
+#+BEGIN_SRC php
+<?php
+class Person {
+    private $firstName;
+    private $lastName;
+    public function __construct(string $maybeFirst, string $maybeLast = null) {
+        if ($maybeLast === null) {
+            $this->fullName = $maybeFirst;
+        } else {
+            $this->firstName = $maybeFirst;
+            $this->lastName = $maybeLast;
+        }
+    }
+    public function __set(string $property, string $value) {
+        if ($property === 'fullName') {
+            $name = explode(' ', $value);
+            if (count($name) > 1) {
+                $this->firstName = array_shift($name);
+                $this->lastName = implode(' ', $name);
+            } else {
+                throw new Exception('Wrong name:' . $value);   
+            }
+        }
+    }
+    public function __get(string $property) {
+        if ($property === 'fullName') {
+            return $this->firstName . ' ' . $this->lastName;
+        }
+    }
+}
+
+$a = new Person('Foo', 'Bar');
+echo $a->fullName;
+$b = new Person('Foo Bar');
+echo $b->fullName;
+#+END_SRC
+** Callbacks, Anonymous Functions, and Closures
+
+Adding many incidental tasks to a method will overwhelm its core responsibility. Callbacks allow plugging functionality into a component at runtime that is not directly related to that component's core task. By making a component callback aware, client code will have the power to extend core code in contexts you don't yet know about.
+
+#+BEGIN_SRC php
+class Item {}
+
+class Processor {
+    private $callbacks;
+    // Register callbacks
+    public function registerCallback(callable $callback) {
+        if (!is_callable($callback)) {
+            throw new Exception('Callback is not callable');
+        }
+        $this->callbacks[] = $callback;
+    }
+    public function process(Item $item) {
+        echo 'Processing ...';
+        // Invoke callbacks
+        foreach ($this->callbacks as $callback) {
+            call_user_func($callback, $item);
+        }
+    }
+}
+
+// Anonymous function
+$callback = function(Item $item) {
+    echo 'Additional step ...';
+};
+
+$processor = new Processor();
+$processor->registerCallback($callback);
+$processor->process(new Item());
+#+END_SRC
+* Object Tools
+** PHP and Packages
+*** PHP Packages and Namespaces
+
+Until PHP 5.3, developers were forced to name their files in a global context.
+
+#+CAPTION: The most damaging problem was the possibility of naming collisions.
+#+BEGIN_SRC php
+// Foo.php
+class Dummy {}
+// Bar.php
+include 'Foo.php';
+class Dummy {} // Fatal error:  Cannot declare class Dummy ...
+#+END_SRC
+
+#+CAPTION: A conventional workaround was to prepend package names to class names.
+#+BEGIN_SRC php
+// Foo.php
+class Foo_Dummy {}
+// Bar.php
+include 'Foo.php';
+class Bar_Dummy {}
+#+END_SRC
+
+However, as class names grew longer and longer, it resulted in issues with code readability.
+
+-----
+
+A domain name is unique to its owner, this is a trick that Java developers typically use for their package names. They invert domain names so that they run from the most generic to the most specific.
+*** Include Paths
+
+#+BEGIN_SRC php
+require_once(__DIR__ . '/../useful/Outputter.php');
+#+END_SRC
+
+The relationship between files is hardcoded. There must always be a =useful= directory alongside the calling class's containing directory.
+
+#+BEGIN_SRC php
+require_once('../../projectlib/business/User.php');
+#+END_SRC
+
+The path is not relative to the file that contains this =require_once= statement, but to a configured calling context.
+
+#+BEGIN_SRC php
+require_once('/home/john/projectlib/business/User.php');
+#+END_SRC
+
+Freeze the library file into a particular context. It will work for a single instance, but it makes libraries hard to relocate and impractical to share among projects. To install the project on a new server, all =require= statements will need changing to account for a new file path.
+
+If must manually include files, the neatest approach is to decouple the invoking code from the library =business/User.php=.
+
+#+CAPTION: This can be achieved by adding the directory to =include_path=.
+#+BEGIN_SRC sh
+include_path = ".:/usr/local/lib/php-libraries"
+#+END_SRC
+
+#+CAPTION: Or with Apache, set =include_path= in =httpd.conf= or per-directory configuration file =.htaccess=.
+#+BEGIN_SRC sh
+php_value include_path value .:/usr/local/lib/php-libraries
+#+END_SRC 
+
+*** Autoload
+
+Although it's neat to use =require_once= in conjunction with =include_path=, many developers are doing away with require statements altogether at a high level and relying instead on autoload.
+
+To use autoload, classes should be organized so that each sits in its own file. And each class file should bear a fixed relationship to the name of the class it contains.
+
+-----
+
+=spl_autoload_register()= stacks the autoload functions. When PHP encounters an unknown class, it will invoke the autoload functions in turn, stopping when instantiation is possible, or when the all options have been exhausted. There is obviously an overhead to this kind of stacking. It is still supported because components in large systems and in third-party libraries may need to register their own autoload mechanisms. Stacking allows multiple parts of a system to register autoload strategies independently, without overwriting one another.
+** The Class and Object Functions
+
+#+CAPTION: PHP allows you to use strings to refer to classes dynamically:
+#+BEGIN_SRC php
+class Foo {}
+$class = 'Foo';
+$foo = new $class();
+#+END_SRC
+* Objects and Design
+** Object-Oriented and Procedural Programming
+
+One core difference between object-oriented and procedural code can be found in the way that responsibility is distributed.
+
+In procedure programming, the controlling code tends to take responsibility for handling differing conditions. This top-down control can result in the development of duplications and dependencies across a project. Object-oriented code tries to minimize these dependencies by _moving responsibility for handling tasks away from client code and toward the objects_.
+
+*** Responsibility
+
+#+CAPTION: Placing a static method for generating child objects in the parent class.
+#+BEGIN_SRC php
+abstract class ParamHandler {
+    public static function getInstance(string $filename) {
+        if (preg_match("/\.xml$/i", $filename)) {
+            return new XmlParamHandler($filename);
+        }
+        return new TextParamHandler($filename);
+    }
+    abstract public function write();
+    abstract public function read();
+}
+class TextParamHandler extends ParamHandler {...}
+class XmlParamHandler extends ParamHandler {...}
+#+END_SRC
+
+The choice about file format is made in the static method, which tests the file extension only once. The client code takes no responsibility for implementation. It uses the provided object with no knowledge of, or interest in, the particular subclass it belongs to. Because responsibility for implementation lies with the objects and not with the client code, it would be easy to switch in support for new formats transparently.
+
+This pattern is convenient but has its consequences. To handle another format, being the maintainer of =ParamHandler=, you can amend the =getInstance()= method. But being a client coder, you face the prospect of having to reapply the patch every time the package is reinstalled.
+
+*** Cohesion
+
+Cohesion is the extent to which _proximate procedures are related to one another_. Ideally, components should be created to share a clear responsibility. If related routines are spread widely, it will be harder to maintain as you have to hunt around to make changes.
+
+*** Coupling
+
+Tight coupling occurs when discrete parts of a system's code are tightly bound up with one another so that a _change in one part necessitates changes in the others_.
+
+*** Orthogonality
+
+The combination of components with tightly defined responsibilities that are also independent from the wider system is sometimes referred to as orthogonality. Orthogonality promotes reuse in that components can be plugged into new systems without needing any special configuration. Such components will have clear inputs and outputs, independent of any wider context.
+
+** Choosing Your Classes
+
+It can seem straightforward when you are modeling the real world. This is not a bad starting point, but it does have its dangers. You may find it bloating as ongoing development and requirement changes call for it to do more and more things.
+
+#+BEGIN_QUOTE
+A =ShopProduct= class manages product data. It may provide a mechanism for outputting summary information for invoices and delivery notes with a =write()= method. But when the client asks for product summaries in different formats, there are 2 options: create =writeXML()= and =writeHTML()= methods in addition, or add conditional code to =write()= to output different formats, according to an option flag. Either way, the problem here is that the =ShopProduct= class is now trying to do too much.
+#+END_QUOTE
+
+The best approach is to think of a class as having a primary responsibility and to make that responsibility as singular and focused as possible. Describe a class's responsibility in 25 words or less, rarely using the words "and" or "or". 
+
+** Polymorphism
+
+Polymorphism, or class switching, is the maintenance of _multiple implementations behind a common interface_.
+
+The need for polymorphism is often signaled by the presence of extensive conditional statements. Polymorphism doesn't banish conditionals. It tends to centralize the conditional code into one place.
+
+** Encapsulation
+
+Encapsulation means the _hiding of data and functionality from client_.
+
+The interface is what matters, not the mechanisms working beneath it. And the objective should be to make each part as independent as possible from its peers. 
+** Forget How to Do It
+
+At the design stage, empty your head of procedures and mechanisms. _Think only about the key participants of the system: the types it will need and their interfaces._ Let the structures and relationships in the code lead you. The implementation will fall into place easily behind a well-defined interface.
+
+To emphasize interface, think in terms of abstract base classes rather than concrete children. It is this responsibility that is important about the type, not the actual persistence medium or the means of storing and retrieving data.
+** Four Signposts
+*** Code Duplication
+
+Duplication generally means tight coupling. If change something fundamental about one routine, will the similar routines need amendment? If this is the case, they probably belong in the same class.
+
+*** The Class Who Knew Too Much
+
+limit a class's knowledge of its context. By using a global variable, or by giving a class any kind of knowledge about its wider domain, you anchor it into its context, making it less reusable and dependent on code beyond its control.
+** The UML [Skipped]

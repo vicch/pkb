@@ -1,0 +1,1012 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Fooled by Randomness</title>
+<!-- 2017-03-11 Sat 23:14 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Fooled by Randomness</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. 目录</a></li>
+<li><a href="#sec-2">2. 专家推荐</a></li>
+<li><a href="#sec-3">3. 前言</a></li>
+<li><a href="#sec-4">4. 第一章</a></li>
+<li><a href="#sec-5">5. 第二章</a></li>
+<li><a href="#sec-6">6. 第三章</a></li>
+<li><a href="#sec-7">7. 第四章</a></li>
+<li><a href="#sec-8">8. 第五章</a></li>
+<li><a href="#sec-9">9. 第六章</a></li>
+<li><a href="#sec-10">10. 第七章</a></li>
+<li><a href="#sec-11">11. 第二篇</a></li>
+<li><a href="#sec-12">12. 第九章</a></li>
+<li><a href="#sec-13">13. 第十章</a></li>
+<li><a href="#sec-14">14. 第十一章</a></li>
+<li><a href="#sec-15">15. 第十二章</a></li>
+<li><a href="#sec-16">16. 第十三章</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 目录</h2>
+<div class="outline-text-2" id="text-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">前言</th>
+<th scope="col" class="left">Prologue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">第一篇：黑天鹅事件</td>
+<td class="left">Part 1: Solon's Warning</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">第一章：赚钱的随机性</td>
+<td class="left">Chapter 1: If You're So Rich, Why Aren't You So Smart?</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">第二章：奇特的结算方法</td>
+<td class="left">Chapter 2: A Bizzare Accounting Method</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">第三章：从数学的角度思考历史</td>
+<td class="left">Chapter 3: A Mathematical Meditation on History</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">第四章：随机性和科学知识分子</td>
+<td class="left">Chapter 4: Randomness and the Scientific Intellectual</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">第五章：最不适者可能生存吗？</td>
+<td class="left">Chapter 5: Survival of the Least Fit</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">第六章：偏态与不对称</td>
+<td class="left">Chapter 6: Skewness and Asymmetry</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">第七章：归纳法的问题</td>
+<td class="left">Chapter 7: The Problem of Induction</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">第二篇：打字机前的猴子</td>
+<td class="left">Part 2: Monkeys on Typewriter</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">第八章：太多「下一个富翁」</td>
+<td class="left">Chapter 8: Too Many Millionaires Next Door</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">第九章：买卖证券比煎蛋容易</td>
+<td class="left">Chapter 9: It Is Easier to Buy and Sell Than Fry an Egg</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">第十章：生活中的非线性现象</td>
+<td class="left">Chapter 10: On the Nonlinearities of Life</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">第十一章：我们是概率盲</td>
+<td class="left">Chapter 11: We Are Probability Blind</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">第三篇：活在随机世界中</td>
+<td class="left">Part 3: Living with Randomities</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">第十二章：赌徒的迷信和笼中的鸽子</td>
+<td class="left">Chapter 12: Gamblers' Ticks and Pigeons in a Box</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">第十三章：概率与怀疑论</td>
+<td class="left">Chapter 13: On Probability and Skepticism</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 专家推荐</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-quote-container">
+<blockquote>
+<p>
+黑天鹅事件发生非常罕见，这带来两个问题。一是度量问题：历史数据记录太少，无法描述，无法总结出规律，无法预测。二是认知问题：很长时间没有发生，容易让人麻痹大意，忘记预防。
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 前言</h2>
+<div class="outline-text-2" id="text-3">
+<div class="org-quote-container">
+<blockquote>
+<p>
+……分明靠运气，却被误认为是凭非运气（即技术）才完成的事；以及更普遍来说，分明是随机现象，却被误认为是非随机现象（即决定论）。幸运的傻子运气好得出奇，却煞有介事地把自己的成功归诸其他特定原因。
+</p>
+
+<p>
+&#x2026; luck disguised and perceived as nonluck (that is, skills) and, more generally, randomness disguised and perceived as non-randomness (that is, determinism). &#x2026; lucky fool, defined as a person who benefited from a disproportionate share of luck but attributes his success to some other, generally very precise, reason.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+在基因上，我们仍和许久以前漫游在非洲大草原上的老祖先很接近。我们信念的形成充满着迷信，我们没办法以批判性的方式去思考，我们的心智并没有配备适当的硬件，缺乏处理概率问题的能力。即使现今也不例外，书店架上摆满了成功人物的传记，畅谈他们如何功成名就。俗话说的「天时地利」，可用来削弱他们所得出的任何结论。
+</p>
+
+<p>
+We are still very close to our ancestors who roamed the savannah. The formation of our beliefs is fraught with superstitions. &#x2026; our inability to think critically. Our mind is not equipped with the adequate machinery to handle probabilities. Even today, bookstores are full of biographies of successful men presenting their specific explanation on how they made it big in life. We have an expression, "the right time and the right place", to weaken whatever conclusion can be inferred from them.
+</p>
+</blockquote>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">随机性（randomness）</th>
+<th scope="col" class="left">决定论（determinism）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">概率（probability）</td>
+<td class="left">必然（certainty）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">巧合（coincidence）</td>
+<td class="left">因果（law）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">噪声（noise）</td>
+<td class="left">讯号（signal）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">归纳法</td>
+<td class="left">演绎法</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">想法（belief）</td>
+<td class="left">知识（knowledge）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">预测（forcast）</td>
+<td class="left">预言（prophecy）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">运气（luck）</td>
+<td class="left">技术（skills）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">幸运的傻子（lucky idiot）</td>
+<td class="left">专业投资人（skilled investor）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">存活者偏差（survivorship bias）</td>
+<td class="left">市场优势（market outperformance）</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 第一章</h2>
+<div class="outline-text-2" id="text-4">
+<div class="org-quote-container">
+<blockquote>
+<p>
+科学家发现，血清素这种神经传递物质似乎支配着我们大部分的行为。它会形成一种正面反馈，也就是良性循环，但如果随机产生的外部作用力出现了，则可能引发反向的运动，造成恶性循环。曾有研究显示，注入血清素的猴子，在猴群中的地位会升高，从而又使它们血液中的血清素增加，直到良性循环中断，恶性循环代之而起。在恶性循环中，失败会导致猴子的社会地位滑落，因此出现的行为，又使其社会地位进一步滑落。
+</p>
+
+<p>
+Scientists found out that serotonin, a neurotransmitter, seems to command a large share of our human behavior. It sets a positive feedback, the virtuous cycle, but, owing to an external kick from randomness, can start a reverse motion and cause a vicious cycle. It has been shown that monkeys injected with serotonin will rise in the pecking order, which in turn causes an increase of the serotonin level in their blood, until the virtuous cycle breaks and starts a vicious one. During the vicious cycle failure will cause one to slide in the pecking order, causing a behavior that will bring about further drops in the pecking order.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> 第二章</h2>
+<div class="outline-text-2" id="text-5">
+<div class="org-quote-container">
+<blockquote>
+<p>
+假设有个行为古怪且无聊的企业大亨，拿出 1000 万美元和你玩俄罗斯转盘，他准备了一把左轮手枪，可装 6 发子弹的弹夹只装 1 发子弹，然后对准你的头扣动扳机。假设 25 岁的人一年玩一次俄罗斯转盘，他要活到 50 岁生日的机会十分渺茫。但是如果有很多人，比方说几千个 25 岁的年轻人都在玩这个游戏，那么应该会有少数人能够年过半百且极其富有，其他人则已成一堆墓冢。
+</p>
+
+<p>
+Imagine an eccentric (and bored) tycoon offering you $10 million to play Russian roulette, i.e., to put a revolver containing one bullet in the six available chambers to your head and pull the trigger. Ff a 25-year-old played Russian roulette once a year, there would be a very slim possibility of his surviving until his 50th birthday. But, if there are enough players, say thousands of 25-year-old players, we can expect to see a handful of extremely rich survivors, and a very large cemetery.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+我们很难想象亚历山大大帝或者恺撒在发生的历史中只打胜仗，却在未曾发生的历史中吃败仗。我们能够听到他们的大名，只是因为他们和其他成千上万的人一样，冒了很大的风险，最后碰巧取得胜利。他们十分聪明、有勇气、高尚，拥有当时所能产生的最高文化水平；但是其他数以千计、活在不显眼的历史脚注中的人物也是如此。
+</p>
+
+<p>
+It is hard to think of Alexander the Great or Julius Caesar as men who won only in the visible history, but who could have suffered defeat in others. If we have heard of them, it is simply because they took considerable risks, along with thousands of others, and happened to win. They were intelligent, courageous, noble, had the highest possible obtainable culture in their day. But so did thousands of others who live in the musty footnotes of history.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+不要把正确性和可理解性混为一谈。数学上的真理对我们的心智来说并没有太大的意义，尤其在检验随机的结果时更是如此。大部分概率的结果完全违背直觉。
+</p>
+
+<p>
+Beware the confusion between correctness and intelligibility. Mathematical truths make little sense to our mind, particularly when it comes to the examination of random outcomes. Most results in probability are entirely counterintuitive.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> 第三章</h2>
+<div class="outline-text-2" id="text-6">
+<div class="org-quote-container">
+<blockquote>
+<p>
+随机过程是指随着时间的行进，各种事件纷纷出现的动态过程。概率论的这一分支，研究对象是连续性随机事件的演变过程，可称之为历史的数学
+</p>
+
+<p>
+Stochastic processes refer to the dynamics of events unfolding with the course of time. This branch of probability concerns itself with the study of the evolution of successive random events. One could call it the mathematics of history.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+蒙特·卡罗仿真法是研制原子弹时在洛斯阿拉莫斯实验室发展出来的，20 世纪 80 年代在财务数学领域流行起来。「真正的」数学家不喜欢蒙特·卡罗法，他们认为蒙特·卡罗法剥夺了数学的巧妙技巧和优雅，他们称它为一种「蛮力」。（比如）在一个正方形内画个圆，然后对着这幅图胡乱举枪射击。拿圆圈内的弹孔数除以圆圈内外所有的弹孔数，所得出的比率便是圆周率的倍数。
+</p>
+
+<p>
+Monte Carlo simulation methods were pioneered in martial physics in the Los Alamos laboratory during the A-bomb preparation. They became popular in financial mathematics in the 1980s. "True" mathematicians do not like Monte Carlo methods. They believe that they rob us of the finesse and elegance of mathematics. They call it "brute force". By drawing a circle inside of a square, and "shooting" random bullets into the picture. The ratio of bullets inside the circle divided by those inside and outside the circle will deliver a multiple of the mystical Pi.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+幸运的傻瓜可能得助于生命中的某些好运气，但是长期而言，他的处境会慢慢趋近于运气没那么好的白痴。 <span class="underline">每个人都会向长期的性质靠拢</span> 。
+</p>
+
+<p>
+The lucky fool might have benefited from some luck in life; over the longer run he would slowly converge to the state of a less-lucky idiot. Each one would revert to his long-term properties.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+报酬率为 15%，波动性（或者不确定性）为每年 10%，换算之后，任何一年赚钱的概率为 93%。但是从比较窄的时间尺度来看，任何一秒赚到钱的概率只有 50.02%。同样的方法可以用来解释为什么时间尺度短的新闻充斥噪声，时间尺度长的历史中噪声则多已剔除。
+</p>
+
+<p>
+A 15% return with a 10% volatility (or uncertainty) per annum translates into a 93% probability of success in any given year. But seen at a narrow time scale, this translates into a mere 50.02% probability of success over any given second. The same methodology can explain why the news (the high scale) is full of noise and why history (the low scale) is largely stripped of it.
+</p>
+</blockquote>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> 不同时间尺度下赚钱的概率（Probability of success at different scales）</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">一年</th>
+<th scope="col" class="right">93%</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">一季</td>
+<td class="right">77%</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">一个月</td>
+<td class="right">67%</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">一天</td>
+<td class="right">54%</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">一小时</td>
+<td class="right">51.3%</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">一分钟</td>
+<td class="right">50.17%</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">一秒钟</td>
+<td class="right">50.02%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> 第四章</h2>
+<div class="outline-text-2" id="text-7">
+<div class="org-quote-container">
+<blockquote>
+<p>
+你可以用蒙特·卡罗发生器以称做递归文法的一种方法随机组词，产生文法上无懈可击，但完全没有意义的句子，让人以为那是文学作品。但是你却不可能用随机的方式写出一篇科学作品。词汇可以随机组成，但真正的科学知识却没办法。
+</p>
+
+<p>
+You can sometimes replicate something that can be mistaken for a literary discourse with a Monte Carlo generator, by randomizing phrases under a method called recursive grammar, and produce grammatically sound but entirely meaningless sentences. But it is not possible randomly to construct a scientific one. Rhetoric can be constructed randomly, but not genuine scientific knowledge.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> 第五章</h2>
+<div class="outline-text-2" id="text-8">
+<div class="org-quote-container">
+<blockquote>
+<p>
+平均而言，动物是有适应力，但不是每一只动物都能适应，而且不是时时都能适应。一只动物有可能因为它的样本路径很幸运而生存下来，那条样本路径并未出现与进化有关的稀有事件。这些动物不曾遭遇稀有事件的时间越久，则它们对该稀有事件的承受力越显脆弱。如果我们把时间无限延长，那么依照遍历性原则，那个事件肯定会发生—那些物种必会遭毁灭。
+</p>
+
+<p>
+On average, animals will be fit, but not every single one of them, and not at all times. Just as an animal could have survived because its sample path was lucky, a sample path that was free of the evolutionary rare event. The longer these animals can go without encountering the rare event, the more vulnerable they will be to it. We said that should one extend time to infinity, then, by ergodicity, that event will happen with certainty — the species will be wiped out.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> 第六章</h2>
+<div class="outline-text-2" id="text-9">
+<div class="org-quote-container">
+<blockquote>
+<p>
+作家兼科学家古尔德曾被诊断罹患致命的胃癌，关于他能活多久，他收到的第一个信息是：这种病的存活期的中位数，约 8 个月。古尔德进一步研究后，发现实情和他最初获取的信息大不相同。主要的差异在于期望（亦即平均）存活期比 8 个月长得多。他注意到期望值和中位数两者根本不同。中位数意指约 50% 的人活不到 8 个月，50% 的人则活了 8 个月以上。但是活了 8 个月以上的人，生命维持的期间相当长。结果出现不对称时，存活期平均值和存活期中位数并不相同。古尔德因此发现偏态的概念。
+</p>
+
+<p>
+The essayist and scientist Steven Jay Gould was once diagnosed when he was in his forties with a deadly form of cancer of the lining of the stomach. The first piece of information he received about his odds of making it was that the median survival for the ailment is approximately 8 months. The further research by Gould uncovered a very different story from the information he had initially been given; mainly that the expected (i.e., average) survival was considerably higher than 8 months. It came to his notice that expected and median do not mean the same thing at all. Median means roughly that 50% of the people die before 8 months and 50% survive longer than 8 months. But those who survive would live considerably longer. Whenever there is asymmetry in outcomes, the average survival has nothing to do with the median survival. This prompted Gould, who thus undderstood the hard way the concept of skewness.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+赔钱的频率或概率本身完全没有用处，它必须和结果的大小一起判断。假设我参加的赌博，1000 次里面有 999 次赚到 1 美元（事件 A），有一次赔 10000 美元（事件 B）。A 发生的概率远高于 B，我们如果赌事件 A 会发生，赌赢的概率很高，但这么做不是好想法。
+</p>
+
+<p>
+The frequency or probability of the loss, in and by itself, is totally irrelevant; it needs to be judged in connection with the magnitude of the outcome. Assume I engage in a gambling strategy that has 999 chances in 1,000 of making $1 (event A) and 1 chance in 1,000 of losing $10,000 (event B). A is far more likely than B. Odds are that we would make money by betting for event A, but it is not a good idea to do so.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+投资人和企业要赚的不是概率，而是白花花的钞票。因此对他们来说， <span class="underline">某个事件发生的可能性多大并不重要，重要的是那件事发生时能赚多少钱。</span> 利润出现的频率有多高并不重要，结果多少才重要。 <span class="underline">很少人带回家的支票是根据他们做对或做错的频率而核发的，他们得到的不是利润就是亏损。</span> 只有评论家的成败才是靠他们说对或说错的频率。
+</p>
+
+<p>
+Investors and businesses are not paid in probabilities; they are paid in dollars. Accordingly, it is not how likely an event is to happen that matters, it is how much is made when it happens that should be the consideration. How frequent the profit is irrelevant; it is the magnitude of the outcome that counts. It is a pure accounting fact that, aside from the commentators, very few people take home a check linked to how often they are right or wrong.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+在财务学以外的大部分领域中，当不同的结果所获回报的差距不是很显著时，把极端值从样本中剔除并不会造成问题。教授在计算学生的平均分数时，可以把称做离群值的最高和最低分数剔除，然后计算剩余分数的平均值，这种做法并无不妥。学财务的人借用了这种技术，因而也忽视不常发生的事件，不去注意稀有事件可能导致一家公司破产的影响。
+</p>
+
+<p>
+People in most fields outside of economics do not have problems eliminating extreme values from their sample, when the difference in payoff between different outcomes is not significant. A professor who computes the average of his students' grades removes the highest and lowest observations, which he would call outliers, and takes the average of the remaining ones, without this being an unsound practice. People in finance borrow the technique and ignore infrequent events, not noticing that the effect of a rare event can bankrupt a company.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+许多科学家在全球变暖效应发生的早期阶段，并没有注意到这件事，因为他们把温度突升从样本中剔除，认为这种事情不可能再度发生。他们忽视了，温度突升的现象虽然少见，却会对冰帽的融化产生巨大的累积性效果。
+</p>
+
+<p>
+Many scientists failed to notice global warming in its early stages as they removed from their sample the spikes in temperature, under the belief that these were not likely to recur. They ignored the fact that these spikes, although rare, had the effect of adding disproportionately to the cumulative melting of the ice cap.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+目前通用的统计学，背后的观念十分简单：得到的信息越多，对结果就会越有把握。常见的统计方法指的是信赖水准稳定升高，但是它和观察数的比值并不是线性关系。也就是说，样本数如果增加 n 倍，知识只增加 n 的平方根倍。
+</p>
+
+<p>
+The concept behind what is used is today's statistics is all based on one simple notion: the more information you have, the more you are confident about the outcome. Common statistical method is based on the steady augmentation of the confidence level, in nonlinear proportion to the number of observations. That is, for an n times increase in the sample size, we increase our knowledge by the square root of n.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+统计学显得复杂是在分布不对称时。如果在满是黑球的罐内取到红球的概率很小，那么我们对罐内没有红球的信心，会增加得非常慢。相反的，一旦取到一颗红球，我们对罐内有红球的信心会急速升高。这种知识的不对称是本书的核心，也是休谟和波普尔等人致力研究的重要哲学问题。
+</p>
+
+<p>
+Where statistics becomes complicated is when we have distributions that are not symmetric. If there is a very small probability of finding a red ball in an urn dominated by black ones, then our knowledge about the absence of red balls will increase very slowly. On the other hand, our knowledge of the presence of red balls will dramatically improve once one of them is found. This asymmetry in knowledge is central in this book. It is a central philosophical problem for such people as the ancient skeptics David Hume and Karl Popper.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+如果红球的数目随机分布，我们就永远无从得知罐内的组成。这称做定常性问题。假使罐底有个洞，而我在抽样时，有个小孩在我不知情的情况下，加进某种颜色的球。这时我再怎么推论都没用。我可能推论罐内有 50% 的红球，而那个顽皮的小孩马上把所有的红球取出，放进黑球。这么一来，我们从统计获得的知识并不可靠。我们把过去的历史视为单一的同质型样本，并且相信观察过去的样本后，我们对未来的知识即可大增。但是如果那个顽皮小孩改变罐子内色球的组成会怎么样？
+</p>
+
+<p>
+If the incidence of red balls is itself randomly distributed, we will never get to know the composition of the urn. This is called "the problem of stationarity". Think of an urn that is hollow at the bottom. As I am sampling from it, and without my being aware of it, some mischievous child is adding balls of one color or another. My inference thus becomes insignificant. I may infer that the red balls represent 50% of the urn while the mischievous child would swiftly replace all the red balls with black ones. This makes much of our knowledge derived through statistics quite shaky. We take past history as a single homogeneous sample and believe that we have considerably increased our knowledge of the future from the observation of the sample of the past. What if vicious children were changing the composition of the urn?
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+工业革命的科学成就带给人们信心，相信他们能够推进到社会科学，尤其是通过马克思主义之类的运动。伪科学吸引一大批理想主义笨蛋，企图建立计划型社会。你可以用一大堆方程式来充内行而没人能够揭穿你，因为根本没有办法对照实验。一些技术人员认为他们的数学知识可以带领他们了解市场。「财务工程」的应用就带有浓厚的伪科学成分。应用这些方法的人，衡量风险时是以过去的历史作为未来的指针。由于分布有可能缺乏定常性，这整个观念可能大错特错。
+</p>
+
+<p>
+The scientific successes of the industrial revolution could be carried through into the social sciences, particularly with such movements as Marxism. Pseudoscience came with a collection of idealistic nerds who tried to create a tailor-made society. You can disguise charlatanism under the weight of equations, and nobody can catch you since there is no such thing as a controlled experiment. A few technicians thought that their mathematical knowledge could lead them to understand markets. The practice of "financial engineering" came along with massive doses of pseudoscience. Practitioners of these methods measure risks, using the tool of past history as an indication of the future. The mere possibility of the distributions not being stationary makes the entire concept seem like a costly mistake.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> 第七章</h2>
+<div class="outline-text-2" id="text-10">
+<div class="org-quote-container">
+<blockquote>
+<p>
+18 世纪的科学受到培根的影响，从士林哲学（scholasticism）转而对天真的经验论产生过度的反应。士林哲学奠基于演绎法则，不强调对真实世界的观察。培根反对在没有实际成果的情形下，「结成学习蜘蛛网」。受到培根的影响，科学转而强调经验的观察。问题是，如果方法不适当，经验观察会引导你误入歧途。休谟警告我们不要形成这样的知识，并且强调搜集和解读知识时应该持严谨的态度，这称做知识论（epistemology）。
+</p>
+
+<p>
+Science in the 18th century had experienced a swing from scholasticism, entirely based on deductive reasoning - no emphasis on the obsdervation of the real world - to, owing to Francis Bacon, an overreaction into naive and unstructured empiricism. Bacon had argued against "spinning the cobweb of learning" with little practical result. Science had shifted, thanks to Bacon, into an emphasis on empirical observation. The problem is that, without a proper method, empirical observations can lead you astray. Hume came to warn us against such knowledge, and to stress the need for some rigor in the gathering and interpretation of knowledge - what is called epistemology.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+下面的归纳性陈述说明了不以逻辑方法解读过去的资料所产生的问题：我对布什总统的一生做了彻底的统计检视。58 年来，总共观察了 21000 次，他没有一次死掉。因此我可以宣称他长生不死，而这具有很高的统计显著性。
+</p>
+
+<p>
+The following inductive statement illustrates the problem of interpreting past data literally, without methodology or logic: I have just completed a thorough statistical examination of the life of President Bush. For 58 years, close to 21,000 observations, he did not die once. I can hence pronounce him as immortal, with a high degree of statistical significance.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> 第二篇</h2>
+<div class="outline-text-2" id="text-11">
+<div class="org-quote-container">
+<blockquote>
+<p>
+如果把无限多的猴子放在打字机前面，让它们去乱敲，那么其中一只肯定会打出一字不差的《伊利亚特》。你愿意拿毕生的积蓄去赌这只猴子下一次会打出《奥德赛》吗？过去的表现有多少可用于预测未来的表现？
+</p>
+
+<p>
+If one puts an infinite number of monkeys in front of typewriters, and lets them clap away, there is a certainty that one of them would come out with an exact version of the Iliad. Would you invest your life's savings on a bet that the monkey would write the Odyssey next? How much can past performance be relevant in forecasting future performance?
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+「如果某人过去的表现优于他人，那么将来表现优于他人的概率也很高。」这种推测非常薄弱，以至于决策时一无可取。因为最重要的是两项因素：他从事工作的随机成分多寡，以及有多少数目的猴子参与。起初的样本数有多少十分重要。如果总共只有5只猴子，我会对打出《伊利亚特》的那只猴子刮目相看。 <span class="underline">而从事商业的人数越多，其中某个人纯靠运气便能有惊人表现的可能性越高。</span>
+</p>
+
+<p>
+"If someone performed better than the rest in the past then there is a great chance of his performing better than the crowd in the future." This presumption might be weak to the point of being useless in decision making.  Because it all depends on two factors: The randomness content of his profession and the number of monkeys in operation. The initial sample size matters greatly. If there are 5 monkeys in the game, I would be r ather impressed with the Iliad writer. The greater the number of businessmen, the greater the likelihood of one of them performing in a stellar manner just by luck.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> 第九章</h2>
+<div class="outline-text-2" id="text-12">
+<div class="org-quote-container">
+<blockquote>
+<p>
+<span class="underline">拿法则去套用数据，这种行为称做数据探索</span> 。只要靠运气，尝试的次数越多，越有可能找到一个非常适合过去数据的法则。 <span class="underline">一个随机系列总会呈现某种可察觉的形态。事实上，数据如果完美到未呈现任何模式，反倒十分可疑，让人觉得有捏造之嫌。</span>
+</p>
+
+<p>
+The activity of fitting the rule on the data is called data snooping. The more I try, the more I am likely, by mere luck, to find a rule that worked on past data. <span class="underline">A random series will always present some detectable pattern. As a matter of fact, data that is perfectly patternless would be extremely suspicious and appear to be man-made.</span>
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+获得诺贝尔化学奖的鲍林，据说相信维生素 C 具有很好的医疗效果，他本人每天大量服用。由于他的强力推荐，一般人便相信维生素 C 真的具有疗效。许多医学研究无法证实鲍林的说法，但一般人对此却充耳不闻，他们宁可采信「诺贝尔奖得主」的证词，即使他没有资格讨论和医学有关的事情。
+</p>
+
+<p>
+Linus Pauling, a Nobel Prize winner in chemistry, was said to believe in vitamin C's medicinal properties, himself ingesting massive daily doses. With his bully pulpit, he contributed to the common belief in vitamin C's curative properties. Many medical studies, unable to replicate Pauling's claims, fell on deaf ears as it was difficult to undo the testimonial by a "Nobel Prize winner", even if he was not qualified to discuss matters related to medicine.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+世界上根本没有纯随机抽样这种东西，因为抽样的结果取决于设备的品质。够多的小事集中在一起，我们就能在某些地方发现非随机现象，例如转盘本身可能不是摆得很平，或者旋转的球不是很圆。
+</p>
+
+<p>
+There is no such thing as a pure random draw, for the outcome of the draw depends on the quality of the equipment. With enough minutiae one would be able to uncover the nonrandomness somewhere. E.g., the wheel itself may not have been perfectly balanced or perhaps the spinning ball was not completely spherical.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> 第十章</h2>
+<div class="outline-text-2" id="text-13">
+<div class="org-quote-container">
+<blockquote>
+<p>
+我们的打字键盘上字母的排列并没有采取最理想的顺序。目前的排列顺序会减慢打字的速度，而不是让我们打起字来更为容易，原因是当初的机械式打字机色带容易卡死，为了避免这种情形，所以有这样的字母排列顺序出现。后来文字处理走向计算机化，有人曾经设计几种键盘，以便加快打字速度，却终归徒劳无功，打字者已经习惯使用 QWERTY 的键盘打字，很难改变。强迫发展过程理性化，反而成了多余、不必要、不可能办到的事。这称做路径依赖结果，阻碍了许多数学家建构模型的努力。
+</p>
+
+<p>
+Our typewriters have the order of the letters on their keyboard arranged in a nonoptimal manner, as a matter of fact in such a nonoptimal manner as to slow down the typing rather than make the job easy, in order to avoid jamming the ribbons as they were designed for less electronic days. Therefore, as we started building better typewriters and computerized word processors, several attempts were made to rationalize the computer keyboard, to no avail. People were trained on a QWERTY keyboard and their habits were too sticky for change. Forcing rational dynamics on the process would be superfluous, nay, impossible. This is called a path dependent outcome, and has thwarted many mathematical attempts at modeling behavior.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+经济学发展成一门科学的过程中，什么地方出了差错？答案是一群聪明人觉得一定得用数学来告诉自己，他们的想法很严谨、他们研究的是一门科学。
+</p>
+
+<p>
+What has gone wrong with the development of economics as a science? Answer: There was a bunch of intelligent people who felt compelled to use mathematics just to tell themselves that they were rigorous in their thinking, that theirs was a science.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+随机结果的非线性特质有时可作为打破僵局的一种工具。布里丹之驴：假设有一头驴子，饥饿的程度和口渴的程度相等，我们把它放在距食物和饮水恰好等距的地方。这种情况下，它会死于饥饿和口渴，因为它没办法决定先吃哪一个。现在在这幅画面中加入随机性，随便把驴子轻轻推向任一方，使它更接近某一边，离另一边稍远些，这么一来，僵局马上解开，这只快乐的驴子将先吃饱再喝水，或者先喝水再吃饱。同类的游戏，比方说借「丢硬币」来解决生活中一些小小的僵局，也就是让随机性帮助你做决定。
+</p>
+
+<p>
+Nonlinearity in random outcomes is sometimes used as a tool to break stalemates. Buridan's donkey: Imagine a donkey equally hungry and thirsty placed at exactly equal distance from sources of food and water. In such a framework, he would die of both thirst and hunger as he would be unable to decide which one to get to first. Now inject some randomness in the picture, by randomly nudging the donkey, causing him to get closer to one source, no matter which, and accordingly away from the other. The impasse would be instantly broken and our happy donkey will be either in turn well fed then well hydrated, or well hydrated then well fed. Other examples, such as "flipping a coin" to break some of the minor stalemates in life where one lets randomness help with the decision process.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> 第十一章</h2>
+<div class="outline-text-2" id="text-14">
+<div class="org-quote-container">
+<blockquote>
+<p>
+我们的脑子一次只能处理一种状况，除非你有严重的精神疾病。假设你和同事赌 1000 美元，而依你的看法，输赢的概率各半，明天晚上，你的口袋里不是一分钱都没有，就是放着 2000 美元，概率各为 50%。在任何特定的时刻，我们只能想象一种状态，假使让我们凭想象去决定的话，我们可能用不合理性的方式去赌，因为其中一种状态会盘踞整幅画面。
+</p>
+
+<p>
+Our brain can properly handle one and only one state at once, unless you have personality troubles of a deeply pathological nature. Consider a bet you make with a colleague for the amount of $1,000, which, in your opinion, is exactly fair. Tomorrow night you will have zero or $2,000 in your pocket, each with a 50% probability. We can conjure up one and only one state at a given time. Left to our own devices, we are likely to bet in an irrational way, as one of the states would dominate the picture: the fear of ending with nothing or the excitement of an extra $1,000.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+现代社会虽受概率主宰，但在做重要决策的时候，却一点都不尊重它的基本法则。我们有能力把宇宙飞船送到火星，却没办法根据基本的概率法则来审判罪犯，而犯罪证据显然是一种概率概念。我们根据概率定律推论，所能找到最有可能犯罪的人，却因我们误解概率的基本概念而无罪开释。但你也可能因为人们误解概率，被控犯下不曾犯过的罪行。我们的法院还无法正确计算两个事件的联合概率。
+</p>
+
+<p>
+Our modern society is ruled by probability, while important decisions are made without the smallest regard for its basic laws. We are capable of sending a spacecraft to Mars, but we are incapable of having criminal trials managed by the basic laws of probability, yet evidence is clearly a probabilistic notion. People who are as close to being criminal as probability laws can allow us to infer are walking free because of our misunderstanding of basic concepts of the odds. Equally, you could be convicted for a crime you never committed, again owing to a poor reading of probability, for we still cannot have a court of law properly compute the joint probability of events.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+有位毕业于哈佛大学的律师发表似是而非的论调，说虐待妻子的男人，只有 10% 会杀害她们。这是不以谋杀为条件的概率。 <span class="underline">正确的方法应该是看妻子遭丈夫谋杀的案子中，以前也曾遭丈夫殴打的比率有多高（高达 50%）。因为我们这里讨论的是条件概率，也就是以辛普森的妻子被杀的信息为条件，辛普森犯下谋杀罪行的概率，而不是讨论辛普森杀妻的无条件概率。</span>
+</p>
+
+<p>
+One Harvard lawyer used the specious argument that only 10% of men who brutalize their wives go on to murder them, which is a probability unconditional on the murder. The correct way to look at it is to determine the percentage of murder cases where women were killed by their husbands and had previously been battered by them (that is, 50%), for we are dealing with what is called conditional probabilities; the probability that O. J. killed his wife conditional on the information of her having been killed, rather than the unconditional probability of O. J. killing his wife.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+在原始社会中，只要做简单判断就够了。当可能的结果属于单维空间时，没有数学，我们的社会也很容易生存。单维意指我们只看单一变量，而不是不同事件的集合。一种证券的价格是单维的，几种证券的价格合起来，则是多维的，需要使用数学模型来分析；我们没办法用肉眼轻易看到可能结果的组合，甚至没办法以图形来表示，因为我们的实体世界最多只能画出三维空间的图形。
+</p>
+
+<p>
+Mere judgment would probably suffice in a primitive society. It is easy for a society to live without mathematics, when the space of possible outcomes is one-dimensional. One-dimensional means that we are looking at one sole variable, not a collection of separate events. The price of one security is one-dimensional, whereas the collection of the prices of several securities is multi-dimensional and requires mathematical modeling. We cannot easily see the collection of possible outcomes of the portfolio with a naked eye, and cannot even represent it on a graph as our physical world has been limited to visual representation in three dimensions only.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+在人类的进化过程中，因为我们不必懂概率，所以也就没有足够的诱因来发展出了解概率的能力。但是更深一层的原因是，人类不是被设计来理解事物的，我们只是被设计来求生和繁衍后代。为了求生存，我们必须夸大某些事情的概率，例如可能影响我们存活的事件发生的概率。举例来说，大脑对生命危险特别在意的人（也就是偏执狂），比较能够生存下来，因此他们的基因遗传下去。
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+假设某只股票今天的交易价格是 100 美元，某人给我权利（但非义务）于一个月后以 110 美元买进。这称做「买入期权」。一个月后，股价涨到 110 美元以上，我要求期权卖方以 110 美元的价格把股票卖给我，称做「履约」。这时履约才有意义。要是履约时的股价为 120 美元，那么我的选择权有 10 美元的价值，因为我可以按 110 美元的价格向期权卖方买进股票，然后按 120 美元的价格在市场上卖出，一进一出的差价 10 美元落袋。不过这样的概率不是很高。购买买入期权时，如果股票的市价低于履约价格，立即履约则没有好处，我们把这种期权称为「价外」。
+</p>
+
+<p>
+Say a stock trades at $100 and that someone gives me the right (but not the obligation) to buy it at $110 one month ahead of today. This is dubbed a call option. It makes sense for me to exercise it, by asking the seller of the option to deliver me the stock at $110, only if it trades at a higher price than $110 in one month's time. If the stock goes to $120, my option will be worth $10, for I will be able to buy the stock at $110 from the option writer and sell it to the market at $120, pocketing the difference. But this does not have a very high probability. It is called out-of-the-money, for I have no gain from exercising it right away.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+……常把「缺乏证据」与「证明没有这回事」混为一谈。假使我测试某种化学疗法，比方说是拿氟尿嘧啶去治疗上呼吸道癌，发现它的效果比安慰剂好，但两者差别不太大；配合其他的物理疗法，它能把存活率从 21% 提高到 24%。由于我的样本不大，因此存活率升高了 3%，我不确定是是否由于药物的关系，因为这有可能只是随机现象而已。于是我写了一篇文章，说明我的研究结果，并表示没有证据显示这种药物能够改善存活率，因此有待进一步研究。有位医药记者拿到这篇文章，写了一则新闻，说某教授发现证据，显示氟尿嘧啶没有帮助。这与我的原意完全相反。
+</p>
+
+<p>
+&#x2026; most commonly get mixed up between absence of evidence and evidence of absence. Say I test some chemotherapy, for instance Fluorouracil, for upper respiratory tract cancer, and find that it is better than a placebo, but only marginally so; that (in addition to other modalities) it improves survival from 21% to 24%. Given my sample size, I may not be confident that the additional 3% survival points come from the medicine; it could be merely attributable to randomness. I would write a paper outlining my results and saying that there is no evidence of improved survival from such medicine, and that further research would be needed. A medical journalist would pick it up and claim that one Professor found evidence that Fluorouracil does not help, which is entirely opposite to my intentions.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+一位著名的电视金融大师常发表这样的谬论：「美国人平均可望活到 73 岁。因此如果你是 68 岁，还可以活 5 年，应该为此好好规划未来 5 年的投资。」但如果你是 80 岁呢？你的预期寿命是 -7 岁吗？新闻记者把无条件预期寿命和条件预期寿命混为一谈了。 <span class="underline">刚出生时，你的无条件预期寿命可能是 73 岁。但是随着年龄日增且没有死亡，你的预期寿命会跟着你的年龄而提高。</span> 因为其他先死的人，已经占去寿命在 73 岁以下的位置，而所谓期望值，就是指平均值。因此如果你现在 73 岁，而且健康状况良好，你可能仍然有 9 年的寿命期望值。但是期望值会改变，到了 82 岁，如果你还活着，你可能再有 5 年的期望值。即使 100 岁的人，也仍有正值的条件预期寿命。那些专家的说法，和以下的说法几乎没有两样：我们的手术死亡率是 1%。到目前为止，我们为 99 位病人动过手术，都很成功；你是第 100 位，所以你死在手术台上的概率是 100%。
+</p>
+
+<p>
+A fallacy made by a prominent TV financial guru goes as follows: "The average American is expected to live 73 years. Therefore if you are 68, you can expect to live 5 more years, and should plan accordingly." Now what if you are 80? Is your life expectancy -7 years? What these journalists confuse is the unconditional and conditional life expectancy. At birth, your unconditional life expectancy may be 73 years. But as you advance in age and do not die, your life expectancy increases along with your life. Because other people, by dying, have taken your spot in the statistics, for expectation means average. So if you are 73 and are in good health, you may still have, say, 9 years in expectation. But the expectation would change, and at 82, you will have another 5 years, provided of course you are still alive. Even someone 100 years old still has a positive conditional life expectation. Such a statement is not too different from the one that says: Our operation has a mortality rate of 1%. So far we have operated on 99 patients with great success; you are our 100th, hence you have a 100% probability of dying on the table.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+道琼斯工业股价指数在 11000 点时涨跌 1.03 点，幅度根本不到 0.01%。这样的波动不值得提出解释。如果你和朋友来个横跨西伯利亚的越野车比赛，一个月后，你以 1 秒之差击败他，显然你不能就此吹嘘自己比他快。你可能受助于某些东西，或者，只是随机因素使然，别无其他。那一秒钟的时间不够显著，我们没办法据此得出什么结论。但是新闻记者拿薪水就得解释事情，所以他们乐于立即提出种种解释。
+</p>
+
+<p>
+A move of 1.03 with the Dow at 11,000 constitutes less than a 0.01% move. Such a move does not warrant an explanation. If you engage in a mountain bicycle race with a friend across Siberia and, a month later, beat him by one single second, you clearly cannot quite boast that you are faster than him. You might have been helped by something, or it can be just plain randomness, nothing else. That second is not in itself significant enough for someone to draw conclusions. But journalists are paid to provide explanations will gladly and readily provide them.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+还有另一个问题存在：人们以为具有统计显著性之后，一定有因果关系存在。因果关系可能非常复杂。如果有许多可能的原因存在，就很难单独挑出一个作为原因。这称做「多变量分析」。比方说，如果股票市场可能受美国国内利率、欧洲股票市场、美国的通货膨胀，以及其他十来种主要因素影响，那么新闻记者必须去观察所有这些因素、观察它们以前个别和共同造成的影响、观察这些影响的稳定性，并且进行统计检验，才能表示股市的涨跌是不是由某项因素引起的。最后，必须给各项因素一个「信赖水平」；如果信赖水平不到 90%，那就没有什么好说的。
+</p>
+
+<p>
+There is another problem: even assuming statistical significance, one has to accept a cause and effect. Causality can be very complex. It is very difficult to isolate a single cause when there are plenty around. This is called multivariate analysis. For instance, if the stock market can react to U.S. domestic interest rates, the European stock markets, United States inflation, and another dozen prime factors, then the journalists need to look at all of these factors, look at their historical effect both in isolation and jointly, look at the stability of such influence, then, after consulting the test statistic, isolate the factor if it is possible to do so. Finally, a proper confidence level needs to be given to the factor itself; if it is less than 90% the story would be dead.
+</p>
+</blockquote>
+</div>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+如何分清电话线的静电噪声和对方的声音？振幅的变动不大时，比较有可能是噪声造成的，但当它的幅度增加，则是信号的可能性急剧提高。这种方法称做「核平滑」。但是我们的听觉没有能力独自执行这种机能。同样，我们的大脑没办法看出显著的价格变动和纯属噪声两者的区别，尤其是在遭受新闻记者未经平滑处理的噪声大量轰击时。
+</p>
+
+<p>
+How the static on the telephone line could be distinguished from the voice of your correspondent? The method is to consider that when a change in amplitude is small, it is more likely to result from noise, with its likelihood of being a signal increasing exponentially as its magnitude increases. The method is called a smoothing kernel. But our brain cannot see the difference between a significant price change and mere noise, particularly when it is pounded with unsmoothed journalistic noise.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-15" class="outline-2">
+<h2 id="sec-15"><span class="section-number-2">15</span> 第十二章</h2>
+<div class="outline-text-2" id="text-15">
+<div class="org-quote-container">
+<blockquote>
+<p>
+哈佛大学心理学家斯金纳做了一个关鸽子的笼子，笼中有个开关，鸽子可以用喙去操作，有个电动装置会把食物送进笼子里。他以随机的方式送食物给非常饥饿的鸽子。随后他观察到鸽子出现相当惊人的行为。它们根据内在根深蒂固的统计机制，发展出极其复杂、有如祈雨舞般的行为。有只鸽子会对着笼中特定的一角有规律地摇头，另一只鸽子会以逆时钟方向转头。几乎每一只鸽子都发展出一种与喂食联结起来的特别仪式，慢慢固定到它们心里。
+</p>
+
+<p>
+The famous Harvard psychologist B. F. Skinner constructed a box for pigeons, equipped with a switch that the pigeon can operate by pecking. In addition, an electrical mechanism delivers food into the box. He programmed it to deliver food at random to the famished birds. He saw quite astonishing behavior on the part of the birds; they developed an extremely sophisticated rain-dance type of behavior in response to their ingrained statistical machinery. One bird swung its head rhythmically against a specific corner of the box, others spun their heads counterclockwise; literally all of the birds developed a specific ritual that progressively became hardwired into their mind as linked to their feeding.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-16" class="outline-2">
+<h2 id="sec-16"><span class="section-number-2">16</span> 第十三章</h2>
+<div class="outline-text-2" id="text-16">
+<div class="org-quote-container">
+<blockquote>
+<p>
+要测试信念是否路径依赖，有个简单的方法。假设你拥有一幅画，当初是以 2 万美元买进的。由于艺术品市场欣欣向荣，现在这幅画值 4 万美元。如果你手头上没有这幅画，你会依目前的市价买进吗？ <span class="underline">如果你不肯按目前市价买进，表示市价已高于其实价，留着它不放根本不合理，你所做的只是感情上的投资。</span>
+</p>
+
+<p>
+There is a simple test to define path dependence of beliefs. Say you own a painting you bought for $20,000, and owing to rosy conditions in the art market, it is now worth $40,000. If you owned no painting, would you still acquire it at the current price? There is no rational reason to keep a painting you would not buy at its current market rate, only an emotional investment.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2017-03-11 Sat 23:14</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

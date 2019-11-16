@@ -1,0 +1,2304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-04-06 Sat 19:22 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Architecture Scrap</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Architecture Scrap</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgf52b10d">1 软件架构入门</a>
+<ul>
+<li><a href="#orgb0a29f2">1.1 分层架构</a></li>
+<li><a href="#orgc3711b1">1.2 事件驱动架构</a></li>
+<li><a href="#org25a96f1">1.3 微核架构</a></li>
+<li><a href="#orgdc6beea">1.4 微服务架构</a></li>
+<li><a href="#org8435d0c">1.5 云架构</a></li>
+<li><a href="#org2853950">1.6 链接</a></li>
+</ul>
+</li>
+<li><a href="#org8daec32">2 微服务的理论模型和现实路径</a>
+<ul>
+<li><a href="#org7224e61">2.1 定义</a></li>
+<li><a href="#org32b630d">2.2 起源</a></li>
+<li><a href="#orgb5c6769">2.3 特征</a>
+<ul>
+<li><a href="#orga5c9fa4">2.3.1 组件服务化</a></li>
+<li><a href="#orge764f36">2.3.2 按业务能力组织服务</a></li>
+<li><a href="#orge4354fa">2.3.3 服务即产品</a></li>
+<li><a href="#orgb4df8f5">2.3.4 智能终端与哑管道</a></li>
+<li><a href="#orgb8f7529">2.3.5 去中心化</a></li>
+<li><a href="#org87094b3">2.3.6 基础设施自动化</a></li>
+<li><a href="#org90740f2">2.3.7 容错设计</a></li>
+<li><a href="#orgf90d761">2.3.8 兼容设计</a></li>
+</ul>
+</li>
+<li><a href="#orgce626b6">2.4 实施</a>
+<ul>
+<li><a href="#orgd2dd49c">2.4.1 前提</a></li>
+<li><a href="#org05b8edb">2.4.2 维度</a></li>
+<li><a href="#org9ab47db">2.4.3 原则</a></li>
+</ul>
+</li>
+<li><a href="#org7004672">2.5 角色</a></li>
+</ul>
+</li>
+<li><a href="#orgc22ceab">3 京东咚咚架构演进</a>
+<ul>
+<li><a href="#org4e5d207">3.1 1.0 诞生</a></li>
+<li><a href="#orgebb710d">3.2 2.0 成长</a></li>
+<li><a href="#orgbcdc98e">3.3 3.0 爆发</a></li>
+<li><a href="#org46999d7">3.4 4.0 涅槃</a></li>
+</ul>
+</li>
+<li><a href="#org21bc19e">4 The Tumblr Architecture Yahoo Bought For A Cool Billion Dollars</a>
+<ul>
+<li><a href="#orgedc42ed">4.1 Stats</a></li>
+<li><a href="#orgb81cc8f">4.2 Software</a></li>
+<li><a href="#org69ed4d6">4.3 Hardware</a></li>
+<li><a href="#org0ad7cf3">4.4 Architecture</a></li>
+<li><a href="#orgfbad428">4.5 Old Tumblr</a></li>
+<li><a href="#org04b6495">4.6 New Tumblr</a></li>
+<li><a href="#orge05226e">4.7 Internal Firehose</a></li>
+<li><a href="#org864ce47">4.8 Cell Design For Dashboard Inbox</a></li>
+<li><a href="#orgb6f8729">4.9 Team Structure</a></li>
+<li><a href="#orga26ae93">4.10 Software Deployment</a></li>
+<li><a href="#orgdc7f47e">4.11 Development</a></li>
+<li><a href="#orgdc55660">4.12 Hiring Process</a></li>
+<li><a href="#org8d41abb">4.13 Lessons Learned</a></li>
+</ul>
+</li>
+<li><a href="#org8d6dd1f">5 Web service 是什么？</a>
+<ul>
+<li><a href="#org5f4bd8a">5.1 Web service 的概念</a></li>
+<li><a href="#org830243d">5.2 Web service 架构和云</a></li>
+<li><a href="#org205e5ba">5.3 本地服务的缺陷</a></li>
+<li><a href="#org718a256">5.4 Web service 的优势</a></li>
+<li><a href="#org5a7ddff">5.5 Web service 的发展趋势</a></li>
+</ul>
+</li>
+<li><a href="#org0cc23cc">6 Scalability for Dummies</a>
+<ul>
+<li><a href="#orgffdca38">6.1 Part 1: Clones</a></li>
+<li><a href="#orgba440c3">6.2 Part 2: Database</a></li>
+<li><a href="#org1dc0217">6.3 Part 3: Cache</a>
+<ul>
+<li><a href="#org3eacbd1">6.3.1 Pattern 1: Cached Database Queries</a></li>
+<li><a href="#orgee4e5c6">6.3.2 Pattern 2: Cached Objects</a></li>
+</ul>
+</li>
+<li><a href="#org8a23726">6.4 Part 4: Asynchronism</a>
+<ul>
+<li><a href="#orge2f73be">6.4.1 Paradigm 1</a></li>
+<li><a href="#orge4c7ea0">6.4.2 Paradigm 2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgf52b10d" class="outline-2">
+<h2 id="orgf52b10d"><span class="section-number-2">1</span> 软件架构入门</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2016/09/software-architecture.html">Source</a>
+</p>
+</div>
+
+<div id="outline-container-orgb0a29f2" class="outline-3">
+<h3 id="orgb0a29f2"><span class="section-number-3">1.1</span> 分层架构</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+分层架构（layered architecture）是最常见（默认）的软件架构，也是事实上的标准架构。
+</p>
+
+<p>
+这种架构将软件分成若干层，每一层都有清晰的分工， <span class="underline">不需要知道其他层的细节，层与层之间通过接口通信。</span> 用户的请求将依次通过这四层的处理，不能跳过其中任何一层。虽然没有明确约定软件一定要分成多少层，但是四层的结构最常见：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">表现层（presentation）</th>
+<th scope="col" class="org-left">用户界面，负责视觉元素和用户互动</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">业务层（business）</td>
+<td class="org-left">实现业务逻辑</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">持久层（persistence）</td>
+<td class="org-left">负责提供数据，SQL 语句在这一层</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">数据库（database）</td>
+<td class="org-left">负责保存数据</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+有的软件在业务层和持久层之间加了一个服务层（service），提供不同业务逻辑需要的通用接口。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>开发</b></th>
+<th scope="col" class="org-left">（优）结构简单，容易理解和开发。</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">（优）团队可以分工负责不同的层，适合大多数软件公司的组织架构。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>测试</b></td>
+<td class="org-left">（优）每一层都可以独立测试，其他层的接口通过模拟实现。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>部署</b></td>
+<td class="org-left">（缺）即使做小修改，往往需要整个软件重新部署，不容易做持续发布。</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">（缺）软件升级时，可能需要整个服务暂停。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>扩展</b></td>
+<td class="org-left">（缺）扩展性差，必须依次扩展每一层，而每一层内部是耦合的，扩展困难。</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">（缺）一旦环境变化，需要代码调整或增加功能时，通常成本较大。</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgc3711b1" class="outline-3">
+<h3 id="orgc3711b1"><span class="section-number-3">1.2</span> 事件驱动架构</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+事件是状态发生变化时，软件发出的通知。事件驱动架构（event-driven architecture）就是通过事件进行通信的软件架构。它分成四个部分：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">事件队列（event queue）</th>
+<th scope="col" class="org-left">接收事件的入口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">分发器（event mediator）</td>
+<td class="org-left">将事件分发到不同的业务逻辑单元</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">事件通道（event channel）</td>
+<td class="org-left">分发器与处理器之间的联系渠道</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">事件处理器（event processor）</td>
+<td class="org-left">实现业务逻辑，处理完成后会发出事件，触发下一步操作</td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/26.png" alt="26.png" />
+</p>
+</div>
+
+<p>
+对于简单的项目，事件队列、分发器和事件通道，可以合为一体，整个软件就分成事件代理和事件处理器两部分：
+</p>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/27.png" alt="27.png" />
+</p>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>开发</b></th>
+<th scope="col" class="org-left">（缺）涉及异步编程（要考虑远程通信、失去响应等情况），开发相对复杂。</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">（优）适用性广，各种类型的项目都可以用。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>测试</b></td>
+<td class="org-left">（缺）分布式和异步特性导致较难测试。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>部署</b></td>
+<td class="org-left">（优）事件处理器可以独立地加载和卸载，容易部署。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>性能</b></td>
+<td class="org-left">（优）性能较好，因为事件的异步本质，不易产生堵塞。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>扩展</b></td>
+<td class="org-left">（优）分布式和异步架构使事件处理器之间高度解耦，扩展性好。</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org25a96f1" class="outline-3">
+<h3 id="org25a96f1"><span class="section-number-3">1.3</span> 微核架构</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+微核架构（microkernel architecture）又称为「插件架构」（plug-in architecture），指的是 <span class="underline">软件的内核（core）相对较小，通常只包含系统运行的最小功能，主要功能和业务逻辑都通过插件实现。</span> 插件则是互相独立的，插件之间的通信应该尽量减少，避免出现互相依赖的问题。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>开发</b></th>
+<th scope="col" class="org-left">（优）可定制性高，适应不同的开发需要。</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">（优）可以渐进式地开发，逐步增加功能。</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">（缺）开发难度相对较高，因为涉及到插件与内核的通信，以及内部的插件登记机制。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>部署</b></td>
+<td class="org-left">（优）功能之间是隔离的，插件可以独立地加载和卸载，容易部署。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>扩展</b></td>
+<td class="org-left">（缺）扩展性（scalability）差，内核通常是一个独立单元，不易做成分布式。</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">（优）良好的功能延伸性（extensibility），为需要的功能开发插件即可。</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgdc6beea" class="outline-3">
+<h3 id="orgdc6beea"><span class="section-number-3">1.4</span> 微服务架构</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+微服务架构（microservices architecture）是服务导向架构（Service-Oriented Architecture，SOA）的升级。 <span class="underline">每个服务是一个独立的部署单元，单元都是分布式的，互相解耦，通过远程通信协议（比如 REST、SOAP）联系。</span>
+</p>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/28.png" alt="28.png" />
+</p>
+</div>
+
+<p>
+微服务架构分成三种实现模式：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">RESTful API 模式</th>
+<th scope="col" class="org-left">服务通过 API 提供，如云服务。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">RESTful 应用模式</td>
+<td class="org-left">服务通过传统的网络协议或者应用协议提供。</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">背后通常是一个多功能的应用程序，常见于企业内部。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">集中消息模式</td>
+<td class="org-left">采用消息代理（message broker），可以实现消息队列、负载均衡、统一日志和异常处理。</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">缺点是会出现单点失败，消息代理可能要做成集群。</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>开发</b></th>
+<th scope="col" class="org-left">（优）容易开发，每个组件可以进行持续集成式的开发，可以实时部署，不间断地升级。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>测试</b></td>
+<td class="org-left">（优）容易测试，可以单独测试每一个服务。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>部署</b></td>
+<td class="org-left">（优）容易部署，软件被拆分成多个服务，每个服务都是可部署单元。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>性能</b></td>
+<td class="org-left">（缺）由于强调独立和低耦合，服务可能拆分得很细，导致系统变得凌乱和笨重，性能不佳。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>扩展</b></td>
+<td class="org-left">（优）扩展性好，各个服务之间低耦合。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>其他</b></td>
+<td class="org-left">（缺）分布式使得原子性操作很难实现，交易回滚比较困难。</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org8435d0c" class="outline-3">
+<h3 id="org8435d0c"><span class="section-number-3">1.5</span> 云架构</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+云结构（cloud architecture）主要解决扩展性和并发的问题，是最容易扩展的架构，主要原因是 <span class="underline">不使用中央数据库，而是把数据复制到内存中，变成可复制的内存数据单元。</span> 由于没有中央数据库，扩展性的最大瓶颈消失了。由于每个处理单元的数据都在内存里，最好要进行数据持久化。 <span class="underline">业务处理能力封装成处理单元（prcessing unit），访问量增加时，就新建处理单元；访问量减少时，就关闭处理单元。</span>
+</p>
+
+<p>
+这种架构主要分成两部分：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">处理单元（processing unit）</th>
+<th scope="col" class="org-left">实现业务逻辑。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">虚拟中间件（virtualized middleware）</td>
+<td class="org-left">负责通信、保持会话、数据复制、分布式处理、处理单元的部署。</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+虚拟中间件又包含四个组件：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">消息中间件（messaging grid）</th>
+<th scope="col" class="org-left">管理用户请求和会话，收到请求时，决定分配给哪一个处理单元。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">数据中间件（data grid）</td>
+<td class="org-left">将数据复制到每一个处理单元，即数据同步，保证每个处理单元获得同样的数据。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">处理中间件（processing grid）</td>
+<td class="org-left">如果一个请求涉及不同类型的处理单元，该中间件负责协调处理单元。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">部署中间件（deployment manager）</td>
+<td class="org-left">负责单元的开闭、监控负载和响应时间。</td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/29.png" alt="29.png" />
+</p>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>开发</b></th>
+<th scope="col" class="org-left">（缺）实现复杂，成本较高。</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">主要适合网站类应用，不适合大量数据吞吐的大型数据库应用。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>测试</b></td>
+<td class="org-left">（缺）较难测试。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>部署</b></td>
+<td class="org-left">（优）动态部署。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>性能</b></td>
+<td class="org-left">（优）高负载。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>扩展</b></td>
+<td class="org-left">（优）高扩展性。</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org2853950" class="outline-3">
+<h3 id="org2853950"><span class="section-number-3">1.6</span> 链接</h3>
+<div class="outline-text-3" id="text-1-6">
+<ol class="org-ol">
+<li><a href="http://www.oreilly.com/programming/free/software-architecture-patterns.csp">Software Architecture Patterns</a></li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8daec32" class="outline-2">
+<h2 id="org8daec32"><span class="section-number-2">2</span> 微服务的理论模型和现实路径</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<a href="http://blog.csdn.net/mindfloating/article/details/51221780">Source</a>
+</p>
+
+<p>
+两年前接触到了微服务的概念，面对日益膨胀的系统感觉豁然开朗。之后的两年逐步把系统按微服务的架构理念进行了重构，并将业务迁移到了新架构之上。感觉现在差不多是时候写一篇关于微服务的总结文章了。
+</p>
+</div>
+
+<div id="outline-container-org7224e61" class="outline-3">
+<h3 id="org7224e61"><span class="section-number-3">2.1</span> 定义</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Martin Fowler &amp; James Lewis 的文章 <a href="http://martinfowler.com/articles/microservices.html">Microservices</a> 给出了微服务架构的一个定义：
+</p>
+
+<blockquote>
+<p>
+<span class="underline">微服务架构即是采用一组小服务来构建应用的方法。每个服务运行在独立的进程中，不同服务通过一些轻量级交互机制来通信，例如 RPC、HTTP 等。服务围绕业务能力来构建，并依赖自动部署机制来独立部署。</span>
+</p>
+</blockquote>
+
+<p>
+这个定义相对模糊，但还是勾勒出了微服务的关键概念： <span class="underline">小，独立进程，自动化</span> 。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org32b630d" class="outline-3">
+<h3 id="org32b630d"><span class="section-number-3">2.2</span> 起源</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+从微服务的定义，我们感觉似曾相识。早在 1994 年 Mike Gancarz 曾提出了 9 条著名原则（<a href="https://en.wikipedia.org/wiki/Unix_philosophy#Mike_Gancarz:_The_UNIX_Philosophy">The UNIX Philosophy</a>），其中前 4 条和微服务架构理念特别接近。微服务就像把 UNIX 哲学应用到分布式系统（<a href="https://vanilla-java.github.io/2016/03/22/Micro-services-for-performance.html">Micro-services for performance</a>）。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border dense">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>小即是美：</b></th>
+<th scope="col" class="org-left">代码少，bug 就少，易测试和维护，也更容易不断迭代、完善。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>一个程序只做好一件事：</b></td>
+<td class="org-left">一个服务也只需要做好一件好，专注才能做好。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>尽可能早地创建原型：</b></td>
+<td class="org-left">尽早提供 API，建立服务契约，达成服务间的一致性约定，实现和完善可以慢慢进行。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>可移植性比效率更重要：</b></td>
+<td class="org-left">服务间的轻量级交互协议在效率和可移植性之间，首要考虑兼容性和可移植性。</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+而在微服务之前的十年，大家经常谈论的是一个叫 <del>SOA</del> 的架构模式，它和微服务又是什么关系？在 Sam Newman 的 <a href="https://book.douban.com/subject/25881698/">Building Microservices</a> 一书中，作者对 SOA 和 Micorservices 的区别给出了定义：
+</p>
+
+<blockquote>
+<p>
+You should instead think of Microservices as a specific approach for SOA in the same way that XP or Scrum are specific approaches for Agile software development.
+</p>
+</blockquote>
+
+<p>
+可以把微服务想成是 SOA 的一种实践方式，正如 XP 或 Scrum 是敏捷软件开发的实践方式。我对这个定义是认同的， <span class="underline">面向服务架构（SOA）的概念已有十多年，它提出了一种架构设计思想，但没有给出标准的参考实现，</span> 而早期软件业界自己摸索了一套实践方式 —— <del>企业服务总线（ESB）</del> 。 但历史证明 ESB 的实现方案甚至在传统企业软件行业也未取得成功，Martin Fowler 在文中说正是 <span class="underline">因为 ESB 当年搞砸了很多项目，投入几百万美金，产出几乎为零，因此 SOA 这个概念也蒙上了不详的标签，所以当微服务架构出现时，其拥护者开始拒绝使用包裹着失败阴影的 SOA 这个标签，而直接称其为微服务架构（Microservices Architecture Style），让人以为是一套全新的架构思想，但事实上它的本质依然是 SOA 的一种实践方式。</span>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb5c6769" class="outline-3">
+<h3 id="orgb5c6769"><span class="section-number-3">2.3</span> 特征</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+微服务架构的系统应该具备什么样的特征，Martin 在其文章 <a href="http://martinfowler.com/articles/microservices.html">Microservices</a> 中做了详尽的阐述，简单归纳如下。
+</p>
+</div>
+
+<div id="outline-container-orga5c9fa4" class="outline-4">
+<h4 id="orga5c9fa4"><span class="section-number-4">2.3.1</span> 组件服务化</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<p>
+<span class="underline">传统实现组件的方式是通过库（library），库和应用一起运行在进程中，库的局部变化意味着整个应用的重新部署。通过服务来实现组件，意味着将应用拆散为一系列的服务，运行在不同的进程中，单一服务的局部变化只需重新部署对应的服务进程。</span>
+</p>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/05.png" alt="05.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge764f36" class="outline-4">
+<h4 id="orge764f36"><span class="section-number-4">2.3.2</span> 按业务能力组织服务</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<p>
+按业务能力组织服务的意思是， <span class="underline">服务提供的能力和业务功能对应，比如：订单服务和数据访问服务，前者反映了真实的订单相关业务，后者是一种技术抽象服务不反应真实的业务。所以按微服务架构理念来划分服务时，不应该存在数据访问服务这样一个服务。</span>
+</p>
+
+<p>
+Melvin Conway 在 1967 年观察到一个现象并总结出了一条著名的康威定律（<a href="https://en.wikipedia.org/wiki/Conway's_law">Conway's law</a>）：
+</p>
+
+<blockquote>
+<p>
+Organizations which design systems are constrained to produce designs which are copies of the communication structures of these organizations.
+</p>
+</blockquote>
+
+<p>
+<span class="underline">一个组织设计的系统，总是等价于这个组织的沟通结构。</span> 传统开发方式中，我们将工程师按技能专长分层为前端层、中间层、数据层，前端对应的角色为 UI、页面构建师等，中间层对应的角色为后端开发工程师，数据层对应着 DBA 等角色。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/06.png" alt="06.png" />
+</p>
+</div>
+
+<p>
+传统架构的分层结构反映了不同角色的沟通结构。所以 <span class="underline">若要按微服务的方式来构建应用，也需要对应调整团队的组织架构。每个服务背后的小团队的是跨功能的，</span> 包含实现业务所需的全面的技能。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/07.png" alt="07.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge4354fa" class="outline-4">
+<h4 id="orge4354fa"><span class="section-number-4">2.3.3</span> 服务即产品</h4>
+<div class="outline-text-4" id="text-2-3-3">
+<p>
+传统的应用开发是基于项目模式的，开发团队根据功能列表开发出一个软件应用，并交付给客户后，该软件应用就进入维护模式，由另一个维护团队负责，开发团队的职责结束。而微服务架构建议避免采用这种项目模式，更倾向于让 <span class="underline">开发团队负责整个产品的全部生命周期。</span> Amazon 对此提出了一个观点：
+</p>
+
+<blockquote>
+<p>
+You build it, you run it.
+</p>
+</blockquote>
+
+<p>
+<span class="underline">开发团队对软件在生产环境的运行负全部责任，让服务的开发者与服务的使用者（客户）形成每日的交流反馈，</span> 来自直接客户的反馈有助于开发者提升服务的品质。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb4df8f5" class="outline-4">
+<h4 id="orgb4df8f5"><span class="section-number-4">2.3.4</span> 智能终端与哑管道</h4>
+<div class="outline-text-4" id="text-2-3-4">
+<p>
+微服务架构抛弃了 ESB 过度复杂的业务规则编排、消息路由等。 <span class="underline">服务作为智能终端，所有的业务逻辑在服务内部处理，而服务间的通信尽可能轻量化，不添加任何额外的业务规则。</span> 智能终端指服务本身，而 <span class="underline">哑管道是通信机制，可以是同步的 RPC，也可以是异步的 MQ，它们只作为消息通道，在传输过程中不会附加额外的业务智能。</span>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb8f7529" class="outline-4">
+<h4 id="orgb8f7529"><span class="section-number-4">2.3.5</span> 去中心化</h4>
+<div class="outline-text-4" id="text-2-3-5">
+<p>
+去中心化包含两层意思：
+</p>
+
+<ol class="org-ol">
+<li>技术栈的去中心化。</li>
+<li>数据的去中心化。</li>
+</ol>
+
+<p>
+每个服务的业务场景不同，可以针对性地选择合适的技术解决方案。但也需要避免过度多样化，结合团队实际情况来选择取舍，如果每个服务都用不同语言的技术栈来实现，维护成本会很高。
+</p>
+
+<p>
+<span class="underline">每个服务独享自身的数据存储设施（缓存，数据库等），不像传统应用共享一个缓存和数据库，这样有利于服务的独立性，隔离相关干扰。</span>
+</p>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/08.png" alt="08.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org87094b3" class="outline-4">
+<h4 id="org87094b3"><span class="section-number-4">2.3.6</span> 基础设施自动化</h4>
+<div class="outline-text-4" id="text-2-3-6">
+<p>
+无自动化不微服务，自动化包括测试和部署。 <span class="underline">单一进程的传统应用被拆分为一系列的多进程服务后，意味着开发、调试、测试、监控和部署的复杂度都会相应增大，必须要有合适的自动化基础设施来支持微服务架构模式，</span> 否则开发、运维成本将大大增加。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org90740f2" class="outline-4">
+<h4 id="org90740f2"><span class="section-number-4">2.3.7</span> 容错设计</h4>
+<div class="outline-text-4" id="text-2-3-7">
+<p>
+著名的 <del>Design for Failure</del> 思想， <span class="underline">微服务架构采用粗粒度的进程间通信，引入了额外的复杂性和需要处理的新问题，如网络延迟、消息格式、负载均衡和容错，</span> 忽略其中任何一点都属于对分布式计算的误解。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf90d761" class="outline-4">
+<h4 id="orgf90d761"><span class="section-number-4">2.3.8</span> 兼容设计</h4>
+<div class="outline-text-4" id="text-2-3-8">
+<p>
+一旦采用了微服务架构模式，在服务需要变更时要特别小心， <span class="underline">服务提供者的变更可能引发服务消费者的兼容性破坏，时刻谨记保持服务契约（接口）的兼容性。</span> 一条普适的健壮性原则「伯斯塔尔法则」（<a href="https://en.wikipedia.org/wiki/Robustness_principle">Robustness principle</a>）给出了很好的建议：
+</p>
+
+<blockquote>
+<p>
+<span class="underline">Be conservative in what you send, be liberal in what you accept.</span>
+</p>
+</blockquote>
+
+<p>
+按照伯斯塔尔法则的思想来设计和实现服务时， <span class="underline">发送的数据要更保守，意味着最小化地传送必要的信息，接收时更开放，意味着要最大限度地容忍冗余数据，保证兼容性。</span>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgce626b6" class="outline-3">
+<h3 id="orgce626b6"><span class="section-number-3">2.4</span> 实施</h3>
+<div class="outline-text-3" id="text-2-4">
+</div><div id="outline-container-orgd2dd49c" class="outline-4">
+<h4 id="orgd2dd49c"><span class="section-number-4">2.4.1</span> 前提</h4>
+<div class="outline-text-4" id="text-2-4-1">
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/09.png" alt="09.png" />
+</p>
+</div>
+
+<p>
+上图来自 Martin Fowler 的文章 <a href="http://martinfowler.com/bliki/MicroservicePremium.html">MicroservicePremium</a> ，揭示了生产率和复杂度的关系。 <span class="underline">在复杂度较小时采用单体应用（Monolith）的生产率更高，复杂度到了一定规模时，单体应用的生产率开始急剧下降，这时对其进行微服务化的拆分才是合算的。</span>
+</p>
+
+<p>
+图上标明了复杂度和生产率拐点的存在，但并没有量化复杂度的拐点到底是多少。或者换种说法系统或代码库的规模多大时，才适合开始进行微服务化的拆分。在一篇有趣的文章 <a href="http://blog.jobbole.com/76139/">程序员职业生涯中的 Norris 常数</a> 中提到大部分普通程序员成长生涯的瓶颈在 2 万行代码左右。
+</p>
+
+<blockquote>
+<p>
+<span class="underline">当代码在 2,000 行以下，你可以写任何混乱肮脏的代码并依靠你的记忆拯救你。深思熟虑的类和包分解会让你的代码规模达到 20,000 行。</span> 初级程序员，学会了爬行，接着蹒跚学步，然后行走，然后慢跑，然后再跑步，最后冲刺，他认为，「以这样加速度前进我可以赶上超音速喷气式飞机的速度！」但他跑进了 2,000 行的极限，因为他的技能不会再按比例增加。他必须改变移动方式，比如开车去获得更快的速度。然后，他就学会了开车，开始很慢，然后越来越快，但又进入到了 20,000 行的极限。驾驶汽车的技术不会让你能够开喷气式飞机。
+</p>
+</blockquote>
+
+<p>
+每一个瓶颈的突破需要新的技能和技巧，结合我自己的经历和经验， <span class="underline">微服务的合适拆分拐点可能就在两万行代码规模附近，而每个微服务的规模大小最好能控制在一个普通程序员的舒适维护区范围内。</span> 借用前面的比喻，一个受过职业训练的普通程序员就像一个拿到驾照的司机，一般司机都能轻松驾驭 100 公里左右的时速，但很少有能轻松驾驭 200 公里或以上时速的司机，即使能够风险也是很高的。而能开喷气式飞机的飞行员级别的程序员恐怕在大部分的团队里一个也没有。
+</p>
+
+<p>
+另外一个实施前提是基础设施的自动化，把 1 个应用进程部署到 1 台主机，部署复杂度是 1 x 1 = 1，若应用规模需要部署 200 台主机，那么部署复杂度是 1 x 200 = 200。 把 1 个应用进程拆分成 50 个微服务进程，则部署复杂度变成了 50 x 200 = 10000。所以微服务的特征才有「基础设施自动化」，这和规模也是有关的，这也是因为其运维复杂度的飙升，从开发之后的构建、测试、部署都需要一个高度自动化的环境来支撑才能有效降低边际成本。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org05b8edb" class="outline-4">
+<h4 id="org05b8edb"><span class="section-number-4">2.4.2</span> 维度</h4>
+<div class="outline-text-4" id="text-2-4-2">
+<p>
+<b>建模</b>
+</p>
+
+<p>
+服务围绕业务能力建模，下图是我在 <a href="http://blog.csdn.net/mindfloating/article/details/50166169">京东咚咚架构演进</a> 一文中写到的，咚咚向微服务架构演进中，对服务拆分后得到的服务矩阵图。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/10.png" alt="10.png" />
+</p>
+</div>
+
+<hr />
+
+<p>
+<b>协作</b>
+</p>
+
+<p>
+采用微服务架构模式后，开发和运行的协作模式都会发生变化，还是以我们实践的经验为例。按微服务的组织方式，不同人或小团队负责一个或一组微服务，服务之间可能存在相互调用，所以在服务之间采用了类似面向外部开放的契约化开发模式。
+</p>
+
+<p>
+每一个服务都提供了一份契约文档，发布到公开的内部 wiki，方便服务干系人获取查看。契约文档要求至少对服务的几个基本方面作出说明：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border dense">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">API：</th>
+<th scope="col" class="org-left">API 接入技术说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">能力：</td>
+<td class="org-left">服务能力的描述</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">契约：</td>
+<td class="org-left">提供这些能力所约定的限制条件说明</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">版本：</td>
+<td class="org-left">支持的最新和历史的版本说明</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+使用契约文档来减少反复的口头沟通，降低协作成本。
+</p>
+
+<p>
+采用微服务后，一个业务功能的调用会涉及多个服务间的协同工作，由于服务间是跨进程调用， <span class="underline">一个业务功能的完成涉及的调用链条可能较长</span> ，这就涉及到服务间需遵循一些规则，来确保协作的可靠性和可用性。我们采用的原则是：长链条的内部服务之间的调用异步化。 <span class="underline">若一个调用链条中的个别服务变慢或阻塞，可能导致整个链条产生雪崩效应，采用异步化，可以规避调用阻塞等待导致的雪崩情形。</span>
+</p>
+
+<hr />
+
+<p>
+<b>测试</b>  
+</p>
+
+<p>
+测试从不同的维度可以划分如下四个象限，从不同维度视角对测试做了观察和判断。除了体验和探索性测试需要人工介入，其他维度的测试都可以通过自动化来实现，以降低测试人工成本和重复性工作。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/11.png" alt="11.png" />
+</p>
+</div>
+
+<p>
+而从测试所处的层次，又可以得到下面这样个一个测试金字塔：
+</p>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/12.png" alt="12.png" />
+</p>
+</div>
+
+<p>
+服务开发和运营人员专注于服务实现层面的单元测试，和服务契约层面的接口测试。面向业务功能的端到端测试，更多是依赖自动化脚本完成。为了维护自动化测试脚本，也需要保持服务接口和契约的兼容性和稳定性，这些自动化测试脚本也属于服务的消费方之一。
+</p>
+
+<hr />
+
+<p>
+<b>部署</b>
+</p>
+
+<p>
+借助于虚拟化或容器等隔离技术，每个服务独享资源，不必考虑额外的资源使用冲突。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/13.png" alt="13.png" />
+</p>
+</div>
+
+<hr />
+
+<p>
+<b>监控</b>
+</p>
+
+<p>
+大量松耦合的微服务通过相互协作来完成业务功能的流程处理，在这样一个复杂的生产环境中，出现异常或错误是很难迅速定位的。这就需要一套成体系的监控基础设施，在我们的实践中借助了公司统一的监控基础设施，对监控进行了分层，顶层的监控站在用户视角，底层的监控站在系统视角，形成更完善的反馈链路。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/14.png" alt="14.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9ab47db" class="outline-4">
+<h4 id="org9ab47db"><span class="section-number-4">2.4.3</span> 原则</h4>
+<div class="outline-text-4" id="text-2-4-3">
+<p>
+在实施微服务架构的过程中，通过不断的迭代、摸索和修正得到了一些良好的实践模式，对这些良好的实践模式进行抽象、总结就得到了架构原则。而对架构原则的把控是为了更好地服务于业务的战略目标。原则的普及带来整体效率的提升和边际成本的下降，以便更有效地支持战略目标的达成。下面的图片结合了微服务架构实施过程中，演示了关于「交付实践」-「架构原则」-「战略目标」之间的一个升维演化和支撑关系。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/15.png" alt="15.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7004672" class="outline-3">
+<h3 id="org7004672"><span class="section-number-3">2.5</span> 角色</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+实施微服务后关于团队人员角色会发生什么样的变化？
+</p>
+
+<p>
+按微服务拆分系统后，按照「服务即产品」的思路，人员角色将发生变化。普通工程师从仅仅开发功能转变为开发、运营服务，工作性质的转变将带来思路和关注点的变化。每个服务至少有一个工程师作为负责人，当然能力更强的人可能会负责更多的服务。大量拆分的微服务带来开发人员交集的减少，对于大规模的团队并行开发好处明显。而服务负责制对个人能力要求更高，自驱动和自学习能力更强的人会得到更多的成长机会，个人成长路线的发展也打开了空间。
+</p>
+
+<p>
+这时团队的构成会变得类似 NBA 球队的组成，工程师的角色类似球员，架构师或技术经理类似教练，而部门经理则是球队经理。球员只管打好球，教练负责球员训练、培养、战术安排和比赛全场把控，经理则掌握着人事权，控制着球员的薪水升迁，招聘到优秀的球员以及想办法带领球队去更受欢迎的比赛上打球。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc22ceab" class="outline-2">
+<h2 id="orgc22ceab"><span class="section-number-2">3</span> 京东咚咚架构演进</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<a href="http://blog.csdn.net/mindfloating/article/details/50166169">Source</a>
+</p>
+
+<p>
+咚咚之于京东相当于旺旺之于淘宝，它们都是服务于买家和卖家的沟通。自从京东开始为第三方卖家提供入驻平台服务后，咚咚也就随之诞生了。 
+</p>
+</div>
+
+<div id="outline-container-org4e5d207" class="outline-3">
+<h3 id="org4e5d207"><span class="section-number-3">3.1</span> 1.0 诞生</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+为了业务的快速上线，1.0 版本的技术架构实现是非常直接且简单粗暴的。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/16.jpg" alt="16.jpg" />
+</p>
+</div>
+
+<p>
+1.0 的功能十分简单，实现了一个 IM 的基本功能，接入、互通消息和状态。另外还有客服功能，就是顾客接入咨询时的客服分配，按 <del>轮询方式</del> 把顾客分配给在线的客服接待。用开源 <del>Mina</del> 框架实现了 <del>TCP 长连接</del> 接入，用 <del>Tomcat Comet</del> 机制实现了 <del>HTTP 长轮询</del> 服务。而消息投递的实现是一端发送的消息临时存放在 <del>Redis</del> 中，另一端拉取的「生产-消费」模型。
+</p>
+
+<p>
+这个模型的做法导致需要 <span class="underline">以一种高频率的方式来轮询 Redis，遍历属于自己连接的关联会话消息</span> 。这个模型很简单，「简单」包括多个层面的意思：理解起来简单；开发起来简单；部署起来也简单。只需要一个 Tomcat 应用依赖一个共享的 Redis，简单的实现核心业务功能，并支持业务快速上线。
+</p>
+
+<p>
+但这个简单的模型也有些严重的缺陷，主要是效率和扩展问题。 <span class="underline">轮询的频率间隔大小基本决定了消息的延时，轮询越快延时越低，但轮询越快消耗也越高。</span> 这个模型实际上是一个高功耗低效能的模型，因为不活跃的连接在那做高频率的无意义轮询。高频有多高呢，基本在 100 ms 以内，不能让轮询太慢，比如超过 2 秒轮一次，人就会在聊天过程中感受到明显的会话延迟。随着在线人数增加，轮询的耗时也线性增长，因此这个模型导致了扩展能力和承载能力都不好，一定会随着在线人数的增长碰到性能瓶颈。
+</p>
+
+<p>
+1.0 的时代背景正是京东技术平台从 .NET 向 Java 转型的年代，我也正是在这期间加入京东并参与了京东主站技术转型架构升级的过程。之后开始接手了京东咚咚，并持续完善这个产品，进行了三次技术架构演进。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgebb710d" class="outline-3">
+<h3 id="orgebb710d"><span class="section-number-3">3.2</span> 2.0 成长</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+我们刚接手时 1.0 已在线上运行并支持京东 POP（开放平台）业务，之后京东打算组建自营在线客服团队并落地在成都。不管是自营还是 POP 客服咨询业务当时都起步不久，1.0 架构中的性能和效率缺陷问题还没有达到引爆的业务量级。而自营客服当时还处于起步阶段，客服人数不足，服务能力不够，顾客咨询量远远超过客服的服务能力。超出服务能力的顾客咨询，当时我们的系统统一返回提示客服繁忙，请稍后咨询。这种状况导致高峰期大量顾客无论怎么刷新请求，都很可能无法接入客服，体验很差。所以 2.0 重点放在了业务功能体验的提升上。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/17.jpg" alt="17.jpg" />
+</p>
+</div>
+
+<p>
+针对无法及时提供服务的顾客，可以排队或者留言。针对纯文字沟通，提供了文件和图片等更丰富的表达方式。另外支持了客服转接和快捷回复等方式来提升客服的接待效率。总之，整个 2.0 就是围绕提升客服效率和用户体验。而我们担心的效率问题在 2.0 高速发展业务的时期还没有出现，但业务量正在逐渐积累，我们知道它快要爆了。到 2012 年末，度过双十一后开始了 3.0 的一次重大架构升级。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbcdc98e" class="outline-3">
+<h3 id="orgbcdc98e"><span class="section-number-3">3.3</span> 3.0 爆发</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+经历了 2.0 时代一整年的业务高速发展，实际上代码规模膨胀得很快。与代码一块膨胀的还有团队，从最初的 4 个人到近 30 人。团队大了后，一个系统多人开发，开发人员层次不一，规范难统一，系统模块耦合重，改动沟通和依赖多，上线风险难以控制。 <span class="underline">一个单独 Tomcat 应用多实例部署模型终于走到头了，这个版本架构升级的主题就是服务化。</span>
+</p>
+
+<p>
+服务化的第一个问题如何把一个大的应用系统切分成子服务系统。当时的背景是京东的部署还在半自动化年代，自动部署系统刚起步，子服务系统若按业务划分太细太多，部署工作量很大且难管理。所以当时我们不是按业务功能分区服务的，而是按业务重要性级别划分了 0、1、2 三个级别不同的子业务服务系统。另外就是独立了一组接入服务，针对不同渠道和通信方式的接入端。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/18.png" alt="18.png" />
+</p>
+</div>
+
+<p>
+更细化的应用服务和架构分层方式：
+</p>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/19.png" alt="19.png" />
+</p>
+</div>
+
+<p>
+这次大的架构升级，主要考虑了三个方面：稳定性、效率和容量。做了下面这些事情：
+</p>
+
+<ul class="org-ul">
+<li>业务分级，核心、非核心业务隔离</li>
+<li>多机房部署，流量分流，容灾冗余，峰值应对冗余</li>
+<li>读库 <span class="underline">多源</span> ， <span class="underline">失败转移</span></li>
+<li>写库 <span class="underline">主备</span> ，短暂有损服务容忍下的 <span class="underline">快速切换</span></li>
+<li>外部接口，失败转移或 <span class="underline">快速断路</span></li>
+<li>Redis 主备，失败转移</li>
+<li>大表迁移，MongoDB 取代 MySQL 存储消息记录</li>
+<li>改进消息投递模型</li>
+</ul>
+
+<p>
+前 6 条基本属于考虑系统稳定性、可用性方面的改进升级。这一块属于陆续迭代完成的，承载很多失败转移的配置和控制功能在上面图中是由管控中心提供的。第 7 条主要是随着业务量的上升，单日消息量越来越大后，使用了 MongoDB 来单独存储量最大的聊天记录。第 8 条是针对 1.0 版本消息轮询效率低的改进，改进后的投递方式如下图所示：
+</p>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/20.png" alt="20.png" />
+</p>
+</div>
+
+<p>
+不再是轮询了，而是让 <span class="underline">终端每次建立连接后注册接入点位置，消息投递前定位连接所在接入点位置再推送过去。这样投递效率就是恒定的了，而且很容易扩展，在线人数越多则连接数越多，只需要扩展接入点即可。</span> 其实，这个模型依然还有些小问题，主要出在离线消息的处理上，可以先思考下，我们最后再讲。
+</p>
+
+<p>
+3.0 经过了两年的迭代式升级，单纯从业务量上来说还可以继续支撑很长时间的增长。但实际上到 2014 年底我们面对的不再是业务量的问题，而是业务模式的变化。这直接导致了一个全新时代的到来。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org46999d7" class="outline-3">
+<h3 id="org46999d7"><span class="section-number-3">3.4</span> 4.0 涅槃</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+2014 年京东的组织架构发生了很大变化，从一个公司变成了一个集团，下设多个子公司。原来的商城成为了其中一个子公司，新成立的子公司包括京东金融、京东智能、京东到家、拍拍、海外事业部等。各自业务范围不同，业务模式也不同，但不管什么业务总是需要客服服务。如何复用原来为商城量身订做的咚咚客服系统，并支持其他子公司业务快速接入成为我们新的课题。
+</p>
+
+<p>
+最早要求接入的是拍拍网，它是从腾讯收购的，所以是完全不同的账户和订单交易体系。由于时间紧迫，我们把为商城订做的部分剥离，基于 3.0 架构对接拍拍又单独订做了一套，并独立部署。
+</p>
+
+<p>
+虽然在业务要求的时间点前完成了上线，但这样做也带来了明显的问题：
+</p>
+
+<ul class="org-ul">
+<li>复制工程，定制业务开发，多套源码维护成本高</li>
+<li>独立部署，至少 <span class="underline">双机房主备外加一个灰度集群</span> ，资源浪费大</li>
+</ul>
+
+<p>
+以前我们都是 <del>面向业务</del> 去架构系统，如今新的业务变化形势下，我们开始考虑 <del>面向平台</del> 去架构， <span class="underline">在统一平台上跑多套业务，统一源码，统一部署，统一维护。把业务服务继续拆分，剥离出最基础的服务，针对不同的业务特殊需求做最小化的定制服务开发。部署方式则以平台形式部署，不同业务方的服务跑在同一个平台上，但数据互相隔离。</span> 服务继续被拆分的更微粒化，形成了一组服务矩阵。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/21.png" alt="21.png" />
+</p>
+</div>
+
+<p>
+而部署方式，只需要 <span class="underline">在双机房建立两套对等集群，并另外建一个较小的灰度发布集群</span> 即可，所有不同业务都运行在统一平台集群上。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/22.png" alt="22.png" />
+</p>
+</div>
+
+<p>
+<span class="underline">更细粒度的服务意味着每个服务的开发更简单，代码量更小，依赖更少，隔离稳定性更高。但更细粒度的服务也意味着更繁琐的运维监控管理，</span> 直到今年公司内部弹性私有云、缓存云、消息队列、部署、监控、日志等基础系统日趋完善，使得实施这类细粒度划分的微服务架构成为可能，运维成本可控。 <span class="underline">从 1.0 的 1 种应用进程，到 3.0 的 6~7 种应用进程，再到 4.0 的 50+ 更细粒度的不同种应用进程。每种进程再根据承载业务流量不同分配不同的实例数，真正的实例进程数会过千。</span> 为了更好的监控和管理这些进程，为此专门定制了一套面向服务的运维管理系统。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/23.png" alt="23.png" />
+</p>
+</div>
+
+<p>
+统一服务运维提供了实用的内部工具和库来帮助开发更健壮的微服务。包括中心配置管理、流量埋点监控、数据库和缓存访问、运行时隔离。下图所示是一个 <del>运行隔离</del> ：
+</p>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/24.png" alt="24.png" />
+</p>
+</div>
+
+<p>
+<span class="underline">细粒度的微服务做到了进程间隔离，严格的开发规范和工具库帮助实现了异步消息和异步 HTTP 来避免多个跨进程的同步长调用链。进程内部通过切面方式引入了服务增强容器 Armor 来隔离线程，并支持进程内的单独业务降级和同步转异步化执行。</span> 而所有这些工具和库服务都是为了两个目标：
+</p>
+
+<ul class="org-ul">
+<li>让服务进程运行时状态可见</li>
+<li>让服务进程运行时状态可被管理和改变</li>
+</ul>
+
+<p>
+最后我们回到前文留下的一个悬念，就是关于消息投递模型的缺陷。一开始我们 <span class="underline">在接入层检测到终端连接断开后，消息无法投递，再将消息缓存下来，等终端重连接上来再拉取离线消息。这个模型在移动时代表现的很不好，因为移动网络的不稳定性，导致经常断链后重连。而准确的检测网络连接断开是依赖一个网络超时的，导致检测可能不准确，引发消息假投递成功。</span> 新的模型如下图所示，它 <span class="underline">不再依赖准确的网络连接检测，投递前待确认消息 id 被缓存，而消息体被持久存储。等到终端接收确认返回后，该消息才算投妥，未确认的消息 id 在重新登陆后或重连接后作为离线消息推送。这个模型不会产生消息假投妥导致的丢失，但可能导致消息重复，只需由客户终端按消息 id 去重即可。</span>
+</p>
+
+
+<div class="figure">
+<p><img src="../images/architecture_scrap/25.png" alt="25.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org21bc19e" class="outline-2">
+<h2 id="org21bc19e"><span class="section-number-2">4</span> The Tumblr Architecture Yahoo Bought For A Cool Billion Dollars</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<a href="http://highscalability.com/blog/2013/5/20/the-tumblr-architecture-yahoo-bought-for-a-cool-billion-doll.html">Source</a>
+</p>
+
+<p>
+It's being reported Yahoo bought Tumblr for $1.1 billion. You may recall <a href="http://highscalability.com/blog/2012/4/9/the-instagram-architecture-facebook-bought-for-a-cool-billio.html">Instagram was profiled on HighScalability</a> and they were also bought by Facebook for a ton of money. 
+</p>
+
+<p>
+Just what is Yahoo buying? The business acumen of the deal is not something I can judge, but if you are doing due diligence on the technology then Tumblr would probably get a big thumbs up.
+</p>
+
+<p>
+With over 15 billion page views a month, Tumblr has become an insanely popular blogging platform. Users may like Tumblr for its simplicity, its beauty, its strong focus on user experience, or its friendly and engaged community. 
+</p>
+
+<p>
+Growing at over 30% a month has not been without challenges. Some reliability problems among them. It helps to realize that Tumblr operates at surprisingly huge scales: 500 million page views a day, a peak rate of ~40k requests per second, ~3TB of new data to store a day, all running on 1000+ servers.
+</p>
+
+<p>
+<span class="underline">One of the common patterns across successful startups is the perilous chasm crossing from startup to wildly successful startup. Finding people, evolving infrastructures, servicing old infrastructures, while handling huge month over month increases in traffic</span>, all with only four engineers, means you have to make difficult choices about what to work on. This was Tumblr's situation. Now with twenty engineers there's enough energy to work on issues and develop some very interesting solutions.
+</p>
+
+<p>
+<span class="underline">Tumblr started as a fairly typical large LAMP application. The direction they are moving in now is towards a distributed services model built around Scala, HBase, Redis, Kafka, Finagle, and an intriguing cell based architecture for powering their Dashboard.</span> Effort is now going into fixing short term problems in their PHP application, pulling things out, and doing it right using services. 
+</p>
+
+<p>
+The theme at Tumblr is transition at massive scale. Transition from a LAMP stack to a somewhat bleeding edge stack. Transition from a small startup team to a fully armed and ready development team churning out new features and infrastructure. To help us understand how Tumblr is living this theme is startup veteran Blake Matheny, Distributed Systems Engineer at Tumblr:
+</p>
+</div>
+
+<div id="outline-container-orgedc42ed" class="outline-3">
+<h3 id="orgedc42ed"><span class="section-number-3">4.1</span> Stats</h3>
+<div class="outline-text-3" id="text-4-1">
+<ul class="org-ul">
+<li>500 million page views per day, 15+ billion page views per month</li>
+<li>Peak rate of ~40k requests per second</li>
+<li>1+ TB/day into Hadoop cluster, many TB/day into MySQL/HBase/Redis/Memcache
+<ul class="org-ul">
+<li>Posts are about 50 GB/day</li>
+<li>Follower list updates are about 2.7 TB/day</li>
+</ul></li>
+<li>Dashboard runs at 1 million writes and 50k reads per second, and growing</li>
+<li>Growing at 30% per month</li>
+<li>~20 engineers (billions of page visits per month per engineer)</li>
+<li>~1000 hardware nodes in production</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb81cc8f" class="outline-3">
+<h3 id="orgb81cc8f"><span class="section-number-3">4.2</span> Software</h3>
+<div class="outline-text-3" id="text-4-2">
+<ul class="org-ul">
+<li>OS X for development, Linux (CentOS, Scientific) in production</li>
+<li>Apache, nginx</li>
+<li>PHP, Scala, Ruby</li>
+<li>Redis, HBase, MySQL</li>
+<li>Varnish, HAProxy</li>
+<li>Memcache, Gearman, Kafka, Kestrel, Finagle</li>
+<li>Thrift, HTTP</li>
+<li>Func (a secure, scriptable remote control framework and API)</li>
+<li>Git, Capistrano, Puppet, Jenkins</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org69ed4d6" class="outline-3">
+<h3 id="org69ed4d6"><span class="section-number-3">4.3</span> Hardware</h3>
+<div class="outline-text-3" id="text-4-3">
+<ul class="org-ul">
+<li>500 web servers</li>
+<li>200 database servers (many of these are part of a spare pool we pulled from for failures)
+<ul class="org-ul">
+<li>47 pools</li>
+<li>30 shards</li>
+</ul></li>
+<li>30 Memcache servers</li>
+<li>22 Redis servers</li>
+<li>15 Varnish servers</li>
+<li>25 HAProxy nodes</li>
+<li>8 nginx servers</li>
+<li>14 job queue servers (Kestrel + Gearman)</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0ad7cf3" class="outline-3">
+<h3 id="org0ad7cf3"><span class="section-number-3">4.4</span> Architecture</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+Tumblr has a different <del>usage pattern</del> than other social networks.
+</p>
+
+<ul class="org-ul">
+<li>With 50+ million posts a day, an average post goes to many hundreds of people. It's not just one or two users that have millions of followers. The graph for Tumblr users has hundreds of followers. This is different than any other social network and is what makes Tumblr so challenging to scale.</li>
+
+<li>#2 social network in terms of time spent by users. The content is engaging. It's images and videos. The posts aren't byte sized. They aren't all long form, but they have the ability. People write in-depth content that's worth reading so people stay for hours.</li>
+
+<li>Users form a connection with other users so they will go hundreds of pages back into the dashboard to read content. Other social networks are just a stream that you sample.</li>
+
+<li>Implication is that given the number of users, the average reach of the users, and the high posting activity of the users, there is a huge amount of updates to handle.</li>
+</ul>
+
+<p>
+Tumblr runs in one colocation site. Designs are keeping geographical distribution in mind for the future.
+</p>
+
+<p>
+Two components to Tumblr as a platform: public Tumblelogs and Dashboard:
+</p>
+
+<ul class="org-ul">
+<li>Public Tumblelog is what the public deals with in terms of a blog. Easy to cache as its not that dynamic.</li>
+<li>Dashboard is similar to the Twitter timeline. Users follow real-time updates from all the users they follow.
+
+<ul class="org-ul">
+<li>Very different scaling characteristics than the blogs. Caching isn't as useful because every request is different, especially with active followers.</li>
+<li>Needs to be real-time and consistent. Should not show stale data. And it's a lot of data to deal with. Posts are only about 50GB a day. Follower list updates are 2.7TB a day. Media is all stored on <del>S3</del>.</li>
+</ul></li>
+
+<li>Most users leverage Tumblr as tool for consuming of content. Of the 500+ million page views a day, 70% of that is for the Dashboard.</li>
+<li>Dashboard availability has been quite good. Tumblelog hasn't been as good because they have a legacy infrastructure that has been hard to migrate away from. With a small team they had to pick and choose what they addressed for scaling issues.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgfbad428" class="outline-3">
+<h3 id="orgfbad428"><span class="section-number-3">4.5</span> Old Tumblr</h3>
+<div class="outline-text-3" id="text-4-5">
+<p>
+When the company started on <del>Rackspace</del> it gave each custom domain blog an A record. When they outgrew Rackspace there were too many users to migrate. This is 2007. They still have custom domains on Rackspace. They route through Rackspace back to their colo space using <del>HAProxy</del> and <del>Varnish</del>. Lots of legacy issues like this.
+</p>
+
+<p>
+A traditional LAMP progression.
+</p>
+
+<ul class="org-ul">
+<li>Historically developed with PHP. Nearly every engineer programs in PHP.</li>
+<li>Started with a web server, database server and a PHP application and started growing from there.</li>
+<li>To scale they started using <del>memcache</del>, then put in <del>front-end caching</del>, then <del>HAProxy</del> in front of the caches, then <del>MySQL sharding</del>. MySQL sharding has been hugely helpful.</li>
+<li>Use a "squeeze everything out of a single server" approach. In the past year they've developed a couple of <del>backend services in C</del>: an ID generator and Staircar, using <del>Redis</del> to power Dashboard notifications.</li>
+</ul>
+
+<p>
+The Dashboard uses a <del>scatter-gather</del> approach. Events are displayed when a user access their Dashboard. Events for the users you follow are pulled and displayed. This will scale for another 6 months. Since the data is time ordered, sharding schemes don't work particularly well.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org04b6495" class="outline-3">
+<h3 id="org04b6495"><span class="section-number-3">4.6</span> New Tumblr</h3>
+<div class="outline-text-3" id="text-4-6">
+<p>
+Changed to a <del>JVM centric</del> approach for hiring and speed of development reasons.
+</p>
+
+<p>
+Goal is to <span class="underline">move everything out of the PHP app into services and make the app a thin layer over services</span> that does request authentication, presentation, etc.
+</p>
+
+<p>
+<del>Scala</del> selection:
+</p>
+
+<ul class="org-ul">
+<li>Internally they had a lot of people with Ruby and PHP experience, so Scala was appealing.</li>
+<li>Liked <del>Netty</del>, but wanted out of Java, so Scala was a good choice.</li>
+<li>Node.js wasn't selected because <span class="underline">it is easier to scale the team with a JVM base</span>. Node.js isn't developed enough to have standards and best practices, a large volume of well tested code.</li>
+<li>With Scala you can use all the Java code. There's not a lot of knowledge of how to use it in a scalable way and they target 5ms response times, 40k requests per second and some at 400k requests per second. There's a lot in the <del>Java ecosystem</del> they can leverage.</li>
+</ul>
+
+<p>
+<del>Finagle</del> Selection:
+</p>
+
+<ul class="org-ul">
+<li>Finagle was a compelling factor in choosing Scala. It is a library from Twitter. It handles most of the <span class="underline">distributed issues like distributed tracing, service discovery, and service registration</span>. You don't have to implement all this stuff. It just comes for free.</li>
+<li>Once on the JVM, Finagle provided all the primitives they needed (<del>Thrift</del>, <del>ZooKeeper</del>, etc).</li>
+<li>Finagle is being used by Foursquare and Twitter. Scala is also being used by Meetup. Like the Thrift application interface. It has really good performance.</li>
+<li>Picked Finagle because it was cool, knew some of the guys, it worked without a lot of networking code and did all the work needed in a distributed system.</li>
+</ul>
+
+<p>
+<del>Internal services</del> are being shifted from being <del>C/libevent</del> based to being Scala/Finagle based.
+</p>
+
+<p>
+Newer, non-relational data stores like <del>HBase</del> and <del>Redis</del> are being used, but the bulk of their data is currently stored in a heavily <del>partitioned MySQL</del> architecture. Not replacing MySQL with HBase.
+</p>
+
+<p>
+HBase backs their URL shortner with billions of URLs and all the historical data and analytics. It has been rock solid. <span class="underline">HBase is used in situations with high write requirements</span>, like a million writes a second for the Dashboard replacement. HBase wasn't deployed instead of MySQL because they couldn't bet the business on HBase with the people that they had, so they started using it with smaller less critical path projects to gain experience.
+</p>
+
+<p>
+<span class="underline">Problem with MySQL and sharding for time series data is one shard is always really hot.</span> Also ran into <span class="underline">read replication lag due to insert concurrency on the slaves</span>.
+</p>
+
+<p>
+Created a common <del>services framework</del>:
+</p>
+
+<ul class="org-ul">
+<li>Spent a lot of time upfront solving operations problem of how to manage a distributed system.</li>
+<li>Built a kind of <del>Rails scaffolding</del>, but for services. A template is used to bootstrap services internally.</li>
+<li>All services look identical from an operation's perspective. Checking statistics, monitoring, starting and stopping all work the same way for all services.</li>
+<li>Tooling is put around the build process in <del>SBT</del> (a Scala build tool) using plugins and helpers to take care of common activities like tagging things in git, publishing to the repository, etc. Most developers don't have to get in the guts of the build system.</li>
+</ul>
+
+<p>
+Front-end layer uses <del>HAProxy</del>. <del>Varnish</del> might be hit for public blogs. 40 machines.
+</p>
+
+<p>
+500 web servers running Apache and their PHP application.
+</p>
+
+<p>
+200 database servers. Many database servers are used for high availability reasons. <del>Commodity hardware</del> is used and the <del>MTBF</del> (mean time between failures) is surprisingly low. Much more hardware than expected is lost so there are many spares in case of failure.
+</p>
+
+<p>
+6 <del>backend services</del> to support the PHP application. A team is dedicated to develop the backend services. A new service is rolled out every 2-3 weeks. Includes dashboard notifications, dashboard <del>secondary index</del>, URL shortener, and a memcache proxy to handle <del>transparent sharding</del>.
+</p>
+
+<p>
+Put a lot of time and effort and tooling into <del>MySQL sharding</del>. MongoDB is not used even though it is popular in NY (their location). MySQL can scale just fine.
+</p>
+
+<p>
+<del>Gearman</del>, a job queue system, is used for long running <del>fire and forget</del> type work.
+</p>
+
+<p>
+Availability is measured in terms of reach. Can a user reach custom domains or the dashboard? Also in terms of error rate.
+</p>
+
+<p>
+Historically the highest priority item is fixed. Now failure modes are analyzed and addressed systematically. Intention is to measure success from a user perspective and an application perspective. If part of a request can't be fulfilled that is account for.
+</p>
+
+<p>
+Initially an <del>Actor model</del> was used with Finagle, but that was dropped. For fire and forget work a job queue is used. In addition, Twitter's utility library contains a <del>Futures</del> implementation and services are implemented in terms of futures. In the situations when a thread pool is needed, futures are passed into a <del>future pool</del>. Everything is submitted to the future pool for asynchronous execution.
+</p>
+
+<p>
+Scala encourages <del>no shared state</del>. Finagle is assumed correct because it's tested by Twitter in production. <del>Mutable state</del> is avoided using constructs in Scala or Finagle. No long running <del>state machines</del> are used. State is pulled from the database, used, and written back to the database. Advantage is developers don't need to worry about threads or locks.
+</p>
+
+<p>
+22 <del>Redis</del> servers. Each server has 8~32 instances, so 100+ of Redis instances are used in production.
+</p>
+
+<ul class="org-ul">
+<li>Used for backend storage for dashboard notifications.</li>
+<li>A notification is something like a user liked your post. Notifications show up in a user's dashboard to indicate actions other users have taken on their content.</li>
+<li><del>High write ratio</del> made MySQL a poor fit.</li>
+<li>Notifications are ephemeral so it wouldn't be horrible if they were dropped, so Redis was an acceptable choice for this function.</li>
+<li>Gave them a chance to learn about Redis and get familiar with how it works.</li>
+<li>Redis has been completely problem free and the community is great.</li>
+<li>A <del>Scala futures based</del> interface for Redis was created. This functionality is now moving into their <del>Cell Architecture</del>.</li>
+<li>URL shortener uses Redis as the <del>first level cache</del> and HBase as permanent storage.</li>
+<li>Dashboard's secondary index is built around Redis.</li>
+<li>Redis is used as Gearman's <del>persistence layer</del> using a <del>memcache proxy</del> built using Finagle.</li>
+<li>Slowly moving from memcache to Redis. Would like to eventually settle on just one caching service. Performance is on par with memcache.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge05226e" class="outline-3">
+<h3 id="orge05226e"><span class="section-number-3">4.7</span> Internal Firehose</h3>
+<div class="outline-text-3" id="text-4-7">
+<p>
+Internally applications need access to the <del>activity stream</del>. An activity steam is information about users creating/deleting posts, liking/unliking posts, etc. A challenge is to distribute so much data in real-time. Wanted something that would scale internally and that an application ecosystem could reliably grow around. A central point of distribution was needed.
+</p>
+
+<p>
+Previously this information was distributed using <del>Scribe</del> / <del>Hadoop</del>. Services would log into Scribe and begin tailing and then pipe that data into an app. This model stopped scaling almost immediately, especially at peak where people are creating 1000s of posts a second. Didn't want people tailing files and piping to grep.
+</p>
+
+<p>
+An <del>internal firehose</del> was created as a <del>message bus</del>. Services and applications talk to the firehose via <del>Thrift</del>.
+</p>
+
+<p>
+LinkedIn's <del>Kafka</del> is used to store messages. Internally consumers use an <del>HTTP stream</del> to read from the firehose. MySQL wasn't used because the sharding implementation is changing frequently so hitting it with a huge data stream is not a good idea.
+</p>
+
+<p>
+The firehose model is very flexible, not like Twitter's firehose in which data is assumed to be lost.
+</p>
+
+<ul class="org-ul">
+<li>The firehose stream can be rewound in time. It retains a week of data. On connection it's possible to specify the point in time to start reading.</li>
+<li>Multiple clients can connect and each client won't see duplicate data. Each client has a client ID. Kafka supports a <del>consumer group</del> idea. Each consumer in a consumer group gets its own messages and won't see duplicates. Multiple clients can be created using the same consumer ID and clients won't see duplicate data. This allows data to be processed independently and in parallel. Kafka uses <del>ZooKeeper</del> to periodically checkpoint how far a consumer has read.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org864ce47" class="outline-3">
+<h3 id="org864ce47"><span class="section-number-3">4.8</span> Cell Design For Dashboard Inbox</h3>
+<div class="outline-text-3" id="text-4-8">
+<p>
+The current <del>scatter-gather model</del> for providing Dashboard functionality has very limited runway. It won't last much longer.
+</p>
+
+<ul class="org-ul">
+<li>The solution is to move to an <del>inbox model</del> implemented using a <del>Cell Based Architecture</del> that is similar to Facebook Messages.</li>
+<li>An inbox is the opposite of scatter-gather. A user's dashboard, which is made up posts from followed users and actions taken by other users, is logically stored together in time order.</li>
+<li>Solves the scatter-gather problem because it's an inbox. You just ask what is in the inbox so it's less expensive then going to each user a user follows. This will scale for a very long time.</li>
+</ul>
+
+<p>
+Rewriting the Dashboard is difficult. The data has a <del>distributed</del> nature, but it has a <del>transactional</del> quality, it's not OK for users to get partial updates.
+</p>
+
+<ul class="org-ul">
+<li>The amount of data is incredible. Messages must be delivered to hundreds of different users on average which is a very different problem than Facebook faces. Large data + high distribution rate + multiple datacenters.</li>
+<li>Spec'ed at 1 million writes a second and 50k reads a second. The data set size is 2.7TB of data growth with no <del>replication</del> or compression turned on. The million writes a second is from the 24 byte row key that indicates what content is in the inbox.</li>
+<li>Doing this on an already popular application that has to be kept running.</li>
+</ul>
+
+<p>
+Cells:
+</p>
+
+<ul class="org-ul">
+<li>A cell is a self-contained installation that has all the data for a range of users. All the data necessary to render a user's Dashboard is in the cell.</li>
+<li>Users are mapped into cells. Many cells exist per data center.</li>
+<li>Each cell has an <del>HBase cluster</del>, <del>service cluster</del>, and <del>Redis caching cluster</del>.</li>
+<li>Users are homed to a cell and all cells consume all posts via <del>firehose</del> updates.</li>
+<li>Each cell is <del>Finagle</del> based and populates <del>HBase</del> via the <del>firehose</del> and service requests over <del>Thrift</del>.</li>
+<li>A user comes into the Dashboard, users home to a particular cell, a <del>service node</del> reads their dashboard via HBase, and passes the data back.</li>
+<li>Background tasks consume from the firehose to populate tables and process requests.</li>
+<li>A <del>Redis caching layer</del> is used for posts inside a cell.</li>
+</ul>
+
+<p>
+Request flow: a user publishes a post, the post is written to the firehose, all of the cells consume the posts and write that post content to post database, the cells lookup to see if any of the followers of the post creator are in the cell, if so the follower inboxes are updated with the post ID.
+</p>
+
+<p>
+Advantages of cell design:
+</p>
+
+<ul class="org-ul">
+<li>Massive scale requires <del>parallelization</del> and parallelization requires components be isolated from each other so there is no interaction. Cells provide a unit of parallelization that can be adjusted to any size as the user base grows.</li>
+<li>Cells isolate failures. One cell failure does not impact other cells.</li>
+<li>Cells enable nice things like the ability to test upgrades, implement rolling upgrades, and test different versions of software.</li>
+</ul>
+
+<p>
+The key idea that is easy to miss is: all posts are replicated to all cells.
+</p>
+
+<ul class="org-ul">
+<li>Each cell stores a single copy of all posts. Each cell can completely satisfy a Dashboard rendering request. Applications don't ask for all the post IDs and then ask for the posts for those IDs. It can return the dashboard content for the user. Every cell has all the data needed to fulfill a Dashboard request without doing any cross cell communication.</li>
+<li>Two HBase tables are used: one that stores a copy of each post. That data is small compared to the other table which stores every post ID for every user within that cell. The second table tells what the user's dashboard looks like which means they don't have to go fetch all the users a user is following. It also means across clients they'll know if you read a post and viewing a post on a different device won't mean you read the same content twice. With the inbox model state can be kept on what you've read.</li>
+<li>Posts are not put directly in the inbox because the size is too great. So the ID is put in the inbox and the post content is put in the cell just once. This model greatly reduces the storage needed while making it simple to return a time ordered view of an users inbox. The downside is each cell contains a complete copy of all posts. Surprisingly posts are smaller than the inbox mappings. Post growth per day is 50GB per cell, inbox grows at 2.7TB a day. Users consume more than they produce.</li>
+<li>A user's dashboard doesn't contain the text of a post, just post IDs, and the majority of the growth is in the IDs.</li>
+<li>As followers change, the design is safe because all posts are already in the cell. If only follower posts were stored in a cell then cell would be out of data as the followers changed and some sort of back fill process would be needed.</li>
+<li>An alternative design is to use a separate post cluster to store post text. The downside of this design is that if the cluster goes down it impacts the entire site. Using the cell design and post replication to all cells creates a very robust architecture.</li>
+</ul>
+
+<p>
+A user having millions of followers who are really active is handled by selectively <del>materializing</del> user feeds by their <del>access model</del> (see Feeding Frenzy).
+</p>
+
+<ul class="org-ul">
+<li>Different users have different access models and distribution models that are appropriate. Two different distribution modes: one for popular users and one for everyone else.</li>
+<li>Data is handled differently depending on the user type. Posts from active users wouldn't actually be published, posts would selectively materialized.</li>
+<li>Users who follow millions of users are treated similarly to users who have millions of followers.</li>
+</ul>
+
+<p>
+Cell size is hard to determine. The size of cell is the impact site of a failure. The number of users homed to a cell is the impact. There's a tradeoff to make in what they are willing to accept for the user experience and how much it will cost.
+</p>
+
+<p>
+Reading from the firehose is the biggest network issue. Within a cell the network traffic is manageable.
+</p>
+
+<p>
+As more cells are added, cells can be placed into a cell group that reads from the firehose and then replicates to all cells within the group. A <del>hierarchical replication</del> scheme. This will also aid in moving to multiple datacenters.
+</p>
+</div>
+</div>
+<div id="outline-container-orgb6f8729" class="outline-3">
+<h3 id="orgb6f8729"><span class="section-number-3">4.9</span> Team Structure</h3>
+<div class="outline-text-3" id="text-4-9">
+<p>
+Teams: infrastructure, platform, SRE (Site Reliability Engineer), product, web ops, service.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Infrastructure:</th>
+<th scope="col" class="org-left">Layer 5 and below. IP address and below, DNS, hardware provisioning.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Platform:</td>
+<td class="org-left">Core app development, SQL sharding, services, web operations.</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">SRE:</td>
+<td class="org-left">Sits between service team and web ops team.</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Focuses on more immediate needs in terms of reliability and scalability.</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Service:</td>
+<td class="org-left">Focuses on things slightly more strategic, that are one or two months out.</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Web ops:</td>
+<td class="org-left">Responsible for problem detection and response, and tuning.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-orga26ae93" class="outline-3">
+<h3 id="orga26ae93"><span class="section-number-3">4.10</span> Software Deployment</h3>
+<div class="outline-text-3" id="text-4-10">
+<p>
+Started with a set of rsync scripts that distributed the PHP application everywhere. Once the number of machines reached 200 the system started having problems, <span class="underline">deploys took a long time to finish and machines would be in various states of the deploy process</span>.
+</p>
+
+<p>
+The next phase built the deploy process (development, staging, production) into their service stack using <del>Capistrano</del>. Worked for services on dozens of machines, but by connecting via SSH it started failing again when deploying to hundreds of machines.
+</p>
+
+<p>
+Now a piece of coordination software runs on all machines. Based around <del>Func</del> from RedHat, a lightweight API for issuing commands to hosts. Scaling is built into Func.
+</p>
+
+<p>
+Build deployment is over Func by saying do X on a set of hosts, which avoids SSH. Say you want to deploy software on group A. The master reaches out to a set of nodes and runs the deploy command.
+</p>
+
+<p>
+The deploy command is implemented via Capistrano. It can do a git checkout or pull from the repository. Easy to scale because they are talking HTTP. They like Capistrano because it supports simple directory based versioning that works well with their PHP app. Moving towards versioned updates, where each directory contains a <del>SHA</del> so it's easy to check if a version is correct.
+</p>
+
+<p>
+The Func API is used to report back status, to say these machines have these software versions.
+</p>
+
+<p>
+Safe to restart any of their services because they'll drain off connections and then restart.
+</p>
+
+<p>
+All features run in dark mode before activation.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdc7f47e" class="outline-3">
+<h3 id="orgdc7f47e"><span class="section-number-3">4.11</span> Development</h3>
+<div class="outline-text-3" id="text-4-11">
+<p>
+Started with the philosophy that anyone could use any tool that they wanted, but as the team grew that didn't work. Onboarding new employees was very difficult, so they've standardized on a stack so they can get good with those, grow the team quickly, address production issues more quickly, and build up operations around them.
+</p>
+
+<p>
+Process is roughly Scrum like. Lightweight.
+</p>
+
+<p>
+Every developer has a preconfigured development machine. It gets updates via <del>Puppet</del>.
+</p>
+
+<p>
+Dev machines can roll changes, test, then roll out to staging, and then roll out to production.
+</p>
+
+<p>
+Developers use <del>vim</del> and Textmate.
+</p>
+
+<p>
+Testing is via code reviews for the PHP application.
+</p>
+
+<p>
+On the service side they've implemented a testing infrastructure with <del>commit hooks</del>, <del>Jenkins</del>, and continuous integration and build notifications. 
+</p>
+</div>
+</div>
+<div id="outline-container-orgdc55660" class="outline-3">
+<h3 id="orgdc55660"><span class="section-number-3">4.12</span> Hiring Process</h3>
+<div class="outline-text-3" id="text-4-12">
+<p>
+Interviews usually avoid math, puzzles, and brain teasers. Try to ask questions focused on work the candidate will actually do. Are they smart? Will they get stuff done? But measuring "gets things done" is difficult to assess. Goal is to find great people rather than keep people out.
+</p>
+
+<p>
+Focused on coding. They'll ask for sample code. During phone interviews they will use <del>Collabedit</del> to write shared code.
+</p>
+
+<p>
+Interviews are not confrontational, they just want to find the best people. Candidates get to use all their tools, like Google, during the interview. The idea is developers are at their best when they have tools so that's how they run the interviews.
+</p>
+
+<p>
+Challenge is finding people that have the scaling experience they require given Tumblr's traffic levels. Few companies in the world are working on the problems they are.
+</p>
+
+<ul class="org-ul">
+<li>Example, for a new ID generator they needed A JVM process to generate service responses in less the 1ms at a rate at 10k requests per second with a 500 MB RAM limit with High Availability. They found the <del>serial collector</del> gave the lowest latency for this particular work load. Spent a lot of time on JVM tuning.</li>
+</ul>
+
+<p>
+On the Tumblr Engineering Blog they've posted memorials giving their respects for the passing of Dennis Ritchie &amp; John McCarthy. It's a geeky culture.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8d41abb" class="outline-3">
+<h3 id="org8d41abb"><span class="section-number-3">4.13</span> Lessons Learned</h3>
+<div class="outline-text-3" id="text-4-13">
+<ul class="org-ul">
+<li>Automation everywhere.</li>
+<li>MySQL (plus sharding) scales, apps don't.</li>
+<li>Redis is amazing.</li>
+<li>Scala apps perform fantastically.</li>
+<li>Scrap projects when you aren't sure if they will work.</li>
+<li>Don't hire people based on their survival through a useless technological gauntlet. Hire them because they fit your team and can do the job.</li>
+<li>Select a stack that will help you hire the people you need.</li>
+<li>Build around the skills of your team.</li>
+<li>Read papers and blog posts. Key design ideas like the cell architecture and <del>selective materialization</del> were taken from elsewhere.</li>
+<li>Ask your peers. They talked to engineers from Facebook, Twitter, LinkedIn about their experiences and learned from them. You may not have access to this level, but reach out to somebody somewhere.</li>
+<li>Wade, don't jump into technologies. They took pains to learn HBase and Redis before putting them into production by using them in pilot projects or in roles where the damage would be limited.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org8d6dd1f" class="outline-2">
+<h2 id="org8d6dd1f"><span class="section-number-2">5</span> Web service 是什么？</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2009/08/what_is_web_service.html">Source</a>
+</p>
+
+<p>
+下一代互联网软件将建立在 Web service（也就是「云」）的基础上。
+</p>
+</div>
+
+<div id="outline-container-org5f4bd8a" class="outline-3">
+<h3 id="org5f4bd8a"><span class="section-number-3">5.1</span> Web service 的概念</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+想要理解 Web service，必须先理解什么是 service（服务）。
+</p>
+
+<p>
+传统上，我们把计算机后台程序（daemon）提供的功能，称为「服务」（service）。比如，一个杀毒软件在后台运行，它会自动监控系统，这种自动监控就是一个「服务」。通俗地说，「服务」就是计算机可以提供的某种功能。
+</p>
+
+<p>
+根据来源的不同，「服务」又可以分成两种：「本地服务」（使用同一台机器提供的服务，不需要网络），和「网络服务」（使用另一台计算机提供的服务，必须通过网络才能完成）。
+</p>
+
+<p>
+举例来说，现在有一批图片，需要把它们的大小缩小一半。把「缩放图片」看成是一种服务。可以使用「本地服务」，在自己计算机上用软件缩小图片，也可以使用「网络服务」，将图片上传到某个网站，让服务器缩小图片，完成后再通过网络送回。
+</p>
+
+<p>
+<span class="underline">Web Service 的本质，就是通过网络调用其他网站的资源。</span>
+</p>
+
+<p>
+举例来说，去年我写过一个「四川大地震图片墙」，它能动态显示关于四川地震的最新图片。但是，所有的图片都不是储存在我的服务器上，而是来自 Flickr。我只是发出一个动态请求，要求 Flickr 提供图片。这种情况下，Flickr 提供的就是一种 Web service。
+</p>
+
+<p>
+Web service 让你的网站可以使用其他网站的资源，比如在网页上显示天气、地图、Twitter 上的最新动态等等。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org830243d" class="outline-3">
+<h3 id="org830243d"><span class="section-number-3">5.2</span> Web service 架构和云</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+如果一个软件的主要部分采用了 Web service，即它把存储或计算环节「外包」给其他网站了，这个软件就属于 Web service 架构。
+</p>
+
+<p>
+<span class="underline">Web service 架构的基本思想，就是尽量把非核心功能交给其他服务去做，自己全力开发核心功能。</span> 总体上看，凡是不属于核心竞争力的功能，都应该「外包」出去。
+</p>
+
+<p>
+最近很红的「云计算」（cloud computing）或者「云服务」（cloud services），实际上是 Web service 的同义词，不过更形象一些罢了。它们不说把事情交给其他计算机去做，而说把事情交给「云」去做。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org205e5ba" class="outline-3">
+<h3 id="org205e5ba"><span class="section-number-3">5.3</span> 本地服务的缺陷</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+Web service 是未来软件开发和使用的趋势，本地服务将使用得越来越少，主要因为以下三个原因：
+</p>
+
+<ul class="org-ul">
+<li>本地资源不足。很多数据和资料，本地无法提供，只能向其他网站索取。</li>
+<li>成本因素。使用本地服务往往是不经济的，使用专业网站的服务更便宜。这里面涉及硬件和人员两部分，即使买得起硬件，专门找一个人管理系统，也是很麻烦的事。</li>
+<li>可移植性差。如果想把本机的服务移植到其他机器上，往往很困难，尤其是在跨平台的情况下。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org718a256" class="outline-3">
+<h3 id="org718a256"><span class="section-number-3">5.4</span> Web service 的优势</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+除了能克服本地服务的缺点以外，Web service 还有以下的优越性：
+</p>
+
+<ul class="org-ul">
+<li>平台无关。</li>
+<li>编程语言无关。只要遵守相关协议，就可以使用任意编程语言请求 Web service。大大增加了 Web service 的适用性，降低了对程序员的要求。</li>
+<li>对于 Web service 提供者来说，部署、升级和维护 Web service 都不需要考虑客户端兼容问题。</li>
+<li>对于 Web service 使用者来说，可以轻易实现多种数据、多种服务的 <span class="underline">聚合（mashup）</span> 。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org5a7ddff" class="outline-3">
+<h3 id="org5a7ddff"><span class="section-number-3">5.5</span> Web service 的发展趋势</h3>
+<div class="outline-text-3" id="text-5-5">
+<ul class="org-ul">
+<li>在使用方式上，RPC 和 SOAP 的使用在减少，Restful 架构占到了主导地位。</li>
+<li>在数据格式上，XML 格式的使用在减少，JSON 等轻量级格式的使用在增多。</li>
+<li>在设计架构上，越来越多的第三方软件让用户在客户端（即浏览器），直接与云端对话，不再使用第三方的服务器进行中转或处理数据。</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org0cc23cc" class="outline-2">
+<h2 id="org0cc23cc"><span class="section-number-2">6</span> Scalability for Dummies</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+<a href="http://www.lecloud.net/tagged/scalability">Source</a>
+</p>
+</div>
+
+<div id="outline-container-orgffdca38" class="outline-3">
+<h3 id="orgffdca38"><span class="section-number-3">6.1</span> Part 1: Clones</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+Public servers of a scalable web service are hidden behind a load balancer. This load balancer evenly distributes load (requests from users) onto a group/cluster of application servers.
+</p>
+
+<p>
+User should always get the same results of his request back, independent what server he "landed on". That leads to the first golden rule for scalability: <span class="underline">every server contains exactly the same codebase and does not store any user-related data,</span> like sessions or profile pictures, on local disc or memory. 
+</p>
+
+<p>
+<span class="underline">User data needs to be stored in a centralized data store which is accessible to all application servers.</span> It can be an external database or an external persistent cache, like Redis. An external persistent cache will have better performance than an external database. The data store does not reside on the application servers. Instead, it is somewhere in or near the data center of the application servers. 
+</p>
+
+<p>
+But what about deployment? How can you make sure that a code change is sent to all your servers without one server still serving old code? This tricky problem is fortunately already solved by the great tool <span class="underline">Capistrano</span>.
+</p>
+
+<p>
+Create an image file from one of these servers. AWS calls this AMI - Amazon Machine Image. Use this AMI as a "super-clone" that all new instances are based upon. For a new instance, just do an initial deployment of latest code and it is ready.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgba440c3" class="outline-3">
+<h3 id="orgba440c3"><span class="section-number-3">6.2</span> Part 2: Database</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+Servers can now horizontally scale and serve thousands of concurrent requests. But somewhere down the road the application gets slower and finally breaks down. The reason: database. You can choose from two paths:
+</p>
+
+<p>
+Path 1 is to stick with MySQL. Hire a DBA to do master-slave replication (read from slaves, write to master) and upgrade master server by adding more RAM. In some months, the DBA will come up with words like "sharding", "denormalization" and "SQL tuning". At that point every new action to keep the database running will be more expensive and time consuming than the previous one.
+</p>
+
+<p>
+Path 2 is to <span class="underline">denormalize right from the beginning and include no more <code>join</code> in any database query.</span> You can stay with MySQL, and use it like a NoSQL database, or you can switch to a better and easier to scale NoSQL database like MongoDB or CouchDB. <span class="underline">Joins will now need to be done in application code.</span>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1dc0217" class="outline-3">
+<h3 id="org1dc0217"><span class="section-number-3">6.3</span> Part 3: Cache</h3>
+<div class="outline-text-3" id="text-6-3">
+<p>
+With a scalable database solution, you have no fear of storing terabytes. But users still have to suffer slow page requests when a lot of data is fetched from the database. The solution is the implementation of a cache.
+</p>
+
+<p>
+With "cache" I always mean <span class="underline">in-memory caches like Memcached or Redis. Never do file-based caching, it makes cloning and auto-scaling of your servers just a pain.</span>
+</p>
+
+<p>
+A cache is a simple key-value store and it should reside as a buffering layer between application and data storage. Whenever the application has to read data it should at first try to retrieve the data from cache.
+</p>
+
+<p>
+There are two patterns of caching data:
+</p>
+</div>
+
+<div id="outline-container-org3eacbd1" class="outline-4">
+<h4 id="org3eacbd1"><span class="section-number-4">6.3.1</span> Pattern 1: Cached Database Queries</h4>
+<div class="outline-text-4" id="text-6-3-1">
+<p>
+Whenever you do a query to database, store the result dataset in cache. A hashed version of the query is the cache key. The next time you run the query, first check if it is already in the cache. This pattern has several issues. The main issue is the expiration. <span class="underline">It is hard to delete a cached result when you cache a complex query. When one piece of data changes, you need to delete all cached queries who may include that table cell.</span>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgee4e5c6" class="outline-4">
+<h4 id="orgee4e5c6"><span class="section-number-4">6.3.2</span> Pattern 2: Cached Objects</h4>
+<div class="outline-text-4" id="text-6-3-2">
+<p>
+In general, see data as an object like in code (classes, instances, etc.). Let the class assemble a dataset from database and then store the complete instance of the class or the assembled dataset in the cache. <span class="underline">When the class has finished the "assembling" of its internal data, directly store the data array or the complete instance of the class in the cache.</span>
+</p>
+
+<p>
+It makes asynchronous processing possible. Imagine an army of <span class="underline">worker servers who assemble the objects. The application just consumes the latest cached objects</span> and nearly never touches the databases anymore.
+</p>
+
+<p>
+In general, I am more a friend of Redis than Memcached, because I love the extra database-features of Redis like persistence and the built-in data structures like lists and sets. But if you just need to cache, take Memcached, because it scales like a charm.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8a23726" class="outline-3">
+<h3 id="org8a23726"><span class="section-number-3">6.4</span> Part 4: Asynchronism</h3>
+<div class="outline-text-3" id="text-6-4">
+<p>
+Imagine that you want to buy bread at a bakery. But there is no bread at the moment, instead you are asked to come back in 2 hours. To avoid such a "please wait" situation, asynchronism needs to be done. In general, there are two paradigms:
+</p>
+</div>
+
+<div id="outline-container-orge2f73be" class="outline-4">
+<h4 id="orge2f73be"><span class="section-number-4">6.4.1</span> Paradigm 1</h4>
+<div class="outline-text-4" id="text-6-4-1">
+<p>
+The first way of async processing is "bake the breads at night and sell them in the morning". Referring to a web app this means <span class="underline">doing the time-consuming work in advance</span> and serving the finished work with a low request time.
+</p>
+
+<p>
+Very often this paradigm is used to turn dynamic content into static content. Pages of a website, maybe built with a massive framework or CMS, are pre-rendered and locally stored as static HTML files on every change. Often these computing tasks are done on a regular basis, maybe by a script which is called every hour by a cronjob. The website could upload these pre-rendered HTML pages to AWS S3 or Cloudfront or another CDN to become even more responsive.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge4c7ea0" class="outline-4">
+<h4 id="orge4c7ea0"><span class="section-number-4">6.4.2</span> Paradigm 2</h4>
+<div class="outline-text-4" id="text-6-4-2">
+<p>
+Back to the bakery. Sometimes customers has special requests like a birthday cake with "Happy Birthday, Steve!" on it. The bakery can not foresee these kind of customer wishes, so it must start the task when the customer is in the bakery and tell him to come back at the next day.
+</p>
+
+<p>
+Refering to a web service, this would mean a user comes to the website and starts a very computing intensive task which would take several minutes to finish. <span class="underline">The frontend sends a job onto a job queue and immediately signals back to the user. The job queue is constantly checked by workers. If there is a new job then the worker does the job and sends a signal that the job was done.</span>
+</p>
+
+<p>
+<span class="underline">RabbitMQ</span> is one of many systems which help to implement async processing. You could also use ActiveMQ or a simple Redis list.
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2019-04-06 Sat 19:22</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

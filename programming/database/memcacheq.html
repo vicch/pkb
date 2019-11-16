@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>MemcacheQ</title>
+<!-- 2016-06-16 Thu 15:44 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">MemcacheQ</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. 安装</a></li>
+<li><a href="#sec-2">2. 命令行</a>
+<ul>
+<li><a href="#sec-2-1">2.1. 运行</a></li>
+<li><a href="#sec-2-2">2.2. 操作</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. 资源</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 安装</h2>
+<div class="outline-text-2" id="text-1">
+<div class="org-src-container">
+<label class="org-src-name">安装 libevent</label>
+<pre class="src src-sh">wget https://sourceforge.net/projects/levent/files/libevent/libevent-2.0/libevent-2.0.22-stable.tar.gz
+tar -xvzf libevent-2.0.22-stable.tar.gz
+<span class="org-builtin">cd</span> libevent-2.0.22-stable
+./configure
+make
+make install
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">安装 BerkeleyDB</label>
+<pre class="src src-sh">wget http://fossies.org/linux/misc/db-6.1.23.tar.gz
+tar -xvzf db-6.1.23.tar.gz
+<span class="org-builtin">cd</span> db-6.1.23/build_unix
+../dist/configure
+make
+make install
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">配置动态链接库查找路径</label>
+<pre class="src src-sh">vim /etc/ld.so.conf
+<span class="org-comment-delimiter">## </span><span class="org-comment">&#28155;&#21152;&#20004;&#34892;</span>
+/usr/local/lib
+/usr/local/BerkeleyDB.6.1/lib
+<span class="org-comment-delimiter">## </span><span class="org-comment">&#36816;&#34892; ldconfig</span>
+ldconfig
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">安装 memcacheq</label>
+<pre class="src src-sh">wget https://memcacheq.googlecode.com/files/memcacheq-0.2.0.tar.gz
+tar -xvzf memcacheq-0.2.0.tar.gz
+<span class="org-builtin">cd</span> memcacheq-0.2.0
+./configure --with-bdb=/usr/local/BerkeleyDB.6.1 --with-libevent=/usr/local/lib --enable-threads
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">运行 memcacheq</label>
+<pre class="src src-sh">mkdir /var/mcq/data
+mkdir /var/mcq/logs
+memcacheq -d -l 192.168.0.105 -r -H /var/mcq/data -N -R -v -L 1024 -B 1024 &gt; /var/mcq/logs/memcacheq.log 2&gt;&amp;1
+
+<span class="org-comment-delimiter">## </span><span class="org-comment">&#26597;&#30475;&#31471;&#21475;</span>
+netstat -tlnp
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">连接测试</label>
+<pre class="src src-sh">telnet 192.168.0.105 22201
+<span class="org-builtin">set</span> ...
+get ...
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 命令行</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 运行</h3>
+<div class="outline-text-3" id="text-2-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">memcacheq &lt;options&gt;
+    -p &lt;port&gt;  <span class="org-comment-delimiter"># </span><span class="org-comment">TCP</span>
+    -U &lt;port&gt;  <span class="org-comment-delimiter"># </span><span class="org-comment">UDP</span>
+    -d         <span class="org-comment-delimiter"># </span><span class="org-comment">daemon</span>
+    -r         <span class="org-comment-delimiter"># </span><span class="org-comment">&#26368;&#22823;&#21270;&#26680;&#24515;&#25991;&#20214;&#38480;&#21046;</span>
+    -u &lt;user&gt;  <span class="org-comment-delimiter"># </span><span class="org-comment">root &#36523;&#20221;&#36816;&#34892;&#26102;</span>
+    -c &lt;num&gt;   <span class="org-comment-delimiter"># </span><span class="org-comment">&#26368;&#22823;&#36830;&#25509;&#25968;&#65292;&#40664;&#35748; 1024</span>
+    -v         <span class="org-comment-delimiter"># </span><span class="org-comment">verbose</span>
+
+    -m &lt;mbyte&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#20869;&#23384;&#20013;&#32531;&#23384;&#22823;&#23567;&#65292;&#40664;&#35748; 64</span>
+    -A &lt;byte&gt;  <span class="org-comment-delimiter"># </span><span class="org-comment">&#20998;&#39029;&#22823;&#23567;&#65292;&#40664;&#35748; 4096</span>
+    -B &lt;byte&gt;  <span class="org-comment-delimiter"># </span><span class="org-comment">&#20449;&#24687;&#38271;&#24230;&#65292;&#40664;&#35748; 1024</span>
+    -H &lt;path&gt;  <span class="org-comment-delimiter"># </span><span class="org-comment">&#25968;&#25454;&#24211; home &#30446;&#24405;&#65292;&#40664;&#35748; /data1/memcacheq</span>
+    -T &lt;sec&gt;   <span class="org-comment-delimiter"># </span><span class="org-comment">&#36816;&#34892; memp_trickle &#26102;&#38388;&#38388;&#38548;&#65292;&#40664;&#35748; 30&#65292;0 &#34920;&#31034;&#20851;&#38381;</span>
+    -L &lt;kbyte&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#26085;&#24535;&#32531;&#20914;&#22823;&#23567;&#65292;&#40664;&#35748; 32</span>
+    -R         <span class="org-comment-delimiter"># </span><span class="org-comment">&#33258;&#21160;&#28165;&#38500;&#36807;&#26399;&#26085;&#24535;</span>
+    -N         <span class="org-comment-delimiter"># </span><span class="org-comment">&#28608;&#27963; DB_TXN_NOSYN &#25552;&#21319;&#24615;&#33021;</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例（微博等级队列）</label>
+<pre class="src src-sh">memcacheq -drNvR -uroot -A8192 -B4096 -L1024 -m64 -c8000 -T16 -H/data2/mcq/6825 -p6825
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> 操作</h3>
+<div class="outline-text-3" id="text-2-2">
+<div class="org-src-container">
+<label class="org-src-name">写入</label>
+<pre class="src src-sh"><span class="org-builtin">set</span> &lt;queue&gt; &lt;flags&gt; 0 &lt;msg_len&gt;
+&lt;msg_body&gt;
+
+<span class="org-comment-delimiter">## </span><span class="org-comment">output</span>
+STORED
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">读取</label>
+<pre class="src src-sh">get &lt;queue&gt;
+
+<span class="org-comment-delimiter">## </span><span class="org-comment">output</span>
+VALUE &lt;queue&gt; &lt;flags&gt; &lt;msg_len&gt;
+&lt;msg_body&gt;
+END
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">删除队列</label>
+<pre class="src src-sh">delete &lt;queue&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">查看所有队列状态</label>
+<pre class="src src-sh">stats queue
+
+<span class="org-comment-delimiter">## </span><span class="org-comment">output</span>
+STAT &lt;queue&gt; &lt;all_msg_cnt&gt;/&lt;consumed_msg_cnt&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">查看当前队列中消息数量</label>
+<pre class="src src-sh">db_stat
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 资源</h2>
+<div class="outline-text-2" id="text-3">
+<ol class="org-ol">
+<li><a href="http://memcachedb.org/memcacheq/">MemcacheQ - Simple Queue Service over Memcache</a>
+</li>
+<li><a href="http://blog.xiayf.cn/2013/04/27/compile-and-install-memcacheq/">编译安装 MemcacheQ</a>
+</li>
+<li><a href="http://haoyun.blog.51cto.com/2038762/1133345">MemcacheQ 的安装、配置、使用</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2016-06-16 Thu 15:44</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

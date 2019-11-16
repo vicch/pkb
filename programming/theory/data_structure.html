@@ -1,0 +1,2508 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Data Structure</title>
+<!-- 2017-02-23 Thu 10:57 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
+
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Data Structure</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. 数据结构</a>
+<ul>
+<li><a href="#sec-1-1">1.1. 比较</a></li>
+<li><a href="#sec-1-2">1.2. 选择</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. 数据类型</a></li>
+<li><a href="#sec-3">3. 数组</a></li>
+<li><a href="#sec-4">4. 链表</a>
+<ul>
+<li><a href="#sec-4-1">4.1. 单向链表 C 实现</a>
+<ul>
+<li><a href="#sec-4-1-1">4.1.1. <code>list.h</code></a></li>
+<li><a href="#sec-4-1-2">4.1.2. <code>list.c</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-4-2">4.2. 双向链表 C 实现</a>
+<ul>
+<li><a href="#sec-4-2-1">4.2.1. <code>dlist.h</code></a></li>
+<li><a href="#sec-4-2-2">4.2.2. <code>dlist.c</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-4-3">4.3. 循环链表 C 实现</a>
+<ul>
+<li><a href="#sec-4-3-1">4.3.1. <code>clist.h</code></a></li>
+<li><a href="#sec-4-3-2">4.3.2. <code>clist.c</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-4-4">4.4. 栈 C 实现（单向链表）</a>
+<ul>
+<li><a href="#sec-4-4-1">4.4.1. <code>stack.h</code></a></li>
+<li><a href="#sec-4-4-2">4.4.2. <code>stack.c</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-4-5">4.5. 队列 C 实现（单向链表）</a>
+<ul>
+<li><a href="#sec-4-5-1">4.5.1. <code>queue.h</code></a></li>
+<li><a href="#sec-4-5-2">4.5.2. <code>queue.c</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-5">5. 集合</a>
+<ul>
+<li><a href="#sec-5-1">5.1. 集合 C 实现</a>
+<ul>
+<li><a href="#sec-5-1-1">5.1.1. <code>set.h</code></a></li>
+<li><a href="#sec-5-1-2">5.1.2. <code>set.c</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-6">6. 哈希表</a>
+<ul>
+<li><a href="#sec-6-1">6.1. 哈希方法</a></li>
+<li><a href="#sec-6-2">6.2. 冲突</a></li>
+<li><a href="#sec-6-3">6.3. 链式哈希表 C 实现</a>
+<ul>
+<li><a href="#sec-6-3-1">6.3.1. <code>chtbl.h</code></a></li>
+<li><a href="#sec-6-3-2">6.3.2. <code>chtbl.c</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-7">7. 树</a>
+<ul>
+<li><a href="#sec-7-1">7.1. 遍历</a></li>
+<li><a href="#sec-7-2">7.2. B- 树</a></li>
+</ul>
+</li>
+<li><a href="#sec-8">8. 堆</a></li>
+<li><a href="#sec-9">9. 图</a></li>
+<li><a href="#sec-10">10. 链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 数据结构</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> 比较</h3>
+<div class="outline-text-3" id="text-1-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">优点</th>
+<th scope="col" class="left">缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">无序数组</td>
+<td class="left">插入快；如果知道下标，可以快速存取</td>
+<td class="left">查找、删除慢；大小固定</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">有序数组</td>
+<td class="left">查找快</td>
+<td class="left">插入、删除慢；大小固定</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">链表</td>
+<td class="left">插入、删除快</td>
+<td class="left">查找慢</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">二叉树</td>
+<td class="left">插入、删除、查找快（如果树保持平衡）</td>
+<td class="left">删除算法复杂</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">红黑树</td>
+<td class="left">插入、删除、查找快；树总是平衡的</td>
+<td class="left">算法复杂</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">2-3-4 树</td>
+<td class="left">插入、删除、查找快；树总是平衡的</td>
+<td class="left">算法复杂</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">哈希表</td>
+<td class="left">插入、查找快（通过键查值）</td>
+<td class="left">删除慢；对存储空间使用不充分</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">栈</td>
+<td class="left">先进后出的方式</td>
+<td class="left">除了栈顶，存取其他元素慢</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">队列</td>
+<td class="left">先进先出的方式</td>
+<td class="left">除了队列首尾，存取其他元素慢</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">堆</td>
+<td class="left">插入、删除快；查找最大（小）元素快</td>
+<td class="left">查找其他元素慢</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">图</td>
+<td class="left">对现实世界建模</td>
+<td class="left">某些算法慢且复杂</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left"><b>平均访问</b></th>
+<th scope="col" class="left"><b>最差访问</b></th>
+<th scope="col" class="left"><b>平均搜索</b></th>
+<th scope="col" class="left"><b>最差搜索</b></th>
+<th scope="col" class="left"><b>平均插入删除</b></th>
+<th scope="col" class="left"><b>最差插入删除</b></th>
+<th scope="col" class="left"><b>空间</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Array_data_structure">Array</a></td>
+<td class="left">$O(1)$</td>
+<td class="left">同</td>
+<td class="left">$O(n)$</td>
+<td class="left">同</td>
+<td class="left">$O(n)$</td>
+<td class="left">同</td>
+<td class="left">$O(n)$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Stack_(abstract_data_type)">Stack</a></td>
+<td class="left">$O(n)$</td>
+<td class="left">同</td>
+<td class="left">$O(n)$</td>
+<td class="left">同</td>
+<td class="left">$O(1)$</td>
+<td class="left">同</td>
+<td class="left">$O(n)$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Singly_linked_list#Singly_linked_lists">Single-Linked List</a></td>
+<td class="left">$O(n)$</td>
+<td class="left">同</td>
+<td class="left">$O(n)$</td>
+<td class="left">同</td>
+<td class="left">$O(1)$</td>
+<td class="left">同</td>
+<td class="left">$O(n)$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Doubly_linked_list">Double-Linked List</a></td>
+<td class="left">$O(n)$</td>
+<td class="left">同</td>
+<td class="left">$O(n)$</td>
+<td class="left">同</td>
+<td class="left">$O(1)$</td>
+<td class="left">同</td>
+<td class="left">$O(n)$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Skip_list">Skip List</a></td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">$O(n)$</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">$O(n)$</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">$O(n)$</td>
+<td class="left">$O(n\log{n})$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Binary_search_tree">Binary Search Tree</a></td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">$O(n)$</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">$O(n)$</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">$O(n)$</td>
+<td class="left">$O(n)$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/B_tree">B Tree</a></td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">同</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">同</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">同</td>
+<td class="left">$O(n)$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Red-black_tree">Red-Black Tree</a></td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">同</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">同</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">同</td>
+<td class="left">$O(n)$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/AVL_tree">AVL Tree</a></td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">同</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">同</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">同</td>
+<td class="left">$O(n)$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="https://en.wikipedia.org/wiki/Splay_tree">Splay Tree</a></td>
+<td class="left">-</td>
+<td class="left">-</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">同</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">同</td>
+<td class="left">$O(n)$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="https://en.wikipedia.org/wiki/Cartesian_tree">Cartesian Tree</a></td>
+<td class="left">-</td>
+<td class="left">-</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">$O(n)$</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">$O(n)$</td>
+<td class="left">$O(n)$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Hash_table">Hash Table</a></td>
+<td class="left">-</td>
+<td class="left">-</td>
+<td class="left">$O(1)$</td>
+<td class="left">$O(n)$</td>
+<td class="left">$O(1)$</td>
+<td class="left">$O(n)$</td>
+<td class="left">$O(n)$</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> 选择</h3>
+<div class="outline-text-3" id="text-1-2">
+
+<div class="figure">
+<p><img src="../images/data_structure/01.png" alt="01.png" />
+</p>
+</div>
+
+<p>
+只有简单数据结构（数组、链表）的性能太差时，才需要使用复杂的数据结构。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 数据类型</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+从结构上看，所有的数据最终都可以分解成三种类型：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>标量（scalar）</b></th>
+<th scope="col" class="left">一个单独的字符串（string）或数字（number）。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>序列（sequence）</b></td>
+<td class="left">若干相关的数据按照一定顺序并列在一起。</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">又称数组（array）或列表（list）。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>映射（mapping）</b></td>
+<td class="left">一组键值对（key/value），即每个数据有名称和与之对应的值。</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">又称散列（hash）或字典（dictionary）。</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>Primitive types</b></th>
+<th scope="col" class="left">Boolean</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">Character</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">Integer</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">Floating-point</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">Enumerated</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>Composite types</b></td>
+<td class="left">Array</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">Record, tuple, struct</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">Union, tagged union</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">Variant</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>Abstract types</b></td>
+<td class="left">List</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">Associative array</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">Stack, queue</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">Tree, graph</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">Set, multiset</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">Container</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 数组</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+一组相同类型数据的集合，存储空间相邻，可通过索引访问。
+</p>
+
+<hr  />
+<p>
+<b>空间</b>
+</p>
+
+<p>
+适合数据量较小的场合，且大小事先可预测（存储空间足够大的情况下不重要）。
+</p>
+
+<p>
+数组和计算机的存储器系统有直接的对应关系。 <br /> 
+可以把整个计算机存储器想象成一个数组，存储器的地址和数组的索引相对应。
+</p>
+
+<hr  />
+<p>
+<b>时间</b>
+</p>
+
+<p>
+可以假设，数组访问可以用仅仅几条机器指令完成。
+</p>
+
+<hr  />
+<p>
+<b>使用</b>
+</p>
+
+<p>
+在引用数组元素时，需要确保：
+</p>
+<ul class="org-ul">
+<li>索引非负数且小于数组实际大小，
+</li>
+<li>在元素的空间里存储了有效的内容。
+</li>
+</ul>
+
+<p>
+指向数组的指针意义重大，当作为参数传递给一个函数时，无需为整个数组创造一份拷贝，就可以访问其中的对象。 <br /> 
+在使用大型数组时这种能力尤其重要。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 链表</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+一组数据项的集合，每个元素都含有访问下一个元素所需的信息。
+</p>
+
+<p>
+适合频繁地插入、删除元素的场合。
+</p>
+
+<p>
+相对于数组：
+</p>
+<ul class="org-ul">
+<li>可以迅速重新安排元素次序，
+</li>
+<li>不能迅速访问任意一个指定元素。
+</li>
+</ul>
+
+<p>
+当今的计算机硬件对内存是否连续更为敏感，而链表恰恰会破坏这种顺序读取。
+</p>
+</div>
+
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> 单向链表 C 实现</h3>
+<div class="outline-text-3" id="text-4-1">
+</div><div id="outline-container-sec-4-1-1" class="outline-4">
+<h4 id="sec-4-1-1"><span class="section-number-4">4.1.1</span> <code>list.h</code></h4>
+<div class="outline-text-4" id="text-4-1-1">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-preprocessor">#if</span><span class="org-negation-char"><span class="org-preprocessor">n</span></span><span class="org-preprocessor">def</span> LIST_H
+
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">LIST_H</span>
+
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdlib.h&gt;</span>
+
+<span class="org-comment-delimiter">/* </span><span class="org-comment">&#38142;&#34920;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+<span class="org-keyword">typedef</span> <span class="org-keyword">struct</span> <span class="org-type">ListElmt_</span> {
+    <span class="org-type">void</span>             *<span class="org-variable-name">data</span>;
+    <span class="org-keyword">struct</span> <span class="org-type">ListElmt_</span> *<span class="org-variable-name">next</span>;
+} <span class="org-type">ListElmt</span>;
+
+<span class="org-comment-delimiter">/* </span><span class="org-comment">&#38142;&#34920; </span><span class="org-comment-delimiter">*/</span>
+<span class="org-keyword">typedef</span> <span class="org-keyword">struct</span> <span class="org-type">List_</span> {
+    <span class="org-type">int</span>      <span class="org-variable-name">size</span>;
+    <span class="org-type">int</span>      (*<span class="org-function-name">match</span>)(<span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">key1</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">key2</span>);
+    <span class="org-type">void</span>     (*<span class="org-function-name">destroy</span>)(<span class="org-type">void</span> *<span class="org-variable-name">data</span>);
+    <span class="org-type">ListElmt</span> *<span class="org-variable-name">head</span>;
+    <span class="org-type">ListElmt</span> *<span class="org-variable-name">tail</span>;
+} <span class="org-type">List</span>;
+
+<span class="org-type">void</span> <span class="org-function-name">list_init</span>(<span class="org-type">List</span> *<span class="org-variable-name">list</span>, <span class="org-type">void</span> (*<span class="org-variable-name">destroy</span>)(<span class="org-type">void</span> *<span class="org-variable-name">data</span>));
+<span class="org-type">void</span> <span class="org-function-name">list_destroy</span>(<span class="org-type">List</span> *<span class="org-variable-name">list</span>);
+<span class="org-type">int</span> <span class="org-function-name">list_ins_next</span>(<span class="org-type">List</span> *<span class="org-variable-name">list</span>, <span class="org-type">ListElmt</span> *<span class="org-variable-name">element</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">data</span>);
+<span class="org-type">int</span> <span class="org-function-name">list_rem_next</span>(<span class="org-type">List</span> *<span class="org-variable-name">list</span>, <span class="org-type">ListElmt</span> *<span class="org-variable-name">element</span>, <span class="org-type">void</span> **<span class="org-variable-name">data</span>);
+
+<span class="org-preprocessor">#define</span> <span class="org-function-name">list_size</span>(<span class="org-variable-name">list</span>) ((list)-&gt;size)
+<span class="org-preprocessor">#define</span> <span class="org-function-name">list_head</span>(<span class="org-variable-name">list</span>) ((list)-&gt;head)
+<span class="org-preprocessor">#define</span> <span class="org-function-name">list_tail</span>(<span class="org-variable-name">list</span>) ((list)-&gt;tail)
+<span class="org-preprocessor">#define</span> <span class="org-function-name">list_is_head</span>(<span class="org-variable-name">list</span>, <span class="org-variable-name">element</span>) ((element) == (list)-&gt;head ? 1 : 0)
+<span class="org-preprocessor">#define</span> <span class="org-function-name">list_is_tail</span>(<span class="org-variable-name">element</span>) ((element)-&gt;next == <span class="org-constant">NULL</span> ? 1 : 0)
+<span class="org-preprocessor">#define</span> <span class="org-function-name">list_data</span>(<span class="org-variable-name">element</span>) ((element)-&gt;data)
+<span class="org-preprocessor">#define</span> <span class="org-function-name">list_next</span>(<span class="org-variable-name">element</span>) ((element)-&gt;next)
+
+<span class="org-preprocessor">#endif</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-1-2" class="outline-4">
+<h4 id="sec-4-1-2"><span class="section-number-4">4.1.2</span> <code>list.c</code></h4>
+<div class="outline-text-4" id="text-4-1-2">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdlib.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;string.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">"list.h"</span>
+</pre>
+</div>
+</div>
+
+<ol class="org-ol"><li>初始化<br  /><div class="outline-text-5" id="text-4-1-2-1">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">void</span> <span class="org-function-name">list_init</span>(<span class="org-type">List</span> *<span class="org-variable-name">list</span>, <span class="org-type">void</span> (*<span class="org-variable-name">destroy</span>)(<span class="org-type">void</span> *<span class="org-variable-name">data</span>))
+{
+    list-&gt;size = 0;
+    list-&gt;destroy = destroy;
+    list-&gt;head = <span class="org-constant">NULL</span>;
+    list-&gt;tail = <span class="org-constant">NULL</span>;
+
+    <span class="org-keyword">return</span>;
+}
+</pre>
+</div>
+</div>
+</li>
+<li>销毁<br  /><div class="outline-text-5" id="text-4-1-2-2">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">void</span> <span class="org-function-name">list_destroy</span>(<span class="org-type">List</span> *<span class="org-variable-name">list</span>)
+{
+    <span class="org-type">void</span> *<span class="org-variable-name">data</span>;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#36941;&#21382;&#20803;&#32032;&#24182;&#38144;&#27585; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">while</span> (list_size(list) &gt; 0) {
+        <span class="org-keyword">if</span> (list_rem_next(list, <span class="org-constant">NULL</span>, (<span class="org-type">void</span> **)&amp;data) == 0 &amp;&amp; list-&gt;destroy != <span class="org-constant">NULL</span>) {
+            <span class="org-comment-delimiter">/* </span><span class="org-comment">&#35843;&#29992;&#33258;&#23450;&#20041;&#20989;&#25968;&#37322;&#25918;&#21160;&#24577;&#20998;&#37197;&#25968;&#25454; </span><span class="org-comment-delimiter">*/</span>
+            list-&gt;destroy(data);
+        }
+    }
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#28165;&#31354;&#32467;&#26500; </span><span class="org-comment-delimiter">*/</span>
+    memset(list, 0, <span class="org-keyword">sizeof</span>(List));
+
+    <span class="org-keyword">return</span>;
+}
+</pre>
+</div>
+</div>
+</li>
+<li>插入元素<br  /><div class="outline-text-5" id="text-4-1-2-3">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-comment-delimiter">/* </span><span class="org-comment">&#22312;&#25351;&#23450;&#20803;&#32032;&#21518;&#25554;&#20837;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+<span class="org-type">int</span> <span class="org-function-name">list_ins_next</span>(<span class="org-type">List</span> *<span class="org-variable-name">list</span>, <span class="org-type">ListElmt</span> *<span class="org-variable-name">element</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">data</span>)
+{
+    <span class="org-type">ListElmt</span> *<span class="org-variable-name">new_element</span>;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#20998;&#37197;&#31354;&#38388; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">if</span> ((new_element = (<span class="org-type">ListElmt</span> *)malloc(<span class="org-keyword">sizeof</span>(ListElmt))) == <span class="org-constant">NULL</span>)
+        <span class="org-keyword">return</span> -1;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#25554;&#20837;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+    new_element-&gt;data = (<span class="org-type">void</span> *)data;
+
+    <span class="org-keyword">if</span> (element == <span class="org-constant">NULL</span>) {
+        <span class="org-comment-delimiter">/* </span><span class="org-comment">&#22836;&#37096;&#25554;&#20837; </span><span class="org-comment-delimiter">*/</span>
+        <span class="org-keyword">if</span> (list_size(list) == 0)
+            list-&gt;tail = new_element;
+        new_element-&gt;next = list-&gt;head;
+        list-&gt;head = new_element;
+    } <span class="org-keyword">else</span> {
+        <span class="org-comment-delimiter">/* </span><span class="org-comment">&#38750;&#22836;&#37096;&#25554;&#20837; </span><span class="org-comment-delimiter">*/</span>
+        <span class="org-keyword">if</span> (element-&gt;next == <span class="org-constant">NULL</span>)
+            list-&gt;tail = new_element;
+        new_element-&gt;next = element-&gt;next;
+        element-&gt;next = new_element;
+    }
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#20803;&#32032;&#20010;&#25968;&#22686;&#21152; </span><span class="org-comment-delimiter">*/</span>
+    list-&gt;size++;
+
+    <span class="org-keyword">return</span> 0;
+}
+</pre>
+</div>
+</div>
+</li>
+<li>删除元素<br  /><div class="outline-text-5" id="text-4-1-2-4">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-comment-delimiter">/* </span><span class="org-comment">&#21024;&#38500;&#25351;&#23450;&#20803;&#32032;&#21518;&#30340;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+<span class="org-type">int</span> <span class="org-function-name">list_rem_next</span>(<span class="org-type">List</span> *<span class="org-variable-name">list</span>, <span class="org-type">ListElmt</span> *<span class="org-variable-name">element</span>, <span class="org-type">void</span> **<span class="org-variable-name">data</span>)
+{
+    <span class="org-type">ListElmt</span> *<span class="org-variable-name">old_element</span>;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#26816;&#26597;&#38142;&#34920;&#26159;&#21542;&#20026;&#31354; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">if</span> (list_size(list) == 0)
+        <span class="org-keyword">return</span> -1;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#31227;&#38500;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">if</span> (element == <span class="org-constant">NULL</span>) {
+        <span class="org-comment-delimiter">/* </span><span class="org-comment">&#22836;&#37096;&#31227;&#38500; </span><span class="org-comment-delimiter">*/</span>
+        *data = list-&gt;head-&gt;data;
+        old_element = list-&gt;head;
+        list-&gt;head = list-&gt;head-&gt;next;
+        <span class="org-keyword">if</span> (list_size(list) == 1)
+            list-&gt;tail = <span class="org-constant">NULL</span>;
+
+    } <span class="org-keyword">else</span> {
+        <span class="org-comment-delimiter">/* </span><span class="org-comment">&#38750;&#22836;&#37096;&#31227;&#38500; </span><span class="org-comment-delimiter">*/</span>
+        <span class="org-keyword">if</span> (element-&gt;next == <span class="org-constant">NULL</span>)
+            <span class="org-keyword">return</span> -1;
+        *data = element-&gt;next-&gt;data;
+        old_element = element-&gt;next;
+        element-&gt;next = element-&gt;next-&gt;next;
+        <span class="org-keyword">if</span> (element-&gt;next == <span class="org-constant">NULL</span>)
+            list-&gt;tail = element;
+    }
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#37322;&#25918;&#31354;&#38388; </span><span class="org-comment-delimiter">*/</span>
+    free(old_element);
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#20803;&#32032;&#20010;&#25968;&#20943;&#23569; </span><span class="org-comment-delimiter">*/</span>
+    list-&gt;size--;
+
+    <span class="org-keyword">return</span> 0;
+}
+</pre>
+</div>
+</div>
+</li></ol>
+</div>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> 双向链表 C 实现</h3>
+<div class="outline-text-3" id="text-4-2">
+</div><div id="outline-container-sec-4-2-1" class="outline-4">
+<h4 id="sec-4-2-1"><span class="section-number-4">4.2.1</span> <code>dlist.h</code></h4>
+<div class="outline-text-4" id="text-4-2-1">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-preprocessor">#if</span><span class="org-negation-char"><span class="org-preprocessor">n</span></span><span class="org-preprocessor">def</span> DLIST_H
+
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">DLIST_H</span>
+
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdlib.h&gt;</span>
+
+<span class="org-keyword">typedef</span> <span class="org-keyword">struct</span> <span class="org-type">DListElmt_</span> {
+    <span class="org-type">void</span>              *<span class="org-variable-name">data</span>;
+    <span class="org-keyword">struct</span> <span class="org-type">DListElmt_</span> *<span class="org-variable-name">prev</span>;
+    <span class="org-keyword">struct</span> <span class="org-type">DListElmt_</span> *<span class="org-variable-name">next</span>;
+} <span class="org-type">DListElmt</span>;
+
+<span class="org-keyword">typedef</span> <span class="org-keyword">struct</span> <span class="org-type">DList_</span> {
+    <span class="org-type">int</span>       <span class="org-variable-name">size</span>;
+    <span class="org-type">int</span>       (*<span class="org-function-name">match</span>)(<span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">key1</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">key2</span>);
+    <span class="org-type">void</span>      (*<span class="org-function-name">destroy</span>)(<span class="org-type">void</span> *<span class="org-variable-name">data</span>);
+    <span class="org-type">DListElmt</span> *<span class="org-variable-name">head</span>;
+    <span class="org-type">DListElmt</span> *<span class="org-variable-name">tail</span>;
+} <span class="org-type">DList</span>;
+
+<span class="org-type">void</span> <span class="org-function-name">dlist_init</span>(<span class="org-type">DList</span> *<span class="org-variable-name">list</span>, <span class="org-type">void</span> (*<span class="org-variable-name">destroy</span>)(<span class="org-type">void</span> *<span class="org-variable-name">data</span>));
+<span class="org-type">void</span> <span class="org-function-name">dlist_destroy</span>(<span class="org-type">DList</span> *<span class="org-variable-name">list</span>);
+<span class="org-type">int</span> <span class="org-function-name">dlist_ins_next</span>(<span class="org-type">DList</span> *<span class="org-variable-name">list</span>, <span class="org-type">DListElmt</span> *<span class="org-variable-name">element</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">data</span>);
+<span class="org-type">int</span> <span class="org-function-name">dlist_ins_prev</span>(<span class="org-type">DList</span> *<span class="org-variable-name">list</span>, <span class="org-type">DListElmt</span> *<span class="org-variable-name">element</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">data</span>);
+<span class="org-type">int</span> <span class="org-function-name">dlist_remove</span>(<span class="org-type">DList</span> *<span class="org-variable-name">list</span>, <span class="org-type">DListElmt</span> *<span class="org-variable-name">element</span>, <span class="org-type">void</span> **<span class="org-variable-name">data</span>);
+
+<span class="org-preprocessor">#define</span> <span class="org-function-name">dlist_size</span>(<span class="org-variable-name">list</span>) ((list)-&gt;size)
+<span class="org-preprocessor">#define</span> <span class="org-function-name">dlist_head</span>(<span class="org-variable-name">list</span>) ((list)-&gt;head)
+<span class="org-preprocessor">#define</span> <span class="org-function-name">dlist_tail</span>(<span class="org-variable-name">list</span>) ((list)-&gt;tail)
+<span class="org-preprocessor">#define</span> <span class="org-function-name">dlist_is_head</span>(<span class="org-variable-name">element</span>) ((element)-&gt;prev == <span class="org-constant">NULL</span> ? 1 : 0)
+<span class="org-preprocessor">#define</span> <span class="org-function-name">dlist_is_tail</span>(<span class="org-variable-name">element</span>) ((element)-&gt;next == <span class="org-constant">NULL</span> ? 1 : 0)
+<span class="org-preprocessor">#define</span> <span class="org-function-name">dlist_data</span>(<span class="org-variable-name">element</span>) ((element)-&gt;data)
+<span class="org-preprocessor">#define</span> <span class="org-function-name">dlist_next</span>(<span class="org-variable-name">element</span>) ((element)-&gt;next)
+<span class="org-preprocessor">#define</span> <span class="org-function-name">dlist_prev</span>(<span class="org-variable-name">element</span>) ((element)-&gt;prev)
+
+<span class="org-preprocessor">#endif</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-2-2" class="outline-4">
+<h4 id="sec-4-2-2"><span class="section-number-4">4.2.2</span> <code>dlist.c</code></h4>
+<div class="outline-text-4" id="text-4-2-2">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdlib.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;string.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">"dlist.h"</span>
+</pre>
+</div>
+</div>
+
+<ol class="org-ol"><li>初始化<br  /><div class="outline-text-5" id="text-4-2-2-1">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">void</span> <span class="org-function-name">dlist_init</span>(<span class="org-type">DList</span> *<span class="org-variable-name">list</span>, <span class="org-type">void</span> (*<span class="org-variable-name">destroy</span>)(<span class="org-type">void</span> *<span class="org-variable-name">data</span>))
+{
+    list-&gt;size = 0;
+    list-&gt;destroy = destroy;
+    list-&gt;head = <span class="org-constant">NULL</span>;
+    list-&gt;tail = <span class="org-constant">NULL</span>;
+
+    <span class="org-keyword">return</span>;
+}
+</pre>
+</div>
+</div>
+</li>
+<li>销毁<br  /><div class="outline-text-5" id="text-4-2-2-2">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">void</span> <span class="org-function-name">dlist_destroy</span>(<span class="org-type">DList</span> *<span class="org-variable-name">list</span>)
+{
+    <span class="org-type">void</span> *<span class="org-variable-name">data</span>;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#36941;&#21382;&#20803;&#32032;&#24182;&#31227;&#38500; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">while</span> (dlist_size(list) &gt; 0) {
+        <span class="org-keyword">if</span> (dlist_remove(list, dlist_tail(list), (<span class="org-type">void</span> **)&amp;data) == 0 &amp;&amp; list-&gt;destroy != <span class="org-constant">NULL</span>) {
+            <span class="org-comment-delimiter">/* </span><span class="org-comment">&#35843;&#29992;&#33258;&#23450;&#20041;&#20989;&#25968;&#37322;&#25918;&#21160;&#24577;&#20998;&#37197;&#25968;&#25454; </span><span class="org-comment-delimiter">*/</span>
+            list-&gt;destroy(data);
+        }
+    }
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#28165;&#31354;&#32467;&#26500; </span><span class="org-comment-delimiter">*/</span>
+    memset(list, 0, <span class="org-keyword">sizeof</span>(DList));
+
+    <span class="org-keyword">return</span>;
+}
+</pre>
+</div>
+</div>
+</li>
+<li>插入元素 1<br  /><div class="outline-text-5" id="text-4-2-2-3">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-comment-delimiter">/* </span><span class="org-comment">&#22312;&#25351;&#23450;&#20803;&#32032;&#21518;&#25554;&#20837;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+<span class="org-type">int</span> <span class="org-function-name">dlist_ins_next</span>(<span class="org-type">DList</span> *<span class="org-variable-name">list</span>, <span class="org-type">DListElmt</span> *<span class="org-variable-name">element</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">data</span>)
+{
+    <span class="org-type">DListElmt</span> *<span class="org-variable-name">new_element</span>;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#38500;&#38750;&#38142;&#34920;&#20026;&#31354;&#65292;&#21542;&#21017;&#19981;&#20801;&#35768;&#25351;&#23450;&#20803;&#32032;&#20026; NULL </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">if</span> (element == <span class="org-constant">NULL</span> &amp;&amp; dlist_size(list) != 0)
+        <span class="org-keyword">return</span> -1;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#20998;&#37197;&#31354;&#38388; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">if</span> ((new_element = (<span class="org-type">DListElmt</span> *)malloc(<span class="org-keyword">sizeof</span>(DListElmt))) == <span class="org-constant">NULL</span>)
+        <span class="org-keyword">return</span> -1;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#25554;&#20837;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+    new_element-&gt;data = (<span class="org-type">void</span> *)data;
+
+    <span class="org-keyword">if</span> (dlist_size(list) == 0) {
+        <span class="org-comment-delimiter">/* </span><span class="org-comment">&#25554;&#20837;&#21040;&#31354;&#38142;&#34920; </span><span class="org-comment-delimiter">*/</span>
+        list-&gt;head = new_element;
+        list-&gt;head-&gt;prev = <span class="org-constant">NULL</span>;
+        list-&gt;head-&gt;next = <span class="org-constant">NULL</span>;
+        list-&gt;tail = new_element;
+
+    } <span class="org-keyword">else</span> {
+        <span class="org-comment-delimiter">/* </span><span class="org-comment">&#25554;&#20837;&#21040;&#38750;&#31354;&#38142;&#34920; </span><span class="org-comment-delimiter">*/</span>
+        new_element-&gt;next = element-&gt;next;
+        new_element-&gt;prev = element;
+        <span class="org-keyword">if</span> (element-&gt;next == <span class="org-constant">NULL</span>)
+           list-&gt;tail = new_element;
+        <span class="org-keyword">else</span>
+           element-&gt;next-&gt;prev = new_element;
+        element-&gt;next = new_element;
+    }
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#20803;&#32032;&#20010;&#25968;&#22686;&#21152; </span><span class="org-comment-delimiter">*/</span>
+    list-&gt;size++;
+
+    <span class="org-keyword">return</span> 0;
+}
+</pre>
+</div>
+</div>
+</li>
+<li>插入元素 2<br  /><div class="outline-text-5" id="text-4-2-2-4">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-comment-delimiter">/* </span><span class="org-comment">&#22312;&#25351;&#23450;&#20803;&#32032;&#21069;&#25554;&#20837;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+<span class="org-type">int</span> <span class="org-function-name">dlist_ins_prev</span>(<span class="org-type">DList</span> *<span class="org-variable-name">list</span>, <span class="org-type">DListElmt</span> *<span class="org-variable-name">element</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">data</span>)
+{
+    <span class="org-type">DListElmt</span> *<span class="org-variable-name">new_element</span>;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#38500;&#38750;&#38142;&#34920;&#20026;&#31354;&#65292;&#21542;&#21017;&#19981;&#20801;&#35768;&#25351;&#23450;&#20803;&#32032;&#20026; NULL </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">if</span> (element == <span class="org-constant">NULL</span> &amp;&amp; dlist_size(list) != 0)
+        <span class="org-keyword">return</span> -1;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#20998;&#37197;&#31354;&#38388; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">if</span> ((new_element = (<span class="org-type">DListElmt</span> *)malloc(<span class="org-keyword">sizeof</span>(DListElmt))) == <span class="org-constant">NULL</span>)
+        <span class="org-keyword">return</span> -1;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#25554;&#20837;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+    new_element-&gt;data = (<span class="org-type">void</span> *)data;
+
+    <span class="org-keyword">if</span> (dlist_size(list) == 0) {
+        <span class="org-comment-delimiter">/* </span><span class="org-comment">&#25554;&#20837;&#21040;&#31354;&#38142;&#34920; </span><span class="org-comment-delimiter">*/</span>
+        list-&gt;head = new_element;
+        list-&gt;head-&gt;prev = <span class="org-constant">NULL</span>;
+        list-&gt;head-&gt;next = <span class="org-constant">NULL</span>;
+        list-&gt;tail = new_element;
+
+    } <span class="org-keyword">else</span> {
+        <span class="org-comment-delimiter">/* </span><span class="org-comment">&#25554;&#20837;&#21040;&#38750;&#31354;&#38142;&#34920; </span><span class="org-comment-delimiter">*/</span>
+        new_element-&gt;next = element; 
+        new_element-&gt;prev = element-&gt;prev;
+        <span class="org-keyword">if</span> (element-&gt;prev == <span class="org-constant">NULL</span>)
+            list-&gt;head = new_element;
+        <span class="org-keyword">else</span>
+            element-&gt;prev-&gt;next = new_element;
+        element-&gt;prev = new_element;
+    }
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#20803;&#32032;&#20010;&#25968;&#22686;&#21152; </span><span class="org-comment-delimiter">*/</span>
+    list-&gt;size++;
+
+    <span class="org-keyword">return</span> 0;
+}
+</pre>
+</div>
+</div>
+</li>
+<li>移除元素<br  /><div class="outline-text-5" id="text-4-2-2-5">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">dlist_remove</span>(<span class="org-type">DList</span> *<span class="org-variable-name">list</span>, <span class="org-type">DListElmt</span> *<span class="org-variable-name">element</span>, <span class="org-type">void</span> **<span class="org-variable-name">data</span>)
+{
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#19981;&#20801;&#35768;&#25351;&#23450;&#20803;&#32032;&#20026; NULL&#65292;&#25110;&#20174;&#31354;&#38142;&#34920;&#31227;&#38500; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">if</span> (element == <span class="org-constant">NULL</span> || dlist_size(list) == 0)
+        <span class="org-keyword">return</span> -1;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#31227;&#38500;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+    *data = element-&gt;data;
+
+    <span class="org-keyword">if</span> (element == list-&gt;head) {
+        <span class="org-comment-delimiter">/* </span><span class="org-comment">&#22836;&#37096;&#31227;&#38500; </span><span class="org-comment-delimiter">*/</span>
+        list-&gt;head = element-&gt;next;
+        <span class="org-keyword">if</span> (list-&gt;head == <span class="org-constant">NULL</span>)
+            list-&gt;tail = <span class="org-constant">NULL</span>;
+        <span class="org-keyword">else</span>
+            element-&gt;next-&gt;prev = <span class="org-constant">NULL</span>;
+
+    } <span class="org-keyword">else</span> {
+        <span class="org-comment-delimiter">/* </span><span class="org-comment">&#38750;&#22836;&#37096;&#31227;&#38500; </span><span class="org-comment-delimiter">*/</span>
+        element-&gt;prev-&gt;next = element-&gt;next;
+        <span class="org-keyword">if</span> (element-&gt;next == <span class="org-constant">NULL</span>)
+            list-&gt;tail = element-&gt;prev;
+        <span class="org-keyword">else</span>
+            element-&gt;next-&gt;prev = element-&gt;prev;
+    }
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#37322;&#25918;&#31354;&#38388; </span><span class="org-comment-delimiter">*/</span>
+    free(element);
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#20803;&#32032;&#20010;&#25968;&#20943;&#23569; </span><span class="org-comment-delimiter">*/</span>
+    list-&gt;size--;
+
+    <span class="org-keyword">return</span> 0;
+}
+</pre>
+</div>
+</div>
+</li>
+<li>初始化<br  /><div class="outline-text-5" id="text-4-2-2-6">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">void</span> <span class="org-function-name">list_init</span>(<span class="org-type">List</span> *<span class="org-variable-name">list</span>, <span class="org-type">void</span> (*<span class="org-variable-name">destroy</span>)(<span class="org-type">void</span> *<span class="org-variable-name">data</span>))
+{
+    list-&gt;size = 0;
+    list-&gt;destroy = destroy;
+    list-&gt;head = <span class="org-constant">NULL</span>;
+    list-&gt;tail = <span class="org-constant">NULL</span>;
+
+    <span class="org-keyword">return</span>;
+}
+</pre>
+</div>
+</div>
+</li>
+<li>销毁<br  /><div class="outline-text-5" id="text-4-2-2-7">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">void</span> <span class="org-function-name">list_destroy</span>(<span class="org-type">List</span> *<span class="org-variable-name">list</span>)
+{
+    <span class="org-type">void</span> *<span class="org-variable-name">data</span>;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#36941;&#21382;&#20803;&#32032;&#24182;&#38144;&#27585; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">while</span> (list_size(list) &gt; 0) {
+        <span class="org-keyword">if</span> (list_rem_next(list, <span class="org-constant">NULL</span>, (<span class="org-type">void</span> **)&amp;data) == 0 &amp;&amp; list-&gt;destroy != <span class="org-constant">NULL</span>) {
+            <span class="org-comment-delimiter">/* </span><span class="org-comment">&#35843;&#29992;&#33258;&#23450;&#20041;&#20989;&#25968;&#37322;&#25918;&#21160;&#24577;&#20998;&#37197;&#25968;&#25454; </span><span class="org-comment-delimiter">*/</span>
+            list-&gt;destroy(data);
+        }
+    }
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#28165;&#31354;&#32467;&#26500; </span><span class="org-comment-delimiter">*/</span>
+    memset(list, 0, <span class="org-keyword">sizeof</span>(List));
+
+    <span class="org-keyword">return</span>;
+}
+</pre>
+</div>
+</div>
+</li>
+<li>插入元素<br  /><div class="outline-text-5" id="text-4-2-2-8">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-comment-delimiter">/* </span><span class="org-comment">&#22312;&#25351;&#23450;&#20803;&#32032;&#21518;&#25554;&#20837;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+<span class="org-type">int</span> <span class="org-function-name">list_ins_next</span>(<span class="org-type">List</span> *<span class="org-variable-name">list</span>, <span class="org-type">ListElmt</span> *<span class="org-variable-name">element</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">data</span>)
+{
+    <span class="org-type">ListElmt</span> *<span class="org-variable-name">new_element</span>;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#20998;&#37197;&#31354;&#38388; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">if</span> ((new_element = (<span class="org-type">ListElmt</span> *)malloc(<span class="org-keyword">sizeof</span>(ListElmt))) == <span class="org-constant">NULL</span>)
+        <span class="org-keyword">return</span> -1;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#25554;&#20837;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+    new_element-&gt;data = (<span class="org-type">void</span> *)data;
+
+    <span class="org-keyword">if</span> (element == <span class="org-constant">NULL</span>) {
+        <span class="org-comment-delimiter">/* </span><span class="org-comment">&#22836;&#37096;&#25554;&#20837; </span><span class="org-comment-delimiter">*/</span>
+        <span class="org-keyword">if</span> (list_size(list) == 0)
+            list-&gt;tail = new_element;
+        new_element-&gt;next = list-&gt;head;
+        list-&gt;head = new_element;
+    } <span class="org-keyword">else</span> {
+        <span class="org-comment-delimiter">/* </span><span class="org-comment">&#38750;&#22836;&#37096;&#25554;&#20837; </span><span class="org-comment-delimiter">*/</span>
+        <span class="org-keyword">if</span> (element-&gt;next == <span class="org-constant">NULL</span>)
+            list-&gt;tail = new_element;
+        new_element-&gt;next = element-&gt;next;
+        element-&gt;next = new_element;
+    }
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#20803;&#32032;&#20010;&#25968;&#22686;&#21152; </span><span class="org-comment-delimiter">*/</span>
+    list-&gt;size++;
+
+    <span class="org-keyword">return</span> 0;
+}
+</pre>
+</div>
+</div>
+</li>
+<li>删除元素<br  /><div class="outline-text-5" id="text-4-2-2-9">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-comment-delimiter">/* </span><span class="org-comment">&#21024;&#38500;&#25351;&#23450;&#20803;&#32032;&#21518;&#30340;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+<span class="org-type">int</span> <span class="org-function-name">list_rem_next</span>(<span class="org-type">List</span> *<span class="org-variable-name">list</span>, <span class="org-type">ListElmt</span> *<span class="org-variable-name">element</span>, <span class="org-type">void</span> **<span class="org-variable-name">data</span>)
+{
+    <span class="org-type">ListElmt</span> *<span class="org-variable-name">old_element</span>;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#26816;&#26597;&#38142;&#34920;&#26159;&#21542;&#20026;&#31354; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">if</span> (list_size(list) == 0)
+        <span class="org-keyword">return</span> -1;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#31227;&#38500;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">if</span> (element == <span class="org-constant">NULL</span>) {
+        <span class="org-comment-delimiter">/* </span><span class="org-comment">&#22836;&#37096;&#31227;&#38500; </span><span class="org-comment-delimiter">*/</span>
+        *data = list-&gt;head-&gt;data;
+        old_element = list-&gt;head;
+        list-&gt;head = list-&gt;head-&gt;next;
+        <span class="org-keyword">if</span> (list_size(list) == 1)
+            list-&gt;tail = <span class="org-constant">NULL</span>;
+
+    } <span class="org-keyword">else</span> {
+        <span class="org-comment-delimiter">/* </span><span class="org-comment">&#38750;&#22836;&#37096;&#31227;&#38500; </span><span class="org-comment-delimiter">*/</span>
+        <span class="org-keyword">if</span> (element-&gt;next == <span class="org-constant">NULL</span>)
+            <span class="org-keyword">return</span> -1;
+        *data = element-&gt;next-&gt;data;
+        old_element = element-&gt;next;
+        element-&gt;next = element-&gt;next-&gt;next;
+        <span class="org-keyword">if</span> (element-&gt;next == <span class="org-constant">NULL</span>)
+            list-&gt;tail = element;
+    }
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#37322;&#25918;&#31354;&#38388; </span><span class="org-comment-delimiter">*/</span>
+    free(old_element);
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#20803;&#32032;&#20010;&#25968;&#20943;&#23569; </span><span class="org-comment-delimiter">*/</span>
+    list-&gt;size--;
+
+    <span class="org-keyword">return</span> 0;
+}
+</pre>
+</div>
+</div>
+</li></ol>
+</div>
+</div>
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> 循环链表 C 实现</h3>
+<div class="outline-text-3" id="text-4-3">
+</div><div id="outline-container-sec-4-3-1" class="outline-4">
+<h4 id="sec-4-3-1"><span class="section-number-4">4.3.1</span> <code>clist.h</code></h4>
+<div class="outline-text-4" id="text-4-3-1">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-preprocessor">#if</span><span class="org-negation-char"><span class="org-preprocessor">n</span></span><span class="org-preprocessor">def</span> CLIST_H
+
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">CLIST_H</span>
+
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdlib.h&gt;</span>
+
+<span class="org-keyword">typedef</span> <span class="org-keyword">struct</span> <span class="org-type">CListElmt_</span> {
+    <span class="org-type">void</span>              *<span class="org-variable-name">data</span>;
+    <span class="org-keyword">struct</span> <span class="org-type">CListElmt_</span> *<span class="org-variable-name">next</span>;
+} <span class="org-type">CListElmt</span>;
+
+<span class="org-keyword">typedef</span> <span class="org-keyword">struct</span> <span class="org-type">CList_</span> {
+    <span class="org-type">int</span>       <span class="org-variable-name">size</span>;
+    <span class="org-type">int</span>       (*<span class="org-function-name">match</span>)(<span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">key1</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">key2</span>);
+    <span class="org-type">void</span>      (*<span class="org-function-name">destroy</span>)(<span class="org-type">void</span> *<span class="org-variable-name">data</span>);
+    <span class="org-type">CListElmt</span> *<span class="org-variable-name">head</span>;
+} <span class="org-type">CList</span>;
+
+<span class="org-type">void</span> <span class="org-function-name">clist_init</span>(<span class="org-type">CList</span> *<span class="org-variable-name">list</span>, <span class="org-type">void</span> (*<span class="org-variable-name">destroy</span>)(<span class="org-type">void</span> *<span class="org-variable-name">data</span>));
+<span class="org-type">void</span> <span class="org-function-name">clist_destroy</span>(<span class="org-type">CList</span> *<span class="org-variable-name">list</span>);
+<span class="org-type">int</span> <span class="org-function-name">clist_ins_next</span>(<span class="org-type">CList</span> *<span class="org-variable-name">list</span>, <span class="org-type">CListElmt</span> *<span class="org-variable-name">element</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">data</span>);
+<span class="org-type">int</span> <span class="org-function-name">clist_rem_next</span>(<span class="org-type">CList</span> *<span class="org-variable-name">list</span>, <span class="org-type">CListElmt</span> *<span class="org-variable-name">element</span>, <span class="org-type">void</span> **<span class="org-variable-name">data</span>);
+
+<span class="org-preprocessor">#define</span> <span class="org-function-name">clist_size</span>(<span class="org-variable-name">list</span>) ((list)-&gt;size)
+<span class="org-preprocessor">#define</span> <span class="org-function-name">clist_head</span>(<span class="org-variable-name">list</span>) ((list)-&gt;head)
+<span class="org-preprocessor">#define</span> <span class="org-function-name">clist_data</span>(<span class="org-variable-name">element</span>) ((element)-&gt;data)
+<span class="org-preprocessor">#define</span> <span class="org-function-name">clist_next</span>(<span class="org-variable-name">element</span>) ((element)-&gt;next)
+
+<span class="org-preprocessor">#endif</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-3-2" class="outline-4">
+<h4 id="sec-4-3-2"><span class="section-number-4">4.3.2</span> <code>clist.c</code></h4>
+<div class="outline-text-4" id="text-4-3-2">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdlib.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;string.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">"clist.h"</span>
+</pre>
+</div>
+</div>
+
+<ol class="org-ol"><li>初始化<br  /><div class="outline-text-5" id="text-4-3-2-1">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">void</span> <span class="org-function-name">clist_init</span>(<span class="org-type">CList</span> *<span class="org-variable-name">list</span>, <span class="org-type">void</span> (*<span class="org-variable-name">destroy</span>)(<span class="org-type">void</span> *<span class="org-variable-name">data</span>))
+{
+    list-&gt;size = 0;
+    list-&gt;destroy = destroy;
+    list-&gt;head = <span class="org-constant">NULL</span>;
+
+    <span class="org-keyword">return</span>;
+}
+</pre>
+</div>
+</div>
+</li>
+<li>销毁<br  /><div class="outline-text-5" id="text-4-3-2-2">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">void</span> <span class="org-function-name">clist_destroy</span>(<span class="org-type">CList</span> *<span class="org-variable-name">list</span>)
+{
+    <span class="org-type">void</span> *<span class="org-variable-name">data</span>;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#36941;&#21382;&#20803;&#32032;&#24182;&#31227;&#38500; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">while</span> (clist_size(list) &gt; 0) {
+        <span class="org-keyword">if</span> (clist_rem_next(list, list-&gt;head, (<span class="org-type">void</span> **)&amp;data) == 0 &amp;&amp; list-&gt;destroy != <span class="org-constant">NULL</span>) {
+            <span class="org-comment-delimiter">/* </span><span class="org-comment">&#35843;&#29992;&#33258;&#23450;&#20041;&#20989;&#25968;&#37322;&#25918;&#21160;&#24577;&#20998;&#37197;&#25968;&#25454; </span><span class="org-comment-delimiter">*/</span>
+            list-&gt;destroy(data);
+        }
+    }
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#28165;&#31354;&#32467;&#26500; </span><span class="org-comment-delimiter">*/</span>
+    memset(list, 0, <span class="org-keyword">sizeof</span>(CList));
+
+    <span class="org-keyword">return</span>;
+}
+</pre>
+</div>
+</div>
+</li>
+<li>插入元素<br  /><div class="outline-text-5" id="text-4-3-2-3">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">clist_ins_next</span>(<span class="org-type">CList</span> *<span class="org-variable-name">list</span>, <span class="org-type">CListElmt</span> *<span class="org-variable-name">element</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">data</span>)
+{
+    <span class="org-type">CListElmt</span> *<span class="org-variable-name">new_element</span>;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#20998;&#37197;&#31354;&#38388; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">if</span> ((new_element = (<span class="org-type">CListElmt</span> *)malloc(<span class="org-keyword">sizeof</span>(CListElmt))) == <span class="org-constant">NULL</span>)
+        <span class="org-keyword">return</span> -1;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#25554;&#20837;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+    new_element-&gt;data = (<span class="org-type">void</span> *)data;
+
+    <span class="org-keyword">if</span> (clist_size(list) == 0) {
+        <span class="org-comment-delimiter">/* </span><span class="org-comment">&#25554;&#20837;&#21040;&#31354;&#38142;&#34920; </span><span class="org-comment-delimiter">*/</span>
+        new_element-&gt;next = new_element;
+        list-&gt;head = new_element;
+
+    } <span class="org-keyword">else</span> {
+        <span class="org-comment-delimiter">/* </span><span class="org-comment">&#25554;&#20837;&#21040;&#38750;&#31354;&#38142;&#34920; </span><span class="org-comment-delimiter">*/</span>
+        new_element-&gt;next = element-&gt;next;
+        element-&gt;next = new_element;
+    }
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#20803;&#32032;&#20010;&#25968;&#22686;&#21152; </span><span class="org-comment-delimiter">*/</span>
+    list-&gt;size++;
+
+    <span class="org-keyword">return</span> 0;
+}
+</pre>
+</div>
+</div>
+</li>
+<li>移除元素<br  /><div class="outline-text-5" id="text-4-3-2-4">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">clist_rem_next</span>(<span class="org-type">CList</span> *<span class="org-variable-name">list</span>, <span class="org-type">CListElmt</span> *<span class="org-variable-name">element</span>, <span class="org-type">void</span> **<span class="org-variable-name">data</span>)
+{
+    <span class="org-type">CListElmt</span> *<span class="org-variable-name">old_element</span>;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#26816;&#26597;&#38142;&#34920;&#26159;&#21542;&#20026;&#31354; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">if</span> (clist_size(list) == 0)
+        <span class="org-keyword">return</span> -1;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#31227;&#38500;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+    *data = element-&gt;next-&gt;data;
+
+    <span class="org-keyword">if</span> (element-&gt;next == element) {
+        <span class="org-comment-delimiter">/* </span><span class="org-comment">&#31227;&#38500;&#26368;&#21518;&#19968;&#20010;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+        old_element = element-&gt;next;
+        list-&gt;head = <span class="org-constant">NULL</span>;
+
+    } <span class="org-keyword">else</span> {
+        <span class="org-comment-delimiter">/* </span><span class="org-comment">&#31227;&#38500;&#38750;&#26368;&#21518;&#19968;&#20010;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+        old_element = element-&gt;next;
+        element-&gt;next = element-&gt;next-&gt;next;
+    }
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#37322;&#25918;&#31354;&#38388; </span><span class="org-comment-delimiter">*/</span>
+    free(old_element);
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#20803;&#32032;&#20010;&#25968;&#20943;&#23569; </span><span class="org-comment-delimiter">*/</span>
+    list-&gt;size--;
+
+    <span class="org-keyword">return</span> 0;
+}
+</pre>
+</div>
+</div>
+</li></ol>
+</div>
+</div>
+<div id="outline-container-sec-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> 栈 C 实现（单向链表）</h3>
+<div class="outline-text-3" id="text-4-4">
+</div><div id="outline-container-sec-4-4-1" class="outline-4">
+<h4 id="sec-4-4-1"><span class="section-number-4">4.4.1</span> <code>stack.h</code></h4>
+<div class="outline-text-4" id="text-4-4-1">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-preprocessor">#if</span><span class="org-negation-char"><span class="org-preprocessor">n</span></span><span class="org-preprocessor">def</span> STACK_H
+
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">STACK_H</span>
+
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdlib.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">"list.h"</span>
+
+<span class="org-comment-delimiter">/* </span><span class="org-comment">&#22522;&#20110;&#38142;&#34920; </span><span class="org-comment-delimiter">*/</span>
+<span class="org-keyword">typedef</span> <span class="org-type">List</span> <span class="org-type">Stack</span>;
+
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">stack_init</span> list_init
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">stack_destroy</span> list_destroy
+
+<span class="org-type">int</span> <span class="org-function-name">stack_push</span>(<span class="org-type">Stack</span> *<span class="org-variable-name">stack</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">data</span>);
+<span class="org-type">int</span> <span class="org-function-name">stack_pop</span>(<span class="org-type">Stack</span> *<span class="org-variable-name">stack</span>, <span class="org-type">void</span> **<span class="org-variable-name">data</span>);
+
+<span class="org-preprocessor">#define</span> <span class="org-function-name">stack_peek</span>(<span class="org-variable-name">stack</span>) ((stack)-&gt;head == <span class="org-constant">NULL</span> ? <span class="org-constant">NULL</span> : (stack)-&gt;head-&gt;data)
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">stack_size</span> list_size
+
+<span class="org-preprocessor">#endif</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-4-2" class="outline-4">
+<h4 id="sec-4-4-2"><span class="section-number-4">4.4.2</span> <code>stack.c</code></h4>
+<div class="outline-text-4" id="text-4-4-2">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdlib.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">"list.h"</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">"stack.h"</span>
+</pre>
+</div>
+</div>
+
+<ol class="org-ol"><li>入栈<br  /><div class="outline-text-5" id="text-4-4-2-1">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">stack_push</span>(<span class="org-type">Stack</span> *<span class="org-variable-name">stack</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">data</span>)
+{
+    <span class="org-keyword">return</span> list_ins_next(stack, <span class="org-constant">NULL</span>, data);
+}
+</pre>
+</div>
+</div>
+</li>
+<li>出栈<br  /><div class="outline-text-5" id="text-4-4-2-2">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">stack_pop</span>(<span class="org-type">Stack</span> *<span class="org-variable-name">stack</span>, <span class="org-type">void</span> **<span class="org-variable-name">data</span>)
+{
+    <span class="org-keyword">return</span> list_rem_next(stack, <span class="org-constant">NULL</span>, data);
+}
+</pre>
+</div>
+</div>
+</li></ol>
+</div>
+</div>
+<div id="outline-container-sec-4-5" class="outline-3">
+<h3 id="sec-4-5"><span class="section-number-3">4.5</span> 队列 C 实现（单向链表）</h3>
+<div class="outline-text-3" id="text-4-5">
+</div><div id="outline-container-sec-4-5-1" class="outline-4">
+<h4 id="sec-4-5-1"><span class="section-number-4">4.5.1</span> <code>queue.h</code></h4>
+<div class="outline-text-4" id="text-4-5-1">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-preprocessor">#if</span><span class="org-negation-char"><span class="org-preprocessor">n</span></span><span class="org-preprocessor">def</span> QUEUE_H
+
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">QUEUE_H</span>
+
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdlib.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">"list.h"</span>
+
+<span class="org-comment-delimiter">/* </span><span class="org-comment">&#22522;&#20110;&#38142;&#34920; </span><span class="org-comment-delimiter">*/</span>
+<span class="org-keyword">typedef</span> <span class="org-type">List</span> <span class="org-type">Queue</span>;
+
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">queue_init</span> list_init
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">queue_destroy</span> list_destroy
+
+<span class="org-type">int</span> <span class="org-function-name">queue_enqueue</span>(<span class="org-type">Queue</span> *<span class="org-variable-name">queue</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">data</span>);
+<span class="org-type">int</span> <span class="org-function-name">queue_dequeue</span>(<span class="org-type">Queue</span> *<span class="org-variable-name">queue</span>, <span class="org-type">void</span> **<span class="org-variable-name">data</span>);
+
+<span class="org-preprocessor">#define</span> <span class="org-function-name">queue_peek</span>(<span class="org-variable-name">queue</span>) ((queue)-&gt;head == <span class="org-constant">NULL</span> ? <span class="org-constant">NULL</span> : (queue)-&gt;head-&gt;data)
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">queue_size</span> list_size
+
+<span class="org-preprocessor">#endif</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-5-2" class="outline-4">
+<h4 id="sec-4-5-2"><span class="section-number-4">4.5.2</span> <code>queue.c</code></h4>
+<div class="outline-text-4" id="text-4-5-2">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdlib.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">"list.h"</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">"queue.h"</span>
+</pre>
+</div>
+</div>
+
+<ol class="org-ol"><li>入队<br  /><div class="outline-text-5" id="text-4-5-2-1">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">queue_enqueue</span>(<span class="org-type">Queue</span> *<span class="org-variable-name">queue</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">data</span>)
+{
+    <span class="org-keyword">return</span> list_ins_next(queue, list_tail(queue), data);
+}
+</pre>
+</div>
+</div>
+</li>
+<li>出队<br  /><div class="outline-text-5" id="text-4-5-2-2">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">queue_dequeue</span>(<span class="org-type">Queue</span> *<span class="org-variable-name">queue</span>, <span class="org-type">void</span> **<span class="org-variable-name">data</span>)
+{
+    <span class="org-keyword">return</span> list_rem_next(queue, <span class="org-constant">NULL</span>, data);
+}
+</pre>
+</div>
+</div>
+</li></ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> 集合</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> 集合 C 实现</h3>
+<div class="outline-text-3" id="text-5-1">
+</div><div id="outline-container-sec-5-1-1" class="outline-4">
+<h4 id="sec-5-1-1"><span class="section-number-4">5.1.1</span> <code>set.h</code></h4>
+<div class="outline-text-4" id="text-5-1-1">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-preprocessor">#if</span><span class="org-negation-char"><span class="org-preprocessor">n</span></span><span class="org-preprocessor">def</span> SET_H
+
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">SET_H</span>
+
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdlib.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">"list.h"</span>
+
+<span class="org-keyword">typedef</span> <span class="org-type">List</span> <span class="org-type">Set</span>;
+
+<span class="org-type">void</span> <span class="org-function-name">set_init</span>(<span class="org-type">Set</span> *<span class="org-variable-name">set</span>, <span class="org-type">int</span> (*<span class="org-variable-name">match</span>)(<span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">key1</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">key2</span>), <span class="org-type">void</span> (*<span class="org-variable-name">destroy</span>)(<span class="org-type">void</span> *<span class="org-variable-name">data</span>));
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">set_destroy</span> list_destroy
+<span class="org-type">int</span> <span class="org-function-name">set_insert</span>(<span class="org-type">Set</span> *<span class="org-variable-name">set</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">data</span>);
+<span class="org-type">int</span> <span class="org-function-name">set_remove</span>(<span class="org-type">Set</span> *<span class="org-variable-name">set</span>, <span class="org-type">void</span> **<span class="org-variable-name">data</span>);
+<span class="org-type">int</span> <span class="org-function-name">set_union</span>(<span class="org-type">Set</span> *<span class="org-variable-name">setu</span>, <span class="org-keyword">const</span> <span class="org-type">Set</span> *<span class="org-variable-name">set1</span>, <span class="org-keyword">const</span> <span class="org-type">Set</span> *<span class="org-variable-name">set2</span>);
+<span class="org-type">int</span> <span class="org-function-name">set_intersection</span>(<span class="org-type">Set</span> *<span class="org-variable-name">seti</span>, <span class="org-keyword">const</span> <span class="org-type">Set</span> *<span class="org-variable-name">set1</span>, <span class="org-keyword">const</span> <span class="org-type">Set</span> *<span class="org-variable-name">set2</span>);
+<span class="org-type">int</span> <span class="org-function-name">set_difference</span>(<span class="org-type">Set</span> *<span class="org-variable-name">setd</span>, <span class="org-keyword">const</span> <span class="org-type">Set</span> *<span class="org-variable-name">set1</span>, <span class="org-keyword">const</span> <span class="org-type">Set</span> *<span class="org-variable-name">set2</span>);
+<span class="org-type">int</span> <span class="org-function-name">set_is_member</span>(<span class="org-keyword">const</span> <span class="org-type">Set</span> *<span class="org-variable-name">set</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">data</span>);
+<span class="org-type">int</span> <span class="org-function-name">set_is_subset</span>(<span class="org-keyword">const</span> <span class="org-type">Set</span> *<span class="org-variable-name">set1</span>, <span class="org-keyword">const</span> <span class="org-type">Set</span> *<span class="org-variable-name">set2</span>);
+<span class="org-type">int</span> <span class="org-function-name">set_is_equal</span>(<span class="org-keyword">const</span> <span class="org-type">Set</span> *<span class="org-variable-name">set1</span>, <span class="org-keyword">const</span> <span class="org-type">Set</span> *<span class="org-variable-name">set2</span>);
+
+<span class="org-preprocessor">#define</span> <span class="org-function-name">set_size</span>(<span class="org-variable-name">set</span>) ((set)-&gt;size)
+
+<span class="org-preprocessor">#endif</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-1-2" class="outline-4">
+<h4 id="sec-5-1-2"><span class="section-number-4">5.1.2</span> <code>set.c</code></h4>
+<div class="outline-text-4" id="text-5-1-2">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdlib.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;string.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">"list.h"</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">"set.h"</span>
+</pre>
+</div>
+</div>
+
+<ol class="org-ol"><li>初始化<br  /><div class="outline-text-5" id="text-5-1-2-1">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">void</span> <span class="org-function-name">set_init</span>(
+    <span class="org-type">Set</span> *<span class="org-variable-name">set</span>,
+    <span class="org-type">int</span> (*<span class="org-variable-name">match</span>)(<span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">key1</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">key2</span>),
+    <span class="org-type">void</span> (*<span class="org-variable-name">destroy</span>)(<span class="org-type">void</span> *<span class="org-variable-name">data</span>))
+{
+    list_init(set, destroy);
+    set-&gt;match = match;
+
+    <span class="org-keyword">return</span>;
+}
+</pre>
+</div>
+</div>
+</li>
+<li>插入元素<br  /><div class="outline-text-5" id="text-5-1-2-2">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">set_insert</span>(<span class="org-type">Set</span> *<span class="org-variable-name">set</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">data</span>)
+{
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#19981;&#20801;&#35768;&#37325;&#22797;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">if</span> (set_is_member(set, data))
+        <span class="org-keyword">return</span> 1;
+
+    <span class="org-keyword">return</span> list_ins_next(set, list_tail(set), data);
+}
+</pre>
+</div>
+</div>
+</li>
+<li>移除元素<br  /><div class="outline-text-5" id="text-5-1-2-3">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">set_remove</span>(<span class="org-type">Set</span> *<span class="org-variable-name">set</span>, <span class="org-type">void</span> **<span class="org-variable-name">data</span>)
+{
+    <span class="org-type">ListElmt</span> *<span class="org-variable-name">member</span>, *<span class="org-variable-name">prev</span>;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#26597;&#25214;&#35201;&#31227;&#38500;&#30340;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+    prev = <span class="org-constant">NULL</span>;
+    <span class="org-keyword">for</span> (member = list_head(set); member != <span class="org-constant">NULL</span>; member = list_next(member)) {
+        <span class="org-keyword">if</span> (set-&gt;match(*data, list_data(member)))
+            <span class="org-keyword">break</span>;
+        prev = member;
+    }
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#26410;&#25214;&#21040;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">if</span> (member == <span class="org-constant">NULL</span>)
+        <span class="org-keyword">return</span> -1;
+
+    <span class="org-keyword">return</span> list_rem_next(set, prev, data);
+}
+</pre>
+</div>
+</div>
+</li>
+<li>并集<br  /><div class="outline-text-5" id="text-5-1-2-4">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">set_union</span>(<span class="org-type">Set</span> *<span class="org-variable-name">setu</span>, <span class="org-keyword">const</span> <span class="org-type">Set</span> *<span class="org-variable-name">set1</span>, <span class="org-keyword">const</span> <span class="org-type">Set</span> *<span class="org-variable-name">set2</span>)
+{
+    <span class="org-type">ListElmt</span> *<span class="org-variable-name">member</span>;
+    <span class="org-type">void</span>     *<span class="org-variable-name">data</span>;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#21021;&#22987;&#21270;&#32467;&#26524;&#38598;&#21512; </span><span class="org-comment-delimiter">*/</span>
+    set_init(setu, set1-&gt;match, <span class="org-constant">NULL</span>);
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#25554;&#20837;&#31532;&#19968;&#20010;&#38598;&#21512;&#30340;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">for</span> (member = list_head(set1); member != <span class="org-constant">NULL</span>; member = list_next(member)) {
+        data = list_data(member);
+        <span class="org-keyword">if</span> (list_ins_next(setu, list_tail(setu), data) != 0) {
+            set_destroy(setu);
+            <span class="org-keyword">return</span> -1;
+        }
+    }
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#25554;&#20837;&#31532;&#20108;&#20010;&#38598;&#21512;&#30340;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">for</span> (member = list_head(set2); member != <span class="org-constant">NULL</span>; member = list_next(member)) {
+        <span class="org-keyword">if</span> (set_is_member(set1, list_data(member))) {
+            <span class="org-comment-delimiter">/* </span><span class="org-comment">&#36339;&#36807;&#37325;&#22797;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+            <span class="org-keyword">continue</span>;
+
+        } <span class="org-keyword">else</span> {
+            data = list_data(member);
+            <span class="org-keyword">if</span> (list_ins_next(setu, list_tail(setu), data) != 0) {
+                set_destroy(setu);
+                <span class="org-keyword">return</span> -1;
+            }
+        }
+    }
+
+    <span class="org-keyword">return</span> 0;
+}
+</pre>
+</div>
+</div>
+</li>
+<li>交集<br  /><div class="outline-text-5" id="text-5-1-2-5">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">set_intersection</span>(<span class="org-type">Set</span> *<span class="org-variable-name">seti</span>, <span class="org-keyword">const</span> <span class="org-type">Set</span> *<span class="org-variable-name">set1</span>, <span class="org-keyword">const</span> <span class="org-type">Set</span> *<span class="org-variable-name">set2</span>)
+{
+    <span class="org-type">ListElmt</span> *<span class="org-variable-name">member</span>;
+    <span class="org-type">void</span>     *<span class="org-variable-name">data</span>;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#21021;&#22987;&#21270;&#32467;&#26524;&#38598;&#21512; </span><span class="org-comment-delimiter">*/</span>
+    set_init(seti, set1-&gt;match, <span class="org-constant">NULL</span>);
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#25554;&#20837;&#20004;&#20010;&#38598;&#21512;&#20013;&#20849;&#26377;&#30340;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">for</span> (member = list_head(set1); member != <span class="org-constant">NULL</span>; member = list_next(member)) {
+        <span class="org-keyword">if</span> (set_is_member(set2, list_data(member))) {
+            data = list_data(member);
+            <span class="org-keyword">if</span> (list_ins_next(seti, list_tail(seti), data) != 0) {
+                set_destroy(seti);
+                <span class="org-keyword">return</span> -1;
+            }
+        }
+    }
+
+    <span class="org-keyword">return</span> 0;
+}
+</pre>
+</div>
+</div>
+</li>
+<li>差集<br  /><div class="outline-text-5" id="text-5-1-2-6">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">set_difference</span>(<span class="org-type">Set</span> *<span class="org-variable-name">setd</span>, <span class="org-keyword">const</span> <span class="org-type">Set</span> *<span class="org-variable-name">set1</span>, <span class="org-keyword">const</span> <span class="org-type">Set</span> *<span class="org-variable-name">set2</span>)
+{
+    <span class="org-type">ListElmt</span> *<span class="org-variable-name">member</span>;
+    <span class="org-type">void</span>     *<span class="org-variable-name">data</span>;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#21021;&#22987;&#21270;&#32467;&#26524;&#38598;&#21512; </span><span class="org-comment-delimiter">*/</span>
+    set_init(setd, set1-&gt;match, <span class="org-constant">NULL</span>);
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#25554;&#20837;&#31532;&#19968;&#20010;&#38598;&#21512;&#20013;&#65292;&#19981;&#23646;&#20110;&#31532;&#20108;&#20010;&#38598;&#21512;&#30340;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">for</span> (member = list_head(set1); member != <span class="org-constant">NULL</span>; member = list_next(member)) {
+        <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>set_is_member(set2, list_data(member))) {
+            data = list_data(member);
+            <span class="org-keyword">if</span> (list_ins_next(setd, list_tail(setd), data) != 0) {
+                set_destroy(setd);
+                <span class="org-keyword">return</span> -1;
+            }
+        }
+    }
+
+    <span class="org-keyword">return</span> 0;
+}
+</pre>
+</div>
+</div>
+</li>
+<li>成员判断<br  /><div class="outline-text-5" id="text-5-1-2-7">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">set_is_member</span>(<span class="org-keyword">const</span> <span class="org-type">Set</span> *<span class="org-variable-name">set</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">data</span>)
+{
+    <span class="org-type">ListElmt</span> *<span class="org-variable-name">member</span>;
+
+    <span class="org-keyword">for</span> (member = list_head(set); member != <span class="org-constant">NULL</span>; member = list_next(member)) {
+        <span class="org-keyword">if</span> (set-&gt;match(data, list_data(member)))
+            <span class="org-keyword">return</span> 1;
+    }
+
+    <span class="org-keyword">return</span> 0;
+}
+</pre>
+</div>
+</div>
+</li>
+<li>子集判断<br  /><div class="outline-text-5" id="text-5-1-2-8">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">set_is_subset</span>(<span class="org-keyword">const</span> <span class="org-type">Set</span> *<span class="org-variable-name">set1</span>, <span class="org-keyword">const</span> <span class="org-type">Set</span> *<span class="org-variable-name">set2</span>)
+{
+    <span class="org-type">ListElmt</span> *<span class="org-variable-name">member</span>;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#20808;&#36890;&#36807;&#38598;&#21512;&#22823;&#23567;&#36827;&#34892;&#21028;&#26029; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">if</span> (set_size(set1) &gt; set_size(set2))
+        <span class="org-keyword">return</span> 0;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#36941;&#21382;&#31532;&#19968;&#20010;&#38598;&#21512;&#30340;&#20803;&#32032;&#65292;&#21028;&#26029;&#26159;&#21542;&#23646;&#20110;&#31532;&#20108;&#20010;&#38598;&#21512; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">for</span> (member = list_head(set1); member != <span class="org-constant">NULL</span>; member = list_next(member)) {
+        <span class="org-keyword">if</span> (<span class="org-negation-char">!</span>set_is_member(set2, list_data(member)))
+            <span class="org-keyword">return</span> 0;
+    }
+
+    <span class="org-keyword">return</span> 1;
+}
+</pre>
+</div>
+</div>
+</li>
+<li>等集判断<br  /><div class="outline-text-5" id="text-5-1-2-9">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">set_is_equal</span>(<span class="org-keyword">const</span> <span class="org-type">Set</span> *<span class="org-variable-name">set1</span>, <span class="org-keyword">const</span> <span class="org-type">Set</span> *<span class="org-variable-name">set2</span>)
+{
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#20808;&#36890;&#36807;&#38598;&#21512;&#22823;&#23567;&#36827;&#34892;&#21028;&#26029; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">if</span> (set_size(set1) != set_size(set2))
+        <span class="org-keyword">return</span> 0;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#22823;&#23567;&#30456;&#31561;&#19988;&#31532;&#19968;&#20010;&#38598;&#21512;&#20026;&#31532;&#20108;&#20010;&#38598;&#21512;&#30340;&#23376;&#38598;&#65292;&#21017;&#38598;&#21512;&#30456;&#31561; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">return</span> set_is_subset(set1, set2);
+}
+</pre>
+</div>
+</div>
+</li></ol>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> 哈希表</h2>
+<div class="outline-text-2" id="text-6">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>优点</b></th>
+<th scope="col" class="left">插入、查找操作接近常量时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>缺点</b></td>
+<td class="left">基于数组，创建后大小固定，难以扩展</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">难以对数据进行有序遍历</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">一些哈希表被基本填满时，性能下降</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> 哈希方法</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+从关键字获得哈希地址的方法。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">直接定址法</th>
+<th scope="col" class="left">以每行唯一的数字值作为关键字，如 ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">数字分析法</td>
+<td class="left">以某列数字值的一部分作为关键字，如手机号后四位</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">平方取中法</td>
+<td class="left">取关键字平方后的中间几位</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">折叠法</td>
+<td class="left">将关键字分段，取这几部分的叠加和</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">除留余数法</td>
+<td class="left">取关键字被某个不大于哈希表表长的数除后所得余数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">随机数法</td>
+<td class="left">选择一个随机函数，取关键字的随机函数值</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> 冲突</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+不同的关键字可能得到同一哈希地址。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">开放地址法</th>
+<th scope="col" class="left">产生冲突时，在目标地址之后寻找空位存放数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">链地址法</td>
+<td class="left">数组不存放数据，而是存放数据链表，产生冲突时，在链表尾部加入新数据</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-6-3" class="outline-3">
+<h3 id="sec-6-3"><span class="section-number-3">6.3</span> 链式哈希表 C 实现</h3>
+<div class="outline-text-3" id="text-6-3">
+</div><div id="outline-container-sec-6-3-1" class="outline-4">
+<h4 id="sec-6-3-1"><span class="section-number-4">6.3.1</span> <code>chtbl.h</code></h4>
+<div class="outline-text-4" id="text-6-3-1">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-preprocessor">#if</span><span class="org-negation-char"><span class="org-preprocessor">n</span></span><span class="org-preprocessor">def</span> CHTBL_H
+
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">CHTBL_H</span>
+
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdlib.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">"list.h"</span>
+
+<span class="org-keyword">typedef</span> <span class="org-keyword">struct</span> <span class="org-type">CHTbl_</span> {
+    <span class="org-type">int</span>  <span class="org-variable-name">buckets</span>;                <span class="org-comment-delimiter">// </span><span class="org-comment">&#26742;&#30340;&#20010;&#25968;</span>
+    <span class="org-type">int</span>  (*<span class="org-function-name">h</span>)(<span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">key</span>);  <span class="org-comment-delimiter">// </span><span class="org-comment">&#21704;&#24076;&#20989;&#25968;</span>
+    <span class="org-type">int</span>  (*<span class="org-function-name">match</span>)(<span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">key1</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">key2</span>); <span class="org-comment-delimiter">// </span><span class="org-comment">&#21028;&#26029;&#38190;&#26159;&#21542;&#21305;&#37197;&#30340;&#20989;&#25968;</span>
+    <span class="org-type">void</span> (*<span class="org-function-name">destroy</span>)(<span class="org-type">void</span> *<span class="org-variable-name">data</span>); <span class="org-comment-delimiter">// </span><span class="org-comment">&#38144;&#27585;&#26742;&#30340;&#20989;&#25968;</span>
+    <span class="org-type">int</span>  <span class="org-variable-name">size</span>;                   <span class="org-comment-delimiter">// </span><span class="org-comment">&#34920;&#20013;&#20803;&#32032;&#25968;</span>
+    <span class="org-type">List</span> *<span class="org-variable-name">table</span>;                 <span class="org-comment-delimiter">// </span><span class="org-comment">&#26742;&#38142;&#34920;</span>
+} <span class="org-type">CHTbl</span>;
+
+<span class="org-type">int</span> <span class="org-function-name">chtbl_init</span>(
+    <span class="org-type">CHTbl</span> *<span class="org-variable-name">htbl</span>,
+    <span class="org-type">int</span> <span class="org-variable-name">buckets</span>,
+    <span class="org-type">int</span> (*<span class="org-variable-name">h</span>)(<span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">key</span>),
+    <span class="org-type">int</span> (*<span class="org-variable-name">match</span>)(<span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">key1</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">key2</span>),
+    <span class="org-type">void</span> (*<span class="org-variable-name">destroy</span>)(<span class="org-type">void</span> *<span class="org-variable-name">data</span>));
+<span class="org-type">void</span> <span class="org-function-name">chtbl_destroy</span>(<span class="org-type">CHTbl</span> *<span class="org-variable-name">htbl</span>);
+<span class="org-type">int</span> <span class="org-function-name">chtbl_insert</span>(<span class="org-type">CHTbl</span> *<span class="org-variable-name">htbl</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">data</span>);
+<span class="org-type">int</span> <span class="org-function-name">chtbl_remove</span>(<span class="org-type">CHTbl</span> *<span class="org-variable-name">htbl</span>, <span class="org-type">void</span> **<span class="org-variable-name">data</span>);
+<span class="org-type">int</span> <span class="org-function-name">chtbl_lookup</span>(<span class="org-keyword">const</span> <span class="org-type">CHTbl</span> *<span class="org-variable-name">htbl</span>, <span class="org-type">void</span> **<span class="org-variable-name">data</span>);
+
+<span class="org-preprocessor">#define</span> <span class="org-function-name">chtbl_size</span>(<span class="org-variable-name">htbl</span>) ((htbl)-&gt;size)
+
+<span class="org-preprocessor">#endif</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-3-2" class="outline-4">
+<h4 id="sec-6-3-2"><span class="section-number-4">6.3.2</span> <code>chtbl.c</code></h4>
+<div class="outline-text-4" id="text-6-3-2">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdlib.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;string.h&gt;</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">"list.h"</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">"chtbl.h"</span>
+</pre>
+</div>
+</div>
+
+<ol class="org-ol"><li>初始化<br  /><div class="outline-text-5" id="text-6-3-2-1">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">chtbl_init</span>(
+    <span class="org-type">CHTbl</span> *<span class="org-variable-name">htbl</span>,
+    <span class="org-type">int</span> <span class="org-variable-name">buckets</span>,
+    <span class="org-type">int</span> (*<span class="org-variable-name">h</span>)(<span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">key</span>),
+    <span class="org-type">int</span> (*<span class="org-variable-name">match</span>)(<span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">key1</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">key2</span>),
+    <span class="org-type">void</span> (*<span class="org-variable-name">destroy</span>)(<span class="org-type">void</span>*<span class="org-variable-name">data</span>))
+{
+    <span class="org-type">int</span> <span class="org-variable-name">i</span>;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#20026;&#26742;&#20998;&#37197;&#31354;&#38388; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">if</span> ((htbl-&gt;table = (<span class="org-type">List</span> *)malloc(buckets * <span class="org-keyword">sizeof</span>(List))) == <span class="org-constant">NULL</span>)
+        <span class="org-keyword">return</span> -1;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#21021;&#22987;&#21270;&#26742; </span><span class="org-comment-delimiter">*/</span>
+    htbl-&gt;buckets = buckets;
+    <span class="org-keyword">for</span> (i = 0; i &lt; htbl-&gt;buckets; i++)
+        list_init(&amp;htbl-&gt;table[i], destroy);
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#23553;&#35013;&#20989;&#25968; </span><span class="org-comment-delimiter">*/</span>
+    htbl-&gt;h = h;
+    htbl-&gt;match = match;
+    htbl-&gt;destroy = destroy;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#21021;&#22987;&#21270;&#20803;&#32032;&#20010;&#25968; </span><span class="org-comment-delimiter">*/</span>
+    htbl-&gt;size = 0;
+
+    <span class="org-keyword">return</span> 0;
+}
+</pre>
+</div>
+</div>
+</li>
+
+<li>销毁<br  /><div class="outline-text-5" id="text-6-3-2-2">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">void</span> <span class="org-function-name">chtbl_destroy</span>(<span class="org-type">CHTbl</span> *<span class="org-variable-name">htbl</span>)
+{
+    <span class="org-type">int</span> <span class="org-variable-name">i</span>;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#38144;&#27585;&#26742; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">for</span> (i = 0; i &lt; htbl-&gt;buckets; i++) {
+        list_destroy(&amp;htbl-&gt;table[i]);
+    }
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#37322;&#25918;&#20869;&#23384; </span><span class="org-comment-delimiter">*/</span>
+    free(htbl-&gt;table);
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#28165;&#31354;&#32467;&#26500; </span><span class="org-comment-delimiter">*/</span>
+    memset(htbl, 0, <span class="org-keyword">sizeof</span>(CHTbl));
+
+    <span class="org-keyword">return</span>;
+}
+</pre>
+</div>
+</div>
+</li>
+
+<li>插入元素<br  /><div class="outline-text-5" id="text-6-3-2-3">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">chtbl_insert</span>(<span class="org-type">CHTbl</span> *<span class="org-variable-name">htbl</span>, <span class="org-keyword">const</span> <span class="org-type">void</span> *<span class="org-variable-name">data</span>)
+{
+    <span class="org-type">void</span> *<span class="org-variable-name">temp</span>;
+    <span class="org-type">int</span> <span class="org-variable-name">bucket</span>, <span class="org-variable-name">retval</span>;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#26816;&#26597;&#20803;&#32032;&#26159;&#21542;&#37325;&#22797; </span><span class="org-comment-delimiter">*/</span>
+    temp = (<span class="org-type">void</span> *)data;
+    <span class="org-keyword">if</span> (chtbl_lookup(htbl, &amp;temp) == 0)
+        <span class="org-keyword">return</span> 1;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#23558;&#38190;&#25955;&#21015;&#21270; </span><span class="org-comment-delimiter">*/</span>
+    bucket = htbl-&gt;h(data) % htbl-&gt;buckets;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#23558;&#20803;&#32032;&#25554;&#20837;&#30456;&#24212;&#30340;&#26742; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">if</span> ((retval = list_ins_next(&amp;htbl-&gt;table[bucket], <span class="org-constant">NULL</span>, data)) == 0)
+        htbl-&gt;size++;
+
+    <span class="org-keyword">return</span> retval;
+}
+</pre>
+</div>
+</div>
+</li>
+
+<li>删除元素<br  /><div class="outline-text-5" id="text-6-3-2-4">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">chtbl_remove</span>(<span class="org-type">CHTbl</span> *<span class="org-variable-name">htbl</span>, <span class="org-type">void</span> **<span class="org-variable-name">data</span>)
+{
+    <span class="org-type">ListElmt</span> *<span class="org-variable-name">element</span>, *<span class="org-variable-name">prev</span>;
+    <span class="org-type">int</span> <span class="org-variable-name">bucket</span>;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#23558;&#38190;&#25955;&#21015;&#21270; </span><span class="org-comment-delimiter">*/</span>
+    bucket = htbl-&gt;h(*data) % htbl-&gt;buckets;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#32500;&#25252;&#19968;&#20010;&#25351;&#21521;&#24453;&#21024;&#38500;&#20803;&#32032;&#30340;&#25351;&#38024; </span><span class="org-comment-delimiter">*/</span>
+    prev = <span class="org-constant">NULL</span>;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#36941;&#21382;&#26742;&#20013;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">for</span> (element = list_head(&amp;htbl-&gt;table[bucket]); element != <span class="org-constant">NULL</span>; element = list_next(element)) {
+        <span class="org-keyword">if</span> (htbl-&gt;match(*data, list_data(element))) {
+            <span class="org-comment-delimiter">/* </span><span class="org-comment">&#21024;&#38500;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+            <span class="org-keyword">if</span> (list_rem_next(&amp;htbl-&gt;table[bucket], prev, data) == 0) {
+                htbl-&gt;size--;
+                <span class="org-keyword">return</span> 0;
+            } <span class="org-keyword">else</span> {
+                <span class="org-keyword">return</span> -1;
+            }
+        }
+        prev = element;
+    }
+
+    <span class="org-keyword">return</span> -1;
+}
+</pre>
+</div>
+</div>
+</li>
+
+<li>查找元素<br  /><div class="outline-text-5" id="text-6-3-2-5">
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-function-name">chtbl_lookup</span>(<span class="org-keyword">const</span> <span class="org-type">CHTbl</span> *<span class="org-variable-name">htbl</span>, <span class="org-type">void</span> **<span class="org-variable-name">data</span>)
+{
+    <span class="org-type">ListElmt</span> *<span class="org-variable-name">element</span>;
+    <span class="org-type">int</span> <span class="org-variable-name">bucket</span>;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#23558;&#38190;&#25955;&#21015;&#21270; </span><span class="org-comment-delimiter">*/</span>
+    bucket = htbl-&gt;h(*data) % htbl-&gt;buckets;
+
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">&#36941;&#21382;&#26742;&#20013;&#20803;&#32032; </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">for</span> (element = list_head(&amp;htbl-&gt;table[bucket]); element != <span class="org-constant">NULL</span>; element = list_next(element)) {
+        <span class="org-keyword">if</span> (htbl-&gt;match(*data, list_data(element))) {
+            <span class="org-comment-delimiter">/* </span><span class="org-comment">&#36820;&#22238;&#34920;&#20013;&#25968;&#25454; </span><span class="org-comment-delimiter">*/</span>
+            *data = list_data(element);
+            <span class="org-keyword">return</span> 0;
+        }
+    }
+
+    <span class="org-keyword">return</span> -1;
+}
+</pre>
+</div>
+</div>
+</li></ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> 树</h2>
+<div class="outline-text-2" id="text-7">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">二叉查找树</th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">平衡二叉树（AVL 树）</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">红黑树</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">B- 树</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">B+ 树</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">字典树（trie）</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> 遍历</h3>
+<div class="outline-text-3" id="text-7-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> 深度优先遍历</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">先序（pre-order）</th>
+<th scope="col" class="left">根 → 左 → 右</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">中序（in-order）</td>
+<td class="left">左 → 根 → 右</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">后序（post-order）</td>
+<td class="left">左 → 右 → 根</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-7-2" class="outline-3">
+<h3 id="sec-7-2"><span class="section-number-3">7.2</span> B- 树</h3>
+<div class="outline-text-3" id="text-7-2">
+<ul class="org-ul">
+<li>常用于磁盘等存储设备的一种平衡查找树；
+</li>
+<li>每个叶子节点到达根节点的距离都一样；
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> 堆</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+又称优先队列（priority queue）。通常是可以被看做「树」的数组，表示为二叉树时，每个节点的值都大于或小于它的子节点的值。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left"><b>Heapify</b></th>
+<th scope="col" class="left"><b>查找极值</b></th>
+<th scope="col" class="left"><b>分离极值</b></th>
+<th scope="col" class="left"><b>提升键</b></th>
+<th scope="col" class="left"><b>插入</b></th>
+<th scope="col" class="left"><b>删除</b></th>
+<th scope="col" class="left"><b>合并</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Linked_list">Linked list (sorted)</a></td>
+<td class="left">-</td>
+<td class="left">$O(1)$</td>
+<td class="left">$O(1)$</td>
+<td class="left">$O(n)$</td>
+<td class="left">$O(n)$</td>
+<td class="left">$O(1)$</td>
+<td class="left">$O(m+n)$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Linked_list">Linked list (unsorted)</a></td>
+<td class="left">-</td>
+<td class="left">$O(n)$</td>
+<td class="left">$O(n)$</td>
+<td class="left">$O(1)$</td>
+<td class="left">$O(1)$</td>
+<td class="left">$O(1)$</td>
+<td class="left">$O(1)$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Binary_heap">Binary heap</a></td>
+<td class="left">$O(n)$</td>
+<td class="left">$O(1)$</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">$O(m+n)$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Binomial_heap">Binomial Heap</a></td>
+<td class="left">-</td>
+<td class="left">$O(1)$</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">$O(1)$</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">$O(\log{n})$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Fibonacci_heap">Fibonacci heap</a></td>
+<td class="left">-</td>
+<td class="left">$O(1)$</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">$O(1)$</td>
+<td class="left">$O(1)$</td>
+<td class="left">$O(\log{n})$</td>
+<td class="left">$O(1)$</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> 图</h2>
+<div class="outline-text-2" id="text-9">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left"><b>存储</b></th>
+<th scope="col" class="left"><b>增加顶点</b></th>
+<th scope="col" class="left"><b>移除顶点</b></th>
+<th scope="col" class="left"><b>增加边界</b></th>
+<th scope="col" class="left"><b>移除边界</b></th>
+<th scope="col" class="left"><b>查询</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Adjacency_list">Adjacency list</a>（无向）</td>
+<td class="left">$O(V+E)$</td>
+<td class="left">$O(1)$</td>
+<td class="left">$O(V+E)$</td>
+<td class="left">$O(1)$</td>
+<td class="left">$O(E)$</td>
+<td class="left">$O(V)$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Incidence_list">Incidence list</a>（有向）</td>
+<td class="left">$O(V+E)$</td>
+<td class="left">$O(1)$</td>
+<td class="left">$O(E)$</td>
+<td class="left">$O(1)$</td>
+<td class="left">$O(E)$</td>
+<td class="left">$O(E)$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Adjacency_matrix">Adjacency matrix</a></td>
+<td class="left">$O(V^2)$</td>
+<td class="left">$O(V^2)$</td>
+<td class="left">$O(V^2)$</td>
+<td class="left">$O(1)$</td>
+<td class="left">$O(1)$</td>
+<td class="left">$O(1)$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="http://en.wikipedia.org/wiki/Incidence_matrix">Incidence matrix</a></td>
+<td class="left">$O(VE)$</td>
+<td class="left">$O(VE)$</td>
+<td class="left">$O(VE)$</td>
+<td class="left">$O(VE)$</td>
+<td class="left">$O(VE)$</td>
+<td class="left">$O(E)$</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> 链接</h2>
+<div class="outline-text-2" id="text-10">
+<ol class="org-ol">
+<li><a href="http://opendatastructures.org/ods-cpp/">Open Data Structures (in C++)</a>
+</li>
+<li><a href="http://www.techug.com/post/bigo-cheatsheet.html">算法复杂度速查表</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2017-02-23 Thu 10:57</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,187 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Latex
+
+* TikZ
+** 单位
+
+| =cm= |   |
+|------+---|
+| =em= |   |
+|------+---|
+| =ex= |   |
+|------+---|
+| =pt= |   |
+
+** =\draw=
+
+#+BEGIN_SRC text
+\draw [<style>, ...] <path>/<shape>;
+#+END_SRC
+
+#+CAPTION: =<style>=
+| 颜色 | =<color>=            |
+|------+----------------------|
+| 粗细 | =thick= =very thick= |
+|      | =thin= =very thin=   |
+|------+----------------------|
+| 样式 | =dashed= =dotted=    |
+
+#+CAPTION: =<path>=
+| 坐标     | =(<x>,<y>) -- (<x>,<y>) -- ...= |
+|----------+---------------------------------|
+| 闭合路径 | =(<x>, <y>) -- ... cycle=       |
+
+** =\fill=
+
+#+BEGIN_SRC text
+\fill [<style>, ...] <shape>
+#+END_SRC
+
+#+CAPTION: =<style>=
+| 颜色 | =<color>=                       |
+|      | =<color_1>!<percent>!<color_2>= |
+|------+---------------------------------|
+| 边框 | =draw=<color>=                  |
+
+** =\def=
+
+#+BEGIN_SRC text
+\def\<name> at (#1,#2) {<command>}
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC text
+\def\mirror at (#1,#2) {\draw (#1,#2) rectangle ++(2,2);}
+\begin{tikzpicture}
+\mirror at (1,2)
+\mirror at (2,4)
+\end{tikzpicture}
+#+END_SRC
+
+** =\tikzstyle=
+
+#+CAPTION: 定义 1
+#+BEGIN_SRC text
+\tikzset{
+  <class>/.style={<attr>=<value>, ...}
+}
+#+END_SRC
+
+#+CAPTION: 定义 2
+#+BEGIN_SRC text
+\tikzstyle {<class>} = [<attr>=<value>, ...]
+#+END_SRC
+
+#+CAPTION: 特殊类
+| =every *= | =node=  |
+|           | =label= |
+
+*** 属性
+
+|                          | *含义*   | *可选值*               |
+|--------------------------+----------+------------------------|
+| *外观*                   |          |                        |
+|--------------------------+----------+------------------------|
+| =<shape>=                |          | =rectangle= etc.       |
+|--------------------------+----------+------------------------|
+| *边框*                   |          |                        |
+|--------------------------+----------+------------------------|
+| =draw=                   |          |                        |
+|--------------------------+----------+------------------------|
+| =draw=<style>=           |          | =dashed= =none= etc.   |
+|--------------------------+----------+------------------------|
+| =draw=<color>=           |          |                        |
+|--------------------------+----------+------------------------|
+| =<width>=                |          | =thick= etc.           |
+|--------------------------+----------+------------------------|
+| =rounded corners=<size>= |          |                        |
+|--------------------------+----------+------------------------|
+| *大小*                   |          |                        |
+|--------------------------+----------+------------------------|
+| =minimum size=<size>=    |          |                        |
+|--------------------------+----------+------------------------|
+| =minimum height=<size>=  |          |                        |
+|--------------------------+----------+------------------------|
+| =minimum width=<size>=   |          |                        |
+|--------------------------+----------+------------------------|
+| =inner sep=<size>=       |          |                        |
+|--------------------------+----------+------------------------|
+| *位置*                   |          |                        |
+|--------------------------+----------+------------------------|
+| =xshift=<size>=          | X 轴偏移 |                        |
+|--------------------------+----------+------------------------|
+| =yshift=<size>=          | Y 轴偏移 |                        |
+|--------------------------+----------+------------------------|
+| *颜色*                   |          |                        |
+|--------------------------+----------+------------------------|
+| =color=<color>=          | 文字颜色 |                        |
+|--------------------------+----------+------------------------|
+| =fill=<color>=           | 填充颜色 |                        |
+|--------------------------+----------+------------------------|
+| *文字*                   |          |                        |
+|--------------------------+----------+------------------------|
+| =font=<size>=            | 字体大小 | =\small= =\large=      |
+|--------------------------+----------+------------------------|
+| =font=<family>=          | 字体类型 | =\sffamily= Sans serif |
+|                          |          | =\ttfamily= Monospace  |
+|--------------------------+----------+------------------------|
+| =text width=<size>=      |          |                        |
+|--------------------------+----------+------------------------|
+| =text centered=          |          |                        |
+|--------------------------+----------+------------------------|
+| =label={}=               |          |                        |
+
+*** 示例
+
+#+CAPTION: 标签在右下角
+#+BEGIN_SRC text
+label={[shift={(-3ex,3ex)}]south east:#1}
+#+END_SRC
+
+** =\node=
+
+#+BEGIN_SRC text
+\node [<options>] (<name>) at (<x>,<y>) {<label>};
+#+END_SRC
+
+** =trees=
+*** 属性
+
+|                                    |   |
+|------------------------------------+---|
+| =anchor=<direction>=               |   |
+|------------------------------------+---|
+| =parent anchor=<direction>=        |   |
+|------------------------------------+---|
+| =growth parent anchor=<direction>= |   |
+|------------------------------------+---|
+| *间距*                             |   |
+|------------------------------------+---|
+| =level distance=<size>=            |   |
+|------------------------------------+---|
+| =sibling distance=<size>=          |   |
+
+* 数学公式
+
+| $\times$ | =\times=          |
+|----------+-------------------|
+| =~=      | =\textasciitilde= |
+|----------+-------------------|
+| $\ldots$ | =\ldots=          |
+
+file:../images/latex/01.gif
+
+file:../images/latex/02.gif
+
+file:../images/latex/03.gif
+
+file:../images/latex/04.gif
+
+* 链接
+
+1. [[https://www.sharelatex.com/blog/2013/08/27/tikz-series-pt1.html][Basic Drawing Using TikZ]]
+1. [[http://www.holoborodko.com/pavel/quicklatex/][QuickLaTeX]]
+1. [[https://en.wikibooks.org/wiki/LaTeX][WikiBooks LaTeX]]
+1. [[http://web.ift.uib.no/Teori/KURS/WRK/TeX/symALL.html][LaTeX Math Symbols]]
+1. [[http://texdoc.net/texmf-dist/doc/latex/amsmath/amsldoc.pdf][User's Guide for the =amsmath= Package]]
+1. [[http://orgmode.org/worg/org-contrib/babel/languages/ob-doc-LaTeX.html][LaTeX Source Code Blocks in Org Mode]]

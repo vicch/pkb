@@ -1,0 +1,475 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Understanding TypeScript
+
+* Get Started
+** Install TypeScript
+
+#+BEGIN_SRC sh
+npm install -g typescript
+#+END_SRC
+
+** Use TypeScript
+
+Create a simple TypeScript script:
+
+#+CAPTION: =script.ts=
+#+BEGIN_SRC typescript
+class Greeter {
+  greeting: string;
+  constructor(message: string) {
+    this.greeting = message;
+  }
+  greet() {
+    return "Hello, " + this.greeting;
+  }
+}
+
+let greeter = new Greeter("world");
+
+let button = document.createElement("button");
+button.textContent = "Say Hello";
+button.onclick = function() {
+  alert(greeter.greet());
+};
+
+document.body.appendChild(button);
+#+END_SRC
+
+Compile it to JavaScript:
+
+#+BEGIN_SRC sh
+tsc script.ts
+# Generates script.js
+#+END_SRC
+
+Embed the JavaScript file to an HTML document and see the effect.
+
+** Set Up the Course Workspace
+
+- [[https://www.npmjs.com/package/lite-server][npm | lite-server]]
+
+lite-server is a local dev server which loads latest files automatically. Install lite-server:
+
+#+BEGIN_SRC sh
+npm init
+npm install --save-dev lite-server
+#+END_SRC
+
+Add an npm command to start lite-server:
+
+#+CAPTION: =package.json=
+#+BEGIN_SRC js
+{
+  "scripts": {
+    "start": "lite-server"
+  }
+}
+#+END_SRC
+
+Create a simple =index.html= and start lite-server, which will open [[http://localhost:3000/]] in browser.
+
+-----
+
+Initialize the directory as TypeScript project: 
+
+#+BEGIN_SRC sh
+tsc --init
+# Generates tsconfig.json
+#+END_SRC
+
+Then command =tsc= will compile all TypeScript files in the directory, file names are not needed anymore.
+
+** Understand the Created JavaScript Code
+
+Once TypeScript is compiled into JavaScript, all the type notations are removed, the result code doesn't have type constraints. TypeScript only prevents type errors during the compiling process.
+
+* Using Types For A Better Code
+** Module Exercise
+
+Add types as explicitly as possible to this code:
+
+#+BEGIN_SRC typescript
+let bankAccount = {
+    money: 2000,
+    deposit(value) {
+        this.money += value;
+    }
+};
+ 
+let myself = {
+    name: "Max",
+    bankAccount: bankAccount,
+    hobbies: ["Sports", "Cooking"]
+};
+ 
+myself.bankAccount.deposit(3000);
+#+END_SRC
+
+Result:
+
+#+BEGIN_SRC typescript
+type BankAccount = {
+    money: number,
+    deposit: (value: number) => void
+};
+
+type User = {
+    name: string,
+    bankAccount: BankAccount,
+    hobbies: string[]
+};
+
+let account: BankAccount = {
+    money: 2000,
+    deposit(value: number): void {
+        this.money += value;
+    }
+};
+ 
+let me: User = {
+    name: "Max",
+    bankAccount: account,
+    hobbies: ["Sports", "Cooking"]
+};
+ 
+me.bankAccount.deposit(3000);
+#+END_SRC
+
+* TypeScript and ES6
+** The Spread and Rest Operators
+
+- [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax][MDN | JavaScript | Reference | Expressions & Operators | Spread Syntax]]
+- [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters][MDN | JavaScript | Reference | Functions | Rest Parameters]]
+
+#+BEGIN_SRC typescript
+const foo = (...args: string[]) => { // Rest
+  console.log(args);
+}
+let bar: string[] = ["b", "a", "r"];
+foo(...bar); // Spread
+#+END_SRC
+
+* Namespaces and Modules
+** Namespaces and Multiple Files
+
+When a namespace spreads across multiple files:
+
+- Compile the files individually and include all the =.js= files in HTML.
+- Compile the files into a single file by =tsc --outFile app.js foo.ts bar.ts ...=.
+- Use =/// <reference/>= notation to declare the dependencies among the files, and compile the entry file. Compiler will automatically include the referenced files.
+
+** Limitations of Namespaces
+
+When the application grow, dependencies become less maintainable by using namespaces which needs the =/// <reference/>= notation. Modules should be used in this scenario. 
+
+** Load Modules
+
+[[https://rollupjs.org/guide/en/][rollup.js]]
+
+The config file specifies the module standard to be used by the compiler:
+
+#+CAPTION: =tsconfig.json=
+#+BEGIN_SRC js
+{
+  "compilerOptions": {
+    "module": "commonjs"
+  }
+}
+#+END_SRC
+
+Regardless of the module standard, module importing won't work directly in browser. A module loader such as rollup.js needs to be used.
+
+-----
+
+Module usage example:
+
+#+CAPTION: =/foo/bar.ts=
+#+BEGIN_SRC typescript
+export const name = 'bar';
+export const bar = () => 'This is bar.';
+#+END_SRC
+
+#+CAPTION: =/app.ts=
+#+BEGIN_SRC typescript
+import { name, bar } from './foo/bar';
+console.log(name);
+console.log(bar());
+#+END_SRC
+
+-----
+
+Install rollup.js:
+
+#+BEGIN_SRC sh
+$ npm install --save-dev rollup
+#+END_SRC
+
+Update compiler config to use ES2015 module standard:
+
+#+CAPTION: =tsconfig.json=
+#+BEGIN_SRC js
+{
+  "compilerOptions": {
+    "module": "es2015"
+  }
+}
+#+END_SRC
+
+Add an npm script to invoke rollup.js after compiling TypeScript:
+
+#+CAPTION: =package.json=
+#+BEGIN_SRC js
+{
+  "scripts": {
+    "build": "tsc && rollup app.js --format iife --file app.js"
+  }
+}
+#+END_SRC
+
+Then to compile TypeScript:
+
+#+BEGIN_SRC sh
+$ npm run build
+#+END_SRC
+* Generics
+** Module Exercise
+
+Write a class that implements a generic map, which stores the given type of elements keyed by strings.
+
+#+BEGIN_SRC typescript
+class MyMap<T> {
+  private map: { [key: string]: T } = {};
+  setItem(key: string, value: T) {
+    this.map[key] = value;
+  }
+  getItem(key: string) {
+    return this.map[key];
+  }
+  clear() {
+    this.map = {};
+  }
+  print() {
+    for (let key in this.map) {
+      console.log(key + ':' + this.map[key]);
+    }
+  }
+}
+
+let map = new MyMap<number>();
+map.setItem('foo', 1);
+map.setItem('bar', 2);
+console.log(map.getItem('foo'));
+map.print();
+map.clear();
+#+END_SRC
+
+* Use JavaScript Libraries with TypeScript
+** Use jQuery
+
+Include a jQuery distribution file into HTML to make it available for the page. However it can't be used directly in TypeScript code, because =$= is not defined. One way to define it and get past compiling:
+
+#+BEGIN_SRC typescript
+declare var $: any;
+$('...'); // OK
+#+END_SRC
+
+** Understand Declaration Files
+
+TypeScript compiler loads automatically declaration files with =.d.ts= extensions. Declaration files are similar to header files, where global variables and functions can be defined and shared among all TypeScript files.
+
+#+CAPTION: =jquery.d.ts=
+#+BEGIN_SRC typescript
+declare var $: any;
+#+END_SRC
+
+** Use Public Type Definitions
+
+- [[http://definitelytyped.org/][DefinitelyTyped]]
+- [[https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/jquery][DefinitelyTyped | jQuery]]
+
+To install type definitions provided by DefinitelyTyped for jQuery:
+
+#+BEGIN_SRC sh
+$ npm init
+$ npm install --save-dev @types/jquery
+#+END_SRC
+
+TypeScript compiler will automatically pick up the type definitions under =node_modules/@types/jquery/=. The type definitions also enable IDE to provide type checks and auto completions.
+
+* TypeScript Workflows
+** Add TypeScript to Gulp Workflow
+
+- [[https://gulpjs.com/][gulp.js]]
+- [[https://www.npmjs.com/package/gulp-typescript][npm | gulp-typescript]]
+
+gulp.js is a build system. gulp-typescript is a plugin which wraps the TypeScript compiler via API.
+
+Install packages:
+
+#+BEGIN_SRC sh
+$ npm install --save-dev gulp gulp-typescript typescript
+#+END_SRC
+
+Create gulp config file:
+
+#+CAPTION: =gulpfile.js=
+#+BEGIN_SRC js
+var gulp = require('gulp');
+var ts = require('gulp-typescript');
+
+var tsProject = ts.createProject('tsconfig.json'); // Load compiler config
+
+gulp.task('typescript', function() {
+  return tsProject.src()      // Take all source files of the project
+    .pipe(tsProject())        // Compile with the loaded config
+    .pipe(gulp.dest('dist')); // Put the result somewhere
+});
+
+gulp.task('watch', function() {
+  gulp.watch('*.ts', gulp.series('typescript')); // Watch for *.ts files and run
+                                                 // the "typescript" task
+});
+
+gulp.task('default', gulp.series('watch')); // Run "watch" task by default
+#+END_SRC
+
+Add an npm script to run gulp:
+
+#+CAPTION: =package.json=
+#+BEGIN_SRC js
+{
+  "scripts": {
+    "build": "gulp"
+  }
+}
+#+END_SRC
+
+** Add TypeScript to Webpack Workflow
+
+- [[https://www.npmjs.com/package/webpack][npm | webpack]]
+- [[https://www.npmjs.com/package/ts-loader][npm | ts-loader]]
+
+Install packages:
+
+#+BEGIN_SRC sh
+$ npm install --save-dev webpack webpack-cli ts-loader
+#+END_SRC
+
+Create webpack config file:
+
+#+CAPTION: =webpack.config.js=
+#+BEGIN_SRC js
+module.exports = {
+  entry: './app.ts',
+  output: {
+    filename: './bundle.js'
+  },
+  module: {
+    rules: [
+      { test: /\.ts$/, loader: 'ts-loader' } // Use ts-loader for .ts files
+    ]
+  }
+}
+#+END_SRC
+
+Add an npm script to run webpack:
+
+#+CAPTION: =package.json=
+#+BEGIN_SRC js
+{
+  "scripts": {
+    "build": "webpack -d --watch",
+    "build:prod": "webpack -p"
+  }
+}
+#+END_SRC
+
+Importing of jQuery needs to be updated:
+
+#+BEGIN_SRC typescript
+import $ from 'jquery'; // Assuming @types/jquery is installed
+#+END_SRC
+* Use TypeScript with ReactJS
+** Project Setup
+
+Install packages and create project:
+
+#+BEGIN_SRC sh
+$ npm install -g create-react-app
+$ create-react-app ./react-app --scripts-version=react-scripts-ts
+#+END_SRC
+
+Start the app, changes will be watched:
+
+#+BEGIN_SRC sh
+$ cd react-app
+$ npm start
+#+END_SRC
+
+** User PropTypes
+
+Create a functional component:
+
+#+CAPTION: =src/Counter.tsx=
+#+BEGIN_SRC typescript
+import * as React from 'react';
+
+interface ICounterProps {
+  counter: number;
+}
+
+const counter = (props: ICounterProps) => <p>{props.counter}</p>;
+
+export default counter;
+#+END_SRC
+
+Use the component:
+
+#+CAPTION: =src/App.tsx=
+#+BEGIN_SRC typescript
+import Counter from './Counter';
+
+class App extends React.Component {
+  public render() {
+    return <Counter counter={1} />;
+  }
+}
+#+END_SRC
+
+** Type and Class Components
+
+Make the counter more functional by adding states and event handlers to the app:
+
+#+CAPTION: =src/App.tsx=
+#+BEGIN_SRC typescript
+interface IAppState {
+  counter: number;
+}
+
+class App extends React.Component<{}, IAppState> { // React.Component is a generic class
+  public state = { counter: 0 };
+
+  public render() {
+    return (
+      <Counter counter={this.state.counter} /> // Pass state to component
+      <button onClick={this.incrementHandler}>Increment</button>
+      <button onClick={this.decrementHandler}>Decrement</button>
+    );
+  }
+
+  private incrementHandler = () => {
+    this.setState(prevState => {
+      return { counter: prevState.counter + 1 };
+    });
+  }
+  private decrementHandler = () => {
+    this.setState(prevState => {
+      return { counter: prevState.counter - 1 };
+    });
+  }
+}
+#+END_SRC
+
+** Wrap Up
+
+- [[https://github.com/microsoft/TypeScript-React-Starter][GitHub | TypeScript-React-Starter]]

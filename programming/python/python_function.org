@@ -1,0 +1,916 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Python Function
+
+* 内置
+
+| *字符串*   | =chr()=      | 输入 ASCII 值，返回字符         |
+|            | =ord()=      | 输入字符，返回 ASCII 值         |
+|            | =repr()=     | 将对象转换为其字符串格式        |
+|------------+--------------+---------------------------------|
+| *序列*     | =len()=      |                                 |
+|            | =range()=    | 生成连续值序列                  |
+|            | =min()=      | 字面值最小的元素                |
+|            | =max()=      | 字面值最大的元素                |
+|------------+--------------+---------------------------------|
+| *序列迭代* | =sum()=      |                                 |
+|            | =map()=      | 对每个元素应用函数              |
+|            | =any()=      | 任何元素是 =True= 则返回 =True= |
+|------------+--------------+---------------------------------|
+| *序列排序* | =sorted()=   | 排序                            |
+|            | =reversed()= | 倒序                            |
+|------------+--------------+---------------------------------|
+| *文件*     | =file()=     |                                 |
+|            | =open()=     |                                 |
+
+** =any()=
+
+#+BEGIN_SRC python
+any ( iterable )
+#+END_SRC
+
+#+CAPTION: 检查字符串中是否存在数字字符
+#+BEGIN_SRC python
+hasdigit = any(map(str.isdigit, string))
+#+END_SRC
+
+** =file()=
+
+#+BEGIN_SRC python
+file(
+    name
+[,  mode
+[,  buffering
+]])
+#+END_SRC
+
+=file= 类型的构建方法，返回 =file= 类型实例。打开文件时建议使用 =open()= 。
+
+** =len()=
+
+#+BEGIN_SRC python
+len ( seq )
+#+END_SRC
+
+** =map()=
+
+#+BEGIN_SRC python
+map (
+    function
+,   iterable
+,   ...
+)
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+s = list(map(abs, [-1, 0, 1]))
+n, m = map(int, raw_input().split())
+#+END_SRC
+
+** =open()=
+
+#+BEGIN_SRC python
+open(
+    name
+[,  mode
+[,  buffering
+]])
+#+END_SRC
+
+以指定权限打开文件，返回 =file= 类型示例。
+
+#+CAPTION: =mode=
+| =r=  | 读默认值   |
+|------+------------|
+| =w=  | 覆盖写    |
+|------+------------|
+| =a=  | 追加写    |
+|------+------------|
+| =a+= | 读写       |
+|------+------------|
+| =B=  | 二进制文件 |
+
+#+BEGIN_SRC python
+fname = raw_input('Open file: ')
+fhandle = open(filename)
+print fhandle.read()
+fhanlde.close()
+#+END_SRC
+
+** =range()=
+
+#+BEGIN_SRC python
+range(stop) # 从 0 开始到 stop 为止，不包括 stop
+
+range(      # 指定开始和结束
+    start
+,   stop    # 不包括右边界
+[,  step
+])
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+range(10)         # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+range(0, 30, 5)   # [0, 5, 10, 15, 20, 25]
+range(0, -10, -1) # [0, -1, -2, -3, -4, -5, -6, -7, -8, -9]
+range(0)          # []
+#+END_SRC
+
+** =sum()=
+
+#+BEGIN_SRC python
+sum (
+    iterable,
+[,  start
+])
+#+END_SRC
+
+** =reversed()=
+
+#+BEGIN_SRC python
+reversed ( seq )
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+list(reversed(lst)) # 返回值是一个迭代器，需要包含在 list() 中
+#+END_SRC
+
+** =sorted()=
+
+#+BEGIN_SRC python
+sorted (
+    iterable
+[,  cmp
+[,  key
+[,  reverse
+]]])
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+new = sorted(lst, key=str.lower, reverse=True)
+new = sorted(lst, key=lambda i: i[1])
+#+END_SRC
+
+* 输出
+
+| =print=   |                          |
+|-----------+--------------------------|
+| =print()= | Python 3                 |
+|-----------+--------------------------|
+| =eval()=  |                          |
+|-----------+--------------------------|
+| =repr()=  | 取得对象的规范字符串表示 |
+
+
+#+BEGIN_SRC python
+print <pattern> % <arg>
+print <pattern> % (<arg>, ...)
+# Python 3
+print(<pattern> % <arg>)
+print(<pattern> % (<arg>, ...))
+#+END_SRC
+
+#+BEGIN_SRC python
+foo = 'My name is %s %s.' % ('Foo', 'Bar')
+print foo
+
+foo = 'Foo'
+bar = 'Bar'
+print 'My name is %s %s' % (foo, bar)
+
+foo = 'My name is %s %s.'
+bar = ('Foo', 'Bar')
+print foo % bar
+#+END_SRC
+
+** 占位符
+
+|              |          |           | 示例               |
+|--------------+----------+-----------+--------------------|
+| 字符串       | =%s=     |           |                    |
+|              | =%r=     | repr 形式 |                    |
+|--------------+----------+-----------+--------------------|
+| 字符         | =%c=     |           |                    |
+|--------------+----------+-----------+--------------------|
+| 十进制整数   | =%d=     |           |                    |
+|--------------+----------+-----------+--------------------|
+| 整数         | =%i=     |           |                    |
+|              | =%u=     | 无符号    |                    |
+|--------------+----------+-----------+--------------------|
+| 浮点十进制数 | =%f=     |           | =100000000.000000= |
+|              | =%.<n>f= | 指定精度  |                    |
+|              | =%F=     |           |                    |
+|--------------+----------+-----------+--------------------|
+| 浮点带精度   | =%e=     |           | =1.000000e+08=     |
+|              | =%E=     | 大写      | =1.000000E+08=     |
+|--------------+----------+-----------+--------------------|
+| 浮点不带精度 | =%g=     |           | =1e+08=            |
+|              | =%G=     | 大写      | =1E+08=            |
+|--------------+----------+-----------+--------------------|
+| 八进制整数   | =%o=     |           |                    |
+|--------------+----------+-----------+--------------------|
+| 十六进制整数 | =%x=     |           | =5f5e100=          |
+|              | =%X=     | 大写      | =5F5E100=          |
+
+** =eval()=
+
+#+BEGIN_SRC python
+eval (
+    expr
+[,  globals
+[,  locals
+]])
+#+END_SRC
+
+** =print=
+
+#+BEGIN_SRC python
+print <expr>, <expr>, ...
+#+END_SRC
+
+#+CAPTION: 用 @@html:<code>,</code>@@ 连接时，会自动使用空格分隔。
+#+BEGIN_SRC python
+print 'Foo bar', 1 + 2
+# Foo bar 3
+#+END_SRC
+
+#+CAPTION: 以 @@html:<code>,</code>@@ 结尾，避免自动换行。
+#+BEGIN_SRC python
+print 'Foo bar',
+...
+#+END_SRC
+
+** =print()=
+
+#+BEGIN_SRC python
+print (
+    expr, ... # 接受多个表达式
+,   sep       # 分隔符，默认为空格
+,   end       # 结尾字符，默认为换行
+,   file      # 默认为 sys.stdout
+)
+#+END_SRC
+
+#+CAPTION: 在 Python 2 中使用 =print()=
+#+BEGIN_SRC python
+from __future__ import print_function
+#+END_SRC
+
+#+CAPTION: 打印多个对象
+#+BEGIN_SRC python
+print(a + b, a - b, sep = '\n')
+#+END_SRC
+
+#+CAPTION: 打印序列
+#+BEGIN_SRC python
+print([1, 2, 3])  # 作为单个对象打印：[1, 2, 3]
+print(*[1, 2, 3]) # 作为多个对象打印：1 2 3
+#+END_SRC
+
+** =repr()=
+
+#+BEGIN_SRC python
+repr ( object )
+#+END_SRC
+
+- 同 =``= 。
+- 大多数时候， ~eval(repr(object)) == object~ 。
+
+* 输入
+
+| =input()=     | 提示用户输入 |
+|---------------+--------------|
+| =raw_input()= |              |
+
+** =input()=
+
+#+BEGIN_SRC python
+input([prompt])
+#+END_SRC
+
+=input()= 存在安全问题，避免使用。
+
+#+BEGIN_SRC python
+# Python 2 会对输入进行类型转换，等于 eval(raw_input())
+i = input("Enter a value: ") # 42
+type(i) # <type 'int'>
+
+# Python 3 不对输入进行类型转换，只存储为字符串
+i = input("Enter a value: ") # 42
+type(i) # <class 'str'>
+#+END_SRC
+
+** =raw_input()=
+
+#+BEGIN_SRC python
+raw_input([prompt])
+#+END_SRC
+
+#+BEGIN_SRC python
+value = raw_input('Input a value: ')
+#+END_SRC
+
+* 类型
+** =complex()=
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+a = complex('1+2j')
+#+END_SRC
+
+** =dict=
+
+#+BEGIN_SRC python
+class dict (
+    iterable
+,   **kwarg
+)
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+dct = dict(name='test', type='file') # 键（字面量）必须是字符串
+print dct
+# {'name': 'test', 'type': 'file'}
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+dct = dict([('name', 'test'), ('type', 'file')])
+print dct
+# {'name': 'test', 'type': 'file'}
+#+END_SRC
+
+** =float()=
+
+#+BEGIN_SRC python
+class float ( [x] )
+#+END_SRC
+
+** =int()=
+
+#+BEGIN_SRC python
+class int( x = 0 )
+#+END_SRC
+
+#+BEGIN_SRC python
+class int(
+    x
+,   base = 10
+)
+#+END_SRC
+
+** =isinstance()=
+
+#+BEGIN_SRC python
+bool isinstance (
+    object
+,   classinfo
+)
+#+END_SRC
+
+** =list()=
+
+#+BEGIN_SRC python
+class list([iterable])
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+lst = list('abc') # ['a', 'b', 'c']
+#+END_SRC
+
+** =set()=
+** =str()=
+
+#+BEGIN_SRC python
+class str(object = '')
+#+END_SRC
+
+** =tuple()=
+
+#+BEGIN_SRC python
+tuple([iterable])
+#+END_SRC
+
+** =type()=
+
+#+BEGIN_SRC python
+type type(object)
+#+END_SRC
+
+* 数字
+
+| =round()= |                            |
+|-----------+----------------------------|
+| =pow()=   |                            |
+|-----------+----------------------------|
+| =max()=   |                            |
+|-----------+----------------------------|
+| =min()=   |                            |
+|-----------+----------------------------|
+| =bin()=   | 返回数字的二进制字符串形式 |
+
+** =bin()=
+
+#+BEGIN_SRC python
+bin ( x )
+#+END_SRC
+
+** =round()=
+
+#+BEGIN_SRC python
+round (
+    number
+[,  ndigits
+])
+#+END_SRC
+
+* 字符串
+
+| *查找*   | =str.find()=       | 查找子字符串出现的首位置 ，不存在时返回 =-1=  |
+|          | =str.index()=      | 同 =str.find()= ，但不存在时返回 =ValueError= |
+|          | =str.count()=      | 查找指定字符出现次数                          |
+|----------+--------------------+-----------------------------------------------|
+| *操作*   | =str.replace()=    |                                               |
+|          | =str.translate()=  | 替换和移除字符                                |
+|          | =str.join()=       |                                               |
+|          | =str.split()=      |                                               |
+|          | =str.splitlines()= |                                               |
+|----------+--------------------+-----------------------------------------------|
+| *格式化* | =str.format()=     | 用值替换字符串中的占位符                      |
+|          | =str.upper()=      |                                               |
+|          | =str.lower()=      |                                               |
+|          | =str.title()=      |                                               |
+|          | =str.swapcase()=   | 交换大小写                                    |
+|          | =str.lstrip()=     | 移除指定字符，默认为空格                      |
+|          | =str.rstrip()=     |                                               |
+|          | =str.ljust()=      | 根据指定宽度左右对齐、居中，用指定字符填充    |
+|          | =str.rjust()=      |                                               |
+|          | =str.center()=     |                                               |
+|          | =str.encode()=     | 编码                                          |
+|----------+--------------------+-----------------------------------------------|
+| *测试*   | =str.startswith()= |                                               |
+|          | =str.endswith()=   |                                               |
+|          | =str.isalnum()=    |                                               |
+|          | =str.isalpha()=    | 测试不为空且全部字符为字母                    |
+|          | =str.isdigit()=    | 测试不为空且全部字符为数字                    |
+|          | =str.isupper()=    |                                               |
+|          | =str.islower()=    |                                               |
+
+** =str.count()=
+
+#+BEGIN_SRC python
+str.count(sub[, start[, end]])
+#+END_SRC
+
+Return the number of non-overlapping occurrences of substring =sub= in the range =[start, end]= interpreted as in slice notation.
+
+** =str.find=
+
+#+BEGIN_SRC python
+str.find(
+    sub
+[,  start
+[,  end
+]])
+#+END_SRC
+
+** =str.format()=
+
+#+BEGIN_SRC python
+str.format( 
+  arg, ...
+, **kwargs
+)
+#+END_SRC
+
+#+CAPTION: 格式化字符串
+#+BEGIN_SRC python
+'{<index>:<fill><align><width>.<precision><type>}'
+    <index>     # 数字，从 0 开始，对应参数
+    <fill>      # 填充字符，默认为空格
+    <align>     # 对齐方式
+        <       # 左对齐
+        >       # 右对齐
+    <width>     # 填充宽度，不足时使用填充字符
+    <precision> # 最大宽度
+    <type>      # 数据类型
+        d       # 十进制，默认类型
+        b       # 二进制
+        o       # 八进制
+        x       # 十六进制小写
+        X       # 十六进制大写
+        c       # 字符
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+"The sum of 1 + 2 is {0}".format(1 + 2)
+#+END_SRC
+
+#+CAPTION: 示例：打印十进制、八进制、十六进制、二进制形式
+#+BEGIN_SRC python
+print('{0:{1}d} {0:{1}o} {0:{1}X} {0:{1}b}'.format(number, width))
+#+END_SRC
+
+#+CAPTION: 示例：参数为序列
+#+BEGIN_SRC python
+print('{s[0]}, {s[1]}, {s}'.format(s = [1, 2]))
+# 1, 2, [1, 2]
+#+END_SRC
+
+** =str.join()=
+
+#+BEGIN_SRC python
+str.join(iterable)
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+lst = ['foo', 'bar']
+' '.join(lst) # foo bar
+# foo bar
+#+END_SRC
+
+** =str.replace()=
+
+#+BEGIN_SRC python
+str.replace(
+    old
+,   new
+[,  max
+])
+#+END_SRC
+
+** =str.split()=
+
+#+BEGIN_SRC python
+str.split(
+[   sep      # 默认为空格
+[,  maxsplit
+]])
+#+END_SRC
+
+** =str.splitlines()=
+
+#+BEGIN_SRC python
+str.splitlines(
+[   keepends # 是否保留换行符，默认不保留
+])
+#+END_SRC
+
+将字符串根据换行符分解为字符串列表，换行符包括 ="\r"= ="\n"= ="\r\n"= 。
+
+#+BEGIN_SRC python
+'ab c\n\nde fg\rkl\r\n'.splitlines()
+# ['ab c', '', 'de fg', 'kl']
+# 最后一个元素为空时被丢弃
+'ab c\n\nde fg\rkl\r\n'.splitlines(True)
+# ['ab c\n', '\n', 'de fg\r', 'kl\r\n']
+#+END_SRC
+
+** =str.translate()=
+
+#+BEGIN_SRC python
+str.translate(
+    table       # 转换映射
+[,  deletechars # 移除字符
+])
+#+END_SRC
+
+#+BEGIN_SRC python
+"read this short text".translate(None, "aeiou")
+# rd ths shrt txt
+#+END_SRC
+
+* 列表
+
+| *查找* | =list.count()=    | 查找指定元素出现次数         |
+|        | =list.index()=    | 查找指定元素出现的第一个位置 |
+|--------+-------------------+------------------------------|
+| *修改* | =list.append()=   | 添加元素                     |
+|        | =list.extend()=   | 添加元素（多个）             |
+|        | =list.insert()=   | 插入元素                     |
+|        | =list.pop()=      | 弹出元素                     |
+|        | =list.remove()=   | 移除指定值                   |
+|--------+-------------------+------------------------------|
+| *排序* | =list.sort()=     | 列表排序                     |
+|        | =list.reverse()=  | 列表倒序                     |
+
+** =list.sort()=
+
+#+BEGIN_SRC python
+list.sort(
+    cmp     # 比较方法
+,   key     #
+,   reverse # 倒序
+)
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+# l = [['a', 2], ['b', 1], ['c', 3]]
+# 按每个元素第二项倒序排序
+l.sort(cmp=lambda a, b: cmp(a[1], b[1]), reverse=True)
+# l = [['c', 3], ['a', 2], ['b', 1]]
+#+END_SRC
+
+** =list.remove()=
+
+移除首个出现的指定值。
+
+#+BEGIN_SRC python
+list.remove(x)
+#+END_SRC
+
+#+BEGIN_SRC python
+l = [1, 2, 3, 2, 1]
+l.remove(2) # [1, 3, 2, 1]
+#+END_SRC
+
+* 字典
+
+#+CAPTION: 内置
+| =zip()= | 将多个列表的元素合成为元组列表 |
+|---------+--------------------------------|
+|         |                                |
+
+| *读取* | =dict.keys()=  |                          |
+|        | =dict.values()= |                          |
+|        | =dict.items()= | 用键值对生成元组         |
+|        | =dict.get()=   | 读取键值                 |
+|--------+----------------+--------------------------|
+| *构建* | =dict.copy()=  |                          |
+|        | =dict.fromkeys()= |                          |
+|--------+----------------+--------------------------|
+| *修改* | =dict.update()= | 用键值对更新（覆盖）字典 |
+|        | =dict.pop()=   | 弹出键值对，返回值       |
+
+** =zip()=
+
+#+BEGIN_SRC python
+zip([iterable, ...])
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+foo = ['a', 'b']
+bar = [1, 2]
+dict(zip(foo, bar))
+# {'a': 1, 'b': 2}
+
+foo = [1, 2, 3]
+bar = ['a', 'b', 'c']
+baz = [[4, 5], [6, 7], [8, 9]]
+zip(foo, bar, baz)
+# [(1, 'a', [4, 5]), (2, 'b', [6, 7]), (3, 'c', [8, 9])]
+#+END_SRC
+
+** =dict.fromkeys()=
+
+#+BEGIN_SRC python
+dict.fromkeys (
+    seq
+[,  value
+])
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+dct = dict.fromkeys(['name', 'type'])
+print dct
+# {'name': None, 'type': None}
+#+END_SRC
+
+** =dict.get()=
+
+#+BEGIN_SRC python
+dict.get (
+    key
+[,  default
+])
+#+END_SRC
+
+* 集合
+
+|                                     | 运算符                        |                                       |
+|-------------------------------------+-------------------------------+---------------------------------------|
+| =set.add()=                         |                               | 添加单个元素                          |
+|-------------------------------------+-------------------------------+---------------------------------------|
+| =set.update()=                      | @@html:<code>&#124;=</code>@@ | 添加多个元素                          |
+|-------------------------------------+-------------------------------+---------------------------------------|
+| =set.discard()=                     |                               | 删除单个元素，不存在时不报错          |
+|-------------------------------------+-------------------------------+---------------------------------------|
+| =set.remove()=                      |                               | 删除单个元素，不存在时抛出 =KeyError= |
+|-------------------------------------+-------------------------------+---------------------------------------|
+| =set.pop()=                         |                               | 弹出随机元素，为空时抛出 =KeyError=   |
+|-------------------------------------+-------------------------------+---------------------------------------|
+| =set.union()=                       | @@html:<code>&#124;</code>@@  | 求并集                                |
+|-------------------------------------+-------------------------------+---------------------------------------|
+| =set.intersection()=                | =&=                           | 求交集                                |
+|-------------------------------------+-------------------------------+---------------------------------------|
+| =set.difference()=                  | =-=                           | 求差集                                |
+|-------------------------------------+-------------------------------+---------------------------------------|
+| =set.symmetric_difference()=        | =^=                           | 求异或集（并集减交集）                |
+|-------------------------------------+-------------------------------+---------------------------------------|
+| =set.intersection_update()=         | =&==                          |                                       |
+|-------------------------------------+-------------------------------+---------------------------------------|
+| =set.difference_update()=           | =-==                          |                                       |
+|-------------------------------------+-------------------------------+---------------------------------------|
+| =set.symmetric_difference_update()= | =^==                          |                                       |
+
+** =set.add()=
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+foo = {1, 2, 3}
+foo.add(4)
+foo.add('a')
+#+END_SRC
+
+** =set.update()=
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+foo = {1, 2, 3}
+foo.update([4, 5])
+foo.update({6, 7})
+foo.update({8, 9}, [10, 11])
+#+END_SRC
+
+* 文件
+
+|        | =file.close()=      |              |
+|--------+---------------------+--------------|
+| *读写* | =file.read()=       |              |
+|        | =file.readline()=   |              |
+|        | =file.write()=      |              |
+|        | =file.writelines()= |              |
+|        | =file.truncate()=   | 清空文件     |
+|--------+---------------------+--------------|
+| *位置* | =file.seek()=       | 设定位置     |
+|        | =file.tell()=       | 返回当前位置 |
+
+** =file.read()=
+
+#+BEGIN_SRC python
+file.read([size])
+#+END_SRC
+
+无参数调用 =read()= 之后，文件指针会指向 EOF 位置。
+
+** =file.seek()=
+
+#+BEGIN_SRC python
+file.seek (
+    offset
+[,  whence
+])
+#+END_SRC
+
+| =whence= | =os.SEEK_SET= 绝对位置             |
+|          | =os.SEEK_CUR= 相对（当前位置）位置 |
+|          | =os.SEEK_END= 相对（文件末尾）位置 |
+
+#+CAPTION: 读取文件之后使指针回到文件开头
+#+BEGIN_SRC python
+f = open('foo.txt')
+print f.read()
+f.seek(0)
+#+END_SRC
+
+* 模块
+** =dir()=
+
+返回标示符列表，即所有属性、函数、加载的模块。
+
+#+BEGIN_SRC python
+dir([object])
+    # 参数为空时，返回当前模块的标示符列表
+    # 参数为模块名时，返回此模块的标示符列表
+    # 参数为对象时，返回对象所属类的标示符列表
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+dir()
+# ['__builtins__', '__doc__', '__name__', ...] 当前模块
+dir(sys)
+# ['__breakpointhook__', '__displayhook__', '__doc__', ...] sys 模块
+import sys
+dir()
+# ['__builtins__', '__doc__', '__name__', ..., 'sys'] 当前模块加入模块 sys
+a = 5
+dir()
+# ['__builtins__', '__doc__', '__name__', ..., 'a', 'sys'] 当前模块加入新定义成员 a
+dir(a)
+# ['__abs__', '__add__', '__and__', '__bool__', ...] int 类
+del a
+dir()
+# ['__builtins__', '__doc__', '__name__', 'sys'] 当前模块减去被删除的成员 a
+#+END_SRC
+
+* 特殊
+
+#+ATTR_HTML: :class no-border
+| *Special methods* | - invoked by interpreter to perform basic object operations |
+|                   | - always named in =__<method>__= format                     |
+|                   | - also known as "dunder" methods                            |
+
+Special methods is a way to leverage the Python data model, by perform standard operations in a unified manner on different objects.
+
+|                         | *重载方法、运算符*   |
+|-------------------------+----------------------|
+| *Object creation*       |                      |
+| *and destruction*       |                      |
+|-------------------------+----------------------|
+| [[__init__][=__init__()=]]            | =<name> = <Class>()= |
+|-------------------------+----------------------|
+| *String representation* |                      |
+| *and formatting*        |                      |
+|-------------------------+----------------------|
+| *Collection*            |                      |
+|-------------------------+----------------------|
+| [[__len__][=__len__()=]]             | =len()=              |
+|-------------------------+----------------------|
+| [[__getitem__][=__getitem__()=]]         | =[]=                 |
+|-------------------------+----------------------|
+| [[__contains__][=__contains__()=]]        | =in=                 |
+|-------------------------+----------------------|
+| *Iteration*             |                      |
+|-------------------------+----------------------|
+| *Attribute access*      |                      |
+|-------------------------+----------------------|
+| *Operator overloading*  |                      |
+|-------------------------+----------------------|
+| *Method invocation*     |                      |
+
+** =__contains__()=
+<<__contains__>>
+
+If a collection has no =__contains__()= method, the =in= operator does a sequential scan.
+
+** =__getitem__()=
+<<__getitem__>>
+
+Because =__getitem__()= delegates to the =[]= operator, the object automatically supports slicing and iteration.
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+class Foo:
+    def __init__(self):
+        self._elements = [n * n for n in range(1, 10)]
+
+    def __getitem__(self, position):
+        return self._elements[position]
+
+foo = Foo()
+foo[1]   # 4
+foo[2:5] # [9, 16, 25]
+for i in foo: # 1, 4, 9, ...
+#+END_SRC
+
+** =__init__()=
+<<__init__>>
+
+子类的 =__init__()= 中需要手动调用父类的 =__init__()= ，Python 不会自动调用。
+
+** =__len__()=
+<<__len__>>
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+class Foo:
+    def __init__(self):
+        self._elements = [n * n for n in range(1, 10)]
+
+    def __len__(self):
+        return len(self._elements)
+
+foo = Foo()
+len(foo) # 9
+#+END_SRC
+
+* 其他
+
+| =help()= | 返回对象、对象的方法的注释文档 |
+|----------+--------------------------------|
+|          |                                |
+
+** =help()=
+
+#+BEGIN_SRC python
+help([object])
+#+END_SRC
+
+#+BEGIN_SRC python
+help(list.remove)
+#+END_SRC
+
+* 链接
+
+1. [[https://docs.python.org/2.7/library/functions.html][Built-in Functions (2.7.12)]]

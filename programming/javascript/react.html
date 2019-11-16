@@ -1,0 +1,1256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-03-11 Mon 20:03 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>React</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">React</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org007f165">1 概念</a>
+<ul>
+<li><a href="#org2e73d03">1.1 Performance Model</a></li>
+</ul>
+</li>
+<li><a href="#org6c27702">2 项目结构</a></li>
+<li><a href="#orgd574ca5">3 JSX</a>
+<ul>
+<li><a href="#orgbe422fe">3.1 <code>{}</code></a></li>
+<li><a href="#org8b11e44">3.2 <code>${}</code></a></li>
+<li><a href="#orgac97508">3.3 <code>className</code></a></li>
+<li><a href="#org3cce5e1">3.4 <code>htmlFor</code></a></li>
+<li><a href="#org06a49bf">3.5 <code>style</code></a></li>
+</ul>
+</li>
+<li><a href="#orgfe3646e">4 Component</a>
+<ul>
+<li><a href="#orgc0ae8a9">4.1 Functional Component</a></li>
+<li><a href="#orgd5cfce3">4.2 Class Component</a></li>
+<li><a href="#org96725d0">4.3 Props</a>
+<ul>
+<li><a href="#org1cab6bb">4.3.1 <code>children</code></a></li>
+<li><a href="#orgb2bc0db">4.3.2 <code>defaultProps</code></a></li>
+<li><a href="#org4460185">4.3.3 <code>key</code></a></li>
+</ul>
+</li>
+<li><a href="#org1f6851f">4.4 State</a>
+<ul>
+<li><a href="#orgd3da40a">4.4.1 用法</a></li>
+<li><a href="#org45fc30b">4.4.2 Controlled element</a></li>
+</ul>
+</li>
+<li><a href="#org3ab7bf6">4.5 Lifecycle</a></li>
+<li><a href="#orge354729">4.6 Event Handler</a></li>
+</ul>
+</li>
+<li><a href="#org7abb2e4">5 React</a>
+<ul>
+<li><a href="#orga42c297">5.1 <code>createRef()</code></a></li>
+</ul>
+</li>
+<li><a href="#org661c1c1">6 Redux</a>
+<ul>
+<li><a href="#org67b1398">6.1 Lifecycle</a></li>
+<li><a href="#org62c2c55">6.2 Structure</a></li>
+<li><a href="#org88cf039">6.3 Action</a></li>
+<li><a href="#org7b3452e">6.4 Action Creator</a></li>
+<li><a href="#org7f562b6">6.5 Reducer</a>
+<ul>
+<li><a href="#org5410cc2">6.5.1 <code>combineReducers()</code></a></li>
+<li><a href="#org503d772">6.5.2 State mutation</a></li>
+</ul>
+</li>
+<li><a href="#orge06f214">6.6 Store</a>
+<ul>
+<li><a href="#org02b0301">6.6.1 <code>createStore()</code></a></li>
+<li><a href="#org31a8f11">6.6.2 <code>dispatch()</code></a></li>
+<li><a href="#orgd4ceebe">6.6.3 <code>getState()</code></a></li>
+</ul>
+</li>
+<li><a href="#org8d0e2a4">6.7 Provider</a></li>
+<li><a href="#orge8e84c9">6.8 Connect</a></li>
+<li><a href="#org1e7f77e">6.9 示例 1</a></li>
+<li><a href="#orgf42cf6a">6.10 示例 2</a></li>
+</ul>
+</li>
+<li><a href="#org71d6c84">7 Middleware</a>
+<ul>
+<li><a href="#orgfb11e34">7.1 Redux Thunk</a>
+<ul>
+<li><a href="#org944fb07">7.1.1 示例</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org326d4b0">8 工具</a>
+<ul>
+<li><a href="#orgb77c137">8.1 <code>create-react-app</code></a></li>
+</ul>
+</li>
+<li><a href="#org1791284">9 链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org007f165" class="outline-2">
+<h2 id="org007f165"><span class="section-number-2">1</span> 概念</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-org2e73d03" class="outline-3">
+<h3 id="org2e73d03"><span class="section-number-3">1.1</span> Performance Model</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+<a href="http://www.react.express/performance_model">Performance Model | React Express</a>
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>Operation</b></th>
+<th scope="col" class="org-left"><b>Cost</b></th>
+<th scope="col" class="org-left"><b>Descrption</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">DOM manipulation</td>
+<td class="org-left">Slow</td>
+<td class="org-left">Modifying the DOM is slow. React is built to modify that DOM as little as possible. React builds anin-memory representation of the components rendered, and then syncs this representation to the DOM. As components are updated, React will update the in-memory representation, and then make the least amount of changes to the DOM possible. This is what keeps the application fast. React does this automatically most of the time - however, hints can be given about when and how to update the DOM to improve performance. This is especially relevant when dealing with hundreds or thousands of components, in the case of large lists.</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Component render</td>
+<td class="org-left">Fast</td>
+<td class="org-left">Components can re-render very frequently without a noticeable performance impact. It's common for <code>render()</code> to be called many times as the <code>state</code> or <code>props</code> of a component change. This is part of the magic of React. In other JavaScript libraries, you may have tried to reduce calls to <code>render()</code> in order to limit DOM updates and improve performance. In React, reducing re-renders is only for particularly complex or expensive components. Note: <code>render()</code> generally refers to the render method of components getting called as part of the component lifecycle. This doesn't refer to actually updating the DOM, which React handles automatically based on what is returned from <code>render()</code> methods.</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>shouldComponentUpdate()</code></td>
+<td class="org-left">Very fast</td>
+<td class="org-left">In cases where component render is happening too frequently and causing performance issues, React gives more control over the component lifecycle with <code>shouldComponentUpdate()</code>, allowing to choose exactly when a component does and doesn't re-render. When this method isn't defined, components will always re-render whenever their <code>state</code> or <code>props</code> change. Defining <code>shouldComponentUpdate()</code> allows to manually compare whatever data is needed to determine whether or not the component should re-render. Return <code>true</code> to trigger a <code>render()</code> call and <code>false</code> to prevent it.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6c27702" class="outline-2">
+<h2 id="org6c27702"><span class="section-number-2">2</span> 项目结构</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+<pre class="src src-sh">&lt;project&gt;/
+  node_modules/     <span class="org-comment-delimiter"># </span><span class="org-comment">Dependency files</span>
+  public/           <span class="org-comment-delimiter"># </span><span class="org-comment">Static files</span>
+  src/              <span class="org-comment-delimiter"># </span><span class="org-comment">Source code</span>
+    actions/        <span class="org-comment-delimiter"># </span><span class="org-comment">Action creators</span>
+    components/
+    reducers/
+    index.js
+  package.json      <span class="org-comment-delimiter"># </span><span class="org-comment">Dependencies and configurations</span>
+  package.lock.json <span class="org-comment-delimiter"># </span><span class="org-comment">Exact versions of dependencies</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd574ca5" class="outline-2">
+<h2 id="orgd574ca5"><span class="section-number-2">3</span> JSX</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+JSX 会被 Babel 转换为 JS 函数调用，如 <code>&lt;div /&gt;</code> 转换为 <code>React.createElement('div')</code> ，因此虽然代码内不显式引用 <code>React</code> ，但是需要 <code>import</code> 。
+</p>
+
+<p>
+ReactDOM provides built-in DOM-node components with same names as the corresponding HTML tags, e.g. <code>&lt;div /&gt;</code>, <code>&lt;input /&gt;</code>. They don't need to be required when used, that's handled automatically during the JSX language transformation.
+</p>
+</div>
+
+<div id="outline-container-orgbe422fe" class="outline-3">
+<h3 id="orgbe422fe"><span class="section-number-3">3.1</span> <code>{}</code></h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 1: </span>使用 <code>{}</code> 嵌入变量或表达式</label><pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">buttonText</span> = <span class="org-string">'Foo'</span>;
+<span class="org-keyword">return</span> &lt;button&gt;{buttonText}&lt;/button&gt;
+
+<span class="org-keyword">function</span> <span class="org-function-name">getButtonText</span>() { <span class="org-keyword">return</span> <span class="org-string">'Foo'</span>; }
+<span class="org-keyword">return</span> &lt;button&gt;{getButtonText()}&lt;/button&gt;
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#20351;&#29992; || &#25552;&#20379;&#40664;&#35748;&#20540;</span>
+<span class="org-keyword">return</span> &lt;button&gt;{foo || <span class="org-string">'Default'</span>}&lt;/button&gt;
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#23884;&#20837;&#21311;&#21517;&#20989;&#25968;</span>
+<span class="org-keyword">return</span> &lt;button onClick={e =&gt; console.log(e.target.value)}&gt;Submit&lt;/button&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 2: </span>不同类型值转换为字符串输出</label><pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">buttonText</span> = <span class="org-string">'Foo'</span>;          <span class="org-comment-delimiter">// </span><span class="org-comment">Foo</span>
+<span class="org-keyword">const</span> <span class="org-variable-name">buttonText</span> = 1234;           <span class="org-comment-delimiter">// </span><span class="org-comment">1234</span>
+<span class="org-keyword">const</span> <span class="org-variable-name">buttonText</span> = [<span class="org-string">'Foo'</span>, <span class="org-string">'Bar'</span>]; <span class="org-comment-delimiter">// </span><span class="org-comment">FooBar</span>
+
+<span class="org-keyword">return</span> &lt;button&gt;{buttonText}&lt;/button&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8b11e44" class="outline-3">
+<h3 id="org8b11e44"><span class="section-number-3">3.2</span> <code>${}</code></h3>
+<div class="outline-text-3" id="text-3-2">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 3: </span>使用 <code>${}</code> 在字符串中嵌入变量</label><pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">text</span> = <span class="org-string">'foo bar'</span>;
+<span class="org-keyword">return</span> &lt;div&gt;{<span class="org-string">`Some text: ${text}`</span>}&lt;/div&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgac97508" class="outline-3">
+<h3 id="orgac97508"><span class="section-number-3">3.3</span> <code>className</code></h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+因为 <code>class</code> 是 JS 关键字，JSX 的 <code>class</code> 属性需要替换为 <code>className</code> 。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3cce5e1" class="outline-3">
+<h3 id="org3cce5e1"><span class="section-number-3">3.4</span> <code>htmlFor</code></h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+因为 <code>for</code> 是 JS 关键字，JSX 的 <code>for</code> 属性需要替换为 <code>htmlFor</code> 。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org06a49bf" class="outline-3">
+<h3 id="org06a49bf"><span class="section-number-3">3.5</span> <code>style</code></h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+<code>style</code> 属性的值必须是对象。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">return</span> &lt;tag style={{ &lt;attr&gt;: &lt;value&gt;; ... }}&gt;&lt;/tag&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 4: </span>示例</label><pre class="src src-js"><span class="org-comment-delimiter">// </span><span class="org-comment">CSS &#23646;&#24615;&#21517;&#21487;&#20197;&#20351;&#29992; camelcase&#65292;&#25110;&#32773;&#30452;&#25509;&#20351;&#29992;&#23383;&#31526;&#20018;</span>
+<span class="org-keyword">return</span> &lt;div style={{ backgroundColor: <span class="org-string">'grey'</span> }}&gt;&lt;/div&gt;
+<span class="org-keyword">return</span> &lt;div style={{ <span class="org-string">'background-color'</span>: <span class="org-string">'grey'</span> }}&gt;&lt;/div&gt;
+
+<span class="org-keyword">const</span> <span class="org-variable-name">elementStyle</span> = { backgroundColor: <span class="org-string">'grey'</span> };
+<span class="org-keyword">return</span> &lt;div style={elementStyle}&gt;&lt;/div&gt;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfe3646e" class="outline-2">
+<h2 id="orgfe3646e"><span class="section-number-2">4</span> Component</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-orgc0ae8a9" class="outline-3">
+<h3 id="orgc0ae8a9"><span class="section-number-3">4.1</span> Functional Component</h3>
+<div class="outline-text-3" id="text-4-1">
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">Component</span> = (props) =&gt; {
+  <span class="org-keyword">return</span> &lt;tag&gt;&lt;/tag&gt;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd5cfce3" class="outline-3">
+<h3 id="orgd5cfce3"><span class="section-number-3">4.2</span> Class Component</h3>
+<div class="outline-text-3" id="text-4-2">
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">class</span> Component <span class="org-keyword">extends</span> React.Component {
+  render() {
+    <span class="org-keyword">return</span> &lt;tag&gt;&lt;/tag&gt;
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org96725d0" class="outline-3">
+<h3 id="org96725d0"><span class="section-number-3">4.3</span> Props</h3>
+<div class="outline-text-3" id="text-4-3">
+<div class="org-src-container">
+<pre class="src src-js">&lt;Foo bar=<span class="org-string">"text"</span> ... /&gt;
+
+<span class="org-keyword">const</span> <span class="org-variable-name">Foo</span> = (props) =&gt; {
+  <span class="org-keyword">return</span> &lt;div&gt;{props.bar}&lt;/div&gt;
+}
+
+<span class="org-keyword">class</span> Foo <span class="org-keyword">extends</span> React.Component {
+  render() {
+    <span class="org-keyword">return</span> &lt;div&gt;{<span class="org-constant">this</span>.props.bar}&lt;/div&gt;
+  }
+}
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org1cab6bb" class="outline-4">
+<h4 id="org1cab6bb"><span class="section-number-4">4.3.1</span> <code>children</code></h4>
+<div class="outline-text-4" id="text-4-3-1">
+<p>
+JSX <code>&lt;Component&gt;</code> 标签内的内容可以通过 <code>props.children</code> 读取。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">&lt;ComponentOne&gt;
+  &lt;ComponentTwo /&gt;
+&lt;/ComponentOne&gt;
+
+<span class="org-keyword">const</span> <span class="org-variable-name">ComponentOne</span> = (props) =&gt; {
+  <span class="org-keyword">return</span> &lt;div&gt;{props.children}&lt;/div&gt;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb2bc0db" class="outline-4">
+<h4 id="orgb2bc0db"><span class="section-number-4">4.3.2</span> <code>defaultProps</code></h4>
+<div class="outline-text-4" id="text-4-3-2">
+<p>
+定义 <code>&lt;Component&gt;.defaultProps</code> 可以在未提供 prop 值时使用默认值。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">Foo</span> = (props) =&gt; {
+  <span class="org-keyword">return</span> &lt;div&gt;{props.bar}&lt;/div&gt;;
+}
+Foo.defaultProps = {
+  bar: <span class="org-string">'default'</span>
+};
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4460185" class="outline-4">
+<h4 id="org4460185"><span class="section-number-4">4.3.3</span> <code>key</code></h4>
+<div class="outline-text-4" id="text-4-3-3">
+<p>
+<a href="https://reactjs.org/docs/lists-and-keys.html#keys">Keys | React</a>
+</p>
+
+<p>
+Keys help React identify which items have changed, are added, or are removed.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">numbers</span> = [1, 2, 3, 4, 5];
+<span class="org-keyword">const</span> <span class="org-variable-name">listItems</span> = numbers.map((number) =&gt;
+  &lt;li key={number.toString()}&gt;
+    {number}
+  &lt;/li&gt;
+);
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1f6851f" class="outline-3">
+<h3 id="org1f6851f"><span class="section-number-3">4.4</span> State</h3>
+<div class="outline-text-3" id="text-4-4">
+</div><div id="outline-container-orgd3da40a" class="outline-4">
+<h4 id="orgd3da40a"><span class="section-number-4">4.4.1</span> 用法</h4>
+<div class="outline-text-4" id="text-4-4-1">
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">class</span> Component {
+  constructor(props) {
+    <span class="org-keyword">super</span>(props);
+    <span class="org-constant">this</span>.state = { &lt;name&gt;: &lt;value&gt; }; <span class="org-comment-delimiter">// </span><span class="org-comment">&#21021;&#22987;&#21270;</span>
+  }
+  state = { &lt;name&gt;: &lt;value&gt; }; <span class="org-comment-delimiter">// </span><span class="org-comment">&#21021;&#22987;&#21270;&#31616;&#21270;&#24418;&#24335;</span>
+
+  someFunction() {
+    <span class="org-constant">this</span>.setState({ &lt;name&gt;: &lt;value&gt; }); <span class="org-comment-delimiter">// </span><span class="org-comment">&#20462;&#25913;</span>
+  }
+
+  render() {
+    <span class="org-keyword">return</span> &lt;div&gt;{<span class="org-constant">this</span>.state.&lt;name&gt;}&lt;/div&gt; <span class="org-comment-delimiter">// </span><span class="org-comment">&#35835;&#21462;</span>
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org45fc30b" class="outline-4">
+<h4 id="org45fc30b"><span class="section-number-4">4.4.2</span> Controlled element</h4>
+<div class="outline-text-4" id="text-4-4-2">
+<p>
+Controlled element 即将用户输入存储在 state 中，而不是 DOM 中的元素。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">class</span> Foo <span class="org-keyword">extends</span> React.Component {
+  state = { bar: <span class="org-string">''</span> };
+  render() {
+    <span class="org-keyword">return</span> (
+      &lt;form&gt;
+        &lt;input type=<span class="org-string">"text"</span>
+          value={<span class="org-constant">this</span>.state.bar}
+          onChange={e =&gt; <span class="org-constant">this</span>.setState({ bar: e.target.value })}
+        /&gt;
+      &lt;/form&gt;
+    );
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3ab7bf6" class="outline-3">
+<h3 id="org3ab7bf6"><span class="section-number-3">4.5</span> Lifecycle</h3>
+<div class="outline-text-3" id="text-4-5">
+
+<div class="figure">
+<p><img src="../images/react/01.png" alt="01.png" />
+</p>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>Lifecycle 函数</b></th>
+<th scope="col" class="org-left"><b>一般用法</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>constructor()</code></td>
+<td class="org-left">One-time setup</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>render()</code></td>
+<td class="org-left">Return JSX</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>componentDidMount()</code></td>
+<td class="org-left">Initial data loading</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>componentDidUpdate()</code></td>
+<td class="org-left">Data loading after props/state change</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>componentWillUnmount()</code></td>
+<td class="org-left">Cleanup</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orge354729" class="outline-3">
+<h3 id="orge354729"><span class="section-number-3">4.6</span> Event Handler</h3>
+<div class="outline-text-3" id="text-4-6">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 5: </span>使用箭头函数</label><pre class="src src-js"><span class="org-keyword">class</span> Foo <span class="org-keyword">extends</span> React.Component {
+  handleSubmit = (event) =&gt; { <span class="org-comment-delimiter">// </span><span class="org-comment">&#31661;&#22836;&#20989;&#25968;&#33258;&#21160; bind</span>
+    event.preventDefault();
+  }
+  render() {
+    <span class="org-keyword">return</span> &lt;form onSubmit={<span class="org-constant">this</span>.handleSubmit}&gt;&lt;/form&gt;;
+  }
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 6: </span>使用普通函数</label><pre class="src src-js"><span class="org-keyword">class</span> Foo <span class="org-keyword">extends</span> React.Component {
+  handleSubmit(event) {
+    event.preventDefault();
+  }
+  render() {
+    <span class="org-keyword">return</span> &lt;form onSubmit={(event) =&gt; <span class="org-constant">this</span>.handleSubmit(event)}&gt;&lt;/form&gt;; <span class="org-comment-delimiter">// </span><span class="org-comment">&#35774;&#32622; handler &#26102; bind</span>
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7abb2e4" class="outline-2">
+<h2 id="org7abb2e4"><span class="section-number-2">5</span> React</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-orga42c297" class="outline-3">
+<h3 id="orga42c297"><span class="section-number-3">5.1</span> <code>createRef()</code></h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+<a href="https://reactjs.org/docs/react-api.html#reactcreateref">React.createRef() | React</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">class</span> Foo <span class="org-keyword">extends</span> React.Component {
+  constructor(props) {
+    <span class="org-keyword">super</span>(props);
+    <span class="org-constant">this</span>.inputRef = React.createRef();
+  }
+
+  componentDidMount() {
+    <span class="org-constant">this</span>.inputRef.current.focus();
+  }
+
+  render() {
+    <span class="org-keyword">return</span> &lt;input type=<span class="org-string">"text"</span> ref={<span class="org-constant">this</span>.inputRef} /&gt;;
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org661c1c1" class="outline-2">
+<h2 id="org661c1c1"><span class="section-number-2">6</span> Redux</h2>
+<div class="outline-text-2" id="text-6">
+</div><div id="outline-container-org67b1398" class="outline-3">
+<h3 id="org67b1398"><span class="section-number-3">6.1</span> Lifecycle</h3>
+<div class="outline-text-3" id="text-6-1">
+
+<div class="figure">
+<p><img src="../images/react/02.png" alt="02.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org62c2c55" class="outline-3">
+<h3 id="org62c2c55"><span class="section-number-3">6.2</span> Structure</h3>
+<div class="outline-text-3" id="text-6-2">
+
+<div class="figure">
+<p><img src="../images/react/03.png" alt="03.png" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/react/04.png" alt="04.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org88cf039" class="outline-3">
+<h3 id="org88cf039"><span class="section-number-3">6.3</span> Action</h3>
+<div class="outline-text-3" id="text-6-3">
+<p>
+Action 对象表示发生的事件，如用户动作。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">{
+  type: &lt;ACTION_TYPE&gt;,
+  &lt;payload&gt; <span class="org-comment-delimiter">// </span><span class="org-comment">Optional, A single key/value pair or an object</span>
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7b3452e" class="outline-3">
+<h3 id="org7b3452e"><span class="section-number-3">6.4</span> Action Creator</h3>
+<div class="outline-text-3" id="text-6-4">
+<p>
+Action creator 函数返回一个 action 对象。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 7: </span>Synchronous action creator</label><pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">fooAction</span> = (param, ...) =&gt; {
+  <span class="org-keyword">return</span> {
+    type: <span class="org-string">'FOO_ACTION'</span>,
+    payload: ...
+  };
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 8: </span>Asynchronous action creator</label><pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">fooAction</span> = (param, ...) =&gt; <span class="org-keyword">async</span> (dispatch) =&gt; {
+  <span class="org-keyword">const</span> <span class="org-variable-name">response</span> = <span class="org-keyword">await</span> ...
+  dispatch({
+    type: <span class="org-string">'FOO_ACTION'</span>,
+    payload: ...
+  });
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7f562b6" class="outline-3">
+<h3 id="org7f562b6"><span class="section-number-3">6.5</span> Reducer</h3>
+<div class="outline-text-3" id="text-6-5">
+<p>
+Reducer 函数定义当 action 发生时，state 如何变化。Reducer 的参数为 action 发生之前的 state （初始化时为 undefined）和 action 本身，返回值为 action 发生之后的 state，返回值不能为 undefined。
+</p>
+
+<p>
+整个应用的 state 由一个 store 对象表示，每个 reducer 维护此对象的一个元素，reducer 和 state 元素的对应关系在 <code>combineReducers()</code> 的调用参数中指定。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">initialState</span> = { bar: 1 };
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#35843;&#29992;&#26102;&#20256;&#20837;&#30340; state &#20026;&#35813; reducer &#23545;&#24212;&#30340; state</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#38656;&#35201;&#25351;&#23450;&#40664;&#35748;&#20540;&#65292;&#21363;&#21021;&#27425;&#35843;&#29992;&#26102;&#30340;&#21021;&#22987; state</span>
+<span class="org-keyword">const</span> <span class="org-variable-name">fooReducer</span> = (previousState = initialState, action) =&gt; {
+  <span class="org-keyword">switch</span> (action.type) {
+    <span class="org-keyword">case</span> <span class="org-string">'FOO_ACTION'</span>:
+      <span class="org-keyword">return</span> [...previousState, action.payload];
+      <span class="org-comment-delimiter">// </span><span class="org-comment">Reducer &#19981;&#24212;&#35813;&#20462;&#25913;&#20256;&#20837;&#30340; state &#23545;&#35937;&#24182;&#36820;&#22238;&#65292;&#22914;&#65306;</span>
+      <span class="org-comment-delimiter">// </span><span class="org-comment">previousState.push(action.payload);</span>
+      <span class="org-comment-delimiter">// </span><span class="org-comment">return previousState;</span>
+      <span class="org-comment-delimiter">// </span><span class="org-comment">&#24212;&#35813;&#36820;&#22238;&#26032;&#30340; state &#23545;&#35937;&#65292;&#21542;&#21017; Redux &#20250;&#35748;&#20026; state &#27809;&#26377;&#21457;&#29983;&#21464;&#21270;</span>
+    <span class="org-keyword">default</span>:
+      <span class="org-keyword">return</span> previousState;
+  }
+};
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#36755;&#20986;&#21512;&#24182;&#30340; reducer</span>
+<span class="org-keyword">export</span> <span class="org-keyword">default</span> combineReducers({
+  foo: fooReducer
+});
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org5410cc2" class="outline-4">
+<h4 id="org5410cc2"><span class="section-number-4">6.5.1</span> <code>combineReducers()</code></h4>
+<div class="outline-text-4" id="text-6-5-1">
+<p>
+<code>combineReducers()</code> 把多个 reducer 函数合并成一个函数，作为 <code>createStore()</code> 的参数生成 store。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">fooReducer</span> = (state, action) =&gt; {}
+<span class="org-keyword">const</span> <span class="org-variable-name">barReducer</span> = (state, action) =&gt; {}
+
+<span class="org-keyword">const</span> <span class="org-variable-name">singleReducer</span> = combineReducers({
+  fooState: fooReducer,
+  barState: barReducer
+});
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org503d772" class="outline-4">
+<h4 id="org503d772"><span class="section-number-4">6.5.2</span> State mutation</h4>
+<div class="outline-text-4" id="text-6-5-2">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 9: </span>Array</label><pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">fooReducer</span>(state, action) =&gt; {
+  <span class="org-keyword">return</span> [...state, &lt;v&gt;];                         <span class="org-comment-delimiter">// </span><span class="org-comment">Add</span>
+  <span class="org-keyword">return</span> state.filter((e) =&gt; e !== &lt;v&gt;);          <span class="org-comment-delimiter">// </span><span class="org-comment">Remove</span>
+  <span class="org-keyword">return</span> state.map((e) =&gt; e === &lt;v1&gt; ? &lt;v2&gt; : e); <span class="org-comment-delimiter">// </span><span class="org-comment">Update</span>
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 10: </span>Object</label><pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">fooReducer</span>(state, action) =&gt; {
+  <span class="org-keyword">return</span> {...state, &lt;k&gt;: &lt;v&gt;};       <span class="org-comment-delimiter">// </span><span class="org-comment">Add</span>
+  <span class="org-keyword">return</span> {...state, &lt;k&gt;: <span class="org-constant">undefined</span>}; <span class="org-comment-delimiter">// </span><span class="org-comment">Remove</span>
+  <span class="org-keyword">return</span> {...state, &lt;k&gt;: &lt;v&gt;};       <span class="org-comment-delimiter">// </span><span class="org-comment">Update</span>
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge06f214" class="outline-3">
+<h3 id="orge06f214"><span class="section-number-3">6.6</span> Store</h3>
+<div class="outline-text-3" id="text-6-6">
+<p>
+Store 是整个应用的 state 的集合，store 对象的每个 key 对应一个 reducer 函数，state 必须通过 reducer 函数进行修改，不能直接修改。
+</p>
+</div>
+
+<div id="outline-container-org02b0301" class="outline-4">
+<h4 id="org02b0301"><span class="section-number-4">6.6.1</span> <code>createStore()</code></h4>
+<div class="outline-text-4" id="text-6-6-1">
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">fooReducer</span> = (state, action) =&gt; {}
+<span class="org-keyword">const</span> <span class="org-variable-name">barReducer</span> = (state, action) =&gt; {}
+<span class="org-keyword">const</span> <span class="org-variable-name">singleReducer</span> = combineReducers({
+  foo: fooReducer,
+  bar: barReducer
+});
+
+<span class="org-keyword">const</span> <span class="org-variable-name">store</span> = createStore(singleReducer);
+<span class="org-comment-delimiter">// </span><span class="org-comment">store.getState() = {</span>
+<span class="org-comment-delimiter">//   </span><span class="org-comment">foo: {...},</span>
+<span class="org-comment-delimiter">//   </span><span class="org-comment">bar: {...},</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org31a8f11" class="outline-4">
+<h4 id="org31a8f11"><span class="section-number-4">6.6.2</span> <code>dispatch()</code></h4>
+<div class="outline-text-4" id="text-6-6-2">
+<p>
+<code>dispatch()</code> 将遍历调用 store 中的 reducer 函数，传入每个 reducer 函数对应的 state 和当前 action。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">store</span> = createStore(singleReducer);
+<span class="org-keyword">const</span> <span class="org-variable-name">action</span> = fooAction(<span class="org-string">'bar'</span>);
+store.dispatch(action);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd4ceebe" class="outline-4">
+<h4 id="orgd4ceebe"><span class="section-number-4">6.6.3</span> <code>getState()</code></h4>
+<div class="outline-text-4" id="text-6-6-3">
+<p>
+返回 state 集合。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">store</span> = createStore(singleReducer);
+store.getState();
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8d0e2a4" class="outline-3">
+<h3 id="org8d0e2a4"><span class="section-number-3">6.7</span> Provider</h3>
+</div>
+<div id="outline-container-orge8e84c9" class="outline-3">
+<h3 id="orge8e84c9"><span class="section-number-3">6.8</span> Connect</h3>
+<div class="outline-text-3" id="text-6-8">
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">import</span> { connect } from <span class="org-string">'react-redux'</span>;
+<span class="org-keyword">import</span> { fooAction } from <span class="org-string">'../actions'</span>;
+
+<span class="org-keyword">class</span> Foo <span class="org-keyword">extends</span> React.Component {
+  render() {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">this.props = {</span>
+    <span class="org-comment-delimiter">//   </span><span class="org-comment">foo: ...,      // State</span>
+    <span class="org-comment-delimiter">//   </span><span class="org-comment">fooAction: ... // Action creator</span>
+    <span class="org-comment-delimiter">// </span><span class="org-comment">}</span>
+  }
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">mapStateToProps &#23558;&#24212;&#29992;&#30340; state &#26144;&#23556;&#21040; component &#30340; props</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#24403;&#24212;&#29992;&#30340; state &#34987; reducer &#20462;&#25913;&#26102;&#65292;component &#30340; props &#20250;&#30456;&#24212;&#21464;&#21270;</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">state: &#24212;&#29992;&#30340; state &#38598;&#21512;</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">props: component &#24403;&#21069;&#30340; props</span>
+<span class="org-keyword">const</span> <span class="org-variable-name">mapStateToProps</span> = (state, props) =&gt; {
+  <span class="org-comment-delimiter">// </span><span class="org-comment">&#20174; state &#20013;&#26597;&#25214;&#24403;&#21069; component &#38656;&#35201;&#30340;&#25968;&#25454;&#24182;&#36820;&#22238;</span>
+  <span class="org-keyword">return</span> { foo: state.foo };
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#23558; action creator &#20256;&#36882;&#32473; store</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#24403; action creator &#34987;&#35843;&#29992;&#26102;&#65292;store &#20250;&#33258;&#21160;&#35843;&#29992; dispatch() &#23558;&#29983;&#25104;&#30340; action &#20256;&#36882;&#32473; reducers</span>
+<span class="org-keyword">export</span> <span class="org-keyword">default</span> connect(mapStateToProps, { fooAction })(Foo);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1e7f77e" class="outline-3">
+<h3 id="org1e7f77e"><span class="section-number-3">6.9</span> 示例 1</h3>
+<div class="outline-text-3" id="text-6-9">
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">depositAction</span> = (name, amount) =&gt; {
+  <span class="org-keyword">return</span> {
+    type: <span class="org-string">'DEPOSIT'</span>,
+    payload: {name: name, amount: amount}
+  }
+}
+
+<span class="org-keyword">const</span> <span class="org-variable-name">withdrawAction</span> = (name, amount) =&gt; {
+  <span class="org-keyword">return</span> {
+    type: <span class="org-string">'WITHDRAW'</span>,
+    payload: {name: name, amount: amount}
+  }
+}
+
+<span class="org-keyword">const</span> <span class="org-variable-name">balanceReducer</span> = (state = {}, action) =&gt; {
+  <span class="org-keyword">if</span> (action.type === <span class="org-string">'DEPOSIT'</span> || action.type === <span class="org-string">'WITHDRAW'</span>) {
+    <span class="org-keyword">const</span> <span class="org-variable-name">name</span> = action.payload.name;
+    <span class="org-keyword">const</span> <span class="org-variable-name">amount</span> = action.payload.amount;
+    <span class="org-keyword">let</span> <span class="org-variable-name">balance</span> = (state.hasOwnProperty(name)) ? state[name] : 0;
+
+    <span class="org-keyword">if</span> (action.type === <span class="org-string">'DEPOSIT'</span>) {
+      balance += amount;
+    } <span class="org-keyword">else</span> <span class="org-keyword">if</span> (action.type === <span class="org-string">"WITHDRAW"</span> &amp;&amp; balance &gt;= amount) {
+      balance -= amount;
+    }
+
+    <span class="org-keyword">return</span> Object.assign({}, state, {[name]: balance});
+  }
+  <span class="org-keyword">return</span> state;
+}
+
+<span class="org-keyword">const</span> <span class="org-variable-name">singleReducer</span> = Redux.combineReducers({
+  balance: balanceReducer
+});
+<span class="org-keyword">const</span> <span class="org-variable-name">bank</span> = Redux.createStore(singleReducer);
+
+bank.dispatch(depositAction(<span class="org-string">'Foo'</span>, 100)); <span class="org-comment-delimiter">// </span><span class="org-comment">bank.getState() = {balance: {Foo: 100}}</span>
+bank.dispatch(depositAction(<span class="org-string">'Bar'</span>, 50));  <span class="org-comment-delimiter">// </span><span class="org-comment">bank.getState() = {balance: {Foo: 100, Bar: 50}}</span>
+bank.dispatch(depositAction(<span class="org-string">'Foo'</span>, 50));  <span class="org-comment-delimiter">// </span><span class="org-comment">bank.getState() = {balance: {Foo: 150, Bar: 50}}</span>
+bank.dispatch(withdrawAction(<span class="org-string">'Bar'</span>, 30)); <span class="org-comment-delimiter">// </span><span class="org-comment">bank.getState() = {balance: {Foo: 150, Bar: 20}}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf42cf6a" class="outline-3">
+<h3 id="orgf42cf6a"><span class="section-number-3">6.10</span> 示例 2</h3>
+<div class="outline-text-3" id="text-6-10">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 11: </span><code>index.js</code></label><pre class="src src-js"><span class="org-keyword">import</span> React from <span class="org-string">'react'</span>;
+<span class="org-keyword">import</span> ReactDOM from <span class="org-string">'react-dom'</span>;
+<span class="org-keyword">import</span> { Provider } from <span class="org-string">'react-redux'</span>;
+<span class="org-keyword">import</span> { createStore } from <span class="org-string">'redux'</span>;
+
+<span class="org-keyword">import</span> App from <span class="org-string">'./components/App'</span>;
+<span class="org-keyword">import</span> reducers from <span class="org-string">'./reducers'</span>;
+
+ReactDOM.render((
+  &lt;Provider store={createStore(reducers)}&gt;
+    &lt;App /&gt;
+  &lt;/Provider&gt;
+), document.querySelector(<span class="org-string">'#root'</span>));
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 12: </span><code>actions/index.js</code></label><pre class="src src-js"><span class="org-keyword">export</span> <span class="org-keyword">const</span> <span class="org-variable-name">fooAction</span> = () =&gt; {
+  <span class="org-keyword">return</span> {
+    type: <span class="org-string">'FOO_ACTION'</span>,
+    ...
+  }
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 13: </span><code>reducers/index.js</code></label><pre class="src src-js"><span class="org-keyword">import</span> { combineReducers } from <span class="org-string">'redux'</span>;
+
+<span class="org-keyword">const</span> <span class="org-variable-name">fooReducer</span> = (state = <span class="org-constant">null</span>, action) =&gt; {
+  <span class="org-keyword">switch</span> (action.type) {
+    <span class="org-keyword">case</span> <span class="org-string">'FOO_ACTION'</span>:
+      ...
+    <span class="org-keyword">default</span>:
+      <span class="org-keyword">return</span> state;
+  }
+}
+
+<span class="org-keyword">export</span> <span class="org-keyword">default</span> combineReducers({
+  foo: fooReducer
+});
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 14: </span><code>components/App.js</code></label><pre class="src src-js"><span class="org-keyword">import</span> React from <span class="org-string">'react'</span>;
+<span class="org-keyword">import</span> FooComponent from <span class="org-string">'./FooComponent'</span>;
+
+<span class="org-keyword">const</span> <span class="org-variable-name">App</span> = () =&gt; {
+  <span class="org-keyword">return</span> &lt;div&gt;&lt;FooComponent /&gt;&lt;/div&gt;;
+}
+
+<span class="org-keyword">export</span> <span class="org-keyword">default</span> App;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 15: </span><code>components/FooComponent.js</code></label><pre class="src src-js"><span class="org-keyword">import</span> React from <span class="org-string">'react'</span>;
+<span class="org-keyword">import</span> { connect } from <span class="org-string">'react-redux'</span>;
+<span class="org-keyword">import</span> { fooAction } from <span class="org-string">'../actions'</span>;
+
+<span class="org-keyword">class</span> Foo <span class="org-keyword">extends</span> React.Component {
+  handleSth = () =&gt; {
+    <span class="org-constant">this</span>.props.fooAction();
+  }
+  render() {
+    <span class="org-keyword">return</span> &lt;div&gt;{<span class="org-constant">this</span>.props.foo}&lt;/div&gt;;
+  }
+}
+
+<span class="org-keyword">const</span> <span class="org-variable-name">mapStateToProps</span> = (state) =&gt; {
+  <span class="org-keyword">return</span> { foo: state.foo };
+}
+
+<span class="org-keyword">export</span> <span class="org-keyword">default</span> connect(mapStateToProps, { fooAction })(Foo);
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org71d6c84" class="outline-2">
+<h2 id="org71d6c84"><span class="section-number-2">7</span> Middleware</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+Middleware 是在调用 <code>store.dispatch(action)</code> 时被调用的函数，可以中止或修改 action 对象。Middleware 最常用于处理异步 action，如 <code>react-thunk</code> 。
+</p>
+</div>
+
+<div id="outline-container-orgfb11e34" class="outline-3">
+<h3 id="orgfb11e34"><span class="section-number-3">7.1</span> Redux Thunk</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+使用 <code>redux-thunk</code> ，action creator 不止可以返回 action 对象，还可以返回函数。
+</p>
+
+<ul class="org-ul">
+<li>同步 action creator 返回 action 对象，action 对象被 Redux 隐式调用 <code>dispatch()</code> 时传递给 reducers。</li>
+<li>异步 action creator 返回 action 函数，action 函数被 Redux Thunk 调用时，action 函数内显式调用 <code>dispatch()</code> 将 action 对象传递给 reducers。</li>
+</ul>
+</div>
+
+<div id="outline-container-org944fb07" class="outline-4">
+<h4 id="org944fb07"><span class="section-number-4">7.1.1</span> 示例</h4>
+<div class="outline-text-4" id="text-7-1-1">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 16: </span><code>index.js</code></label><pre class="src src-js">...
+<span class="org-keyword">import</span> { crateStore, applyMiddleware } from <span class="org-string">'redux'</span>;
+<span class="org-keyword">import</span> thunk from <span class="org-string">'redux-thunk'</span>;
+<span class="org-keyword">import</span> reducers from <span class="org-string">'./reducers'</span>;
+
+<span class="org-keyword">const</span> <span class="org-variable-name">store</span> = createStore(reducers, applyMiddleware(thunk));
+
+...
+&lt;Provider store={store}&gt;
+...
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 17: </span><code>actions/index.js</code></label><pre class="src src-js"><span class="org-keyword">export</span> <span class="org-keyword">const</span> <span class="org-variable-name">fooAction</span> = () =&gt; { <span class="org-comment-delimiter">// </span><span class="org-comment">&#24322;&#27493; action creator</span>
+  <span class="org-keyword">return</span> <span class="org-keyword">async</span> (dispatch, getState) =&gt; { <span class="org-comment-delimiter">// </span><span class="org-comment">action &#20989;&#25968;&#30340;&#21442;&#25968;&#20026; dispatch &#21644; getState &#20989;&#25968;</span>
+    <span class="org-keyword">const</span> <span class="org-variable-name">response</span> = <span class="org-keyword">await</span> ...;
+    <span class="org-keyword">const</span> <span class="org-variable-name">action</span> = { type: <span class="org-string">'FOO_ACTION'</span>, payload: ... };
+    dispatch(action);
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org326d4b0" class="outline-2">
+<h2 id="org326d4b0"><span class="section-number-2">8</span> 工具</h2>
+<div class="outline-text-2" id="text-8">
+</div><div id="outline-container-orgb77c137" class="outline-3">
+<h3 id="orgb77c137"><span class="section-number-3">8.1</span> <code>create-react-app</code></h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+生成 React 项目目录结构和基础文件。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">create-react-app &lt;name&gt;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1791284" class="outline-2">
+<h2 id="org1791284"><span class="section-number-2">9</span> 链接</h2>
+<div class="outline-text-2" id="text-9">
+<ol class="org-ol">
+<li><a href="https://reactjs.org/docs/">React Documentation</a></li>
+<li><a href="https://redux.js.org/introduction/getting-started">Redux Documentation</a></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2019-03-11 Mon 20:03</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

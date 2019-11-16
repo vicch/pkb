@@ -1,0 +1,772 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Terraform Up and Running</title>
+<!-- 2018-04-14 Sat 21:30 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Terraform Up and Running</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Preface</a></li>
+<li><a href="#sec-2">2. Chapter 1. Why Terraform</a>
+<ul>
+<li><a href="#sec-2-1">2.1. The rise of DevOps</a></li>
+<li><a href="#sec-2-2">2.2. What is infrastructure as code</a>
+<ul>
+<li><a href="#sec-2-2-1">2.2.1. Server templating tools</a></li>
+<li><a href="#sec-2-2-2">2.2.2. Orchestration tools</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-3">2.3. How Terraform works</a></li>
+<li><a href="#sec-2-4">2.4. How Terraform compares to other infrastructure as code tools</a>
+<ul>
+<li><a href="#sec-2-4-1">2.4.1. Configuration management vs orchestration</a></li>
+<li><a href="#sec-2-4-2">2.4.2. Mutable infrastructure vs immutable infrastructure</a></li>
+<li><a href="#sec-2-4-3">2.4.3. Procedural language vs declarative language</a></li>
+<li><a href="#sec-2-4-4">2.4.4. Client/server architecture vs client-only architecture</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-5">2.5. Conclusion</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. Chapter 2. An Introduction to Terraform</a>
+<ul>
+<li><a href="#sec-3-1">3.1. Deploy a single web server</a></li>
+<li><a href="#sec-3-2">3.2. Deploy a cluster of web servers</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. Chapter 3. How to manage Terraform state</a>
+<ul>
+<li><a href="#sec-4-1">4.1. What is Terraform state</a></li>
+<li><a href="#sec-4-2">4.2. Shared storage for state files</a></li>
+<li><a href="#sec-4-3">4.3. Isolating state files</a></li>
+<li><a href="#sec-4-4">4.4. File layout</a></li>
+<li><a href="#sec-4-5">4.5. Read-only state</a></li>
+<li><a href="#sec-4-6">4.6. Conclusion</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5. Chapter 4. How to create reusable infrastructure with Terraform modules</a>
+<ul>
+<li><a href="#sec-5-1">5.1. Inline blocks</a></li>
+<li><a href="#sec-5-2">5.2. Versioned modules</a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6. Chapter 5.</a></li>
+<li><a href="#sec-7">7. Chapter 6.</a></li>
+<li><a href="#sec-8">8. Links</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Preface</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Terraform is an open source tool to define infrastructure as code (IAC), and to deploy and manage that infrastructure across a variety of cloud providers. It's replacing not only manual sysadmin work, but also many older IAC tools such as Chef, Puppet, Ansible, SaltStack, and CloudFormation.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Chapter 1. Why Terraform</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> The rise of DevOps</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<b>Configuration drift</b>: the problem when each server a subtly different configuration from all the others (snowflake servers).
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> What is infrastructure as code</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>To treat all aspects of operations as software, even those that aspects that represent hardware.
+</li>
+<li>To manage almost everything in code, including servers, databases, networks, log files, application configuration, documentation, automated tests, deployment processes etc.
+</li>
+</ul>
+
+<p>
+Four categories of IAC tools:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>Ad hoc script</b></th>
+<th scope="col" class="left">Small, one-off tasks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>Configuration management tool</b></td>
+<td class="left">Install and manage software on existing servers</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">Chef, Puppet, Ansible, SaltStack</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>Server templating tool</b></td>
+<td class="left">Create server images to be deployed across multiple servers</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">Docker, Packer, Vagrant</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>Orchestration tool</b></td>
+<td class="left">Create and provision servers and other resouces</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">Terraform, CloudFormation, OpenStack Heat</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-2-2-1" class="outline-4">
+<h4 id="sec-2-2-1"><span class="section-number-4">2.2.1</span> Server templating tools</h4>
+<div class="outline-text-4" id="text-2-2-1">
+<p>
+Instead of launching a bunch of servers and configuring them by running the same code on each one, the idea behind server templating tools is to create an image of a server that captures a fully self-contained "snapshot" of the operating system, the software, the files, and all other relevant details.
+</p>
+
+<p>
+To deploy images across servers, some other IAC tool is still needed.
+</p>
+
+
+<div class="figure">
+<p><img src="../images/terraform_up_and_running/01.png" alt="01.png" />
+</p>
+</div>
+
+<p>
+There are two categories of tools for working with images:
+</p>
+
+<dl class="org-dl">
+<dt> Virtual Machines </dt><dd><span class="underline">A virtual machine (VM) emulates an entire computer system, including the hardware.</span> A hypervisor, such as VMWare, VirtualBox, or Parallels, is run to virtualize the underlying CPU, memory, hard drive, and networking. <span class="underline">VM Image run on top of the hypervisor</span> can only see the virtualized hardware, so it's <span class="underline">fully isolated from the host machine and any other VM Images.</span> The drawback is that all of this virtualization incurs <span class="underline">a lot of overhead</span> in terms of CPU usage, memory usage, and startup time. VM Images are defined as code using tools such as Packer and Vagrant.
+</dd>
+
+<dt> Containers </dt><dd><span class="underline">A container emulates the user space of an operating system.</span> A container engine, such as Docker or CoreOS rkt, is run to create isolated processes, memory, mount points, and networking. Container run on top of the container engine can only see its own isolated user space, so it cannot see the host machine or other containers. Since <span class="underline">containers run directly on top of the host machine, the isolation is not as secure as with VMs, but there is virtually no CPU or memory overhead.</span> Container Images are defined as code using tools such as Docker and CoreOs rkt.
+</dd>
+</dl>
+
+
+<div class="figure">
+<p><img src="../images/terraform_up_and_running/02.png" alt="02.png" />
+</p>
+</div>
+
+<p>
+Server templating is a key component of the shift to <b>immutable infrastructure</b>: once a server is deployed, you never make changes to it again. If update is needed, e.g. deploy a new version of application code, a new image is created from the server template and deployed on a new server.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-2-2" class="outline-4">
+<h4 id="sec-2-2-2"><span class="section-number-4">2.2.2</span> Orchestration tools</h4>
+<div class="outline-text-4" id="text-2-2-2">
+<p>
+Orchestration and server templating working together is a common pattern in immutable infrastructure.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> How Terraform works</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+The <code>terraform</code> binary parses infrastructure code, translates it into a series of API calls to the cloud providers specified in the code, and makes those API calls as efficiently as possible on your behalf.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> How Terraform compares to other infrastructure as code tools</h3>
+<div class="outline-text-3" id="text-2-4">
+</div><div id="outline-container-sec-2-4-1" class="outline-4">
+<h4 id="sec-2-4-1"><span class="section-number-4">2.4.1</span> Configuration management vs orchestration</h4>
+<div class="outline-text-4" id="text-2-4-1">
+<p>
+Configuration management tools can typically do some degree of orchestration (e.g. deploy a server with Ansible) and orchestration tools can typically do some degree of configuration (e.g. run configuration scripts on each server provisioned with Terraform).
+</p>
+
+<p>
+If server templating tool is used, the vast majority of configuration management needs are already taken care of. Once an image is created from a Dockerfile or Packer template, all that's left to do is provision the infrastructure for running those images. If server templating tools is not used, a good alternative is to use a configuration management and orchestration tool together. For example, use Terraform to provision servers and run Chef to configure each one.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-4-2" class="outline-4">
+<h4 id="sec-2-4-2"><span class="section-number-4">2.4.2</span> Mutable infrastructure vs immutable infrastructure</h4>
+<div class="outline-text-4" id="text-2-4-2">
+<p>
+Configuration management tools typically default to a mutable infrastructure paradigm. Updates to servers happen in-place, and as more updates are applied, <span class="underline">each server builds up a unique history of changes, which leads to the same configuration drift problem</span> that happens when manage servers manually.
+</p>
+
+<p>
+With orchestration tool, servers are updated by deploying new images to new servers, and undeploy old servers. This approach reduces the likelihood of configuration drift bugs, makes it easier to know exactly the state of each server.
+</p>
+
+<p>
+Downsides of immutable infrastructure:
+</p>
+
+<ul class="org-ul">
+<li>Rebuilding an image from a server template and redpeloying all servers for a trivial change can take a long time.
+</li>
+<li>Once a server is up and running, it'll start making changes on the hard drive and experiencing some degree of configuration drift, although this is mitigated if you deploy frequently.
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-2-4-3" class="outline-4">
+<h4 id="sec-2-4-3"><span class="section-number-4">2.4.3</span> Procedural language vs declarative language</h4>
+<div class="outline-text-4" id="text-2-4-3">
+<p>
+Chef and Ansible encourage a procedural style where code specifies, step-by-step, how to to achieve some desired end state. Terraform and other orchestration tools encourage a more declarative style where <span class="underline">code specifies the desired end state, and the IAC tool itself is responsible for figuring out how to achieve that state.</span> Terraform will also be aware of any state it created in the past.
+</p>
+
+<p>
+Downsides of procedural languages:
+</p>
+
+<ul class="org-ul">
+<li>Procedural code does not fully capture the state of the infrastructure. Reading through the Ansible templates above is not enough to know what's deployed. It also have to know the order in which those templates were applied.
+</li>
+<li>Procedural code limits reusability. It has to manually take into account the current state of the codebase.
+</li>
+</ul>
+
+<p>
+Downsides of declarative languages:
+</p>
+
+<ul class="org-ul">
+<li>Without access to a full programming language, the expressive power is limited. Some types of infrastructure changes, such as a zero-downtime deployment, are hard to express in purely declarative terms.
+</li>
+<li>Without the ability to do "logic" (e.g. if-statements, loops), creating generic, reusable code can be tricky.
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-2-4-4" class="outline-4">
+<h4 id="sec-2-4-4"><span class="section-number-4">2.4.4</span> Client/server architecture vs client-only architecture</h4>
+<div class="outline-text-4" id="text-2-4-4">
+<p>
+Chef, Puppet, SaltStack, CloudFormation, and Heat all use a client/server architecture. The client, which could be a web UI or a CLI tool, is used to issue commands. The commands go to a server, which is responsible for executing commands and storing the state of the system. To execute those commands, the server talks to agents, which must be running on every sever to configure.
+</p>
+
+
+<div class="figure">
+<p><img src="../images/terraform_up_and_running/03.png" alt="03.png" />
+</p>
+</div>
+
+<p>
+The client-server architecture has some drawbacks:
+</p>
+
+<ul class="org-ul">
+<li>Need to install and run extra software.
+</li>
+<li>Need to deploy an extra server for configuration management.
+</li>
+<li>Need to to maintain, upgrade, backup, monitor, and restore the extra softwares and hardwares.
+</li>
+<li>Need to open ports for communication, and configure authentication, all of which increases surface area to attackers.
+</li>
+<li>Extra moving parts introduce a large number of new failure modes into the infrastructure.
+</li>
+</ul>
+
+<p>
+Ansible, and Terraform, use a client-only architecture. Ansible client works by connecting directly to your servers over SSH. Terraform uses cloud provider APIs to provision infrastructure. While CloudFormation uses a client/server architecture, AWS handles all the server and agent details, so as an end user, you have an experience that feels like client-only.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Conclusion</h3>
+<div class="outline-text-3" id="text-2-5">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> Comparison of IAC tools</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left"><b>Type</b></th>
+<th scope="col" class="left"><b>Infrastructure</b></th>
+<th scope="col" class="left"><b>Language</b></th>
+<th scope="col" class="left"><b>Architecture</b></th>
+<th scope="col" class="left"><b>Maturity</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">Chef</td>
+<td class="left">Config Management</td>
+<td class="left">Mutable</td>
+<td class="left">Procedural</td>
+<td class="left">Client/Server</td>
+<td class="left">High</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Puppet</td>
+<td class="left">Config Management</td>
+<td class="left">Mutable</td>
+<td class="left">Declarative</td>
+<td class="left">Client/Server</td>
+<td class="left">High</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Ansible</td>
+<td class="left">Config Management</td>
+<td class="left">Mutable</td>
+<td class="left">Procedural</td>
+<td class="left">Client-only</td>
+<td class="left">Medium</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">SaltStack</td>
+<td class="left">Config Management</td>
+<td class="left">Mutable</td>
+<td class="left">Declarative</td>
+<td class="left">Client/Server</td>
+<td class="left">Medium</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">CloudFormation</td>
+<td class="left">Orchestration</td>
+<td class="left">Immutable</td>
+<td class="left">Declarative</td>
+<td class="left">Client/Server</td>
+<td class="left">Medium</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Terraform</td>
+<td class="left">Orchestration</td>
+<td class="left">Immutable</td>
+<td class="left">Declarative</td>
+<td class="left">Client-only</td>
+<td class="left">Low</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Heat</td>
+<td class="left">Orchestration</td>
+<td class="left">Immutable</td>
+<td class="left">Declarative</td>
+<td class="left">Client/Server</td>
+<td class="left">Low</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Chapter 2. An Introduction to Terraform</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Deploy a single web server</h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+<label class="org-src-name">Run a simple web server with AWS user data</label>
+<pre class="src src-terraform"><span class="org-function-name">resource</span> <span class="org-string">"aws_instance"</span> <span class="org-string">"foo"</span> {
+  <span class="org-variable-name">user_data</span> = &lt;&lt;-EOF
+<span class="org-string">              #!/bin/bash</span>
+<span class="org-string">              echo "Hello, World" &gt; index.html</span>
+<span class="org-string">              nohup busybox httpd -f -p 8080 &amp;</span>
+<span class="org-string">              EOF</span>
+}
+</pre>
+</div>
+
+<p>
+When one resource references another resource using interpolation syntax, an implicit dependency is created. Terraform parses these dependencies, builds a dependency graph from them, and uses that to automatically figure out in what order it should create resources. When Terraform walks your dependency tree, it will create as many resources in parallel as it can.
+</p>
+
+<p>
+In Terraform, most changes to an EC2 Instance, other than metadata such as tags, actually create a completely new Instance.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Deploy a cluster of web servers</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+An ASG needs parameter <code>availability_zones</code> which specifies into which availability zones (AZs) the EC2 Instances should be deployed. It could be a  hard-code the list of AZs, e.g. <code>["us-east-1a", "us-east-1b"]</code>, but each AWS account has access to a slightly different set of AZs, so a better option is to use the <code>aws_availability_zones</code> data source to fetch the AZs specific to the AWS account.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-terraform"><span class="org-function-name">resource</span> <span class="org-string">"aws_autoscaling_group"</span> <span class="org-string">"foo"</span> {
+  <span class="org-variable-name">availability_zones</span> = [<span class="org-string">"</span><span class="org-variable-name">${data.aws_availability_zones.all.names}</span><span class="org-string">"</span>]
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Chapter 3. How to manage Terraform state</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> What is Terraform state</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+When using Terraform as a team, as soon as state file is shared, there is a problem: locking. If two team members are running Terraform at the same time, you may run into race conditions.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Shared storage for state files</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+Putting Terraform state files in version control is a bad idea because:
+</p>
+
+<ul class="org-ul">
+<li>It's easy to forget to pull down the latest changes before running Terraform or to push changes to version control after running Terraform.
+</li>
+<li>All data in Terraform state files is stored in plaintext, while certain Terraform resources need to store sensitive data, for example database username and password.
+</li>
+</ul>
+
+<p>
+The best way to manage shared storage for state files is to use Terraform's built-in support for Remote State Storage. 
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> Isolating state files</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+Instead of defning all environments in a single set of Terraform templates, you should define each environment in a separate set of templates, by putting the Terraform templates for each environment into a separate folder. Terraform uses a separate state file for each folder.
+</p>
+
+<p>
+Take the isolation concept beyond environments and down to the "component" level, where a component is a coherent set of resources that are typically deployed together. For example, the basic network topology of infrastructure: VPC and associated subnets, routing rules, VPNs, and network ACLs, these probably only change once every few months, while new versions of web server may be deployed multiple times per day.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> File layout</h3>
+<div class="outline-text-3" id="text-4-4">
+<div class="org-src-container">
+
+<pre class="src src-sh">root
+ |
+ |- global
+ |   |- iam
+ |   +- s3
+ |
+ |- stage
+ |   |- vpc
+ |   |- services
+ |   |   |- frontend
+ |   |   +- backend
+ |   |       |- main.tf
+ |   |       |- vars.tf
+ |   |       +- outputs.tf
+ |   +- datastore
+ |       |- mysql
+ |       +- redis
+ |
+ |- prod
+ |   |- vpc
+ |   |- services
+ |   |   |- frontend
+ |   |   +- backend
+ |   +- datastore
+ |       |- mysql
+ |       +- redis
+ |
+ +- mgmt
+     |- vpc
+     +- services
+         |- bastion_host.tf
+         +- jenkins.tf
+</pre>
+</div>
+
+<p>
+<span class="underline">Splitting components into separate folders prevents breaking multiple components in one command, but it also prevents creating all the components in one command.</span> It's also harder to use resource dependencies, for example, application component access attributes of the database component. Terraform offers read-only state for this purpose.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4-5" class="outline-3">
+<h3 id="sec-4-5"><span class="section-number-3">4.5</span> Read-only state</h3>
+<div class="outline-text-3" id="text-4-5">
+<p>
+Output parameters of one resource, e.g. IP address and port numbers of DB instance, can be set as environment variables or written to a config file so they could be used by other resources.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-6" class="outline-3">
+<h3 id="sec-4-6"><span class="section-number-3">4.6</span> Conclusion</h3>
+<div class="outline-text-3" id="text-4-6">
+<p>
+When writing code for a typical app, most bugs are relatively minor and only break a small part of a single app. When writing code that controls infrastructure, bugs tend to be more severe, as they can break all apps at once. More safety mechanisms should be incluced when working on IAC.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Chapter 4. How to create reusable infrastructure with Terraform modules</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Inline blocks</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+If not specified otherwise, all the resources deploy into the same VPC. That means a server in the staging environment can talk to a server in the production environment and vice-versa. In real-world usage, running both environments in one VPC opens up to two risks:
+</p>
+
+<ul class="org-ul">
+<li>A mistake in one environment could affect the other. 
+</li>
+<li>If an attacker gets access to one environment, they also have access to the other.
+</li>
+</ul>
+
+<p>
+Therefore, outside of simple examples and experiments, you should run each environment in a separate VPC.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> Versioned modules</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+If all environments are pointing to the same module folder, then a change in the module folder will affect all environments on the very next deployment. This sort of coupling makes it harder to test out a change in staging without affecting prod. A better approach is to create versioned modules so that staging uses one version and prod uses a different version.
+</p>
+
+<p>
+The easiest way to create a versioned module is to put the code for the module in a separate Git repository and to set the source parameter to that repository's URL.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Chapter 5.</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+TODO
+</p>
+</div>
+</div>
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Chapter 6.</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+TODO
+</p>
+</div>
+</div>
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Links</h2>
+<div class="outline-text-2" id="text-8">
+<ol class="org-ol">
+<li><a href="https://cloudcraft.co/">Cloudcraft</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2018-04-14 Sat 21:30</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

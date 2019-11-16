@@ -1,0 +1,78 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Programming
+
+* 抽象
+
+Abstraction
+- enables reuse of programs
+- makes it easier to debug and improve programs
+- hides details of programs, making it easier to read
+- enables programmers to concentrate on high-level steps
+
+-----
+
+- Procedure abstraction :: Moving computational detail into a function. \\
+                           Hiding the details of how a computation is done behind a procedure-abstraction barrier.
+
+-----
+
+- Data abstraction :: Moving representation detail into a set of access functions. \\
+                      Hiding behind a data-abstraction barrier the details of how data are represented.
+
+- Access function :: Constructor, accessor (getter), mutator (setter).
+
+Whenever the detailed implementation of a class may change, access functions should be provided to insulate the class-using functions from the potential change.
+
+By defining member variables as =private=, all member-variable references and assignments are forced to go through public access functions.
+
+* 类型
+
+所有被计算机处理的数据最终都可以分解到单个位（bit），类型允许我们规定怎样使用多个位的特定组合。
+
+* 变量
+
+- Variable :: An identifier that serves as the name of a chunk of computer memory. \\
+              The variable's *data type* determines the size of the chunk and the way the bits are interpreted.
+
+- Variable assignment :: Storing a value in the memory chunk allocated for a variable.
+
+* 程序
+
+- 「客户-接口-实现」方案 :: 一种软件工程惯例，将程序分隔成三个文件。
+
+| 客户 | 调用在接口声明的函数，在更高抽象层次进行处理 |
+|------+----------------------------------------------|
+| 接口 | 定义数据结构，声明用于数据结构的函数         |
+|------+----------------------------------------------|
+| 实现 | 接口声明的函数的具体实现                     |
+
+接口是客户程序与实现之间的契约：
+- 客户程序同意通过接口里定义的函数访问数据
+- 实现同意提供允诺的函数
+
+#+CAPTION: 客户示例
+#+BEGIN_SRC c
+// avg.c
+#include <iostream.h>
+#include <math.h>
+#include "Number.h"
+...
+#+END_SRC
+
+#+CAPTION: 接口示例
+#+BEGIN_SRC c
+// Number.h
+typedef int Number; // 将被加工的数据类型
+Number randNum();   // 和该类型相关联的操作
+#+END_SRC
+
+#+CAPTION: 实现示例
+#+BEGIN_SRC c
+// int.c
+#include <stdlib.h>
+#include "Number.h"
+
+Number randNum() {
+    return rand();
+}
+#+END_SRC

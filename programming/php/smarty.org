@@ -1,0 +1,278 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Smarty
+
+* Smarty
+
+- 部件化（componentize） :: 将网页分为多个独立部分、分别用模板文件控制的方法。\\
+                            可以独立修改、复用到其他网页或在网页中调整位置。
+
+* 文件
+
+|                 | 后缀   | 内容                             |
+|-----------------+--------+----------------------------------|
+| 模板            | =.tpl= | HTML 和 Smarty 标签              |
+|-----------------+--------+----------------------------------|
+| 插件（plug-in） | =.php= | 表现层逻辑，定义模板中使用的变量 |
+
+如果只显示静态内容，不需要插件，只需要模板。
+
+* 目录
+
+| =templates/=   | =.tpl= 模板文件                      |
+|----------------+--------------------------------------|
+| =templates_c/= | 编译 =.tpl= 文件后生成的 =.php= 文件 |
+|                | 这些文件在 =.tpl= 被修改后重新生成   |
+|----------------+--------------------------------------|
+| =configs/=     | 配置文件                             |
+|----------------+--------------------------------------|
+| =cache/=       |                                      |
+
+* 语法
+** 注释
+
+#+BEGIN_SRC smarty
+{* Comment *}
+#+END_SRC
+
+** 配置
+
+#+CAPTION: 加载配置文件（路径为实例化 Smarty 对象时设置的 =config_dir= ）：
+#+BEGIN_SRC smarty
+{config_load file="site.conf"}
+#+END_SRC
+
+#+CAPTION: 读取配置文件中的变量：
+#+BEGIN_SRC smarty
+{#var#}
+{$smarty.config.var}
+#+END_SRC
+
+** 示例
+
+#+BEGIN_SRC smarty
+{* Smarty *} // 模板注释，模板文件最好以此类注释开头
+Hello {$name}, welcome to Smarty!
+#+END_SRC
+
+* 运算符
+
+| ~==~ =eq=          |                      |
+|--------------------+----------------------|
+| ~!=~ =ne= =neq=    |                      |
+|--------------------+----------------------|
+| =>= =gt=           |                      |
+|--------------------+----------------------|
+| =<= =lt=           |                      |
+|--------------------+----------------------|
+| =>== =ge= =gte=    |                      |
+|--------------------+----------------------|
+| =<== =le= =lte=    |                      |
+|--------------------+----------------------|
+| ~===~              |                      |
+|--------------------+----------------------|
+| =!= =not=          |                      |
+|--------------------+----------------------|
+| =%= =mod=          |                      |
+|--------------------+----------------------|
+| =is (not) div by=  | ~$a % $b == 0~       |
+|--------------------+----------------------|
+| =is (not) even=    | ~$a % 2 == 0~        |
+|--------------------+----------------------|
+| =is (not) even by= | ~($a / $b) % 2 == 0~ |
+|--------------------+----------------------|
+| =is (not) odd=     | ~$a % 2 != 0~        |
+|--------------------+----------------------|
+| =is (not) odd by=  | ~($a / $b) % 2 != 0~ |
+
+* 语句
+** =if=
+
+#+BEGIN_SRC smarty
+{if ...}
+{elseif ...}
+{else}
+{/if}
+#+END_SRC
+
+** =foreach=
+*** Smarty 2
+
+#+BEGIN_SRC smarty
+{foreach from= key= item= name= }
+{/foreach}
+#+END_SRC
+
+| =from= | Array  | 遍历的数组变量       |
+|--------+--------+----------------------|
+| =key=  | String |                      |
+|--------+--------+----------------------|
+| =item= | String |                      |
+|--------+--------+----------------------|
+| =name= | String | =foreach= 遍历的名称 |
+
+#+CAPTION: =foreach= 变量
+| =$smarty.foreach.<name>.index=     | 当前索引，起始为 0                 |
+|------------------------------------+------------------------------------|
+| =$smarty.foreach.<name>.iteration= | 当前循环，起始为 1                 |
+|------------------------------------+------------------------------------|
+| =$smarty.foreach.<name>.first=     | 当前是否是第一个元素               |
+|------------------------------------+------------------------------------|
+| =$smarty.foreach.<name>.last=      | 当前是否是最后一个元素             |
+|------------------------------------+------------------------------------|
+| =$smarty.foreach.<name>.show=      | 设为 =False= 时， =foreach= 不显示 |
+|                                    | 如果存在 =foreachelse= ，显示之    |
+|------------------------------------+------------------------------------|
+| =$smarty.foreach.<name>.total=     | 循环总次数                         |
+
+*** Smarty 3
+
+#+BEGIN_SRC smarty
+{foreach $array as $item}
+{/foreach}
+
+{foreach $array as $key=>$item}
+{/foreach}
+
+{break}
+
+{continue}
+#+END_SRC
+
+#+CAPTION: =foreach= 变量
+| =$item@index=     |   |
+|-------------------+---|
+| =$item@iteration= |   |
+|-------------------+---|
+| =$item@first=     |   |
+|-------------------+---|
+| =$item@last=      |   |
+|-------------------+---|
+| =$item@show=      |   |
+|-------------------+---|
+| =$item@total=     |   |
+
+* 示例
+
+#+CAPTION: 目录结构
+#+BEGIN_SRC sh
+project/
+    cache/
+    images/
+    include/
+        config.php          # 定义网站根目录、项目路径、Smarty 路径
+        configs/
+            site.conf       # Smarty 配置文件
+    index.php               # 实例化 Application 类，加载 store_front.tpl
+    libs/
+        smarty/             # Smarty 库文件
+    presentation/
+        application.php     # Smarty 子类，用于 Smarty 初始化
+        templates/
+            store_front.tpl # 页面模板
+        templates_c/
+    styles/
+        styles.css          # 样式
+        yui_styles.css      # YUI 包文件
+#+END_SRC
+
+#+CAPTION: =includ/config.php=
+#+BEGIN_SRC php
+define('SITE_ROOT', dirname(dirname(__FILE__)));
+define('PRESENTATION_DIR', SITE_ROOT . '/presentation/');
+define('BUSINESS_DIR', SITE_ROOT . '/business/');
+define('SMARTY_DIR', SITE_ROOT . '/libs/smarty/');
+define('TEMPLATE_DIR', PRESENTATION_DIR . 'templates');
+define('COMPILE_DIR', PRESENTATION_DIR . 'templates_c');
+define('CONFIG_DIR', SITE_ROOT . '/include/configs');
+#+END_SRC
+
+#+CAPTION: =include/configs/site.conf=
+#+BEGIN_SRC code
+site_title = "Site Title"
+#+END_SRC
+
+#+CAPTION: =presentation/application.php=
+#+BEGIN_SRC php
+require_once SMARTY_DIR . 'Smarty.class.php';
+class Application extends Smarty
+{
+    public function __construct() // 将创建 Smarty 页面的标准方法封装在类中
+    {
+        parent::Smarty();
+        $this->template_dir = TEMPLATE_DIR;
+        $this->compile_dir = COMPILE_DIR;
+        $this->config_dir = CONFIG_DIR;
+    }
+}
+#+END_SRC
+
+#+CAPTION: =index.php=
+#+BEGIN_SRC php
+require_once 'include/config.php';
+require_once PRESENTATION_DIR . 'application.php';
+$application = new Application();
+$application->display('store_front.tpl');
+#+END_SRC
+
+#+CAPTION: =presentation/templates/store_front.tpl=
+#+BEGIN_SRC html
+{* smarty *}
+{config_load file="site.conf"}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{#site_title#}</title>
+#+END_SRC
+
+#+CAPTION: =styles/styles.css=
+#+BEGIN_SRC css
+@import "reset-min.css";
+@import "base-min.css";
+@import "fonts-min.css";
+@import "grids-min.css";
+#+END_SRC
+
+* 安装
+
+1 - 下载 Smarty 库，将文件放入项目根目录或公用目录下的 =libs/smarty= 。
+
+#+CAPTION: 2 - 将 Smarty 文件加入 =php.ini= 的包含路径：
+#+BEGIN_SRC code
+include_path = ".:/usr/share/php:/usr/local/lib/Smarty-v.e.r/libs/smarty/"
+#+END_SRC
+
+#+CAPTION: 或定义常量 =SMARTY_DIR= ：
+#+BEGIN_SRC php
+define('SMARTY_DIR', '/usr/local/lib/Smarty-v.e.r/libs/smarty/');
+#+END_SRC
+
+#+CAPTION: 或直接以绝对路径加载文件：
+#+BEGIN_SRC php
+require_once('/usr/local/lib/Smarty-v.e.r/libs/smarty/Smarty.class.php');
+#+END_SRC
+
+#+CAPTION: 3 - 根目录下建立：
+#+BEGIN_SRC sh
+templates/
+templates_c/ # 需要写权限
+configs/
+cache/       # 需要写权限
+#+END_SRC
+
+4 - =.tpl= 文件放置在 =templates/= 目录下。
+
+#+CAPTION: 5 - =index.php= 中初始化 Smarty，显示模板：
+#+BEGIN_SRC php
+require_once(SMARTY_DIR . 'Smarty.class.php');
+$smarty = new Smarty();
+$smarty->setTemplateDir('/web/localhost/project/templates/');
+$smarty->setCompileDir('/web/localhost/project/templates_c/');
+$smarty->setConfigDir('/web/localhost/project/configs/');
+$smarty->setCacheDir('/web/localhost/project/cache/');
+$smarty->assign('name','Your Name');
+// $smarty->debugging = true;
+$smarty->display('index.tpl');
+#+END_SRC
+* 资源
+
+1. [[http://www.smarty.net/docs/en/][Smarty 3 Manual]]

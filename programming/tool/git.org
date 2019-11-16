@@ -1,0 +1,738 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Git
+
+* 概念
+
+分布式版本控制系统
+- 整个项目的数据和历史都在本地。
+- 大部分操作只需要本地文件，不需要网络连接。
+
+Git 是一个文件系统的快照（snapshot），如果文件没有被修改，只保存一个指向之前已经保存过的文件的链接（link）。
+
+** 组成
+
+| Repository (Git directory) | 本地仓库：metadata、对象数据库                   |
+|----------------------------+--------------------------------------------------|
+| Workspace                  | 工作空间：项目的某一个版本，用于在本地修改的文件 |
+|----------------------------+--------------------------------------------------|
+| Index / Staging area       | 暂存区：单一文件，记录将要提交的信息             |
+|----------------------------+--------------------------------------------------|
+| Remote                     | 远程仓库                                         |
+
+file:../images/git/03.png
+
+- 被修改的文件用 =stage= 命令加入到 index。
+- index 记录和保留这些修改，直到执行 =commit= 命令。
+- index 中的修改可以被删除和替换。
+
+
+- Index :: 短暂存在（transitory）的、动态的二进制文件。
+         - 描述仓库在某一时刻的目录结构。
+         - 不在仓库之间共享，专属于一个仓库。
+
+** HEAD 指针
+
+指向当前使用的分支的指针，默认指向 master 分支。
+
+* 协议
+
+| =http(s)://example.com/path/to/repo.git/= |          |
+|-------------------------------------------+----------|
+| =ssh://example.com/path/to/repo.git/=     | SSH 协议 |
+|-------------------------------------------+----------|
+| =user@example.com:/path/to/repo.git/=     | SSH 协议 |
+|-------------------------------------------+----------|
+| =git://example.com/path/to/repo.git/=     |          |
+|-------------------------------------------+----------|
+| =ftp(s)://example.com/path/to/repo.git/=  |          |
+|-------------------------------------------+----------|
+| =rsync://example.com/path/to/repo.git/=   |          |
+|-------------------------------------------+----------|
+| =file:///opt/git/project.git=             |          |
+
+参考文档：[[https://git-scm.com/book/en/v2/Git-on-the-Server-The-Protocols][Git on the Server - The Protocols]]
+
+* 操作
+
+file:../images/git/01.png
+
+file:../images/git/13.png
+
+* 文件
+
+file:../images/git/02.png
+
+文件状态
+- untracked
+- tracked
+  + committed / unmodified
+  + modified
+  + staged
+
+| unmodified | 修改的数据已经保存在本地数据库，重新回到未被修改状态                                              |
+|------------+---------------------------------------------------------------------------------------------------|
+| modified   | 文件被修改，但未提交到本地数据库                                                                  |
+|------------+---------------------------------------------------------------------------------------------------|
+| staged     | 标记被修改的文件的当前版本，以加入到下一次的提交快照中                                            |
+|            | 只有 staged 文件会被提交                                                                          |
+|            | staged 文件再次被修改而未 stage 时， =commit= 会提交上次 stage 时文件的版本，而不是最后修改的版本 |
+|------------+---------------------------------------------------------------------------------------------------|
+| committed  | Staging area 中的文件快照被永久保存到 Git 目录                                                    |
+
+* 分支
+
+Git 的 commit 快照之间通过指针相连，每一个快照的指针指向它的 upstream。创建一个分支，就是创建一个指向最后一个提交的指针。
+
+** 创建
+
+#+BEGIN_SRC sh
+git branch <branch>
+#+END_SRC
+
+file:../images/git/06.png
+
+** 切换
+
+#+CAPTION: 切换分支
+#+BEGIN_SRC sh
+git checkout <branch>
+#+END_SRC
+
+=branch= 命令不自动切换到新的分支，即不移动 HEAD 指针，需要用 =checkout= 命令移动 HEAD 指针，切换到新分支。
+
+file:../images/git/07.png
+
+-----
+
+切换到新分支后，之后的提交会使指针在这一分支上延续。
+
+file:../images/git/08.png
+
+*** 冲突
+
+如果当前分支有未提交、并与准备检出的分支有冲突的修改，Git 不允许切换分支。解决方法：
+
+- stashing
+- commit amending
+
+** 合并
+
+#+CAPTION: 将 A 合并入 B 时，先检出 B，然后运行 =merge= 命令
+#+BEGIN_SRC sh
+git checkout branch_b
+git merge branch_a
+#+END_SRC
+
+*** 冲突
+
+合并的两个分支中对同一个文件有不同的修改时，会出现冲突。当合并出现冲突时，Git 不自动提交，冲突的文件被标为 =unmerged= 。
+
+处理冲突的方法：
+1. 手动处理冲突的文件，并移除 =<<<<= ~=====~ =>>>>>= 行
+2. 对处理后的文件执行 =git add= ，将其标为 =resolved=
+3. =git commit=
+
+*** 三向合并
+
+如果 A 和 B 不在同一条提交时间线上，Git 会自动找到它们的共同 upstream，进行三向合并。
+
+file:../images/git/09.png
+
+三向合并的结果是一个新的快照，Git 自动提交这个快照，并将当前分支指向它。
+
+file:../images/git/10.png
+
+*** Fast forward
+
+将 B 合并入当前分支 A 时，如果 A 和 B 在同一条提交时间线上，且 A 是 B 的 upstream：
+
+file:../images/git/11.png
+
+由于没有需要处理的分歧，Git 直接将 A 的指针移动到 B，称为 fast forward：
+
+file:../images/git/12.png
+
+** 远程分支
+
+- 在本地仓库但无法移动，网络通信时会自动更新。
+- 名称为 =<remote>/<branch>= ，e.g. =origin/master= 。
+
+** 追踪
+
+如果当前分支与远程分支存在追踪关系， =git pull= 就可以省略远程分支名。
+
+#+BEGIN_SRC sh
+git pull <remote> # 本地当前分支与其追踪的指定远程仓库的分支合并
+git pull          # 如果只有一个追踪分支，远程仓库名也可省略
+#+END_SRC
+
+=git clone= 时所有本地分支默认与远程仓库的同名分支建立追踪关系，比如本地的 =master= 分支自动追踪 =origin/master= 分支。
+
+#+CAPTION: 手动建立追踪
+#+BEGIN_SRC sh
+git branch --set-upstream <branch> <remote>/<branch>
+#+END_SRC
+
+** 分支模式
+*** Long-running 模式
+
+在一条提交时间线上保留多个分支，代表不同稳定性的版本。
+
+file:../images/git/04.png
+
+*** Feature 模式
+
+为开发某个功能而建立的、存在时间短的分支，开发完成后应合并入主提交时间线。
+
+file:../images/git/05.png
+
+* 配置
+
+| =.gitconfig= | 在用户主目录下为全局配置 |
+|              | 在项目目录下为项目配置   |
+|--------------+--------------------------|
+| =.gitignore= |                          |
+
+** =.gitignore=
+
+- Git 忽略的文件，修改时不会被列为 =untracked= 。
+- 用 Glob 格式表示文件名。
+- 一般包括开发环境文件、临时文件、缓存、日志、第三方库。
+
+#+CAPTION: 示例
+#+BEGIN_SRC sh
+*.[oa]       # 忽略以 .o 或 .a 结尾的文件
+!lib.a       # 忽略排除条件，上一条规则的特例
+/TODO        # 忽略根目录下指定文件
+build/       # 忽略指定目录下所有文件
+doc/*.txt    # 忽略指定目录下匹配模式的文件，但不递归到子目录
+doc/**/*.txt # 忽略指定目录下匹配模式的文件，递归到子目录
+#+END_SRC
+
+* 命令
+** 命令列表
+
+| [[add][=add=]]         | 将目录、文件添加指定文件到暂存区                     |
+|---------------+------------------------------------------------------|
+| =archive=     | 生成可供发布的压缩包                                 |
+|---------------+------------------------------------------------------|
+| =blame=       | 显示指定文件的修改历史（修改人、修改内容）           |
+|---------------+------------------------------------------------------|
+| [[branch][=branch=]]      |                                                      |
+|---------------+------------------------------------------------------|
+| [[checkout][=checkout=]]    | 移动 HEAD 指针，切换到分支                           |
+|---------------+------------------------------------------------------|
+| [[cherry-pick][=cherry-pick=]] | 将指定 commit 合并入当前分支                         |
+|---------------+------------------------------------------------------|
+| [[clone][=clone=]]       |                                                      |
+|---------------+------------------------------------------------------|
+| [[commit][=commit=]]      | 提交所有暂存区中的文件                               |
+|---------------+------------------------------------------------------|
+| [[config][=config=]]      | 配置 Git                                             |
+|---------------+------------------------------------------------------|
+| [[diff][=diff=]]        | 显示文件差异                                         |
+|---------------+------------------------------------------------------|
+| [[fetch][=fetch=]]       | 从远程仓库获取更新数据                               |
+|---------------+------------------------------------------------------|
+| [[init][=init=]]        | 初始化                                               |
+|---------------+------------------------------------------------------|
+| [[log][=log=]]         | 显示 commit 历史                                     |
+|---------------+------------------------------------------------------|
+| [[merge][=merge=]]       | 将指定分支合并入当前分支                             |
+|---------------+------------------------------------------------------|
+| [[mergetool][=mergetool=]]   | 打开图形化合并工具处理冲突                           |
+|---------------+------------------------------------------------------|
+| [[mv][=mv=]]          | 重命名文件，并将操作放入暂存区                       |
+|---------------+------------------------------------------------------|
+| [[pull][=pull=]]        | 取远程分支的更新，并与本地分支合并                   |
+|---------------+------------------------------------------------------|
+| [[push][=push=]]        | 将指定分支同步到远程仓库                             |
+|---------------+------------------------------------------------------|
+| [[rebase][=rebase=]]      | 在指定分支上重做当前分支与其进入不同分支后经历的变化 |
+|---------------+------------------------------------------------------|
+| =reflog=      | 显示所有操作记录                                     |
+|---------------+------------------------------------------------------|
+| [[remote][=remote=]]      | 管理远程主机                                         |
+|---------------+------------------------------------------------------|
+| [[reset][=reset=]]       |                                                      |
+|---------------+------------------------------------------------------|
+| =revert=      | 撤销指定 commit，用新的 commit 抵消所有修改          |
+|---------------+------------------------------------------------------|
+| [[rm][=rm=]]          | 删除工作区文件，并将删除操作放入暂存区               |
+|---------------+------------------------------------------------------|
+| =shortlog=    |                                                      |
+|---------------+------------------------------------------------------|
+| [[show][=show=]]        |                                                      |
+|---------------+------------------------------------------------------|
+| [[stage][=stage=]]       |                                                      |
+|---------------+------------------------------------------------------|
+| [[stash][=stash=]]       | 临时保存已修改的文件                                 |
+|---------------+------------------------------------------------------|
+| [[status][=status=]]      | 检查文件状态，显示分支信息                           |
+|---------------+------------------------------------------------------|
+| [[tag][=tag=]]         |                                                      |
+|---------------+------------------------------------------------------|
+| =whatchanged= | 显示指定文件的历史                                   |
+
+** =add=
+<<add>>
+
+#+BEGIN_SRC sh
+git add <options> <path> ...
+    -A # 提交全部修改的文件
+    -p # 分次确认、提交多处变化
+#+END_SRC
+
+- track 一个文件或一个目录下所有文件，使文件从 =untracked= 变为 =tracked= 。
+- stage 一个文件，将一个 =modified= 文件加入到 staging area，使文件从 =modified= 变为 =staged= ；
+
+** =blame=
+
+#+BEGIN_SRC sh
+git blame <file>
+#+END_SRC
+
+** =branch=
+<<branch>>
+
+#+BEGIN_SRC sh
+git branch    # 列出所有本地分支
+git branch -r # 列出所有远程分支
+git branch -a # 列出所有本地和远程分支
+git branch -v # 列出分支、当前分支和每个分支的最后一次提交信息
+
+git branch --merge [<branch>]     # 列出已合并入当前或指定分支的分支
+git branch --no-merged [<branch>] # 列出未合并入当前或指定分支的分支
+
+git branch <branch>          # 新建分支，但不 checkout
+git branch <branch> <commit> # 新建分支，并指向指定 commit
+
+git branch -d <branch>  # 删除分支，但忽略未合并入当前分支的分支
+git branch -D <branch>  # 强制删除分支，包括未合并入当前分支的分支
+git branch -dr <branch> # 删除远程分支
+
+git branch -M <branch> # 强制移动（重命名）分支
+
+git branch --track <branch> <remote>/<branch>        # 新建分支，并与指定的远程分支建立追踪关系
+git branch --set-upstream <branch> <remote>/<branch> # 在指定分支与远程分支之间建立追踪关系
+#+END_SRC
+
+** =checkout=
+<<checkout>>
+
+#+BEGIN_SRC sh
+git checkout - # 切换到上一个分支
+
+git checkout -b <branch>              # 新建分支并 checkout
+git checkout -b <branch_1> <branch_2> # 在 branch_2 基础上新建分支 branch_1
+git checkout -b <branch> <tag>        # 新建分支并指向标签
+
+git checkout -f <branch> # 强制切换到分支
+
+git checkout .               # 恢复暂存区所有文件到工作区
+git checkout <file>          # 从暂存区恢复指定文件到工作区
+git checkout <commit> <file> # 从指定 commit 恢复指定文件到暂存区和工作区
+#+END_SRC
+
+** =cherry-pick=
+<<cherry-pick>>
+
+#+BEGIN_SRC sh
+git cherry-pick <commit>
+#+END_SRC
+
+** =clone=
+<<clone>>
+
+下载项目代码库的整个代码历史。
+
+#+BEGIN_SRC sh
+git clone <url>       # 默认生成一个与远程仓库同名的目录
+git clone <url> <dir> # 指定生成的目录名
+
+git clone -o <remote> <url> # 指定远程仓库名，默认为 origin
+#+END_SRC
+
+** =commit=
+<<commit>>
+
+#+BEGIN_SRC sh
+git commit <options> [<path>]
+    -a       # stage 所有 tracked 且被修改的文件并提交，省略 git add
+    -m <msg> # 添加 commit 信息
+    -v       # 显示冗余 commit 信息，加入 git diff 结果
+    --amend  # 使用新的 commit 替代上一次提交
+             # 如果无变化，则 -m <msg> 修复上一次 commit 信息
+#+END_SRC
+
+** =config=
+<<config>>
+
+#+BEGIN_SRC sh
+git config <options>
+    -l, --list                # 显示所有配置
+    -e <scope> <name> <value> # 修改配置
+#+END_SRC
+
+#+CAPTION: =<scope>=
+| =--global= |   |
+|------------+---|
+| =--system= |   |
+|------------+---|
+| =--local=  |   |
+
+#+CAPTION: =<name>=
+| =user.email=        |                                              |
+|---------------------+----------------------------------------------|
+| =user.name=         |                                              |
+|---------------------+----------------------------------------------|
+| =credential.helper= | 保存密码一段时间，eg. =cache --timeout=3600= |
+|---------------------+----------------------------------------------|
+| =push.default=      | 默认 =push= 方式                             |
+
+** =diff=
+<<diff>>
+
+#+BEGIN_SRC sh
+git diff      # 显示工作区和暂存区的差异，即还未 stage 的修改
+git diff HEAD # 显示工作区和最后一个 commit 的差异
+
+git diff <branch> <branch>           # 显示两个 分支的 diff
+git diff <branch> <branch> -- <path> # 显示两个分支某文件的 diff
+
+git diff --staged        # 显示暂存区和上一次 commit 的差异，即已经 stage 的修改
+git diff --cached <file> # 显示指定文件暂存区和上一次 commit 的差异
+
+git diff --shortstat "@{0 day ago}" # 显示今天修改的代码行数
+#+END_SRC
+
+** =fetch=
+<<fetch>>
+
+通常用来查看其他人的进程，取回的代码对本地的开发代码没有影响。
+
+#+BEGIN_SRC sh
+git fetch <remote>          # 取回所有分支更新
+git fetch <remote> <branch> # 取回指定分支更新
+
+git fetch --prune <remote> # 如果远程分支被删除，也删除本地分支
+git fetch -p
+#+END_SRC
+
+** =init=
+<<init>>
+
+#+BEGIN_SRC sh
+git init       # 在当前目录新建 Git 代码库
+git init <dir> # 新建目录并将其初始化为 Git 代码库
+#+END_SRC
+
+** =log=
+<<log>>
+
+#+BEGIN_SRC sh
+git log          # 显示当前分支 commit 历史
+git log -<n>     # 显示之前 n 次 commit 历史
+git log --stat   # 显示 commit 历史及对应的变更文件
+git log --pretty
+git log --online
+
+git log -S <keyword> # 搜索 commit 历史
+
+git log -p <file>       # 显示指定文件的 diff 历史
+git log --follow <file> # 显示指定文件的 commit 历史
+
+git log <commit> HEAD --pretty=format:%s # 显示指定 commit 之后的历史，每个 commit 显示一行
+git log <commit> HEAD --grep <keyword>   # 显示指定 commit 之后的提交信息包含关键词的历史
+#+END_SRC
+
+** =merge=
+<<merge>>
+
+#+BEGIN_SRC sh
+git merge <branch>
+#+END_SRC
+
+** =mergetool=
+<<mergetool>>
+
+#+BEGIN_SRC sh
+git mergetool
+#+END_SRC
+
+** =mv=
+<<mv>>
+
+#+BEGIN_SRC sh
+git mv <old> <new>
+#+END_SRC
+
+- 等同于 =git rm= 旧文件并 =git add= 新文件。
+- Git 不能自动获知文件被重命名。
+
+** =pull=
+<<pull>>
+
+#+BEGIN_SRC sh
+git pull <remote> <remote_branch>                # 与本地当前分支合并
+git pull <remote> <remote_branch>:<local_branch> # 与本地指定分支合并
+
+git pull -p # 如果有远程分支被删除，在本地也删除分支
+
+git pull --rebase <remote> <remote_branch> # 使用 rebase 模式合并
+#+END_SRC
+
+** =push=
+<<push>>
+
+#+BEGIN_SRC sh
+git push                                         # 推送当前分支，到唯一的追踪的远程分支
+git push <remote>                                # 推送当前分支，到追踪的远程分支
+git push <remote> <branch>                       # 推送指定本地分支，到追踪的远程分支
+git push <remote> <local_branch>:<remote_branch> # 推送指定本地分支，到指定远程分支
+
+git push <options>
+    -all        # 推送本地所有分支到远程仓库（不管是否存在对应远程分支）
+    -f, --force # 强制更新（覆盖）远程分支，即使有冲突或远程版本更新
+    -u <remote> # 指定默认远程仓库
+
+git push <remote> --delete <branch> # 删除远程分支
+git push <remote> :<branch>         # 推送空的分支到远程分支，相当于删除远程分支
+
+git push <remote> <tag>             # 推送指定标签
+git push <remote> --tags            # 推送所有标签
+git push <remote> :refs/tags/<tag>  # 删除远程标签
+#+END_SRC
+
+- Simple 方式：不带参数的 =git push= 只推送当前分支，Git 2.0 之后默认采用。
+- Matching 方式：不带参数的 =git push= 推送所有有对应的远程分支的本地分支，Git 2.0 之前默认采用。
+
+#+CAPTION: 修改 =push= 方式：
+#+BEGIN_SRC sh
+git config --global push.default matching
+git config --global push.default simple
+#+END_SRC
+
+** =rebase=
+<<rebase>>
+
+#+BEGIN_SRC sh
+git rebase <branch>
+#+END_SRC
+
+除 =merge= 之外的将一个分支合并进另一个分支的方式，与 =merge= 的结果相同，但 =rebase= 的历史记录更简洁。
+
+分支在 =rebase= 结束后会被删除，因此 =rebase= 最好只在本地进行，否则其他 =pull= 过此分支的人会收到影响，提交历史会变得混乱。
+
+** =remote=
+<<remote>>
+
+#+BEGIN_SRC sh
+git remote    # 显示所有远程仓库
+git remote -v # 显示所有远程仓库和地址
+
+git remote show <name>            # 显示指定远程仓库信息
+git remote add <name> <url>       # 添加远程仓库
+git remote remove <name> [<url>]  # 删除远程仓库
+git remote rename <name1> <name2> # 重命名远程仓库
+
+git remote update
+#+END_SRC
+
+** =reset=
+<<reset>>
+
+#+BEGIN_SRC sh
+git reset <file> # 重置暂存区的指定文件到上一次 commit，但工作区保持不变
+
+git reset <options> <commit> # 重置当前分支 HEAD 指针到指定 commit
+    --soft  #
+    --mixed # （默认）重置缓存区，不改变工作区（保留修改）
+    --hard  # 重置缓存区和工作区（丢弃修改）
+    --keep  # 缓存区和工作区保持不变
+    --merge #
+#+END_SRC
+
+** =revert=
+
+#+BEGIN_SRC sh
+git revert <commit>
+#+END_SRC
+
+** =rev-parse=
+
+返回 SHA hash。
+
+#+BEGIN_SRC sh
+git rev-parse <branch>|<pointer>
+#+END_SRC
+
+#+BEGIN_SRC sh
+git rev-parse HEAD
+#+END_SRC
+
+** =rm=
+<<rm>>
+
+#+BEGIN_SRC sh
+git rm <options> <path>/<glob_pattern> ...
+    -f       # 强制删除
+    --cached # 停止追踪，从 Git 中移除文件，但不从硬盘删除
+             # 如用于 .gitignore 中遗漏的文件
+#+END_SRC
+
+- 取消文件 =tracked= 状态并移出 working 目录（从硬盘删除）。
+- 等同于先 =rm= 文件并 =commit= 。
+
+** =shortlog=
+
+#+BEGIN_SRC sh
+git shortlog -sn # 显示所有提交过的用户，按提交次数排序
+#+END_SRC
+
+** =show=
+<<show>>
+
+#+BEGIN_SRC sh
+git show <commit>             # 显示指定 commit 的元数据和修改内容
+git show --name-only <commit> # 显示指定 commit 修改的文件
+git show <commit>:<file>      # 显示指定 commit 中指定文件的修改
+
+git show <tag>    # 显示标签信息
+#+END_SRC
+
+** =stage=
+<<stage>>
+
+#+BEGIN_SRC sh
+git stage
+#+END_SRC
+
+** =stash=
+<<stash>>
+
+#+BEGIN_SRC sh
+git stash apply <stash> # 重新应用指定 stash 的修改，不指定时，默认取最近的 stash
+git stash drop <stash>  # 删除指定 stash
+git stash list          # 列出所有 stash
+git stash pop <stash>   # 重新应用指定 stash 的修改，并删除 stash
+#+END_SRC
+
+- 执行 =stash= 后， =status= 会显示没有需要提交的文件。
+- 在一个分支上执行 =stash= 后，可以在其他分支上用 =stash apply= 应用修改，无法顺利应用的修改会导致合并冲突。
+
+** =status=
+<<status>>
+
+#+BEGIN_SRC sh
+git status
+#+END_SRC
+
+** =tag=
+<<tag>>
+
+#+BEGIN_SRC sh
+git tag [<options>] <tag> [<commit>]
+    <empty>      # 在当前或指定 commit 新建标签
+    -a           #
+    -m <message> # 添加标签信息
+
+git tag [<options>]
+    <empty> # 列出所有标签
+
+git tag -d <tag> # 删除本地标签
+#+END_SRC
+
+** =whatchanged=
+
+#+BEGIN_SRC sh
+git whatchanged <file>
+#+END_SRC
+
+* 常用
+** 创建仓库
+
+#+CAPTION: 将已有项目加入到 Git
+#+BEGIN_SRC sh
+git init              # 在项目目录下生成 .git/ 子目录和初始文件
+git add <files>       # 加入文件到 Git 并初始提交                       
+git commit -m "..."
+#+END_SRC
+
+#+CAPTION: 从远程 clone 仓库到本地
+#+BEGIN_SRC sh
+git clone <url> <dir>
+#+END_SRC
+
+如果不指定本地目录名，则新建与项目同名的目录，并检出最新工作目录。
+
+** Hotfix
+
+1. 从工作分支切换到生产分支，更新分支。
+2. 创建 hotfix 分支，修复问题。
+3. 合并 hotfix 分支，推送。
+4. 切换回工作分支。
+
+** 删除所有已合并分支
+
+#+BEGIN_SRC sh
+git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d
+#+END_SRC
+
+** 同步 fork
+
+#+BEGIN_SRC sh
+git remote add upstream git://...
+git fetch upstream
+git checkout master
+git merge upstream/master master
+#+END_SRC
+
+** 查找删除记录
+
+#+BEGIN_SRC sh
+git log -c -S "<deleted_text>" /path/to/file
+#+END_SRC
+
+** 撤销修改
+
+#+CAPTION: 撤销一个文件的修改到 =HEAD= 。
+#+BEGIN_SRC sh
+git checkout /path/to/file
+#+END_SRC
+
+* 词汇表
+
+| branch            | 分支     |
+|-------------------+----------|
+| checkout          | 检出     |
+|-------------------+----------|
+| commit            | 提交     |
+|-------------------+----------|
+| conflict          | 冲突     |
+|-------------------+----------|
+| merge             | 合并     |
+|-------------------+----------|
+| pull              | 拉取     |
+|-------------------+----------|
+| push              | 推送     |
+|-------------------+----------|
+| remote            | 远程     |
+|-------------------+----------|
+| repository        | 仓库     |
+|-------------------+----------|
+| snapshot          | 快照     |
+|-------------------+----------|
+| working directory | 工作目录 |
+
+* 链接
+
+1. [[https://git-scm.com/docs][Git Reference]]
+1. [[https://www.atlassian.com/git/workflows][Comparing Workflows]]
+1. [[http://nvie.com/posts/a-successful-git-branching-model/][A successful Git branching model]]
+
+-----
+
+1. [[http://makandracards.com/makandra/527-squash-several-git-commits-into-a-single-commit][Squash several Git commits into a single commit]]
+1. [[http://longair.net/blog/2009/04/16/git-fetch-and-merge/][Fetch and merge, don't pull]]
+

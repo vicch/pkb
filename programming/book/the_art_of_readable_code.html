@@ -1,0 +1,807 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>The Art of Readable Code</title>
+<!-- 2016-08-15 Mon 13:13 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
+
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">The Art of Readable Code</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Preface</a></li>
+<li><a href="#sec-2">2. Chapter 1: Code Should Be Easy to Understand</a>
+<ul>
+<li><a href="#sec-2-1">2.1. The Fundamental Theorem of Readability</a></li>
+<li><a href="#sec-2-2">2.2. Is Smaller Always Better?</a></li>
+<li><a href="#sec-2-3">2.3. Does Time-Till-Understanding Conflict with Other Goals?</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. Chapter 2: Packing Information into Names</a>
+<ul>
+<li><a href="#sec-3-1">3.1. Choose Specific Words</a></li>
+<li><a href="#sec-3-2">3.2. Avoid Generic Names Like <code>tmp</code> and <code>retval</code></a></li>
+<li><a href="#sec-3-3">3.3. Prefer Concrete Names over Abstract Names</a></li>
+<li><a href="#sec-3-4">3.4. Attaching Extra Information to a Name</a></li>
+<li><a href="#sec-3-5">3.5. How Long Should a Name Be?</a></li>
+<li><a href="#sec-3-6">3.6. Use Name Formatting to Convey Meaning</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. Chapter 3: Names That Can't Be Misconstrued</a>
+<ul>
+<li><a href="#sec-4-1">4.1. Naming Limits</a></li>
+<li><a href="#sec-4-2">4.2. Naming Booleans</a></li>
+<li><a href="#sec-4-3">4.3. Matching Expectations of Users</a></li>
+<li><a href="#sec-4-4">4.4. Evaluating Multiple Name Candidates</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Preface</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Most of our day-to-day lives as programmers are spent on the "basic" stuff, like naming variables, writing loops, and attacking problems down at the function level.
+</p>
+
+<p>
+The concepts of readability are mostly language-independent.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Chapter 1: Code Should Be Easy to Understand</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Code should be easy to understand.
+</p>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> The Fundamental Theorem of Readability</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<del>Code should be written to minimize the time it would take for someone else to understand it.</del> That "someone else" might be you six months later.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Is Smaller Always Better?</h3>
+<div class="outline-text-3" id="text-2-2">
+<div class="org-src-container">
+<label class="org-src-name">Fewer lines isn't always better</label>
+<pre class="src src-java">assert((<span class="org-negation-char">!</span>(bucket = FindBucket(key))) || <span class="org-negation-char">!</span>bucket-&gt;IsOccupied());
+<span class="org-comment-delimiter">// </span><span class="org-comment">-&gt;</span>
+bucket = FindBucket(key);
+<span class="org-keyword">if</span> (bucket != NULL) assert(<span class="org-negation-char">!</span>bucket-&gt;IsOccupied());
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Does Time-Till-Understanding Conflict with Other Goals?</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Making code easy to understand often leads to code that is well architected and easy to test.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Chapter 2: Packing Information into Names</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<del>Pack information into names. Think of a name as a tiny comment.</del>
+</p>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Choose Specific Words</h3>
+<div class="outline-text-3" id="text-3-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left"><b>More specific</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>GetPage()</code></td>
+<td class="left"><code>FetchPage()</code> <code>DownloadPage()</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>Size()</code></td>
+<td class="left"><code>Height()</code> <code>NumNodes()</code> <code>MemoryBytes()</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>Stop()</code></td>
+<td class="left"><code>Kill()</code> (heavyweight operation that can't be undone)</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>Pause()</code> (if there is a way to <code>Resume()</code>)</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left"><b>Alternatives</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">send</td>
+<td class="left">deliver, dispatch, announce, distribute, route</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">find</td>
+<td class="left">search, extract, locate, recover</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">start</td>
+<td class="left">launch, create, begin, open</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">make</td>
+<td class="left">create, set up, build, generate, compose, add, new</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+It's better to be clear and precise than to be cute.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Avoid Generic Names Like <code>tmp</code> and <code>retval</code></h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+<del>Pick a name that describes the entity's value or purpose.</del>
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">Announce the purpose of the variable upfront might help catch a bug.</label>
+<pre class="src src-java">retval += v[i];
+<span class="org-comment-delimiter">// </span><span class="org-comment">-&gt;</span>
+sum_squares += v[i]; <span class="org-comment-delimiter">// </span><span class="org-comment">Where's the square? Bug!</span>
+</pre>
+</div>
+
+<p>
+The name <code>tmp</code> should be used only in cases when being short-lived and temporary is the most important fact about that variable, for example, in the case of swapping two variables.
+</p>
+
+<p>
+Names like <code>i</code>, <code>j</code>, <code>iter</code>, and <code>it</code> are commonly used as indices and loop iterators.
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">Sometimes more precise names are better for spotting bugs.</label>
+<pre class="src src-java"><span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 0; i &lt; clubs.size(); i++)
+    <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">j</span> = 0; j &lt; clubs[i].members.size(); j++)
+        <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">k</span> = 0; k &lt; users.size(); k++)
+            <span class="org-keyword">if</span> (clubs[i].members[k] == users[j])
+                cout &lt;&lt; <span class="org-string">"user["</span> &lt;&lt; j &lt;&lt; <span class="org-string">"] is in club["</span> &lt;&lt; i &lt;&lt; <span class="org-string">"]"</span> &lt;&lt; endl;
+<span class="org-comment-delimiter">// </span><span class="org-comment">-&gt; Use indexes ci, mi, ui</span>
+<span class="org-keyword">if</span> (clubs[ci].members[ui] == users[mi]) <span class="org-comment-delimiter">// </span><span class="org-comment">Bug! First letters don't match up.</span>
+<span class="org-keyword">if</span> (clubs[ci].members[mi] == users[ui]) <span class="org-comment-delimiter">// </span><span class="org-comment">OK. First letters match.</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Prefer Concrete Names over Abstract Names</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+Describe functions, variables concretely rather than abstractly.
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">In C++, to disallow default copy constructor and assignment operator of a class:</label>
+<pre class="src src-cpp"><span class="org-preprocessor">#define</span> <span class="org-function-name">DISALLOW_EVIL_CONSTRUCTORS</span>(<span class="org-variable-name">ClassName</span>) ...
+<span class="org-comment-delimiter">// </span><span class="org-comment">The word "evil" is not clear</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">A better macro name:</span>
+<span class="org-preprocessor">#define</span> <span class="org-function-name">DISALLOW_COPY_AND_ASSIGN</span>(<span class="org-variable-name">ClassName</span>) ...
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">A command-line flag that prints debugging information but runs slowly, used when testing on a local machine:</label>
+<pre class="src src-sh">--run_locally
+<span class="org-comment-delimiter"># </span><span class="org-comment">To print debugging information remotely, Passing --run_locally is confusing</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">A more explicit flag:</span>
+--extra_logging
+</pre>
+</div>
+
+<p>
+Don't try to smash two orthogonal ideas into one to control both at once.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Attaching Extra Information to a Name</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+Encode the units into the variable's name if it is a measurement:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>start = Date.getTime()</code></th>
+<th scope="col" class="left"><code>start_ms = Date.getTime()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>Start(int delay)</code></td>
+<td class="left"><code>Start(int delay_sec)</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>CreateCache(int size)</code></td>
+<td class="left"><code>CreateCache(int size_mb)</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>ThrottleDownload(float limit)</code></td>
+<td class="left"><code>ThrottleDownload(float max_kbps)</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>Rotate(float angle)</code></td>
+<td class="left"><code>Rotate(float degree_cw)</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Attach extra information whenever there's something dangerous or surprising about the variable, especially where a bug can easily sneak in.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>Situation</b></th>
+<th scope="col" class="left"><b>Without extra info</b></th>
+<th scope="col" class="left"><b>With extra info</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">Retrieved data should be cleansed to be trusted</td>
+<td class="left"><code>msgbody</code></td>
+<td class="left"><code>unsafe_msgbody</code></td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>safe_msgbody</code></td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>url</code></td>
+<td class="left"><code>untrusted_url</code></td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>trusted_url</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Plaintext passwords should be encrypted</td>
+<td class="left"><code>password</code></td>
+<td class="left"><code>plaintext_password</code></td>
+</tr>
+
+<tr>
+<td class="left">before further processing</td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>encrypted_password</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">User-provided comment should be escaped</td>
+<td class="left"><code>comment</code></td>
+<td class="left"><code>unescaped_comment</code></td>
+</tr>
+
+<tr>
+<td class="left">before being displayed</td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>escaped_comment</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Bytes of HTML have been converted to UTF-8</td>
+<td class="left"><code>html</code></td>
+<td class="left"><code>html_utf8</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Incoming data has been url encoded</td>
+<td class="left"><code>data</code></td>
+<td class="left"><code>data_urlenc</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-3-5" class="outline-3">
+<h3 id="sec-3-5"><span class="section-number-3">3.5</span> How Long Should a Name Be?</h3>
+<div class="outline-text-3" id="text-3-5">
+<div class="org-src-container">
+<label class="org-src-name">Shorter names can be used for shorter scopes, where all information (variable type, initial value, how it's destroyed) is easy to see.</label>
+<pre class="src src-java"><span class="org-keyword">if</span> (debug) {
+    map&lt;string,<span class="org-type">int</span>&gt; m;
+    LookUpNamesNumbers(&amp;m);
+    Print(m);
+}
+</pre>
+</div>
+
+<p>
+If an identifier has a large scope, it needs to carry enough information to make it clear.
+</p>
+
+<p>
+Project-specific abbreviations are usually a bad idea. If a new teammate understands what the name means, then it's probably OK.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> Throw out unneeded words:</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left"><code>ConvertToString()</code></td>
+<td class="left"><code>ToString()</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-3-6" class="outline-3">
+<h3 id="sec-3-6"><span class="section-number-3">3.6</span> Use Name Formatting to Convey Meaning</h3>
+<div class="outline-text-3" id="text-3-6">
+<p>
+Follow naming conventions and be consistent. Use <code>UPPERCASE</code>, <code>CamelCase</code> and <code>_</code> to distinguish among constants, variables, functions, macros etc. 
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Chapter 3: Names That Can't Be Misconstrued</h2>
+<div class="outline-text-2" id="text-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> <code>filter()</code> is an ambiguous name:</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>Intended action</b></th>
+<th scope="col" class="left"><b>Better name</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">To pick out</td>
+<td class="left"><code>select()</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">To get rid of</td>
+<td class="left"><code>exclude()</code></td>
+</tr>
+</tbody>
+</table>
+
+<hr  />
+
+<div class="org-src-container">
+<label class="org-src-name">Rename a function that clips the contents of a paragraph:</label>
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">Clip</span>(text, length):
+<span class="org-comment-delimiter"># </span><span class="org-comment">If it removes length from the end:</span>
+?
+<span class="org-comment-delimiter"># </span><span class="org-comment">If it truncates to a maximum length:</span>
+<span class="org-keyword">def</span> <span class="org-function-name">Truncate</span>(text, max_chars):
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Naming Limits</h3>
+<div class="outline-text-3" id="text-4-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Inclusive limits</th>
+<th scope="col" class="left"><code>min</code> <code>max</code></th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left"><code>first</code> <code>last</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">Inclusive/exclusive limits</td>
+<td class="left"><code>begin</code> <code>end</code></td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<label class="org-src-name">Inclusive/exclusive limits example</label>
+<pre class="src src-python"><span class="org-comment-delimiter"># </span><span class="org-comment">To print events that happened on October 16</span>
+PrintEventsInRange(<span class="org-string">"OCT 16 12:00am"</span>, <span class="org-string">"OCT 17 12:00am"</span>) <span class="org-comment-delimiter"># </span><span class="org-comment">Inclusive/exclusive limits</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">is easier than</span>
+PrintEventsInRange(<span class="org-string">"OCT 16 12:00am"</span>, <span class="org-string">"OCT 16 11:59:59.9999pm"</span>) <span class="org-comment-delimiter"># </span><span class="org-comment">Inclusive limits</span>
+</pre>
+</div>
+
+<p>
+The word "end" is a still little ambiguous. Unfortunately, English doesn't have a succinct word for "just past the last value".
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Naming Booleans</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+Be sure it's clear what <code>true</code> and <code>false</code> really mean for a boolean.
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">Adding words like <code>is</code> , <code>has</code> , <code>can</code> , or <code>should</code> can make booleans more clear.</label>
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">SpaceLeft</span>():    <span class="org-comment-delimiter"># </span><span class="org-comment">Implying return a number</span>
+<span class="org-keyword">def</span> <span class="org-function-name">HasSpaceLeft</span>(): <span class="org-comment-delimiter"># </span><span class="org-comment">Implying return a boolean</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">Avoid negated terms in a name.</label>
+<pre class="src src-python"><span class="org-variable-name">disable_ssl</span> = false; <span class="org-comment-delimiter"># </span><span class="org-comment">Needs thinking</span>
+<span class="org-variable-name">use_ssl</span> = true;      <span class="org-comment-delimiter"># </span><span class="org-comment">Easier to read</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> Matching Expectations of Users</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+The prefix <code>get</code> implies a "lightweight accessors" that simply return an internal member. 
+</p>
+
+<p>
+The method <code>list.size()</code> of C++ Standard Library seems to be a constant time operation, however it used to be an $O(n)$ operation. It would have been less confusing had it been named <code>countSize()</code> or <code>countElements()</code> .
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> Evaluating Multiple Name Candidates</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+Imagine a config file for many objects. In a the "prototype inheritance" pattern, one object could reuse another object by referencing its <code>id</code>. This field could be named in multiple ways.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>template:&lt;id&gt;</code></th>
+<th scope="col" class="left">Not clear whether it's "a template" or "using this other template".</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">A "template" is often something abstract that must be "filled in" before it is concrete.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>reuse:&lt;id&gt;</code></td>
+<td class="left">Could mean "this object can be reused at most 100 times".</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>copy:&lt;id&gt;</code></td>
+<td class="left">Could mean "copy this 100 times" or "this is the 100th copy of something".</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>inherit:&lt;id&gt;</code></td>
+<td class="left">The word "inherit" is familiar to most programmers.</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">It's understood that further modifications are made after inheritance.</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">Can be improve to <code>inherit_from</code> .</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2016-08-15 Mon 13:13</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

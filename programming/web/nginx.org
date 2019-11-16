@@ -1,0 +1,104 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Nginx
+
+* 配置
+** 示例
+
+#+CAPTION: 最简
+#+BEGIN_SRC sh
+server {
+    listen      80;
+    server_name foo.com;
+    root        /var/www/foo.com;
+    index       index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
+#+END_SRC
+
+#+BEGIN_SRC code
+http {
+    access_log <file> <type>;
+
+    index index.html index.htm ... ;
+
+    include /etc/nginx/conf.d/*.conf;
+
+    server {
+        listen      <port>;
+        server_name <server_name>;
+        root        <path>;
+
+        index index.html index.htm ... ;
+
+        include /etc/nginx/default.d/*.conf;
+
+        location <prefix> {
+        }
+    }
+}
+#+END_SRC
+
+*** PHP 配置
+
+#+BEGIN_SRC code
+server {
+    listen 80;
+    server_name foo.com;
+
+    root /path;
+    index index.html index.htm index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    location ~ \.php$ {
+        try_files $uri =404;
+
+        include fastcgi.conf;
+        fastcgi_pass 127.0.0.1:9000;
+    }
+}
+#+END_SRC
+
+* 模块
+** =ngx_http_stub_status_module=
+
+#+CAPTION: 查看模块是否编译
+#+BEGIN_SRC sh
+nginx -V 2>&1 | grep -o with-http_stub_status_module
+#+END_SRC
+
+*** 配置
+
+#+CAPTION: 设置状态页面
+#+BEGIN_SRC sh
+location /server-status {
+    stub_status on;
+    allow <ip>;
+}
+#+END_SRC
+
+*** 输出
+
+#+BEGIN_SRC sh
+Active connections: 2 
+server accepts handled requests
+10011 10011 10028 
+Reading: 0 Writing: 1 Waiting: 1
+#+END_SRC
+
+* 命令
+
+#+BEGIN_SRC sh
+nginx <options>
+    -c <file>   # 配置文件
+    -s <signal> # stop, quit, reopen, reload
+#+END_SRC
+
+* 链接
+
+1. [[http://nginx.org/en/docs/][Nginx Documentation]]

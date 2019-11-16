@@ -1,0 +1,2806 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Web Scrap</title>
+<!-- 2017-01-17 Tue 09:26 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Web Scrap</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. HTTP 协议入门</a>
+<ul>
+<li><a href="#sec-1-1">1.1. HTTP/0.9</a></li>
+<li><a href="#sec-1-2">1.2. HTTP/1.0</a>
+<ul>
+<li><a href="#sec-1-2-1">1.2.1. 简介</a></li>
+<li><a href="#sec-1-2-2">1.2.2. 请求格式</a></li>
+<li><a href="#sec-1-2-3">1.2.3. 响应格式</a></li>
+<li><a href="#sec-1-2-4">1.2.4. <code>Content-Type</code></a></li>
+<li><a href="#sec-1-2-5">1.2.5. <code>Content-Encoding</code></a></li>
+<li><a href="#sec-1-2-6">1.2.6. 缺点</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-3">1.3. HTTP/1.1</a>
+<ul>
+<li><a href="#sec-1-3-1">1.3.1. 持久连接</a></li>
+<li><a href="#sec-1-3-2">1.3.2. 管道机制</a></li>
+<li><a href="#sec-1-3-3">1.3.3. <code>Content-Length</code></a></li>
+<li><a href="#sec-1-3-4">1.3.4. 分块传输编码</a></li>
+<li><a href="#sec-1-3-5">1.3.5. 其他特性</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-4">1.4. SPDY</a></li>
+<li><a href="#sec-1-5">1.5. HTTP/2</a>
+<ul>
+<li><a href="#sec-1-5-1">1.5.1. 二进制协议</a></li>
+<li><a href="#sec-1-5-2">1.5.2. 多工</a></li>
+<li><a href="#sec-1-5-3">1.5.3. 数据流</a></li>
+<li><a href="#sec-1-5-4">1.5.4. 头信息压缩</a></li>
+<li><a href="#sec-1-5-5">1.5.5. 服务器推送</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-6">1.6. 链接</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. SSL/TLS 协议概述</a>
+<ul>
+<li><a href="#sec-2-1">2.1. 作用</a></li>
+<li><a href="#sec-2-2">2.2. 历史</a></li>
+<li><a href="#sec-2-3">2.3. 运行过程</a></li>
+<li><a href="#sec-2-4">2.4. 握手阶段</a>
+<ul>
+<li><a href="#sec-2-4-1">2.4.1. 客户端发出请求（ClientHello）</a></li>
+<li><a href="#sec-2-4-2">2.4.2. 服务器响应（SeverHello）</a></li>
+<li><a href="#sec-2-4-3">2.4.3. 客户端响应</a></li>
+<li><a href="#sec-2-4-4">2.4.4. 服务器响应</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-5">2.5. 链接</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. 图解 SSL/TLS 协议</a>
+<ul>
+<li><a href="#sec-3-1">3.1. SSL 协议的握手过程</a></li>
+<li><a href="#sec-3-2">3.2. 私钥的作用</a></li>
+<li><a href="#sec-3-3">3.3. DH 算法的握手阶段</a></li>
+<li><a href="#sec-3-4">3.4. 恢复会话</a>
+<ul>
+<li><a href="#sec-3-4-1">3.4.1. Session ID</a></li>
+<li><a href="#sec-3-4-2">3.4.2. Session ticket</a></li>
+</ul>
+</li>
+<li><a href="#sec-3-5">3.5. 链接</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. HTTPS 升级指南</a>
+<ul>
+<li><a href="#sec-4-1">4.1. 获取证书</a></li>
+<li><a href="#sec-4-2">4.2. 安装证书</a></li>
+<li><a href="#sec-4-3">4.3. 修改链接</a></li>
+<li><a href="#sec-4-4">4.4. 301 重定向</a></li>
+<li><a href="#sec-4-5">4.5. 安全措施</a>
+<ul>
+<li><a href="#sec-4-5-1">4.5.1. HTTP Strict Transport Security (HSTS)</a></li>
+<li><a href="#sec-4-5-2">4.5.2. Cookie</a></li>
+</ul>
+</li>
+<li><a href="#sec-4-6">4.6. 链接</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5. HTTPS 的七个误解</a>
+<ul>
+<li><a href="#sec-5-1">5.1. 误解七：HTTPS 无法缓存</a></li>
+<li><a href="#sec-5-2">5.2. 误解六：SSL 证书很贵</a></li>
+<li><a href="#sec-5-3">5.3. 误解五：HTTPS 站点必须有独享的 IP 地址</a></li>
+<li><a href="#sec-5-4">5.4. 误解四：转移服务器时要购买新证书</a></li>
+<li><a href="#sec-5-5">5.5. 误解三：HTTPS 太慢</a></li>
+<li><a href="#sec-5-6">5.6. 误解二：有了 HTTPS，cookie 和查询字符串就安全了</a></li>
+<li><a href="#sec-5-7">5.7. 误解一：只有注册登录页才需要 HTTPS</a></li>
+<li><a href="#sec-5-8">5.8. 链接</a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6. Content Security Policy 入门</a>
+<ul>
+<li><a href="#sec-6-1">6.1. 简介</a></li>
+<li><a href="#sec-6-2">6.2. 选项值</a></li>
+<li><a href="#sec-6-3">6.3. <code>Content-Security-Policy</code></a>
+<ul>
+<li><a href="#sec-6-3-1">6.3.1. <code>default-src</code></a></li>
+<li><a href="#sec-6-3-2">6.3.2. <code>object-src</code></a></li>
+<li><a href="#sec-6-3-3">6.3.3. <code>report-uri</code></a></li>
+<li><a href="#sec-6-3-4">6.3.4. <code>script-src</code></a></li>
+<li><a href="#sec-6-3-5">6.3.5. <code>style-src</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-6-4">6.4. <code>Content-Security-Policy-Report-Only</code></a></li>
+<li><a href="#sec-6-5">6.5. 链接</a></li>
+</ul>
+</li>
+<li><a href="#sec-7">7. URL 编码问题</a>
+<ul>
+<li><a href="#sec-7-1">7.1. 问题的由来</a></li>
+<li><a href="#sec-7-2">7.2. 网址路径中包含汉字</a></li>
+<li><a href="#sec-7-3">7.3. 查询字符串包含汉字</a></li>
+<li><a href="#sec-7-4">7.4. GET 方法生成的 URL 包含汉字</a></li>
+<li><a href="#sec-7-5">7.5. Ajax 调用的 URL 包含汉字</a></li>
+</ul>
+</li>
+<li><a href="#sec-8">8. URL 的井号</a>
+<ul>
+<li><a href="#sec-8-1">8.1. <code>#</code> 的涵义</a></li>
+<li><a href="#sec-8-2">8.2. HTTP 请求</a></li>
+<li><a href="#sec-8-3">8.3. 改变 <code>#</code></a></li>
+<li><a href="#sec-8-4">8.4. <code>window.location.hash</code></a></li>
+<li><a href="#sec-8-5">8.5. <code>onhashchange</code> 事件</a></li>
+<li><a href="#sec-8-6">8.6. Google 抓取 <code>#</code> 的机制</a></li>
+<li><a href="#sec-8-7">8.7. 链接</a></li>
+</ul>
+</li>
+<li><a href="#sec-9">9. 理解 RESTful 架构</a>
+<ul>
+<li><a href="#sec-9-1">9.1. 历史</a></li>
+<li><a href="#sec-9-2">9.2. 资源（Resources）</a></li>
+<li><a href="#sec-9-3">9.3. 表现（Representation）</a></li>
+<li><a href="#sec-9-4">9.4. 状态转化（State Transfer）</a></li>
+<li><a href="#sec-9-5">9.5. RESTful</a></li>
+<li><a href="#sec-9-6">9.6. 误区</a></li>
+</ul>
+</li>
+<li><a href="#sec-10">10. RESTful API 设计</a>
+<ul>
+<li><a href="#sec-10-1">10.1. 协议</a></li>
+<li><a href="#sec-10-2">10.2. 域名</a></li>
+<li><a href="#sec-10-3">10.3. 版本</a></li>
+<li><a href="#sec-10-4">10.4. 路径</a></li>
+<li><a href="#sec-10-5">10.5. HTTP 动作</a></li>
+<li><a href="#sec-10-6">10.6. 过滤</a></li>
+<li><a href="#sec-10-7">10.7. 状态码</a></li>
+<li><a href="#sec-10-8">10.8. 错误处理</a></li>
+<li><a href="#sec-10-9">10.9. 返回结果</a></li>
+<li><a href="#sec-10-10">10.10. Hypermedia API</a></li>
+<li><a href="#sec-10-11">10.11. 链接</a></li>
+</ul>
+</li>
+<li><a href="#sec-11">11. 网站的无密码登录</a>
+<ul>
+<li><a href="#sec-11-1">11.1. OpenID</a></li>
+<li><a href="#sec-11-2">11.2. Persona</a></li>
+<li><a href="#sec-11-3">11.3. 第三方账户</a></li>
+<li><a href="#sec-11-4">11.4. OAuth</a></li>
+<li><a href="#sec-11-5">11.5. Email 一次性登录</a></li>
+</ul>
+</li>
+<li><a href="#sec-12">12. 理解 OAuth 2.0</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> HTTP 协议入门</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2016/08/http.html">Source</a>
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> HTTP/0.9</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+HTTP 是 <span class="underline">基于 TCP/IP 协议的应用层协议</span> ，不涉及数据包（packet）传输，主要规定了客户端和服务器之间的通信格式，默认使用 80 端口。最早版本是 1991 年发布的 0.9 版，该版本极其简单，只有一个命令 <code>GET</code> 。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-code">GET /index.html
+</pre>
+</div>
+
+<p>
+表示 TCP 连接建立后，客户端向服务器请求网页文件 <code>index.html</code> 。协议规定，服务器只能响应 HTML 格式的字符串，不能回应别的格式。服务器发送完毕，就关闭 TCP 连接。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> HTTP/1.0</h3>
+<div class="outline-text-3" id="text-1-2">
+</div><div id="outline-container-sec-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> 简介</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<p>
+1996 年 5 月，HTTP/1.0 发布，内容大大增加。首先，任何格式的内容都可以发送。这使得互联网不仅可以传输文字，还能传输图像、视频、二进制文件。这为互联网的大发展奠定了基础。其次，除了 <code>GET</code> 命令，还引入了 <code>POST</code> 命令和 <code>HEAD</code> 命令，丰富了浏览器与服务器的互动手段。再次，HTTP 请求和响应的格式也变了，除了数据部分，每次通信都必须包括头信息（HTTP header），用来描述一些元数据。
+</p>
+
+<p>
+其他的新增功能还包括状态码（status code）、多字符集支持、多部分发送（multi-part type）、权限（authorization）、缓存（cache）、内容编码（content encoding）等。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2-2" class="outline-4">
+<h4 id="sec-1-2-2"><span class="section-number-4">1.2.2</span> 请求格式</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<div class="org-src-container">
+<label class="org-src-name">HTTP/1.0 请求示例</label>
+<pre class="src src-code">GET / HTTP/1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5)
+Accept: */*
+</pre>
+</div>
+
+<p>
+第一行是请求命令，必须在尾部添加协议版本 <code>HTTP/1.0</code> 。后面是多行头信息，描述客户端的情况。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2-3" class="outline-4">
+<h4 id="sec-1-2-3"><span class="section-number-4">1.2.3</span> 响应格式</h4>
+<div class="outline-text-4" id="text-1-2-3">
+<div class="org-src-container">
+
+<pre class="src src-code">HTTP/1.0 200 OK 
+Content-Type: text/plain
+Content-Length: 137582
+Expires: Thu, 05 Dec 1997 16:00:00 GMT
+Last-Modified: Wed, 5 August 1996 15:55:28 GMT
+Server: Apache 0.84
+
+&lt;html&gt;
+    &lt;body&gt;Hello World&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</div>
+
+<p>
+响应的格式是「头信息 + 一个空行 <code>\r\n</code> + 数据」，其中，第一行是「协议版本 + 状态码（status code） + 状态描述」。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2-4" class="outline-4">
+<h4 id="sec-1-2-4"><span class="section-number-4">1.2.4</span> <code>Content-Type</code></h4>
+<div class="outline-text-4" id="text-1-2-4">
+<p>
+关于字符的编码，HTTP/1.0 规定， <span class="underline">头信息必须是 ASCII 编码，后面的数据可以是任何格式。</span> 服务器响应的时候，必须告诉客户端，数据是什么格式，这就是 <code>Content-Type</code> 字段的作用。这些数据类型总称为 <span class="underline">MIME 类型</span> ，每个值包括一级类型和二级类型，之间用斜杠分隔。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">一些常见的 <code>Content-Type</code> 字段的值：</label>
+<pre class="src src-code">text/plain
+text/html
+text/css
+image/jpeg
+image/png
+image/svg+xml
+audio/mp4
+video/mp4
+application/javascript
+application/pdf
+application/zip
+application/atom+xml
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">除了预定义的类型，厂商也可以自定义类型：</label>
+<pre class="src src-code">application/vnd.debian.binary-package
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">MIME 类型还可以在尾部使用分号，添加参数：</label>
+<pre class="src src-code">Content-Type: text/html; charset=utf-8
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">客户端请求的时候，可以使用 <code>Accept</code> 字段声明可以接受的数据格式：</label>
+<pre class="src src-code">Accept: */*
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">MIME 类型还可以写在 HTML 中：</label>
+<pre class="src src-html">&lt;<span class="org-function-name">meta</span> <span class="org-variable-name">http-equiv</span>=<span class="org-string">"Content-Type"</span> <span class="org-variable-name">content</span>=<span class="org-string">"text/html; charset=UTF-8"</span> /&gt;
+<span class="org-comment-delimiter">&lt;!-- </span><span class="org-comment">&#31561;&#21516;&#20110; </span><span class="org-comment-delimiter">--&gt;</span>
+&lt;<span class="org-function-name">meta</span> <span class="org-variable-name">charset</span>=<span class="org-string">"utf-8"</span> /&gt;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-2-5" class="outline-4">
+<h4 id="sec-1-2-5"><span class="section-number-4">1.2.5</span> <code>Content-Encoding</code></h4>
+<div class="outline-text-4" id="text-1-2-5">
+<p>
+发送的数据可以经过压缩的， <code>Content-Encoding</code> 字段说明 <span class="underline">数据的压缩方法</span> 。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><code>Content-Encoding</code> 的值：</label>
+<pre class="src src-code">gzip
+compress
+deflate
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">客户端请求时可以用 <code>Accept-Encoding</code> 字段声明可以接受的压缩方法：</label>
+<pre class="src src-code">Accept-Encoding: gzip, deflate
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-2-6" class="outline-4">
+<h4 id="sec-1-2-6"><span class="section-number-4">1.2.6</span> 缺点</h4>
+<div class="outline-text-4" id="text-1-2-6">
+<p>
+HTTP/1.0 的主要缺点是， <span class="underline">每个 TCP 连接只能发送一个请求，发送数据完毕连接就关闭，</span> 如果还要请求其他资源，必须再新建一个连接。 <span class="underline">TCP 连接的新建成本很高，因为需要客户端和服务器三次握手，并且开始时发送速率较慢（slow start），所以 HTTP/1.0 的性能比较差。</span> 随着网页加载的外部资源越来越多，这个问题就愈发突出了。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">为了解决这个问题，有些浏览器在请求时，使用了非标准的 <code>Connection</code> 字段：</label>
+<pre class="src src-code">Connection: keep-alive
+</pre>
+</div>
+
+<p>
+要求服务器不要关闭 TCP 连接，以便其他请求复用。服务器同样回应这个字段，一个可以复用的 TCP 连接就建立了，直到客户端或服务器主动关闭连接。但是，这不是标准字段，不同实现的行为可能不一致，因此不是根本的解决办法。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> HTTP/1.1</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+1997 年 1 月，HTTP/1.1 发布，只比 1.0 版本晚了半年。它进一步完善了 HTTP 协议，一直用到了 20 年后的今天，直到现在还是最流行的版本。
+</p>
+</div>
+
+<div id="outline-container-sec-1-3-1" class="outline-4">
+<h4 id="sec-1-3-1"><span class="section-number-4">1.3.1</span> 持久连接</h4>
+<div class="outline-text-4" id="text-1-3-1">
+<p>
+HTTP/1.1 的最大变化就是引入了 <span class="underline">持久连接（persistent connection），即 TCP 连接默认不关闭，可以被多个请求复用，</span> 不用声明 <code>Connection: keep-alive</code> 。客户端和服务器发现对方一段时间没有活动，就可以主动关闭连接。不过，规范的做法是，客户端在最后一个请求时，发送 <code>Connection: close</code> ，明确要求服务器关闭 TCP 连接。
+</p>
+
+<p>
+虽然 HTTP/1.1 允许复用 TCP 连接，但是 <span class="underline">同一个 TCP 连接里面，所有的数据通信是按次序进行的。服务器只有处理完一个响应，才会处理下一个。如果前面的响应特别慢，后面就会有许多请求排队等待。这称为「队头堵塞」（head-of-line blocking）。</span>
+</p>
+
+<p>
+为了避免这个问题，有两种方法：一是减少请求数，二是同时多开持久连接。这导致了很多的网页优化技巧，比如合并脚本和样式表、将图片嵌入 CSS 代码、域名分片（domain sharding）等等。如果 HTTP 协议设计得更好一些，这些额外的工作是可以避免的。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-3-2" class="outline-4">
+<h4 id="sec-1-3-2"><span class="section-number-4">1.3.2</span> 管道机制</h4>
+<div class="outline-text-4" id="text-1-3-2">
+<p>
+HTTP/1.1 还引入了 <span class="underline">管道机制（pipelining），即在同一个 TCP 连接里面，客户端可以同时发送多个请求，</span> 进一步改进了 HTTP 协议的效率。
+</p>
+
+<p>
+举例来说，客户端需要请求两个资源。以前的做法是，在同一个 TCP 连接里面，先发送 A 请求，然后等待服务器响应，再发出 B 请求。管道机制则是 <span class="underline">允许浏览器同时发出 A 请求和 B 请求，但是服务器还是按照顺序，先响应 A 请求，完成后再响应 B 请求。</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-3-3" class="outline-4">
+<h4 id="sec-1-3-3"><span class="section-number-4">1.3.3</span> <code>Content-Length</code></h4>
+<div class="outline-text-4" id="text-1-3-3">
+<p>
+同一个 TCP 连接现在可以接收多个响应，势必就要有一种机制，确认数据包的哪一部分是属于同一个响应的。这就是 <code>Content-length</code> 字段的作用，声明响应的数据长度。在 HTTP/1.0 中， <code>Content-Length</code> 字段不是必需的，因为浏览器发现服务器关闭了 TCP 连接，就表明收到的数据包已经全了。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-code">Content-Length: 3495
+</pre>
+</div>
+
+<p>
+表示这个响应的长度是 3495 字节，后面的字节就属于下一个响应了。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-3-4" class="outline-4">
+<h4 id="sec-1-3-4"><span class="section-number-4">1.3.4</span> 分块传输编码</h4>
+<div class="outline-text-4" id="text-1-3-4">
+<p>
+使用 <code>Content-Length</code> 的前提条件是，服务器发送响应之前，必须知道响应的数据长度。这意味着服务器要等到所有操作完成，才能发送数据，效率不高。更好的处理方法是， <span class="underline">产生一块数据，就发送一块，采用「流模式」（stream）</span> 取代「缓存模式」（buffer）。因此， HTTP/1.1 规定可以不使用 <code>Content-Length</code> ，而使用 <span class="underline">「分块传输编码」（chunked transfer encoding），只要请求或响应的头信息有 <code>Transfer-Encoding</code> 字段，就表明响应将由数量未定的数据块组成。</span>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-code">Transfer-Encoding: chunked
+</pre>
+</div>
+
+<p>
+<span class="underline">每个非空的数据块前有一个 16 进制的数值，表示这个块的长度。最后是一个大小为 0 的块，表示本次响应的数据发送完毕。</span>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-code">HTTP/1.1 200 OK
+Content-Type: text/plain
+Transfer-Encoding: chunked
+
+25
+This is the data in the first chunk
+
+1C
+and this is the second one
+
+3
+con
+
+8
+sequence
+
+0
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-3-5" class="outline-4">
+<h4 id="sec-1-3-5"><span class="section-number-4">1.3.5</span> 其他特性</h4>
+<div class="outline-text-4" id="text-1-3-5">
+<p>
+HTTP/1.1 新增了许多动词方法： <code>PUT</code> 、 <code>PATCH</code> 、 <code>HEAD</code> 、 <code>OPTIONS</code> 、 <code>DELETE</code> 。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">客户端请求的头信息新增了 <code>Host</code> 字段，用来指定服务器的域名：</label>
+<pre class="src src-code">Host: www.example.com
+</pre>
+</div>
+
+<p>
+<span class="underline"><code>Host</code> 字段可以将请求发往同一台服务器上的不同网站，为虚拟主机的使用打下了基础。</span>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> SPDY</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+2009 年，谷歌公开了自行研发的 SPDY 协议，主要解决 HTTP/1.1 效率不高的问题。这个协议在 Chrome 浏览器上证明可行以后，就被当作 HTTP/2 的基础，主要特性都在 HTTP/2 之中得到继承。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> HTTP/2</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+2015 年 HTTP/2 发布。它不叫 HTTP/2.0，是因为标准委员会不打算再发布子版本了，下一个新版本将是 HTTP/3。
+</p>
+</div>
+
+<div id="outline-container-sec-1-5-1" class="outline-4">
+<h4 id="sec-1-5-1"><span class="section-number-4">1.5.1</span> 二进制协议</h4>
+<div class="outline-text-4" id="text-1-5-1">
+<p>
+HTTP/1.1 的头信息必须是文本（ASCII 编码），而数据体可以是文本，也可以是二进制。 <span class="underline">HTTP/2 则是一个彻底的二进制协议，头信息和数据体都是二进制，并且统称为「帧」（frame）：头信息帧和数据帧。</span>
+</p>
+
+<p>
+二进制协议的一个好处是，可以定义额外的帧。HTTP/2 定义了近 10 种帧，为将来的高级应用打好了基础。如果使用文本实现这种功能，解析数据将会变得非常麻烦，二进制解析则方便得多。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-5-2" class="outline-4">
+<h4 id="sec-1-5-2"><span class="section-number-4">1.5.2</span> 多工</h4>
+<div class="outline-text-4" id="text-1-5-2">
+<p>
+HTTP/2 复用 TCP 连接， <span class="underline">在一个连接里，客户端和浏览器都可以同时发送多个请求或响应，而且不用按照顺序一一对应，这样就避免了「队头堵塞」。</span> 举例来说，在一个 TCP 连接里面， <span class="underline">服务器同时收到了 A 请求和 B 请求，先响应 A 请求，但发现处理非常耗时，于是先发送 A 请求已经处理好的部分，接着响应 B 请求，完成后再响应 A 请求剩下的部分。</span> 这种双向、实时的通信，就叫做多工（multiplexing）。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-5-3" class="outline-4">
+<h4 id="sec-1-5-3"><span class="section-number-4">1.5.3</span> 数据流</h4>
+<div class="outline-text-4" id="text-1-5-3">
+<p>
+因为 HTTP/2 的数据包是不按顺序发送的，同一个连接里面连续的数据包，可能属于不同的响应。因此必须要对数据包做标记，指出它属于哪个回应。HTTP/2 将 <span class="underline">每个请求或响应的所有数据包，称为一个数据流（stream）。每个数据流都有独一无二的编号。数据包发送时，必须标记数据流 ID，用来区分它属于哪个数据流。</span> 另外还规定，客户端发出的数据流，ID 一律为奇数，服务器发出的，ID 为偶数。
+</p>
+
+<p>
+数据流发送到一半时，客户端和服务器都可以发送 <code>RST_STREAM</code> 帧，取消这个数据流。HTTP/1.1 取消数据流的唯一方法就是关闭 TCP 连接。这就是说， <span class="underline">HTTP/2 可以取消某一次请求，同时保证 TCP 连接还打开着，</span> 可以被其他请求使用。
+</p>
+
+<p>
+<span class="underline">客户端可以指定数据流的优先级。</span> 优先级越高，服务器就会越早响应。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-5-4" class="outline-4">
+<h4 id="sec-1-5-4"><span class="section-number-4">1.5.4</span> 头信息压缩</h4>
+<div class="outline-text-4" id="text-1-5-4">
+<p>
+<span class="underline">HTTP 协议不带有状态，每次请求都必须附上所有信息。</span> 所以，请求的很多字段都是重复的，比如 <code>Cookie</code> 和 <code>User Agent</code> ，一模一样的内容，每次请求都必须附带，会浪费很多带宽，也影响速度。
+</p>
+
+<p>
+HTTP/2 对这一点做了优化，引入了 <span class="underline">头信息压缩机制（header compression）</span> 。一方面， <span class="underline">头信息使用 gzip 或 compress 压缩后再发送；</span> 另一方面， <span class="underline">客户端和服务器同时维护一张头信息表，所有头信息字段都存入这个表，生成一个索引号，以后就不发送同样字段了，只发送索引号，</span> 这样就提高速度了。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-5-5" class="outline-4">
+<h4 id="sec-1-5-5"><span class="section-number-4">1.5.5</span> 服务器推送</h4>
+<div class="outline-text-4" id="text-1-5-5">
+<p>
+HTTP/2 允许服务器未经请求，主动向客户端发送资源，这叫做服务器推送（server push）。常见场景是客户端请求一个网页，这个网页里面包含很多静态资源。正常情况下，客户端必须收到网页后，解析 HTML 源码，发现有静态资源，再发出静态资源请求。其实，服务器可以预期到客户端请求网页后，很可能会再请求静态资源，所以就主动把这些静态资源随着网页一起发给客户端了。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> 链接</h3>
+<div class="outline-text-3" id="text-1-6">
+<ol class="org-ol">
+<li><a href="http://kamranahmed.info/blog/2016/08/13/http-in-depth/">Journey to HTTP/2</a>
+</li>
+<li><a href="https://tools.ietf.org/html/rfc1945">RFC 1945 - Hypertext Transfer Protocol &#x2013; HTTP/1.0</a>
+</li>
+<li><a href="https://http2.github.io/http2-spec/">Hypertext Transfer Protocol Version 2 (HTTP/2)</a> 
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> SSL/TLS 协议概述</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html">Source</a>
+</p>
+
+<p>
+互联网的通信安全，建立在 SSL/TLS 协议之上。本文简要介绍 SSL/TLS 协议的运行机制，重点是设计思想和运行过程，不涉及具体的实现细节。如果想了解这方面的内容，请参阅 <a href="http://tools.ietf.org/html/rfc5246">RFC 文档</a>。
+</p>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 作用</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+不使用 SSL/TLS 的 HTTP 通信，就是不加密的通信，所有信息明文传播，带来了三大风险。
+</p>
+
+<ul class="org-ul">
+<li>窃听风险（eavesdropping）：第三方可以获知通信内容。
+</li>
+<li>篡改风险（tampering）：第三方可以修改通信内容。
+</li>
+<li>冒充风险（pretending）：第三方可以冒充他人身份参与通信。
+</li>
+</ul>
+
+<p>
+SSL/TLS 协议是为了解决这三大风险而设计的，希望达到：
+</p>
+
+<ul class="org-ul">
+<li>所有信息都是 <span class="underline">加密传播</span> ，第三方无法窃听。
+</li>
+<li>具有 <span class="underline">校验机制</span> ，一旦被篡改，通信双方会立刻发现。
+</li>
+<li>配备 <span class="underline">身份证书</span> ，防止身份被冒充。
+</li>
+</ul>
+
+<p>
+互联网是开放环境，通信双方都是未知身份，这为协议的设计带来了很大的难度。而且，协议还必须能够经受所有匪夷所思的攻击，这使得 SSL/TLS 协议。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> 历史</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+互联网加密通信协议的历史，几乎与互联网一样长。
+</p>
+
+<ul class="org-ul">
+<li>1994 年，NetScape 公司设计了 SSL 协议（Secure Sockets Layer）的 1.0 版，但是未发布。
+</li>
+<li>1995 年，NetScape 公司发布 SSL 2.0，很快发现有严重漏洞。
+</li>
+<li>1996 年，SSL 3.0 问世，得到大规模应用。
+</li>
+<li>1999 年，互联网标准化组织 ISOC 接替 NetScape 公司，发布了 <span class="underline">SSL 的升级版 TLS 1.0</span> 。
+</li>
+<li>2006 年和 2008 年，TLS 进行了两次升级，分别为 TLS 1.1 和 TLS 1.2。
+</li>
+<li>最新的变动是 2011 年 TLS 1.2 的修订版。
+</li>
+</ul>
+
+<p>
+目前，应用最广泛的是 TLS 1.0，接下来是 SSL 3.0。但是，主流浏览器都已经实现了 TLS 1.2 的支持。 <span class="underline">TLS 1.0 通常被标示为 SSL 3.1，TLS 1.1 为 SSL 3.2，TLS 1.2 为 SSL 3.3。</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> 运行过程</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+<span class="underline">SSL/TLS 协议的基本思路是公钥加密法：客户端先向服务器端索要公钥，然后用公钥加密信息，服务器收到密文后，用私钥解密。</span> 这里有两个问题。
+</p>
+
+<p>
+<b>（1）如何保证公钥不被篡改？</b>
+</p>
+
+<p>
+解决方法： <span class="underline">将公钥放在数字证书中，只要证书是可信的，公钥就是可信的。</span>
+</p>
+
+<p>
+<b>（2）公钥加密计算量太大，如何减少耗用的时间？</b>
+</p>
+
+<p>
+解决方法：每一次会话， <span class="underline">客户端和服务器端都生成一个「会话密钥」（session key）来加密信息。由于「会话密钥」是对称加密，所以运算速度非常快，而服务器公钥只用于加密「会话密钥」本身，这样就减少了加密运算的消耗时间。</span>
+</p>
+
+<p>
+因此 SSL/TLS 协议的基本过程是：
+</p>
+
+<ol class="org-ol">
+<li>客户端向服务器端索要并验证公钥。
+</li>
+<li>双方协商生成会话密钥。
+</li>
+<li>双方采用会话密钥对通信进行加密。
+</li>
+</ol>
+
+<p>
+前两步又称为「握手阶段」（handshake）。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> 握手阶段</h3>
+<div class="outline-text-3" id="text-2-4">
+
+<div class="figure">
+<p><img src="../images/web_scrap/03.png" alt="03.png" />
+</p>
+</div>
+
+<p>
+「握手阶段」涉及四次通信，所有通信都是明文的。
+</p>
+</div>
+
+<div id="outline-container-sec-2-4-1" class="outline-4">
+<h4 id="sec-2-4-1"><span class="section-number-4">2.4.1</span> 客户端发出请求（ClientHello）</h4>
+<div class="outline-text-4" id="text-2-4-1">
+<p>
+首先，客户端（通常是浏览器）先向服务器发出加密通信的请求，即 ClientHello。客户端主要向服务器提供以下信息：
+</p>
+
+<ul class="org-ul">
+<li>支持的协议版本，比如 TLS 1.0。
+</li>
+<li>客户端生成的随机数，稍后用于生成会话密钥。
+</li>
+<li>支持的加密方法，比如 RSA 公钥加密。
+</li>
+<li>支持的压缩方法。
+</li>
+</ul>
+
+<p>
+<span class="underline">客户端发送的信息之中不包括服务器的域名，</span> 也就是说，理论上服务器只能包含一个网站，否则会分不清应该向客户端提供哪一个网站的数字证书。 <span class="underline">这就是为什么通常一台服务器只能有一张数字证书。</span> 对于虚拟主机的用户来说，这当然很不方便。2006 年， <span class="underline">TLS 协议加入了 Server Name Indication 扩展，允许客户端向服务器提供它所请求的域名。</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-4-2" class="outline-4">
+<h4 id="sec-2-4-2"><span class="section-number-4">2.4.2</span> 服务器响应（SeverHello）</h4>
+<div class="outline-text-4" id="text-2-4-2">
+<p>
+服务器收到客户端请求后，向客户端发出响应，即 SeverHello。服务器的响应包含以下内容：
+</p>
+
+<ul class="org-ul">
+<li>确认使用的加密通信协议版本，比如 TLS 1.0。如果浏览器与服务器支持的版本不一致，服务器关闭加密通信。
+</li>
+<li>服务器生成的随机数，稍后用于生成会话密钥。
+</li>
+<li>确认使用的加密方法，比如 RSA 公钥加密。
+</li>
+<li>服务器证书。
+</li>
+</ul>
+
+<p>
+除了上面这些信息， <span class="underline">如果服务器需要确认客户端的身份，就会再包含一项请求，要求客户端提供「客户端证书」。</span> 比如，金融机构往往只允许认证客户连入自己的网络，就会向正式客户提供 USB 密钥，里面就包含了一张客户端证书。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-4-3" class="outline-4">
+<h4 id="sec-2-4-3"><span class="section-number-4">2.4.3</span> 客户端响应</h4>
+<div class="outline-text-4" id="text-2-4-3">
+<p>
+客户端收到服务器响应以后，首先 <span class="underline">验证服务器证书，如果证书不是可信机构颁布、或者证书中的域名与实际域名不一致、或者证书已经过期，就会显示警告，</span> 由使用者选择是否还要继续通信。如果证书没有问题，客户端就会从证书中取出服务器的公钥。然后，向服务器发送下面三项信息：
+</p>
+
+<ul class="org-ul">
+<li>一个随机数，用服务器公钥加密，防止被窃听。
+</li>
+<li>编码改变通知，表示随后的信息都将用双方商定的加密方法和密钥发送。
+</li>
+<li>客户端握手结束通知。这一项同时也是前面发送的所有内容的 hash 值，供服务器校验。
+</li>
+</ul>
+
+<p>
+第一项随机数是整个握手阶段出现的第三个随机数，又称 pre-master key。有了它以后，客户端和服务器就同时有了三个随机数，接着双方就用事先商定的加密方法，各自生成本次会话所用的同一把「会话密钥」。至于为什么一定要用三个随机数来生成「会话密钥」，<a href="http://blog.csdn.net/dog250/article/details/5717162">dog250</a> 解释得很好：
+</p>
+
+<blockquote>
+<p>
+pre-master 的存在在于 SSL 协议不信任每个主机都能产生完全随机的随机数，如果随机数不随机，那么 pre-master key 就有可能被猜出来，那么仅使用 pre-master key 作为密钥就不合适，因此必须引入新的随机因素。客户端和服务器加上 pre-master key 三个随机数一同生成的密钥就不容易被猜出了，一个伪随机可能完全不随机，而三个伪随机就十分接近随机了，每增加一个自由度，随机性增加的可不是一。
+</p>
+</blockquote>
+
+<p>
+此外，如果前一步服务器要求客户端证书，客户端会在这一步发送证书及相关信息。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-4-4" class="outline-4">
+<h4 id="sec-2-4-4"><span class="section-number-4">2.4.4</span> 服务器响应</h4>
+<div class="outline-text-4" id="text-2-4-4">
+<p>
+服务器收到客户端的第三个随机数 pre-master key 之后，计算生成本次会话所用的会话密钥。然后，向客户端最后发送下面信息：
+</p>
+
+<ul class="org-ul">
+<li>编码改变通知，表示随后的信息都将用双方商定的加密方法和密钥发送。
+</li>
+<li>服务器握手结束通知。这一项同时也是前面发送的所有内容的 hash 值，供客户端校验。
+</li>
+</ul>
+
+<p>
+至此，整个握手阶段全部结束。接下来， <span class="underline">客户端与服务器进入加密通信，就完全是使用普通的 HTTP 协议，只不过用会话密钥加密内容。</span>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> 链接</h3>
+<div class="outline-text-3" id="text-2-5">
+<ol class="org-ol">
+<li><a href="http://technet.microsoft.com/en-us/library/cc785811(v=ws.10).aspx">SSL/TLS in Detail</a>
+</li>
+<li><a href="http://www.moserware.com/2009/06/first-few-milliseconds-of-https.html">The First Few Milliseconds of an HTTPS Connection</a>
+</li>
+<li><a href="http://en.wikipedia.org/wiki/Transport_Layer_Security">Transport Layer Security</a>
+</li>
+<li><a href="http://security.stackexchange.com/questions/20803/how-does-ssl-work">How does SSL work?</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 图解 SSL/TLS 协议</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2014/09/illustration-ssl.html">Source</a>
+</p>
+
+<p>
+本周，CloudFlare 宣布，开始提供 Keyless 服务，即把网站托管在他们的 CDN 上，不用提供自己的私钥，也能使用 SSL 加密链接。
+</p>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> SSL 协议的握手过程</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+开始加密通信之前，客户端和服务器首先必须建立连接和交换参数，这个过程叫做握手（handshake）。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/web_scrap/04.gif" alt="04.gif" />
+</p>
+</div>
+
+<ol class="org-ol">
+<li>A 给出协议版本号、客户端生成的随机数（client random），以及客户端支持的加密方法。
+</li>
+<li>B 确认双方使用的加密方法，并给出数字证书，以及服务器生成的随机数（server random）。
+</li>
+<li>A 确认数字证书有效，然后生成一个新的随机数（pre-master secret），并使用数字证书中的公钥加密这个随机数发给 B。
+</li>
+<li>B 使用自己的私钥，解密出 A 发来的随机数（pre-master secret）。
+</li>
+<li>A 和 B 据约定的加密方法，使用前面的三个随机数，生成会话密钥（session key），用来加密之后的对话。
+</li>
+</ol>
+
+
+<div class="figure">
+<p><img src="../images/web_scrap/05.jpg" alt="05.jpg" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> 私钥的作用</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+握手阶段有三点需要注意：
+</p>
+
+<ul class="org-ul">
+<li>生成会话密钥一共需要三个随机数。
+</li>
+<li><span class="underline">握手之后的对话使用「会话密钥」加密（对称加密），服务器的公钥和私钥只用于加密和解密「会话密钥」（非对称加密）。</span>
+</li>
+<li>服务器公钥包含在服务器的数字证书中。
+</li>
+</ul>
+
+<p>
+从上面第二点可知，整个会话过程中（握手阶段和其后的对话），服务器的公钥和私钥只需要用到一次。这就是 CloudFlare 能够提供 Keyless 服务的根本原因。某些客户（比如银行）想要使用外部 CDN，加快自家网站的访问速度，但是 <span class="underline">出于安全考虑，不能把私钥交给 CDN 服务商，这时完全可以把私钥留在自家服务器，只用来解密会话密钥，其他步骤都让 CDN 服务商去完成。</span>
+</p>
+
+
+<div class="figure">
+<p><img src="../images/web_scrap/06.png" alt="06.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> DH 算法的握手阶段</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+整个握手阶段不加密（也没法加密），都是明文的。因此，如果有人 <span class="underline">窃听通信，可以知道双方选择的加密方法，以及三个随机数中的两个。整个通话的安全，只取决于第三个随机数（pre-master secret）。</span>
+</p>
+
+<p>
+虽然理论上，只要服务器的公钥足够长（比如 2048 位），那么 pre-master secret 可以保证不被破解。但是为了足够安全，可以考虑把握手阶段的算法从默认的 RSA 算法，改为 Diffie-Hellman 算法（简称 DH 算法）。 <span class="underline">采用 DH 算法，premaster secret 不需要传递，双方只要交换各自的参数，就可以算出这个随机数。</span>
+</p>
+
+
+<div class="figure">
+<p><img src="../images/web_scrap/07.jpg" alt="07.jpg" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> 恢复会话</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+握手阶段用来建立 SSL 连接，如果出于某种原因，对话中断，就需要重新握手。这时有两种方法可以恢复原来的会话：一种叫做 session ID，另一种叫做 session ticket。
+</p>
+</div>
+
+<div id="outline-container-sec-3-4-1" class="outline-4">
+<h4 id="sec-3-4-1"><span class="section-number-4">3.4.1</span> Session ID</h4>
+<div class="outline-text-4" id="text-3-4-1">
+<p>
+Session ID 的思想很简单，就是 <span class="underline">每一次对话都有一个唯一编号（session ID），如果对话中断，下次重连的时候，只要客户端给出这个编号，且服务器有这个编号的记录，双方就可以继续使用已有的会话密钥，</span> 而不必重新生成一把。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/web_scrap/08.png" alt="08.png" />
+</p>
+</div>
+
+<p>
+Session ID 是目前所有浏览器都支持的方法。它的缺点在于 <span class="underline">session ID 往往只保留在一台服务器上，</span> 如果客户端的请求发到另一台服务器，就无法恢复对话。Session ticket 就是为了解决这个问题而诞生的，目前只有 Firefox 和 Chrome 浏览器支持。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-4-2" class="outline-4">
+<h4 id="sec-3-4-2"><span class="section-number-4">3.4.2</span> Session ticket</h4>
+<div class="outline-text-4" id="text-3-4-2">
+<p>
+重连时，客户端发送服务器在之前会话中发送过来的一个 <span class="underline">加密的 session ticket，只有服务器才能解密，其中包含会话的主要信息，</span> 比如对话密钥和加密方法。当服务器收到 session ticket 并解密后，就不必重新生成对话密钥了。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/web_scrap/09.png" alt="09.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-5" class="outline-3">
+<h3 id="sec-3-5"><span class="section-number-3">3.5</span> 链接</h3>
+<div class="outline-text-3" id="text-3-5">
+<ol class="org-ol">
+<li><a href="https://blog.cloudflare.com/announcing-keyless-ssl-all-the-benefits-of-cloudflare-without-having-to-turn-over-your-private-ssl-keys/">Announcing Keyless SSL™: All the Benefits of CloudFlare Without Having to Turn Over Your Private SSL Keys</a>
+</li>
+<li><a href="https://blog.cloudflare.com/keyless-ssl-the-nitty-gritty-technical-details/">Keyless SSL: The Nitty Gritty Technical Details</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> HTTPS 升级指南</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2016/08/migrate-from-http-to-https.html">Source</a>
+</p>
+</div>
+
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> 获取证书</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+SSL 证书是一个二进制文件，包含经过认证的网站公钥和一些元数据，需要从经销商购买。
+</p>
+
+<ul class="org-ul">
+<li><a href="https://www.gogetssl.com/">GoGetSSL</a>
+</li>
+<li><a href="https://www.ssls.com/">SSLs.com</a>
+</li>
+<li><a href="https://sslmate.com/">SSLMate</a>
+</li>
+</ul>
+
+<p>
+SSL 证书分为三种认证级别：
+</p>
+
+<ul class="org-ul">
+<li>域名认证（domain validation）：最低级别认证，可以确认申请人拥有此域名，浏览器会在地址栏显示一把锁。
+</li>
+<li>公司认证（company validation）：确认域名所有人的公司，证书里面会包含公司信息。
+</li>
+<li>扩展认证（extended validation）：最高级别的认证，浏览器地址栏会显示公司名。
+</li>
+</ul>
+
+<p>
+SSL 证书还分为三种覆盖范围：
+</p>
+
+<ul class="org-ul">
+<li>单域名证书：只能用于单一域名，foo.com 的证书不能用于 www.foo.com。
+</li>
+<li>通配符证书：可以用于某个域名及其所有一级子域名，比如 *.foo.com 的证书可以用于 foo.com，也可以用于 www.foo.com。
+</li>
+<li>多域名证书：可以用于多个域名，比如 foo.com 和 bar.com。
+</li>
+</ul>
+
+<p>
+认证级别越高、覆盖范围越广的证书，价格越贵。还有一个免费证书的选择。为了推广 HTTPS 协议，电子前哨基金会 EFF 成立了 <a href="https://letsencrypt.org/">Let's Encrypt</a>，提供免费证书。
+</p>
+
+<ul class="org-ul">
+<li><a href="https://www.digitalocean.com/community/tags/let-s-encrypt?type=tutorials">Let's Encrypt Tutorials</a>
+</li>
+<li><a href="https://certbot.eff.org/">EFF's Certbot, deploying Let's Encrypt certificates</a>
+</li>
+</ul>
+
+<p>
+拿到证书以后，可以用 <a href="https://tools.keycdn.com/ssl">SSL Certificate Check</a> 检查信息是否正确。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> 安装证书</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+证书文件可以放在 <code>/etc/ssl</code> 目录，然后根据使用的 Web 服务器进行配置。
+</p>
+
+<ul class="org-ul">
+<li><a href="https://mozilla.github.io/server-side-tls/ssl-config-generator/">Mozilla SSL Configuration Generator</a>
+</li>
+<li><a href="https://github.com/SSLMate/tlsconfigguide/tree/master/templates">SSLMate TLS Config Guide</a>
+</li>
+</ul>
+
+<p>
+安装成功后，使用 <a href="https://www.ssllabs.com/ssltest/analyze.html">SSL Labs Server Test</a> 检查证书是否生效。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> 修改链接</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+网页加载的 HTTP 资源要全部改成 HTTPS 链接，因为 <span class="underline">加密网页内如果有非加密的资源，浏览器是不会加载的。</span>
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">两种改法：</label>
+<pre class="src src-html">&lt;<span class="org-function-name">script</span> <span class="org-variable-name">src</span>=<span class="org-string">"https://foo.com/jquery.js"</span>&gt;&lt;/<span class="org-function-name">script</span>&gt;
+&lt;<span class="org-function-name">script</span> <span class="org-variable-name">src</span>=<span class="org-string">"//foo.com/jquery.js"</span>&gt;&lt;/<span class="org-function-name">script</span>&gt;
+</pre>
+</div>
+
+<p>
+改法二会根据当前网页的协议，加载相同协议的外部资源，更灵活一些。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">如果页面头部用到了 ~rel="canonical"~ ，也要改成 HTTPS 网址：</label>
+<pre class="src src-html">&lt;<span class="org-function-name">link</span> <span class="org-variable-name">rel</span>=<span class="org-string">"canonical"</span> <span class="org-variable-name">href</span>=<span class="org-string">"https://foo.com/bar.html"</span> /&gt;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> 301 重定向</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+修改 Web 服务器的配置文件，使用 301 重定向，将 HTTP 请求导向 HTTPS。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">Nginx（<a href="https://serverfault.com/questions/67316/in-nginx-how-can-i-rewrite-all-http-requests-to-https-while-maintaining-sub-dom">In Nginx, how can I rewrite all http requests to https while maintaining sub-domain?</a>）：</label>
+<pre class="src src-code">server {
+    listen 80;
+    server_name domain.com www.domain.com;
+    return 301 https://domain.com$request_uri;
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">Apache <code>.htaccess</code> （<a href="https://httpd.apache.org/docs/2.4/rewrite/remapping.html#canonicalhost">Canonical Hostnames</a>）：</label>
+<pre class="src src-code">RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-5" class="outline-3">
+<h3 id="sec-4-5"><span class="section-number-3">4.5</span> 安全措施</h3>
+<div class="outline-text-3" id="text-4-5">
+</div><div id="outline-container-sec-4-5-1" class="outline-4">
+<h4 id="sec-4-5-1"><span class="section-number-4">4.5.1</span> HTTP Strict Transport Security (HSTS)</h4>
+<div class="outline-text-4" id="text-4-5-1">
+<p>
+访问网站时，用户很少直接在地址栏输入 <a href="https://">https://</a> ，总是通过点击链接，或者 3XX 重定向，从 HTTP 页面进入 HTTPS 页面。攻击者完全可以在用户发出 HTTP 请求时，劫持并篡改该请求。另一种情况是恶意网站使用自签名证书，冒充另一个网站，这时浏览器会给出警告，但是许多用户会忽略警告继续访问。
+</p>
+
+<p>
+<a href="https://zh.wikipedia.org/wiki/HTTP%E4%B8%A5%E6%A0%BC%E4%BC%A0%E8%BE%93%E5%AE%89%E5%85%A8">HTTP 严格传输安全</a>（简称 HSTS）的作用，就是强制浏览器只能发出 HTTPS 请求，并阻止用户接受不安全的证书。它在网站的响应头里面，加入一个强制性声明。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-code">Strict-Transport-Security: max-age=31536000; includeSubDomains
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>在接下来的一年（即 31536000 秒）中，浏览器必须使用 HTTPS 向 example.com 或其子域名发送 HTTP 请求。用户点击超链接或在地址栏输入 <a href="http://www.example.com/">http://www.example.com/</a> 时，浏览器应当自动转换并向 <a href="https://www.example.com/">https://www.example.com/</a> 发送请求。
+</li>
+<li>在接下来的一年中，如果 example.com 服务器发送的证书无效，用户不能忽略浏览器警告，否则无法继续访问该网站。
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-4-5-2" class="outline-4">
+<h4 id="sec-4-5-2"><span class="section-number-4">4.5.2</span> Cookie</h4>
+<div class="outline-text-4" id="text-4-5-2">
+<p>
+另一个需要注意的地方是，确保浏览器只在使用 HTTPS 时才发送 cookie。网站响应头 <code>Set-Cookie</code> 字段加上 <code>Secure</code> 即可。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-code">Set-Cookie: LSID=DQAAAK...Eaem_vYg; Secure
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-6" class="outline-3">
+<h3 id="sec-4-6"><span class="section-number-3">4.6</span> 链接</h3>
+<div class="outline-text-3" id="text-4-6">
+<ol class="org-ol">
+<li><a href="https://docs.google.com/document/d/1oRXJUIttqQxuxmjj2tgYjj096IKw4Zcw6eAoIKWZ2oQ/edit#">How To Migrate To HTTPS</a>
+</li>
+<li><a href="https://www.keycdn.com/blog/http-to-https/">Complete Guide - How to Migrate from HTTP to HTTPS</a>
+</li>
+<li><a href="http://smallbiztrends.com/2015/04/changing-from-http-to-https.html">What You Need to Know About Changing From Http to Https</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> HTTPS 的七个误解</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2011/02/seven_myths_about_https.html">Source</a>
+</p>
+</div>
+
+<div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> 误解七：HTTPS 无法缓存</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+许多人以为，出于安全考虑，浏览器不会在本地保存 HTTPS 缓存。实际上，只要在 HTTP 头中使用特定命令，HTTPS 是可以缓存的。微软的 IE 项目经理 Eric Lawrence 写道（<a href="https://blogs.msdn.microsoft.com/ieinternals/2010/04/21/https-caching-and-internet-explorer/">HTTPS Caching and Internet Explorer</a>）：
+</p>
+
+<blockquote>
+<p>
+说来也许令人震惊，只要 HTTP 头允许这样做，所有版本的 IE 都缓存 HTTPS 内容。比如，如果头命令是 <code>Cache-Control: max-age=600</code> ，那么这个网页就将被 IE 缓存 10 分钟。IE 的缓存策略，与是否使用 HTTPS 协议无关。（其他浏览器在这方面的行为不一致，取决于你使用的版本，所以这里不加以讨论。）
+</p>
+</blockquote>
+
+<p>
+Firefox 默认只在内存中缓存 HTTPS。但是，只要头命令中有 <code>Cache-Control: Public</code> ，缓存就会被写到硬盘上。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> 误解六：SSL 证书很贵</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+如果你在网上搜一下，就会发现很多便宜的 SSL 证书，大概 10 美元一年，这和一个 .com 域名的年费差不多。而且事实上，还能找到免费的 SSL 证书。在效力上，便宜的证书当然会比大机构颁发的证书差一点，但是几乎所有的主流浏览器都接受这些证书。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> 误解五：HTTPS 站点必须有独享的 IP 地址</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+由于 IPv4 将要分配完毕，所以很多人关心这个问题。 <span class="underline">每个 IP 地址只能安装一张 SSL 证书，</span> 这是毫无疑问的。但是，如果使用子域名通配符 SSL 证书（wildcard SSL certificate，价格大约是每年 125 美元），就能在一个 IP 地址上部署多个 HTTPS 子域名。比如，<a href="https://www.httpwatch.com">https://www.httpwatch.com</a> 和 <a href="https://store.httpwatch.com">https://store.httpwatch.com</a> ，就共享同一个IP地址。
+</p>
+
+<p>
+另外，UCC（统一通信证书，Unified Communications Certificate）支持一张证书同时匹配多个站点，可以是完全不同的域名。SNI（服务器名称指示，Server Name Indication）允许一个 IP 地址上多个域名安装多张证书。服务器端，Apache 和 Nginx 支持该技术，IIS 不支持；客户端，IE 7+、Firefox 2.0+、Chrome 6+、Safari 2.1+ 和 Opera 8.0+ 支持。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-4" class="outline-3">
+<h3 id="sec-5-4"><span class="section-number-3">5.4</span> 误解四：转移服务器时要购买新证书</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+部署 SSL 证书，需要这样几步：
+</p>
+
+<ol class="org-ol">
+<li>在服务器上，生成一个 CSR 文件（SSL 证书请求文件，SSL Certificate Signing Request）。
+</li>
+<li>使用 CSR 文件，购买 SSL 证书。
+</li>
+<li>安装 SSL 证书。
+</li>
+</ol>
+
+<p>
+这些步骤都经过精心设计，保证传输的安全，防止有人截取或非法获得证书。结果就是，在第二步得到的证书不能用在另一台服务器上。如果需要这样做，就必须以某种格式输出证书。比如，IIS 的做法是生成一个可以转移的 .pfx 文件，并加以密码保护。将这个文件导入其他服务器，将可以继续使用原来的 SSL 证书了。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-5" class="outline-3">
+<h3 id="sec-5-5"><span class="section-number-3">5.5</span> 误解三：HTTPS 太慢</h3>
+<div class="outline-text-3" id="text-5-5">
+<p>
+使用 HTTPS 不会使网站变得更快，但是有一些技巧可以大大减少额外开销。
+</p>
+
+<p>
+首先，只要压缩文本内容，就会降低解码耗用的 CPU 资源。不过，对于当代 CPU 来说，这点开销不值一提。其次， <span class="underline">建立 HTTPS 连接要求额外的 TCP 往返，因此会新增一些发送和接收的字节，但是新增的字节是很少的。</span>
+</p>
+
+<p>
+<span class="underline">第一次打开网页的时候，HTTPS 协议会比 HTTP 协议慢一点，这是因为读取和验证 SSL 证书的时间。但是，一旦有效的 HTTPS 连接建立起来，再刷新网页，两种协议几乎没有区别。</span>
+</p>
+
+<p>
+某些用户可能发现，HTTPS 比 HTTP 更快一点。这会发生在一些大公司的内部局域网，因为通常情况下， <span class="underline">公司的网关会截取并分析所有的网络通信。但是，当它遇到 HTTPS 连接时，就只能直接放行，</span> 因为 HTTPS 无法被解读。正是因为少了这个解读的过程，所以 HTTPS 变得比较快。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-6" class="outline-3">
+<h3 id="sec-5-6"><span class="section-number-3">5.6</span> 误解二：有了 HTTPS，cookie 和查询字符串就安全了</h3>
+<div class="outline-text-3" id="text-5-6">
+<p>
+虽然无法直接从 HTTPS 数据中读取 cookie 和查询字符串，但是仍然需要使它们的值变得难以预测。比如，曾经有一家英国银行，直接使用顺序排列的数值表示 session ID：
+</p>
+
+
+<div class="figure">
+<p><img src="../images/web_scrap/10.png" alt="10.png" />
+</p>
+</div>
+
+<p>
+黑客可以先注册一个账户，找到这个 cookie，看到这个值的表示方法，然后改动 cookie，从而劫持其他人的 session ID。至于查询字符串，也可以通过类似方式泄漏（<a href="http://blog.httpwatch.com/2009/02/20/how-secure-are-query-strings-over-https/">How Secure Are Query Strings Over HTTPS?</a>）。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-7" class="outline-3">
+<h3 id="sec-5-7"><span class="section-number-3">5.7</span> 误解一：只有注册登录页才需要 HTTPS</h3>
+<div class="outline-text-3" id="text-5-7">
+<p>
+这种想法很普遍。人们觉得 HTTPS 可以保护用户的密码，此外就不需要了。Firefox 浏览器新插件 Firesheep，证明了这种想法是错的。可以看到，在 Twitter 和 Facebook 上，劫持其他人的 session 是非常容易的。咖啡馆的免费 WiFi 就是一个很理想的劫持环境，因为两个原因：
+</p>
+
+<ul class="org-ul">
+<li><span class="underline">免费公用 WiFi 通常不会加密，很容易监控所有流量。</span>
+</li>
+<li><span class="underline">WiFi 通常使用 NAT 进行外网和内网的地址转换，所有内网客户端都共享一个外网地址。这意味着，被劫持的 session 看上去很像来自原来的登录者。</span>
+</li>
+</ul>
+
+<p>
+以 Twitter 为例，它的登录页使用了 HTTPS，但是登录以后，其他页面就变成了 HTTP。这时，它的 cookie 里的 session 值就暴露了。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/web_scrap/11.png" alt="11.png" />
+</p>
+</div>
+
+<p>
+也就是说，这些 cookie 是在 HTTPS 环境下建立的，但是却在 HTTP 环境下传输，如果有人劫持到这些 cookie，就能以你的身份在 Twitter 上发言。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-8" class="outline-3">
+<h3 id="sec-5-8"><span class="section-number-3">5.8</span> 链接</h3>
+<div class="outline-text-3" id="text-5-8">
+<ol class="org-ol">
+<li><a href="http://blog.httpwatch.com/2011/01/28/top-7-myths-about-https/">Top 7 Myths about HTTPS</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Content Security Policy 入门</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2016/09/csp.html">Source</a>
+</p>
+
+<p>
+跨域脚本攻击 XSS 是最常见、危害最大的网页安全漏洞，为了防止 XSS，要采取很多编程措施，非常麻烦。能不能根本上解决问题，浏览器自动禁止外部注入恶意脚本？这就是「网页安全政策」（Content Security Policy，缩写 CSP）的来历。
+</p>
+</div>
+
+<div id="outline-container-sec-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> 简介</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+CSP 的实质就是 <span class="underline">白名单策略，开发者明确告诉客户端（浏览器），哪些外部资源可以加载和执行，</span> 它的实现和执行全部由客户端完成，开发者只需提供配置。CSP 大大增强了网页的安全性，攻击者即使发现了漏洞，也没法注入脚本，除非还控制了一台列入了白名单的可信主机。
+</p>
+
+<p>
+两种方法可以启用 CSP。一种是通过 HTTP 头信息的 <code>Content-Security-Policy</code> 字段。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/web_scrap/01.jpg" alt="01.jpg" />
+</p>
+</div>
+
+<p>
+另一种是通过网页的 <code>&lt;meta&gt;</code> 标签。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-html">&lt;<span class="org-function-name">meta</span> <span class="org-variable-name">http-equiv</span>=<span class="org-string">"Content-Security-Policy"</span> <span class="org-variable-name">content</span>=<span class="org-string">"</span>
+<span class="org-string">    script-src 'self';</span>
+<span class="org-string">    object-src 'none';</span>
+<span class="org-string">    style-src cdn.example.org third-party.org;</span>
+<span class="org-string">    child-src https:</span>
+<span class="org-string">"</span>&gt;
+</pre>
+</div>
+
+<p>
+启用后 CSP，不符合规则的外部资源会被阻止加载，Chrome 的报错信息：
+</p>
+
+
+<div class="figure">
+<p><img src="../images/web_scrap/02.png" alt="02.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> 选项值</h3>
+<div class="outline-text-3" id="text-6-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left"><b>示例</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">协议</td>
+<td class="left"><code>https:</code> <code>data:</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">主机名</td>
+<td class="left"><code>example.org</code> <code>https://example.com:443</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">通配符</td>
+<td class="left"><code>*.example.org</code> <code>*://*.example.com:*</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">路径</td>
+<td class="left"><code>example.org/resources/js/</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>self</code></td>
+<td class="left">当前域名，需要加单引号</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>none</code></td>
+<td class="left">禁止加载任何外部资源，需要加单引号</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+值为空时，表示默认允许任何值。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">多个值并列时用空格分隔：</label>
+<pre class="src src-code">Content-Security-Policy: script-src 'self' https://apis.google.com
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">选项重复时，只有第一次会生效：</label>
+<pre class="src src-code">script-src https://host1.com; script-src https://host2.com
+script-src https://host1.com https://host2.com
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-3" class="outline-3">
+<h3 id="sec-6-3"><span class="section-number-3">6.3</span> <code>Content-Security-Policy</code></h3>
+<div class="outline-text-3" id="text-6-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> 资源加载选项</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>connect-src</code></th>
+<th scope="col" class="left">HTTP 连接（通过 XHR、WebSockets、EventSource 等）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>font-src</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>frame-src</code></td>
+<td class="left">嵌入的外部资源（比如 <code>&lt;frame&gt;</code> 、 <code>&lt;iframe&gt;</code> 、 <code>&lt;embed&gt;</code> 、 <code>&lt;applet&gt;</code> ）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>img-src</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>manifest-src</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>media-src</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>object-src</code></td>
+<td class="left">插件（比如 Flash）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>script-src</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>style-src</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>worker-src</code></td>
+<td class="left">Worker 脚本</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> URL 选项</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>base-uri</code></th>
+<th scope="col" class="left">限制 <code>&lt;base#href&gt;</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>form-action</code></td>
+<td class="left">限制 <code>&lt;form#action&gt;</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>frame-ancestors</code></td>
+<td class="left">限制嵌入框架的网页</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 3:</span> 其他选项</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>block-all-mixed-content</code></th>
+<th scope="col" class="left">HTTPS 网页不得加载 HTTP 资源（浏览器默认开启）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>plugin-types</code></td>
+<td class="left">限制可以使用的插件格式</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>sandbox</code></td>
+<td class="left">浏览器行为的限制，比如不能有弹出窗口等</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>upgrade-insecure-requests</code></td>
+<td class="left">自动将网页上所有加载外部资源的 HTTP 链接换成 HTTPS 协议</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-6-3-1" class="outline-4">
+<h4 id="sec-6-3-1"><span class="section-number-4">6.3.1</span> <code>default-src</code></h4>
+<div class="outline-text-4" id="text-6-3-1">
+<p>
+设置以上选项的默认值，单项设置的值会覆盖此默认值。示例：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-code">default-src 'self';
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-3-2" class="outline-4">
+<h4 id="sec-6-3-2"><span class="section-number-4">6.3.2</span> <code>object-src</code></h4>
+<div class="outline-text-4" id="text-6-3-2">
+<p>
+<code>object-src</code> 是必需选项，因为 Flash 里可以执行外部脚本。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-6-3-3" class="outline-4">
+<h4 id="sec-6-3-3"><span class="section-number-4">6.3.3</span> <code>report-uri</code></h4>
+<div class="outline-text-4" id="text-6-3-3">
+<p>
+用于浏览器报告注入行为的网址，浏览器会使用 POST 方法发送一个 JSON 对象，示例：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-js">{
+  <span class="org-string">"csp-report"</span>: {
+    <span class="org-string">"document-uri"</span>: <span class="org-string">"http://example.org/page.html"</span>,
+    <span class="org-string">"referrer"</span>: <span class="org-string">"http://evil.example.com/"</span>,
+    <span class="org-string">"blocked-uri"</span>: <span class="org-string">"http://evil.example.com/evil.js"</span>,
+    <span class="org-string">"violated-directive"</span>: <span class="org-string">"script-src 'self' https://apis.google.com"</span>,
+    <span class="org-string">"original-policy"</span>: <span class="org-string">"script-src 'self' https://apis.google.com; report-uri http://example.org/my_amazing_csp_report_parser"</span>
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-3-4" class="outline-4">
+<h4 id="sec-6-3-4"><span class="section-number-4">6.3.4</span> <code>script-src</code></h4>
+<div class="outline-text-4" id="text-6-3-4">
+<p>
+<code>script-src</code> 是必需选项，因为攻击者只要能注入脚本，其他限制都可以规避。
+</p>
+
+<hr  />
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 4:</span> 除了常规值， <code>script-src</code> 还可以设置一些特殊值（需要加单引号）：</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>unsafe-inline</code></th>
+<th scope="col" class="left">允许执行页面内嵌的 <code>&lt;script&gt;</code> 标签和事件监听函数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>unsafe-eval</code></td>
+<td class="left">允许将字符串当作代码执行，比如使用 <code>eval</code> 、 <code>setTimeout</code> 、 <code>setInterval</code> 等函数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">nonce 值</td>
+<td class="left">HTTP 响应给出的授权 token，页面内嵌脚本必须包含 token 才会被执行</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">hash 值</td>
+<td class="left">出许执行的脚本代码的 hash，页面内嵌脚本的 hash 值吻合时才会被执行</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<label class="org-src-name">nonce 值示例：</label>
+<pre class="src src-html">Content-Security-Policy: script-src 'nonce-EDNnf03nceIOfn39fn3e9h3sdfa'
+
+&lt;<span class="org-function-name">script</span> <span class="org-variable-name">nonce</span>=<span class="org-string">"EDNnf03nceIOfn39fn3e9h3sdfa"</span>&gt;&lt;/<span class="org-function-name">script</span>&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">hash 值示例，计算 hash 值时 <code>&lt;script&gt;</code> 标签不算在内：</label>
+<pre class="src src-html">Content-Security-Policy: script-src 'sha256-qznLcsROx4GACP2dm0UCKCzCG-HiZ1guq6ZZDob_Tng='
+
+&lt;<span class="org-function-name">script</span>&gt;alert('Hello, world.');&lt;/<span class="org-function-name">script</span>&gt;
+</pre>
+</div>
+
+<hr  />
+
+<p>
+<code>script-src</code> 不能使用 <code>unsafe-inline</code> 值（除非伴随一个 nonce 值），也不能设置 <code>data:URL</code> 。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">恶意攻击的例子：</label>
+<pre class="src src-html">&lt;<span class="org-function-name">img</span> <span class="org-variable-name">src</span>=<span class="org-string">"x"</span> <span class="org-variable-name">onerror</span>=<span class="org-string">"evil()"</span>&gt;
+&lt;<span class="org-function-name">script</span> <span class="org-variable-name">src</span>=<span class="org-string">"data:text/javascript,evil()"</span>&gt;&lt;/<span class="org-function-name">script</span>&gt;
+</pre>
+</div>
+
+<hr  />
+
+<p>
+必须特别注意 JSONP 回调函数，虽然加载的脚本来自当前域名，但是通过改写回调函数，攻击者依然可以执行恶意代码：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-html">&lt;<span class="org-function-name">script</span> <span class="org-variable-name">src</span>=<span class="org-string">"/path/jsonp?callback=alert(document.domain)//"</span>&gt;
+&lt;/<span class="org-function-name">script</span>&gt;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-3-5" class="outline-4">
+<h4 id="sec-6-3-5"><span class="section-number-4">6.3.5</span> <code>style-src</code></h4>
+<div class="outline-text-4" id="text-6-3-5">
+<p>
+<code>style-src</code> 也可以使用 <code>script-src</code> 的 nonce 值和 hash 值。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-4" class="outline-3">
+<h3 id="sec-6-4"><span class="section-number-3">6.4</span> <code>Content-Security-Policy-Report-Only</code></h3>
+<div class="outline-text-3" id="text-6-4">
+<p>
+<code>Content-Security-Policy-Report-Only</code> 字段表示不执行限制选项，只记录违反限制的行为，必须与 <code>report-uri=</code> 选项配合使用。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-6-5" class="outline-3">
+<h3 id="sec-6-5"><span class="section-number-3">6.5</span> 链接</h3>
+<div class="outline-text-3" id="text-6-5">
+<ol class="org-ol">
+<li><a href="https://research.google.com/pubs/pub45542.html">CSP Is Dead, Long Live CSP!</a>
+</li>
+<li><a href="https://www.html5rocks.com/en/tutorials/security/content-security-policy/">An Introduction to Content Security Policy</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> URL 编码问题</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2010/02/url_encoding.html">Source</a>
+</p>
+</div>
+
+<div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> 问题的由来</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+URL 只能使用英文字母、数字和某些符号，不能使用其他文字和符号。<a href="http://www.ietf.org/rfc/rfc1738.txt">RFC 1738</a> 规定：
+</p>
+
+<blockquote>
+<p>
+Only alphanumerics <code>0-9a-zA-Z</code>, the special characters <code>$-_.+!*'(),</code>, and reserved characters used for their reserved purposes may be used unencoded within a URL.
+</p>
+</blockquote>
+
+<p>
+如果 URL 中有汉字，就必须进行编码。但是麻烦的是，RFC 1738 没有规定具体的编码方法，而是交给应用程序（浏览器）决定。这导致「URL 编码」成为了一个混乱的领域。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-7-2" class="outline-3">
+<h3 id="sec-7-2"><span class="section-number-3">7.2</span> 网址路径中包含汉字</h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+使用 IE 8 输入网址 <a href="http://zh.wikipedia.org/wiki/春节">http://zh.wikipedia.org/wiki/春节</a> ，查看 HTTP 请求的头信息，会发现 IE 实际请求的网址是 <a href="http://zh.wikipedia.org/wiki/%E6%98%A5%E8%8A%82">http://zh.wikipedia.org/wiki/%E6%98%A5%E8%8A%82</a> 。「春」和「节」的 UTF-8 编码分别是 <code>E6 98 A5</code> 和 <code>E8 8A 82</code> ，因此， <code>%E6%98%A5%E8%8A%82</code> 就是在 <span class="underline">每个字节前加上 <code>%</code></span> 。在 Firefox 中测试也得到同样的结果。
+</p>
+
+<p>
+结论 1： <span class="underline">网址路径的编码是 UTF-8。</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-7-3" class="outline-3">
+<h3 id="sec-7-3"><span class="section-number-3">7.3</span> 查询字符串包含汉字</h3>
+<div class="outline-text-3" id="text-7-3">
+<p>
+在 IE 中输入网址 <a href="http://www.baidu.com/s?wd=春节">http://www.baidu.com/s?wd=春节</a> ，查看 HTTP 请求的头信息，会发现 IE 将「春节」转化成了一个乱码，切换到十六进制模式能看到，「春节」被转成了 <code>B4 BA BD DA</code> 。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/web_scrap/12.png" alt="12.png" />
+</p>
+</div>
+
+<p>
+「春」和「节」的 GB2312 编码（Windows XP 中文版的默认编码）分别是 <code>B4 BA</code> 和 <code>BD DA</code> 。因此 IE 是将查询字符串以 GB2312 编码发送出去。Firefox 的处理方法略有不同，它发送的是 <code>wd=%B4%BA%BD%DA</code> ，同样采用 GB2312 编码，但是在每个字节前加上了 <code>%</code> 。
+</p>
+
+<p>
+结论 2： <span class="underline">查询字符串的编码是操作系统的默认编码。</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-7-4" class="outline-3">
+<h3 id="sec-7-4"><span class="section-number-3">7.4</span> GET 方法生成的 URL 包含汉字</h3>
+<div class="outline-text-3" id="text-7-4">
+<p>
+前面说的是直接输入网址的情况，但是更常见的情况是在已打开的网页上，用 GET 或 POST 方法发出 HTTP 请求。根据 <a href="http://xml-nchu.blogspot.ca/p/url.html">细谈 URL 编码</a>，这时的编码由网页的编码，即 HTML 中字符集的设定决定。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-html">&lt;<span class="org-function-name">meta</span> <span class="org-variable-name">http-equiv</span>=<span class="org-string">"Content-Type"</span> <span class="org-variable-name">content</span>=<span class="org-string">"text/html;charset=..."</span>&gt;
+</pre>
+</div>
+
+<p>
+举例来说，百度是 GB2312 编码，Google 是 UTF-8 编码。搜索同一个词「春节」，生成的查询字符串是不一样的，百度生成的是 <code>%B4%BA%BD%DA</code> ，Google 生成的是 <code>%E6%98%A5%E8%8A%82</code> 。
+</p>
+
+<p>
+结论 3： <span class="underline">GET 和 POST 方法的编码是网页的编码。</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-7-5" class="outline-3">
+<h3 id="sec-7-5"><span class="section-number-3">7.5</span> Ajax 调用的 URL 包含汉字</h3>
+<div class="outline-text-3" id="text-7-5">
+<div class="org-src-container">
+
+<pre class="src src-js">url = url + <span class="org-string">"?q="</span> +document.myform.elements[0].value; <span class="org-comment-delimiter">// </span><span class="org-comment">&#20551;&#35774;&#25552;&#20132;&#30340;&#20540;&#26159;&#12300;&#26149;&#33410;&#12301;</span>
+http_request.open(<span class="org-string">'GET'</span>, url, <span class="org-constant">true</span>);
+</pre>
+</div>
+
+<p>
+由 Javascript 生成 HTTP 请求，也就是 Ajax 调用，这种情况下，IE 和 Firefox 的处理方式完全不一样。无论网页使用什么字符集，IE 发送给服务器的总是 <code>q=%B4%BA%BD%DA</code> ，而 Firefox 总是 <code>q=%E6%98%A5%E8%8A%82</code> 。
+</p>
+
+<p>
+结论 4：在 Ajax 调用中，IE 总是采用 GB2312 编码（操作系统的默认编码），而 Firefox 总是采用 UTF-8 编码。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> URL 的井号</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2011/03/url_hash.html">Source</a>
+</p>
+</div>
+
+<div id="outline-container-sec-8-1" class="outline-3">
+<h3 id="sec-8-1"><span class="section-number-3">8.1</span> <code>#</code> 的涵义</h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+<code>#</code> 代表网页中的一个位置，其右面的字符，就是该位置的标识符，浏览器读取 URL 后，会自动将指定位置滚动至可视区域。为网页位置指定标识符，有两种方法。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">使用锚点</label>
+<pre class="src src-html">&lt;<span class="org-function-name">a</span> <span class="org-variable-name">name</span>=<span class="org-string">"print"</span>&gt;&lt;/<span class="org-function-name">a</span>&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">使用 <code>id</code> 属性</label>
+<pre class="src src-html">&lt;<span class="org-function-name">div</span> <span class="org-variable-name">id</span>=<span class="org-string">"print"</span>&gt;&lt;/<span class="org-function-name">div</span>&gt;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-8-2" class="outline-3">
+<h3 id="sec-8-2"><span class="section-number-3">8.2</span> HTTP 请求</h3>
+<div class="outline-text-3" id="text-8-2">
+<p>
+<span class="underline"><code>#</code> 是用来指导浏览器动作的，对服务器端完全无用，HTTP 请求中不包括 <code>#</code> 。</span>
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">访问网址</label>
+<pre class="src src-code">http://www.example.com/index.html#print
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">浏览器实际发出的请求</label>
+<pre class="src src-code">GET /index.html HTTP/1.1
+Host: www.example.com
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">用 GET 参数指定一个颜色时，只有将 <code>#</code> 转码，浏览器才会将其作为实义字符处理</label>
+<pre class="src src-code">http://example.com/?color=%23fff
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-8-3" class="outline-3">
+<h3 id="sec-8-3"><span class="section-number-3">8.3</span> 改变 <code>#</code></h3>
+<div class="outline-text-3" id="text-8-3">
+<p>
+<span class="underline">改变 <code>#</code> 后的部分，浏览器会滚动到相应位置，但不会重新加载网页。</span>
+</p>
+
+<p>
+<span class="underline">改变 <code>#</code> 后的部分，会在浏览器的访问历史中增加一个记录，</span> 点击「后退」就可以回到上一个位置。这对于 Ajax 应用程序特别有用，可以用不同的 <code>#</code> 值，表示不同的访问状态，然后向用户给出可以访问某个状态的链接。
+</p>
+
+<p>
+上述规则对 IE 6 和 IE 7 不成立，它们不会在 <code>#</code> 改变时增加历史记录。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-8-4" class="outline-3">
+<h3 id="sec-8-4"><span class="section-number-3">8.4</span> <code>window.location.hash</code></h3>
+<div class="outline-text-3" id="text-8-4">
+<p>
+<code>window.location.hash</code> 属性可读可写。读取时，可以用来判断网页状态是否改变；写入时，则会在不重载网页的前提下，创造一条访问历史记录。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-8-5" class="outline-3">
+<h3 id="sec-8-5"><span class="section-number-3">8.5</span> <code>onhashchange</code> 事件</h3>
+<div class="outline-text-3" id="text-8-5">
+<p>
+这是一个 HTML 5 新增的事件，当 <code>#</code> 值发生变化时，就会触发这个事件。IE 8+、Firefox 3.6+、Chrome 5+、Safari 4.0+ 支持该事件。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">使用方法有三种</label>
+<pre class="src src-js">window.onhashchange = func;
+window.addEventListener(<span class="org-string">"hashchange"</span>, func, <span class="org-constant">false</span>);
+&lt;body onhashchange=<span class="org-string">"func();"</span>&gt;
+</pre>
+</div>
+
+<p>
+对于不支持 <code>onhashchange</code> 的浏览器，可以用 <code>setInterval</code> 监控 <code>location.hash</code> 的变化。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-8-6" class="outline-3">
+<h3 id="sec-8-6"><span class="section-number-3">8.6</span> Google 抓取 <code>#</code> 的机制</h3>
+<div class="outline-text-3" id="text-8-6">
+<p>
+默认情况下，Google 的网络爬虫会忽略 URL 的 <code>#</code> 部分。但是，Google 还规定，如果希望 Ajax 生成的内容被浏览引擎抓取，那么 URL 中可以使用 <code>#!</code> ，Google 会自动将其后面的内容转成查询字符串 <code>_escaped_fragment_</code> 的值。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">比如 Twitter 的 URL</label>
+<pre class="src src-code">http://twitter.com/#!/username
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">Google 会自动抓取另一个 URL</label>
+<pre class="src src-code">http://twitter.com/?_escaped_fragment_=/username
+</pre>
+</div>
+
+<p>
+通过这种机制，Google 就可以索引动态的 Ajax 内容。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-8-7" class="outline-3">
+<h3 id="sec-8-7"><span class="section-number-3">8.7</span> 链接</h3>
+<div class="outline-text-3" id="text-8-7">
+<ol class="org-ol">
+<li><a href="http://blog.httpwatch.com/2011/03/01/6-things-you-should-know-about-fragment-urls/">6 Things You Should Know About Fragment URLs</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> 理解 RESTful 架构</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2011/09/restful.html">Source</a>
+</p>
+
+<p>
+越来越多的人开始意识到，网站即软件，而且是一种新型的软件。这种「互联网软件」采用「客户端/服务器」模式，建立在分布式体系上，通过互联网通信，具有高延时（high latency）、高并发等特点。
+</p>
+
+<p>
+网站开发完全可以采用软件开发的模式。但是传统上，软件和网络是两个不同的领域，很少有交集；软件开发主要针对单机环境，网络则主要研究系统之间的通信。互联网的兴起，使得这两个领域开始融合，现在我们必须考虑，如何开发在互联网环境中使用的软件。RESTful 架构就是目前最流行的一种互联网软件架构。
+</p>
+</div>
+
+<div id="outline-container-sec-9-1" class="outline-3">
+<h3 id="sec-9-1"><span class="section-number-3">9.1</span> 历史</h3>
+<div class="outline-text-3" id="text-9-1">
+<p>
+REST 这个词是 Roy Thomas Fielding 在他 2000 年的博士论文 <a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm">Architectural Styles and
+the Design of Network-based Software Architectures</a> 中提出的。Fielding 是 HTTP 协议（1.0 和 1.1）的主要设计者、Apache 服务器软件的作者之一、Apache 基金会的第一任主席。所以，他的这篇论文一经发表，就引起了关注，并且立即对互联网开发产生了深远的影响。
+</p>
+
+<p>
+他介绍论文的写作目的：
+</p>
+
+<blockquote>
+<p>
+本文研究计算机科学两大前沿——软件和网络——的交叉点。长期以来，软件研究主要关注软件设计的分类、设计方法的演化，很少客观地评估不同的设计选择对系统行为的影响。而相反地，网络研究主要关注系统之间通信行为的细节、如何改进特定通信机制的表现，常常忽视了一个事实，那就是改变应用程序的互动风格比改变互动协议，对整体表现有更大的影响。这篇文章的写作目的，就是在符合架构原理的前提下，理解和评估以网络为基础的应用软件的架构设计，得到一个功能强、性能好、适宜通信的架构。
+</p>
+
+<p>
+This dissertation explores a junction on the frontiers of two research disciplines in computer science: software and networking. Software research has long been concerned with the categorization of software designs and the development of design methodologies, but has rarely been able to objectively evaluate the impact of various design choices on system behavior. Networking research, in contrast, is focused on the details of generic communication behavior between systems and improving the performance of particular communication techniques, often ignoring the fact that changing the interaction style of an application can have more impact on performance than the communication protocols used for that interaction. My work is motivated by the desire to understand and evaluate the architectural design of network-based application software through principled use of architectural constraints, thereby obtaining the functional, performance, and social properties desired of an architecture.
+</p>
+</blockquote>
+
+<p>
+Fielding 将他对互联网软件的架构原则定名为 REST，即 Representational State Transfer。如果一个架构符合 REST 原则，就称它为 RESTful 架构。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-9-2" class="outline-3">
+<h3 id="sec-9-2"><span class="section-number-3">9.2</span> 资源（Resources）</h3>
+<div class="outline-text-3" id="text-9-2">
+<p>
+REST 的名称「表现层状态转化」中，省略了主语，「表现层」其实指的是「资源」（Resources）的「表现层」。
+</p>
+
+<p>
+所谓「资源」，就是网络上的一个实体，或者说是网络上的一个具体信息。它可以是文本、图片、音乐、服务，总之就是一个具体的实在。可以用一个 URI（统一资源定位符）指向它，每种资源对应一个特定的 URI。要获取这个资源，访问它的 URI 就可以，因此 URI 就成了每一个资源的地址，或独一无二的识别符。
+</p>
+
+<p>
+所谓「上网」，就是与互联网上一系列的「资源」互动，调用它的 URI。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-9-3" class="outline-3">
+<h3 id="sec-9-3"><span class="section-number-3">9.3</span> 表现（Representation）</h3>
+<div class="outline-text-3" id="text-9-3">
+<p>
+「资源」是一种信息实体，它可以有多种外在表现形式。「资源」具体呈现出来的形式，叫做它的「表现」（Representation）。比如，文本可以用 txt 格式表现，也可以用 HTML 格式、XML 格式、JSON 格式表现，甚至可以采用二进制格式；图片可以用 JPG 格式表现，也可以用 PNG 格式表现。
+</p>
+
+<p>
+<span class="underline">URI 只代表资源的实体，不代表它的形式。</span> 严格地说，有些网址最后的 <code>.html</code> 后缀名是不必要的，因为这个后缀名表示格式，属于表现层范畴，而 <span class="underline">URI 应该只代表「资源的位置」，具体「表现形式」应该在 HTTP 请求的头信息中用 <code>Accept</code> 和 <code>Content-Type</code> 字段指定，</span> 这两个字段才是对表现层的描述。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-9-4" class="outline-3">
+<h3 id="sec-9-4"><span class="section-number-3">9.4</span> 状态转化（State Transfer）</h3>
+<div class="outline-text-3" id="text-9-4">
+<p>
+访问一个网站，就是客户端和服务器的一个互动过程，在这个过程中，势必涉及到数据和状态的变化。
+</p>
+
+<p>
+互联网通信协议 <span class="underline">HTTP 是一个无状态协议，这意味着，所有的状态都保存在服务器端。因此，如果客户端想要操作服务器，必须通过某种手段，让服务器端发生「状态转化」（State Transfer）。</span> 而这种转化是建立在表现层之上的，所以就是「表现层状态转化」。
+</p>
+
+<p>
+客户端用到的手段，只能是 HTTP 协议，具体来说，是 HTTP 协议里 4 个表示操作方式的动词：GET、POST、PUT、DELETE。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">GET</th>
+<th scope="col" class="left">获取资源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">POST</td>
+<td class="left">新建（或更新）资源</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">PUT</td>
+<td class="left">更新资源</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">DELETE</td>
+<td class="left">删除资源</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-9-5" class="outline-3">
+<h3 id="sec-9-5"><span class="section-number-3">9.5</span> RESTful</h3>
+<div class="outline-text-3" id="text-9-5">
+<p>
+RESTful 架构：
+</p>
+
+<ul class="org-ul">
+<li>每一个 URI 代表一种资源。
+</li>
+<li>客户端和服务器之间，传递这种资源的某种表现。
+</li>
+<li>客户端通过 4 个 HTTP 动词，对服务器端资源进行操作，实现「表现层状态转化」。
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-9-6" class="outline-3">
+<h3 id="sec-9-6"><span class="section-number-3">9.6</span> 误区</h3>
+<div class="outline-text-3" id="text-9-6">
+<p>
+最常见的一种设计错误就是 URI 包含动词。因为 <span class="underline">资源表示一种实体，所以应该是名词，URI 不应该有动词，动词应该放在 HTTP 协议中。</span> 比如 <code>/posts/show/1</code> ，其中 show 是动词，正确的写法应该是 <code>/posts/1</code> ，然后用 GET 方法表示获取动作。
+</p>
+
+<p>
+如果某些动作是 HTTP 动词表示不了的，就应该把动作做成一种资源。比如网上汇款，错误的 URI：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-code">POST /accounts/1/transfer/500/to/2
+</pre>
+</div>
+
+<p>
+正确的写法是把动词 transfer 改成名词 transaction，资源不能是动词，但是可以是一种服务：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-code">POST /transaction HTTP/1.1
+
+from=1&amp;to=2&amp;amount=500.00
+</pre>
+</div>
+
+<p>
+另一个设计误区是在 URI 中加入版本号：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-code">http://www.example.com/app/1.0/foo
+</pre>
+</div>
+
+<p>
+因为不同的版本，可以理解成同一种资源的不同表现形式，所以应该采用同一个 URI。版本号可以在 HTTP 请求头信息的 <code>Accept</code> 字段中进行区分：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-code">Accept: vnd.example-com.foo+json; version=1.0
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> RESTful API 设计</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html">Source</a>
+</p>
+
+<p>
+网络应用程序，分为前端和后端两个部分。当前的发展趋势，就是前端设备层出不穷，因此，必须有 <span class="underline">一种统一的机制，方便不同的前端设备与后端进行通信。这导致 API 构架的流行，</span> 甚至出现 <del>API-First</del> 的设计思想。RESTful API 是目前比较成熟的一套互联网应用程序的 API 设计理论。
+</p>
+</div>
+
+<div id="outline-container-sec-10-1" class="outline-3">
+<h3 id="sec-10-1"><span class="section-number-3">10.1</span> 协议</h3>
+<div class="outline-text-3" id="text-10-1">
+<p>
+API 与用户的通信协议应该使用 HTTPS。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-10-2" class="outline-3">
+<h3 id="sec-10-2"><span class="section-number-3">10.2</span> 域名</h3>
+<div class="outline-text-3" id="text-10-2">
+<div class="org-src-container">
+<label class="org-src-name">应该尽量将 API 部署在专用域名下：</label>
+<pre class="src src-code">https://api.example.com
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">如果确定 API 很简单，不会有进一步扩展，可以考虑放在主域名下：</label>
+<pre class="src src-code">https://example.com/api/
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-3" class="outline-3">
+<h3 id="sec-10-3"><span class="section-number-3">10.3</span> 版本</h3>
+<div class="outline-text-3" id="text-10-3">
+<div class="org-src-container">
+<label class="org-src-name">应该将 API 的版本号放入 URL：</label>
+<pre class="src src-code">https://api.example.com/v1/
+</pre>
+</div>
+
+<p>
+另一种做法是将版本号放在 HTTP 头信息中，但不如放入 URL 方便和直观。Github 采用这种做法（<a href="https://developer.github.com/v3/media/#request-specific-version">GitHub API - Request specific version</a>）。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-10-4" class="outline-3">
+<h3 id="sec-10-4"><span class="section-number-3">10.4</span> 路径</h3>
+<div class="outline-text-3" id="text-10-4">
+<p>
+路径又称「终点」（endpoint），表示 API 的具体地址。在 RESTful 架构中，每个地址代表一种资源，所以地址中不能有动词，只能有名词，而且所用的名词往往与数据库的表名对应。一般来说，数据库中的表都是同种记录的集合（collection），所以 API 中的名词也应该使用复数。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">例如，一个提供动物园、各种动物和雇员的信息的 API：</label>
+<pre class="src src-sh">https://api.example.com/v1/zoos
+https://api.example.com/v1/animals
+https://api.example.com/v1/employees
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-5" class="outline-3">
+<h3 id="sec-10-5"><span class="section-number-3">10.5</span> HTTP 动作</h3>
+<div class="outline-text-3" id="text-10-5">
+<p>
+对于资源的具体操作类型，由 HTTP 动词表示。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left"><b>对应 SQL</b></th>
+<th scope="col" class="left"><b>含义</b></th>
+<th scope="col" class="left"><b>示例</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>GET</code></td>
+<td class="left"><code>SELECT</code></td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>GET /zoos</code></td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>GET /zoos/ID</code></td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>GET /zoos/ID/animals</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>POST</code></td>
+<td class="left"><code>INSERT</code></td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>POST /zoos</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>PUT</code></td>
+<td class="left"><code>UPDATE</code></td>
+<td class="left">客户端提供完整资源</td>
+<td class="left"><code>PUT /zoos/ID</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>PATCH</code></td>
+<td class="left"><code>UPDATE</code></td>
+<td class="left">客户端只提供改变部分</td>
+<td class="left"><code>PATCH /zoos/ID</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>DELETE</code></td>
+<td class="left"><code>DELETE</code></td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>DELETE /zoos/ID</code></td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>DELETE /zoos/ID/animals/ID</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>HEAD</code></td>
+<td class="left">&#xa0;</td>
+<td class="left">获取资源的元数据</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>OPTIONS</code></td>
+<td class="left">&#xa0;</td>
+<td class="left">获取信息（资源的哪些属性客户端可以改变）</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-10-6" class="outline-3">
+<h3 id="sec-10-6"><span class="section-number-3">10.6</span> 过滤</h3>
+<div class="outline-text-3" id="text-10-6">
+<p>
+如果记录数量很多，服务器不可能全部返回，API 应该提供参数以过滤返回结果。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>?limit=10</code></th>
+<th scope="col" class="left">总数量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>?offset=10</code></td>
+<td class="left">偏移</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>?page=2&amp;pagesize=100</code></td>
+<td class="left">分页</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>?sortby=name&amp;order=asc</code></td>
+<td class="left">排序</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>?animal_type_id=1</code></td>
+<td class="left">筛选条件</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+参数的设计允许存在冗余，即允许 API 路径和 URL 参数偶尔有重复。比如， <code>GET /zoo/ID/animals</code> 与 <code>GET /animals?zoo_id=ID</code> 的含义是相同的。  
+</p>
+</div>
+</div>
+<div id="outline-container-sec-10-7" class="outline-3">
+<h3 id="sec-10-7"><span class="section-number-3">10.7</span> 状态码</h3>
+<div class="outline-text-3" id="text-10-7">
+<p>
+服务器向用户返回的状态码和提示信息。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>状态码</b></th>
+<th scope="col" class="left"><b>HTTP 动作</b></th>
+<th scope="col" class="left"><b>含义</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>200 OK</code></td>
+<td class="left"><code>GET</code></td>
+<td class="left">服务器成功返回请求的数据（幂等操作（idempotent））</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>201 Created</code></td>
+<td class="left"><code>POST/PUT/PATCH</code></td>
+<td class="left">添加或修改数据成功</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>202 Accepted</code></td>
+<td class="left">&#xa0;</td>
+<td class="left">请求已经加入后台队列（异步任务）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>204 No Content</code></td>
+<td class="left"><code>DELETE</code></td>
+<td class="left">删除数据成功</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>400 Invalid Request</code></td>
+<td class="left"><code>POST/PUT/PATCH</code></td>
+<td class="left">请求有错误，服务器未进行操作（幂等操作）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>401 Unauthorized</code></td>
+<td class="left">&#xa0;</td>
+<td class="left">用户没有权限（令牌、密码）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>403 Forbidden</code></td>
+<td class="left">&#xa0;</td>
+<td class="left">用户得到授权（与 401 错误相对），但是访问被禁止</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>404 Not Found</code></td>
+<td class="left">&#xa0;</td>
+<td class="left">请求针对的记录不存在，服务器未进行操作（幂等操作）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>406 Not Acceptable</code></td>
+<td class="left"><code>GET</code></td>
+<td class="left">请求的格式不支持（比如请求 JSON，但是 API 只支持 XML）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>410 Gone</code></td>
+<td class="left"><code>GET</code></td>
+<td class="left">请求的资源被永久删除</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>422 Unprocesable Entity</code></td>
+<td class="left"><code>POST/PUT/PATCH</code></td>
+<td class="left">创建对象时发生验证错误</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>500 Internal Server Error</code></td>
+<td class="left">&#xa0;</td>
+<td class="left">服务器发生错误，用户无法判断请求是否成功</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+状态码完整列表：<a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">Hypertext Transfer Protocol - HTTP/1.1 - Status Code Definitions</a>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-10-8" class="outline-3">
+<h3 id="sec-10-8"><span class="section-number-3">10.8</span> 错误处理</h3>
+<div class="outline-text-3" id="text-10-8">
+<div class="org-src-container">
+<label class="org-src-name">如果状态码是 <code>4XX</code> ，应该返回出错信息。一般来说将 <code>error</code> 作为键名，出错信息作为键值：</label>
+<pre class="src src-code">{
+    error: "Invalid API key"
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-9" class="outline-3">
+<h3 id="sec-10-9"><span class="section-number-3">10.9</span> 返回结果</h3>
+<div class="outline-text-3" id="text-10-9">
+<p>
+针对不同操作，服务器向用户返回的结果应该符合以下规范：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left"><b>返回</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>GET /collection</code></td>
+<td class="left">资源对象列表（数组）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>GET /collection/resource</code></td>
+<td class="left">单个资源对象</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>POST /collection</code></td>
+<td class="left">新生成的资源对象</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>PUT /collection/resource</code></td>
+<td class="left">完整的资源对象</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>PATCH /collection/resource</code></td>
+<td class="left">完整的资源对象</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>DELETE /collection/resource</code></td>
+<td class="left">空文档</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-10-10" class="outline-3">
+<h3 id="sec-10-10"><span class="section-number-3">10.10</span> Hypermedia API</h3>
+<div class="outline-text-3" id="text-10-10">
+<p>
+RESTful API 最好做到 <span class="underline">hypermedia，即返回结果中提供链接，指向其他 API 方法，</span> 使用户可以不查文档也知道下一步应该做什么。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">比如，当用户向 api.example.com 的根目录发出请求，返回结果：</label>
+<pre class="src src-js">{
+    <span class="org-string">"link"</span>: { <span class="org-comment-delimiter">// </span><span class="org-comment">&#19979;&#19968;&#27493;&#35843;&#29992;&#30340; API</span>
+        <span class="org-string">"rel"</span>:   <span class="org-string">"collection https://www.example.com/zoos"</span>, <span class="org-comment-delimiter">// </span><span class="org-comment">&#19982;&#24403;&#21069;&#22320;&#22336;&#30340;&#20851;&#31995;</span>
+        <span class="org-string">"href"</span>:  <span class="org-string">"https://api.example.com/zoos"</span>,            <span class="org-comment-delimiter">// </span><span class="org-comment">API &#36335;&#24452;</span>
+        <span class="org-string">"title"</span>: <span class="org-string">"List of zoos"</span>,                            <span class="org-comment-delimiter">// </span><span class="org-comment">API &#26631;&#39064;</span>
+        <span class="org-string">"type"</span>:  <span class="org-string">"application/vnd.yourformat+json"</span>          <span class="org-comment-delimiter">// </span><span class="org-comment">&#36820;&#22238;&#31867;&#22411;</span>
+    }
+}
+</pre>
+</div>
+
+<p>
+Hypermedia API 的设计被称为 <a href="http://en.wikipedia.org/wiki/HATEOAS">HATEOAS</a> ，Github API 就是这种设计，访问 api.github.com 会得到所有可用 API 的地址列表。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-10-11" class="outline-3">
+<h3 id="sec-10-11"><span class="section-number-3">10.11</span> 链接</h3>
+<div class="outline-text-3" id="text-10-11">
+<ol class="org-ol">
+<li><a href="https://codeplanet.io/principles-good-restful-api-design/">Principles of good RESTful API Design</a>
+</li>
+<li><a href="https://bourgeois.me/rest/">REST best practices</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> 网站的无密码登录</h2>
+<div class="outline-text-2" id="text-11">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2012/10/password-less_login.html">Source</a>
+</p>
+</div>
+
+<div id="outline-container-sec-11-1" class="outline-3">
+<h3 id="sec-11-1"><span class="section-number-3">11.1</span> OpenID</h3>
+<div class="outline-text-3" id="text-11-1">
+<p>
+<a href="http://openid.net/">OpenID</a> 是最早提出的一种无密码登录。它的设想是：互联网上每一个网址（URL）都指向一个唯一的网页，这说明网址具有唯一性。因此，可以 <span class="underline">用网址来标识用户</span> 。 使用 OpenID 的网站，不要求用户输入用户名，而 <span class="underline">要求用户输入一个代表其身份的网址，然后向该网址进行求证，</span> 如果得到证实，就允许用户登录，从而实现无密码登录。
+</p>
+
+<p>
+OpenID 有两个很大的缺点：一是需要服务器端支持，二是使用网址表示身份，违背直觉，普通用户难以理解。因此，始终无法得到推广。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-11-2" class="outline-3">
+<h3 id="sec-11-2"><span class="section-number-3">11.2</span> Persona</h3>
+<div class="outline-text-3" id="text-11-2">
+<p>
+去年，Mozilla 提出了 <a href="https://developer.mozilla.org/en-US/Persona">Persona</a> 方案，号称是无密码登录的终极解决方案。它与 OpenID 异曲同工。后者用网址标识用户，它用 Email 标识用户。用户键入 Email 地址以后，网站向 Email 服务器请求认证。
+</p>
+
+<p>
+虽然这种方案还处在推广期，效果有待观察。但是我不太看好它。首先，它的技术要求和流程比 OpenID 更复杂，无法用一句话讲清楚；其次，它要求服务器端支持，很难想象世界上大部分 Email 服务器都会部署 Persona 代码。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-11-3" class="outline-3">
+<h3 id="sec-11-3"><span class="section-number-3">11.3</span> 第三方账户</h3>
+<div class="outline-text-3" id="text-11-3">
+<p>
+OpenID 的实质是让第三方网站认证用户身份，这等同于用户在第三方网站登录，因此，可以直接告诉用户，使用第三方帐号登录。
+</p>
+
+<p>
+这样做的优点是比较直观，用户容易接受；缺点是自身的业务要依赖第三方网站。比如，现在很多网站使用 Facebook 帐号登录，一旦 Facebook 出现故障，这些网站都会受到影响。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-11-4" class="outline-3">
+<h3 id="sec-11-4"><span class="section-number-3">11.4</span> OAuth</h3>
+<div class="outline-text-3" id="text-11-4">
+<p>
+<a href="https://oauth.net/2/">OAuth</a> 协议其实与第三方帐户是一回事。 <span class="underline">第三方账户是第三方网站提供用户身份认证，属于认证服务（authentication）；OAuth 更进一步，第三方网站允许应用直接操作它的用户数据，属于授权服务（authorization）。</span>
+</p>
+
+<p>
+因为涉及到用户数据的改变，所以 OAuth 认证比 OpenID 要求更严格。 <span class="underline">通常只有针对某个第三方网站的外部服务，才需要用到 OAuth。</span> 如果只是单纯地区分用户身份，其实没必要用它。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-11-5" class="outline-3">
+<h3 id="sec-11-5"><span class="section-number-3">11.5</span> Email 一次性登录</h3>
+<div class="outline-text-3" id="text-11-5">
+<p>
+<a href="http://notes.xoxco.com/post/27999787765/is-it-time-for-password-less-login">Is it time for password-less login?</a> 提出的一种最简单的实现：用户登录的时候，只显示一个 Email 地址输入框。用户输入 Email 地址后，网站就向该地址发出一封邮件，里面包含一个登录链接。用户点击这个链接，就证明他是这个邮箱的主人，身份有效，从而实现登录。
+</p>
+
+<p>
+登录链接只在一段时间内有效。登录之后可以通过 cookie 让用户长时间处在登录状态，如果 cookie 失效，则重新向用户邮箱发出另一个登录链接即可。
+</p>
+
+<p>
+由于整个认证过程都通过电子邮件完成，彻底实现无密码登录，而且操作流程很自然，易于理解。更重要的是，它使用现有的 Email 协议，不需要服务器端部署新的代码，具有最好的兼容性。
+</p>
+
+<p>
+主要缺点是，它需要用户额外查看一次邮箱。它也不适合用户无法打开 Email 的场合，因此必须部署备用的登录方式。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> 理解 OAuth 2.0</h2>
+<div class="outline-text-2" id="text-12">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html">Source</a>
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2017-01-17 Tue 09:26</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

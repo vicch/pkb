@@ -1,0 +1,1054 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-10-13 Sun 11:53 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Javascript</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Javascript</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org9c578c5">1 Type</a>
+<ul>
+<li><a href="#org6ca999b">1.1 String</a>
+<ul>
+<li><a href="#orgadfac56">1.1.1 Template Literals</a></li>
+</ul>
+</li>
+<li><a href="#orgb674580">1.2 Object</a>
+<ul>
+<li><a href="#org9ba9417">1.2.1 Iteration</a></li>
+<li><a href="#org295254a">1.2.2 Equality</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org5a5b59c">2 Expression</a>
+<ul>
+<li><a href="#org5d98185">2.1 <code>async</code></a></li>
+<li><a href="#org32b5358">2.2 <code>const</code></a></li>
+<li><a href="#org90512ff">2.3 <code>export</code></a></li>
+<li><a href="#orgf94743c">2.4 <code>import</code></a></li>
+<li><a href="#org78b1f81">2.5 <code>let</code></a></li>
+</ul>
+</li>
+<li><a href="#org98caa32">3 Statement</a>
+<ul>
+<li><a href="#orgecdfb6a">3.1 Destructuring</a></li>
+<li><a href="#org240604b">3.2 Spread</a></li>
+</ul>
+</li>
+<li><a href="#org919d182">4 Function</a>
+<ul>
+<li><a href="#org5e947ce">4.1 箭头函数</a></li>
+<li><a href="#orge5e1c57">4.2 参数默认值</a></li>
+<li><a href="#org057d999">4.3 Getter &amp; Setter</a></li>
+<li><a href="#org37eab61">4.4 Rest</a></li>
+<li><a href="#org14269c7">4.5 IIFE</a></li>
+</ul>
+</li>
+<li><a href="#org6c71c88">5 Class</a>
+<ul>
+<li><a href="#org56bce03">5.1 示例</a></li>
+<li><a href="#orgf27a1f5">5.2 <code>static</code></a></li>
+<li><a href="#org29030c6">5.3 <code>this</code></a>
+<ul>
+<li><a href="#org7ec4987">5.3.1 Unbound instance</a></li>
+<li><a href="#org6a9ddd3">5.3.2 Bound instance</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orga52b620">6 Standard Object</a>
+<ul>
+<li><a href="#orgbabb65d">6.1 <code>Array</code></a>
+<ul>
+<li><a href="#orgd34dd62">6.1.1 <code>filter()</code></a></li>
+<li><a href="#org05ceefb">6.1.2 <code>map()</code></a></li>
+</ul>
+</li>
+<li><a href="#org41d16dc">6.2 <code>Date</code></a></li>
+</ul>
+</li>
+<li><a href="#org62440d9">7 Module</a>
+<ul>
+<li><a href="#org47b7008">7.1 <code>import</code></a>
+<ul>
+<li><a href="#org8f0c7d8">7.1.1 Named Import</a></li>
+<li><a href="#org11be901">7.1.2 All Import</a></li>
+<li><a href="#orgb1cec0a">7.1.3 Default Import</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org9393fff">8 Web API</a>
+<ul>
+<li><a href="#orgb7e7751">8.1 <code>Document</code></a>
+<ul>
+<li><a href="#org4bc8b8b">8.1.1 <code>querySelector()</code></a></li>
+</ul>
+</li>
+<li><a href="#orgc9c947c">8.2 <code>Event</code></a>
+<ul>
+<li><a href="#orgf2e13e2">8.2.1 <code>change</code></a></li>
+<li><a href="#org6e1369c">8.2.2 <code>preventDefault()</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orga6a8ddf">9 Link</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org9c578c5" class="outline-2">
+<h2 id="org9c578c5"><span class="section-number-2">1</span> Type</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-org6ca999b" class="outline-3">
+<h3 id="org6ca999b"><span class="section-number-3">1.1</span> String</h3>
+<div class="outline-text-3" id="text-1-1">
+</div><div id="outline-container-orgadfac56" class="outline-4">
+<h4 id="orgadfac56"><span class="section-number-4">1.1.1</span> Template Literals</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals">MDN | JavaScript | Reference | Template Literals</a>
+</p>
+
+<p>
+Template literal 是可换行、可嵌入表达式的字符串：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-string">`line 1</span>
+<span class="org-string">line 2`</span>
+
+<span class="org-string">`string foo is ${foo}`</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb674580" class="outline-3">
+<h3 id="orgb674580"><span class="section-number-3">1.2</span> Object</h3>
+<div class="outline-text-3" id="text-1-2">
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">obj</span> = { foo: 1, bar: 2 };
+<span class="org-keyword">const</span> <span class="org-variable-name">foo</span> = obj.foo;  <span class="org-comment-delimiter">// </span><span class="org-comment">1</span>
+<span class="org-keyword">const</span> <span class="org-variable-name">str</span> = <span class="org-string">'bar'</span>;
+<span class="org-keyword">const</span> <span class="org-variable-name">bar</span> = obj[str]; <span class="org-comment-delimiter">// </span><span class="org-comment">2</span>
+</pre>
+</div>
+
+<p>
+动态对象 key：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">key</span> = <span class="org-string">'foo'</span>;
+<span class="org-keyword">const</span> <span class="org-variable-name">map</span> = { [key]: <span class="org-string">'bar'</span> };
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org9ba9417" class="outline-4">
+<h4 id="org9ba9417"><span class="section-number-4">1.2.1</span> Iteration</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">let</span> <span class="org-variable-name">obj</span> = { foo: 1, bar: 2 };
+<span class="org-keyword">for</span> (<span class="org-keyword">let</span> <span class="org-variable-name">k</span> <span class="org-keyword">in</span> obj) {
+  console.log(k + <span class="org-string">':'</span> + obj[k]);
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org295254a" class="outline-4">
+<h4 id="org295254a"><span class="section-number-4">1.2.2</span> Equality</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<p>
+使用 <code>===</code> 比较对象时，比较的是对象地址。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">function</span> <span class="org-function-name">update</span>(<span class="org-variable-name">obj</span>, <span class="org-variable-name">key</span>, <span class="org-variable-name">val</span>) {
+  obj[key] = val;
+  <span class="org-keyword">return</span> obj;
+}
+<span class="org-keyword">const</span> <span class="org-variable-name">a</span> = { foo: 1, bar: 2 };
+<span class="org-keyword">const</span> <span class="org-variable-name">b</span> = update(a, <span class="org-string">'foo'</span>, 3); <span class="org-comment-delimiter">// </span><span class="org-comment">Object is passed by reference</span>
+<span class="org-keyword">const</span> <span class="org-variable-name">c</span> = (a === b);           <span class="org-comment-delimiter">// </span><span class="org-comment">True</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5a5b59c" class="outline-2">
+<h2 id="org5a5b59c"><span class="section-number-2">2</span> Expression</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-org5d98185" class="outline-3">
+<h3 id="org5d98185"><span class="section-number-3">2.1</span> <code>async</code></h3>
+<div class="outline-text-3" id="text-2-1">
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">function</span> <span class="org-function-name">bar</span>() { ... } <span class="org-comment-delimiter">// </span><span class="org-comment">&#24322;&#27493;&#20989;&#25968;&#65292;&#36820;&#22238; Promise &#23545;&#35937;</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#19981;&#20351;&#29992; async</span>
+<span class="org-keyword">function</span> <span class="org-function-name">foo</span>() {
+  bar().then(<span class="org-keyword">function</span> () { ... }); <span class="org-comment-delimiter">// </span><span class="org-comment">bar() &#36820;&#22238;&#21518;&#35843;&#29992;&#22238;&#35843;&#20989;&#25968;</span>
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#20351;&#29992; async</span>
+<span class="org-keyword">async</span> <span class="org-keyword">function</span> foo() {
+  <span class="org-keyword">var</span> <span class="org-variable-name">result</span> = <span class="org-keyword">await</span> bar();
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org32b5358" class="outline-3">
+<h3 id="org32b5358"><span class="section-number-3">2.2</span> <code>const</code></h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const">MDN | JavaScript | Reference | Statements &amp; Declarations | const</a>
+</p>
+
+<p>
+<code>const</code> 的作用域为代码块（block），只能被赋值一次。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">if</span> (1) {
+  <span class="org-keyword">const</span> <span class="org-variable-name">a</span> = 1; <span class="org-comment-delimiter">// </span><span class="org-comment">&#27492;&#22788; a = 1</span>
+  a = 2;       <span class="org-comment-delimiter">// </span><span class="org-comment">Compiler error</span>
+}
+<span class="org-keyword">if</span> (1) {
+  <span class="org-keyword">const</span> <span class="org-variable-name">a</span> = 3; <span class="org-comment-delimiter">// </span><span class="org-comment">&#27492;&#22788; a = 3</span>
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org90512ff" class="outline-3">
+<h3 id="org90512ff"><span class="section-number-3">2.3</span> <code>export</code></h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export">MDN | JavaScript | Reference | Statements &amp; Declarations | export</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">export</span> <span class="org-keyword">default</span> Foo;          <span class="org-comment-delimiter">// </span><span class="org-comment">Default export</span>
+<span class="org-keyword">export</span> <span class="org-keyword">const</span> <span class="org-variable-name">foo</span> = () =&gt; {}; <span class="org-comment-delimiter">// </span><span class="org-comment">Named export</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf94743c" class="outline-3">
+<h3 id="orgf94743c"><span class="section-number-3">2.4</span> <code>import</code></h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">MDN | JavaScript | Reference | Statements &amp; Declarations | import</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">import</span> Foo from <span class="org-string">'foo'</span>;                 <span class="org-comment-delimiter">// </span><span class="org-comment">Default import</span>
+<span class="org-keyword">import</span> { foo1, foo2, ... } from <span class="org-string">'foo'</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">Named import</span>
+<span class="org-keyword">import</span> Foo, { foo1 } from <span class="org-string">'foo'</span>;       <span class="org-comment-delimiter">// </span><span class="org-comment">Default and named import</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 1: </span>Default export 和 named export 区别</label><pre class="src src-js"><span class="org-keyword">import</span> ReactDOM from <span class="org-string">'react-dom'</span>;
+ReactDOM.render(...);
+
+<span class="org-keyword">import</span> { render } from <span class="org-string">'react-dom'</span>;
+render(...);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org78b1f81" class="outline-3">
+<h3 id="org78b1f81"><span class="section-number-3">2.5</span> <code>let</code></h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let">MDN | JavaScript | Reference | Statements &amp; Declarations | let</a>
+</p>
+
+<p>
+<code>let</code> 的作用域为代码块（block），可以被多次赋值。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">if</span> (1) {
+  <span class="org-keyword">let</span> <span class="org-variable-name">a</span> = 1;
+  a = 2;
+}
+<span class="org-keyword">if</span> (1) {
+  <span class="org-keyword">let</span> <span class="org-variable-name">a</span> = 3;
+  a = 4;
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org98caa32" class="outline-2">
+<h2 id="org98caa32"><span class="section-number-2">3</span> Statement</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-orgecdfb6a" class="outline-3">
+<h3 id="orgecdfb6a"><span class="section-number-3">3.1</span> Destructuring</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">MDN | JavaScript | Reference | Expressions &amp; Operators | Destructuring Assignment</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-comment-delimiter">// </span><span class="org-comment">Array</span>
+<span class="org-keyword">const</span> <span class="org-variable-name">list</span> = [10, 20];
+<span class="org-keyword">const</span> [<span class="org-variable-name">a</span>, <span class="org-variable-name">b</span>] = list; <span class="org-comment-delimiter">// </span><span class="org-comment">a = 10, b = 20</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Array with spread</span>
+<span class="org-keyword">const</span> <span class="org-variable-name">list</span> = [10, 20, 30, 40, 50];
+<span class="org-keyword">const</span> [a, b, ...rest] = list; <span class="org-comment-delimiter">// </span><span class="org-comment">a = 10, b = 20, rest = [30, 40, 50]</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Object, keys must match</span>
+<span class="org-keyword">const</span> <span class="org-variable-name">map</span> = { a: <span class="org-string">'foo'</span>, b: <span class="org-string">'bar'</span> };
+<span class="org-keyword">const</span> { a, b } = map;       <span class="org-comment-delimiter">// </span><span class="org-comment">a = 'foo', b = 'bar'</span>
+<span class="org-keyword">const</span> { a: <span class="org-variable-name">c</span>, b: <span class="org-variable-name">d</span> } = map; <span class="org-comment-delimiter">// </span><span class="org-comment">c = 'foo', d = 'bar'</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Object with spread</span>
+<span class="org-keyword">const</span> <span class="org-variable-name">map</span> = { a: <span class="org-string">'foo'</span>, b: <span class="org-string">'bar'</span>, c: <span class="org-string">'hoge'</span>, d: <span class="org-string">'fuga'</span> };
+<span class="org-keyword">const</span> { a, b, ...rest } = map; <span class="org-comment-delimiter">// </span><span class="org-comment">a = 'foo', b = 'bar', rest = { c: 'hoge', d: 'fuga' };</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org240604b" class="outline-3">
+<h3 id="org240604b"><span class="section-number-3">3.2</span> Spread</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax">MDN | JavaScript | Reference | Expressions &amp; Operators | Spread Syntax</a>
+</p>
+
+<p>
+Spread 语法将一个数组（或字符串）扩展为一组元素。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">foo = (x, y, z) =&gt; {};
+<span class="org-keyword">let</span> <span class="org-variable-name">args</span> = [0, 1, 2];
+foo(...args); <span class="org-comment-delimiter">// </span><span class="org-comment">foo(0, 1, 2);</span>
+</pre>
+</div>
+
+<p>
+数组 spread 可用于复制（shallow copy）、连接、扩展数组：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">a</span> = [1, 2, 3];
+<span class="org-keyword">const</span> <span class="org-variable-name">b</span> = [4, 5, 6];
+<span class="org-keyword">const</span> <span class="org-variable-name">c</span> = [...a];       <span class="org-comment-delimiter">// </span><span class="org-comment">&#22797;&#21046;&#65292;c = [1, 2, 3]</span>
+<span class="org-keyword">const</span> <span class="org-variable-name">d</span> = [...a, ...b]; <span class="org-comment-delimiter">// </span><span class="org-comment">&#36830;&#25509;&#65292;d = [1, 2, 3, 4, 5, 6]</span>
+<span class="org-keyword">const</span> <span class="org-variable-name">e</span> = [...a, 7, 8]; <span class="org-comment-delimiter">// </span><span class="org-comment">&#25193;&#23637;, e = [1, 2, 3, 7, 8]</span>
+                        <span class="org-comment-delimiter">// </span><span class="org-comment">Spread &#25193;&#23637;&#20250;&#29983;&#25104;&#26032;&#25968;&#32452;&#65292;&#32780;&#19981;&#26159;&#20462;&#25913;&#21407;&#25968;&#32452;</span>
+</pre>
+</div>
+
+<p>
+对象 spread 可用于复制（shallow copy）、扩展对象：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">a</span> = { x: 1, y: 2 };
+
+<span class="org-keyword">const</span> <span class="org-variable-name">b</span> = {...a};             <span class="org-comment-delimiter">// </span><span class="org-comment">&#22797;&#21046;&#65292;b = { x: 1, y: 2 }</span>
+<span class="org-keyword">const</span> <span class="org-variable-name">c</span> = {...a, y: 3, z: 4}; <span class="org-comment-delimiter">// </span><span class="org-comment">&#25193;&#23637;&#65292;&#37325;&#22797;&#30340; key &#20250;&#34987;&#35206;&#30422;</span>
+                              <span class="org-comment-delimiter">// </span><span class="org-comment">c = { x: 1, y: 3, z: 4 }</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org919d182" class="outline-2">
+<h2 id="org919d182"><span class="section-number-2">4</span> Function</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-org5e947ce" class="outline-3">
+<h3 id="org5e947ce"><span class="section-number-3">4.1</span> 箭头函数</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">MDN | JavaScript | Reference | Functions | Arrow Functions</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">(&lt;param&gt;, ...) =&gt; { &lt;statement&gt; ... }
+(&lt;param&gt;, ...) =&gt; &lt;expression&gt; <span class="org-comment-delimiter">// </span><span class="org-comment">&#31561;&#20215;&#20110; =&gt; { return &lt;expression&gt;; }</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-comment-delimiter">// </span><span class="org-comment">&#20989;&#25968;&#20307;&#20165;&#20026; return &lt;expr&gt; &#26102;&#21487;&#20197;&#30465;&#30053; {}</span>
+<span class="org-keyword">const</span> <span class="org-variable-name">a</span> = () =&gt; <span class="org-string">'b'</span>;
+<span class="org-comment-delimiter">// </span><span class="org-comment">var a = function a() { return 'b'; }</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#21442;&#25968;&#20010;&#25968;&#20026; 1 &#26102;&#21487;&#20197;&#30465;&#30053; ()</span>
+<span class="org-keyword">const</span> <span class="org-variable-name">a</span> = x =&gt; x + 1;
+<span class="org-comment-delimiter">// </span><span class="org-comment">var a = function a(x) { return x + 1; }</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#21442;&#25968;&#20010;&#25968;&#19981;&#23450;&#26102;&#20351;&#29992; ...args</span>
+<span class="org-keyword">const</span> <span class="org-variable-name">a</span> = (...args) =&gt; {
+  <span class="org-keyword">return</span> args.map(x =&gt; Math.pow(x, 2));
+}
+<span class="org-comment-delimiter">// </span><span class="org-comment">var a = function a() {</span>
+<span class="org-comment-delimiter">//   </span><span class="org-comment">for (var _len = arguments.length, args = Array(_len), _key = 0; _key &lt; _len; _key++) {</span>
+<span class="org-comment-delimiter">//     </span><span class="org-comment">args[_key] = arguments[_key];</span>
+<span class="org-comment-delimiter">//   </span><span class="org-comment">}</span>
+<span class="org-comment-delimiter">//   </span><span class="org-comment">return args.map(function (x) {</span>
+<span class="org-comment-delimiter">//     </span><span class="org-comment">return Math.pow(x, 2);</span>
+<span class="org-comment-delimiter">//   </span><span class="org-comment">});</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">};</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge5e1c57" class="outline-3">
+<h3 id="orge5e1c57"><span class="section-number-3">4.2</span> 参数默认值</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters">MDN | JavaScript | Reference | Functions | Default Parameters</a>
+</p>
+
+<p>
+传入参数为 <code>undefined</code> 时，函数将使用参数默认值。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">foo</span> = (bar = <span class="org-string">'default'</span>) =&gt; {};
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org057d999" class="outline-3">
+<h3 id="org057d999"><span class="section-number-3">4.3</span> Getter &amp; Setter</h3>
+<div class="outline-text-3" id="text-4-3">
+<ul class="org-ul">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get">MDN | JavaScript | Reference | Functions | Getter</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/set">MDN | JavaScript | Reference | Functions | Setter</a></li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">foo</span> = {
+  _bar: <span class="org-string">''</span>,
+  get bar() {
+    <span class="org-keyword">return</span> <span class="org-constant">this</span>._bar;
+  },
+  set bar(value) {
+    <span class="org-constant">this</span>._bar = <span class="org-string">'bar is '</span> + value;
+  }
+}
+
+foo.bar = <span class="org-string">'test'</span>;
+console.log(foo.bar); <span class="org-comment-delimiter">// </span><span class="org-comment">bar is test</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org37eab61" class="outline-3">
+<h3 id="org37eab61"><span class="section-number-3">4.4</span> Rest</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters">MDN | JavaScript | Reference | Functions | Rest Parameters</a>
+</p>
+
+<p>
+Rest 参数即用数组代表不确定个数的参数。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">function</span> <span class="org-function-name">sum</span>(...args) {
+  <span class="org-keyword">return</span> args.reduce((previous, current) =&gt; {
+    <span class="org-keyword">return</span> previous + current;
+  });
+}
+sum(1, 2, 3); <span class="org-comment-delimiter">// </span><span class="org-comment">6</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org14269c7" class="outline-3">
+<h3 id="org14269c7"><span class="section-number-3">4.5</span> IIFE</h3>
+<div class="outline-text-3" id="text-4-5">
+<p>
+<a href="https://developer.mozilla.org/en-US/docs/Glossary/IIFE">MDN | Glossary | IIFE</a>
+</p>
+
+<p>
+IIFE (Immediately Invoked Function Expression) 是定义后立即调用的函数。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">(<span class="org-keyword">function</span> () {
+    &lt;statements&gt;
+})();
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6c71c88" class="outline-2">
+<h2 id="org6c71c88"><span class="section-number-2">5</span> Class</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-org56bce03" class="outline-3">
+<h3 id="org56bce03"><span class="section-number-3">5.1</span> 示例</h3>
+<div class="outline-text-3" id="text-5-1">
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">class</span> Foo {
+  constructor(arg) {
+    <span class="org-constant">this</span>.bar = arg;
+  }
+  getBar() {
+    <span class="org-keyword">return</span> <span class="org-constant">this</span>.bar;
+  }
+}
+
+<span class="org-keyword">const</span> <span class="org-variable-name">foo</span> = <span class="org-keyword">new</span> <span class="org-type">Foo</span>(<span class="org-string">'bar'</span>);
+foo.getBar();
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf27a1f5" class="outline-3">
+<h3 id="orgf27a1f5"><span class="section-number-3">5.2</span> <code>static</code></h3>
+<div class="outline-text-3" id="text-5-2">
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">class</span> Foo {
+  <span class="org-keyword">static</span> bar = <span class="org-string">'bar'</span>;
+  <span class="org-keyword">static</span> getClassName() {
+    <span class="org-keyword">return</span> <span class="org-string">'Foo'</span>;
+  }
+}
+
+<span class="org-keyword">const</span> <span class="org-variable-name">a</span> = Foo.bar;
+Foo.getClassName();
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org29030c6" class="outline-3">
+<h3 id="org29030c6"><span class="section-number-3">5.3</span> <code>this</code></h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+类成员函数中的 <code>this</code> 在函数调用时会指向调用此函数的变量（对象），因此将从外部被调用的函数（比如 event handler）中如果使用 <code>this</code> ，函数必须 bind 到类实例。
+</p>
+</div>
+
+<div id="outline-container-org7ec4987" class="outline-4">
+<h4 id="org7ec4987"><span class="section-number-4">5.3.1</span> Unbound instance</h4>
+<div class="outline-text-4" id="text-5-3-1">
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">class</span> Foo {
+  constructor(value) { <span class="org-constant">this</span>.bar = value; }
+  getBar() { <span class="org-keyword">return</span> <span class="org-constant">this</span>.bar; }
+}
+
+<span class="org-keyword">const</span> <span class="org-variable-name">foo1</span> = <span class="org-keyword">new</span> <span class="org-type">Foo</span>(<span class="org-string">'bar1'</span>);
+foo1.getBar(); <span class="org-comment-delimiter">// </span><span class="org-comment">bar1: getBar() &#20013; this -&gt; foo1</span>
+
+<span class="org-keyword">const</span> <span class="org-variable-name">foo2</span> = {
+  bar: <span class="org-string">'bar2'</span>,
+  getBar: foo1.getBar
+}
+foo2.getBar(); <span class="org-comment-delimiter">// </span><span class="org-comment">bar2: getBar() &#20013; this -&gt; foo2</span>
+
+<span class="org-keyword">const</span> <span class="org-variable-name">getBar</span> = foo1.getBar;
+getBar(); <span class="org-comment-delimiter">// </span><span class="org-comment">Error: Cannot read propery of 'bar' of undefined</span>
+          <span class="org-comment-delimiter">// </span><span class="org-comment">&#22240;&#20026;&#26410; bind &#30340; getBar() &#20013; this &#26159; undefined</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6a9ddd3" class="outline-4">
+<h4 id="org6a9ddd3"><span class="section-number-4">5.3.2</span> Bound instance</h4>
+<div class="outline-text-4" id="text-5-3-2">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 2: </span>ES2016 之前</label><pre class="src src-js"><span class="org-keyword">class</span> Foo {
+  constructor(value) {
+    <span class="org-constant">this</span>.bar = value;
+    <span class="org-constant">this</span>.getBar = <span class="org-constant">this</span>.getBar.bind(<span class="org-constant">this</span>); <span class="org-comment-delimiter">// </span><span class="org-comment">Bind</span>
+  }
+  getBar() { <span class="org-keyword">return</span> <span class="org-constant">this</span>.bar; }
+}
+
+<span class="org-keyword">const</span> <span class="org-variable-name">foo</span> = <span class="org-keyword">new</span> <span class="org-type">Foo</span>(<span class="org-string">'bar'</span>);
+<span class="org-keyword">const</span> <span class="org-variable-name">getBar</span> = foo.getBar;
+getBar();
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 3: </span>ES2016 之后（并使用 babel stage-2 以上 preset）</label><pre class="src src-js"><span class="org-keyword">class</span> Foo {
+  constructor(value) { <span class="org-constant">this</span>.bar = value; }
+  getBar = () =&gt; <span class="org-constant">this</span>.bar; <span class="org-comment-delimiter">// </span><span class="org-comment">Bind</span>
+}
+
+<span class="org-keyword">const</span> <span class="org-variable-name">foo</span> = <span class="org-keyword">new</span> <span class="org-type">Foo</span>(<span class="org-string">'bar'</span>);
+<span class="org-keyword">const</span> <span class="org-variable-name">getBar</span> = foo.getBar;
+getBar();
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga52b620" class="outline-2">
+<h2 id="orga52b620"><span class="section-number-2">6</span> Standard Object</h2>
+<div class="outline-text-2" id="text-6">
+</div><div id="outline-container-orgbabb65d" class="outline-3">
+<h3 id="orgbabb65d"><span class="section-number-3">6.1</span> <code>Array</code></h3>
+<div class="outline-text-3" id="text-6-1">
+</div><div id="outline-container-orgd34dd62" class="outline-4">
+<h4 id="orgd34dd62"><span class="section-number-4">6.1.1</span> <code>filter()</code></h4>
+<div class="outline-text-4" id="text-6-1-1">
+<p>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter">Array.prototype.filter() | MDN</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">var</span> <span class="org-variable-name">foo</span> = [1, 2, 3];
+<span class="org-keyword">var</span> <span class="org-variable-name">bar</span> = foo.filter(<span class="org-keyword">function</span>(<span class="org-variable-name">n</span>) {
+  <span class="org-keyword">return</span> n !== 2; <span class="org-comment-delimiter">// </span><span class="org-comment">&#36820;&#22238; true &#21017;&#20445;&#30041;&#20803;&#32032;&#65292;&#21542;&#21017;&#21024;&#38500;</span>
+});
+<span class="org-comment-delimiter">// </span><span class="org-comment">foo = [1, 2, 3] &#21407;&#25968;&#32452;&#20445;&#25345;&#19981;&#21464;</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">bar = [1, 3]</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org05ceefb" class="outline-4">
+<h4 id="org05ceefb"><span class="section-number-4">6.1.2</span> <code>map()</code></h4>
+<div class="outline-text-4" id="text-6-1-2">
+<p>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map">Array.prototype.map() | MDN</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">var</span> <span class="org-variable-name">foo</span> = [1, 2, 3, 4];
+<span class="org-keyword">var</span> <span class="org-variable-name">bar</span> = foo.map(<span class="org-keyword">function</span>(<span class="org-variable-name">n</span>) {
+  <span class="org-keyword">return</span> n * 2;
+});
+<span class="org-comment-delimiter">// </span><span class="org-comment">bar = [2, 4, 6, 8]</span>
+
+<span class="org-keyword">var</span> <span class="org-variable-name">foo</span> = [
+  { key: <span class="org-string">'a'</span>, value: 1 },
+  { key: <span class="org-string">'b'</span>, value: 2 }
+];
+<span class="org-keyword">var</span> <span class="org-variable-name">bar</span> = foo.map(<span class="org-keyword">function</span>({ key }) { <span class="org-comment-delimiter">// </span><span class="org-comment">Destructing assignment</span>
+  <span class="org-keyword">return</span> key + <span class="org-string">'_new'</span>;
+});
+<span class="org-comment-delimiter">// </span><span class="org-comment">bar = ['a_new', 'b_new']</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org41d16dc" class="outline-3">
+<h3 id="org41d16dc"><span class="section-number-3">6.2</span> <code>Date</code></h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date">Date | MDN</a>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org62440d9" class="outline-2">
+<h2 id="org62440d9"><span class="section-number-2">7</span> Module</h2>
+<div class="outline-text-2" id="text-7">
+</div><div id="outline-container-org47b7008" class="outline-3">
+<h3 id="org47b7008"><span class="section-number-3">7.1</span> <code>import</code></h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">MDN | JavaScript | Reference | Statements | import</a>
+</p>
+</div>
+
+<div id="outline-container-org8f0c7d8" class="outline-4">
+<h4 id="org8f0c7d8"><span class="section-number-4">7.1.1</span> Named Import</h4>
+<div class="outline-text-4" id="text-7-1-1">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 4: </span><code>foo/bar.js</code></label><pre class="src src-js"><span class="org-keyword">export</span> <span class="org-keyword">const</span> <span class="org-variable-name">exec</span> = () =&gt; <span class="org-string">'bar'</span>;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 5: </span><code>index.js</code></label><pre class="src src-js"><span class="org-keyword">import</span> { exec } from <span class="org-string">'./foo/bar'</span>;
+console.log(exec());
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org11be901" class="outline-4">
+<h4 id="org11be901"><span class="section-number-4">7.1.2</span> All Import</h4>
+<div class="outline-text-4" id="text-7-1-2">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 6: </span><code>foo/bar.js</code></label><pre class="src src-js"><span class="org-keyword">export</span> <span class="org-keyword">const</span> <span class="org-variable-name">name</span> = <span class="org-string">'bar'</span>;
+<span class="org-keyword">export</span> <span class="org-keyword">const</span> <span class="org-variable-name">exec</span> = () =&gt; <span class="org-string">'bar'</span>;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 7: </span><code>index.js</code></label><pre class="src src-js"><span class="org-keyword">import</span> * as Bar from <span class="org-string">'./foo/bar'</span>;
+console.log(Bar.name);
+console.log(Bar.exec());
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb1cec0a" class="outline-4">
+<h4 id="orgb1cec0a"><span class="section-number-4">7.1.3</span> Default Import</h4>
+<div class="outline-text-4" id="text-7-1-3">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 8: </span><code>foo/bar.js</code></label><pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">exec</span> = () =&gt; <span class="org-string">'bar'</span>;
+<span class="org-keyword">export</span> <span class="org-keyword">default</span> exec;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 9: </span><code>index.js</code></label><pre class="src src-js"><span class="org-keyword">import</span> exec from <span class="org-string">'./foo/bar'</span>;
+console.log(exec());
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9393fff" class="outline-2">
+<h2 id="org9393fff"><span class="section-number-2">8</span> Web API</h2>
+<div class="outline-text-2" id="text-8">
+</div><div id="outline-container-orgb7e7751" class="outline-3">
+<h3 id="orgb7e7751"><span class="section-number-3">8.1</span> <code>Document</code></h3>
+<div class="outline-text-3" id="text-8-1">
+</div><div id="outline-container-org4bc8b8b" class="outline-4">
+<h4 id="org4bc8b8b"><span class="section-number-4">8.1.1</span> <code>querySelector()</code></h4>
+<div class="outline-text-4" id="text-8-1-1">
+<p>
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector">Document.querySelector() | MDN</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">Element document.querySelector(DOMString selectors);
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">var</span> <span class="org-variable-name">root</span> = document.querySelector(<span class="org-string">'#root'</span>);
+<span class="org-keyword">var</span> <span class="org-variable-name">container</span> = document.querySelector(<span class="org-string">'div.containerh'</span>);
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc9c947c" class="outline-3">
+<h3 id="orgc9c947c"><span class="section-number-3">8.2</span> <code>Event</code></h3>
+<div class="outline-text-3" id="text-8-2">
+</div><div id="outline-container-orgf2e13e2" class="outline-4">
+<h4 id="orgf2e13e2"><span class="section-number-4">8.2.1</span> <code>change</code></h4>
+<div class="outline-text-4" id="text-8-2-1">
+<div class="org-src-container">
+<pre class="src src-js">&lt;input type=<span class="org-string">"text"</span> onChange=<span class="org-string">"handleChange"</span> /&gt;
+<span class="org-keyword">function</span> <span class="org-function-name">handleChange</span>(<span class="org-variable-name">event</span>) {
+  <span class="org-keyword">var</span> <span class="org-variable-name">value</span> = event.target.value;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6e1369c" class="outline-4">
+<h4 id="org6e1369c"><span class="section-number-4">8.2.2</span> <code>preventDefault()</code></h4>
+<div class="outline-text-4" id="text-8-2-2">
+<div class="org-src-container">
+<pre class="src src-js">&lt;form onSubmit=<span class="org-string">"handleSubmit"</span>&gt;&lt;/form&gt;
+<span class="org-keyword">function</span> <span class="org-function-name">handleSubmit</span>(<span class="org-variable-name">event</span>) {
+  event.preventDefault();
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga6a8ddf" class="outline-2">
+<h2 id="orga6a8ddf"><span class="section-number-2">9</span> Link</h2>
+<div class="outline-text-2" id="text-9">
+<ol class="org-ol">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference">MDN | JavaScript | Reference</a></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2019-10-13 Sun 11:53</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

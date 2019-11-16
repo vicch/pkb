@@ -1,0 +1,395 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: MySQL
+
+* 概念
+** 引擎
+
+|        | 锁级别 | 外键约束 | 全文搜索 | 事务处理 | 压缩 |
+|--------+--------+----------+----------+----------+------|
+| MyISAM | 表级   | 不支持   | 支持     | 不支持   | 支持 |
+|--------+--------+----------+----------+----------+------|
+| InnoDB | 行级   | 支持     | 不支持   | 支持     |      |
+
+#+ATTR_HTML: :class no-border
+| *MyISAM* | =SELECT= 执行速度更快。                                 |
+|          | 相对简单，维护成本低，适合小型应用。                    |
+|----------+---------------------------------------------------------|
+| *InnoDB* | =INSERT= 和 =UPDATE= 执行速度更快， =SELECT= 性能较差。 |
+|          | 高并发时性能更好。                                      |
+|          | 支持聚集索引，按照主键进行聚集。                        |
+
+* 类型
+** 整形
+
+|             | 字节 | =UNSIGNED=                                 | =UNSIGNED=               |
+|-------------+------+--------------------------------------------+--------------------------|
+| =TINYINT=   |    1 | -128 ~ 127                                 | 0 ~ 255                  |
+|-------------+------+--------------------------------------------+--------------------------|
+| =SMALLINT=  |    2 | -32768 ~ 32767                             | 0 ~ 65535                |
+|-------------+------+--------------------------------------------+--------------------------|
+| =MEDIUMINT= |    3 | -8388608 ~ 8388607                         | 0 ~ 16777215             |
+|-------------+------+--------------------------------------------+--------------------------|
+| =INT=       |    4 | -2147483648 ~ 2147483647                   | 0 ~ 4294967295           |
+|-------------+------+--------------------------------------------+--------------------------|
+| =BIGINT=    |    8 | -9223372036854775808 ~ 9223372036854775807 | 0 ~ 18446744073709551615 |
+
+* DDS
+** =CREATE=
+*** =CREATE DATABASE=
+
+#+BEGIN_SRC sql
+CREATE {DATABASE | SCHEMA} [IF NOT EXISTS] db_name
+    [create_specification] ...
+
+create_specification:
+    [DEFAULT] CHARACTER SET [=] charset_name
+  | [DEFAULT] COLLATE [=] collation_name
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC sql
+CREATE DATABASE `foo`
+DEFAULT CHARACTER SET utf8
+DEFAULT COLLATE utf8_unicode_ci;
+#+END_SRC
+
+* DMS
+* DAS
+** =SHOW=
+*** =SHOW CREATE TABLE=
+
+#+BEGIN_SRC sql
+SHOW CREATE TABLE tbl_name
+#+END_SRC
+
+*** =SHOW DATABASES=
+
+#+BEGIN_SRC sql
+SHOW {DATABASES | SCHEMAS}
+    [LIKE 'pattern' | WHERE expr]
+#+END_SRC
+
+*** =SHOW TABLES=
+
+#+BEGIN_SRC sql
+SHOW [FULL] TABLES
+    [{FROM | IN} db_name]
+    [LIKE 'pattern' | WHERE expr]
+#+END_SRC
+
+* SQL
+** 表
+*** =CREATE=
+
+#+BEGIN_SRC sql
+CREATE [TEMPORARY] TABLE [IF NOT EXISTS] tbl_name
+    (create_definition,...)
+    [table_options]
+    [partition_options]
+
+CREATE [TEMPORARY] TABLE [IF NOT EXISTS] tbl_name
+    [(create_definition,...)]
+    [table_options]
+    [partition_options]
+    select_statement
+
+CREATE [TEMPORARY] TABLE [IF NOT EXISTS] tbl_name
+    { LIKE old_tbl_name | (LIKE old_tbl_name) }
+#+END_SRC
+
+#+BEGIN_SRC sql
+create_definition:
+    col_name column_definition
+  | [CONSTRAINT [symbol]] PRIMARY KEY [index_type] (index_col_name,...)
+      [index_option] ...
+  | {INDEX|KEY} [index_name] [index_type] (index_col_name,...)
+      [index_option] ...
+  | [CONSTRAINT [symbol]] UNIQUE [INDEX|KEY]
+      [index_name] [index_type] (index_col_name,...)
+      [index_option] ...
+  | {FULLTEXT|SPATIAL} [INDEX|KEY] [index_name] (index_col_name,...)
+      [index_option] ...
+  | [CONSTRAINT [symbol]] FOREIGN KEY
+      [index_name] (index_col_name,...) reference_definition
+  | CHECK (expr)
+#+END_SRC
+
+#+BEGIN_SRC sql
+column_definition:
+    data_type [NOT NULL | NULL] [DEFAULT default_value]
+      [AUTO_INCREMENT] [UNIQUE [KEY] | [PRIMARY] KEY]
+      [COMMENT 'string']
+      [COLUMN_FORMAT {FIXED|DYNAMIC|DEFAULT}]
+      [reference_definition]
+  | data_type [GENERATED ALWAYS] AS (expression)
+      [VIRTUAL | STORED] [UNIQUE [KEY]] [COMMENT comment]
+      [NOT NULL | NULL] [[PRIMARY] KEY]
+#+END_SRC
+
+#+BEGIN_SRC sql
+
+data_type:
+    BIT[(length)]
+  | TINYINT[(length)] [UNSIGNED] [ZEROFILL]
+  | SMALLINT[(length)] [UNSIGNED] [ZEROFILL]
+  | MEDIUMINT[(length)] [UNSIGNED] [ZEROFILL]
+  | INT[(length)] [UNSIGNED] [ZEROFILL]
+  | INTEGER[(length)] [UNSIGNED] [ZEROFILL]
+  | BIGINT[(length)] [UNSIGNED] [ZEROFILL]
+  | REAL[(length,decimals)] [UNSIGNED] [ZEROFILL]
+  | DOUBLE[(length,decimals)] [UNSIGNED] [ZEROFILL]
+  | FLOAT[(length,decimals)] [UNSIGNED] [ZEROFILL]
+  | DECIMAL[(length[,decimals])] [UNSIGNED] [ZEROFILL]
+  | NUMERIC[(length[,decimals])] [UNSIGNED] [ZEROFILL]
+  | DATE
+  | TIME[(fsp)]
+  | TIMESTAMP[(fsp)]
+  | DATETIME[(fsp)]
+  | YEAR
+  | CHAR[(length)] [BINARY]
+      [CHARACTER SET charset_name] [COLLATE collation_name]
+  | VARCHAR(length) [BINARY]
+      [CHARACTER SET charset_name] [COLLATE collation_name]
+  | BINARY[(length)]
+  | VARBINARY(length)
+  | TINYBLOB
+  | BLOB
+  | MEDIUMBLOB
+  | LONGBLOB
+  | TINYTEXT [BINARY]
+      [CHARACTER SET charset_name] [COLLATE collation_name]
+  | TEXT [BINARY]
+      [CHARACTER SET charset_name] [COLLATE collation_name]
+  | MEDIUMTEXT [BINARY]
+      [CHARACTER SET charset_name] [COLLATE collation_name]
+  | LONGTEXT [BINARY]
+      [CHARACTER SET charset_name] [COLLATE collation_name]
+  | ENUM(value1,value2,value3,...)
+      [CHARACTER SET charset_name] [COLLATE collation_name]
+  | SET(value1,value2,value3,...)
+      [CHARACTER SET charset_name] [COLLATE collation_name]
+  | spatial_type
+#+END_SRC
+
+http://dev.mysql.com/doc/refman/5.7/en/create-table.html
+
+#+CAPTION: 示例
+#+BEGIN_SRC sql
+CREATE TABLE `data` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `dt` int(10) unsigned NOT NULL,
+  `count` int(10) unsigned NOT NULL
+  PRIMARY KEY (`id`),
+  KEY `dt` (`dt`,`count`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+#+END_SRC
+
+*** =TRUNCATE=
+
+#+BEGIN_SRC sql
+TRUNCATE <table>;
+#+END_SRC
+
+删除表中所有记录时， =TRUNCATE= 比 =DELETE= 效率高。
+
+=DELETE= 可以回滚， =TRUNCATE= 不可以回滚。
+
+*** =DROP=
+
+#+BEGIN_SRC sql
+DROP <table>;
+#+END_SRC
+
+** 列
+*** 添加列
+
+#+BEGIN_SRC sql
+ALTER TABLE `table` ADD COLUMN `column` <type> [<options>];
+
+<options>
+    NOT NULL
+    DEFAULT <default>    
+#+END_SRC
+
+*** 删除列
+
+#+BEGIN_SRC sql
+ALTER TABLE `table` DROP COLUMN `column`;
+#+END_SRC
+
+*** 修改列
+
+#+BEGIN_SRC sql
+ALTER TABLE <table> CHANGE COLUMN <old_column> <new_column> [<options>];
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC sql
+ALTER TABLE month_report CHANGE COLUMN value value (varchar(50) NOT NULL);
+#+END_SRC
+
+* 函数
+** 数字
+** 字符串
+
+| =SUBSTR()= |   |
+|------------+---|
+| =LOWER()=  |   |
+|------------+---|
+| =UPPER()=  |   |
+
+** 正则
+
+| =REGEXP= | 正则匹配 |
+
+*** =REGEXP=
+
+#+CAPTION: 示例：查询（非）元音字母开头的城市名称
+#+BEGIN_SRC sql
+SELECT DISTINCT city FROM station WHERE city REGEXP '^[AEIOU]';
+SELECT DISTINCT city FROM station WHERE city NOT REGEXP '^[AEIOU]';
+#+END_SRC
+
+** 日期
+
+| =DATE_ADD()= | 计算日期加上间隔 |
+
+*** =DATE_ADD()=
+
+#+BEGIN_SRC sql
+DATE_ADD(<date>, INTERVAL <expr> <type>)
+#+END_SRC
+
+#+CAPTION: 示例 1
+#+BEGIN_SRC sql
+SELECT id, DATE_ADD(curr_date, INTERVAL 30 DAY) AS future_date;
+#+END_SRC
+
+#+CAPTION: 示例 2：在天气记录中查找所有气温高于前一天气温的日期
+#+BEGIN_SRC sql
+SELECT w1.id
+FROM weather w1, weather w2
+WHERE w1.date = DATE_ADD(w2.date, INTERVAL 1 DAY)
+AND w1.temperature > w2.temperature;
+#+END_SRC
+
+** 控制流
+
+| =IF()=     |   |
+|------------+---|
+| =IFNULL()= |   |
+|------------+---|
+| =NULLIF()= |   |
+|------------+---|
+| =CASE=     |   |
+
+*** =CASE=
+
+#+CAPTION: 示例：通过三角形三边判断类型
+#+BEGIN_SRC sql
+SELECT CASE
+    WHEN A >= B + C OR B >= A + C OR C >= A + B THEN 'Not A Triangle'
+    WHEN A = B AND A = C THEN 'Equilateral'
+    WHEN A = B OR A = C OR B = C THEN 'Isosceles'
+    ELSE 'Scalene' END
+FROM TRIANGLES;
+#+END_SRC
+
+* 命令
+** =mysql=
+
+#+BEGIN_SRC sh
+mysql <options>
+    -h, --host=
+    -P, --port=
+    -u, --user=
+    -p, --password=
+    -D, --database=
+
+    -e, --execute=<query>
+    -s, --silent            # 不输出分隔符
+    -N, --skip-column-names # 不输出列名
+#+END_SRC
+
+#+CAPTION: 数据库导入
+#+BEGIN_SRC sh
+mysql -h <host> -u <user> -p <password> <database> < <file>
+#+END_SRC
+
+** =mysqldump=
+
+#+CAPTION: 数据库备份
+#+BEGIN_SRC sh
+mysqldump <options> <database> <tables> > <file>
+    -h, --host=
+    -P, --port=
+    -u, --user=
+    -p, --password=
+#+END_SRC
+
+** 命令行
+
+不区分大小写。
+
+| =help= =?=    | =\h= |
+|---------------+------|
+| =quit= =exit= | =\q= |
+
+** =service=
+
+#+BEGIN_SRC sh
+service mysql <action>
+    status
+    start
+    stop
+#+END_SRC
+
+* 配置
+
+#+CAPTION: =/etc/mysql/=
+| =mysql.cnf=      |   |
+|------------------+---|
+| =conf.d/*=       |   |
+|------------------+---|
+| =mysql.conf.d/*= |   |
+
+* 使用
+** 安装
+
+#+BEGIN_SRC sh
+$ sudo apt-get install mysql-server
+$ sudo service mysql start
+$ mysql -u root -p
+> ALTER USER 'root'@'localhost' IDENTIFIED BY '<new_password>';
+#+END_SRC
+
+** Debug
+*** 表
+
+#+BEGIN_SRC sql
+DESC <table>;
+SHOW CREATE TABLE <table>;
+SHOW TABLE STATUS;
+#+END_SRC
+
+*** 引擎
+
+#+BEGIN_SRC sql
+SHOW ENGINE INNODB STATUS;
+SHOW VARIABLES LIKE 'innodb%';
+#+END_SRC
+
+*** 其他
+
+#+CAPTION: 列出所有表的行数、占用空间等
+#+BEGIN_SRC sql
+SELECT TABLE_NAME, table_rows, data_length, index_length, round(((data_length + index_length) / 1024 / 1024),2) "Size in MB"
+FROM information_schema.TABLES
+# WHERE table_schema = "schema_name"
+ORDER BY (data_length + index_length) DESC;
+#+END_SRC
+
+* 链接
+
+1. [[http://dev.mysql.com/doc/][MySQL Documentation]]
+1. [[https://www.w3schools.com/sql/sql_ref_mysql.asp][MySQL Functions]]

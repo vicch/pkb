@@ -1,0 +1,1956 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>More Joel on Software</title>
+<!-- 2016-05-05 周四 18:14 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">More Joel on Software</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. 目录</a></li>
+<li><a href="#sec-2">2. 第一章</a>
+<ul>
+<li><a href="#sec-2-1">2.1. 寻找优秀的程序员（Finding Great Developers）</a></li>
+<li><a href="#sec-2-2">2.2. 寻找优秀的程序员之实战指南（A Field Guide to Developers）</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. 第二章</a>
+<ul>
+<li><a href="#sec-3-1">3.1. 学校只教 Java 的危险性（The Perils of Javaschools）</a></li>
+<li><a href="#sec-3-2">3.2. 在耶鲁大学的演讲（Talk at Yale）</a></li>
+<li><a href="#sec-3-3">3.3. 给计算机系学生的建议（Advice for Computer Science College Students）</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. 第三章</a>
+<ul>
+<li><a href="#sec-4-1">4.1. 字体平滑、反锯齿和次像素渲染（Font Smoothing, Anti-aliasing and Subpixel Rendering）</a></li>
+<li><a href="#sec-4-2">4.2. 寸土必争（A Game of Inches）</a></li>
+<li><a href="#sec-4-3">4.3. 大构想的陷阱（The Big Picture）</a></li>
+<li><a href="#sec-4-4">4.4. 别给用户太多选择（Choices = Headaches）</a></li>
+<li><a href="#sec-4-5">4.5. 易用性是不够的（It's Not Just Usability）</a></li>
+<li><a href="#sec-4-6">4.6. 用软件搭建社区（Building Communities with Software）</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5. 第四章</a>
+<ul>
+<li><a href="#sec-5-1">5.1. 火星人的耳机（Martian Headsets）</a></li>
+<li><a href="#sec-5-2">5.2. 为什么 Microsoft Office 的文件格式如此复杂（Why Are the Microsoft Office File Formats So Complicated）</a></li>
+<li><a href="#sec-5-3">5.3. 要挣钱，就别怕脏（Where There's Muck, There's Brass）</a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6. 第五章</a>
+<ul>
+<li><a href="#sec-6-1">6.1. 循证式日程规划（Evidence-Based Scheduling）</a></li>
+<li><a href="#sec-6-2">6.2. 关于战略问题的通信之六（Strategy Letter VI）</a></li>
+<li><a href="#sec-6-3">6.3. 你的编程语言能做到吗（Can Your Programming Language Do This?）</a></li>
+<li><a href="#sec-6-4">6.4. 让错误的代码显而易见（Making Wrong Code Look Wrong）</a></li>
+</ul>
+</li>
+<li><a href="#sec-7">7. 第六章</a>
+<ul>
+<li><a href="#sec-7-1">7.1. Micro-ISV: From Vision to Reality 的前言（Foreword to Micro-ISV: From Vision to Reality）</a></li>
+<li><a href="#sec-7-2">7.2. 飙高音（Hitting the High Notes）</a></li>
+</ul>
+</li>
+<li><a href="#sec-8">8. 第七章</a>
+<ul>
+<li><a href="#sec-8-1">8.1. 仿生学办公室（Bionic Office）</a></li>
+<li><a href="#sec-8-2">8.2. 他山之石，不可攻玉（Up the Tata Without a Tutu）</a></li>
+<li><a href="#sec-8-3">8.3. 简化性（Simplicity）</a></li>
+<li><a href="#sec-8-4">8.4. 组织 beta 测试的十二个最高秘诀（Top Twelve Tips for Running a Beta Test）</a></li>
+<li><a href="#sec-8-5">8.5. 建立优质客户服务的七个步骤（Seven Steps to Remarkable Customer Service）</a></li>
+</ul>
+</li>
+<li><a href="#sec-9">9. 第八章</a>
+<ul>
+<li><a href="#sec-9-1">9.1. 挑选发布日期（Picking a Ship Date）</a></li>
+<li><a href="#sec-9-2">9.2. 软件定价（Camels and Rubber Duckies）</a></li>
+</ul>
+</li>
+<li><a href="#sec-10">10. 第九章</a>
+<ul>
+<li><a href="#sec-10-1">10.1. 五个为什么（Five Whys）</a></li>
+<li><a href="#sec-10-2">10.2. 确定优先顺序（Set Your Priorities）</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 目录</h2>
+<div class="outline-text-2" id="text-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">第一章</th>
+<th scope="col" class="left">人员管理</th>
+<th scope="col" class="left">Managing People</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">第二章</td>
+<td class="left">写给未来程序员的建议</td>
+<td class="left">Advice to Potential Programmers</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">第三章</td>
+<td class="left">设计的作用</td>
+<td class="left">The Impact of Design</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">第四章</td>
+<td class="left">管理大型项目</td>
+<td class="left">Managing Large Projects</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">第五章</td>
+<td class="left">编程建议</td>
+<td class="left">Programming Advice</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">第六章</td>
+<td class="left">开办软件公司</td>
+<td class="left">Starting a Sofeware Business</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">第七章</td>
+<td class="left">经营软件公司</td>
+<td class="left">Running a Software Business</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">第八章</td>
+<td class="left">发布软件</td>
+<td class="left">Releasing Software</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">第九章</td>
+<td class="left">修订软件</td>
+<td class="left">Revising Software</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 第一章</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 寻找优秀的程序员（Finding Great Developers）</h3>
+<div class="outline-text-3" id="text-2-1">
+<blockquote>
+<p>
+就同所有行业中最好的人才一样，那些优秀的程序员是不会出现在招聘市场上的。这条规律（优秀的人才从不在市场上求职）有一个推论，那就是在人才市场上找工作的，大部分都是一些水平很差、完全达不到要求的人。
+</p>
+
+<p>
+The great software developers, indeed, the best people in every field, are quite simply never on the market. The corollary of that rule—the rule that the great people are never on the market—is that the bad people—the seriously unqualified—are on the market quite a lot.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> 寻找优秀的程序员之实战指南（A Field Guide to Developers）</h3>
+<div class="outline-text-3" id="text-2-2">
+<blockquote>
+<p>
+程序员早就练出了对公正有非常良好的判断力。代码要么能运行，要么不能。坐在那里争论代码是否有问题，这是毫无意义的，因为你可以运行代码，答案自然就有了。代码的世界是非常公正的，也是非常严格有序的。许许多多的人选择编程，首要的原因就是，他们宁愿将自己的时间花在一个公平有序的地方，一个严格的能者上庸者下的地方，一个只要你是对的就能赢得任何争论的地方。我是谁并不重要，重要的是我是对的。非政治性的组织就应该这样，这种组织才会让程序员感到高兴。
+</p>
+
+<p>
+Programmers have very well-honed senses of justice. Code either works, or it doesn’t. There’s no sense in arguing whether a bug exists, since you can test the code and find out. The world of programming is very just and very strictly ordered, and a heck of a lot of people go into programming in the first place because they prefer to spend their time in a just, orderly place, a strict meritocracy where you can win any debate simply by being right. It didn’t matter who I was, it mattered that I was right. That’s the kind of nonpolitical organization that delights programmers.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+巨型公司用一种不合理的方式操纵它们的公众形象――比方说，他们是一家计算机公司，那么与反抗独裁有什么关系呢？真是活见鬼――成功地创造出一种自我认同的文化，使得全世界各地购买计算机的用户感觉他们买的并不仅仅是一台计算机，觉得自己通过购买而参加到了一场运动中。
+</p>
+
+<p>
+Giant corporations manipulating their public image in a way that doesn’t even make sense (like, uh, they’re a computer company—what the hell does that have to do with being against dictatorships?) and successfully creating a culture of identity that has computer shoppers around the world feeling like they’re not just buying a computer, they’re buying into a movement.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 第二章</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> 学校只教 Java 的危险性（The Perils of Javaschools）</h3>
+<div class="outline-text-3" id="text-3-1">
+<blockquote>
+<p>
+1900 年的时候，拉丁语和希腊语都是大学里的必修课，原因不足因为它们有什么特别的作用，而是因为它们有点被看成是受过高等教育的人士的标志。拉丁语训练你的思维，锻炼你的记忆。分析拉丁语的句法结构是思考能力的最佳练习，是真正对智力的挑战，能够很好地培养逻辑能力。指针和递归不正像计算机科学中的拉丁语和希腊语吗？
+</p>
+
+<p>
+In 1900, Latin and Greek were required subjects in college, not because they served any purpose, but because they were sort of considered an obvious requirement for educated people. Latin trains your mind. Trains your memory. Unraveling a Latin sentence is an excellent exercise in thought, a real intellectual puzzle, and a good introduction to logical thinking. Are pointers and recursion the Latin and Greek of computer science? 
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+指针和递归的真正价值在于那种你在学习它们的过程中所得到的思维深度，以及你因为害怕在这些课程中被淘汰所产生的心理抗压能力，它们都是在建造大型系统的过程中必不可少的。指针和递归要求一定水平的推理能力、抽象思考能力，以及最重要的，在若干个不同的抽象层次上同时审视同一个问题的能力。因此，是否真正理解指针和递归与是否是一个优秀程序员直接相关。
+</p>
+
+<p>
+The real value of pointers and recursion is that building big systems requires the kind of mental flexibility you get from learning about them and the mental aptitude you need to avoid being weeded out of the courses in which they are taught. Pointers and recursion require a certain ability to reason, to think in abstractions, and, most importantly, to view a problem at several levels of abstraction simultaneously. And thus, the ability to understand pointers and recursion is directly correlated with the ability to be a great programmer.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+我从来没有见过哪个能用 Scheme 语言、Haskell 语言和 C 语言中的指针编程的人，竟然不能在两天里面学会 Java 语言，并且写出的 Java 程序的质量竟然不能胜过那些有 5 年 Java 编程经验的人士。
+</p>
+
+<p>
+I have never met anyone who can do Scheme, Haskell, and C pointers who can’t pick up Java in two days and create better Java code than people with five years of experience in Java.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+计算机科学是由证明（递归）、算法（递归）、语言（λ 演算）、操作系统（指针）、编译器（λ 演算）所组成的，所以说那些不教 C 语言、不教 Scheme 语言、只教 Java 语言的学校实际上根本不是在教授计算机科学。
+</p>
+
+<p>
+CS is proofs (recursion), algorithms (recursion), languages (lambda calculus), operating systems (pointers), compilers (lambda calculus)—and so the bottom line is that a JavaSchool that won’t teach C and won’t teach Scheme is not really teaching computer science either.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> 在耶鲁大学的演讲（Talk at Yale）</h3>
+<div class="outline-text-3" id="text-3-2">
+<blockquote>
+<p>
+CS323 有一个最大的优点，那就是它让许多人明白了原来自己不是编程的那块料，永远也成不了程序员。这是一件好事。如果不是授课老师让一些人明白自己其实不具备编程的能力，他们就会有悲惨的职业生涯，一生中忙于复制和粘贴大量他人编写的 Java 代码。
+</p>
+
+<p>
+The best thing about CS 323 is it teaches a lot of people that they just ain’t never gonna be programmers. This is a good thing. People who don’t have the benefit of Stan Eisenstat teaching them that they can’t be programmers have miserable careers cutting and pasting a lot of Java.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+技术派想要把质量问题用软件自动处理。为了这个目的，他们发明了单元测试、测试驱动开发方法、自动测试、动态逻辑等，目的只有一个，就是「证明」程序中没有错误。
+</p>
+
+<p>
+The geeks want to solve the problem automatically, using software. They propose things like unit tests, test-driven development, automated testing, dynamic logic, and other ways to “prove” that a program is bug free.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+他们是程序员，所以会想让生活中每一件事情都自动完成，因此很自然地，他们也想自动完成 QA 过程。这就是单元测试的来历。单元测试本身并不坏，当你运行完所有的单元测试，就可以机械式地「证明」一个程序足「正确的」。但是，这样做的不利之处是，任何不能被自动测试的东西就会被排斥在质量的定义之外，变成与软件质量无关。换句话说，他们最终证明的只是软件的运行过程是否同设计规格一模一样。这样一来，我们就得到了一个非常狭窄、非常技术化倾向的质量定义，即软件的质量反映在与设计规格上的标准有多接近。
+</p>
+
+<p>
+They’re programmers, so they try to automate everything in their life, and of course they try to automate the QA process. This is how you get unit testing, which is not a bad thing, and it’s how you get all these attempts to mechanically “prove” that a program is “correct.” The trouble is that anything that can’t be automated has to be thrown out of the definition of quality. And basically they get left with the only (quality) they can prove mechanically, which is, does the program behave according to specification. And so we get a very narrow, geeky definition of quality: how closely the program corresponds to the spec.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+为了用机械方法证明程序符合某种规格，规格说明书本身就需要写得非常详尽。实际上，设计规格说明书上不得不因此定义清楚与程序相关的每一件事，否则的话，自动的机械化证明就什么也做不了。好吧，就算设计规格说明书将程序运行的每一个方面都定义清楚了，那么，你有没有发现，设计规格说明书中其实包含了编写程序需要的所有信息！到了这个时候，某些技术派会站起身走到一个非常昏暗的地方，开始动脑筋思考如何将设计规格说明书自动编译为程序。他们会觉得自己发明了一种方法，不用编程就制造了程序。这就是永动机理论在软件工程中的等价物。
+</p>
+
+<p>
+In order to mechanically prove that a program corresponds to some spec, the spec itself needs to be extremely detailed. In fact, the spec has to define everything about the program; otherwise, nothing can be proven automatically and mechanically. Now, if the spec does define everything about how the program is going to behave, then, lo and behold, it contains all the information necessary to generate the program! And now certain geeks go off to a very dark place where they start thinking about automatically compiling specs into programs, and they start to think that they’ve just invented a way to program computers without programming. This is the software engineering equivalent of a perpetual motion machine.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+我完全相信，在微软公司内部，现在所有的自动化测试脚本都显示软件 100% 合格。但是，这又有什么用呢？
+</p>
+
+<p>
+I’m sure the automated scripts for Windows Vista are running at 100% success right now at Microsoft, but it doesn’t help when just about every tech reviewer is advising people to stick with XP for as long as humanly possible.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+「UNIX 文化」倡导将用户界面和功能分隔开来。一个正宗的 UNIX 程序，第一步总是会提供一个命令行界面。幸运的话，有人会出来为它写一个漂亮的前台界面，包含阴影、透明和 3D 效果。这个漂亮的前台界面所做的只是在后台调用命令行界面。如果出于某种不可知的原因，命令行界面在后台无法运行，因此无法得到正确的结果，那么前台界面就会挂掉，在那里等着永远都不会得到的输入。
+</p>
+
+<p>
+Unix has this cultural value of separating user interface from functionality. A righteous Unix program starts out with a command-line interface, and if you’re lucky, someone else will come along and write a pretty front end for it, with shading and transparency and 3D effects, and this pretty front end just launches the command-line interface in the background, which then fails in mysterious ways, which are then not reflected properly in the pretty front end, which is now hung waiting for some input that it’s never going to get.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+形成鲜明对照的是，在「Windows 文化」中，第一步总是先写出 GUI，所有核心功能与用户界面的代码联系之紧密足以让人感到绝望。你因此得到了像 Photoshop 那样的巨型应用程序，它用来编辑照片绝对第一流。但是，如果你是一个程序员，你有一个文件目录中包含了 1000 张照片，你想用 Photoshop 重新设定它们的大小，那么你是无法写出代码的，因为软件的所有功能都紧紧地与某一个特定的用户界面绑在了一起。
+</p>
+
+<p>
+Whereas the Windows culture would be to write a GUI app in the first place, and all the core functionality would be tangled up hopelessly with the user interface code, so you could have this gigantic application like Photoshop that’s absolutely brilliant for editing photos, but if you’re a programmer, and you want to use Photoshop to resize a folder of 1,000 pictures, you just can’t write that code, because it’s all very tightly bound to a particular user interface.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+世界上大概有 80% 的程序员是内部程序员。为什么做一个内部程序员就糟透了？第一点，你永远无法用正确的方法做事，你总是被迫用最保险的方法做事。第二点，一旦你的程序可以用了，你就不得不停止开发。
+</p>
+
+<p>
+(In-house programmer) is what probably 80% of programming jobs are like. Why does it suck to be an in-house programmer? Number one: you never get to do things the right way. You always have to do things the expedient way. Number two: as soon as your program gets good enough, you have to stop working on it.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+能不能清晰地写出技术内容的文章决定了你是一个口齿不清的程序员还是一个领袖。那些决定游戏规则的人都是善于写作的人。为什么 C 语言是最流行的语言，原因就是创始人 Brian Kernighan 和 Dennis Ritchie 写了一本伟大的书《C 程序设计语言》。
+</p>
+
+<p>
+Being able to write clearly on technical topics is the difference between being a grunt individual contributor programmer and being a leader. The people who get to decide the terms of the debate are the ones who can write. The C programming language took over because The C Programming Language by Brian Kernighan and Dennis Ritchie was such a great book.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> 给计算机系学生的建议（Advice for Computer Science College Students）</h3>
+<div class="outline-text-3" id="text-3-3">
+<blockquote>
+<p>
+你认为理所当然的观念「热爱你的工作」，其实是一个很现代的概念。通常的看法是，T作是一种让人很不开心的事，你为了拿工资才不得不去上班。你工作的目的是为了攒F钱去干那些自己真正喜欢于的事。
+</p>
+
+<p>
+The very idea that you can “love your job” is a modern concept. Work is supposed to be something unpleasant you do to get money to do the things you actually like doing.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+一个普通程序员与一个优秀程序员的区别，不在于他们懂得的编程语言谁多谁少，也不在于他们喜欢用 Python 语言还是喜欢用 Java 语言，而在于他们能否与他人交流思想。如果你能说服其他人，你的力量就可以得到放大。如果你能写出清晰的注释和技术规格说明书，其他程序员就能够理解你的代码，因此他们就能在自己的代码中使用，而不必重写。如果你做不到这一点，你的代码对其他人就没有价值。如果你能为最终用户写出清晰的使用手册，其他人就能明白你的代码是用来干什么的，这是唯一让别人明白你的代码有何价值的方法。
+</p>
+
+<p>
+The difference between a tolerable programmer and a great programmer is not how many programming languages they know, and it’s not whether they prefer Python or Java. It’s whether they can communicate their ideas. By persuading other people, they get leverage. By writing clear comments and technical specs, they let other programmers understand their code, which means other programmers can use and work with their code instead of rewriting it. Absent this, their code is worthless. By writing clear technical documentation for end users, they allow people to figure out what their code is supposed to do, which is the only way those users can see the value in their code.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+C 语言让程序员互相沟通，更重要的是，它比你在大学中学到的「现代语言」都更接近机器。你至少需要花一个学期来了解机器原理，否则你永远不可能在高级语言的层次写出高效的代码。你也永远无法开发编译器和操作系统，而它们恰恰属于目前程序员能够得到的最佳工作之列。
+</p>
+
+<p>
+C is the language working programmers use to communicate with one another, and, more importantly, it is much closer to the machine than “modern” languages that you’ll be taught in college. You need to spend at least a semester getting close to the machine, or you’ll never be able to create efficient code in higher level languages. You’ll never be able to work on compilers and operating systems, which are some of the best programming jobs around.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+你一定要去学微观经济学，因为你必须搞懂供给和需求，你必须明白竞争优势，你必须理解什么是净现值（NPV），什么是贴现，什么是边际效用。只有这样，你才会懂得为什么生意是现在这种做法。
+</p>
+
+<p>
+Make sure you study microeconomics, because you have to know about supply and demand, you have to know about competitive advantage, and you have to understand NPVs and discounting and marginal utility before you’ll have any idea why business works the way it does.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+首先，根据一时性的商业潮流决定个人的职业选择，这是愚蠢的。其次，即使编程工作无一幸存地都流向了印度和中国，但是学习编程本身依然是一种第一流的素质训练，可以为各种超级有趣的工作打下基础，比如业务流程工程。再次，不管是在美国还是在印度，真正优秀的程序员依然是非常非常短缺的。真正优秀的程序员根本不会失业。
+</p>
+
+<p>
+First, trying to choose a career based on a current business fad is foolish. Second, programming is incredibly good training for all kinds of fabulously interesting jobs, such as business process engineering, even if every single programming job does go to India and China. Third, there’s still an incredible shortage of the really good programmers, here and in India. Really good programmers do have jobs.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 第三章</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> 字体平滑、反锯齿和次像素渲染（Font Smoothing, Anti-aliasing and Subpixel Rendering）</h3>
+<div class="outline-text-3" id="text-4-1">
+<blockquote>
+<p>
+苹果公司的渲染算法比微软公司更忠实于字体的原始设计，能够像印刷品那样在高清晰度状态下呈现出字体设计中的细微差别。微软的处理方法也有一个好处，就是有利于对着屏幕阅读。
+</p>
+
+<p>
+Apple's rendering is truer to what the font would look like if it were printed at high resolution. The advantage of Microsoft’s method is that it works better for onscreen reading.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+在最常见的品味这个问题上，如果你做一个偏好调查，你会发现大多数人根本不知道应该怎么选择，他们只好选一个自己最熟悉的答案。除非受过专门训练，明确知道自己想要什么，否则人们挑中的就是自己最熟悉的。
+</p>
+
+<p>
+In most matters of taste, when you do preference surveys, you’ll find that most people don’t really know what to choose and will opt for the one that seems most familiar. Unless people are trained to know what to look for, they’re going to pick the one that is most familiar.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> 寸土必争（A Game of Inches）</h3>
+<div class="outline-text-3" id="text-4-2">
+<blockquote>
+<p>
+创造一个有使用价值的软件，你必须时时刻刻都在奋斗，每一次的修补，每一个功能，每一处小小的改进，你都在奋斗，目的只是为了再多创造一点空间，可以再多吸引一个用户加入。
+</p>
+
+<p>
+To create a usable piece of software, you have to fight for every fix, every feature, every little accommodation that will get one more person up the curve.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+为了发现可以改进的地方，你必须有一个思维定势，始终如一地用批判的眼光看世界。随便找一样东西，如果你看不出它的缺点，那么你的思维转型还没有成功。
+</p>
+
+<p>
+It takes a mindset of constant criticism to find (space of improvement). You have to reshape your mind until you’re finding fault with everything.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> 大构想的陷阱（The Big Picture）</h3>
+<div class="outline-text-3" id="text-4-3">
+<blockquote>
+<p>
+在软件开发中，这是一个特别危险的陷阱。你在头脑中形成了一个整体的设想，想好了下一步要做什么，一切看上去都清楚无比，都不用你再设计什么东西了。你马上就一头扎入了工作，开始落实你的设想。
+</p>
+
+<p>
+This is a particularly dangerous trap when it comes to software development. You get some big picture idea in your head for what you want to do, and it all seems so crystal clear that it doesn’t even seem like you need to design anything. You can just dive in and start implementing your vision.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+世界上只有一件事比你自己设计软件更困难，那就是一个团队一起设计软件。
+</p>
+
+<p>
+The only thing harder than trying to design software is trying to design software as a team.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+最让我抓狂的就是有些开发团队养成了一个坏习惯，每次需要做决定的时候就要开会。这就像一批肥胖的建筑工人一起研究怎样写一出歌剧，但是他们同时还躺在沙发上看着电视剧 Baywatch。坐上沙发的胖子越多，他们就越不可能写出歌剧。
+</p>
+
+<p>
+What kills me is the teams who get into the bad habit of holding meetings every time they need to figure out how something is going to work. It’s like a bunch of fat construction guys trying to write an opera while sitting on the couch watching Baywatch. The more fat construction guys you add to the couch, the less likely you are to get opera out of it.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+如果你想尝试将两个在真实世界中差别极大的对象（电子邮件和日程安排）合并在同一种用户界面中，那么你的软件的可用性将一塌糊涂，因为软件中的数据关系在真实世界中根本不适用。
+</p>
+
+<p>
+When you try to combine two very dramatically different real-world items (e-mail and appointments) into the same kind of thing in the user interface, usability suffers because there’s no longer a real-world metaphor that applies.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> 别给用户太多选择（Choices = Headaches）</h3>
+<div class="outline-text-3" id="text-4-4">
+<blockquote>
+<p>
+你给用户的选择越多，他们就越难选择，就会感到越不开心。
+</p>
+
+<p>
+The more choices you give people, the harder it is for them to choose, and the unhappier they’ll feel.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-4-5" class="outline-3">
+<h3 id="sec-4-5"><span class="section-number-3">4.5</span> 易用性是不够的（It's Not Just Usability）</h3>
+<div class="outline-text-3" id="text-4-5">
+<blockquote>
+<p>
+如果一个应用程序具备确实非常重要的功能，而且用户真地非常需要这个功能，那么即使这个程序难用得令人感到可悲，它仍然会大受欢迎。反过来说，有一个应用程序，被做成是世界上最容易使用的东西，但是如果它对任何人都毫无用处，那么它照样会完蛋。
+</p>
+
+<p>
+An application that does something really great that people really want to do can be pathetically unusable, and it will still be a hit. And an application can be the easiest thing in the world to use, but if it doesn’t do anything anybody wants, it will flop.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+短消息软件在社会化方面做得非常成功，极大地改善了几百万人的爱情生活。即使短消息的用户界面糟糕得可怕，但是它依然在孩子们中疯狂地流行。
+</p>
+
+<p>
+(Cellphone text message) was so successful socially that it’s radically improving millions of people’s love lives (or at least their social calendars). Even though text messaging has a ghastly user interface, it became extremely popular with the kids.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+eBay 对文化人类学意义上的人类下了大赌注，并且赌赢了。eBay 了不起的地方在于，它的巨大成功完全是因为它的模式当时被看作根本不可行，没有其他人来做这件事，只有eBay做，等到它依仗着网络效应锁定领跑者的优势时，其他人再想追赶就晚了。
+</p>
+
+<p>
+eBay made a big bet on the cultural anthropology of human beings and won. The great thing about eBay is that it was a huge success precisely because it seemed like a terrible idea at the time, and so nobody else tried it, until eBay locked in the network effects and first-mover advantage.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+假定你的用户正在做某些他们不应该做的事。根据易用性设计的思想，这个时候你应该告诉用户哪些事是不对的，应该怎样纠正。专家为这种做法起了个专门的名称，叫做「防御性设计」。
+</p>
+
+<p>
+Suppose your user does something they shouldn’t have done. Good usability design says that you should tell them what they did wrong and tell them how to correct it. Usability consultants are marketing this under the brand name “Defensive Design.”
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+公地的悲剧（the tragedy of the commons）：在公共草地可以无偿放牧，所以牧羊人一定会过度放牧，尽可能多地占用公地的资源，因为如果他不这样做，其他人也会这样做，最终就会导致公地的荒芜。在经济学上，这特指公共资源会因为过度使用而枯蝎．过度砍伐的森林、过度捕捞的渔业资源及污染严重的河流和空气，都是「公地的悲剧」的典型例子。之所以叫悲剧，是因为每个当事人都知道资源将由于过度使用而枯竭，但每个人对阻止事态的继续恶化都感到无能为力，而且都抱着「及时捞一把」的心态加剧事态的恶化。
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+我们不要显示错误信息，假装系统接受了用户张贴的伟哥广告。这样使得张贴者感到达到了目的，就转到其他论坛去贴广告了。我们要做的就是不让他的广告被任何其他人看到。说真的，避开攻击最好的方法之一就是让它看上去好像获得了成功。这是装死战术在软件中的表现。
+</p>
+
+<p>
+Let’s not display an error message. Let’s just pretend that the post about Viagra was accepted. Show it to the original poster, so he feels smug and moves on to the next inappropriate discussion group. But don’t show it to anyone else. Indeed, one of the best ways to deflect attacks is to make it look like they’re succeeding. It’s the software equivalent of playing dead.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-4-6" class="outline-3">
+<h3 id="sec-4-6"><span class="section-number-3">4.6</span> 用软件搭建社区（Building Communities with Software）</h3>
+<div class="outline-text-3" id="text-4-6">
+<blockquote>
+<p>
+如果你让某个功能很容易操作，人们就愿意使用它。如果你让某个功能很难操作，人们就会避免使用它。通过这种方式你能够暗中鼓励人们按照预想的方式表现。
+</p>
+
+<p>
+When you make something easy, people do it more often. When you make something hard, people do it less often. In this way, you can gently encourage people to behave in certain ways.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+我们的论坛刚开出来的时候，我们需要尽快地让发言的数量和质量超过临界点，这很重要，否则就会发生空酒馆效应。我们的设计目标就是，消除发言的一切障碍。
+</p>
+
+<p>
+In the early days of the forum, achieving a critical mass to get the conversation off the ground was important to prevent the empty restaurant phenomenon. Thus a design goal was to eliminate impediments to posting.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+人们来到你的论坛是为了提问。如果你提供「通知我」功能，那么访问者贴完帖子后，选上这个功能，就永远不会再回来了。他们只读那些发到他们邮箱的回复。
+</p>
+
+<p>
+What happens is that people go to the group to ask a question. If you offer the “Notify me” check box, these people will post their question, check the box, and never come back. They’ll just read the replies in their mailbox.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+如果实行这样（按照回复时间）的排序，某些主题往往会永远出现在论坛的最上方，因为人们总是愿意讨论 H1B 签证，或者大学中的计算机教育有什么问题，直到世界末日也不愿意停下来。我现在的安排（按照发起时间排序）有两个好处。首先，讨论主题的更新换代很快，所以列表最上方的话题总是保持相对新鲜。而且，到了某一个点，人们就会停止对一个话题进行争论。
+</p>
+
+<p>
+When you do that (most recent reply first), certain topics tend to float near the top forever, because people will be willing to argue about H1B visas, or what’s wrong with computer science in college, until the end of the universe. The way I do it (most recent original post first) has two advantages. One, topics rapidly go away, so conversation remains relatively interesting. Eventually, people have to just stop arguing about a given point.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+每当一个主题中有新的同复时，我们就对 URL 做一点小小的重构，将总的回复数加入网址中。这样一来，这个链接就会在浏览器中重新显示「末读」的颜色。
+</p>
+
+<p>
+All we have to do is subtly change the URL for each topic to include the number of replies available; that way when there are additional replies, the post will appear in the “unread” color again.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+如果将「回复」命令放在除了页面最下方以外的任何其他地方，实际上会鼓励人们在看完现有内容之前就迫不及待地发表自己那一点智慧。
+</p>
+
+<p>
+If I put a “Reply” link anywhere but the bottom of the page, that would positively encourage people to spew their little gems before they’ve read what’s already there.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+阅读这张告示的人中，99.9999% 都不会有不端的行为，那些真正的不法之徒才不会在乎告示上怎么说呢。所以，这种告示的真正效果是，一方面让那些守法的好人感到自己正在遭受某种起诉，另一方面又根本无法阻止那些它想要阻止的破坏行为。所以，把管理方针公开贴出来只是一种对大多数遵纪守法访问者的侮辱，而对心智不健全的家伙毫无阻止作用。
+</p>
+
+<p>
+99.99999% of the people who read that sign ain’t gonna be misbehavin’, and the misbehavers couldn’t care less what the sign says. So the net result of the sign is to make honest citizens feel like they’re being accused of something, and it doesn’t deter the sociopaths at all. So posting rules is just a way to insult the majority of the lawabiding citizens, and it doesn’t deter the morons.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> 第四章</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> 火星人的耳机（Martian Headsets）</h3>
+<div class="outline-text-3" id="text-5-1">
+<blockquote>
+<p>
+如何让不同的东西搭配在一起工作。在它们的结合点，所有相关的事宜都必须取得一致。
+</p>
+
+<p>
+How to get things to work together. At the point of contact between those two items, there are all kinds of things that have to be agreed on.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+实际上，你没有办法测试一个网页是否符合标准，因为没有可靠的测试工具能够保证，只要通过它的测试，网页就能在所有浏览器上正常显示。这样的测试工具根本不存在。
+</p>
+
+<p>
+&#x2026; no way to test a web page against the standard, because there’s no reference implementation that guarantees that if it works, all the browsers work. This just doesn’t exist.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+所有人都同意遵守同一部经典并不能保证所有人的行为都符合同样的规范。闻为法条太复杂、太深奥、太难懂了，想要完全正确地理解法条几乎是不可能的。
+</p>
+
+<p>
+Just because you all agree to follow one book doesn’t ensure compatibility, because the laws are so complex and complicated and convoluted that it’s almost impossible to understand them all well enough.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+DOCIYPE 是一个神话。一个平庸的网页设计师在网页头部加上 DOCTYPE 说明，然后就声称「这是一个标准 HTML 网页」。他们无法得出这样的结论。他们唯一能说的就是，这个网页的目标是要符合标准的 HTML 规定。他们真正能做的就是，在 IE、Firefox，也许还有 Opera 和 Safari 中测试这个网贞，看看它是否能够正常显示。否则，他们就只是按照书上说的将 DOCTYPE 说明复制在页面的头部，对这样做的意义一无所知。
+</p>
+
+<p>
+DOCTYPE is a myth. A mortal web designer who attaches a DOCTYPE tag to their web page saying, “This is standard HTML.” There is no way they know that. All they are really saying is that the page was meant to be standard HTML. All they really know is that they tested it with IE, Firefox, maybe Opera and Safari, and it seems to work. Or, they copied the DOCTYPE tag out of a book and don’t know what it means.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+现在，网上到处都是有错误的网页，原因就是所有早期的浏览器开发者制造出了超级宽容、超级友善、无比包容错误的浏览器。它们太爱你了，根本不在乎你犯了错。许许多多的错误就是这样出现的。
+</p>
+
+<p>
+Now there are all these web pages out there with errors, because all the early web browser developers made super-liberal, friendly, accommodating browsers that loved you for who you were and didn’t care if you made a mistake. And so there were lots of mistakes.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+这并不是那些网页的错误。它们通常都被仔细地编写过，保证符合网页标准。但是 IE 6 和 IE 7 本身并不是真正地按标准处理网页，所以这些网页使用了一些小小的破解手段，比如「遇到 Intenet Explorer 时，将内容向右移动 17 个像素，修补 IE 本身的 bug」。IE 8 也是 IE，但是它没有了 IE 7 的 bug，不再把内容从符合网页标准的位置向左移动 17 个像素了。所以现在，那些早前的代码不再正常工作，这是完全合理的结果。
+</p>
+
+<p>
+These are not web pages with errors. They are usually web sites that were carefully constructed to conform to web standards. But IE 6 and IE 7 didn’t really conform to the specs, so these sites have little hacks in them that say, “On Internet Explorer &#x2026; move this thing 17 pixels to the right to compensate for IE’s bug.” And IE 8 is IE, but it no longer has the IE 7 bug where it moved that thing 17 pixels left of where it was supposed to be according to web standards. So now code that was written that was completely reasonable no longer works.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+像往常一样，理想主义者在大原则上是百分之百正确的。同样，像往常一样，实用主义者在现实中也是正确的。他们之间的口水战将持续许多年。这场争论将精确地把世界分成两半。
+</p>
+
+<p>
+As usual, the idealists are 100% right in principle and, as usual, the pragmatists are right in practice. The flames will continue for years. This debate precisely splits the world in two.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> 为什么 Microsoft Office 的文件格式如此复杂（Why Are the Microsoft Office File Formats So Complicated）</h3>
+<div class="outline-text-3" id="text-5-2">
+<blockquote>
+<p>
+为了能够在很老式的计算机上快速打开文件，二进制文件格式才被设计出来。因为文件格式是二进制的，所以读取一个记录往往就是单纯地从磁盘向内存复制一些字节而已，你直接就得到了一个 C 语言的数据结构，可以拿来就用。
+</p>
+
+<p>
+Binary file formats were designed to be fast on very old computers. These are binary formats, so loading a record is usually a matter of just copying (blitting) a range of bytes from disk to memory, where you end up with a C data structure you can use.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+几千名程序员多年的工作最才积累成了今天的 Word 和 Excel。一种文件格式就是某种应用软件所支持的所有功能的简明摘要。
+</p>
+
+<p>
+There are thousands of developer years of work that went into the current versions of Word and Excel. A file format is just a concise summary of all the features an application supports.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+回顾整个历史，程序员无时无刻不想做出正确的事情，但是有时候你不得不向现实屈服。
+</p>
+
+<p>
+At no point in history did a programmer ever not do the right thing, but there you have it.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> 要挣钱，就别怕脏（Where There's Muck, There's Brass）</h3>
+<div class="outline-text-3" id="text-5-3">
+<blockquote>
+<p>
+如果你为「麻烦事」找到了解决方法，市场就会向你支付报酬。解决轻而易举的事情是拿不到钱的。
+</p>
+
+<p>
+The market pays for solutions to gnarly problems, not solutions to easy problems.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+如果由我们的服务器提供所有的服务，那么技术支持成本就会降到零。我们的日子就会好过多了。但是，我们挣的钱也会少得多，我们将会倒闭。
+</p>
+
+<p>
+Life would be much easier (if we run everything on our servers). But we’d be making so much less money, we’d be out of business.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+目前，许许多多样子可爱的创业公司都有一个共同点，那就是他们所有的产品就是一个小小的站点，背后的技术就是一些 Ruby-on-Rails 和 Ajax，不解决任何「麻烦事」，而且别人很容易做出复制品。他们没有解决实际中迫切需要解决的任何困难问题。只有等到他们解决了困难问题，他们对用户才是有用的。用户只向解决困难问题的公司付钱。
+</p>
+
+<p>
+The one thing that so many of today’s cute startups have in common is that all they have is a simple little Ruby-on-Rails Ajax site that has no barriers to entry and doesn’t solve any gnarly problems. They haven’t solved anything difficult yet. Until they do, they won’t be solving problems for people. People pay for solutions to their problems.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+如果你想保持增长，不管是个人，还是公司，那么唯一的方法就是扩张自己擅长处理的业务的边界。
+</p>
+
+<p>
+The only way to keep growing—as a person and as a company—is to keep expanding the boundaries of what you’re good at.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> 第五章</h2>
+<div class="outline-text-2" id="text-6">
+</div><div id="outline-container-sec-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> 循证式日程规划（Evidence-Based Scheduling）</h3>
+<div class="outline-text-3" id="text-6-1">
+<blockquote>
+<p>
+如果日程规划是以「天」为单位，甚至以「周」为单位，我就认定它是没用的。你必须将日程规划先分解成一些非常小的任务，这些任务能够在以「小时」为单位的时间段中完成。
+</p>
+
+<p>
+When I see a schedule measured in days, or even weeks, I know it’s not going to work. You have to break your schedule into very small tasks that can be measured in hours.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+保留好那些工作时间记录单。让你用在每项任务上的时间长度留下可以追踪的痕迹。以后，你就可以回过头来参考这些数据，估计一下新的任务相对需要的时问。
+</p>
+
+<p>
+Keep time sheets. Keep track of how long you spend working on each task. Then you can go back and see how long things took relative to the estimate.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+蘩特卡洛方法是一种基于「随机数」的计算方法，即先确定一个随机事件，然后重复进行多次的随机实验，对结果进行统计平均，以随机事件出现的概率作为问题的近似解。这种方法源于美国在第二次世界大战中研制原子弹的「曼哈顿计划」。该计划的牛持人之一、数学家冯・诺伊曼用驰名世界的赌城――摩纳哥的 Monte Carlo 来命名这种方法。
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+为了计算任意一名程序员在未来任意一种情况下的实际完成时间，你就用每个任务的估计用时去除以这个程序员历史数据中完成速率的一个随机选择的值。这是对估计者根深蒂固的乐观主义的一种补偿。这种补偿的程度非常准确，因为它是准确基于程序员一贯的乐观主义的，已经从历史数据中得到证明。哪怕是事无巨细、一切都做好记录的程序员，在估计各种工作干扰的置信区间上，准确度都远远不如循证式日程规划。
+</p>
+
+<p>
+While calculating each possible future for a given developer, you’re going to divide each task’s estimate by a randomly-selected velocity from that developer’s historical velocities. That compensates for the estimator’s perpetual optimism. And it compensates precisely, based exactly on this developer’s actual, proven, historical optimism. EBS is far more likely to have accurate evidence about these interruptions than even the most time sheet–obsessive developer.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+范围渐变（scope cteep）是项目管理中的一个专用名词，指的是在开发过程中涉及以前没有考虑到的问题，导致项目的范围越来越大。
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+在原始规划时，你应该为以下的情况留出缓冲。
+</p>
+<ol class="org-ol">
+<li>新的功能设想
+</li>
+<li>对手的新动向
+</li>
+<li>整合中出现的问题（也就是将大家的代码合在一起的时候出现的问题）
+</li>
+<li>解决各种错误
+</li>
+<li>易用性测试（要将这些测试的结果合并进最终产品）
+</li>
+<li>软件 Beta 版的测试
+</li>
+</ol>
+
+<p>
+Build buffer into your original schedule for
+</p>
+<ol class="org-ol">
+<li>New feature ideas 
+</li>
+<li>Responding to the competition 
+</li>
+<li>Integration (getting everyone’s code to work together when it’s merged) 
+</li>
+<li>Debugging time 
+</li>
+<li>Usability testing (and incorporating the results of those tests into the product) 
+</li>
+<li>Beta tests
+</li>
+</ol>
+</blockquote>
+
+<blockquote>
+<p>
+只有第一线的程序员才能提出完成日期的估计值。
+</p>
+
+<p>
+Only the programmer doing the work can create the estimate.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+当新代码出现错误以后，就将解决问题的时间算进你原先写出错误代码的那段用时之中。这有助于循证式日程规划预计出得到可靠代码所需的时间，而不是得到可以运行的初步代码所需的时间。
+</p>
+
+<p>
+When bugs are found in new code, charge the time to the original task that you implemented incorrectly. This will help EBS predict the time it takes to get fully debugged code, not just working code.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+假定你想实现两个功能。其中一个非常有用，会使你的产品变成真正的优秀产品。另一个很容易实现，程序员迫不及待地想把它写出来，但是这个功能并非很有用。如果你不搞一个日程规划，程序员就会首先将容易的、有趣的功能做出来。然后，他们剩下的时间就不够了，你别无选择，只好推迟日程来开发有用的或重要的功能。
+</p>
+
+<p>
+Suppose you have two features in mind. One is really useful and will make your product really great. The other is really easy and the programmers can’t wait to code it up, but it serves no useful purpose. If you don’t make a schedule, the programmers will do the easy/fun feature first. Then they’ll run out of time, and you will have no choice but to slip the schedule to do the useful/important feature.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+有效的日程规划是创造优秀软件的钥匙。它强迫你首先完成最重要的功能，让你做出正确的选择，思考要开发一个怎样的软件。这会使你的产品变得更出色，使你的老板感到更高兴，使你的客户感到更满意，以及最重要的一点，那就是使你下午 5 点能够准时下班。
+</p>
+
+<p>
+Realistic schedules are the key to creating good software. It forces you to do the best features first and allows you to make the right decisions about what to build. Which makes your product better and your boss happier, delights your customers, and—best of all—lets you go home at 5 o’clock.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> 关于战略问题的通信之六（Strategy Letter VI）</h3>
+<div class="outline-text-3" id="text-6-2">
+<blockquote>
+<p>
+由于内存的价格直线下降，CPU 的速度每年都在翻番，所以作为一个程序员，你就面临选择。你可以花 6 个月用汇编语言重写程序的内循环。你也可以休假6 个月，去一支摇滚乐队当鼓手。不管是哪一种选择，6 个月后你的程序都会运行得更快。
+</p>
+
+<p>
+As a programmer, thanks to plummeting memory prices and CPU speeds doubling every year, you had a choice. You could spend six months rewriting your inner loops in Assembler, or take six months off to play drums in a rock-and-roll band, and in either case, your program would run faster.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+从长远的观点来看，那些不关心效率、不关心程序是否臃肿、一个劲往软件中加入高级功能的程序员最终将拥有更好的产品。
+</p>
+
+<p>
+The developers who ignored performance and blasted ahead adding cool features to their applications will, in the long run, have better applications.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+C 语言的原始设计目标就是为了让编写跨平台的应用程序变得更容易。它很好地实现了这个目标，但是并不是 100% 跨平台。所以，后来又出现了 Java，它的通用性甚至要超过 C 语言。
+</p>
+
+<p>
+The C programming language was invented with the explicit goal of making it easy to port applications from one instruction set to another. And it did a fine job, but wasn’t really 100% portable, so we got Java, which was even more portable than C.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+沙箱有很多缺陷，它们非常慢而且错误百出，这就是 Java applet 都死光光的原因。建立一个沙箱，你就等于走上了一条不归路，你能得到的运行速度只有底层系统的 1/10，你也无法利用任何一个只有某个底层系统支持、而其他底层系统都不支持的特性。
+</p>
+
+<p>
+Sandboxes are penalty boxes; they’re slow and they suck, which is why Java applets are dead. To build a sandbox, you pretty much doom yourself to running at 1/10 the speed of the underlying platform, and you doom yourself to never supporting any of the cool features that show up on one of the platforms but not the others.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+如果历史会重演，我们就可以期待总有一天，Ajax 程序的用户界面会出现某种程度的统一，它的诞生方式就如同 Windows 的诞生方式一样。总有人会写出一个具备压倒性优势的 SDK，其他人就可以用它来开发功能强大的 Ajax 应用程序。
+</p>
+
+<p>
+If history repeats itself, we can expect some standardization of Ajax user interfaces to happen in the same way we got Microsoft Windows. Somebody is going to write a compelling SDK that you can use to make powerful Ajax applications with common user interface elements that work together.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-6-3" class="outline-3">
+<h3 id="sec-6-3"><span class="section-number-3">6.3</span> 你的编程语言能做到吗（Can Your Programming Language Do This?）</h3>
+<div class="outline-text-3" id="text-6-3">
+<blockquote>
+<p>
+如果你不懂函数式编程，你就无法创造出 MapReduce，正是这种算法使得 Google 的可扩展性达到如此巨大的规模。术语「Map」（映射）和「Reduce」（化简）分别来自 Lisp 语言和函数式编程。
+</p>
+
+<p>
+Without understanding functional programming, you can’t invent MapReduce, the algorithm that makes Google so massively scalable. The terms “Map” and “Reduce” come from Lisp and functional programming.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+最有生产效率的编程环境是那些允许你在不同层次上进行抽象的编程环境。
+</p>
+
+<p>
+The most productive programming environments are the ones that let you work at different levels of abstraction.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-6-4" class="outline-3">
+<h3 id="sec-6-4"><span class="section-number-3">6.4</span> 让错误的代码显而易见（Making Wrong Code Look Wrong）</h3>
+<div class="outline-text-3" id="text-6-4">
+<blockquote>
+<p>
+你只有身处这个行业，才会知道面包厂里「干净」的全部意思。对于外人来说，一走进面包，就想做出是否干净的判断，那是不可能的。
+</p>
+
+<p>
+The whole concept of clean in the bakery was something you had to learn. To an outsider, it was impossible to walk in and judge whether the place was clean or not.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+一个程序员的 4 种境界
+</p>
+<ol class="org-ol">
+<li>你分不清什么是干净的代码，什么是不干净的代码。
+</li>
+<li>你对干净的代码有一个肤浅的认识，主要看它们是不是符合代码书写规范。
+</li>
+<li>你开始能找出那些很隐秘的不干净代码，在干干净净的表面之下发现蛛丝马迹。但是，发现和修正不干净代码要花去你很长的时间，把你折磨得够呛。
+</li>
+<li>你精心构建代码，发挥洞察力，将它们写得清晰易懂，不容易出错。
+</li>
+</ol>
+
+<p>
+Four levels of achievement as a programmer
+</p>
+<ol class="org-ol">
+<li>You don’t know clean from unclean.
+</li>
+<li>You have a superficial idea of cleanliness, mostly at the level of conformance to coding conventions.
+</li>
+<li>You start to smell subtle hints of uncleanliness beneath the surface, and they bug you enough to reach out and fix the code.
+</li>
+<li>You deliberately architect your code in such a way that your nose for uncleanliness makes your code more likely to be correct.
+</li>
+</ol>
+</blockquote>
+
+<blockquote>
+<p>
+制定一种代码书写规范，确保当编程错误时，代码会看上去就是错的。如果代码看上去是有错的，那么它至少有相当大的机会被作者或检查者发现。
+</p>
+
+<p>
+Come up with a coding convention that will ensure that if you ever make this mistake, the code will just look wrong. If wrong code, at least, looks wrong, then it has a fighting chance of getting caught by someone working on that code or reviewing that code.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+大多数的互联网应用程序在开发的时候遵循的原则就是内部使用的所有字符串都是非编码的，直到最后一刻，要把数据发往 HTML 网页的时候，再进行编码处理。这样的做法可能才是正确的架构。
+</p>
+
+<p>
+Most web applications are developed under the principle that all strings internally are not encoded until the very last moment before they are sent to an HTML page, and that’s probably the right architecture.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+所有来自用户的字符串都越须储存在变量（或数据库）中，而且变量名必须以「us」（unsafe string）起首。另一方面，所有已经经过 HTML 编码的字符串，或者已知来源安全的字符串，都储存在变量名以「s」（safe string）起首的变量中。
+</p>
+
+<p>
+All strings that come from the user must be stored in variables (or database columns) with a name starting with the prefix “us” (for Unsafe String). All strings that have been HTML encoded or that came from a known-safe location must be stored in variables with a name starting with the prefix “s” (for Safe string).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+让错误的代码显而易见是一种很好的实践，但未必是所有安全问题的最佳解决方案。总有一些漏洞或错误会漏网，因为你可能做不到每一行都检查一遍。但是，有这种机制比起没有这种机制，绝对要好得多得多。
+</p>
+
+<p>
+Making wrong code look wrong is nice, but it’s not necessarily the best possible solution to every security problem. It doesn’t catch every possible bug or mistake, because you might not look at every line of code. But it’s sure a heck of a lot better than nothing.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+把相关内容放在一起，就能改善代码的质量：
+</p>
+<ul class="org-ul">
+<li>尽量将函数写得简短；
+</li>
+<li>变量声明的位置离使用的位置越近越好；
+</li>
+<li>不要使用宏去创建你自己的编程语言；
+</li>
+<li>不要使用 goto；
+</li>
+<li>不要让右括号与对应的左括号之间的距离超过一个显示屏。
+</li>
+</ul>
+<p>
+所有这些规则都有一个共同点，就是让与一行代码相关的所有信息尽可能地靠拢，缩短它们之问的物理距离。这将大大增加你的机会，让你一眼就能看出程序内部是怎么回事。
+</p>
+
+<p>
+You can improve code by moving things next to each other.
+</p>
+<ul class="org-ul">
+<li>Keep functions short. 
+</li>
+<li>Declare your variables as close as possible to the place where you will use them. 
+</li>
+<li>Don’t use macros to create your own personal programming language.
+</li>
+<li>Don’t use goto. 
+</li>
+<li>Don’t put closing braces more than one screen away from the matching opening brace. 
+</li>
+</ul>
+<p>
+What all these rules have in common is that they are trying to get the relevant information about what a line of code really does physically as close together as possible.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+异常处理使得代码关联消失了。为了知道某一行代码是否运行正常，你不得不到其他地方去寻找答案。
+</p>
+
+<p>
+Exceptions eliminate collocation. You have to look somewhere else to answer a question of whether code is doing the right thing.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+异常处理对于那些随手写写的软件项目和脚本程序很好用，只要不是非常重要和关键性的代码，它都是适用的。但是，如果你写的是一个操作系统，或者核电厂的管理软件，或者一个专用于心脏手术的高速电锯的控制程序，那么异常处理是极端危险的。
+</p>
+
+<p>
+Exceptions are fine for quick-and-dirty code, for scripts, and for code that is neither mission critical nor life sustaining. But if you’re writing software for an operating system, or a nuclear power plant, or the software to control a high-speed circular saw used in open heart surgery, exceptions are extremely dangerous.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+写出真正可靠代码的方法就是使用那些考虑了人类常见缺陷的简单工具，而不是使用那种含有隐藏的副作用、产生有瑕疵的抽象层、假设程序员绝不会出错的复杂工具。
+</p>
+
+<p>
+The way to write really reliable code is to try to use simple tools that take into account typical human frailty, not complex tools with hidden side effects and leaky abstractions that assume an infallible programmer.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> 第六章</h2>
+<div class="outline-text-2" id="text-7">
+</div><div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> Micro-ISV: From Vision to Reality 的前言（Foreword to Micro-ISV: From Vision to Reality）</h3>
+<div class="outline-text-3" id="text-7-1">
+<blockquote>
+<p>
+「独立软件供应商」是微软公司发明的一个新词，指「微软公司以外的软件公司」，或者说得更明白一些，就是指「由于某种原因，我们还没来得及并购或消灭的软件公司，可能阒为他们从事的都是一些花里胡哨的生意（比如布置婚礼仪式上的桌于），所以像我们这样高级的公司没必要自降身价去跟他们争这些小生意，就让他们逍遥自在去吧。但是你们这些小公司一定要记得使用 .NET！」
+</p>
+
+<p>
+“ISV” stands for independent software vendor. It’s a made-up word, made up by Microsoft, to mean “software company that is not Microsoft,” or, more specifically, “software company that for some reason we have not yet bought or eliminated, probably because they are in some charming, twee line of business, like wedding table arrangements, the quaintness of which we are just way too cool to stoop down to, but you little people feel free to enjoy yourselves. Just remember to use .NET!”
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+还有另一个微软公司发明的词，叫做「历史遗留下来的」，用来指所有那些不是微软公司开发的软件。比如谈到 Google 的时候，他们就说这是「历史遗留下来的搜索引擎」，好像就在暗不 Google 只不过是「一家占老、蹩脚的搜索引擎，之所以还有人使用完全是因为历史原因，用户迟早会不可避免地投向 MSN 的怀抱。」
+</p>
+
+<p>
+It’s like that other term, legacy, that Microsoft uses to refer to all non-Microsoft software. So when they refer to Google, say, as a “legacy search engine,” they are trying to imply that Google is merely “an old, crappy search engine that you’re still using by historical accident, until you bow to the inevitable and switch to MSN.”
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+如果你说不清楚你的软件解决了什么棘手的问题，就不要去开软件公司。你要问自己，它解决了什么问题？谁需要这个软件？为什么它能解决这个问题？为什么客户愿意付钱让这个问题得到解决？
+</p>
+
+<p>
+Don’t start a business if you can’t explain what pain it solves, for whom, and why your product will eliminate this pain, and how the customer will pay to solve this pain.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+不要独自一人创办公司。我知道很多人单枪匹马创业成功，但是失败的例子更多。如果你无法说服任何一个你的朋友，他们都不觉得你的主意是可行的，那么也许它就是不行的。顺便说一句，不要把你的宠物猫也算作创业伙伴。
+</p>
+
+<p>
+Don’t start a business by yourself. I know, there are lots of successful one-person startups, but there are even more failed one-person startups. If you can’t even convince one friend that your idea has merit, um, maybe it doesn’t? P.S. Cats do not count.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-7-2" class="outline-3">
+<h3 id="sec-7-2"><span class="section-number-3">7.2</span> 飙高音（Hitting the High Notes）</h3>
+<div class="outline-text-3" id="text-7-2">
+<blockquote>
+<p>
+对于那些喜欢抄来抄去的财经记者，以及那些自己懒得思考、依赖高价请来的咨询公司代替思考的大公司，常识似乎就是，如果想要赚到钱，最重要的莫过于压低程序员的劳动力成本。
+</p>
+
+<p>
+The conventional wisdom in the world of copycat business journalists and large companies who rely on overpaid management consultants to think for them, chew their food, etc., seems to be that the most important thing is reducing the cost of programmers.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+在有些行业，价格比质量重要。那么为什么低成本的软件供应商就不能在软件业中生存下来呢？根本的一点就是软件的复制成本为 0。这意味着，程序员的劳动力成本分摊在你销售出去的所有软件中。对软件来说，如果销售量很大，质量的改进并不会造成单位软件成本的上升。事实上，软件质量的改进会创造出新价值，而且价值创造的速度要快于成本提升的速度。
+</p>
+
+<p>
+In some other industries, cheap is more important than good. So, why isn’t there room in the software industry for a low-cost provider? Here’s why: duplication of software is free. That means the cost of programmers is spread out over all the copies of the software you sell. With software, you can improve quality without adding to the incremental cost of each unit sold. Essentially, design adds value faster than it adds cost.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+衡量程序员的生产率是很困难的，几乎所有你能想到的衡量标准（错误修正涉及的代码行数，功能点的个数，命令行界面中的参数个数）都很不准确，无法采用。而且，在大型项目中，想要得到具有可比性的数据，难度很大，因为很少会让两个程序员去做同样的事情。
+</p>
+
+<p>
+It’s rather hard to measure programmer productivity; almost any metric you can come up with (lines of debugged code, function points, number of command-line arguments) is trivial to game, and it’s very hard to get concrete data on large projects because it’s very rare for two programmers to be told to do the same thing.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+程序员的生产率有 5 倍或 10 倍的差距。
+</p>
+
+<p>
+&#x2026; this data shows 5:1 or 10:1 productivity differences between programmers.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+布鲁克斯法则：向一个已经延误的软件项目增加人手，只会使它更加延误。一个优秀的程序员独自完成一项任务，就不需要额外的沟通和协调。如果同样的任务让 5 个程序员一起完成，他们之间就必须沟通和协调。这会花掉大量时间。开发团队越小，就越能获得额外的收益。人力与工时的互换真的是一个神话。
+</p>
+
+<p>
+Brooks’ Law, “Adding manpower to a late software project makes it later,” is why (Fredrick Brooks, The Mythical Man-Month: Essays on Software Engineering, Addison-Wesley, 1975). A single good programmer working on a single task has no coordination or communication overhead. Five programmers working on the same task must coordinate and communicate. That takes a lot of time. There are added benefits to using the smallest team possible; the man-month really is mythical.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+用许多平庸的程序员取代少数优秀的程序员，这种做法的真正问题在于，不管平庸的程序员工作多长时间，他们做出来的东西都无法像优秀程序员做得那样好。
+</p>
+
+<p>
+The real trouble with using a lot of mediocre programmers instead of a couple of good ones is that no matter how long they work, they never produce something as good as what the great programmers can produce.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+苹果公司要把 iPod 做成一个优美、性感的播放器，不希望破坏它无比光滑、天衣无缝的表面，不希望它像其他很便宜、很垃圾的电子类消费产品一样，背后有一个巨大丑陋的电池盖，因为电池盖的门锁总是很容易断掉，而电池盖的细缝中总是嵌满了口袋布料的绒毛和其他各种各样恶心的东西。
+</p>
+
+<p>
+Apple didn’t want to mar the otherwise perfectly smooth, seamless surface of their beautiful, sexy iPod with one of those ghastly battery covers you see on other cheapo consumer crap, with the little latches that are always breaking and the seams that fill up with pocket lint and all that general yuckiness.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+苹果公司花了额外的钱，在 iPod 中装了一个喇叭，就为了让拇指转轮的咔嗒声听起来好像就来自转轮本身一样。他们原本可以省下这几分钱，将咔嗒声通过耳机传出来。但是拇指转轮让你觉得你在控制。人们喜欢控制的感觉。控制的感觉让人们感到开心。
+</p>
+
+<p>
+Apple spent extra money putting a speaker in the iPod itself so that the thumbwheel clicky sounds would come from the thumbwheel. They could have saved pennies by playing the clicky sounds through the headphones. But the thumbwheel makes you feel like you’re in control. People like to feel in control. It makes people happy to feel in control.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+风格，开心，情感的诉求。这些就是大热门产品的成功要素，不管这种产品是软件还是电影还是消费类电子产品，都一样。如果你没有把这些要素做对，虽然你可能依然能够解决问题，但是你的产品不会成为排名第一的热门商品。
+</p>
+
+<p>
+Style. Happiness. Emotional appeal. These are what make the huge hits, in software products, in movies, and in consumer electronics. And if you don’t get this stuff right, you may solve the problem, but your product doesn’t become the number one hit.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+眼下的软件市场有点「赢家通吃」的味道。除了苹果公司，没有其他人能在 MP3 播放器市场上赚到钱。除了微软公司，没有其他人能在电了表格和文字处理器市场上赚到钱。没错，我知道，他们做了破坏竞争的事情才得到今天的市场地位，但是这改变不了这是一个「赢家通吃」市场的事实。
+</p>
+
+<p>
+The software marketplace, these days, is something of a winner-takeall system. Nobody else is making money on MP3 players other than Apple. Nobody else makes money on spreadsheets and word processors other than Microsoft, and, yes, I know, they did anticompetitive things to get into that position, but that doesn’t change the fact that it’s a winner-take-all system.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+想要开发优异的软件，你的唯一希望就是依靠那些真正优秀的软件天才，只有他们才能为你创造出来。
+</p>
+
+<p>
+The lagniappe that you get from the really, really, really talented software developers is your only hope for remarkableness.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> 第七章</h2>
+<div class="outline-text-2" id="text-8">
+</div><div id="outline-container-sec-8-1" class="outline-3">
+<h3 id="sec-8-1"><span class="section-number-3">8.1</span> 仿生学办公室（Bionic Office）</h3>
+<div class="outline-text-3" id="text-8-1">
+<blockquote>
+<p>
+你的公司的成功依赖于程序员真正以办公室为家的程度。如果要让办公室成为程序员的共同选择，最好让它比普通程序员的家更舒适。有两个办法可以做到这一点。一个是只雇用那些住在条件极端恶劣公寓中的程序员，另一个是创造一个真正舒适的办公室。
+</p>
+
+<p>
+Your business success will depend on the extent to which programmers essentially live at your office. For this to be a common choice, your office had better be nicer than the average programmer’s home. There are two ways to achieve this result. One is to hire programmers who live in extremely shabby apartments. The other is to create a nice office.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-8-2" class="outline-3">
+<h3 id="sec-8-2"><span class="section-number-3">8.2</span> 他山之石，不可攻玉（Up the Tata Without a Tutu）</h3>
+<div class="outline-text-3" id="text-8-2">
+<blockquote>
+<p>
+如果一台计算机与「图灵机」的行为完全一致，就被称为「图灵等价」。在不严格的意义上，所有的现代计算机都拥有「图灵机」的计算功能。
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+软件开发中重要的一课：对你最重要、最关键的部分，你一定要使用更原始的工具。
+</p>
+
+<p>
+A key lesson in software architecture: for your most important, mission-critical stuff, you have to use a tool that is one level lower in abstraction than ideal.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+一个好的软件架构师只会使用那些「可以被信任」或「可以被维护」的工具。一种工具「可以被信任」，并不意味着它是由像 IBM 那样可以被信任的大公司制造的，而是意味着你百分百确信它会正常运作。
+</p>
+
+<p>
+A good architect only uses tools that can either be trusted or be fixed. “Trusted” doesn’t mean that they were made by some big company that you’re supposed to trust like IBM, it means that you know in your heart that it’s going to work right.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+你可以把你的职业生涯赌在 Oracle DBMS 上，因为它有效运行，大家都知道它。你也可以把职业生涯赌在 Berkeley DB 上，因为就算它把一切都搞糟了，你也能查看源代码，解决问题。但是，你可能就不能把职业生涯赌在那些既不开源也不知名的工具上面。你可以把它们用来测试，但是它们不是值得押上你的未来的工具。
+</p>
+
+<p>
+You can bet your career on the Oracle DBMS, because it just works and everybody knows it. And you can bet your career on Berkeley DB, because if it screws up, you go into the source code and fix it. But you probably don’t want to bet your career on a non-open-source, not-wellknown tool. You can use that for experiments, but it’s not a bet-your-career kind of tool.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-8-3" class="outline-3">
+<h3 id="sec-8-3"><span class="section-number-3">8.3</span> 简化性（Simplicity）</h3>
+<div class="outline-text-3" id="text-8-3">
+<blockquote>
+<p>
+商业成功来自于许多因素的共同作用，比如培养追随者、传播理念、简洁明快的设计、感情上的诉求、美学成就、很短的反应时间、及时的用户反馈、与用户行为相对应的程序模型、整体上高度的易用性、让用户感到控制权都在自己手中等。
+</p>
+
+<p>
+Success is a result of a combination of things: building an audience, evangelism, clean and spare design, emotional appeal, aesthetics, fast response time, direct and instant user feedback, program models that correspond to the user model, resulting in high usability, and putting the user in control.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+在我们做过的所有事情中，最能增加收入的就是推出一个带有更多功能的新版本。
+</p>
+
+<p>
+Nothing we have ever done has increased our revenue more than releasing a new version with more features. 
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+如果你把「简化性」这个词理解成与用户行为紧密对应的程序模型，以及由此产生的产品的易用性，那么没问题，你会看到「简化性」发挥威力。如果你把「简化性」这个词理解成简洁明快的视觉呈现，把它仅仅描述为一种美学上的定义，那么没问题，你会看到「简化性」发挥威力。但是，如果你把「简化性」这个词理解成「不提供大量功能」或者「只提供一种功能，并把这种功能完美实现」，那么我会为你大胆说出心里话而喝彩，但是你不可能会有很大的发展，一种故意减少功能的产品是没有前途的。甚至就连 iPod 都附带一个纸牌游戏。
+</p>
+
+<p>
+If you’re using the term “simplicity” to refer to a product in which the user model corresponds closely to the program model so the product is easy to use, fine, more power to ya. If you’re using the term “simplicity” to refer to a product with a spare, clean visual appearance, so the term is nothing more than an aesthetic description, fine, more power to ya. But if you think simplicity means “not very many features” or “does one thing and does it well,” then I applaud your integrity, but you can’t go that far with a product that deliberately leaves features out. Even the iPod has a gratuitous Solitaire game.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-8-4" class="outline-3">
+<h3 id="sec-8-4"><span class="section-number-3">8.4</span> 组织 beta 测试的十二个最高秘诀（Top Twelve Tips for Running a Beta Test）</h3>
+<div class="outline-text-3" id="text-8-4">
+<blockquote>
+<p>
+要想找到那些能够向你反馈意见的测试者，最好的方法是诉诸他们「言行一致」的心理。你需要让他们自己承诺会向你发送反馈意见，或者更好的方法是，让他们自己申请参加 beta 测试。
+</p>
+
+<p>
+The best way to get a beta tester to send you feedback is to appeal to their psychological need to be consistent. You need to get them to say that they will send you feedback, or, even better, apply to be in the beta testing program.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-8-5" class="outline-3">
+<h3 id="sec-8-5"><span class="section-number-3">8.5</span> 建立优质客户服务的七个步骤（Seven Steps to Remarkable Customer Service）</h3>
+<div class="outline-text-3" id="text-8-5">
+<blockquote>
+<p>
+我们对待每一个需要技术支持的求助电话，就好像 NTSB（美国国家运输安全委员会）对待飞机坠毁一样。每当有飞机坠毁，NTSB 就派出调查员，搞清楚发生了什么事，拟定新的政策，防止类似的问题再发生。这一套机制真是行之有效，我们看到美国的飞机坠毁事件是极其罕见的，即使发生，也是因为非常特殊的情况而导致，并且同样原因的事故不会再发生第二次。
+</p>
+
+<p>
+We treat each tech support call like the NTSB treats airliner crashes. Every time a plane crashes, the NTSB sends out investigators, figures out what happened, and then figures out a new policy to prevent that particular problem from ever happening again. It’s worked so well for aviation safety that the very, very rare airliner crashes we still get in the US are always very unusual, one-off situations.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+技术支持团队必须能够与开发团队直接沟通，这很关键。这意味着你不能把技术支持人员外包，他们必须与开发人员在同一个地址办公，必须有途径让问题得到彻底解决。将技术支持服务整个外包给另一家公司，解决单个问题的成本也许可以从 50 美元降到 10 美兀，但是同一种类型的问题会不断出现，使得你不得不一次又一次地付出 10 美元。
+</p>
+
+<p>
+It’s crucial that tech support staff have access to the development team. This means that you can’t outsource tech support: they have to be right there at the same street address as the developers, with a way to get things fixed. To outsource tech support to another company altogether, the cost of a single incident might be $10 instead of $50, but you’re going to have to pay $10 again and again.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+如果你直接问客户键盘有没有插好，他们会觉得受到了侮辱，怒气冲冲地回答：「它当然插好了！难道我看上去像一个笨蛋吗？」而实际上，他们并没有检查过接口。你可以换一种说法，「别着急，有时候键盘接口会有灰尘，导致接触不良。你能不能拔掉键盘插头，吹掉上面的灰尘，然后再把它插回去？」然后，客户爬到桌子底下，发现自己忘了插好插头（或者把插头插入错误的接口）。他们把灰尘吹掉，插入插头，同复你说：「嗯，很好，问题解决了，谢谢。」很多时候，我们要求客户去检查某样东西，都可以这样表达。不是直接要求他们去检查某个设置，而是告诉他们先改变这个设置，然后再改回去，目的是「确保这个设置被保存进了软件」。
+</p>
+
+<p>
+If you try asking them if the keyboard is plugged in, they will get all insulted and say indignantly, “Of course it is! Do I look like an idiot?” without actually checking. Instead, say “OK, sometimes the connection gets a little dusty and the connection gets weak. Could you unplug the connector, blow into it to get the dust out, then plug it back in?” They will then crawl under the desk, find that they forgot to plug it in (or plugged it into the wrong port), blow out the dust, plug it in, and reply, “Um, yeah, that fixed it, thanks.” Many requests for a customer to check something can be phrased this way. Instead of telling them to check a setting, tell them to change the setting and then change it back “just to make sure that the software writes out its settings.”
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+客户遇到问题，你帮他解决了，客户实际上变得比没有问题时还要满意。这肯定与期望值有关。大多数人对于技术支持和客户服务的期望值来自于他们同航空公司、电话公司、有线电视公司、ISP 打交道的经验。
+</p>
+
+<p>
+When customers have a problem and you fix it, they’re actually going to be even more satisfied than if they never had a problem in the first place. It has to do with expectations. Most people’s experience with tech support and customer service comes from airlines, telephone companies, cable companies, and ISPs, all of whom provide generally awful customer service.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+你可能有一种想法，认为绝不能承认过失，否则会吃上官司。这纯粹是无稽之谈。避免被别人起诉的方法就是不要让他人对你火冒三丈。要做到这一点，最好方法就是承认错误，并且把该死的问题都解决掉。
+</p>
+
+<p>
+You may think that admitting fault is a strict no-no that can get you sued. This is nonsense. The way to avoid getting sued is not to have people who are mad at you. The best way to do this is to admit fault and fix the damn problem.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+你必须明白，顾客不是因为你这个人而生气，而是因为你的企业而生气，你只不过碰巧是代表企业的一个活靶子而已。
+</p>
+
+<p>
+You have to realize that customers are not angry at you; they’re angry at your business, and you just happen to be a convenient representative of that business.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> 第八章</h2>
+<div class="outline-text-2" id="text-9">
+</div><div id="outline-container-sec-9-1" class="outline-3">
+<h3 id="sec-9-1"><span class="section-number-3">9.1</span> 挑选发布日期（Picking a Ship Date）</h3>
+<div class="outline-text-3" id="text-9-1">
+<blockquote>
+<p>
+（1）经常发布稍作改进的版本。这属于极限编程中的方法，对于客户数量较少的小团队开发项日（比如公司内部的 IT 项目）最适用。
+</p>
+
+<p>
+（2）每 12 到 18 个月发布一次。上架销售的商业软件和桌面应用程序等就是使用这种方法的典型例子。它适用于有大型开发团队和成千上万名顾客的软件。
+</p>
+
+<p>
+（3）每 3 年到 5 年发布一次。这种方法常见于超级庞大的软件系统和平台，它们本身就是一个个包罗万象的世界。操作系统、.NET 框架、Oracle 数据库以及某种意义上的 Mozilla 都属于这种软件。它们各自的开发人员可以达到几千名。它们与其他的软件之间存在极其复杂的互动关系，必须要妥善处理。
+</p>
+
+<p>
+(1) Frequent small releases. This is the Extreme Programming approach, and it is most appropriate for small-team projects with a small number of customers, such as in-house IT development.
+</p>
+
+<p>
+(2) Every 12 to 18 months. This is typical of shrink-wrapped software products, desktop applications, etc., where you have larger teams and thousands or millions of customers.
+</p>
+
+<p>
+(3) Every 3 to 5 years. This is typical of huge software systems and platforms that are worlds unto themselves. Operating systems, .NET, Oracle, and for some reason Mozilla fall into this category. They often have thousands of developers and enormously complex interactions to other shipping software that can’t be allowed to break.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+在历史上，美国股市的报价直采用分数方式（比如 1/2 美元、l/4 美元、1/8 美元、1/16 美元），已有 200 多年的历史。据说这习惯源于西班牙商人，因为当时他们的货币实行八进制。美国证券交易委员会 2000 年 6 月 13 日发布命令，要求美国主要的股票市场在当年 9 月 5 日之前开始以 10 进位方式交易部分股票，在 2001 年 4 月 9 日之前完成向小数报价制的过渡。
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+……鼓吹 Java 语言是人类进化的下一个阶段……写了许多篇让人目瞪口呆的文章，讲解 Java 将如何彻底地改变人类文明的本质。比如，我们要深信不疑，与 Java 语言相比，一神论在人类历史中只是一个很小的亮点。
+</p>
+
+<p>
+&#x2026; making speeches about how Java was the next step in human evolution; &#x2026; wrote these breathless articles about how Java was going to completely upturn the very nature of human civilization. Compared to Java, we were to believe, monotheism, for example, was just a wee blip.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+对于大多数的商业软件，在开发流程中，你会发现设计、原型制作、整合、调试、开展完整的一轮 alpha 测试和 beta 测试、制作文档等步骤要花掉 6 到 9 个月的时间。事实上，如果你计划每年推出一个全新的版本，那么你只有大约相当于 3 个月的时间用于开发新代码。
+</p>
+
+<p>
+With most commercial software, you’ll discover that the process of designing, prototyping, integrating, fixing bugs, running full alpha and beta cycles, creating documentation, and so forth takes six to nine months. In fact, if you try to do a full release every year, you only have time for about three months’ worth of new code development.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+对于大型的平台式软件（比如操作系统、编译器、网络浏览器、数据库管理系统），开发过程中最困难的部分就是怎么才能与现存的几千种或几百万种的软件和硬件保持兼容。当一个 Windows 的新版本出来的时候，你几乎听不到它有向后兼容的问题。微软公司做到这一点的唯一方法就是开展数量多得吓死人的测试，整个测试过程的庞人和复杂，使得建造巴拿马运河就像一个你个人的周末 DIY 项目一样。Windows 的主要版本之间的发布周期通常是 3 年，期间几乎所有的时间都用于枯燥的整合和测试，而不是用于写出新功能。
+</p>
+
+<p>
+For large platform software—operating systems, compilers, web browsers, DBMSs—the hardest part of the development process is maintaining compatibility with thousands or millions of existing applications or hardware. When a new version of Windows comes out, you very rarely hear about backward-compatibility problems. The only way they can achieve this is with insane amounts of testing that make the construction of the Panama Canal seem like a weekend do-it-yourself project. Given the typical three-year cycle between major Windows releases, almost all of that time is spent in the boring integration and testing phase, not writing new features.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+易用性的基本原则：一个应用程序的行为方法与用户期待的方式一致，那么它就是易用的。
+</p>
+
+<p>
+The cardinal rule of usability: an application is usable if it behaves the way that the user expected it to behave.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-9-2" class="outline-3">
+<h3 id="sec-9-2"><span class="section-number-3">9.2</span> 软件定价（Camels and Rubber Duckies）</h3>
+<div class="outline-text-3" id="text-9-2">
+<blockquote>
+<p>
+你为了开发这个软件，迄今已经投入了 25 万美元。但是，它属于沉没成本。我们再也不要去关心它了，因为不管你销售出去的软件是 1000 份还是 0 份，这 25 万美元总是保持不变的。
+</p>
+
+<p>
+你所要担心的只是边际成本而已，也就是每多销售出去一份软件所增加的成本。其中也许包括装运和发货成本、技术支持成本、银行的服务费、CD的制造费用、热封塑料膜的费用等。
+</p>
+
+<p>
+Maybe it cost you $250,000 to develop the software in the first place, but that’s a sunk cost. We don’t care about that anymore, because the $250,000 is the same whether you sell 1,000 units or 0.
+</p>
+
+<p>
+All you can worry about is the incremental cost of selling each additional unit. That might include shipping and handling, that might include tech support, bank service charges, CD duplication, and shrink-wrapping, whatever.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+许多顾客完全愿意付给我们更多的钱，（他们愿意支付和实际支付的价格）之间的差异，被叫做「消费者剩余」。
+</p>
+
+<p>
+All those people who were all ready to pay more &#x2026; (the extra value that those rich consumers got from their purchase that they would have been perfectly happy to do without) is called consumer surplus.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+市场分割，即根据你的顾客愿意支付的价格将他们分成小同的组，从每个顾客身上攫取最大的消费者剩余。
+</p>
+
+<p>
+Segmentation: separating your customers into different groups according to how much they are willing to pay, and extracting the maximal consumer surplus from each customer.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+各种奇怪的飞机票价，似乎每个人支付的飞机票价格都不一样。它的秘密就在于，那些商务乘客的旅费是公司支付，所以他们根本不在乎票价的高低，而普通旅客是自己支付旅费，所以飞机票价太高的话，他们就不会坐飞机了。
+</p>
+
+<p>
+商务乘客几乎永远都是在工作日出行，他们痛恨周末远离家庭去工作。所以，航空公司就想出了票价策略。如果你的来回机票中包含星期六晚上在外过夜，那么你很可能就不是商务乘客，航空公司就会给你非常低的票价，前提是你星期六晚上在外过夜。
+</p>
+
+<p>
+Bizarre airfares, where everyone seems to be paying a different price. The secret about airfares is that people who are flying on business get their company to reimburse them, so they couldn’t care less how much the ticket costs, while leisure travelers are spending their own money, and they won’t go if it costs too much.
+</p>
+
+<p>
+Business travelers almost always travel on weekdays, and they hate spending a weekend away from home. So the airlines instituted policies that if you’re staying over a Saturday night, you’re probably not travelling on business, and they give you much cheaper fares if you stay over a Saturday night.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+购买优惠券本质上是消费品公司用来区别顾客、实现差别定价的工具，它有效地将市场一分为二。回邮折扣的性质同购物优惠券很类似，并且，还包含了其他一些小伎俩，比如一旦你回邮，你的地址就暴露了，在未来你就成了直接营销的对象。
+</p>
+
+<p>
+Coupons are a way for consumer products companies to charge two different prices and effectively segment their market into two. Mail-in rebates are pretty much the same as coupons, with some other twists like the fact that they reveal your address, so you can be direct-marketed to in the future.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+分割市场的方法还不止于此。你能够用不同的品牌区分你的产品。为了防止有人忘记不同品牌的含义，去了错误的专卖店，Banana Republic 的专卖店就很合适地坐落在满是价值 200 万美元公寓的街区中，而 Old Navy 的专卖店则是坐落在火车站旁边。
+</p>
+
+<p>
+There are other ways to segment. You can market your products under different brand names. In case there was any risk of people forgetting and going to the wrong store, the Banana Republic stores are conveniently situated in neighborhoods full of $2,000,000 condos, while the Old Navy store is near the train station.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+在软件业中，你可以将你的产品分成「专业版」和「家庭版」，两者只有很细微的差别。你希望那些公司用户会感到不好意思上班时用 Windows XP 家庭版工作，而去选择购买专业版。上班时用家庭版？感觉上有点像穿着你的睡衣上班！太恶心了！
+</p>
+
+<p>
+In the world of software, you can just make a version of your product called “Professional” and another version called “Home” with some inconsequential differences, and hope that the corporate purchasers will be too embarrassed at the thought of using Windows XP Home Edition at work and they’ll buy the Professional edition. Home Edition at work? Somehow that feels like coming to work in your pajamas! Ick!
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+对某些特定用户提供折扣可能比要求一些用户付出额外费用更好。没有人喜欢被索要高价。
+</p>
+
+<p>
+&#x2026; better off offering a discount to certain users rather than trying to charge some users a premium.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+某种程度上，如果你向每个人都报价 100 美元，那么顾客似乎也愿意支付和其他人一样的价格，但是如果顾客知道别人收到的价格是 78 美元，那么他连 79 美元也不愿意支付。
+</p>
+
+<p>
+It seems like customers would rather pay $100 when everyone else is paying $100 than pay $79 if they know there’s someone out there who got it for $78.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+你的产品有校园价？所有与学校根本不相干的人最后都会拿到这个价格。
+</p>
+
+<p>
+Got an academic discount? Everyone who is even vaguely related to someone vaguely associated with academia will start using it.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+网站许可证。这种方法与市场分割正好相反……对小客户按照人头进行收费，但是同时又以固定价格出售一种「无限制」许可证。这实在是很奇怪的做法，因为你在将最大的价格优惠不偏不倚给予那些最大的客户，而他们实际上是愿意付给你最多钱的人。
+</p>
+
+<p>
+Site licenses. The opposite of segmentation, really. &#x2026; charge small customers per-user but then there’s an “unlimited” license at a fixed price. This is nutty, because you’re giving the biggest price break precisely to the largest customers, the ones who would be willing to pay you the most money.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+你不需要关心这个月的利润是不是达到了最大化。你真正需要关心的是将你所有时期、包括未来的利润的总和最大化。从技术上看，你要的足所有未来利润的净现值（NPV）最大化。
+</p>
+
+<p>
+You don’t necessarily care about maximizing profits this month. You really care about maximizing all your profits, over time, in the future as well. Technically, you want to maximize the NPV of the stream of all future profits.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+当你比较一年后的 100 美元和今天的 100 美元，你必须考虑到利息因素，要将一年后的 100 美元扣除利息。假定利息率是 2.25%，那么一年后的 100 美元就相当于今天的 97.80 美元，这就叫做一年后 100 美元的净现值。
+</p>
+
+<p>
+When you’re comparing the value of $100 in one year to $100 today, you need to discount the $100 based on some interest rate. If the interest rate is 2.25%, for example, that $100 in the future should be discounted to $97.80, which is called the net present value (NPV) of $100 one year in the future.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+没有软件定价在 1000 美元和 7.5 万美元之间。如果你的软件定价高于 1000 美元，那么你立刻就会遇到非常严重的大公司内部采购政策的权限问题。你的软件就会在那些大公司的采购预算报表中占有单独的一行。在你的软件最后被购买之前，必须得到采购经理和 CEO 的批准，还必须经过竞争性招标以及大量的文书工作。干完这些事情以后，成功完成一次交易的成本就上升到平均为 5 万元以上。如果你派出一个专门的销售员去见客户，软件的要价就不能低于 7.5 万美元。
+</p>
+
+<p>
+There’s no software priced between $1,000 and $75,000. The minute you charge more than $1,000, you need to get serious corporate signoffs. You need a line item in their budget. You need purchasing managers and CEO approval and competitive bids and paperwork. And with all this, the cost of making one successful sale is going to average about $50,000. If you’re sending salespeople out to customers and charging less than $75,000, you’re losing money.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+这件事情的荒唐之处就在于，大公司为了防止买到漫天要价的软件，就制定了这样一套机制，设置了这么多麻烦的步骤，最后的实际效果却是大大抬高了软件的成本。这其中的大部分钱都用在了为了完成交易所必须通过的重重障碍上，而这些障碍都是那些大公司为了保证交易不出错而设下的。
+</p>
+
+<p>
+The joke of it is, big companies protect themselves so well against the risk of buying something expensive that they actually drive up the cost of the expensive stuff, from $1,000 to $75,000, which mostly goes towards the cost of jumping all the hurdles that they set up to ensure that no purchase can possibly go wrong.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+价格是一种信号。当消费者对商品所知有限时，消费者通常就会认为比较贵的商品就是质量比较高的商品。
+</p>
+
+<p>
+Prices send signals. The uninformed consumer is generally going to infer that the more expensive product is better.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> 第九章</h2>
+<div class="outline-text-2" id="text-10">
+</div><div id="outline-container-sec-10-1" class="outline-3">
+<h3 id="sec-10-1"><span class="section-number-3">10.1</span> 五个为什么（Five Whys）</h3>
+<div class="outline-text-3" id="text-10-1">
+<blockquote>
+<p>
+提高服务稳定性的最大困难，就是「黑天鹅难题」。「黑天鹅代表外来因素，是一个超出正常预料的事件。」几乎所有的互联网服务中断都来自十意料之外的突发事件，属于极其小概率的非丰流意外。这类事件是如此罕见，以至于常规的统计方法（比如「故障间隔平均时间」）都失效了。
+</p>
+
+<p>
+Keeping Internet services online suffers from the problem of black swans. “A black swan is an outlier, an event that lies beyond the realm of normal expectations.” Almost all Internet outages are unexpected unexpecteds: extremely lowprobability outlying surprises. They’re the kind of things that happen so rarely it doesn’t even make sense to use normal statistical methods like “mean time between failure.”
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+服务稳定性有两个极端，一个是「极端不可靠」，服务一次又一次地中断，简直愚蠢至极：另一个是服务稳定性「极端可靠」，你花了几百万美元，终于将每年的「正常运行时间」增加了一分钟。在这两个极端之间，存在一个服务稳定性的最佳位置，即所有被预计到的突发情况都已经事先做好了准备。
+</p>
+
+<p>
+Somewhere between the “extremely unreliable” level of service, where it feels like stupid outages occur again and again and again, and the “extremely reliable” level of service, where you spend millions and millions of dollars getting an extra minute of uptime a year, there’s a sweet spot, where all the expected unexpecteds have been taken care of.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-10-2" class="outline-3">
+<h3 id="sec-10-2"><span class="section-number-3">10.2</span> 确定优先顺序（Set Your Priorities）</h3>
+<div class="outline-text-3" id="text-10-2">
+<blockquote>
+<p>
+你最好尽一切可能坚持制作面向整个市场销售的上架软件。因为上架软件增加顾客的边际成本为零，所以你就是在把同一件东西一遍又一遍地卖出去，赚到多得多的利润。
+</p>
+
+<p>
+&#x2026; clinging as strongly as possible to the shrink-wrap side of the equation. That’s because shrink-wrap has no marginal costs for each additional customer, so you can essentially sell the same thing over and over again and make a lot more profit.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+我早就应该想到「重要性」并不是二进制的数字制式，而是模拟制式。不同的事情有不同程度的「重要性」，而不是只有「重要」和「不重要」的两个选项。如果你想把所有事情都做完，最后只会一事无成。
+</p>
+
+<p>
+I should have realized that “important” is not a binary thing, it’s an analog thing. There are all kinds of different shades of important, and if you try to do everything, you’ll never get anything done.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2016-05-05 周四 18:14</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

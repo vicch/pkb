@@ -1,0 +1,1476 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-10-13 Sun 20:47 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TypeScript</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">TypeScript</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgd3068db">1 TypeScript</a>
+<ul>
+<li><a href="#orgd5558ee">1.1 Static Typing</a></li>
+</ul>
+</li>
+<li><a href="#orgb215675">2 Type</a>
+<ul>
+<li><a href="#org74fee5d">2.1 Number</a></li>
+<li><a href="#org36ba15e">2.2 Array</a></li>
+<li><a href="#org9d6f543">2.3 Tuple</a></li>
+<li><a href="#orga915fae">2.4 Enum</a></li>
+<li><a href="#org55dc574">2.5 Any</a></li>
+<li><a href="#org21fa165">2.6 Void</a></li>
+<li><a href="#orgf667730">2.7 Null &amp; Undefined</a></li>
+<li><a href="#org50dc8d5">2.8 Object</a></li>
+<li><a href="#org888cada">2.9 Never</a></li>
+</ul>
+</li>
+<li><a href="#org69d00f9">3 Type Usage</a>
+<ul>
+<li><a href="#org4d804c1">3.1 Assertion</a></li>
+<li><a href="#org5ecaefc">3.2 Union</a></li>
+<li><a href="#org99ecbb5">3.3 Alias</a></li>
+</ul>
+</li>
+<li><a href="#org5a8e925">4 Generic</a>
+<ul>
+<li><a href="#orgaed4ab3">4.1 Constraint</a></li>
+<li><a href="#orga8732b1">4.2 Generic Class</a></li>
+</ul>
+</li>
+<li><a href="#org4b2b815">5 Function</a>
+<ul>
+<li><a href="#org21be9fb">5.1 Function Type</a></li>
+<li><a href="#orgac27ffd">5.2 Argument Type</a></li>
+</ul>
+</li>
+<li><a href="#org75a09b9">6 Class</a>
+<ul>
+<li><a href="#org67a852b">6.1 Constructor</a></li>
+<li><a href="#orgbba75a3">6.2 Accessor</a></li>
+<li><a href="#org864cce6">6.3 Readonly</a></li>
+<li><a href="#orgbd6e593">6.4 Inheritance</a></li>
+</ul>
+</li>
+<li><a href="#org3b857e9">7 Interface</a>
+<ul>
+<li><a href="#org366d9bc">7.1 Any Property</a></li>
+<li><a href="#orge877e65">7.2 Optional Property</a></li>
+<li><a href="#org1a701ac">7.3 Function Property</a></li>
+<li><a href="#orgce28d33">7.4 Function Interface</a></li>
+<li><a href="#org5f4b3d3">7.5 Implement Interface</a></li>
+<li><a href="#org8d9676e">7.6 Extend Interface</a></li>
+</ul>
+</li>
+<li><a href="#org6e9e67b">8 Namespace</a>
+<ul>
+<li><a href="#org6970cfe">8.1 Alias</a></li>
+<li><a href="#org75b36ff">8.2 Multiple Files</a></li>
+<li><a href="#orgac413b2">8.3 Nested Namespace</a></li>
+</ul>
+</li>
+<li><a href="#orga14df83">9 Decorator</a>
+<ul>
+<li><a href="#org05d5cae">9.1 Decorator Composition</a></li>
+<li><a href="#org8171688">9.2 Decorator Factory</a></li>
+<li><a href="#org460f2bd">9.3 Class Decorator</a></li>
+<li><a href="#org89bba9b">9.4 Method Decorator</a></li>
+<li><a href="#org99e242b">9.5 Property Decorator</a></li>
+<li><a href="#orge8dc27e">9.6 Parameter Decorator</a></li>
+</ul>
+</li>
+<li><a href="#org6240e5c">10 Command</a>
+<ul>
+<li><a href="#org40ee3f3">10.1 Install</a></li>
+<li><a href="#org5f2c69f">10.2 <code>tsc</code></a></li>
+</ul>
+</li>
+<li><a href="#org934482f">11 Configuration</a>
+<ul>
+<li><a href="#org03d56ea">11.1 <code>tsconfig.json</code></a></li>
+<li><a href="#org41ed337">11.2 Compiler Options</a>
+<ul>
+<li><a href="#org1e8ee18">11.2.1 <code>noEmitOnError</code></a></li>
+<li><a href="#orgb42d5b2">11.2.2 <code>noImplicitAny</code></a></li>
+<li><a href="#org7ddf291">11.2.3 <code>sourceMap</code></a></li>
+<li><a href="#org1003d38">11.2.4 <code>strictNullChecks</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orga7e4af1">12 Declaration</a></li>
+<li><a href="#org27728b1">13 Links</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd3068db" class="outline-2">
+<h2 id="orgd3068db"><span class="section-number-2">1</span> TypeScript</h2>
+<div class="outline-text-2" id="text-1">
+
+<div class="figure">
+<p><img src="../images/typescript/01.png" alt="01.png" />
+</p>
+</div>
+
+<p>
+TypeScript is a wrapper/superset of JavaScript. TypeScript code is compiled down to JavaScript code.
+</p>
+
+<p>
+TypeScript is strongly typed and OO.
+</p>
+</div>
+
+<div id="outline-container-orgd5558ee" class="outline-3">
+<h3 id="orgd5558ee"><span class="section-number-3">1.1</span> Static Typing</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Types are static in TypeScript: after declaring a variable as a certain type (implicitly or explicitly), the variable cannot be assigned with values of other types:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">let</span> <span class="org-variable-name">foo</span> = <span class="org-string">'bar'</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">Declare implicitly as string</span>
+foo = 1;         <span class="org-comment-delimiter">// </span><span class="org-comment">Assign a number value, compiler error</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb215675" class="outline-2">
+<h2 id="orgb215675"><span class="section-number-2">2</span> Type</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-org74fee5d" class="outline-3">
+<h3 id="org74fee5d"><span class="section-number-3">2.1</span> Number</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<a href="http://www.typescriptlang.org/docs/handbook/basic-types.html#number">TypeScript | Handbook | Basic Types | Number</a>
+</p>
+
+<p>
+Numbers include both int and float:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">let</span> <span class="org-variable-name">foo</span> = 1;
+<span class="org-keyword">let</span> <span class="org-variable-name">bar</span> = 0.5;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org36ba15e" class="outline-3">
+<h3 id="org36ba15e"><span class="section-number-3">2.2</span> Array</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+<a href="http://www.typescriptlang.org/docs/handbook/basic-types.html#array">TypeScript | Handbook | Basic Types | Array</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">let</span> <span class="org-variable-name">foo</span> = [1, 2, 3]; <span class="org-comment-delimiter">// </span><span class="org-comment">Inferred as number[]</span>
+<span class="org-keyword">let</span> <span class="org-variable-name">foo</span>: <span class="org-keyword">number</span>[] = [1, 2, 3];
+<span class="org-keyword">let</span> <span class="org-variable-name">foo</span>: Array&lt;<span class="org-keyword">number</span>&gt; = [1, 2, 3];
+
+foo.push(<span class="org-string">'bar'</span>); <span class="org-comment-delimiter">// </span><span class="org-comment">Error: string not assignable to type number</span>
+foo = [<span class="org-string">'bar'</span>];   <span class="org-comment-delimiter">// </span><span class="org-comment">Error: string[] not assignable to type number[]</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9d6f543" class="outline-3">
+<h3 id="org9d6f543"><span class="section-number-3">2.3</span> Tuple</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+<a href="http://www.typescriptlang.org/docs/handbook/basic-types.html#tuple">TypeScript | Handbook | Basic Types | Tuple</a>
+</p>
+
+<p>
+Tuple is basically an array whose elements can have different types.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">let</span> <span class="org-variable-name">foo</span>: [<span class="org-keyword">string</span>, <span class="org-keyword">number</span>];
+foo = [<span class="org-string">"bar"</span>, 1];
+foo = [1, <span class="org-string">"bar"</span>]; <span class="org-comment-delimiter">// </span><span class="org-comment">Compiler error</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga915fae" class="outline-3">
+<h3 id="orga915fae"><span class="section-number-3">2.4</span> Enum</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+<a href="http://www.typescriptlang.org/docs/handbook/basic-types.html#enum">TypeScript | Handbook | Basic Types | Enum</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">enum</span> <span class="org-type">Foo</span> {First, Second, Third} <span class="org-comment-delimiter">// </span><span class="org-comment">Enum values start from 0 by default</span>
+<span class="org-keyword">let</span> <span class="org-variable-name">bar</span>: Foo = Foo.First;  <span class="org-comment-delimiter">// </span><span class="org-comment">bar == 0</span>
+<span class="org-keyword">let</span> <span class="org-variable-name">bar</span>: Foo = Foo.Second; <span class="org-comment-delimiter">// </span><span class="org-comment">bar == 1</span>
+<span class="org-keyword">let</span> <span class="org-variable-name">bar</span>: Foo = Foo.Third;  <span class="org-comment-delimiter">// </span><span class="org-comment">bar == 2</span>
+
+<span class="org-keyword">enum</span> <span class="org-type">Foo</span> {First, Second = 100, Third} <span class="org-comment-delimiter">// </span><span class="org-comment">Change one default value, following values increment on the basis of it</span>
+<span class="org-keyword">let</span> <span class="org-variable-name">bar</span>: Foo = Foo.First;  <span class="org-comment-delimiter">// </span><span class="org-comment">bar == 0</span>
+<span class="org-keyword">let</span> <span class="org-variable-name">bar</span>: Foo = Foo.Second; <span class="org-comment-delimiter">// </span><span class="org-comment">bar == 100</span>
+<span class="org-keyword">let</span> <span class="org-variable-name">bar</span>: Foo = Foo.Third;  <span class="org-comment-delimiter">// </span><span class="org-comment">bar == 101</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org55dc574" class="outline-3">
+<h3 id="org55dc574"><span class="section-number-3">2.5</span> Any</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+<a href="http://www.typescriptlang.org/docs/handbook/basic-types.html#any">TypeScript | Handbook | Basic Types | Any</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">let</span> <span class="org-variable-name">foo</span>: <span class="org-keyword">any</span> = <span class="org-string">'bar'</span>;
+foo = 1;
+</pre>
+</div>
+
+<p>
+If a variable is declared without assigning any value, it is implicitly of type <code>any</code>, and can be assigned with any value:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">let</span> <span class="org-variable-name">foo</span>;
+foo = 1;
+foo = <span class="org-string">'bar'</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org21fa165" class="outline-3">
+<h3 id="org21fa165"><span class="section-number-3">2.6</span> Void</h3>
+<div class="outline-text-3" id="text-2-6">
+<p>
+Void type functions don't return values:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">function</span> <span class="org-function-name">foo</span>(): <span class="org-keyword">void</span> {
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf667730" class="outline-3">
+<h3 id="orgf667730"><span class="section-number-3">2.7</span> Null &amp; Undefined</h3>
+<div class="outline-text-3" id="text-2-7">
+<ul class="org-ul">
+<li><a href="http://www.typescriptlang.org/docs/handbook/basic-types.html#null-and-undefined">TypeScript | Handbook | Basic Types | Null and Undefined</a></li>
+<li><a href="http://www.typescriptlang.org/docs/handbook/advanced-types.html#nullable-types">TypeScript | Handbook | Advanced Types | Nullable Types</a></li>
+</ul>
+
+<p>
+<code>null</code> and <code>undefined</code> are both types and values:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">let</span> <span class="org-variable-name">foo</span>: <span class="org-keyword">null</span> = <span class="org-keyword">null</span>;
+foo = 1; <span class="org-comment-delimiter">// </span><span class="org-comment">Error, 1 is not assignable to type null</span>
+</pre>
+</div>
+
+<p>
+By default, <code>null</code> and <code>undefined</code> are valid values for any type:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">let</span> <span class="org-variable-name">foo</span>: <span class="org-keyword">string</span>;
+foo = <span class="org-keyword">null</span>;      <span class="org-comment-delimiter">// </span><span class="org-comment">OK</span>
+foo = <span class="org-constant">undefined</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">OK</span>
+</pre>
+</div>
+
+<p>
+To prevent <code>null</code> and <code>undefined</code> from being set to typed variables, set compiler option <code>strictNullChecks</code> to <code>true</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-comment-delimiter">// </span><span class="org-comment">strictNullChecks set to true</span>
+<span class="org-keyword">let</span> <span class="org-variable-name">foo</span>: <span class="org-keyword">string</span>;
+foo = <span class="org-keyword">null</span>;      <span class="org-comment-delimiter">// </span><span class="org-comment">Error</span>
+foo = <span class="org-constant">undefined</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">Error</span>
+</pre>
+</div>
+
+<p>
+To explicitly allow <code>null</code> values, use union type:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">let</span> <span class="org-variable-name">foo</span>: <span class="org-keyword">string</span> | <span class="org-keyword">null</span> | <span class="org-constant">undefined</span>;
+foo = <span class="org-keyword">null</span>;      <span class="org-comment-delimiter">// </span><span class="org-comment">OK</span>
+foo = <span class="org-constant">undefined</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">OK</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org50dc8d5" class="outline-3">
+<h3 id="org50dc8d5"><span class="section-number-3">2.8</span> Object</h3>
+<div class="outline-text-3" id="text-2-8">
+<p>
+<a href="http://www.typescriptlang.org/docs/handbook/basic-types.html#object">TypeScript | Handbook | Basic Types | Object</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">let</span> <span class="org-variable-name">foo</span>: { one: <span class="org-keyword">string</span>, two: <span class="org-keyword">number</span> }; <span class="org-comment-delimiter">// </span><span class="org-comment">With prop names and types</span>
+<span class="org-keyword">let</span> <span class="org-variable-name">bar</span>: { [s: <span class="org-keyword">string</span>]: <span class="org-keyword">number</span> };      <span class="org-comment-delimiter">// </span><span class="org-comment">With prop name types and value types</span>
+</pre>
+</div>
+
+<p>
+An object once declared, the names and types of the properties are fixed:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">let</span> <span class="org-variable-name">foo</span> = { one: <span class="org-string">"bar"</span>, two: 1 };
+
+foo = {};                     <span class="org-comment-delimiter">// </span><span class="org-comment">Error: Type "{}" is missing the following properties</span>
+                              <span class="org-comment-delimiter">// </span><span class="org-comment">from type "{ one: string; two: number; }": one, two</span>
+foo = { a: <span class="org-string">"bar"</span>, b: 1 };     <span class="org-comment-delimiter">// </span><span class="org-comment">Error: Type "{ a: string; b: number; }" is not</span>
+                              <span class="org-comment-delimiter">// </span><span class="org-comment">assignable to type "{ one: string; two: number; }"</span>
+foo = { two: 2, one: <span class="org-string">"bar"</span> }; <span class="org-comment-delimiter">// </span><span class="org-comment">Changing order of properties is OK</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org888cada" class="outline-3">
+<h3 id="org888cada"><span class="section-number-3">2.9</span> Never</h3>
+<div class="outline-text-3" id="text-2-9">
+<p>
+<a href="http://www.typescriptlang.org/docs/handbook/basic-types.html#never">TypeScript | Handbook | Basic Types | Never</a>
+</p>
+
+<p>
+<code>never</code> is the return type for a function that always throws an exception or never returns:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">function</span> <span class="org-function-name">error</span>(<span class="org-variable-name">message</span>: <span class="org-keyword">string</span>): <span class="org-keyword">never</span> {
+    <span class="org-keyword">throw</span> <span class="org-keyword">new</span> <span class="org-type">Error</span>(message);
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org69d00f9" class="outline-2">
+<h2 id="org69d00f9"><span class="section-number-2">3</span> Type Usage</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-org4d804c1" class="outline-3">
+<h3 id="org4d804c1"><span class="section-number-3">3.1</span> Assertion</h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">if</span> (<span class="org-keyword">typeof</span> foo === <span class="org-string">"number"</span>) {
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5ecaefc" class="outline-3">
+<h3 id="org5ecaefc"><span class="section-number-3">3.2</span> Union</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+<a href="http://www.typescriptlang.org/docs/handbook/advanced-types.html#union-types">TypeScript | Handbook | Advanced Types | Union Types</a>
+</p>
+
+<p>
+A union type describes a value that can be one of several types:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">let</span> <span class="org-variable-name">foo</span>: <span class="org-keyword">number</span> | <span class="org-keyword">string</span> | <span class="org-keyword">boolean</span> = 1;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org99ecbb5" class="outline-3">
+<h3 id="org99ecbb5"><span class="section-number-3">3.3</span> Alias</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+<a href="http://www.typescriptlang.org/docs/handbook/advanced-types.html#type-aliases">TypeScript | Handbook | Advanced Types | Type Aliases</a>
+</p>
+
+<p>
+Type aliases are names that refer to existing types:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">type</span> <span class="org-type">Name</span> = <span class="org-keyword">string</span>;
+<span class="org-keyword">type</span> <span class="org-type">NameResolver</span> = () =&gt; <span class="org-keyword">string</span>;
+<span class="org-keyword">type</span> <span class="org-type">NameOrResolver</span> = Name | NameResolver;
+<span class="org-keyword">function</span> <span class="org-function-name">getName</span>(<span class="org-variable-name">n</span>: <span class="org-variable-name">NameOrResolver</span>): Name {
+  <span class="org-keyword">if</span> (<span class="org-keyword">typeof</span> n === <span class="org-string">"string"</span>) { <span class="org-keyword">return</span> n; }
+  <span class="org-keyword">else</span> { <span class="org-keyword">return</span> n(); }
+}
+</pre>
+</div>
+
+<p>
+Use type alias to define reusable complex types:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">type</span> <span class="org-type">Complex</span> = {
+  data: <span class="org-keyword">number</span>[],
+  output: (all: <span class="org-keyword">boolean</span>) =&gt; <span class="org-keyword">number</span>[]
+};
+<span class="org-keyword">function</span> <span class="org-function-name">getData</span>(<span class="org-variable-name">arg</span>: <span class="org-variable-name">Complex</span>) {
+  <span class="org-keyword">return</span> arg.data;
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5a8e925" class="outline-2">
+<h2 id="org5a8e925"><span class="section-number-2">4</span> Generic</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<a href="http://www.typescriptlang.org/docs/handbook/generics.html">TypeScript | Handbook | Generics</a>
+</p>
+
+<p>
+To write flexible functions that take more than one type:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">function</span> <span class="org-function-name">foo</span>(<span class="org-variable-name">arg</span>: <span class="org-keyword">any</span>): <span class="org-keyword">any</span> {} <span class="org-comment-delimiter">// </span><span class="org-comment">Type "any" is too generic, argument type info</span>
+                               <span class="org-comment-delimiter">// </span><span class="org-comment">is lost when using this function.</span>
+foo(<span class="org-string">'bar'</span>);                    <span class="org-comment-delimiter">// </span><span class="org-comment">OK, but we don't know the return type.</span>
+
+<span class="org-keyword">function</span> <span class="org-function-name">foo</span>&lt;T&gt;(arg: T): T {} <span class="org-comment-delimiter">// </span><span class="org-comment">Using generic, function caller can pass the</span>
+                              <span class="org-comment-delimiter">// </span><span class="org-comment">argument type to the function via T.</span>
+foo&lt;<span class="org-keyword">string</span>&gt;(<span class="org-string">'bar'</span>);           <span class="org-comment-delimiter">// </span><span class="org-comment">We know return type is string.</span>
+foo(<span class="org-string">'bar'</span>);                   <span class="org-comment-delimiter">// </span><span class="org-comment">Use type inference.</span>
+
+<span class="org-keyword">function</span> <span class="org-function-name">foo</span>&lt;T&gt;(arg: T[]): T { <span class="org-comment-delimiter">// </span><span class="org-comment">Generic type array</span>
+  <span class="org-keyword">return</span> arg[0];
+}
+foo&lt;<span class="org-keyword">string</span>&gt;([<span class="org-string">'bar'</span>]);
+
+<span class="org-keyword">function</span> <span class="org-function-name">foo</span>&lt;T, U&gt;(arg: T): U {} <span class="org-comment-delimiter">// </span><span class="org-comment">Multiple generic types</span>
+foo&lt;<span class="org-keyword">string</span>, <span class="org-keyword">number</span>&gt;(<span class="org-string">'bar'</span>);      <span class="org-comment-delimiter">// </span><span class="org-comment">We know return type is number</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgaed4ab3" class="outline-3">
+<h3 id="orgaed4ab3"><span class="section-number-3">4.1</span> Constraint</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+<a href="http://www.typescriptlang.org/docs/handbook/generics.html#generic-constraints">TypeScript | Handbook | Generics | Generic Constraints</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">function</span> <span class="org-function-name">foo</span>&lt;T <span class="org-keyword">extends</span> <span class="org-keyword">number</span>&gt;(arg: T): T {}
+<span class="org-keyword">function</span> <span class="org-function-name">foo</span>&lt;T <span class="org-keyword">extends</span> <span class="org-keyword">number</span> | <span class="org-keyword">string</span>&gt;(arg: T): T {}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga8732b1" class="outline-3">
+<h3 id="orga8732b1"><span class="section-number-3">4.2</span> Generic Class</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+<a href="http://www.typescriptlang.org/docs/handbook/generics.html#generic-classes">TypeScript | Handbook | Generics | Generic Classes</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">class</span> <span class="org-type">Tool</span>&lt;T&gt; {
+  combine: (a: T, b: T) =&gt; T;
+}
+
+<span class="org-keyword">let</span> <span class="org-variable-name">numberTool</span> = <span class="org-keyword">new</span> <span class="org-type">Tool</span>&lt;<span class="org-keyword">number</span>&gt;();
+numberTool.combine = (a: <span class="org-keyword">number</span>, b: <span class="org-keyword">number</span>) =&gt; a + b;
+numberTool.combine(1, 2);
+
+<span class="org-keyword">let</span> <span class="org-variable-name">stringTool</span> = <span class="org-keyword">new</span> <span class="org-type">Tool</span>&lt;<span class="org-keyword">string</span>&gt;();
+stringTool.combine = (a: <span class="org-keyword">string</span>, b: <span class="org-keyword">string</span>) =&gt; a + <span class="org-string">' '</span> + b;
+stringTool.combine(<span class="org-string">'foo'</span>, <span class="org-string">'bar'</span>);
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4b2b815" class="outline-2">
+<h2 id="org4b2b815"><span class="section-number-2">5</span> Function</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-org21be9fb" class="outline-3">
+<h3 id="org21be9fb"><span class="section-number-3">5.1</span> Function Type</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+<a href="http://www.typescriptlang.org/docs/handbook/functions.html#function-types">TypeScript | Handbook | Functions | Function Types</a>
+</p>
+
+<p>
+Function types act like variable types, functions of a certain type can be assigned to variables of the same type:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">function</span> <span class="org-function-name">foo</span>(): <span class="org-keyword">number</span> {<span class="org-keyword">return</span> 1;}  <span class="org-comment-delimiter">// </span><span class="org-comment">Type: () =&gt; number</span>
+<span class="org-keyword">function</span> <span class="org-function-name">bar</span>(): <span class="org-keyword">string</span> {<span class="org-keyword">return</span> <span class="org-string">''</span>;} <span class="org-comment-delimiter">// </span><span class="org-comment">Type: () =&gt; string</span>
+
+<span class="org-keyword">let</span> <span class="org-variable-name">a</span>: () =&gt; <span class="org-keyword">number</span>;
+a = foo; <span class="org-comment-delimiter">// </span><span class="org-comment">Ok</span>
+a = bar; <span class="org-comment-delimiter">// </span><span class="org-comment">Compiler error</span>
+</pre>
+</div>
+
+<p>
+Function types can be assigned to object properties to make complex types that act like classes:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">let</span> <span class="org-variable-name">foo</span>: {
+  one: <span class="org-keyword">number</span>[],
+  two: (arg: <span class="org-keyword">string</span>) =&gt; <span class="org-keyword">string</span>[]
+};
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgac27ffd" class="outline-3">
+<h3 id="orgac27ffd"><span class="section-number-3">5.2</span> Argument Type</h3>
+<div class="outline-text-3" id="text-5-2">
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">const</span> <span class="org-variable-name">foo</span> = (arg: <span class="org-keyword">string</span>) =&gt; arg;
+foo(<span class="org-string">'bar'</span>);
+
+<span class="org-keyword">const</span> <span class="org-variable-name">foo</span> = (arg: { name: <span class="org-keyword">string</span> }) =&gt; arg.name;   <span class="org-comment-delimiter">// </span><span class="org-comment">Requires to be an object with a prop "name",</span>
+<span class="org-keyword">const</span> <span class="org-variable-name">bar</span> = { name: <span class="org-string">'bar'</span>, desc: <span class="org-string">'This is bar.'</span> }; <span class="org-comment-delimiter">// </span><span class="org-comment">There can be other props</span>
+foo(bar);
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org75a09b9" class="outline-2">
+<h2 id="org75a09b9"><span class="section-number-2">6</span> Class</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Class example:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">class</span> <span class="org-type">Greeter</span> {
+    message: <span class="org-keyword">string</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">Member is public by default</span>
+    <span class="org-keyword">constructor</span>(message: <span class="org-keyword">string</span>) {
+        <span class="org-keyword">this</span>.message = message;
+    }
+    greet() {
+        <span class="org-keyword">return</span> <span class="org-string">'Hello, '</span> + <span class="org-keyword">this</span>.message;
+    }
+}
+<span class="org-keyword">let</span> <span class="org-variable-name">greeter</span> = <span class="org-keyword">new</span> <span class="org-type">Greeter</span>(<span class="org-string">'world'</span>);
+console.log(greeter.greet());
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org67a852b" class="outline-3">
+<h3 id="org67a852b"><span class="section-number-3">6.1</span> Constructor</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+Adding access modifiers such as <code>public</code> to constructor parameter is a shortcut for setting that parameter to the class property:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">class</span> <span class="org-type">Foo</span> {
+  <span class="org-keyword">constructor</span>(<span class="org-keyword">public</span> bar: <span class="org-keyword">string</span>) {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Implicit: this.bar = bar;</span>
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbba75a3" class="outline-3">
+<h3 id="orgbba75a3"><span class="section-number-3">6.2</span> Accessor</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+<a href="http://www.typescriptlang.org/docs/handbook/classes.html#accessors">TypeScript | Handbook | Classes | Accessors</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">class</span> <span class="org-type">Employee</span> {
+  <span class="org-keyword">private</span> _fullName: <span class="org-keyword">string</span>;
+  <span class="org-keyword">get</span> fullName(): <span class="org-keyword">string</span> {
+    <span class="org-keyword">return</span> <span class="org-keyword">this</span>._fullName;
+  }
+  <span class="org-keyword">set</span> fullName(newName: <span class="org-keyword">string</span>) {
+    <span class="org-keyword">this</span>._fullName = newName;
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org864cce6" class="outline-3">
+<h3 id="org864cce6"><span class="section-number-3">6.3</span> Readonly</h3>
+<div class="outline-text-3" id="text-6-3">
+<p>
+<a href="http://www.typescriptlang.org/docs/handbook/classes.html#readonly-modifier">TypeScript | Handbook | Classes | Readonly Modifier</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">class</span> <span class="org-type">Foo</span> {
+  <span class="org-keyword">constructor</span>(<span class="org-keyword">public</span> <span class="org-keyword">readonly</span> bar: <span class="org-keyword">string</span>) {}
+}
+
+<span class="org-keyword">let</span> <span class="org-variable-name">foo</span> = <span class="org-keyword">new</span> <span class="org-type">Foo</span>(<span class="org-string">'bar'</span>);
+console.log(foo.bar); <span class="org-comment-delimiter">// </span><span class="org-comment">Read is OK</span>
+foo.bar = <span class="org-string">'new'</span>;      <span class="org-comment-delimiter">// </span><span class="org-comment">Write is not allowed</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbd6e593" class="outline-3">
+<h3 id="orgbd6e593"><span class="section-number-3">6.4</span> Inheritance</h3>
+<div class="outline-text-3" id="text-6-4">
+<p>
+<a href="http://www.typescriptlang.org/docs/handbook/classes.html#inheritance">TypeScript | Handbook | Classes | Inheritance</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">class</span> <span class="org-type">Foo</span> {
+  <span class="org-keyword">constructor</span>(<span class="org-keyword">public</span> x: <span class="org-keyword">string</span>) {
+  }
+}
+
+<span class="org-keyword">class</span> <span class="org-type">Bar</span> <span class="org-keyword">extends</span> <span class="org-type">Foo</span> {
+  <span class="org-keyword">constructor</span>(x: <span class="org-keyword">string</span>, <span class="org-keyword">public</span> y: <span class="org-keyword">number</span>) {
+    <span class="org-keyword">super</span>(x + <span class="org-string">' from Bar'</span>); <span class="org-comment-delimiter">// </span><span class="org-comment">Calls parent constructor</span>
+  }
+}
+
+<span class="org-keyword">let</span> <span class="org-variable-name">bar</span> = <span class="org-keyword">new</span> <span class="org-type">Bar</span>(<span class="org-string">'Hello'</span>, 1); <span class="org-comment-delimiter">// </span><span class="org-comment">{ x: 'Hello from Bar', y: 1 }</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3b857e9" class="outline-2">
+<h2 id="org3b857e9"><span class="section-number-2">7</span> Interface</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+<a href="http://www.typescriptlang.org/docs/handbook/interfaces.html">TypeScript | Handbook | Interfaces</a>
+</p>
+
+<p>
+Interface represents the requirements of what properties an object should have:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">interface</span> <span class="org-type">Foo</span> {
+  bar: <span class="org-keyword">string</span>;
+}
+
+<span class="org-keyword">function</span> <span class="org-function-name">exec</span>(<span class="org-variable-name">foo</span>: <span class="org-variable-name">Foo</span>) {
+  <span class="org-keyword">return</span> foo.bar;
+}
+<span class="org-keyword">let</span> <span class="org-variable-name">one</span> = { bar: <span class="org-string">'one'</span>, x: <span class="org-string">''</span> };
+exec(one);                   <span class="org-comment-delimiter">// </span><span class="org-comment">OK</span>
+exec({ bar: <span class="org-string">'one'</span> });        <span class="org-comment-delimiter">// </span><span class="org-comment">OK</span>
+exec({ bar: <span class="org-string">'one'</span>, x: <span class="org-string">''</span> }); <span class="org-comment-delimiter">// </span><span class="org-comment">Error: object literak can only have known prop</span>
+
+<span class="org-keyword">let</span> <span class="org-variable-name">two</span>: Foo;
+two = { bar: <span class="org-string">'two'</span> };        <span class="org-comment-delimiter">// </span><span class="org-comment">OK</span>
+two = { bar: <span class="org-string">'two'</span>, x: <span class="org-string">''</span> }; <span class="org-comment-delimiter">// </span><span class="org-comment">Error: object literak can only have known prop</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org366d9bc" class="outline-3">
+<h3 id="org366d9bc"><span class="section-number-3">7.1</span> Any Property</h3>
+<div class="outline-text-3" id="text-7-1">
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">interface</span> <span class="org-type">Foo</span> {
+  bar: <span class="org-keyword">string</span>;
+  [prop: <span class="org-keyword">string</span>]: <span class="org-keyword">any</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">Allows any additional property</span>
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge877e65" class="outline-3">
+<h3 id="orge877e65"><span class="section-number-3">7.2</span> Optional Property</h3>
+<div class="outline-text-3" id="text-7-2">
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">interface</span> <span class="org-type">Foo</span> {
+  bar: <span class="org-keyword">string</span>;
+  extra?: <span class="org-keyword">number</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">Optional property</span>
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1a701ac" class="outline-3">
+<h3 id="org1a701ac"><span class="section-number-3">7.3</span> Function Property</h3>
+<div class="outline-text-3" id="text-7-3">
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">interface</span> <span class="org-type">Foo</span> {
+  bar: <span class="org-keyword">string</span>;
+  exec(v: <span class="org-keyword">number</span>): <span class="org-keyword">string</span>;
+}
+<span class="org-keyword">let</span> <span class="org-variable-name">one</span> = {
+  bar: <span class="org-string">'one'</span>,
+  exec(v: <span class="org-keyword">number</span>) {
+    <span class="org-keyword">return</span> <span class="org-keyword">this</span>.bar + <span class="org-string">' = '</span> + v;
+  }
+};
+one.exec(1); <span class="org-comment-delimiter">// </span><span class="org-comment">one = 1</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgce28d33" class="outline-3">
+<h3 id="orgce28d33"><span class="section-number-3">7.4</span> Function Interface</h3>
+<div class="outline-text-3" id="text-7-4">
+<p>
+Interface can define the type of a function:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">interface</span> <span class="org-type">Compare</span> {
+  (a: <span class="org-keyword">number</span>, b: <span class="org-keyword">number</span>): <span class="org-keyword">boolean</span>;
+}
+
+<span class="org-keyword">let</span> <span class="org-variable-name">isBigger</span>, <span class="org-variable-name">isSmaller</span>: Compare;
+isBigger = (a: <span class="org-keyword">number</span>, b: <span class="org-keyword">number</span>) =&gt; (a &gt; b);
+isSmaller = (a: <span class="org-keyword">number</span>, b: <span class="org-keyword">number</span>) =&gt; (a &lt; b);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5f4b3d3" class="outline-3">
+<h3 id="org5f4b3d3"><span class="section-number-3">7.5</span> Implement Interface</h3>
+<div class="outline-text-3" id="text-7-5">
+<p>
+Classes can implement interfaces:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">interface</span> <span class="org-type">Foo</span> {
+  bar: <span class="org-keyword">string</span>;
+  exec(v: <span class="org-keyword">number</span>): <span class="org-keyword">string</span>;
+}
+<span class="org-keyword">class</span> <span class="org-type">MyFoo</span> <span class="org-keyword">implements</span> <span class="org-type">Foo</span> {
+  bar: <span class="org-keyword">string</span>;
+  extra: <span class="org-keyword">string</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">Can have extra members</span>
+  exec(v: <span class="org-keyword">number</span>) {
+    <span class="org-keyword">return</span> <span class="org-keyword">this</span>.bar + <span class="org-string">' = '</span> + v;
+  }
+}
+<span class="org-keyword">let</span> <span class="org-variable-name">foo</span> = <span class="org-keyword">new</span> <span class="org-type">MyFoo</span>();
+foo.bar = <span class="org-string">'one'</span>;
+foo.exec(1); <span class="org-comment-delimiter">// </span><span class="org-comment">one = 1</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8d9676e" class="outline-3">
+<h3 id="org8d9676e"><span class="section-number-3">7.6</span> Extend Interface</h3>
+<div class="outline-text-3" id="text-7-6">
+<p>
+Interface can extend another interface:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">interface</span> <span class="org-type">Foo</span> {
+  name: <span class="org-keyword">string</span>;
+  exec(arg: <span class="org-keyword">number</span>): <span class="org-keyword">void</span>;
+}
+<span class="org-keyword">interface</span> <span class="org-type">Bar</span> <span class="org-keyword">extends</span> <span class="org-type">Foo</span> {
+  desc: <span class="org-keyword">string</span>;
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6e9e67b" class="outline-2">
+<h2 id="org6e9e67b"><span class="section-number-2">8</span> Namespace</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+<a href="http://www.typescriptlang.org/docs/handbook/namespaces.html">TypeScript | Handbook | Namespaces</a>
+</p>
+
+<p>
+Code can be organized into namespaces to avoid name collisions within the global namespace.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">namespace</span> Validation {
+  <span class="org-keyword">const</span> <span class="org-variable-name">lettersRegexp</span> = <span class="org-string">/^[A-Za-z]+$/</span>;
+  <span class="org-keyword">export</span> <span class="org-keyword">function</span> <span class="org-function-name">isLetters</span>(<span class="org-variable-name">s</span>: <span class="org-keyword">string</span>) { <span class="org-comment-delimiter">// </span><span class="org-comment">Members must be exported to be accessible</span>
+    <span class="org-keyword">return</span> lettersRegexp.test(s);
+  }
+}
+console.log(Validation.isLetters(<span class="org-string">'foo'</span>)); <span class="org-comment-delimiter">// </span><span class="org-comment">Call function in namespace</span>
+
+<span class="org-keyword">let</span> <span class="org-variable-name">isLetters</span> = (s: <span class="org-keyword">string</span>) =&gt; <span class="org-keyword">false</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">Function with same name in global namespace</span>
+console.log(isLetters(<span class="org-string">'foo'</span>));        <span class="org-comment-delimiter">// </span><span class="org-comment">Call function in global namespace</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org6970cfe" class="outline-3">
+<h3 id="org6970cfe"><span class="section-number-3">8.1</span> Alias</h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+<a href="http://www.typescriptlang.org/docs/handbook/namespaces.html#aliases">TypeScript | Handbook | Namespaces | Aliases</a>
+</p>
+
+<p>
+Use aliases to keep namespaced keywords shorter:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">namespace</span> Foo {
+  <span class="org-keyword">export</span> <span class="org-keyword">class</span> <span class="org-type">Bar</span> {}
+}
+<span class="org-keyword">import</span> Bar = Foo.Bar;
+<span class="org-keyword">let</span> <span class="org-variable-name">bar</span> = <span class="org-keyword">new</span> <span class="org-type">Bar</span>();
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org75b36ff" class="outline-3">
+<h3 id="org75b36ff"><span class="section-number-3">8.2</span> Multiple Files</h3>
+<div class="outline-text-3" id="text-8-2">
+<p>
+Namespace can exist across multiple files:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-comment-delimiter">// </span><span class="org-comment">letters.ts</span>
+<span class="org-keyword">namespace</span> Validation {
+  <span class="org-keyword">const</span> <span class="org-variable-name">lettersRegexp</span> = <span class="org-string">/^[A-Za-z]+$/</span>;
+  <span class="org-keyword">export</span> <span class="org-keyword">function</span> <span class="org-function-name">isLetters</span>(<span class="org-variable-name">s</span>: <span class="org-keyword">string</span>) {
+    <span class="org-keyword">return</span> lettersRegexp.test(s);
+  }
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">numbers.ts</span>
+<span class="org-keyword">namespace</span> Validation {
+  <span class="org-keyword">const</span> <span class="org-variable-name">numbersRegexp</span> = <span class="org-string">/^[0-9]+$/</span>;
+  <span class="org-keyword">export</span> <span class="org-keyword">function</span> <span class="org-function-name">isNumbers</span>(<span class="org-variable-name">s</span>: <span class="org-keyword">string</span>) {
+    <span class="org-keyword">return</span> numbersRegexp.test(s);
+  }
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">app.ts</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">Import the namespace files</span>
+<span class="org-comment-delimiter">/// </span><span class="org-comment">&lt;reference path="letters.ts" /&gt;</span>
+<span class="org-comment-delimiter">/// </span><span class="org-comment">&lt;reference path="numbers.ts" /&gt;</span>
+console.log(Validation.isLetters(<span class="org-string">'foo'</span>));
+console.log(Validation.isNumbers(123));
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgac413b2" class="outline-3">
+<h3 id="orgac413b2"><span class="section-number-3">8.3</span> Nested Namespace</h3>
+<div class="outline-text-3" id="text-8-3">
+<p>
+Namespaces can be nested:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">namespace</span> Foo {
+  <span class="org-keyword">export</span> <span class="org-keyword">namespace</span> Bar { <span class="org-comment-delimiter">// </span><span class="org-comment">Namespace needs to be exported</span>
+    <span class="org-keyword">export</span> <span class="org-keyword">const</span> <span class="org-variable-name">message</span> = <span class="org-string">'hello'</span>;
+  }
+}
+console.log(Foo.Bar.message);
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga14df83" class="outline-2">
+<h2 id="orga14df83"><span class="section-number-2">9</span> Decorator</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+<a href="http://www.typescriptlang.org/docs/handbook/decorators.html">TypeScript | Handbook | Decorators</a>
+</p>
+
+<p>
+A decorator is an expression <code>@decorator</code> that can be attached to declarations of: class, method, accessor, property, parameter.
+</p>
+
+<p>
+The expression <code>decorator</code> must evaluate to a function at runtime. Information of the decorated entity, e.g. class constructor, is passed to the function.
+</p>
+</div>
+
+<div id="outline-container-org05d5cae" class="outline-3">
+<h3 id="org05d5cae"><span class="section-number-3">9.1</span> Decorator Composition</h3>
+<div class="outline-text-3" id="text-9-1">
+<p>
+Multiple decorator can be applied to one declaration:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">function</span> <span class="org-function-name">foo</span>(<span class="org-keyword">constructor</span>: <span class="org-variable-name">Function</span>) {
+  console.log(<span class="org-string">'This is foo.'</span>);
+}
+<span class="org-keyword">function</span> <span class="org-function-name">bar</span>(<span class="org-keyword">constructor</span>: <span class="org-variable-name">Function</span>) {
+  console.log(<span class="org-string">'This is bar.'</span>);
+}
+
+@foo @bar
+<span class="org-keyword">class</span> <span class="org-type">Test</span> {}
+
+<span class="org-keyword">let</span> <span class="org-variable-name">test</span> = <span class="org-keyword">new</span> <span class="org-type">Test</span>();
+<span class="org-comment-delimiter">// </span><span class="org-comment">This is bar. (Latest decorator runs first)</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">This is foo.</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8171688" class="outline-3">
+<h3 id="org8171688"><span class="section-number-3">9.2</span> Decorator Factory</h3>
+<div class="outline-text-3" id="text-9-2">
+<p>
+Decorator expressions doesn't need to be a function directly, it can be something that evaluates to a function:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">function</span> <span class="org-function-name">foo</span>(<span class="org-keyword">constructor</span>: <span class="org-variable-name">Function</span>) {}
+<span class="org-keyword">function</span> <span class="org-function-name">bar</span>(<span class="org-keyword">constructor</span>: <span class="org-variable-name">Function</span>) {}
+<span class="org-keyword">function</span> <span class="org-function-name">route</span>(<span class="org-variable-name">callFoo</span>: <span class="org-keyword">boolean</span>) {
+  <span class="org-keyword">return</span> callFoo ? foo : bar;
+}
+
+@route(<span class="org-keyword">true</span>) <span class="org-comment-delimiter">// </span><span class="org-comment">Evaluates to foo</span>
+<span class="org-keyword">class</span> <span class="org-type">ClassOne</span> {}
+
+@route(<span class="org-keyword">false</span>) <span class="org-comment-delimiter">// </span><span class="org-comment">Evaluates to bar</span>
+<span class="org-keyword">class</span> <span class="org-type">ClassTwo</span> {}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org460f2bd" class="outline-3">
+<h3 id="org460f2bd"><span class="section-number-3">9.3</span> Class Decorator</h3>
+<div class="outline-text-3" id="text-9-3">
+<p>
+Class decorator has one argument which is the constructor:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">function</span> <span class="org-function-name">foo</span>(<span class="org-keyword">constructor</span>: <span class="org-variable-name">Function</span>) {
+  <span class="org-keyword">constructor</span>.<span class="org-constant">prototype</span>.bar = 1;            <span class="org-comment-delimiter">// </span><span class="org-comment">Add prop</span>
+  <span class="org-keyword">constructor</span>.<span class="org-constant">prototype</span>.echo = <span class="org-keyword">function</span>() { <span class="org-comment-delimiter">// </span><span class="org-comment">Add method</span>
+    console.log(<span class="org-keyword">this</span>.bar);
+  }
+}
+
+@foo
+<span class="org-keyword">class</span> <span class="org-type">Test</span> {}
+
+<span class="org-keyword">let</span> <span class="org-variable-name">test</span> = <span class="org-keyword">new</span> <span class="org-type">Test</span>();
+test.echo(); <span class="org-comment-delimiter">// </span><span class="org-comment">1</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org89bba9b" class="outline-3">
+<h3 id="org89bba9b"><span class="section-number-3">9.4</span> Method Decorator</h3>
+<div class="outline-text-3" id="text-9-4">
+<p>
+Method decorator has 3 arguments:
+</p>
+
+<ul class="org-ul">
+<li>The class's constructor for a static method, or the class's prototype for a non-static method.</li>
+<li>The method's name.</li>
+<li>The method's property descriptor. <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty">MDN | JavaScript | Reference | Object | defineProperty</a></li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">function</span> <span class="org-function-name">setWritable</span>(<span class="org-variable-name">isWritable</span>: <span class="org-keyword">boolean</span>) {
+  <span class="org-keyword">return</span> <span class="org-keyword">function</span>(<span class="org-variable-name">target</span>: <span class="org-keyword">any</span>, <span class="org-variable-name">name</span>: <span class="org-keyword">string</span>, <span class="org-variable-name">descriptor</span>: <span class="org-variable-name">PropertyDescriptor</span>) {
+    descriptor.writable = isWritable;
+  }
+}
+
+<span class="org-keyword">class</span> <span class="org-type">Foo</span> {
+  @setWritable(<span class="org-keyword">true</span>)
+  getValue() { <span class="org-keyword">return</span> 1; }
+}
+
+<span class="org-keyword">let</span> <span class="org-variable-name">foo</span> = <span class="org-keyword">new</span> <span class="org-type">Foo</span>();
+foo.getValue();         <span class="org-comment-delimiter">// </span><span class="org-comment">1</span>
+foo.getValue = () =&gt; 2; <span class="org-comment-delimiter">// </span><span class="org-comment">OK: function is overwritten</span>
+foo.getValue();         <span class="org-comment-delimiter">// </span><span class="org-comment">2</span>
+
+<span class="org-keyword">class</span> <span class="org-type">Bar</span> {
+  @setWritable(<span class="org-keyword">false</span>)
+  getValue() { <span class="org-keyword">return</span> 1; }
+}
+
+<span class="org-keyword">let</span> <span class="org-variable-name">bar</span> = <span class="org-keyword">new</span> <span class="org-type">Bar</span>();
+bar.getValue();         <span class="org-comment-delimiter">// </span><span class="org-comment">1</span>
+bar.getValue = () =&gt; 2; <span class="org-comment-delimiter">// </span><span class="org-comment">Error: cannot assign to read-only property</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org99e242b" class="outline-3">
+<h3 id="org99e242b"><span class="section-number-3">9.5</span> Property Decorator</h3>
+<div class="outline-text-3" id="text-9-5">
+<p>
+Property decorator has 2 arguments:
+</p>
+
+<ul class="org-ul">
+<li>The class's constructor for a static property, or the class's prototype for a non-static property.</li>
+<li>The property's name.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge8dc27e" class="outline-3">
+<h3 id="orge8dc27e"><span class="section-number-3">9.6</span> Parameter Decorator</h3>
+<div class="outline-text-3" id="text-9-6">
+<p>
+Parameter decorator has 3 arguments
+</p>
+
+<ul class="org-ul">
+<li>The class's constructor for a static method, or the class's prototype for a non-static method.</li>
+<li>The method's name.</li>
+<li>The parameter's ordinal index.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6240e5c" class="outline-2">
+<h2 id="org6240e5c"><span class="section-number-2">10</span> Command</h2>
+<div class="outline-text-2" id="text-10">
+</div><div id="outline-container-org40ee3f3" class="outline-3">
+<h3 id="org40ee3f3"><span class="section-number-3">10.1</span> Install</h3>
+<div class="outline-text-3" id="text-10-1">
+<div class="org-src-container">
+<pre class="src src-sh">npm install -g typescript
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5f2c69f" class="outline-3">
+<h3 id="org5f2c69f"><span class="section-number-3">10.2</span> <code>tsc</code></h3>
+<div class="outline-text-3" id="text-10-2">
+<div class="org-src-container">
+<pre class="src src-sh">tsc &lt;options&gt; &lt;file&gt; ...
+  --init               <span class="org-comment-delimiter"># </span><span class="org-comment">Init config file</span>
+  -p, --project &lt;path&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">Specify path or directory of the config file</span>
+  -w, --watch          <span class="org-comment-delimiter"># </span><span class="org-comment">Watch mode</span>
+  &lt;file&gt; ...           <span class="org-comment-delimiter"># </span><span class="org-comment">Specify files to compile, ignore include/exclude settings</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org934482f" class="outline-2">
+<h2 id="org934482f"><span class="section-number-2">11</span> Configuration</h2>
+<div class="outline-text-2" id="text-11">
+</div><div id="outline-container-org03d56ea" class="outline-3">
+<h3 id="org03d56ea"><span class="section-number-3">11.1</span> <code>tsconfig.json</code></h3>
+<div class="outline-text-3" id="text-11-1">
+<p>
+Config file <code>tsconfig.json</code> is at the root of a TypeScript project. It specifies the root files and compiler options.
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 1: </span><code>tsconfig.json</code></label><pre class="src src-js">{
+  <span class="org-string">"compilerOptions"</span>: {
+    &lt;key&gt;: &lt;value&gt;
+  },
+  <span class="org-string">"files"</span>: [ <span class="org-comment-delimiter">// </span><span class="org-comment">Include files by absolute or relative paths</span>
+    &lt;filename&gt;
+  ],
+  <span class="org-string">"include"</span>: [ <span class="org-comment-delimiter">// </span><span class="org-comment">Include files by pattern</span>
+    &lt;pattern&gt;
+  ],
+  <span class="org-string">"exclude"</span>: [ <span class="org-comment-delimiter">// </span><span class="org-comment">Exclude files by pattern</span>
+    &lt;pattern&gt;
+  ]
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org41ed337" class="outline-3">
+<h3 id="org41ed337"><span class="section-number-3">11.2</span> Compiler Options</h3>
+<div class="outline-text-3" id="text-11-2">
+<p>
+<a href="http://www.typescriptlang.org/docs/handbook/compiler-options.html">TypeScript | Handbook | Project Configuration | Compiler Options</a>
+</p>
+</div>
+
+<div id="outline-container-org1e8ee18" class="outline-4">
+<h4 id="org1e8ee18"><span class="section-number-4">11.2.1</span> <code>noEmitOnError</code></h4>
+<div class="outline-text-4" id="text-11-2-1">
+<p>
+By default, if there is error in the TypeScript code at compile time, e.g. type error, the compiler gives warnings, but still generates the target JavaScript code. This behavior can be changed by setting option <code>noEmitOnError</code> to <code>true</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb42d5b2" class="outline-4">
+<h4 id="orgb42d5b2"><span class="section-number-4">11.2.2</span> <code>noImplicitAny</code></h4>
+<div class="outline-text-4" id="text-11-2-2">
+<p>
+By setting compiler option <code>noImplicitAny</code> to <code>true</code>, compiler will warn about variables of implicit type <code>any</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">let</span> <span class="org-variable-name">foo</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">Implicit type "any"</span>
+foo = 1;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7ddf291" class="outline-4">
+<h4 id="org7ddf291"><span class="section-number-4">11.2.3</span> <code>sourceMap</code></h4>
+<div class="outline-text-4" id="text-11-2-3">
+<p>
+By setting option <code>sourceMap</code> to <code>true</code>, compiler will generate a source map <code>.map</code> for the compiled <code>.js</code> file. With the source map, when debugging JavaScript in browser, breakpoints can be set on the source file <code>.ts</code>:
+</p>
+
+
+<div class="figure">
+<p><img src="../images/typescript/02.png" alt="02.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1003d38" class="outline-4">
+<h4 id="org1003d38"><span class="section-number-4">11.2.4</span> <code>strictNullChecks</code></h4>
+<div class="outline-text-4" id="text-11-2-4">
+<p>
+By setting option <code>strictNullChecks</code> to <code>true</code>, compiler will warn about variables that are possibly unassigned with a value, i.e. having value <code>null</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">function</span> <span class="org-function-name">foo</span>(<span class="org-variable-name">isTrue</span>: <span class="org-keyword">boolean</span>) {
+  <span class="org-keyword">let</span> <span class="org-variable-name">bar</span>: <span class="org-keyword">number</span>;
+  <span class="org-keyword">if</span> (isTrue) {
+    bar = 1; <span class="org-comment-delimiter">// </span><span class="org-comment">This may not happen, "bar" will ends up null</span>
+  }
+  <span class="org-keyword">return</span> bar;
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga7e4af1" class="outline-2">
+<h2 id="orga7e4af1"><span class="section-number-2">12</span> Declaration</h2>
+<div class="outline-text-2" id="text-12">
+<p>
+<a href="http://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html">TypeScript | Handbook | Declaration Files</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org27728b1" class="outline-2">
+<h2 id="org27728b1"><span class="section-number-2">13</span> Links</h2>
+<div class="outline-text-2" id="text-13">
+<ul class="org-ul">
+<li><a href="http://www.typescriptlang.org/docs/home.html">TypeScript | Documentation</a></li>
+<li><a href="http://www.typescriptlang.org/play/index.html">TypeScript | Playground</a></li>
+<li><a href="http://definitelytyped.org/">DefinitelyTyped</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2019-10-13 Sun 20:47</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

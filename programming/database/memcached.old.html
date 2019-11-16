@@ -1,0 +1,1265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Memcached</title>
+<!-- 2016-11-01 周二 20:19 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Memcached</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. 概念</a>
+<ul>
+<li><a href="#sec-1-1">1.1. 组成</a></li>
+<li><a href="#sec-1-2">1.2. 设计理念</a></li>
+<li><a href="#sec-1-3">1.3. 应用场景</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. 原理</a>
+<ul>
+<li><a href="#sec-2-1">2.1. 数据结构</a></li>
+<li><a href="#sec-2-2">2.2. 存储过程</a></li>
+<li><a href="#sec-2-3">2.3. 过期</a></li>
+<li><a href="#sec-2-4">2.4. 服务器选择</a>
+<ul>
+<li><a href="#sec-2-4-1">2.4.1. 一致性哈希（consistent hashing）</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-3">3. 配置</a></li>
+<li><a href="#sec-4">4. 优化</a></li>
+<li><a href="#sec-5">5. 命令</a>
+<ul>
+<li><a href="#sec-5-1">5.1. 安装</a></li>
+<li><a href="#sec-5-2">5.2. 命令行</a></li>
+<li><a href="#sec-5-3">5.3. CRUD</a></li>
+<li><a href="#sec-5-4">5.4. 状态</a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6. PHP</a>
+<ul>
+<li><a href="#sec-6-1">6.1. 配置</a></li>
+<li><a href="#sec-6-2">6.2. 示例</a></li>
+</ul>
+</li>
+<li><a href="#sec-7">7. 实践</a></li>
+<li><a href="#sec-8">8. 资源</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 概念</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>一个高性能、分布式的内存对象缓存系统（memory object caching system）。
+</li>
+<li>使用键值对，缓存数据库查询、API 调用、页面渲染产生的小块数据（字符串、对象）。
+</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="../images/memcached/01.png" alt="01.png" />
+</p>
+</div>
+
+<ul class="org-ul">
+<li>所有服务器共用一个虚拟内存池（virtual pool of memory）。
+</li>
+<li>一个指定的数据总是在网络集群（web cluster）中一个固定的位置读写。
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> 组成</h3>
+<div class="outline-text-3" id="text-1-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">客户端</th>
+<th scope="col" class="left">拥有一个可用的 Memcached 服务器列表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">客户端哈希算法</td>
+<td class="left">通过输入的键，选择一个服务器</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">服务器端</td>
+<td class="left">将输入的键值对存入一个内部哈希表</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">服务器端算法</td>
+<td class="left">内存不足时，删除过时数据，或复用内存</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> 设计理念</h3>
+<div class="outline-text-3" id="text-1-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">简单键值存储</th>
+<th scope="col" class="left">存储的数据中包含：键、原始数据（raw data）、过期时间、可选 flag</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">不关心数据结构，在存储数据前需要进行序列化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">客户端的任务</td>
+<td class="left">如何把数据发送到特定的服务器</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">如何处理连接不到服务器的情况</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">如何从服务器取得键</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">服务器端的任务</td>
+<td class="left">如何接收数据</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">如何处理过期数据</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">服务器之间无通信</td>
+<td class="left">服务器不了解彼此的存在，不存在串扰（crosstalk）、同步、广播</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">机器之间的交互越少，扩展性（scalability）越好</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">时间复杂度</td>
+<td class="left">（尽量做到）所有的操作都是 O(1) 复杂度</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">删除数据机制</td>
+<td class="left">默认是 LRU（Least Recently Used）原则，删除（flush）不使用的数据，保留经常访问的数据</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">数据也有指定的过期时间，以防止返回过时（stale）的数据</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> 应用场景</h3>
+<div class="outline-text-3" id="text-1-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>数据库查询结果</b></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>对象数据</b></td>
+<td class="left">考虑是否有必要序列化整个对象。</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">从缓存读取对象数据可以写在 constructor 里。</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">序列化应当尽量简单高效，对象的 setup、teardown 操作会耗费 CPU。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>页面渲染结果</b></td>
+<td class="left">套用模板可能比较耗时，可以把套用模板之后的页面文本（HTML）放入缓存。</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 原理</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 数据结构</h3>
+<div class="outline-text-3" id="text-2-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">item</th>
+<th scope="col" class="left">一个键值对（key + value + flags）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">chunk</td>
+<td class="left">保存数据的最小单位</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">大小固定，数据放入之后的剩余空间无法利用</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">slab</td>
+<td class="left">由同样大小的 chunk 组成的集合</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">不同 slab 之间的 chunk 的比例关系由增长因子决定</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">page</td>
+<td class="left">内存分页，固定大小为 1M，是 Memcached 申请内存的最小单位</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">分页大小 = chunk 大小 x chunk 数量</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">分配给某个 slab 的内存页，不能再重新分配给其他 slab</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">growth factor</td>
+<td class="left">增长因子，默认值 1.25</td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="figure">
+<p><img src="../images/memcached/02.jpg" alt="02.jpg" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> 存储过程</h3>
+<div class="outline-text-3" id="text-2-2">
+<ol class="org-ol">
+<li>计算 item 大小，选取合适的 slab（能放下该 item 的最小的 slab）。
+</li>
+<li>如果对应的 slab 不存在，申请一个 page，该 item 存入 slab 中的 chunk。
+</li>
+<li>如果对应的 slab 存在，按照以下优先级选择 chunk。
+<ul class="org-ul">
+<li>expired（free_chunks）
+</li>
+<li>deleted
+</li>
+<li>未使用过的（free_chunks_end）
+</li>
+</ul>
+</li>
+<li>如果对应的 slab 存在且已经存储满了，申请一个新的 page，分为对应大小的 chunk，继续存储。
+</li>
+<li>如果对应的 slab 存在且已经存储满了，且达到了最大内存使用，将使用 LRU 算法，清除 item（eviction）。
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> 过期</h3>
+<div class="outline-text-3" id="text-2-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> 过期时间</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">0</th>
+<th scope="col" class="left">永远不过期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">&lt;= 30 * 24 * 3600</td>
+<td class="left">解读为秒数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&gt; 30 * 24 * 3600</td>
+<td class="left">解读为 UNIX 时间戳</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> 过期机制</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Lazy expiration</th>
+<th scope="col" class="left">不主动将数据标为过期，只有查询到这个数据时，才会检查是否过期。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> 服务器选择</h3>
+<div class="outline-text-3" id="text-2-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>余数算法</b></th>
+<th scope="col" class="left">简单、高效，但在服务器增减时，会导致大量的缓存失效</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>散列算法（一致性哈希）</b></td>
+<td class="left">添加服务器时，只有一台服务器上的部分缓存会受到影响</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-2-4-1" class="outline-4">
+<h4 id="sec-2-4-1"><span class="section-number-4">2.4.1</span> 一致性哈希（consistent hashing）</h4>
+<div class="outline-text-4" id="text-2-4-1">
+
+<div class="figure">
+<p><img src="../images/memcached/03.jpg" alt="03.jpg" />
+</p>
+</div>
+
+<p>
+算法步骤：
+</p>
+
+<ol class="org-ol">
+<li>求出每个服务器节点的哈希值，分布到 0～2^32 的圆（continuum）上。
+</li>
+<li>求出 key 的哈希值，映射到圆上。
+</li>
+<li>从映射位置开始顺时针查找， 将数据保存到找到的第一个节点上。
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 配置</h2>
+<div class="outline-text-2" id="text-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>KEY_MAX_LENGTH</code></th>
+<th scope="col" class="left">最大 key 长度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>POWER_BLOCK</code></td>
+<td class="left">最大单个 item 大小</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>REALTIME_MAXDELTA</code></td>
+<td class="left">最大过期时间（过期时间设为 0 时即按照此最大时间过期）</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 3:</span> settings</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>chunk_size</code></th>
+<th scope="col" class="left">初始 chunk 大小</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>growth_factor</code></td>
+<td class="left">增长因子</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>maxconns</code></td>
+<td class="left">最大软连接数（？）</td>
+</tr>
+</tbody>
+</table>
+
+<hr  />
+
+<p>
+服务器列表
+</p>
+<ul class="org-ul">
+<li>使所有客户端上的服务器列表配置一致，否则各客户端的 map 方式可能会不一致，产生混乱；
+</li>
+<li>可以在服务器列表上设置「权重」，或者使某个服务器在列表中多次出现，调整服务器被选中概率；
+</li>
+</ul>
+
+<hr  />
+
+<p>
+连接对象（connection object）
+</p>
+<ul class="org-ul">
+<li>如果每次连接服务器都初始化一个连接对象，连接数过多，可能会泄露（leak connection）；
+</li>
+<li>需要搞清楚客户端的机制（何种操作是否会创建连接）；
+</li>
+</ul>
+
+<hr  />
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">故障切换（failover）</th>
+<th scope="col" class="left">一个服务器故障时，其上的所有 key 会被重新分配到其他服务器</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">故障（fail）</td>
+<td class="left">一个服务器连接不上时，作为 cache miss 处理</td>
+</tr>
+</tbody>
+</table>
+
+<ul class="org-ul">
+<li>当故障的服务器重新上线时，这两种机制都会产生新旧数据版本混乱的问题，但「故障」机制的影响更小；
+</li>
+</ul>
+
+<hr  />
+
+<p>
+压缩
+</p>
+<ul class="org-ul">
+<li>对大块数据进行压缩，可以减少读取时间；
+</li>
+<li>对小块数据进行压缩，可能反而不经济，浪费 CPU；
+</li>
+<li>客户端可以配置进行、不进行压缩的文件大小范围；
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 优化</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+chunk
+</p>
+<ul class="org-ul">
+<li>存储超过 1M 的数据会使用多个 chunk，导致计算量和时间增加；
+</li>
+<li>对于不同的业务，可以分配使用不同的 Memcached 实例进行特别的设置，以更有效地利用空间；
+</li>
+</ul>
+
+<hr  />
+
+<p>
+key
+</p>
+<ul class="org-ul">
+<li>Memcached 不仅对 key 进行哈希，同时也保存原本的 key，所以 key 应当尽量短，以节省空间；
+</li>
+<li>避免使用用户输入作为 key；
+</li>
+<li>ASCII（基于文本的）通信协议支持空格和换行字符，要确保这些字符不会出现在 key 中；
+</li>
+<li>key 要包含一定附加信息，因为 md5 之后的 key 无法识别来源，可以有两种做法：
+<ul class="org-ul">
+<li>把查询语句和 md5 对照表输出到外部文件；
+</li>
+<li>给每个查询语句分配一个 id，将 id 加入 key 中；
+</li>
+</ul>
+</li>
+</ul>
+
+<hr  />
+
+<p>
+虚拟节点
+</p>
+<ul class="org-ul">
+<li>在服务器数量比较少的时候，可以增加虚拟节点，保证服务器能均匀地分布在圆环上；
+</li>
+</ul>
+
+<hr  />
+
+<p>
+线程模式
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">./configure --enable-threads              <span class="org-comment-delimiter"># </span><span class="org-comment">&#23433;&#35013;&#26102;</span>
+/usr/local/memcache/bin/memcached -t 1024 <span class="org-comment-delimiter"># </span><span class="org-comment">&#21551;&#21160;&#26102;</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> 命令</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> 安装</h3>
+<div class="outline-text-3" id="text-5-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">apt-get install memcached
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> 命令行</h3>
+<div class="outline-text-3" id="text-5-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">memcached &lt;options&gt;
+    -h <span class="org-comment-delimiter"># </span><span class="org-comment">Help</span>
+    -V <span class="org-comment-delimiter"># </span><span class="org-comment">Version</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> CRUD</h3>
+<div class="outline-text-3" id="text-5-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>读</b></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>get</code></td>
+<td class="left">取数据，单条</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>get_multi</code></td>
+<td class="left">取数据，多条</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>写</b></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>set</code></td>
+<td class="left">写入数据，如果 key 已存在则替换</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>add</code></td>
+<td class="left">写入数据，如果 key 已存在则返回 STORED</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>replace</code></td>
+<td class="left">替换数据，如果 key 不存在则返回 NOT_STORED</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>cas</code></td>
+<td class="left">改变一个存在的 key 值 ，还带有检查功能（？）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>append</code></td>
+<td class="left">添加数据，在给定 key 之后</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>prepend</code></td>
+<td class="left">添加数据，在给定 key 之前</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>delete</code></td>
+<td class="left">删除数据</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<label class="org-src-name"><code>set</code> 语法</label>
+<pre class="src src-code">set &lt;key&gt; &lt;flag&gt; &lt;expire_seconds&gt; &lt;value_bytes&gt;
+&lt;value&gt;
+&gt; STORED
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><code>get</code> 语法</label>
+<pre class="src src-code">get &lt;key&gt;
+&gt; VALUE &lt;key&gt; &lt;flag&gt; &lt;value_bytes&gt;
+&gt; &lt;value&gt;
+&gt; END
+</pre>
+</div>
+
+<p>
+&lt;flag&gt;
+</p>
+<ul class="org-ul">
+<li>16 位无符号整数，作为标志位，意义取决于客户端的定义；
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-5-4" class="outline-3">
+<h3 id="sec-5-4"><span class="section-number-3">5.4</span> 状态</h3>
+<div class="outline-text-3" id="text-5-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>stats</code></th>
+<th scope="col" class="left">全局状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>stats curr_connections</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>stats items</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>stats slabs</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 4:</span> <code>stats items</code> 数据项</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>evicted</code></th>
+<th scope="col" class="left">「踢出」次数，如果过大，证明分配的内存不够</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>reclaimed</code></td>
+<td class="left">超时回收次数，如果过大，证明过期时间设置太短</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> PHP</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+PHP 有两个实现 Memcached 客户端的模块
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">pecl/memcache</th>
+<th scope="col" class="left">直接使用 memcache daemon</th>
+<th scope="col" class="left">基本功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">pecl/memcached</td>
+<td class="left">封装了 libMemcached 库，使用 igbinary PHP 扩展</td>
+<td class="left">有附加功能</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<a href="http://blackbe.lt/php-memcache-vs-memcached/">http://blackbe.lt/php-memcache-vs-memcached/</a><br  />
+<a href="http://code.google.com/p/memcached/wiki/PHPClientComparison">http://code.google.com/p/memcached/wiki/PHPClientComparison</a>
+</p>
+
+<hr  />
+
+<p>
+Server key
+</p>
+<ul class="org-ul">
+<li>标示指定服务器；
+</li>
+<li>用于将（相关的）数据缓存到指定服务器，以提高效率；
+</li>
+</ul>
+
+<hr  />
+
+<p>
+Read-through cache callbacks
+</p>
+<ul class="org-ul">
+<li>在某个数据无法从服务器获取时调用的 callback；
+</li>
+<li>获得：Memcached 对象、要读取的 key、和通过引用传递的 value 变量；
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-php">$<span class="org-variable-name">profile_info</span> = $<span class="org-variable-name">m</span>-&gt;<span class="org-function-name">get</span>(<span class="org-string">'user:'</span>.$<span class="org-variable-name">user_id</span>, <span class="org-string">'user_info_cb'</span>);
+<span class="org-keyword">function</span> <span class="org-function-name">user_info_cb</span>($<span class="org-variable-name">memc</span>, $<span class="org-variable-name">key</span>, &amp;$<span class="org-variable-name">value</span>) {
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">lookup profile info in the DB </span><span class="org-comment-delimiter">*/</span>
+    ...
+    $<span class="org-variable-name">value</span> = $<span class="org-variable-name">profile_info</span>;
+    <span class="org-keyword">return</span> <span class="org-constant">true</span>;
+}
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> 配置</h3>
+<div class="outline-text-3" id="text-6-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">含义</th>
+<th scope="col" class="left">类型</th>
+<th scope="col" class="right">默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>allow_failover</code></td>
+<td class="left">错误时是否透明地（transparently）故障切换到其他服务器</td>
+<td class="left"><code>boolean</code></td>
+<td class="right">1</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>chunk_size</code></td>
+<td class="left">数据被切分成指定大小，然后进行传输</td>
+<td class="left"><code>int</code></td>
+<td class="right">8192</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">块过小会导致网络写（network write）次数增加</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>compress_threshold</code></td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>int</code></td>
+<td class="right">20000</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>default_port</code></td>
+<td class="left">默认用于连接服务器的 TCP 端口号</td>
+<td class="left"><code>string</code></td>
+<td class="right">11211</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>hash_function</code></td>
+<td class="left">将 key 映射到服务器的哈希函数</td>
+<td class="left"><code>string</code></td>
+<td class="right">crc32</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>hash_strategy</code></td>
+<td class="left">将 key 映射到服务器的策略</td>
+<td class="left"><code>string</code></td>
+<td class="right">standard</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">设为 <code>consistent</code> 以激活一致性哈希</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>lock_timeout</code></td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>int</code></td>
+<td class="right">15</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>max_failover_attempts</code></td>
+<td class="left">设置、读取数据时尝试的最大次数</td>
+<td class="left"><code>int</code></td>
+<td class="right">20</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">与 <code>allow_failover</code> 结合使用</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>protocol</code></td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>string</code></td>
+<td class="right">ascii</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>redundancy</code></td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>int</code></td>
+<td class="right">1</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>session_redundancy</code></td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>int</code></td>
+<td class="right">2</td>
+</tr>
+</tbody>
+</table>
+
+<hr  />
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 5:</span> <code>php.ini</code></caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>session.save_handler</code></th>
+<th scope="col" class="left">设为 <code>memcached</code> 以用于存储会话数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>session.save_path</code></td>
+<td class="left">存储路径，eg. <code>tcp://host1:11211, tcp://host2:11211</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+不推荐使用 Memcached 存储 session
+</p>
+<ul class="org-ul">
+<li>如果用户登出，session 应当结束，没有必要保留 session 数据；
+</li>
+<li>如果因为故障，一部分缓存数据消失，用户 session 不应该受到影响；
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> 示例</h3>
+<div class="outline-text-3" id="text-6-2">
+<div class="org-src-container">
+<label class="org-src-name">缓存数据库查询结果</label>
+<pre class="src src-php">$<span class="org-variable-name">MEMCACHE_SERVERS</span> = <span class="org-function-name">array</span>(
+    <span class="org-string">"10.1.1.1"</span>, <span class="org-comment-delimiter">// </span><span class="org-comment">web1</span>
+    <span class="org-string">"10.1.1.2"</span>, <span class="org-comment-delimiter">// </span><span class="org-comment">web2</span>
+    <span class="org-string">"10.1.1.3"</span>, <span class="org-comment-delimiter">// </span><span class="org-comment">web3</span>
+);
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#21021;&#22987;&#21270;&#23458;&#25143;&#31471;</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#21482;&#21021;&#22987;&#21270;&#19968;&#27425;&#23458;&#25143;&#31471;&#23545;&#35937;&#65292;&#22810;&#27425;&#21021;&#22987;&#21270;&#21487;&#33021;&#20250;&#36896;&#25104;&#20869;&#23384;&#27844;&#38706;&#65288;memory leak&#65289;</span>
+$<span class="org-variable-name">memcache</span> = <span class="org-keyword">new</span> <span class="org-type">Memcache</span>();
+<span class="org-keyword">foreach</span> ($<span class="org-variable-name">MEMCACHE_SERVERS</span> <span class="org-keyword">as</span> $<span class="org-variable-name">server</span>) {
+    $<span class="org-variable-name">memcache</span>-&gt;<span class="org-function-name">addServer</span>($<span class="org-variable-name">server</span>);
+}
+
+$<span class="org-variable-name">sql</span> = <span class="org-string">"SELECT * ... WHERE id = $id"</span>;
+$<span class="org-variable-name">key</span> = <span class="org-string">'SQL:'</span> . $<span class="org-variable-name">id</span> . <span class="org-string">':'</span> . <span class="org-function-name">md5</span>($<span class="org-variable-name">sql</span>);
+
+$<span class="org-variable-name">data</span> = $<span class="org-variable-name">memcache</span>-&gt;<span class="org-function-name">get</span>($<span class="org-variable-name">key</span>);
+<span class="org-keyword">if</span> ($<span class="org-variable-name">data</span> === <span class="org-constant">false</span>) {
+    $<span class="org-variable-name">data</span> = <span class="org-function-name">array</span>();
+    $<span class="org-variable-name">res</span> = <span class="org-function-name">mysql_query</span>($<span class="org-variable-name">sql</span>, $<span class="org-variable-name">mysql_connection</span>);
+    <span class="org-keyword">while</span> ($<span class="org-variable-name">rec</span> = <span class="org-function-name">mysql_fetch_assoc</span>($<span class="org-variable-name">res</span>)) {
+        $<span class="org-variable-name">data</span>[] = $<span class="org-variable-name">rec</span>;
+    }
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#25968;&#25454;&#24211;&#26597;&#35810;&#32467;&#26524;&#25918;&#20837;&#32531;&#23384;&#65292;&#26377;&#25928;&#26399; 10 &#20998;&#38047;</span>
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#23613;&#37327;&#25226;&#22810;&#20010;&#26377;&#20851;&#32852;&#30340;&#26597;&#35810;&#30340;&#32467;&#26524;&#19968;&#36215;&#25918;&#20837;&#32531;&#23384;&#65292;&#24615;&#33021;&#20250;&#26356;&#22909;</span>
+    $<span class="org-variable-name">memcache</span>-&gt;<span class="org-function-name">set</span>($<span class="org-variable-name">key</span>, $<span class="org-variable-name">data</span>, <span class="org-default">0</span>, <span class="org-default">600</span>);
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> 实践</h2>
+<div class="outline-text-2" id="text-7">
+<ul class="org-ul">
+<li>查看流（flow）比查看状态（state）更有意义；
+</li>
+<li>使用 <code>-vv</code> 或 <code>-vvv</code> 模式可以查看 Memcached 的运行和操作；
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> 资源</h2>
+<div class="outline-text-2" id="text-8">
+<ol class="org-ol">
+<li><a href="https://github.com/memcached/memcached/wiki">Memcached Wiki</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2016-11-01 周二 20:19</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

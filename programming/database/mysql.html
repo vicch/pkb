@@ -1,0 +1,1133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-05-18 Fri 11:41 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MySQL</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">MySQL</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org9601157">1. 概念</a>
+<ul>
+<li><a href="#org5ca17ea">1.1. 引擎</a></li>
+</ul>
+</li>
+<li><a href="#org4aaea27">2. 类型</a>
+<ul>
+<li><a href="#org56519ee">2.1. 整形</a></li>
+</ul>
+</li>
+<li><a href="#orgf73e629">3. DDS</a>
+<ul>
+<li><a href="#org61b788d">3.1. <code>CREATE</code></a>
+<ul>
+<li><a href="#org1f9e1b9">3.1.1. <code>CREATE DATABASE</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org76109fd">4. DMS</a></li>
+<li><a href="#org275b3ed">5. DAS</a>
+<ul>
+<li><a href="#org557caa5">5.1. <code>SHOW</code></a>
+<ul>
+<li><a href="#orgd1642bd">5.1.1. <code>SHOW CREATE TABLE</code></a></li>
+<li><a href="#org17fca73">5.1.2. <code>SHOW DATABASES</code></a></li>
+<li><a href="#orgcdd2b8e">5.1.3. <code>SHOW TABLES</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org392a239">6. SQL</a>
+<ul>
+<li><a href="#orge900d7d">6.1. 表</a>
+<ul>
+<li><a href="#orgab05b29">6.1.1. <code>CREATE</code></a></li>
+<li><a href="#org00b538b">6.1.2. <code>TRUNCATE</code></a></li>
+<li><a href="#org3900f00">6.1.3. <code>DROP</code></a></li>
+</ul>
+</li>
+<li><a href="#orgabf1568">6.2. 列</a>
+<ul>
+<li><a href="#orgae09dac">6.2.1. 添加列</a></li>
+<li><a href="#org2b460e2">6.2.2. 删除列</a></li>
+<li><a href="#orgfa7b294">6.2.3. 修改列</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org8fabf1b">7. 函数</a>
+<ul>
+<li><a href="#org2f4a844">7.1. 数字</a></li>
+<li><a href="#orge8d4194">7.2. 字符串</a></li>
+<li><a href="#org1805c40">7.3. 正则</a>
+<ul>
+<li><a href="#org870b7f1">7.3.1. <code>REGEXP</code></a></li>
+</ul>
+</li>
+<li><a href="#org80fee03">7.4. 日期</a>
+<ul>
+<li><a href="#org72c405d">7.4.1. <code>DATE_ADD()</code></a></li>
+</ul>
+</li>
+<li><a href="#org08dc34d">7.5. 控制流</a>
+<ul>
+<li><a href="#orgec971aa">7.5.1. <code>CASE</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org9706232">8. 命令</a>
+<ul>
+<li><a href="#orge556ca6">8.1. <code>mysql</code></a></li>
+<li><a href="#orgcc2c12b">8.2. <code>mysqldump</code></a></li>
+<li><a href="#orgb704f9e">8.3. 命令行</a></li>
+<li><a href="#org3769619">8.4. <code>service</code></a></li>
+</ul>
+</li>
+<li><a href="#orgc7a11fd">9. 配置</a></li>
+<li><a href="#org9aa4e3b">10. 使用</a>
+<ul>
+<li><a href="#org58135a1">10.1. 安装</a></li>
+<li><a href="#org41aecbd">10.2. Debug</a>
+<ul>
+<li><a href="#org9943628">10.2.1. 表</a></li>
+<li><a href="#orgaada008">10.2.2. 引擎</a></li>
+<li><a href="#org9d3e4ee">10.2.3. 其他</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org8bd1dba">11. 链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org9601157" class="outline-2">
+<h2 id="org9601157"><span class="section-number-2">1</span> 概念</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-org5ca17ea" class="outline-3">
+<h3 id="org5ca17ea"><span class="section-number-3">1.1</span> 引擎</h3>
+<div class="outline-text-3" id="text-1-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">锁级别</th>
+<th scope="col" class="org-left">外键约束</th>
+<th scope="col" class="org-left">全文搜索</th>
+<th scope="col" class="org-left">事务处理</th>
+<th scope="col" class="org-left">压缩</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">MyISAM</td>
+<td class="org-left">表级</td>
+<td class="org-left">不支持</td>
+<td class="org-left">支持</td>
+<td class="org-left">不支持</td>
+<td class="org-left">支持</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">InnoDB</td>
+<td class="org-left">行级</td>
+<td class="org-left">支持</td>
+<td class="org-left">不支持</td>
+<td class="org-left">支持</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>MyISAM</b></th>
+<th scope="col" class="org-left"><code>SELECT</code> 执行速度更快。</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">相对简单，维护成本低，适合小型应用。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>InnoDB</b></td>
+<td class="org-left"><code>INSERT</code> 和 <code>UPDATE</code> 执行速度更快， <code>SELECT</code> 性能较差。</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">高并发时性能更好。</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">支持聚集索引，按照主键进行聚集。</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4aaea27" class="outline-2">
+<h2 id="org4aaea27"><span class="section-number-2">2</span> 类型</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-org56519ee" class="outline-3">
+<h3 id="org56519ee"><span class="section-number-3">2.1</span> 整形</h3>
+<div class="outline-text-3" id="text-2-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-right">字节</th>
+<th scope="col" class="org-left"><code>UNSIGNED</code></th>
+<th scope="col" class="org-left"><code>UNSIGNED</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>TINYINT</code></td>
+<td class="org-right">1</td>
+<td class="org-left">-128 ~ 127</td>
+<td class="org-left">0 ~ 255</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>SMALLINT</code></td>
+<td class="org-right">2</td>
+<td class="org-left">-32768 ~ 32767</td>
+<td class="org-left">0 ~ 65535</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>MEDIUMINT</code></td>
+<td class="org-right">3</td>
+<td class="org-left">-8388608 ~ 8388607</td>
+<td class="org-left">0 ~ 16777215</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>INT</code></td>
+<td class="org-right">4</td>
+<td class="org-left">-2147483648 ~ 2147483647</td>
+<td class="org-left">0 ~ 4294967295</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>BIGINT</code></td>
+<td class="org-right">8</td>
+<td class="org-left">-9223372036854775808 ~ 9223372036854775807</td>
+<td class="org-left">0 ~ 18446744073709551615</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf73e629" class="outline-2">
+<h2 id="orgf73e629"><span class="section-number-2">3</span> DDS</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-org61b788d" class="outline-3">
+<h3 id="org61b788d"><span class="section-number-3">3.1</span> <code>CREATE</code></h3>
+<div class="outline-text-3" id="text-3-1">
+</div><div id="outline-container-org1f9e1b9" class="outline-4">
+<h4 id="org1f9e1b9"><span class="section-number-4">3.1.1</span> <code>CREATE DATABASE</code></h4>
+<div class="outline-text-4" id="text-3-1-1">
+<div class="org-src-container">
+<pre class="src src-sql"><span class="org-keyword">CREATE</span> {<span class="org-keyword">DATABASE</span> | <span class="org-keyword">SCHEMA</span>} [<span class="org-keyword">IF</span> <span class="org-keyword">NOT</span> <span class="org-keyword">EXISTS</span>] db_name
+    [create_specification] ...
+
+create_specification:
+    [<span class="org-keyword">DEFAULT</span>] <span class="org-keyword">CHARACTER</span> <span class="org-keyword">SET</span> [=] charset_name
+  | [<span class="org-keyword">DEFAULT</span>] <span class="org-keyword">COLLATE</span> [=] <span class="org-keyword">collation_name</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 1: </span>示例</label><pre class="src src-sql"><span class="org-keyword">CREATE</span> <span class="org-keyword">DATABASE</span> `foo`
+<span class="org-keyword">DEFAULT</span> <span class="org-keyword">CHARACTER</span> <span class="org-keyword">SET</span> utf8
+<span class="org-keyword">DEFAULT</span> <span class="org-keyword">COLLATE</span> utf8_unicode_ci;
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org76109fd" class="outline-2">
+<h2 id="org76109fd"><span class="section-number-2">4</span> DMS</h2>
+</div>
+<div id="outline-container-org275b3ed" class="outline-2">
+<h2 id="org275b3ed"><span class="section-number-2">5</span> DAS</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-org557caa5" class="outline-3">
+<h3 id="org557caa5"><span class="section-number-3">5.1</span> <code>SHOW</code></h3>
+<div class="outline-text-3" id="text-5-1">
+</div><div id="outline-container-orgd1642bd" class="outline-4">
+<h4 id="orgd1642bd"><span class="section-number-4">5.1.1</span> <code>SHOW CREATE TABLE</code></h4>
+<div class="outline-text-4" id="text-5-1-1">
+<div class="org-src-container">
+<pre class="src src-sql"><span class="org-keyword">SHOW</span> <span class="org-keyword">CREATE</span> <span class="org-keyword">TABLE</span> tbl_name
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org17fca73" class="outline-4">
+<h4 id="org17fca73"><span class="section-number-4">5.1.2</span> <code>SHOW DATABASES</code></h4>
+<div class="outline-text-4" id="text-5-1-2">
+<div class="org-src-container">
+<pre class="src src-sql"><span class="org-keyword">SHOW</span> {DATABASES | SCHEMAS}
+    [<span class="org-keyword">LIKE</span> <span class="org-string">'pattern'</span> | <span class="org-keyword">WHERE</span> expr]
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcdd2b8e" class="outline-4">
+<h4 id="orgcdd2b8e"><span class="section-number-4">5.1.3</span> <code>SHOW TABLES</code></h4>
+<div class="outline-text-4" id="text-5-1-3">
+<div class="org-src-container">
+<pre class="src src-sql"><span class="org-keyword">SHOW</span> [<span class="org-keyword">FULL</span>] <span class="org-keyword">TABLES</span>
+    [{<span class="org-builtin">FROM</span> | <span class="org-keyword">IN</span>} db_name]
+    [<span class="org-keyword">LIKE</span> <span class="org-string">'pattern'</span> | <span class="org-keyword">WHERE</span> expr]
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org392a239" class="outline-2">
+<h2 id="org392a239"><span class="section-number-2">6</span> SQL</h2>
+<div class="outline-text-2" id="text-6">
+</div><div id="outline-container-orge900d7d" class="outline-3">
+<h3 id="orge900d7d"><span class="section-number-3">6.1</span> 表</h3>
+<div class="outline-text-3" id="text-6-1">
+</div><div id="outline-container-orgab05b29" class="outline-4">
+<h4 id="orgab05b29"><span class="section-number-4">6.1.1</span> <code>CREATE</code></h4>
+<div class="outline-text-4" id="text-6-1-1">
+<div class="org-src-container">
+<pre class="src src-sql"><span class="org-keyword">CREATE</span> [<span class="org-keyword">TEMPORARY</span>] <span class="org-keyword">TABLE</span> [<span class="org-keyword">IF</span> <span class="org-keyword">NOT</span> <span class="org-keyword">EXISTS</span>] tbl_name
+    (create_definition,...)
+    [table_options]
+    [partition_options]
+
+<span class="org-keyword">CREATE</span> [<span class="org-keyword">TEMPORARY</span>] <span class="org-keyword">TABLE</span> [<span class="org-keyword">IF</span> <span class="org-keyword">NOT</span> <span class="org-keyword">EXISTS</span>] tbl_name
+    [(create_definition,...)]
+    [table_options]
+    [partition_options]
+    select_statement
+
+<span class="org-keyword">CREATE</span> [<span class="org-keyword">TEMPORARY</span>] <span class="org-keyword">TABLE</span> [<span class="org-keyword">IF</span> <span class="org-keyword">NOT</span> <span class="org-keyword">EXISTS</span>] tbl_name
+    { <span class="org-keyword">LIKE</span> old_tbl_name | (<span class="org-keyword">LIKE</span> old_tbl_name) }
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-sql">create_definition:
+    col_name column_definition
+  | [<span class="org-keyword">CONSTRAINT</span> [symbol]] <span class="org-keyword">PRIMARY</span> <span class="org-keyword">KEY</span> [index_type] (index_col_name,...)
+      [index_option] ...
+  | {<span class="org-keyword">INDEX</span>|<span class="org-keyword">KEY</span>} [index_name] [index_type] (index_col_name,...)
+      [index_option] ...
+  | [<span class="org-keyword">CONSTRAINT</span> [symbol]] <span class="org-keyword">UNIQUE</span> [<span class="org-keyword">INDEX</span>|<span class="org-keyword">KEY</span>]
+      [index_name] [index_type] (index_col_name,...)
+      [index_option] ...
+  | {<span class="org-keyword">FULLTEXT</span>|SPATIAL} [<span class="org-keyword">INDEX</span>|<span class="org-keyword">KEY</span>] [index_name] (index_col_name,...)
+      [index_option] ...
+  | [<span class="org-keyword">CONSTRAINT</span> [symbol]] <span class="org-keyword">FOREIGN</span> <span class="org-keyword">KEY</span>
+      [index_name] (index_col_name,...) reference_definition
+  | <span class="org-keyword">CHECK</span> (expr)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-sql">column_definition:
+    data_type [<span class="org-keyword">NOT</span> <span class="org-keyword">NULL</span> | <span class="org-keyword">NULL</span>] [<span class="org-keyword">DEFAULT</span> default_value]
+      [<span class="org-keyword">AUTO_INCREMENT</span>] [<span class="org-keyword">UNIQUE</span> [<span class="org-keyword">KEY</span>] | [<span class="org-keyword">PRIMARY</span>] <span class="org-keyword">KEY</span>]
+      [<span class="org-keyword">COMMENT</span> <span class="org-string">'string'</span>]
+      [COLUMN_FORMAT {<span class="org-type">FIXED</span>|<span class="org-keyword">DYNAMIC</span>|<span class="org-keyword">DEFAULT</span>}]
+      [reference_definition]
+  | data_type [<span class="org-keyword">GENERATED</span> ALWAYS] <span class="org-keyword">AS</span> (expression)
+      [VIRTUAL | STORED] [<span class="org-keyword">UNIQUE</span> [<span class="org-keyword">KEY</span>]] [<span class="org-keyword">COMMENT</span> <span class="org-keyword">comment</span>]
+      [<span class="org-keyword">NOT</span> <span class="org-keyword">NULL</span> | <span class="org-keyword">NULL</span>] [[<span class="org-keyword">PRIMARY</span>] <span class="org-keyword">KEY</span>]
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-sql">data_type:
+    <span class="org-type">BIT</span>[(<span class="org-builtin">length</span>)]
+  | <span class="org-type">TINYINT</span>[(<span class="org-builtin">length</span>)] [<span class="org-type">UNSIGNED</span>] [<span class="org-type">ZEROFILL</span>]
+  | <span class="org-type">SMALLINT</span>[(<span class="org-builtin">length</span>)] [<span class="org-type">UNSIGNED</span>] [<span class="org-type">ZEROFILL</span>]
+  | <span class="org-type">MEDIUMINT</span>[(<span class="org-builtin">length</span>)] [<span class="org-type">UNSIGNED</span>] [<span class="org-type">ZEROFILL</span>]
+  | <span class="org-type">INT</span>[(<span class="org-builtin">length</span>)] [<span class="org-type">UNSIGNED</span>] [<span class="org-type">ZEROFILL</span>]
+  | <span class="org-type">INTEGER</span>[(<span class="org-builtin">length</span>)] [<span class="org-type">UNSIGNED</span>] [<span class="org-type">ZEROFILL</span>]
+  | <span class="org-type">BIGINT</span>[(<span class="org-builtin">length</span>)] [<span class="org-type">UNSIGNED</span>] [<span class="org-type">ZEROFILL</span>]
+  | <span class="org-type">REAL</span>[(<span class="org-builtin">length</span>,decimals)] [<span class="org-type">UNSIGNED</span>] [<span class="org-type">ZEROFILL</span>]
+  | <span class="org-type">DOUBLE</span>[(<span class="org-builtin">length</span>,decimals)] [<span class="org-type">UNSIGNED</span>] [<span class="org-type">ZEROFILL</span>]
+  | <span class="org-type">FLOAT</span>[(<span class="org-builtin">length</span>,decimals)] [<span class="org-type">UNSIGNED</span>] [<span class="org-type">ZEROFILL</span>]
+  | <span class="org-type">DECIMAL</span>[(<span class="org-builtin">length</span>[,decimals])] [<span class="org-type">UNSIGNED</span>] [<span class="org-type">ZEROFILL</span>]
+  | <span class="org-type">NUMERIC</span>[(<span class="org-builtin">length</span>[,decimals])] [<span class="org-type">UNSIGNED</span>] [<span class="org-type">ZEROFILL</span>]
+  | <span class="org-type">DATE</span>
+  | <span class="org-type">TIME</span>[(fsp)]
+  | <span class="org-type">TIMESTAMP</span>[(fsp)]
+  | <span class="org-type">DATETIME</span>[(fsp)]
+  | <span class="org-type">YEAR</span>
+  | <span class="org-type">CHAR</span>[(<span class="org-builtin">length</span>)] [<span class="org-type">BINARY</span>]
+      [<span class="org-keyword">CHARACTER</span> <span class="org-keyword">SET</span> charset_name] [<span class="org-keyword">COLLATE</span> <span class="org-keyword">collation_name</span>]
+  | <span class="org-type">VARCHAR</span>(<span class="org-builtin">length</span>) [<span class="org-type">BINARY</span>]
+      [<span class="org-keyword">CHARACTER</span> <span class="org-keyword">SET</span> charset_name] [<span class="org-keyword">COLLATE</span> <span class="org-keyword">collation_name</span>]
+  | <span class="org-type">BINARY</span>[(<span class="org-builtin">length</span>)]
+  | VARBINARY(<span class="org-builtin">length</span>)
+  | <span class="org-type">TINYBLOB</span>
+  | <span class="org-type">BLOB</span>
+  | <span class="org-type">MEDIUMBLOB</span>
+  | <span class="org-type">LONGBLOB</span>
+  | <span class="org-type">TINYTEXT</span> [<span class="org-type">BINARY</span>]
+      [<span class="org-keyword">CHARACTER</span> <span class="org-keyword">SET</span> charset_name] [<span class="org-keyword">COLLATE</span> <span class="org-keyword">collation_name</span>]
+  | <span class="org-type">TEXT</span> [<span class="org-type">BINARY</span>]
+      [<span class="org-keyword">CHARACTER</span> <span class="org-keyword">SET</span> charset_name] [<span class="org-keyword">COLLATE</span> <span class="org-keyword">collation_name</span>]
+  | <span class="org-type">MEDIUMTEXT</span> [<span class="org-type">BINARY</span>]
+      [<span class="org-keyword">CHARACTER</span> <span class="org-keyword">SET</span> charset_name] [<span class="org-keyword">COLLATE</span> <span class="org-keyword">collation_name</span>]
+  | <span class="org-type">LONGTEXT</span> [<span class="org-type">BINARY</span>]
+      [<span class="org-keyword">CHARACTER</span> <span class="org-keyword">SET</span> charset_name] [<span class="org-keyword">COLLATE</span> <span class="org-keyword">collation_name</span>]
+  | <span class="org-type">ENUM</span>(value1,value2,value3,...)
+      [<span class="org-keyword">CHARACTER</span> <span class="org-keyword">SET</span> charset_name] [<span class="org-keyword">COLLATE</span> <span class="org-keyword">collation_name</span>]
+  | <span class="org-keyword">SET</span>(value1,value2,value3,...)
+      [<span class="org-keyword">CHARACTER</span> <span class="org-keyword">SET</span> charset_name] [<span class="org-keyword">COLLATE</span> <span class="org-keyword">collation_name</span>]
+  | spatial_type
+</pre>
+</div>
+
+<p>
+<a href="http://dev.mysql.com/doc/refman/5.7/en/create-table.html">http://dev.mysql.com/doc/refman/5.7/en/create-table.html</a>
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 2: </span>示例</label><pre class="src src-sql"><span class="org-keyword">CREATE</span> <span class="org-keyword">TABLE</span> `<span class="org-keyword">data</span>` (
+  `id` <span class="org-type">int</span>(10) <span class="org-type">unsigned</span> <span class="org-keyword">NOT</span> <span class="org-keyword">NULL</span> <span class="org-keyword">AUTO_INCREMENT</span>,
+  `dt` <span class="org-type">int</span>(10) <span class="org-type">unsigned</span> <span class="org-keyword">NOT</span> <span class="org-keyword">NULL</span>,
+  `<span class="org-builtin">count</span>` <span class="org-type">int</span>(10) <span class="org-type">unsigned</span> <span class="org-keyword">NOT</span> <span class="org-keyword">NULL</span>
+  <span class="org-keyword">PRIMARY</span> <span class="org-keyword">KEY</span> (`id`),
+  <span class="org-keyword">KEY</span> `dt` (`dt`,`<span class="org-builtin">count</span>`)
+) ENGINE=InnoDB <span class="org-keyword">DEFAULT</span> CHARSET=utf8;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org00b538b" class="outline-4">
+<h4 id="org00b538b"><span class="section-number-4">6.1.2</span> <code>TRUNCATE</code></h4>
+<div class="outline-text-4" id="text-6-1-2">
+<div class="org-src-container">
+<pre class="src src-sql"><span class="org-keyword">TRUNCATE</span> &lt;<span class="org-keyword">table</span>&gt;;
+</pre>
+</div>
+
+<p>
+删除表中所有记录时， <code>TRUNCATE</code> 比 <code>DELETE</code> 效率高。
+</p>
+
+<p>
+<code>DELETE</code> 可以回滚， <code>TRUNCATE</code> 不可以回滚。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3900f00" class="outline-4">
+<h4 id="org3900f00"><span class="section-number-4">6.1.3</span> <code>DROP</code></h4>
+<div class="outline-text-4" id="text-6-1-3">
+<div class="org-src-container">
+<pre class="src src-sql"><span class="org-keyword">DROP</span> &lt;<span class="org-keyword">table</span>&gt;;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgabf1568" class="outline-3">
+<h3 id="orgabf1568"><span class="section-number-3">6.2</span> 列</h3>
+<div class="outline-text-3" id="text-6-2">
+</div><div id="outline-container-orgae09dac" class="outline-4">
+<h4 id="orgae09dac"><span class="section-number-4">6.2.1</span> 添加列</h4>
+<div class="outline-text-4" id="text-6-2-1">
+<div class="org-src-container">
+<pre class="src src-sql"><span class="org-keyword">ALTER</span> <span class="org-keyword">TABLE</span> `<span class="org-keyword">table</span>` <span class="org-keyword">ADD</span> <span class="org-keyword">COLUMN</span> `<span class="org-keyword">column</span>` &lt;<span class="org-keyword">type</span>&gt; [&lt;<span class="org-keyword">options</span>&gt;];
+
+&lt;<span class="org-keyword">options</span>&gt;
+    <span class="org-keyword">NOT</span> <span class="org-keyword">NULL</span>
+    <span class="org-keyword">DEFAULT</span> &lt;<span class="org-keyword">default</span>&gt;    
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2b460e2" class="outline-4">
+<h4 id="org2b460e2"><span class="section-number-4">6.2.2</span> 删除列</h4>
+<div class="outline-text-4" id="text-6-2-2">
+<div class="org-src-container">
+<pre class="src src-sql"><span class="org-keyword">ALTER</span> <span class="org-keyword">TABLE</span> `<span class="org-keyword">table</span>` <span class="org-keyword">DROP</span> <span class="org-keyword">COLUMN</span> `<span class="org-keyword">column</span>`;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfa7b294" class="outline-4">
+<h4 id="orgfa7b294"><span class="section-number-4">6.2.3</span> 修改列</h4>
+<div class="outline-text-4" id="text-6-2-3">
+<div class="org-src-container">
+<pre class="src src-sql"><span class="org-keyword">ALTER</span> <span class="org-keyword">TABLE</span> &lt;<span class="org-keyword">table</span>&gt; <span class="org-keyword">CHANGE</span> <span class="org-keyword">COLUMN</span> &lt;old_column&gt; &lt;new_column&gt; [&lt;<span class="org-keyword">options</span>&gt;];
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 3: </span>示例</label><pre class="src src-sql"><span class="org-keyword">ALTER</span> <span class="org-keyword">TABLE</span> <span class="org-function-name">month_report</span> <span class="org-keyword">CHANGE</span> <span class="org-keyword">COLUMN</span> <span class="org-keyword">value</span> <span class="org-keyword">value</span> (<span class="org-type">varchar</span>(50) <span class="org-keyword">NOT</span> <span class="org-keyword">NULL</span>);
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8fabf1b" class="outline-2">
+<h2 id="org8fabf1b"><span class="section-number-2">7</span> 函数</h2>
+<div class="outline-text-2" id="text-7">
+</div><div id="outline-container-org2f4a844" class="outline-3">
+<h3 id="org2f4a844"><span class="section-number-3">7.1</span> 数字</h3>
+</div>
+<div id="outline-container-orge8d4194" class="outline-3">
+<h3 id="orge8d4194"><span class="section-number-3">7.2</span> 字符串</h3>
+<div class="outline-text-3" id="text-7-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>SUBSTR()</code></th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>LOWER()</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>UPPER()</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org1805c40" class="outline-3">
+<h3 id="org1805c40"><span class="section-number-3">7.3</span> 正则</h3>
+<div class="outline-text-3" id="text-7-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><code>REGEXP</code></td>
+<td class="org-left">正则匹配</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-org870b7f1" class="outline-4">
+<h4 id="org870b7f1"><span class="section-number-4">7.3.1</span> <code>REGEXP</code></h4>
+<div class="outline-text-4" id="text-7-3-1">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 4: </span>示例：查询（非）元音字母开头的城市名称</label><pre class="src src-sql"><span class="org-keyword">SELECT</span> <span class="org-keyword">DISTINCT</span> city <span class="org-builtin">FROM</span> station <span class="org-keyword">WHERE</span> city REGEXP <span class="org-string">'^[AEIOU]'</span>;
+<span class="org-keyword">SELECT</span> <span class="org-keyword">DISTINCT</span> city <span class="org-builtin">FROM</span> station <span class="org-keyword">WHERE</span> city <span class="org-keyword">NOT</span> REGEXP <span class="org-string">'^[AEIOU]'</span>;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org80fee03" class="outline-3">
+<h3 id="org80fee03"><span class="section-number-3">7.4</span> 日期</h3>
+<div class="outline-text-3" id="text-7-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><code>DATE_ADD()</code></td>
+<td class="org-left">计算日期加上间隔</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-org72c405d" class="outline-4">
+<h4 id="org72c405d"><span class="section-number-4">7.4.1</span> <code>DATE_ADD()</code></h4>
+<div class="outline-text-4" id="text-7-4-1">
+<div class="org-src-container">
+<pre class="src src-sql">DATE_ADD(&lt;<span class="org-type">date</span>&gt;, <span class="org-builtin">INTERVAL</span> &lt;expr&gt; &lt;<span class="org-keyword">type</span>&gt;)
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 5: </span>示例 1</label><pre class="src src-sql"><span class="org-keyword">SELECT</span> id, DATE_ADD(curr_date, <span class="org-builtin">INTERVAL</span> 30 <span class="org-keyword">DAY</span>) <span class="org-keyword">AS</span> future_date;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 6: </span>示例 2：在天气记录中查找所有气温高于前一天气温的日期</label><pre class="src src-sql"><span class="org-keyword">SELECT</span> w1.id
+<span class="org-builtin">FROM</span> weather w1, weather w2
+<span class="org-keyword">WHERE</span> w1.<span class="org-type">date</span> = DATE_ADD(w2.<span class="org-type">date</span>, <span class="org-builtin">INTERVAL</span> 1 <span class="org-keyword">DAY</span>)
+<span class="org-keyword">AND</span> w1.temperature &gt; w2.temperature;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org08dc34d" class="outline-3">
+<h3 id="org08dc34d"><span class="section-number-3">7.5</span> 控制流</h3>
+<div class="outline-text-3" id="text-7-5">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>IF()</code></th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>IFNULL()</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>NULLIF()</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>CASE</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-orgec971aa" class="outline-4">
+<h4 id="orgec971aa"><span class="section-number-4">7.5.1</span> <code>CASE</code></h4>
+<div class="outline-text-4" id="text-7-5-1">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 7: </span>示例：通过三角形三边判断类型</label><pre class="src src-sql"><span class="org-keyword">SELECT</span> <span class="org-keyword">CASE</span>
+    <span class="org-keyword">WHEN</span> A &gt;= B + C <span class="org-keyword">OR</span> B &gt;= A + C <span class="org-keyword">OR</span> C &gt;= A + B <span class="org-keyword">THEN</span> <span class="org-string">'Not A Triangle'</span>
+    <span class="org-keyword">WHEN</span> A = B <span class="org-keyword">AND</span> A = C <span class="org-keyword">THEN</span> <span class="org-string">'Equilateral'</span>
+    <span class="org-keyword">WHEN</span> A = B <span class="org-keyword">OR</span> A = C <span class="org-keyword">OR</span> B = C <span class="org-keyword">THEN</span> <span class="org-string">'Isosceles'</span>
+    <span class="org-keyword">ELSE</span> <span class="org-string">'Scalene'</span> <span class="org-keyword">END</span>
+<span class="org-builtin">FROM</span> TRIANGLES;
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9706232" class="outline-2">
+<h2 id="org9706232"><span class="section-number-2">8</span> 命令</h2>
+<div class="outline-text-2" id="text-8">
+</div><div id="outline-container-orge556ca6" class="outline-3">
+<h3 id="orge556ca6"><span class="section-number-3">8.1</span> <code>mysql</code></h3>
+<div class="outline-text-3" id="text-8-1">
+<div class="org-src-container">
+<pre class="src src-sh">mysql &lt;options&gt;
+    -h, --host=
+    -P, --port=
+    -u, --user=
+    -p, --password=
+    -D, --database=
+
+    -e, --execute=&lt;query&gt;
+    -s, --silent            <span class="org-comment-delimiter"># </span><span class="org-comment">&#19981;&#36755;&#20986;&#20998;&#38548;&#31526;</span>
+    -N, --skip-column-names <span class="org-comment-delimiter"># </span><span class="org-comment">&#19981;&#36755;&#20986;&#21015;&#21517;</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 8: </span>数据库导入</label><pre class="src src-sh">mysql -h &lt;host&gt; -u &lt;user&gt; -p &lt;password&gt; &lt;database&gt; &lt; &lt;file&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcc2c12b" class="outline-3">
+<h3 id="orgcc2c12b"><span class="section-number-3">8.2</span> <code>mysqldump</code></h3>
+<div class="outline-text-3" id="text-8-2">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 9: </span>数据库备份</label><pre class="src src-sh">mysqldump &lt;options&gt; &lt;database&gt; &lt;tables&gt; &gt; &lt;file&gt;
+    -h, --host=
+    -P, --port=
+    -u, --user=
+    -p, --password=
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb704f9e" class="outline-3">
+<h3 id="orgb704f9e"><span class="section-number-3">8.3</span> 命令行</h3>
+<div class="outline-text-3" id="text-8-3">
+<p>
+不区分大小写。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>help</code> <code>?</code></th>
+<th scope="col" class="org-left"><code>\h</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>quit</code> <code>exit</code></td>
+<td class="org-left"><code>\q</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org3769619" class="outline-3">
+<h3 id="org3769619"><span class="section-number-3">8.4</span> <code>service</code></h3>
+<div class="outline-text-3" id="text-8-4">
+<div class="org-src-container">
+<pre class="src src-sh">service mysql &lt;action&gt;
+    status
+    start
+    stop
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc7a11fd" class="outline-2">
+<h2 id="orgc7a11fd"><span class="section-number-2">9</span> 配置</h2>
+<div class="outline-text-2" id="text-9">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> <code>/etc/mysql/</code></caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>mysql.cnf</code></th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>conf.d/*</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>mysql.conf.d/*</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org9aa4e3b" class="outline-2">
+<h2 id="org9aa4e3b"><span class="section-number-2">10</span> 使用</h2>
+<div class="outline-text-2" id="text-10">
+</div><div id="outline-container-org58135a1" class="outline-3">
+<h3 id="org58135a1"><span class="section-number-3">10.1</span> 安装</h3>
+<div class="outline-text-3" id="text-10-1">
+<div class="org-src-container">
+<pre class="src src-sh">$ sudo apt-get install mysql-server
+$ sudo service mysql start
+$ mysql -u root -p
+&gt; ALTER USER <span class="org-string">'root'</span>@<span class="org-string">'localhost'</span> IDENTIFIED BY <span class="org-string">'&lt;new_password&gt;'</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org41aecbd" class="outline-3">
+<h3 id="org41aecbd"><span class="section-number-3">10.2</span> Debug</h3>
+<div class="outline-text-3" id="text-10-2">
+</div><div id="outline-container-org9943628" class="outline-4">
+<h4 id="org9943628"><span class="section-number-4">10.2.1</span> 表</h4>
+<div class="outline-text-4" id="text-10-2-1">
+<div class="org-src-container">
+<pre class="src src-sql"><span class="org-keyword">DESC</span> &lt;<span class="org-keyword">table</span>&gt;;
+<span class="org-keyword">SHOW</span> <span class="org-keyword">CREATE</span> <span class="org-keyword">TABLE</span> &lt;<span class="org-keyword">table</span>&gt;;
+<span class="org-keyword">SHOW</span> <span class="org-keyword">TABLE</span> STATUS;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgaada008" class="outline-4">
+<h4 id="orgaada008"><span class="section-number-4">10.2.2</span> 引擎</h4>
+<div class="outline-text-4" id="text-10-2-2">
+<div class="org-src-container">
+<pre class="src src-sql"><span class="org-keyword">SHOW</span> ENGINE INNODB STATUS;
+<span class="org-keyword">SHOW</span> VARIABLES <span class="org-keyword">LIKE</span> <span class="org-string">'innodb%'</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9d3e4ee" class="outline-4">
+<h4 id="org9d3e4ee"><span class="section-number-4">10.2.3</span> 其他</h4>
+<div class="outline-text-4" id="text-10-2-3">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 10: </span>列出所有表的行数、占用空间等</label><pre class="src src-sql"><span class="org-keyword">SELECT</span> <span class="org-keyword">TABLE_NAME</span>, table_rows, data_length, index_length, round(((data_length + index_length) / 1024 / 1024),2) "<span class="org-keyword">Size</span> <span class="org-keyword">in</span> MB"
+<span class="org-builtin">FROM</span> information_schema.<span class="org-keyword">TABLES</span>
+<span class="org-comment"># WHERE table_schema = "schema_name"</span>
+<span class="org-keyword">ORDER</span> <span class="org-keyword">BY</span> (data_length + index_length) <span class="org-keyword">DESC</span>;
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8bd1dba" class="outline-2">
+<h2 id="org8bd1dba"><span class="section-number-2">11</span> 链接</h2>
+<div class="outline-text-2" id="text-11">
+<ol class="org-ol">
+<li><a href="http://dev.mysql.com/doc/">MySQL Documentation</a></li>
+<li><a href="https://www.w3schools.com/sql/sql_ref_mysql.asp">MySQL Functions</a></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2018-05-18 Fri 11:41</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

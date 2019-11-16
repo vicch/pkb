@@ -1,0 +1,2273 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: PHP Function
+
+* 输出
+
+| *字符串*   | [[echo][=echo()=]]            | 打印字符串                   |
+|------------+---------------------+------------------------------|
+|            | [[printf][=printf()=]]          | 打印格式化字符串             |
+|------------+---------------------+------------------------------|
+|            | [[sprintf][=sprintf()=]]         | 返回格式化字符串             |
+|------------+---------------------+------------------------------|
+| *变量*     | [[print][=print()=]]           | 打印基本类型变量             |
+|------------+---------------------+------------------------------|
+|            | [[print_r][=print_r()=]]         | 打印变量信息                 |
+|------------+---------------------+------------------------------|
+|            | [[var_dump][=var_dump()=]]        | 输出变量或表达式的信息 |
+|------------+---------------------+------------------------------|
+|            | [[var_export][=var_export()=]]      | 输出或返回变量或表达式的信息 |
+|------------+---------------------+------------------------------|
+| *输出控制* | =ob_start()=        |                              |
+|------------+---------------------+------------------------------|
+|            | =ob_get_contents()= |                              |
+|------------+---------------------+------------------------------|
+|            | =ob_end_clean()=    |                              |
+
+** =echo()=
+<<echo>>
+
+#+BEGIN_SRC php
+void echo ( string $arg, ... )
+#+END_SRC
+
+- 属于构造体，与普通函数的行为和使用语境不同。
+- 一般不用 =()= ，输入参数多于一个时不能用 =()= 。
+
+** =ob_start()=
+
+#+CAPTION: 示例：渲染模板但不输出，将结果保存到字符串
+#+BEGIN_SRC php
+public function render() {
+    extract($this->variables);
+
+    // Render and get result as string
+    ob_start();
+    include ROOT . DS . 'application' . DS . 'views' . DS . $this->controller . DS . $this->action . '.phtml';
+    $rendered = ob_get_contents();
+    ob_end_clean();
+
+    return $rendered;
+}
+#+END_SRC
+
+** =print()=
+<<print>>
+
+#+BEGIN_SRC php
+int print ( string $arg )
+#+END_SRC
+
+| 返回值 | =int= | 1 |
+
+- 属于构造体，与普通函数的行为和使用语境相同，可以不用 =()= 。
+- 因为 =echo= 不能用于复杂表达式，某些语境下只能用 =print()= 。
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+($some_var) ? echo 'true' : echo 'false';   // 错误
+($some_var) ? print 'true' : print 'false'; // 可以运行
+echo $some_var ? 'true': 'false';           // 可以运行
+#+END_SRC
+
+** =printf()=
+<<printf>>
+
+#+BEGIN_SRC php
+int printf (
+    string $format
+[,  mixed  $args
+[,  ...
+]])
+#+END_SRC
+
+| =$format= | =string= | 输出格式         |
+|-----------+----------+------------------|
+| =$args=   | =mixed=  | 变量或表达式     |
+|-----------+----------+------------------|
+| 返回值    | =int=    | 输出字符串的长度 |
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+printf("<font color='#%X%X%X'>Hello</font>", $r-20, $g-20, $b-20);
+#+END_SRC
+
+*** 转换指示符
+
+- conversion specifier
+- 和输入参数必须一一对应，如果缺少输入参数，会导致 =parse= 错误。
+
+| =%d=          | 带符号十进制数 |
+|---------------+----------------|
+| =%f=          | 浮点数         |
+|---------------+----------------|
+| =%s=          | 字符串         |
+|---------------+----------------|
+| =%<n>$<type>= | 指定输入参数   |
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+$format = 'The %2$s contains %1$d monkeys';
+echo sprintf($format, $num, $location);
+#+END_SRC
+
+** =print_r()=
+<<print_r>>
+
+#+BEGIN_SRC php
+mixed print_r (
+    mixed $expression     // string|int|float: 输出字面值
+                          // object|array: 输出详细信息
+[,  bool  $return = false
+] )
+#+END_SRC
+
+#+BEGIN_SRC php
+$a = array('a' => 'apple', 'b' => 'banana');
+print_r($a);
+// Array
+// (
+//     [a] => apple
+//     [b] => banana
+// )
+#+END_SRC
+
+** =sprintf()=
+<<sprintf>>
+
+#+BEGIN_SRC php
+string sprintf (
+    string $format
+[,  mixed  $args
+[,  ...
+]])
+#+END_SRC
+
+| =$format= | =string= | 与 =printf()= 使用同样的格式规则 |
+
+** =var_dump()=
+<<var_dump>>
+
+#+BEGIN_SRC php
+void var_dump ( mixed $expression , ... )
+#+END_SRC
+
+** =var_export()=
+<<var_export>>
+
+与 =var_dump()= 的区别是，输出或返回的是有效的 PHP 代码。
+
+#+BEGIN_SRC php
+mixed var_export (
+    mixed $expression
+[,  bool  $return = false // true 表示不输出，将输出文本赋值给字符串
+])
+#+END_SRC
+
+* 数组
+** 增删
+
+file:../images/php_function/01.jpg
+
+*** =array_push()= =array_unshift()=
+
+#+BEGIN_SRC php
+int array_push    ( // 返回加入之后的数组元素个数
+int array_unshift (
+    array &$array
+,   mixed  $var ...
+)
+#+END_SRC
+
+- =array_push()= 相当于 =$array[]= ，使用 =$array[]= 可以减少调用函数的开销。
+- =array_unshift()= 会将数字索引重新排列，关联数组的索引不变。
+
+*** =array_pop()= =array_shift()=
+
+#+BEGIN_SRC php
+mixed array_pop   (
+mixed array_shift (
+    array &$array
+)
+#+END_SRC
+
+| 返回值 | =mixed= | 取出的元素              |
+|        | =null=  | =$array= 为空或不是数组 |
+
+- =array_pop()= 会将数组指针重置。
+- =array_shift()= 会将数字索引重新排列，关联数组的索引不变。
+
+** 排序
+*** 预定义排序
+
+|     | *包含*                 | *不包含*       |
+|-----+------------------------+----------------|
+| =r= | 倒序                   | 正序           |
+|-----+------------------------+----------------|
+| =a= | 保持键值关联           | 不保持键值关联 |
+|-----+------------------------+----------------|
+| =k= | 按键排序，保持键值关联 | 按值排序       |
+|-----+------------------------+----------------|
+| =u= | 用户定义顺序           | 正序或倒序     |
+
+#+BEGIN_SRC php
+bool sort   (
+bool rsort  (
+bool asort  (
+bool arsort (
+bool ksort  (
+bool krsort (
+    array &$array
+[,  int    $sort_flags = SORT_REGULAR // SORT_REGULAR    正常排序，不改变类型
+                                      // SORT_NUMERIC    按数字类型排序
+                                      // SORT_STRING     按字符串类型排序
+                                      // SORT_FLAG_CASE  忽略大小写
+                                      // SORT_NATURAL    自然排序（natural ordering）
+])
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+ksort($array, SORT_STRING | SORT_FLAG_CASE);
+#+END_SRC
+
+*** 自定义排序
+
+#+BEGIN_SRC php
+bool usort  (
+bool uksort (
+bool uasort (
+    array    &$array
+,   callable  $cmp_function
+)
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+function cmp($a, $b) {
+    if ($a == $b) {
+        return 0;
+    }
+    return ($a < $b) ? -1 : 1; // 返回 1 则交换位置
+}
+
+$array = array('a' => 4, 'b' => 8, 'c' => -1);
+uasort($array, 'cmp');
+#+END_SRC
+
+** 键值
+
+| =array_keys()=   | 返回数组索引     |
+|------------------+------------------|
+| =array_values()= | 返回数组值       |
+|------------------+------------------|
+| =key()=          | 返回指针位置的键 |
+|------------------+------------------|
+| =value()=        | 返回指针位置的值 |
+
+*** =array_keys()=
+
+#+BEGIN_SRC php
+array array_keys (             // 返回索引数组
+    array $input
+[,  mixed $search_value = null // 筛选条件，只返回与此值相同的元素的索引
+[,  bool  $strict = false      // true 表示比较值和类型
+]] )
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+$a = array('1', '2', '1', 2, 1);
+$b = array_keys($a, 1);       // array(0, 2, 4);
+$c = array_keys($a, 1, true); // array(4);
+#+END_SRC
+
+*** =array_values()=
+
+#+BEGIN_SRC php
+array array_values ( array $input )
+#+END_SRC
+
+** 遍历
+
+|             |                            | 返回 =false= 的情况    |
+|-------------+----------------------------+------------------------|
+| =reset()=   | 指向第一个元素，并返回值   | 数组为空               |
+|-------------+----------------------------+------------------------|
+| =prev()=    | 指向前一个元素，并返回值   | 超过数组首端           |
+|-------------+----------------------------+------------------------|
+| =current()= | 不移动指针，返回当前元素值 | 超过数组末端或数组为空 |
+|-------------+----------------------------+------------------------|
+| =next()=    | 指向下一个元素，并返回值   | 超过数组末端           |
+|-------------+----------------------------+------------------------|
+| =end()=     | 指向最后一个元素，并返回值 | 数组为空               |
+
+返回值无法区分数组为空、超过首端、超过末端的情况和元素值为 =false= 的情况。
+
+#+BEGIN_SRC php
+mixed reset   (
+mixed prev    (
+mixed current (
+mixed next    (
+mixed end     (
+    array &$array
+)
+#+END_SRC
+
+** 合并
+
+| =array_merge()=           |                                    |
+|---------------------------+------------------------------------|
+| =array_merge_recursive()= | 递归合并                           |
+|---------------------------+------------------------------------|
+| =array_combine()=         | 合并索引数组和值数组，生成新的数组 |
+
+*** =array_merge()=
+
+#+BEGIN_SRC php
+array array_merge ( array $array , ... )
+#+END_SRC
+
+- 如果数组中出现重复的字符串索引，后出现的元素覆盖前面的元素。
+- 数字索引不会被覆盖，所有数字索引的元素从 0 开始重新排列。
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+$arr1 = array("color" => "red", 2, 4);
+$arr2 = array("a", "b", "color" => "green", "shape" => "trapezoid", 4);
+$result = array_merge($arr1, $arr2);
+// array(
+//     [color] => green     // 字符串索引覆盖
+//     [0]     => 2         // 重新排列数字索引
+//     [1]     => 4
+//     [2]     => a
+//     [3]     => b
+//     [shape] => trapezoid
+//     [4]     => 4
+// )
+#+END_SRC
+
+*** =array_merge_recursive()=
+
+#+BEGIN_SRC php
+array array_merge_recursive ( array $array , ... )
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+$arr1 = array("color" => array("favorite" => "red"), 5);
+$arr2 = array(10, "color" => array("favorite" => "green", "blue"));
+$result = array_merge_recursive($arr1, $arr2);
+// array(
+//     [color] => array(
+//         [favorite] => array( // 重复的索引被转换为二级数组
+//             [0] => red
+//             [1] => green
+//         )
+//         [0] => blue
+//     )
+//     [0] => 5
+//     [1] => 10
+// )
+#+END_SRC
+
+*** =array_combine()=
+
+#+BEGIN_SRC php
+array array_combine ( // 两个数组元素个数不同时返回 false
+    array $keys
+,   array $values
+)
+#+END_SRC
+  
+** 变量
+ 
+| =compact()= | 将与字符串同名的变量的值，组合为字符串数组 |
+|-------------+--------------------------------------------|
+| =extract()= | 将字符串数组中的元素转换为一组变量         |
+|-------------+--------------------------------------------|
+| =list()=    | 用数组中的元素为多个变量赋值               |
+
+*** =compact()=
+
+#+BEGIN_SRC php
+array compact (
+    mixed $varname1 // string
+[,  mixed $varname2 // array  遍历数组中的字符串
+[,  ...
+]] )
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+$city  = 'San Francisco';
+$state = 'CA';
+$event = 'SIGGRAPH';
+$location_vars = array('city', 'state');
+$result = compact('event', 'nothing_here', $location_vars);
+// array(
+//     'event' => 'SIGGRAPH',
+//     'city'  => 'San Francisco',
+//     'state' => 'CA'
+// );
+#+END_SRC
+
+*** =extract()=
+
+#+BEGIN_SRC php
+int extract (
+    array &$array                  // 键作为变量名，值作为变量值
+[,  int    $flags = EXTR_OVERWRITE // 出现冲突时（同名变量已存在）的行为
+[,  string $prefix = NULL          // 变量名前缀
+]] )
+#+END_SRC
+
+#+CAPTION: =$flags=
+| =EXTR_OVERWRITE=        | 覆盖，默认值                                    |
+|-------------------------+-------------------------------------------------|
+| =EXTR_SKIP=             | 跳过                                            |
+|-------------------------+-------------------------------------------------|
+| =EXTR_PREFIX_SAME=      | 同名变量名加前缀 =$prefix=                       |
+|-------------------------+-------------------------------------------------|
+| =EXTR_PREFIX_ALL=       | 所有变量名加前缀 =$prefix=                      |
+|-------------------------+-------------------------------------------------|
+| =EXTR_PREFIX_INVALID=   | 无效的、数字的变量名加前缀 =$prefix=            |
+|-------------------------+-------------------------------------------------|
+| =EXTR_IF_EXISTS=        | 只转换并覆盖已存在的变量名                      |
+|                         | eg. 可用于从 =$_REQUEST= 中提取一组限定的变量等 |
+|-------------------------+-------------------------------------------------|
+| =EXTR_PREFIX_IF_EXISTS= | 只转换已存在的变量名，新变量名加前缀 =$prefix=  |
+|-------------------------+-------------------------------------------------|
+| =EXTR_REFS=             | 新变量是对传入的数组的值的引用                  |
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+$size = 'large';
+$var_array = array(
+    'color' => 'blue',
+    'size'  => 'medium',
+    'shape' => 'sphere'
+);
+extract($var_array, EXTR_PREFIX_SAME, 'wddx');
+// $color     : 'blue';
+// $size      : 'large';
+// $shape     : 'sphere';
+// $wddx_size : 'medium';
+#+END_SRC
+
+*** =list()=
+
+- 构造体，非函数。
+- 变量与数组元素按顺序一一对应。
+
+#+BEGIN_SRC php
+array list ( mixed $var , ... )
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+$info = array('coffee', 'brown', 'caffeine');
+list($drink, $color, $power) = $info;
+list($drink, , $power) = $info;
+list( , , $power) = $info;
+#+END_SRC
+
+#+CAPTION: 可以用于交换变量
+#+BEGIN_SRC php
+$a = 1; $b = 2;
+list($a, $b) = array($b, $a);
+#+END_SRC
+
+** 回调
+
+| =array_map()=            | 遍历数组元素，调用回调函数，返回结果数组 |
+|--------------------------+------------------------------------------|
+| =array_reduce()=         | 遍历数组元素，调用回调函数，返回递归值   |
+|--------------------------+------------------------------------------|
+| =array_walk()=           | 遍历数组元素，调用回调函数，修改原数组   |
+|--------------------------+------------------------------------------|
+| =array_walk_recursive()= | 递归遍历数组元素，调用回调函数           |
+|--------------------------+------------------------------------------|
+| =array_filter()=         | 调用回调函数对数组元素进行筛选           |
+
+*** =array_filter()=
+
+#+BEGIN_SRC php
+array array_filter (
+    array    $array
+[,  callable $callback
+[,  int      $flag = 0
+]] )
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+function even($var) {
+    return !($var & 1); // 返回 true 则保留元素，否则过滤掉
+}
+$array = array(6, 7, 8, 9, 10, 11, 12);
+$evens = array_filter($array, 'even');
+// array(6, 8, 10, 12)
+#+END_SRC
+
+*** =array_map()=
+
+#+BEGIN_SRC php
+array array_map (
+    callable $callback
+,   array    $array
+[,  array    $array
+[,  ...
+]] )
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+function cube($n) {
+    return($n * $n * $n);
+}
+$a = array(1, 2, 3, 4, 5);
+$b = array_map('cube', $a);
+// array(1, 8, 27, 64, 125);
+#+END_SRC
+
+*** =array_reduce()=
+
+#+BEGIN_SRC php
+mixed array_reduce (
+    array    $array
+,   callable $callback
+[,  mixed    $initial = NULL
+] )
+#+END_SRC
+
+#+CAPTION: 回调函数
+#+BEGIN_SRC php
+mixed callback (
+    mixed $carry
+,   mixed $item
+)
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+function sum($carry, $item) {
+    $carry += $item;
+    return $carry;
+}
+
+function product($carry, $item) {
+    $carry *= $item;
+    return $carry;
+}
+
+$a = array(1, 2, 3, 4, 5);
+$x = array();
+
+array_reduce($a, 'sum');            // 15
+array_reduce($a, 'product', 10));   // 1200 (10 * 1 * 2 * 3 * 4 * 5)
+array_reduce($x, 'sum', 'No data'); // No data
+#+END_SRC
+
+*** =array_walk()=
+
+#+BEGIN_SRC php
+bool array_walk (
+    array    &$array
+,   callable  $callback
+[,  mixed     $userdata = NULL
+] )
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+function test_print($item2, $key) {
+    echo "$key. $item2\n";
+}
+function test_alter(&$item1, $key, $prefix) {
+    $item1 = "$prefix: $item1";
+}
+
+$fruits = array("a" => "apple", "b" => "banana");
+array_walk($fruits, 'test_print');
+// a. apple
+// b. banana
+array_walk($fruits, 'test_alter', 'fruit');
+// array(
+//     "a" => "fruit: apple",
+//     "b" => "fruit: banana"
+// )
+array_walk($fruits, 'test_print');
+// a. fruit: apple
+// b. fruit: banana
+#+END_SRC
+
+*** =array_walk_recursive()=
+
+#+BEGIN_SRC php
+bool array_walk_recursive (
+    array   &$array
+,   callable $callback
+[,  mixed    $userdata = NULL
+] )
+#+END_SRC
+
+#+CAPTION: 回调函数
+#+BEGIN_SRC php
+void callback (
+    mixed $value
+,   mixed $key
+)
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+$sweet = array('a' => 'apple', 'b' => 'banana');
+$fruits = array('sweet' => $sweet, 'sour' => 'lemon');
+
+function foo($item, $key) {
+    echo "$key holds $item\n";
+}
+
+array_walk_recursive($fruits, 'test_print');
+// a holds apple
+// b holds banana
+// sour holds lemon
+#+END_SRC
+
+** 生成
+
+| =array_fill()= | 用指定值填充数组             |
+|----------------+------------------------------|
+| =range()=      | 创建含有连续数字、字母的数组 |
+
+*** =array_fill()=
+
+#+BEGIN_SRC php
+array array_fill (
+    int   $start_index // 起始索引
+,   int   $num         // 元素个数
+,   mixed $value
+)
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+$a = array_fill(5, 3, 'banana');
+// array(
+//     5 => 'banana',
+//     6 => 'banana',
+//     7 => 'banana'
+// )
+#+END_SRC
+
+*** =range()=
+
+#+BEGIN_SRC php
+array range (
+    mixed  $start
+,   mixed  $end
+[,  number $step = 1
+])
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+// array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+foreach (range(0, 12) as $number) {
+    echo $number;
+}
+
+// array('c', 'b', 'a');
+foreach (range('c', 'a') as $letter) {
+    echo $letter;
+}
+#+END_SRC
+
+** 其他
+
+|        | =count()=        | 返回元素个数           |
+|--------+------------------+------------------------|
+|        | =sizeof()=       |                        |
+|--------+------------------+------------------------|
+|        | =array_unique()= | 去除重复值        |
+|--------+------------------+------------------------|
+| *切片* | =array_slice()=  |                        |
+|--------+------------------+------------------------|
+|        | =array_splice()= | 替换一部分元素         |
+|--------+------------------+------------------------|
+| *随机* | =array_rand()=   | 返回一个或多个随机元素 |
+|--------+------------------+------------------------|
+|        | =shuffle()=      | 打乱元素顺序           |
+
+*** =count()= =sizeof()=
+
+#+BEGIN_SRC php
+int count (
+int sizeof (
+    mixed $var
+[,  int   $mode = COUNT_NORMAL
+] )
+#+END_SRC
+
+| 返回值 | =0= | 变量的值为 =null= 、变量未赋值、数组为空      |
+|        | =1= | 变量为数组以外其他类型，且不满足返回 0 的条件 |
+
+*** =array_rand()=
+
+#+BEGIN_SRC php
+mixed array_rand (
+    array $array
+[,  int   $num = 1
+])
+#+END_SRC
+
+*** =array_splice()=
+
+#+BEGIN_SRC php
+array array_splice (               // 返回被替换的部分
+    array &$input                  // 输入数组
+,   int    $offset                 // 替换起始
+[,  int    $length = count($input) // 替换长度
+[,  mixed  $replacement = array()  // 替换数组
+]] )
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+$a = array(1, 3, 5, 7, 9);
+$b = array_splice($a, 2, 1, 6);
+// $a : array(1, 3, 6, 7, 9)
+// $b : array(5)
+#+END_SRC
+
+*** =shuffle()=
+
+#+BEGIN_SRC php
+bool shuffle ( array &$array )
+#+END_SRC
+* 数字
+
+| =min()=  |   |
+|----------+---|
+| =max()=  |   |
+|----------+---|
+| =rand()= |   |
+
+** =min()= =max()=
+
+#+BEGIN_SRC php
+mixed min ( array $values )
+mixed max ( array $values )
+
+mixed min (
+mixed max (
+    mixed $value1
+,   mixed $value2
+[,  ...
+] )
+#+END_SRC
+
+** =rand()=
+
+#+BEGIN_SRC php
+int rand (
+    int $min
+,   int $max
+)
+#+END_SRC
+
+* 字符串
+
+| *信息* | [[strlen][=strlen()=]]      | 返回长度                               |
+|--------+-----------------+----------------------------------------|
+| *查找* | [[strpos][=strpos()=]]      | 返回第一个匹配位置                     |
+|--------+-----------------+----------------------------------------|
+|        | [[stripos][=stripos()=]]     | 返回第一个匹配位置，区分大小写         |
+|--------+-----------------+----------------------------------------|
+|        | [[strrpos][=strrpos()=]]     | 返回最后一个匹配位置                   |
+|--------+-----------------+----------------------------------------|
+|        | [[strripos][=strripos()=]]    | 返回最后一个匹配位置，区分大小写       |
+|--------+-----------------+----------------------------------------|
+| *操作* | [[substr][=substr()=]]      | 返回子字符串                           |
+|--------+-----------------+----------------------------------------|
+|        | [[str_replace][=str_replace()=]] | 字符串替换                             |
+|--------+-----------------+----------------------------------------|
+|        | [[strtr][=strtr()=]]       | 字符串替换                             |
+|--------+-----------------+----------------------------------------|
+|        | [[strstr][=strstr()=]]      | 返回从第一个匹配位置开始，到字符串末尾 |
+|--------+-----------------+----------------------------------------|
+| *格式* | [[strrev][=strrev()=]]      | 倒序                                   |
+|--------+-----------------+----------------------------------------|
+|        | [[strtoupper][=strtoupper()=]]  | 返回大写形式                           |
+|--------+-----------------+----------------------------------------|
+|        | [[strtolower][=strtolower()=]]  | 返回小写形式                           |
+|--------+-----------------+----------------------------------------|
+|        | [[lcfirst][=lcfirst()=]]     | 第一个字符小写                         |
+|--------+-----------------+----------------------------------------|
+|        | [[ucfirst][=ucfirst()=]]     | 第一个字符大写                         |
+|--------+-----------------+----------------------------------------|
+|        | [[ucwords][=ucwords()=]]     | 每个词的第一个字符大写                 |
+|--------+-----------------+----------------------------------------|
+| *生成* | [[str_repeat][=str_repeat()=]]  | 字符串重复 n 次                        |
+
+** =lcfirst()= =ucfirst()=
+<<lcfirst>><<ucfirst>>
+
+#+BEGIN_SRC php
+string lcfirst (
+string ucfirst (
+    string $str
+)
+#+END_SRC
+
+** =strlen()=
+<<strlen>>
+
+#+BEGIN_SRC php
+int strlen ( string $string )
+#+END_SRC
+
+** =strpos()= =stripos()= =strrpos()= =strripos()=
+<<strpos>><<stripos>><<strrpos>><<strripos>>
+
+#+BEGIN_SRC php
+mixed strpos (  // 返回 false 表示找不到 needle
+mixed strrpos (
+mixed stripos (
+mixed strripos (
+    string $haystack
+,   mixed  $needle
+[,  int    $offset = 0
+])
+#+END_SRC
+
+** =strrev()=
+<<strrev>>
+
+#+BEGIN_SRC php
+string strrev ( string $string )
+#+END_SRC
+
+** =strstr()=
+<<strstr>>
+
+#+BEGIN_SRC php
+string strstr (
+    string $haystack
+,   mixed  $needle
+[,  bool   $before_needle = false // true 表示返回匹配位置之前的部分
+] )
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+$email  = 'name@example.com';
+$domain = strstr($email, '@');       // @example.com
+$user   = strstr($email, '@', true); // name
+#+END_SRC
+
+** =strtoupper()= =strtolower()=
+<<strtoupper>><<strtolower>>
+
+#+BEGIN_SRC php
+string strtoupper (
+string strtolower (
+    string $string
+)
+#+END_SRC
+
+** =strtr()=
+
+#+BEGIN_SRC php
+string strtr (
+    string $str
+,   string $from
+,   string $to
+)
+
+string strtr (
+    string $str
+,   array  $replace_pairs
+)
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+$a = 'AbCdE';
+$b = strtr($a, 'b', 'B');                      // ABCdE
+$c = strtr($a, array('b' => 'B', 'd' => 'D')); // ABCDE
+#+END_SRC
+
+** =str_repeat()=
+<<str_repeat>>
+
+#+BEGIN_SRC php
+string str_repeat (
+    string $input
+,   int    $multiplier
+)
+#+END_SRC
+
+** =str_replace()=
+<<str_replace>>
+
+#+BEGIN_SRC php
+mixed str_replace (
+    mixed  $search  // string 一个查找项
+                    // array  多个查找项
+,   mixed  $replace // string 一个替换项
+                    // array  多个替换项，与查找项一一对应
+,   mixed  $subject // string
+                    // array  对数组中每个字符串进行替换
+[,  int   &$count   // int    进行替换操作的次数
+])
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+$a = 'AbCdE';
+$b = 0;
+$c = str_replace(['b', 'd'], ['B', 'D'], $a, $b);
+// $b: 2
+// $c: 'ABCDE'
+#+END_SRC
+
+** =substr()=
+<<substr>>
+
+#+BEGIN_SRC php
+string substr (
+    string $string
+,   int    $start  // >= 0 表示正向位置（第一个字符为 0）
+                   // <  0 表示逆向位置（最后一个字符为 -1）
+[,  int    $length // null 到字符串末尾
+                   // >  0 （到字符串末尾为止）至多 n 个字符
+                   // == 0 返回 false，null 或空字符串
+                   // <  0 到字符串末尾之前 n 个字符（-1 表示取到倒数第二个字符）
+])
+#+END_SRC
+
+** =ucwords()=
+<<ucwords>>
+
+#+BEGIN_SRC php
+string ucwords (
+    string $str
+[,  string $delimiters = " \t\r\n\f\v"
+])
+#+END_SRC
+
+* 日期时间
+
+| =date()=      | 返回格式化时间字符串   |
+|---------------+------------------------|
+| =time()=      | 返回当前时间戳         |
+|---------------+------------------------|
+| =strtotime()= | 根据时间描述返回时间戳 |
+|---------------+------------------------|
+| =mktime()=    | 根据时间参数返回时间戳 |
+
+** =date()=
+<<date>>
+
+#+BEGIN_SRC php
+string date (
+    string $format
+[,  int    $timestamp = time()
+] )
+#+END_SRC
+
+=$format=
+| 年 | =Y= | 2015           |
+|    | =y= | 15             |
+|----+-----+----------------|
+| 月 | =F= | June           |
+|    | =m= | 06             |
+|    | =n= | 6              |
+|----+-----+----------------|
+| 日 | =d= | 03             |
+|    | =j= | 3              |
+|    | =l= | Wednesday      |
+|    | =D= | Wed            |
+|    | =S= | st, nd, rd, th |
+|----+-----+----------------|
+| 时 | =g= | 1 ~ 12         |
+|    | =G= | 0 ~ 23         |
+|    | =h= | 01 ~ 12        |
+|    | =H= | 00 ~ 23        |
+|    | =a= | am, pm         |
+|    | =A= | AM, PM         |
+|----+-----+----------------|
+| 分 | =i= | 00 ~ 59        |
+|----+-----+----------------|
+| 秒 | =s= | 00 ~ 59        |
+
+** =mktime()=
+<<mktime>>
+
+#+BEGIN_SRC php
+int mktime (
+[   int $hour   = date("H") 
+[,  int $minute = date("i")
+[,  int $second = date("s")
+[,  int $month  = date("n")
+[,  int $day    = date("j")
+[,  int $year   = date("Y")
+[,  int $is_dst = -1
+]]]]]]] )
+#+END_SRC
+
+** =strtotime()=
+<<strtotime>>
+
+#+BEGIN_SRC php
+int strtotime (
+    string $time
+[,  int    $now = time()
+] )
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+strtotime("now");
+strtotime("-1 day");
+strtotime("+1 week 2 days 4 hours 2 seconds");
+strtotime("next Thursday");
+
+// 可以用于从字符串中解析时间
+$date = date("d-m-Y", strtotime("2010-03-21"));
+#+END_SRC
+
+** =time()=
+<<time>>
+
+#+BEGIN_SRC php
+int time ( void )
+#+END_SRC
+
+* 转义
+
+| [[addslashes][=addslashes()=]]              | 用 =\= 转义引号和  =\=                |
+|-----------------------------+---------------------------------------|
+| [[stripslashes][=stripslashes()=]]            | 去除 =\= 转义，与 =addslashes()= 相反 |
+|-----------------------------+---------------------------------------|
+| [[htmlspecialchars][=htmlspecialchars()=]]        | 将特殊字符转换为 HTML entity          |
+|-----------------------------+---------------------------------------|
+| [[htmlentities][=htmlentities()=]]            | 将所有字符转换为 HTML entity          |
+|-----------------------------+---------------------------------------|
+| [[htmlspecialchars_decode][=htmlspecialchars_decode()=]] | 将 HTML entity 转换为普通字符         |
+|-----------------------------+---------------------------------------|
+| [[strip_tags][=strip_tags()=]]              | 去除字符串中的 HTML 和 PHP 标签       |
+
+** =addslashes()= =stripslashes=
+<<addslashes>><<stripslashes>>
+
+#+BEGIN_SRC php
+string addslashes   (
+string stripslashes (
+    string $str
+)
+#+END_SRC
+
+** =htmlspecialchars()= =htmlentities()=
+<<htmlspecialchars>><<htmlentities>>
+
+#+BEGIN_SRC php
+string htmlspecialchars (
+string htmlentities     (
+    string $string
+[,  int    $flags = ENT_COMPAT | ENT_HTML401
+[,  string $encoding = 'UTF-8'
+]] )
+#+END_SRC
+
+=$flags=
+| =ENT_COMPAT= | 只转换双引号，不转换单引号 |
+|--------------+----------------------------|
+| =ENT_QUOTES= | 转换单、双引号             |
+
+HTML entity
+| =&=                     | =&amp;=           |
+|-------------------------+-------------------|
+| @@html:<code>'</code>@@ | =&apos;= =&#039;= |
+| @@html:<code>"</code>@@ | =&quot;=          |
+|-------------------------+-------------------|
+| =<=                     | =&lt;=            |
+| =>=                     | =&gt;=            |
+
+- =htmlspecialchars()= 只转换特殊字符
+- =htmlentities()= 将所有可以转换为 HTML entity 的字符都转换，包括无法识别的字符，如中文字符
+
+示例
+#+BEGIN_SRC php
+$output = '<p><script>alert("NSA backdoor installed");</script>';
+echo htmlentities($output, ENT_QUOTES, 'UTF-8');
+// &lt;p&gt;&lt;script&gt;alert(&quot;NSA backdoor installed&quot;);&lt;/script&gt;
+#+END_SRC
+
+** =htmlspecialchars_decode()=
+<<htmlspecialchars_decode>>
+
+#+BEGIN_SRC php
+string htmlspecialchars_decode (
+    string $string
+[,  int    $flags = ENT_COMPAT | ENT_HTML401
+] )
+#+END_SRC
+
+** =strip_tags()=
+<<strip_tags>>
+
+#+BEGIN_SRC php
+string strip_tags (
+    string $str
+[,  string $allowable_tags
+] )
+#+END_SRC
+
+* 正则
+
+| =preg_match()=            | 返回第一个匹配位置         |
+|---------------------------+----------------------------|
+| =preg_match_all()=        | 返回所有匹配位置           |
+|---------------------------+----------------------------|
+| =preg_replace()=          | 匹配模式并替换             |
+|---------------------------+----------------------------|
+| =preg_replace_callback()= | 匹配模式并调用回调函数替换 |
+
+** 表达式
+
+#+BEGIN_SRC regex
+/(<pattern>)/<modifier>
+#+END_SRC
+
+** =preg_match()=
+
+#+BEGIN_SRC php
+int preg_match (
+    string $pattern
+,   string $subject
+[,  array &$matches
+[,  int    $flags = 0
+[,  int    $offset = 0
+]]] )
+#+END_SRC
+
+| =$matches= |                       | =$matches[0]= 为第一个匹配完整表达式的位置               |
+|            |                       | =$matches[1]= 为第一个匹配第一个子表达式的位置，以此类推 |
+|------------+-----------------------+----------------------------------------------------------|
+| =$flags=   | =PREG_OFFSET_CAPTURE= | =$matches= 匹配结果附加位置偏移量                        |
+|------------+-----------------------+----------------------------------------------------------|
+| 返回值     |                     0 | 不存在匹配                                               |
+|            |                     1 | 存在匹配                                                 |
+|            |               =false= | 错误                                                     |
+
+** =preg_match_all()=
+
+#+BEGIN_SRC php
+int preg_match_all (
+    string $pattern
+,   string $subject
+[,  array &$matches
+[,  int    $flags = PREG_PATTERN_ORDER
+[,  int    $offset = 0
+]]])
+#+END_SRC
+
+| =$matches= |         | =$matches[0]= 为所有匹配完整表达式的位置               |
+|            |         | =$matches[1]= 为所有匹配第一个子表达式的位置，以此类推 |
+|------------+---------+--------------------------------------------------------|
+| 返回值     | =int=   | 匹配部分的个数（可能是 0）                             |
+|            | =false= | 错误                                                   |
+
+** =preg_replace()=
+
+#+BEGIN_SRC php
+mixed preg_replace (
+    mixed $pattern
+,   mixed $replacement
+,   mixed $subject
+[,  int   $limit = -1
+[,  int  &$count
+]])
+#+END_SRC
+
+| =$pattern=     | =string= |                                                                          |
+|                | =array=  |                                                                          |
+|----------------+----------+--------------------------------------------------------------------------|
+| =$replacement= | =string= | 如果 =$pattern= 是数组，则每个匹配都使用 =$replacement= 进行替换         |
+|                | =array=  | 如果 =$pattern= 是数组，则每个匹配使用 =$replacement= 中对应元素进行替换 |
+|                |          | 如果 =$replacement= 元素个数不足，剩余 =$pattern= 元素用空字符串替换     |
+|----------------+----------+--------------------------------------------------------------------------|
+| =$subject=     | =string= |                                                                          |
+|                | =array=  |                                                                          |
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+// $ 1,000.00 -> 1000.00
+$money = preg_replace(array('/\\$/', '/\s/', '/,/'), '', $money);
+
+// 将每个单词首字符变为红色
+$text = preg_replace('/(\b.)/', '<span style="color:red;">\1</span>', $text);
+// \b 表示词边界（word boundary）
+#+END_SRC
+
+** =preg_replace_callback()=
+
+#+BEGIN_SRC php
+mixed preg_replace_callback (
+    mixed    $pattern
+,   callable $callback
+,   mixed    $subject
+[,  int      $limit = -1
+[,  int     &$count
+]])
+#+END_SRC
+
+#+CAPTION: 示例 1
+#+BEGIN_SRC php
+function handler(array $matches) {  // 参数是匹配结果
+    return strtolower($matches[0]); // 返回用于替换的字符串
+}
+#+END_SRC
+
+#+CAPTION: 示例 2
+#+BEGIN_SRC php
+// 使用匿名函数，可以使逻辑在同一位置，避免污染函数命名空间
+$line = preg_replace_callback(
+    '|<p>\s*\w|',
+    function ($matches) {return strtolower($matches[0]);},
+    $line
+);
+#+END_SRC
+
+* 加载
+
+| =include=              | 试图加载文件，如果失败，程序给出 warning 并继续运行 |
+| =include_once=         |                                                     |
+|------------------------+-----------------------------------------------------|
+| =require=              | 保证加载文件，如果失败，程序给出 fatal 错误         |
+| =require_once=         |                                                     |
+|------------------------+-----------------------------------------------------|
+| =get_included_files()= | 返回所有已经加载的文件                              |
+
+** =include(_once)= =require(_once)=
+
+- 相当于在此处粘贴文件的内容。
+- =_once= 可以避免多次加载，PHP 会解析文件的绝对路径进行比较，但会造成额外开销。
+
+#+BEGIN_SRC php
+require('reusable.php');
+require 'reusable.php'; // 构造体，调用时可以不加 () 
+if (include('reusable.php') == 'OK') {
+    echo 'OK';
+}
+#+END_SRC
+
+** =get_included_files()=
+
+#+BEGIN_SRC php
+array get_included_files ( void )
+#+END_SRC
+
+* 错误和异常
+
+| *错误* | =error_log()=                 | 输出错误信息到日志文件           |
+|--------+-------------------------------+----------------------------------|
+|        | =error_reporting()=           | 设置报错级别，或返回当前报错级别 |
+|--------+-------------------------------+----------------------------------|
+|        | =trigger_error()=             | 触发用户级别的错误信息           |
+|--------+-------------------------------+----------------------------------|
+|        | =set_error_handler()=         | 设置自定义错误处理函数           |
+|--------+-------------------------------+----------------------------------|
+|        | =restore_error_handler()=     |                                  |
+|--------+-------------------------------+----------------------------------|
+|        | =error_get_last()=            | 返回上一个错误                   |
+|--------+-------------------------------+----------------------------------|
+| *异常* | =set_exception_handler()=     | 设置自定义异常捕获函数           |
+|--------+-------------------------------+----------------------------------|
+|        | =restore_exception_handler()= |                                  |
+
+** =error_get_last()=
+
+#+BEGIN_SRC php
+array error_get_last ( void )
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+$a = 1 / 0;
+$b = error_get_last();
+// array(
+//     'type' => 2,
+//     'message' => 'Division by zero',
+//     'file' => '/var/www/foo.com/public/index.php',
+//     'line' => 3
+// )
+#+END_SRC
+
+** =error_log()=
+
+#+BEGIN_SRC php
+bool error_log (
+    string $message           // 错误信息
+[,  int    $message_type = 0  // 目标错误日志的种类
+[,  string $destination       // 目标错误日志的位置，具体含义依赖 $message_type
+[,  string $extra_headers     //
+]]] )
+#+END_SRC
+
+#+CAPTION: =$message_type=
+  | 0 | 使用操作系统的日志机制，或写入文件               |
+|   | 具体行为依赖配置中的 =error_log= 指令            |
+|---+--------------------------------------------------|
+| 1 | 通过邮件发送， =$destination= 表示收件邮箱       |
+|---+--------------------------------------------------|
+| 3 | 追加一行到日志文件， =$destination= 表示文件路径 |
+|---+--------------------------------------------------|
+| 4 | 发送到 SAPI 日志处理器（handler）                |
+
+** =error_reporting()=
+
+#+BEGIN_SRC php
+int error_reporting ( // 返回修改前的 error_reporting 值
+[   int $level        // 位掩码
+])
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
+#+END_SRC
+
+** =set_error_handler()=
+
+#+BEGIN_SRC php
+mixed set_error_handler (
+    callable $error_handler                  // 错误处理函数
+[,  int      $error_types = E_ALL | E_STRICT // 错误级别
+] )
+#+END_SRC
+
+#+CAPTION: 自定义错误处理函数
+#+BEGIN_SRC php
+bool handler (
+    int    $errno      // 错误级别，对应 E_* 常量
+,   string $errstr     // 错误信息
+[,  string $errfile    // 出错的文件名
+[,  int    $errline
+[,  array  $errcontext
+]]] )
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+function foo($errno, $errmsg) {
+    echo 'Error handled by foo: ' . $errmsg . "\n";
+}
+set_error_handler('foo', E_USER_ERROR);
+trigger_error('Unknown error', E_USER_ERROR);
+// Error handled by foo: Unknown error
+#+END_SRC
+
+** =set_exception_handler()=
+
+#+BEGIN_SRC php
+callable set_exception_handler (
+    callable $exception_handler
+)
+#+END_SRC
+
+#+CAPTION: 自定义异常捕捉函数
+#+BEGIN_SRC php
+void handler ( Exception $exception )
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+function foo($exception) {
+    echo 'Uncaught exception: ', $exception->getMessage(), "\n";
+}
+set_exception_handler('foo');
+throw new Exception('Some exception');
+// Uncaught exception: Some exception
+#+END_SRC
+
+** =trigger_error()=
+
+#+BEGIN_SRC php
+bool trigger_error (
+    string $error_msg
+[,  int    $error_type = E_USER_NOTICE
+] )
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+if ($divisor == 0) {
+    trigger_error("Cannot divide by zero", E_USER_ERROR);
+}
+// Fatal error: Cannot divide by zero in ... on line ...
+#+END_SRC
+
+* 变量和常量
+
+| *变量* | =isset()=       |              |
+|--------+-----------------+--------------|
+|        | =empty()=       |              |
+|--------+-----------------+--------------|
+|        | =unset()=       |              |
+|--------+-----------------+--------------|
+| *常量* | =define()=      | 设置常量     |
+|--------+-----------------+--------------|
+|        | =defined()=     | 常量是否存在 |
+|--------+-----------------+--------------|
+| *类型* | =is_callable()= |              |
+
+** =define()=
+
+#+BEGIN_SRC php
+bool define (
+    string $name
+,   mixed  $value
+[,  bool   $case_insensitive = false
+])
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+define("CONSTANT", "Hello world.");
+echo CONSTANT; // outputs "Hello world."
+echo Constant; // outputs "Constant" and issues a notice.
+
+// 忽略大小写
+define("GREETING", "Hello you.", true);
+echo GREETING; // outputs "Hello you."
+echo Greeting; // outputs "Hello you."
+
+// 数组（PHP >= 7）
+#+BEGIN_SRC php
+define('ANIMALS', array('dog', 'cat', 'bird'));
+echo ANIMALS[1]; // outputs "cat"
+#+END_SRC
+
+** =defined()=
+
+#+BEGIN_SRC php
+bool defined ( string $name )
+#+END_SRC
+
+** =isset()=
+
+#+BEGIN_SRC php
+bool isset ( mixed $var , ... ) // 变量存在且不为 null 时返回 true
+                                // 多个变量全部符合 true 时返回 true
+#+END_SRC
+
+** =is_callable()=
+
+#+BEGIN_SRC php
+bool is_callable (
+    mixed   $var // string: <function_name>
+                 // array:  [<class_name>, <method_name>]
+                 //         [<object>, <method_name>]
+[,  bool    $syntax_only = false
+[,  string &$callable_name
+]] )
+#+END_SRC
+
+** =empty()=
+
+#+BEGIN_SRC php
+bool empty ( mixed $var ) // 变量不存在，或值为零值、空值时返回 true
+#+END_SRC
+
+#+CAPTION: 零值、空值
+| =int=    | =0=                       |
+|----------+---------------------------|
+| =float=  | =0.0=                     |
+|----------+---------------------------|
+| =string= | @@html:<code>""</code>@@  |
+|          | @@html:<code>"0"</code>@@ |
+|----------+---------------------------|
+| =bool=   | =false=                   |
+|----------+---------------------------|
+| =array=  | =array()=                 |
+|----------+---------------------------|
+| =null=   | =null=                    |
+|----------+---------------------------|
+| =mixed=  | 只声明未赋值的变量        |
+
+** =unset()=
+
+#+BEGIN_SRC php
+void unset ( mixed $var , ... )
+#+END_SRC  
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+unset($foo);
+unset($bar['qux']);
+unset($foo1, $foo2, $foo3);
+#+END_SRC
+
+* 类和对象
+
+| *判断* | =class_exists()=         |                                |
+|--------+--------------------------+--------------------------------|
+|        | =method_exists()=        | 类或对象方法是否存在 |
+|--------+--------------------------+--------------------------------|
+|        | =is_subclass_of()=       | 类或对象是否是指定类的子类     |
+|--------+--------------------------+--------------------------------|
+| *信息* | =get_class()=            | 返回对象的类名（包含命名空间） |
+|--------+--------------------------+--------------------------------|
+|        | =get_class_methods()=    | 返回类或对象的方法             |
+|--------+--------------------------+--------------------------------|
+|        | =get_class_vars()=       | 返回类的属性和默认值           |
+|--------+--------------------------+--------------------------------|
+|        | =get_declared_classes()= | 返回所有已定义的类             |
+|--------+--------------------------+--------------------------------|
+|        | =get_parent_class()=     | 返回类或对象的基类名           |
+
+** =get_class_methods()=
+
+#+BEGIN_SRC php
+array get_class_methods ( mixed $class_name )
+#+END_SRC
+
+#+CAPTION: =protected= 和 =private= 方法在类之外不可见。
+#+BEGIN_SRC php
+class Foo {
+    private function bar() {}
+    public static function baz() {
+        return get_class_methods(self::class);
+    }
+}
+Foo::baz();               // bar, baz
+get_class_methods('Foo'); // baz
+#+END_SRC
+
+#+CAPTION: 用于在调用方法前确认是否存在。
+#+BEGIN_SRC php
+if (in_array('bar', get_class_methods($foo))) {
+    $foo->bar();
+}
+// 等价于 is_callable([$foo, 'bar'])
+#+END_SRC
+
+** =get_class_vars()=
+
+#+BEGIN_SRC php
+array get_class_vars ( string $class_name )
+#+END_SRC
+
+#+CAPTION: =protected= 和 =private= 属性在类之外不可见
+#+BEGIN_SRC php
+class Foo {
+    public $hoge;
+    private $fuga;
+    public static function bar() {
+        return get_class_vars(self::class);
+    }
+}
+Foo::bar();            // ['hoge' => null, 'fuga' => null]
+get_class_vars('Foo'); // ['hoge' => null]
+#+END_SRC
+
+** =get_parent_class()=
+
+#+BEGIN_SRC php
+string get_parent_class ( [ mixed $object ] )
+#+END_SRC
+
+#+BEGIN_SRC php
+namespace Foobar;
+class Foo {}
+class Bar extends Foo {
+    public static function bar() {
+        return get_parent_class(); // 方法内调用不需要参数
+    }
+}
+get_parent_class('Foobar\Bar'); // Foobar\Foo
+get_parent_class(new Bar());    // Foobar\Foo
+Bar::bar();                     // Foobar\Foo
+#+END_SRC
+
+** =is_subclass_of()=
+
+#+BEGIN_SRC php
+bool is_subclass_of (
+    mixed  $object
+,   string $class_name
+[,  bool   $allow_string = true
+] )
+#+END_SRC
+
+=is_subclass_of()= 只判断继承关系，判断继承关系和是否实现接口使用 =instanceof= 。
+
+#+BEGIN_SRC php
+class Foo {}
+class Bar extends Foo {}
+is_subclass_of('Foo', 'Foo');     // false
+is_subclass_of('Bar', 'Foo');     // true
+is_subclass_of(new Bar(), 'Foo'); // true
+#+END_SRC
+
+** =method_exists()=
+
+#+BEGIN_SRC php
+bool method_exists (
+    mixed  $object // 对象或类名
+,   string $method_name
+)
+#+END_SRC
+
+#+CAPTION: 存在的方法不一定可以调用， =protected= 和 =private= 方法都返回 =true= 。
+#+BEGIN_SRC php
+class Foo {
+    private function bar() {}
+    public function baz() {}
+}
+method_exists('Foo', 'bar'); // true
+method_exists('Foo', 'baz'); // true
+#+END_SRC
+
+* 函数
+
+| =call_user_func()=       | 动态调用函数或方法 |
+|--------------------------+--------------------|
+| =call_user_func_array()= |                    |
+
+** =call_user_func()=
+
+#+BEGIN_SRC php
+mixed call_user_func (
+    callable $callback
+[,  mixed    $parameter // 传递给函数的参数
+[,  ...
+]] )
+#+END_SRC
+
+#+BEGIN_SRC php
+function foo($arg1, $arg2) {}
+call_user_func('foo', 'one', 'two');
+#+END_SRC
+
+#+CAPTION: 动态调用时的参数是传值。
+#+BEGIN_SRC php
+function increment(&$var) {}
+$a = 0;
+increment($a);                    // 直接调用不需要 &
+call_user_func('increment', &$a); // 动态调用需要 & 显式传递引用
+#+END_SRC
+
+** =call_user_func_array()=
+
+#+BEGIN_SRC php
+mixed call_user_func_array (
+    callable $callback
+,   array    $param_arr // 传递给函数的参数
+)
+#+END_SRC
+
+#+BEGIN_SRC php
+function foo($arg1, $arg2) {}
+class Foo {
+    public function bar($arg1, $arg2) {}
+}
+call_user_func_array('foo', ['one', 'two']);
+call_user_func_array([new Foo(), 'bar'], ['one', 'two']);
+#+END_SRC
+
+#+CAPTION: 用于 =__call()= 处理未知个数的参数。
+#+BEGIN_SRC php
+class Foo {
+    private $bar;
+    public function __construct(Bar $bar) {
+        $this->bar = $bar; // 代理 Bar 对象
+    }
+    public function __call($method, $args) {
+        if (is_callable([$this->bar, $method])) {
+            return call_user_func_array([$this->bar, $method], $args);
+        }
+    }
+}
+class Bar {
+    public function add($arg1, $arg2) {
+        return $arg1 + $arg2;
+    }
+}
+$foo = new Foo(new Bar());
+$foo->add(1, 2); // 3
+#+END_SRC
+
+* 文件
+
+| *信息*     | [[file_exists][=file_exists()=]]       | 文件是否存在                           |
+|------------+-----------------------+----------------------------------------|
+|            | =basename()=          | 从文件路径中提取文件名                 |
+|------------+-----------------------+----------------------------------------|
+|            | =filemtime()=         | 文件最后修改时间                       |
+|------------+-----------------------+----------------------------------------|
+|            | [[feof][=feof()=]]              | 是否到达文件尾部                       |
+|------------+-----------------------+----------------------------------------|
+| *开闭文件* | [[fopen][=fopen()=]]             | 打开文件或 URL，返回 =resource= 类型   |
+|------------+-----------------------+----------------------------------------|
+|            | [[fclose][=fclose()=]]            | 关闭文件                               |
+|------------+-----------------------+----------------------------------------|
+| *读文件*   | [[fread][=fread()=]]             | 读取指定长度的内容                     |
+|------------+-----------------------+----------------------------------------|
+|            | [[fgets][=fgets()=]]             | 读取一行内容                           |
+|------------+-----------------------+----------------------------------------|
+|            | [[file_get_contents][=file_get_contents()=]] | 读取全部内容，返回字符串               |
+|------------+-----------------------+----------------------------------------|
+|            | =file()=              | 读取全部内容，返回数组                 |
+|------------+-----------------------+----------------------------------------|
+| *写文件*   | [[fwrite][=fwrite()=]]            | 写入内容，返回写入的长度               |
+|------------+-----------------------+----------------------------------------|
+| *临时文件* | =tempnam()=           | 在指定目录下创建临时文件，返回文件路径 |
+|------------+-----------------------+----------------------------------------|
+|            | =tmpfile()=           | 创建临时文件，返回 =resource=          |
+
+** =fclose()=
+<<fclose>>
+
+#+BEGIN_SRC php
+bool fclose ( resource $handle )
+#+END_SRC
+
+| 返回值 | =true=  | 成功 |
+|        | =false= | 失败 |
+
+** =feof()=
+<<feof>>
+
+#+BEGIN_SRC php
+bool feof ( resource $handle )
+#+END_SRC
+
+示例
+#+BEGIN_SRC php
+$handle = fopen($file, 'rb');
+while (feof($handle) !== true) {
+    $line = fgets($handle);
+}
+#+END_SRC
+
+** =fgets()=
+<<fgets>>
+
+#+BEGIN_SRC php
+string fgets (
+    resource $handle // 开始读取的指针位置
+[,  int      $length
+] )
+#+END_SRC
+
+** =file()=
+
+#+BEGIN_SRC php
+array file (
+    string   $filename
+[,  int      $flags = 0
+[,  resource $context
+]] )
+#+END_SRC
+
+#+BEGIN_SRC php
+// file.txt
+foo
+bar
+
+// index.php
+file('file.txt'); // ['foo', 'bar'] 包含换行符
+#+END_SRC
+
+** =file_exists()=
+<<file_exists>>
+
+#+BEGIN_SRC php
+bool file_exists ( string $filename )
+#+END_SRC
+
+** =file_get_contents()=
+<<file_get_contents>>
+
+#+BEGIN_SRC php
+string file_get_contents (
+    string   $filename // 文件路径、HTTP 链接
+[,  bool     $use_include_path = false
+[,  resource $context
+[,  int      $offset = -1
+[,  int      $maxlen
+]]]] )
+#+END_SRC
+
+| =$context= | =resource= | [[file:php_extension.org::stream_context_create][=stream_context_create()=]] 创建的 context resource  |
+
+** =fopen()=
+<<fopen>>
+
+#+BEGIN_SRC php
+resource fopen (
+    string   $filename // 文件路径、HTTP、FTP 链接
+,   string   $mode
+[,  bool     $use_include_path = false
+[,  resource $context
+]] )
+#+END_SRC
+
+| 返回值 | =true=  | 打开文件成功                               |
+|        | =false= | 打开文件失败（模式不是 =w(+)= 和 =a(+)= ） |
+
+=$mode=
+| =r=  | 读，指针在文件头                               |
+| =r+= | 读写，指针在文件头                             |
+|------+------------------------------------------------|
+| =w=  | 写，指针在文件头并清空文件，文件不存在则创建   |
+| =w+= | 读写，指针在文件头并清空文件，文件不存在则创建 |
+|------+------------------------------------------------|
+| =a=  | 写，指针在文件尾，文件不存在则创建             |
+| =a+= | 读写，指针在文件尾，文件不存在则创建           |
+
+** =fread()=
+<<fread>>
+
+#+BEGIN_SRC php
+string fread (
+    resource $handle // 开始读取的指针位置
+,   int      $length // 读取的字节长度，或到文件末尾为止
+)
+#+END_SRC
+
+** =fwrite()=
+<<fwrite>>
+
+#+BEGIN_SRC php
+int fwrite (
+    resource $handle // 开始写入的指针位置
+,   string   $string
+[,  int      $length
+] )
+#+END_SRC
+
+| 返回值 | =int= | 写入的字符串长度 |
+
+* 网络
+
+| =header()=             | 向客户端发送一个原始（raw）HTTP header           |
+|------------------------+--------------------------------------------------|
+| =header_remove()=      | 移除设置的 header                                |
+|------------------------+--------------------------------------------------|
+| =headers_list()=       | 获取响应的 header 列表                           |
+|------------------------+--------------------------------------------------|
+| =headers_sent()=       | 检查是否已发送 header 以及发送 header 的代码位置 |
+|------------------------+--------------------------------------------------|
+| =http_response_code()= | 设置、获取 HTTP 响应码                           |
+|------------------------+--------------------------------------------------|
+| =setcookie()=          | 设置 cookie                                      |
+
+** =header()=
+
+#+BEGIN_SRC php
+void header (
+    string $string
+[,  bool   $replace = true
+[,  int    $http_response_code
+]] )
+#+END_SRC
+
+必须在产生任何输出（HTML 标签、空格、空行）之前使用。当已产生输出时，PHP 会自动发送 header，此时调用 =header()= 会产生警告信息。
+
+#+CAPTION: HTTP 跳转
+#+BEGIN_SRC php
+header('Location: http://www.domain.com/new_home_page.html');
+#+END_SRC
+
+#+CAPTION: HTTP 身份验证
+#+BEGIN_SRC php
+if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) {
+	...
+} else {
+	header('WWW-Authenticate: Basic realm="Realm-Name"');
+	header('HTTP/1.0 401 Unauthorized');
+	die("Please enter your username and password");
+}
+#+END_SRC
+
+#+CAPTION: 内容类型
+#+BEGIN_SRC php
+header('Content-Type: image/png');
+#+END_SRC
+
+** =header_remove()=
+
+#+BEGIN_SRC php
+void header_remove ( [ string $name ] )
+#+END_SRC
+
+** =headers_list()=
+
+#+BEGIN_SRC php
+array headers_list ( void )
+#+END_SRC
+
+** =headers_sent()=
+
+#+BEGIN_SRC php
+bool headers_sent (
+[   string &$file // 发送 header 的文件名
+[,  int    &$line // 发送 header 的行数
+]] )
+#+END_SRC
+
+示例
+#+BEGIN_SRC php
+if (!headers_sent($filename, $linenum)) {
+    header('Location: http://www.example.com/');
+} else {
+    echo "Headers already sent in $filename on line $linenum\n" .
+}
+#+END_SRC
+
+** =http_response_code()=
+
+#+BEGIN_SRC php
+int http_response_code ( [ int $response_code ] )
+#+END_SRC
+
+** =setcookie()=
+
+#+BEGIN_SRC php
+bool setcookie (
+    string $name
+[,  string $value
+[,  int    $expire = 0
+[,  string $path
+[,  string $domain
+[,  bool   $secure = false
+[,  bool   $httponly = false
+]]]]]])
+#+END_SRC
+* URL
+
+| =http_build_query()= | 生成 URL 编码的查询字符串   |
+|----------------------+-----------------------------|
+| =parse_url()=        | 解析 URL 组成部分           |
+|----------------------+-----------------------------|
+| [[urlencode][=urlencode()=]]        | 将字符串编码，用于 URL 请求 |
+
+** =http_build_query()=
+
+#+BEGIN_SRC php
+string http_build_query (
+    mixed  $query_data
+[,  string $numeric_prefix
+[,  string $arg_separator
+[,  int    $enc_type = PHP_QUERY_RFC1738
+]]])
+#+END_SRC
+
+** =parse_url()=
+
+#+BEGIN_SRC php
+mixed parse_url (
+    string $url
+[,  int    $component = -1
+])
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+$array = parse_url('http://foo.com:8080/bar/index.php?key=value#anchor');
+// array(
+//    'scheme' => 'http',
+//    'host' => 'foo.com',
+//    'port' => 8080,
+//    'path' => '/bar/index.php',
+//    'query' => 'key=value',
+//    'fragment' => 'anchor'
+// )
+#+END_SRC
+
+** =urlencode()=
+<<urlencode>>
+
+#+BEGIN_SRC php
+string urlencode ( string $str )
+#+END_SRC
+
+规则
+| =0-9a-zA-Z._-= | 保持不变             |
+|----------------+----------------------|
+| 空格           | =+=                  |
+|----------------+----------------------|
+| 其他字符       | =%= + 两位十六进制数 |
+* 环境和配置
+
+| *环境* | =phpinfo()=          | 输出 PHP 配置信息         |
+|--------+----------------------+---------------------------|
+|        | =phpversion()=       | 输出 PHP 或扩展的版本信息 |
+|--------+----------------------+---------------------------|
+|        | =version_compare()=  | 比较两个 PHP 标准版本号   |
+|--------+----------------------+---------------------------|
+| *配置* | [[ini_get][=ini_get()=]]          | 返回设置项的值            |
+|--------+----------------------+---------------------------|
+|        | [[ini_get_all][=ini_get_all()=]]      | 返回所有设置项的值        |
+|--------+----------------------+---------------------------|
+|        | [[ini_set][=ini_set()=]]          | 修改设置项的值            |
+|        | [[ini_alter][=ini_ alter()=]]        |                           |
+|--------+----------------------+---------------------------|
+|        | [[ini_restore][=ini_restore()=]]      | 恢复设置项为原始值        |
+|--------+----------------------+---------------------------|
+|        | =get_include_path()= | 读取 =include_path=       |
+|--------+----------------------+---------------------------|
+|        | =set_include_path()= | 设定 =include_path=       |
+
+** =ini_get()=
+<<ini_get>>
+
+#+BEGIN_SRC php
+string ini_get ( string $varname )
+#+END_SRC
+
+| 返回值 | =string= | 配置的值，值为 =null= 时返回空字符串 |
+|        | =false=  | 配置不存在时                         |
+
+** =ini_get_all()=
+<<ini_get_all>>
+
+#+BEGIN_SRC php
+array ini_get_all (
+[   string $extension
+[,  bool   $details = true
+]] )
+#+END_SRC
+
+** =ini_set()= =ini_alter()=
+<<ini_set>><<ini_alter>>
+
+#+BEGIN_SRC php
+string ini_set (
+string ini_alter (
+    string $varname
+,   string $newvalue
+)
+#+END_SRC
+
+| 返回值 | =string= | 成功时，返回修改前的值 |
+|        | =false=  | 失败时                 |
+
+- 使用 =ini_set()= 后，配置会在脚本运行时使用新的值，并在脚本结束时恢复
+
+** =ini_restore()=
+<<ini_restore>>
+
+#+BEGIN_SRC php
+void ini_restore ( string $varname )
+#+END_SRC
+** =phpinfo()=
+
+#+BEGIN_SRC php
+bool phpinfo ( [ int $what = INFO_ALL ] )
+#+END_SRC
+
+=$what=
+| 1 | =INFO_GENERAL= |
+|---+----------------|
+| 2 | =INFO_CREDITS= |
+
+** =phpversion()=
+
+#+BEGIN_SRC php
+string phpversion ( [ string $extension ] )
+#+END_SRC
+
+** =set_include_path()=
+
+#+BEGIN_SRC php
+string set_include_path ( string $new_include_path )
+#+END_SRC
+
+#+CAPTION: 添加查找路径。
+#+BEGIN_SRC php
+set_include_path(get_include_path() . PATH_SEPARATOR . "/home/foobar/phplib/");
+#+END_SRC
+
+** =version_compare()=
+
+#+BEGIN_SRC php
+mixed version_compare (
+    string $version1
+,   string $version2
+[,  string $operator
+])
+#+END_SRC
+
+| =$operation= | =string= | =<= ~<=~ =>= ~>=~ etc.      |
+|--------------+----------+-----------------------------|
+| 返回值       |       -1 | =$version1 < $version2=     |
+|              |        0 | ~$version1 == $version2~    |
+|              |        1 | =$version1 > $version2=     |
+|              |   =true= | =$oprator= 进行的比较成立   |
+|              |  =false= | =$oprator= 进行的比较不成立 |
+
+示例
+#+BEGIN_SRC php
+$version = curl_version();
+if (version_compare($version["version"], "7.16.2") < 0) {
+    ...
+}
+#+END_SRC
+
+* Magic
+
+|                  | *调用时机*                                  |
+|------------------+---------------------------------------------|
+| =__construct()=  |                                             |
+|------------------+---------------------------------------------|
+| =__destruct()=   | 对象内存空间被回收前，如 =unset()= 时       |
+|------------------+---------------------------------------------|
+| =__get()=        |                                             |
+|------------------+---------------------------------------------|
+| =__set()=        |                                             |
+|------------------+---------------------------------------------|
+| =__isset()=      | =isset()= =empty()=                         |
+|------------------+---------------------------------------------|
+| =__unset()=      | =unset()=                                   |
+|------------------+---------------------------------------------|
+| =__call()=       | 调用未定义的方法时                          |
+|------------------+---------------------------------------------|
+| =__callStatic()= | 用调用静态方法的方式调用未定义的方法时      |
+|------------------+---------------------------------------------|
+| =__toString()=   | 对象被隐式转换为字符串时，如 =echo= =print= |
+|------------------+---------------------------------------------|
+| =__clone()=      |                                             |
+|------------------+---------------------------------------------|
+| =__sleep()=      | =serialize()=                               |
+|------------------+---------------------------------------------|
+| =__wakeup()=     | =unserialize()=                             |
+|------------------+---------------------------------------------|
+| =__invoke()=     |                                             |
+|------------------+---------------------------------------------|
+| =__set_state()=  | =var_export()=                              |
+|------------------+---------------------------------------------|
+| =__debugInfo()=  |                                             |
+
+** 示例
+
+#+BEGIN_SRC php
+class Test {
+    private $data = array();
+    public function __set($name, $value) {
+        $this->data[$name] = $value;
+    }
+    public function __get($name) {
+        if (array_key_exists($name, $this->data)) {
+            return $this->data[$name];
+        }
+    }
+    public function __isset($name) {
+        return isset($this->data[$name]);
+    }
+    public function __unset($name) {
+        unset($this->data[$name]);
+    }
+    public function __call($name, $arguments) {
+        echo "Calling object method '$name' " . implode(', ', $arguments). "\n";
+    }
+    public static function __callStatic($name, $arguments) {
+        echo "Calling static method '$name' " . implode(', ', $arguments). "\n";
+    }
+}
+
+$obj = new MethodTest;
+$obj->runTest('in object context');       // __call()
+MethodTest::runTest('in static context'); // __callStatic()
+#+END_SRC
+
+** =__get()= =__set()=
+
+#+BEGIN_SRC php
+class Foo {
+    protected $data = array();
+    public function __set($name, $value) {
+        $this->data[$name] = $value;
+    }
+    public function &__get($name) {
+        if (array_key_exists($name, $this->data)) {
+            return $this->data[$name];
+        }
+        $value = false; // 需要返回引用
+        return $value;
+    }
+}
+
+$obj = new Foo;
+$obj->bar = '123';
+echo $obj->bar;
+#+END_SRC
+
+* 结构体
+
+| 结构体 | 不返回值 | 调用时不需要 =()= |
+|--------+----------+-------------------|
+| 函数   | 返回值   | 调用时需要 =()=   |
+
+| =exit= | 结束脚本的执行          |
+|--------+-------------------------|
+| =die=  | 等于 =exit=             |
+|--------+-------------------------|
+| =or=   | 表达式为 =false= 时执行 |
+
+** =exit=
+
+#+BEGIN_SRC php
+exit;                            // 无参数
+void exit ( [ string $status ] ) // 错误信息（输出）
+void exit ( int $status )        // exit 状态码（不输出）
+#+END_SRC
+
+- =exit= 被调用时， =shutdown= 函数和对象的 =destructor= 会在结束前执行
+
+** =die=
+
+- 通常与 =or= 组合使用，用于为可能出错的函数调用提供错误处理
+
+示例 1
+#+BEGIN_SRC php
+mysql_query($query) or die('Could not execute query');
+#+END_SRC
+
+示例 2
+#+BEGIN_SRC php
+mysql_query($query) or die(err_msg());
+function err_msg()
+{
+	return 'MySQL error was: ' . mysql_error();
+}
+#+END_SRC
+
+** =or=
+
+#+BEGIN_SRC php
+<expr> or <command>
+#+END_SRC
+
+- 跟在返回 =bool= 的表达式后
+- 等价于 =if (!<expr>) {<command>}=
+
+示例
+#+BEGIN_SRC php
+mysql_connect($db_host, $db_user, $db_password) or die("Unable to connect to MySQL");
+// 等价于
+$db_server = mysql_connect($db_host, $db_user, $db_password);
+if (!$db_server) die("Unable to connect to MySQL");
+#+END_SRC
+
+* 其他
+
+| =sleep()= | 延迟执行 |
+|-----------+----------|
+|           |          |
+

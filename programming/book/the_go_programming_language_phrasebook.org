@@ -1,0 +1,115 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: The Go Programming Language Phrasebook
+
+* Chapter 1. Introducing Go
+
+When learning a new language, there are 3 things to understand:
+
+1. The abstract model the language presents.
+2. The concrete syntax.
+3. The standard libraries and common idioms of the language.
+
+** Go and C
+
+The point of a low-level language is to provide an abstract machine model to the programmer that closely reflects the architecture of the concrete machines that it will target. There is no such thing as a universal low-level language: one language that closely represents the architecture of a certain machine model will not accurately reflect some other machine model.
+
+The attraction of C has been that, in providing an abstract model similar to most cheap consumer CPUs. However, over the last decade, this abstraction has become less like the real hardware. Therefore it is increasingly hard for a compiler to generate machine code from C sources that efficiently uses the resources of the target system.
+
+The aim of Go was to fill the same niche today that C fit into in the '80s. _The C abstract model represents a single processor and a single block of memory, and Go is a low-level language for multiprocessor development._
+
+** Why Go?
+
+In recent years, scalability has become a lot more important than raw speed. Moore's law, for a long time, roughly corresponded to a doubling in performance for a single thread of execution. Now, it generally means that you get twice as many cores.
+
+It used to be that you just had to wait six months, and your C code would run twice as fast on a new machine. This is no longer true. Now, for code to be faster on new machines, it must be parallel.
+
+_C is inherently a serial language. C code that uses more than a handful of threads is very rare. Go, in contrast, was designed with concurrency in mind._
+
+** Goroutines and Channels
+
+The fundamental concurrency primitive in Go is the goroutine. A goroutine is a like function call that completes asynchronously. Conceptually, goroutines run in parallel, but the language does not define how they work in terms of real parallelism, or make hard guarantees on their concurrency. The exact implementation mechanism for goroutines is not specified by the language.
+
+Goroutines are not intended to be implemented as kernel threads. A Go compiler may spawn a new operating system thread for every goroutine, or it may use a single thread and use timer signals to switch between them, which means large number of goroutines can be multiplexed onto a small number of kernel threads. This means that context switches between goroutines is often cheaper than between POSIX threads.
+
+Creating a goroutine is intended to be much cheaper than creating a thread using a typical C threading library, because of the use of segmented stacks in Go implementations.
+
+The traditional C stack was expected to be a contiguous block of memory. When creating a new thread, it needs to allocate a chunk of memory big enough for the maximum stack size (typically about 1MB of RAM), even if the thread is only ever going to use a few KB of stack space. Operating systems usually mark the page below the bottom of the stack as no-access, so small stack overflows will cause a segmentation fault.
+
+Go functions are more clever by treating the stack as a linked list of memory allocations. A short-lived goroutine will not use more than the 4KB initial stack allocation, so they can be created in large numbers without exhausting address space.
+
+-----
+
+Creating concurrent subprograms (threads, child processes, or goroutines) is the easy part of the problem. The difficult part is communicating between them.
+
+Go uses a form of C. A. R. Hoare's Communicating Sequential Processes (CSP) formalism to facilitate communication between goroutines. CSP defines communication channels that events can be sent down. Go programs can create channels and use them to communicate between threads.
+
+-----
+
+A good rule of thumb for concurrent code is that _the complexity of debugging it is proportional to the number of concurrent tasks multiplied by the number of possible ways in which they can interact._
+
+Go programs use garbage collection, making dangling pointers impossible, and disallows pointer arithmetic, making most other categories of pointer-related errors impossible.
+
+** Selecting a Compiler
+
+(skip)
+
+** The Go Type System
+
+Go is a language with static typing and tight coupling between components. Go is also a language with dynamic typing and loose coupling between components. The language allows to select which of these is more appropriate for each use case.
+
+Go type system is visible via interfaces. Go interfaces support duck typing and don't have to be explicitly adopted. Any type that implements the methods that an interface lists implicitly implements that interface. Interface types can be used as variable types. When calling a method on an interface-typed variable, it uses dynamic dispatch to find the correct method implementation.
+
+Go supports introspection on types. You can query any variable to find out whether it is an instance of a specified type, or whether it implements a specified interface. This makes it easy to write generic data structures in Go. You can either define an interface specifying the methods that required, or use the empty interface, which can be used to represent any type (including primitive types) if just storing values and don't need to call any methods.
+
+Go compiler does type inference, which allows to avoid explicit type annotations on most variable declarations. If combining initialization with declaration, then the compiler will infer the variable's type from the type of the expression assigned to it.
+
+** Understanding the Memory Model
+
+Go uses garbage collection. You explicitly allocate values, but there is no need to think about when to deallocate memory, they are automatically reclaimed when they are no longer required. But it is still possible to leak objects if you accidentally keep references to them after stop using them.
+
+Go does not explicitly differentiate between stack and heap allocations.
+
+For multithreaded code, sharing pointers to an object between multiple
+threads and working out exactly when the object can be destroyed is incredibly hard. For example, acquiring a reference in a thread requires an atomic increment operation, and it has to be very careful that objects aren't prematurely deallocated by race conditions.
+
+There are no guarantees what to expect when two goroutines touch the same memory. Go does not enforce any constraints on the order that memory accesses occur. The compiler is free to reorder any memory accesses within a goroutine, as long as that reordering does not alter the semantics of the goroutine running in isolation.
+
+#+BEGIN_SRC go
+// For example
+a = b;
+use(b)
+use(a);
+b = 12;
+// A valid reordering
+use(b)
+a = b;
+b = 12;
+use(a);
+#+END_SRC
+
+It is not possible for the user to distinguish the difference, unless either variable in this example is shared, then this kind of optimization would have confusing consequences. In general, it's a good idea to only share readonly strutures.
+* Chapter 2. A Go Primer
+
+Go adopts JavaScript's idea of semicolon insertion. Any line that can be interpreted as a complete statement has a semicolon implicitly inserted at the end by the parser. This adds some constraints, for example enforcing a brace style where open braces are at the end of the line at the start of flow-control statements, rather than on their own.
+
+** The Structure of a Go Source File
+
+Go code is arranged in packages, which fill the rôles of both libraries and header files in C.
+
+Although Go uses static compilation, =import= statements do not include source code in the current compilation unit. Go packages are imported when the code is linked, rather than when it is run. This ensures that a Go application will not fail because of a missing package on the deployment system, at the cost of increasing the size of the executable.
+
+When compiling a package, an object code file is generated, which includes a metadata section that describes the types and functions that the package exports, and a list of the packages that this package imports.
+
+Go only provides access control at the package level.
+
+Renaming a package when importing it is usually a bad idea, because it makes code harder to read. Only rename an imported package when it is needed to explicitly disambiguate two packages with the same name.
+
+** Declaring Variables
+
+Clices, maps, and channels are reference types, meaning:
+
+- They are always accessed via reference.
+- When assigning one such typed variable to another, they reference to the same underlying object.
+** Declaring Functions
+
+In Go, there is no distinction between heap and stack allocated variables, except at the implementation level.

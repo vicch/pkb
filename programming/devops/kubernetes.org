@@ -1,0 +1,477 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Kubernetes
+
+* Kubernetes
+
+Kubernetes 是用于部署容器化应用的系统。Kubernetes 不构建，而是直接获取（比如从 Docker Hub）镜像。
+
+Kubernetes 包含两种机器（实体或虚拟）：
+
+#+ATTR_HTML: :class no-border
+| *Master* | 运行管理程序，根据配置文件定义的目标状态，管理（启动、重启等）在其他机器上运行的容器。 |
+|----------+----------------------------------------------------------------------------------------|
+| *Node*   | 运行容器。                                                                             |
+
+file:../images/kubernetes/01.png
+
+* Config
+
+#+CAPTION: 配置文件格式
+#+BEGIN_SRC yaml
+apiVersion: <string>   # v1
+kind: <string>         # E.g. Deployment
+metadata: <ObjectMeta>
+spec: <ObjectSpec>     # 不同 kind 有不同 spec 对象类型，e.g. DeploymentSpec
+#+END_SRC
+
+** =ObjectMeta=
+
+#+BEGIN_SRC yaml
+metadata:
+  name: <string>
+  labels: <object>
+  annotations: <object> # 用于外部工具的元数据，如 Ingress
+  ...
+#+END_SRC
+
+** =LabelSelector=
+
+#+BEGIN_SRC yaml
+selector:
+  matchLabels: <object> # 键值对，用于匹配 metadata 中的 labels
+#+END_SRC
+
+** =Secret=
+
+用于存储敏感信息，如密码，但密码通常使用 =kubectl create secret= 命令创建，而不是使用配置文件。
+
+* Container
+** Container
+
+#+CAPTION: =Container=
+#+BEGIN_SRC yaml
+name: <string>
+image: <string>
+env:
+  - name: <string>     # 环境变量名
+    value: <string>    # 环境变量值
+                       # 数字需要转换为字符串，e.g. '1234'
+    valueFrom:         # 从其他来源获取值，如 Secret
+      secretKeyRef:
+        name: <string> # Secret 对象名
+        key: <string>  # Secret 中的 key
+ports:
+  - containerPort: <integer> # 暴露的 Pod 端口
+    hostPort: <integer>      # 暴露的主机端口
+volumeMounts:
+  - name: <string>           # 匹配 Volume 的 name
+    mountPath: <string>      # 容器内 mount 路径
+    subPath: <string>        # Volume 内存放此容器 volume 的路径，默认为空，即 Volume 根目录
+#+END_SRC
+
+** Pod
+
+Pod 用于运行一个或一组相关的容器。
+
+#+CAPTION: =PodSpec=
+#+BEGIN_SRC yaml
+containers:
+  - <Container>
+volumes:
+  - <Volume>
+#+END_SRC
+
+** Deployment
+
+Deployment 用于描述一组 Pod 的理想状态（desired state），Deployment 控制器负责监控并改变当前状态以达到理想状态。
+
+Deployment 可以定义一个 Pod 模版，根据此模版生成一组相同的 Pod。
+
+#+CAPTION: =DeploymentSpec=
+#+BEGIN_SRC yaml
+replicas: <integer>       # 理想状态 Pod 数量
+selector: <LabelSelector> # 只影响符合此 selector 的 Pod
+template:
+  metadata: <ObjectMeta>
+  spec: <PodSpec>         # 格式同 Pod 配置，如 containers
+#+END_SRC
+
+* Service
+
+Service 用于配置 Kubernetes 集群的网络环境。
+
+#+BEGIN_SRC yaml
+apiVersion: ...
+kind: Service
+metadata: ...
+spec:
+  type: <string> # ClusterIP（默认）
+                 # NodePort
+                 # ExternalName
+                 # LoadBalancer
+#+END_SRC
+
+** =ClusterIP=
+
+=ClusterIP= 用于向集群中的其他对象暴露（expose）指定 Pod 的端口。
+
+#+BEGIN_SRC yaml
+...
+spec:
+  type: ClusterIP
+  selector: <object> # 匹配 label 的键值对
+  ports:
+    - port: <integer>       # 暴露给集群内其他 Pod 的端口
+      targetPort: <integer> # Pod 目标端口
+#+END_SRC
+
+#+CAPTION: =ClusterIP= 的 =name= 将作为 Pod 的主机名
+#+BEGIN_SRC yaml
+# Foo Deployment
+kind: Deployment
+metadata:
+  name: foo-deployment
+spec:
+  template:
+    metadata:
+      labels:
+        component: foo
+
+# Foo CluterIP
+kind: Service
+metadata:
+  name: foo-cluster-ip-service
+spec:
+  type: ClusterIP
+  selector:
+    component: foo
+
+# Bar Deployment
+kind: Deployment
+metadata:
+  name: bar-deployment
+spec:
+  template:
+    spec:
+      containers:
+        - name: bar
+          env:
+            - name: FOO_HOST
+              value: foo-cluster-ip-service # 匹配 ClusterIP 的 name
+#+END_SRC
+
+** =LoadBalancer=
+
+作为集群入口，现在更常用 =Ingress= 。 =LoadBalancer= 需要依赖云服务本身的负载均衡，如 AWS 的 ALB。
+
+** =NodePort=
+
+=NodePort= 用于向外部网络暴露（expose）指定 Pod 的端口，一般只用于开发环境。
+
+#+BEGIN_SRC yaml
+...
+spec:
+  type: NodePort
+  selector: <object> # 用于匹配 label 的键值对
+  ports:
+    - port: <integer>       # 暴露给集群内其他 Pod 的端口
+      nodePort: <integer>   # 暴露给外部网络的端口
+      targetPort: <integer> # Pod 目标端口
+#+END_SRC
+
+* Storage
+** Volume
+
+Volume 使容器能在 Pod 级别存储数据，以解决两个问题：
+
+- 当 Pod 中的一个容器重启，它的文件系统将被清空，倒置存储的数据丢失。
+- Pod 中的容器之间需要共享文件。
+
+Volume 的生命周期与 Pod 一致，Pod 关闭后，Volume 也被清空。
+
+#+CAPTION: =Volume=
+#+BEGIN_SRC yaml
+name: <string>
+persistentVolumeClaim:
+  claimName: <string> # 匹配 PersistentVolumeClaim 的 name
+#+END_SRC
+
+** Persistent Volume
+
+[[https://kubernetes.io/docs/concepts/storage/persistent-volumes/][Persistent Volume | Kubernetes Documentation]]
+
+Persistent Volume 独立于 Pod，因此比 Pod 的 Volume 更持久化，在 Pod 关闭之后也不会丢失。
+
+file:../images/kubernetes/02.png
+
+** Persistent Volume Claim
+
+Persistent Volume Claim (PVC) 是 Pod 对于它所需要的 Persistent Volume 的声明。
+
+#+CAPTION: =PersistentVolumeClaimSpec=
+#+BEGIN_SRC yaml
+accessModes:
+  - <string> # ReadWriteOnce，单个节点读写
+             # ReadOnlyMany，多个节点只
+             # ReadWriteMany，多个节点读写
+resources:
+  requests:
+    storage: <string> # E.g. 2Gi
+storageClassName: <string>
+#+END_SRC
+
+* Ingress
+** =ingress-nginx=
+
+=ingress-nginx= （或 Nginx Ingress Controller）用于在 Kubernetes 集群中实现一个基于 Nginx 的负载均衡器，以连接云服务（或 minikube）提供的负载均衡器和集群的业务节点。
+
+file:../images/kubernetes/03.png
+
+file:../images/kubernetes/04.png
+
+** =Ingress=
+
+#+BEGIN_SRC yaml
+apiVersion: ... # extensions/v1beta1
+kind: Ingress
+metadata:
+  ...
+  annotations:
+    kubernetes.io/ingress.class: nginx              # 创建基于 Nginx 的 Ingress controller
+    nginx.ingress.kubernetes.io/rewrite-target: /$1 # 转发请求时移除 URL 中的路径，e.g. /api/ -> /
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /?(.*)
+            backend:
+              serviceName: <string> # 匹配 ClusterIP Service 的 name
+              servicePort: <integer>
+          - path: /foo/?(.*)
+#+END_SRC
+
+* RBAC
+
+[[https://kubernetes.io/docs/reference/access-authn-authz/rbac/][Kubernetes Reference | Using RBAC Authorization]]
+
+Kubernetes RBAC (Role-Based Access Control) limits access and modification of cluster objects. RBAC is not enabled by default in local dev environments such as Minikube, but should be enabled in prod environments such as Google Cloud.
+
+RBAC consists of accounts and roles.
+
+** Account
+
+Account is for identification. Accounts include:
+
+- User account: identifies a person.
+- Service account: identifies an object such as a =Pod=.
+
+** Roles 
+
+Role is for authorization, it contains a set of permissions. A role can be bound to an account by using "role binding" to authorize the account to perform the allowed actions.
+
+#+ATTR_HTML: :class no-border
+| =Role=               | A namespaced role               |
+|----------------------+---------------------------------|
+| =ClusterRole=        | A cluster-wide role             |
+|----------------------+---------------------------------|
+| =RoleBinding=        | Grants namespaced permissions   |
+|----------------------+---------------------------------|
+| =ClusterRoleBinding= | Grants cluster-wide permissions |
+
+* Helm
+
+Helm is a tool used to manage Kubernetes applications, such as =ingress-nginx=.
+
+Helm has 2 parts:
+
+- Helm: the client, receives commands from user and calls =tiller=.
+- Tiller: the server, modifies Kubernetes cluster such as installing objects.
+
+** 运行
+
+[[https://helm.sh/docs/using_helm/#from-script][Helm Documentation | Installing Helm | Using Script]]
+
+#+BEGIN_SRC sh
+# 安装
+curl -LO https://git.io/get_helm.sh
+chmod 700 get_helm.sh
+./get_helm.sh
+
+# 配置 Tiller 权限
+kubectl create serviceaccount --namespace kube-system tiller
+kubectl create clusterrolebinding tiller-cluster-role --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+
+# 初始化
+helm init --service-account tiller --upgrade
+#+END_SRC
+
+* =kubectl=
+
+=kubectl= 是 Kubernetes 的命令行工具，用于控制 Kubernetes 集群。
+
+** 命令
+
+#+ATTR_HTML: :class no-border
+| *操作* | =apply=        | 应用配置 |
+|        | =create=       | 创建     |
+|        | =delete=       | 删除     |
+|        | =set=          | 修改     |
+|--------+----------------+----------|
+| *状态* | =get=          | 资源列表 |
+|        | =describe=     | 资源信息 |
+|        | =logs=         | 日志     |
+|        | =cluster-info= |          |
+
+** =apply=
+
+#+BEGIN_SRC sh
+kubectl apply <options>
+  -f, --filename <file>|<dir> # 指定目录时，将应用目录下所有配置文件
+  --validate=<bool>           # 是否检查语法，因为客户端和服务器版本不同而报错时可以设为 false
+#+END_SRC
+
+** =create=
+
+#+BEGIN_SRC sh
+kubectl create <type> ...
+#+END_SRC
+
+*** =create clusterrolebinding=
+
+#+BEGIN_SRC sh
+kubectl create clusterrolebinding <options> <name>
+  <options>
+    --clusterrole=<role> # e.g. cluster-admin
+    --serviceaccount=<namespace>:<name>
+#+END_SRC
+
+*** =create secret=
+
+创建 =Secret= 对象，用于存储密码等敏感信息。
+
+#+BEGIN_SRC sh
+kubectl create secret <subtype> <name> <options> <key>=<value>
+  <subtype>
+    generic        # 从本地文件或命令参数创建对象 
+  <name>           # 用于在 Pod 配置内引用
+  <options>
+    --from-literal # 从命令参数创建，而不是从文件读取
+#+END_SRC
+
+*** =create serviceaccount=
+
+#+BEGIN_SRC sh
+kubectl create serviceaccount <options> <name>
+  <options>
+    --namespace <namespace>
+#+END_SRC
+
+** =delete=
+
+#+BEGIN_SRC sh
+kubectl delete <options>
+  -f, --filename <file>
+
+kubectl delete <type> <name>
+#+END_SRC
+
+** =describe=
+
+#+BEGIN_SRC sh
+kubectl describe <type> <name>
+  <type>
+    storageclass # 存储空间类别，用于 Persistent Volume
+#+END_SRC
+
+** =get=
+
+#+BEGIN_SRC sh
+kubectl get <options> <type>
+  <options>
+    -o, --output [wide|json|yaml] # 输出格式
+  <type>
+    deployments
+    persistentvolume (pv)
+    persistentvolumeclaim (pvc)
+    pods
+    services
+    storageclass (sc) # 存储空间类别，用于 Persistent Volume
+#+END_SRC
+
+** =logs=
+
+#+BEGIN_SRC sh
+kubectl logs <name>
+#+END_SRC
+
+** =set=
+
+#+BEGIN_SRC sh
+kubectl set <command>
+  image # 修改 Pod 模版的镜像
+#+END_SRC
+
+*** =set image=
+
+#+BEGIN_SRC sh
+kubectl set image <type>/<name> <container>=<image>
+#+END_SRC
+
+#+CAPTION: =foo-deployment.yml=
+#+BEGIN_SRC yaml
+...
+kind: Deployment
+metadata:
+  name: foo-deployment
+spec:
+  ...
+  template:
+    spec:
+      containers:
+        - name: bar
+          image: project/bar-image
+#+END_SRC
+
+#+CAPTION: 指定镜像
+#+BEGIN_SRC sh
+kubectl set image deployment/foo-deployment bar=project/bar-image:v1
+#+END_SRC
+
+* Minikube
+
+Minikube 是用于开发环境的 Kubernetes 集群配置和管理工具。Minikube 在一个 Linux 虚拟机（需要虚拟机环境如 VirtualBox）中运行一个单节点的 Kubernetes 集群。
+
+** 命令
+
+#+ATTR_HTML: :class no-border
+| *控制* | =start=      |                 |
+|--------+--------------+-----------------|
+| *状态* | =status=     |                 |
+|        | =dashboard=  |                 |
+|        | =ip=         | 获取 IP 地址    |
+|        | =docker-env= | Docker 环境变量 |
+
+** =docker-env=
+
+#+BEGIN_SRC sh
+minikube docker-env
+#+END_SRC
+
+#+BEGIN_SRC sh
+$ minikube docker-env
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://<ip>:<port>"
+export DOCKER_CERT_PATH="<path>/.minikube/certs"
+export DOCKER_API_VERSION="1.35"
+
+# 在当前会话内将本地 Docker client 指向 minikube 内的 Docker server
+$ eval $(minikube docker-env)
+#+END_SRC
+
+* Links
+
+1. [[https://kubernetes.io/docs/home/?path=browse][Kubernetes Documentaion]]
+1. [[https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/][Kubernetes API Reference]]
+1. [[https://kubernetes.github.io/ingress-nginx/][Nginx Ingress Controller]]
+1. [[https://helm.sh/][Helm]]
+1. [[https://github.com/kubernetes/minikube][Minikube]]

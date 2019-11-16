@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>The Cartoon Introduction to Statistics</title>
+<!-- 2016-05-05 周四 18:09 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">The Cartoon Introduction to Statistics</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Part 1: Gathering Statistics</a>
+<ul>
+<li><a href="#sec-1-1">1.1. Introduction: They're everywhere</a></li>
+<li><a href="#sec-1-2">1.2. Chapter 1: Numbers</a></li>
+<li><a href="#sec-1-3">1.3. Chapter 2: Random raw data</a></li>
+<li><a href="#sec-1-4">1.4. Chapter 3: Sorting</a></li>
+<li><a href="#sec-1-5">1.5. Chapter 4: Detective work</a></li>
+<li><a href="#sec-1-6">1.6. Chapter 5: Monster mistakes</a></li>
+<li><a href="#sec-1-7">1.7. Chapter 6: From samples to populations</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. Part 2: Hunting Parameters</a>
+<ul>
+<li><a href="#sec-2-1">2.1. Chapter 7: The Central Limit Theorem</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Part 1: Gathering Statistics</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Introduction: They're everywhere</h3>
+<div class="outline-text-3" id="text-1-1">
+<blockquote>
+<p>
+Statistics is about using the fish we did catch to say things about the fish we didn't.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Statistics help us make <b>confident dicisions</b> when we have <b>limited information</b>.
+</p>
+
+<p>
+We can use statistics to make <b>confident guesses</b>, but you can never use them to achieve <b>certainty</b>.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Chapter 1: Numbers</h3>
+<div class="outline-text-3" id="text-1-2">
+<blockquote>
+<p>
+Treat all numbers with a healthy dose of skepticism.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Always ask these questions of any number you encounter:
+</p>
+<ul class="org-ul">
+<li>Where did you come from?
+</li>
+<li>Who made you?
+</li>
+<li>And why?
+</li>
+</ul>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Chapter 2: Random raw data</h3>
+<div class="outline-text-3" id="text-1-3">
+<blockquote>
+<p>
+Sometimes it's impossible to count all the things you want to know about. Which is why, long ago, someone dreamed up the strategy of studying a <b>sample</b> to learn something about an entire <b>population</b>.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Ideally we'd like to gather a sample that accurately mirrors the population. This can seem like an impossible task when we don't know what the population looks like. To avoid bias, we always collect samples <b>randomly</b>.
+</p>
+
+<p>
+<b>Random sampling</b> is the key to all statistical inquiry.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Chapter 3: Sorting</h3>
+<div class="outline-text-3" id="text-1-4">
+<blockquote>
+<p>
+We gather <b>categorical data</b> when we're studying features that we can <b>describe only with words</b> (eg. colors, nations)h or <b>yes/no answers</b>.
+</p>
+
+<p>
+After we gather categorical data we can easily pile it or slice it to give us a sense of the proportions in our sample.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+We gather <b>numerical data</b> when we're studying features that we can <b>compare using numbers</b> (eg. age, height).
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The crucial difference between the two types of data is that we can do math on numerical data.
+</p>
+</blockquote>
+
+<hr  />
+
+<blockquote>
+<p>
+The most basic picture of numerical data is called a <b>histogram</b>.
+</p>
+</blockquote>
+
+
+<div class="figure">
+<p><img src="../images/the_cartoon_introduction_to_statistics/01.jpg" alt="01.jpg" />
+</p>
+<p><span class="figure-number">Figure 1:</span> Histogram</p>
+</div>
+
+<blockquote>
+<p>
+Another useful way to visualize numerical data is with a <b>boxplot</b>.
+</p>
+
+<p>
+&#x2026; cram the middle 50% of sample values into one big box.
+</p>
+</blockquote>
+
+
+<div class="figure">
+<p><img src="../images/the_cartoon_introduction_to_statistics/02.png" alt="02.png" />
+</p>
+<p><span class="figure-number">Figure 2:</span> Boxplot</p>
+</div>
+
+<blockquote>
+<p>
+Boxplots can be especially useful when we want an overview of our data or want to compare different samples or groups.
+</p>
+
+<p>
+Boxplots can give us a quick sense of <b>how data clumps together</b> and <b>whether it trails off</b> in one direction or the other.
+</p>
+</blockquote>
+
+
+<div class="figure">
+<p><img src="../images/the_cartoon_introduction_to_statistics/03.jpg" alt="03.jpg" />
+</p>
+<p><span class="figure-number">Figure 3:</span> Boxplots</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> Chapter 4: Detective work</h3>
+<div class="outline-text-3" id="text-1-5">
+<blockquote>
+<p>
+When we start to investigate any pile of data, we always look at four primary characteristics:
+</p>
+<ul class="org-ul">
+<li>sample size
+</li>
+<li>shape
+</li>
+<li>location
+</li>
+<li>spread
+</li>
+</ul>
+</blockquote>
+
+<hr  />
+
+<blockquote>
+<p>
+The size of a sample is directly related to the level of confidence we can have about a population.
+</p>
+
+<p>
+In general, a larger sample size is better.
+</p>
+</blockquote>
+
+<hr  />
+
+<blockquote>
+<p>
+We call a pile of data <b>flat</b> when all the possible outcomes are equally likely.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+We call a pile of data <b>normal</b> when something is causing it to clump around one particular value.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+We call a pile of data <b>skewed</b> when something is causing it to trail off more in one direction than the other.
+</p>
+</blockquote>
+
+
+<div class="figure">
+<p><img src="../images/the_cartoon_introduction_to_statistics/04.png" alt="04.png" />
+</p>
+<p><span class="figure-number">Figure 4:</span> Normal and skewed distribution</p>
+</div>
+
+<hr  />
+
+<blockquote>
+<p>
+<b>Location</b> is a measure of where the bulk of the data sits on a number line.
+</p>
+</blockquote>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">mean</th>
+<th scope="col" class="left">average value</th>
+<th scope="col" class="left">平均数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">median</td>
+<td class="left">middle value</td>
+<td class="left">中位数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">mode</td>
+<td class="left">most repeated value</td>
+<td class="left">众数</td>
+</tr>
+</tbody>
+</table>
+
+<hr  />
+
+<blockquote>
+<p>
+<b>Averages</b> can be deceptive if a pile of data is skewed.
+</p>
+
+<p>
+With skewed data, the <b>median</b> is often more revealing as a measure of location.
+</p>
+</blockquote>
+
+
+<div class="figure">
+<p><img src="../images/the_cartoon_introduction_to_statistics/05.gif" alt="05.gif" />
+</p>
+<p><span class="figure-number">Figure 5:</span> Average (mean) vs median</p>
+</div>
+
+<blockquote>
+<p>
+&#x2026; never think about the location of any pile of data without also thinking about its shape.
+</p>
+</blockquote>
+
+<hr  />
+
+<blockquote>
+<p>
+The most common measure of spread is <b>Standard Deviation (SD)</b>.
+</p>
+</blockquote>
+
+
+<div class="figure">
+<p><img src="../images/the_cartoon_introduction_to_statistics/06.gif" alt="06.gif" />
+</p>
+<p><span class="figure-number">Figure 6:</span> Standard Deviation</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> Chapter 5: Monster mistakes</h3>
+<div class="outline-text-3" id="text-1-6">
+<blockquote>
+<p>
+Much of the time we're exploring how one variable influences another. But remember, when we use statistics we can never totally prove any of our conclustions.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Whenever we think we see a relationship between two variables, there might be some other variable influencing our conclusions.
+</p>
+</blockquote>
+
+<hr  />
+
+<blockquote>
+<p>
+&#x2026; lurking variables can bedevil all kinds of statistical analysis, and part of a statistician's job is dig around for them.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> Chapter 6: From samples to populations</h3>
+<div class="outline-text-3" id="text-1-7">
+<blockquote>
+<p>
+When we pile up sample data, we call the result a <b>sample histogram</b>.
+</p>
+
+<p>
+If we could pile up an entire population, we'd call the result a <b>population distribution (群体分布)</b>.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+We refer to qualities in samples as <b>statistics</b>, and to qualities in populations as <b>parameters</b>.
+</p>
+
+<p>
+Statistics are the things we actually calculate and therefore know with certainty.
+</p>
+
+<p>
+Parameters are the things we really want to know but can only make guesses about.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Part 2: Hunting Parameters</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Chapter 7: The Central Limit Theorem</h3>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2016-05-05 周四 18:09</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

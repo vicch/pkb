@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Database Scrap</title>
+<!-- 2016-12-04 周日 19:59 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Database Scrap</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. 数据库的最简单实现</a>
+<ul>
+<li><a href="#sec-1-1">1.1. 存储格式</a></li>
+<li><a href="#sec-1-2">1.2. B 树</a></li>
+<li><a href="#sec-1-3">1.3. 索引</a></li>
+<li><a href="#sec-1-4">1.4. 高级功能</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. NoSQL and RDBMS</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 数据库的最简单实现</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2014/07/database_implementation.html">Source</a>
+</p>
+
+<p>
+所有应用软件之中，数据库可能是最复杂的。但是，自己写一个最简单的数据库并不难。Reddit 上面的帖子 <a href="https://www.reddit.com/r/Database/comments/27u6dy/how_do_you_build_a_database/ciggal8/">How do you build a database?</a> 只用了几百个字，就把原理讲清楚了。
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> 存储格式</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+第一步，就是将所要保存的数据，写入文本文件，即数据库。
+</p>
+
+<p>
+为了方便读取，数据必须分成记录，每一条 <span class="underline">记录的长度规定为等长</span> 。比如，假定每条记录的长度是 800 字节，那么第 5 条记录的开始位置就在 3200 字节。但大多数时候不知道某一条记录在第几个位置，只知道主键（primary key）的值。这时为了读取数据，可以一条条比对记录。但是这样做效率太低，实际应用中， <span class="underline">数据库往往采用 B 树（B-tree）格式储存数据。</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> B 树</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+要理解 B 树，必须从二叉查找树（binary search tree）讲起。二叉查找树是一种查找效率非常高的数据结构，它有三个特点：
+</p>
+
+<ul class="org-ul">
+<li>每个节点最多只有两个子树。
+</li>
+<li>左子树所有节点的值都小于父节点，右子树所有节点的值都大于父节点。
+</li>
+<li>在 n 个节点的查找树中找到目标值，一般只需要 log(n) 次比较。
+</li>
+</ul>
+
+<p>
+<span class="underline">二叉查找树的查找效率与层数相关，越处在下层的数据，就需要越多次比较。</span> 极端情况下，n 个数据需要 n 次比较才能找到目标值。对于数据库来说，每进入一层，就要从硬盘读取一次数据，这非常致命，因为硬盘的读取时间远远大于数据处理时间， <span class="underline">数据库读取硬盘的次数越少越好。</span>
+</p>
+
+<p>
+B 树是对二叉查找树的改进。它的设计思想是， <span class="underline">将相关数据尽量集中在一起，以便一次读取多个数据，减少硬盘操作次数。</span> B 树也有三个特点：
+</p>
+
+<ul class="org-ul">
+<li><span class="underline">一个节点可以容纳多个值。</span>
+</li>
+<li><span class="underline">除非数据已经填满，否则不会增加新的层。</span> 也就是说，B 树追求 <span class="underline">层数越少越好。</span>
+</li>
+<li>子节点的个数与父节点中值的个数，有严格的大小对应关系。一般来说，如果 <span class="underline">父节点有 a 个值，那么就有 a+1 个子节点。</span>
+</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="../images/database_scrap/01.png" alt="01.png" />
+</p>
+</div>
+
+<p>
+这种数据结构，非常有利于减少读取硬盘的次数。 <span class="underline">假定一个节点可以容纳 100 个值，那么 3 层的 B 树可以容纳 100 万个数据，如果换成二叉查找树，则需要 20 层。</span> 假定操作系统一次读取一个节点，并且根节点保留在内存中，那么 B 树在 100 万个数据中查找目标值，只需要读取两次硬盘。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> 索引</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+数据库以 <span class="underline">B 树格式储存，只解决了按照「主键」查找数据的问题。如果想查找其他字段，就需要建立索引。</span>
+</p>
+
+<p>
+所谓 <span class="underline">索引，就是以某个字段为关键字的 B 树文件。</span> 假定有一张「雇员表」，包含了员工号（主键）和姓名两个字段。可以对姓名建立索引文件，该文件以 B 树格式对姓名进行储存，每个姓名后面是其在数据库中的位置（即第几条记录）。查找姓名的时候，先从索引中找到对应第几条记录，然后再从表格中读取。
+</p>
+
+<p>
+这种索引查找方法，叫做 <del>索引顺序存取方法</del> （<a href="http://en.wikipedia.org/wiki/ISAM">Indexed Sequential Access Method</a>，缩写为 ISAM）。它已经有多种实现（比如 C-ISAM 库和 D-ISAM 库），只要使用这些代码库，就能自己写一个最简单的数据库。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> 高级功能</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+部署了最基本的数据存取（包括索引）以后，还可以实现一些高级功能：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>SQL</b></th>
+<th scope="col" class="left">数据库通用操作语言，需要 SQL 解析器，将 SQL 命令解析为对应的 ISAM 操作。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>数据库 <code>join</code></b></td>
+<td class="left">数据库的两张表通过「外键」建立连接关系，需要对这种操作进行优化。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>事务（transaction）</b></td>
+<td class="left">批量进行一系列数据库操作，只要有一步不成功，整个操作都不成功。</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">需要有一个「操作日志」，以便失败时对操作进行回滚。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>备份机制</b></td>
+<td class="left">保存数据库的副本。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>远程操作</b></td>
+<td class="left">使用户可以在不同的机器上，通过 TCP/IP 协议操作数据库。</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> NoSQL and RDBMS</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<a href="https://github.com/ServiceStackV3/mythz_blog/blob/master/pages/129.md">Source</a>
+</p>
+
+<p>
+The aggressive tone of the term "NoSQL" is one of the reasons that a lot of people have an instant resentment to the technology. It encourages flame ignited posts which will get every developer who has ever touched an RDBMS to weigh-in and pass judgement on technology that theyĄŻve never used before in a combined post also declaring their eternal love for their preferred RDBMS of choice.
+</p>
+
+<p>
+The negative posts generally share the same tone:
+</p>
+
+<blockquote>
+<p>
+I have developed with RDBMS for 10 years and I've never needed to use a NoSQL database. RDBMS can scale just as good as NoSQL.
+</p>
+</blockquote>
+
+<p>
+Unfortunately statements like the above instantly illustrate the developer has a biased attachment to a technology they've used all their life whilst at the same time declare they have absolutely no knowledge (or desire to gain any knowledge) on the subject for which they are passing judgement. It's most likely these developers have also made message queues fit in databases and marvelled at their configuration-mapping ability to have an eagerly-loaded chain of nested objects auto-magically bind to their pristine domain model. Yes this is quite a feat to be proud of, unfortunately it also happens to be a one-liner in a lot of non-relational databases. This characteristic of being able to serialize your domain model without requiring it to be mapped to a database using an ORM is not a feature limited to NoSQL databases, other data persistence solutions like db4o (an object orientated database) achieve this equally as well.
+</p>
+
+<hr  />
+
+<p>
+RDBMSs are really good at doing what they do, which is storing flat, relational, tabular data. They still remain the best solution for storing relational data. Using a NoSQL data store isn't an all-or-nothing technology. It actually serves as a good complementary technology to have along-side an RDBMS. Even though they have overlapping feature-set they can still be great together. It's still all about picking the right tool and using the right technology for the task at hand.
+</p>
+
+<p>
+What NoSQL databases are naturally good at:
+</p>
+
+<dl class="org-dl">
+<dt> Performance </dt><dd>As everything is retrieved by key, effectively all your queries hits an index. Redis, an in-memory data-store (with optional async persistence) can achieve 110000 SETs/second, 81000 GETs/second in an entry level Linux box, and no this is not possible with any RDBMS.
+</dd>
+
+<dt> Replication </dt><dd>A feature common in most NoSQL data stores is effortless replication. In Redis this is achieved by un-commenting one line: <code>slaveof ipaddress port</code> in <code>redis.conf</code>
+</dd>
+
+<dt> Schema-less persistence </dt><dd>As there is no formal data structure to bind to and most values are stored as binary or strings, the serialization format is left up to you. Effectively this can be seen as a feature as it leaves you free to serialize object directly. A lot of client libraries opt for a simplistic language-neutral format like JSON.
+</dd>
+
+<dt> Scalability </dt><dd>This seems to be a heated topic (where everyone believes they can scale their technology of choice equally as well given the right setup) so I won't delve in to this too deeply only to say that key-value data-stores by their nature have good characteristics to scale. When everything is accessed by key, clients can easily predict the source of data given a pool of available data-stores. Most clients also come in-built with consistent hashing where the addition or removal of a data store does not significantly impact this predictability.
+</dd>
+
+<dt> Efficiency and Cost </dt><dd>As there are a plethora of options available, most NoSQL data stores are both free and open source. They also perform better and provide better utilization of server resources than comparative RDBMS solutions.
+</dd>
+
+<dt> Advanced data constructs </dt><dd>NoSQL variants like Redis, in addition to a key-value data store also provide rich data constructs and atomic operations on server-side lists, sets, sorted sets and hashes which make things like message-queuing, notification systems, load-balancing work tasks trivial to implement.
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2016-12-04 周日 19:59</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

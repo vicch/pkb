@@ -1,0 +1,968 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-10-14 Mon 16:10 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Understanding TypeScript</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Understanding TypeScript</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgcfc0106">1 Get Started</a>
+<ul>
+<li><a href="#org95de0d9">1.1 Install TypeScript</a></li>
+<li><a href="#org451040b">1.2 Use TypeScript</a></li>
+<li><a href="#org72fdad9">1.3 Set Up the Course Workspace</a></li>
+<li><a href="#orgba22866">1.4 Understand the Created JavaScript Code</a></li>
+</ul>
+</li>
+<li><a href="#orgfb66ae3">2 Using Types For A Better Code</a>
+<ul>
+<li><a href="#org2231019">2.1 Module Exercise</a></li>
+</ul>
+</li>
+<li><a href="#org9424572">3 TypeScript and ES6</a>
+<ul>
+<li><a href="#org75da616">3.1 The Spread and Rest Operators</a></li>
+</ul>
+</li>
+<li><a href="#orgc85f9b4">4 Namespaces and Modules</a>
+<ul>
+<li><a href="#org46c525f">4.1 Namespaces and Multiple Files</a></li>
+<li><a href="#orgfb83e7d">4.2 Limitations of Namespaces</a></li>
+<li><a href="#org2538f21">4.3 Load Modules</a></li>
+</ul>
+</li>
+<li><a href="#orga1b278d">5 Generics</a>
+<ul>
+<li><a href="#org3bb879c">5.1 Module Exercise</a></li>
+</ul>
+</li>
+<li><a href="#orgbc99394">6 Use JavaScript Libraries with TypeScript</a>
+<ul>
+<li><a href="#org52a1e97">6.1 Use jQuery</a></li>
+<li><a href="#org76e878a">6.2 Understand Declaration Files</a></li>
+<li><a href="#orgda3cfc4">6.3 Use Public Type Definitions</a></li>
+</ul>
+</li>
+<li><a href="#org883f75b">7 TypeScript Workflows</a>
+<ul>
+<li><a href="#orgcac7de3">7.1 Add TypeScript to Gulp Workflow</a></li>
+<li><a href="#orge04c283">7.2 Add TypeScript to Webpack Workflow</a></li>
+</ul>
+</li>
+<li><a href="#org5332d7b">8 Use TypeScript with ReactJS</a>
+<ul>
+<li><a href="#org9c77bbb">8.1 Project Setup</a></li>
+<li><a href="#orgf0419a9">8.2 User PropTypes</a></li>
+<li><a href="#org9c5a55b">8.3 Type and Class Components</a></li>
+<li><a href="#orgf624e96">8.4 Wrap Up</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgcfc0106" class="outline-2">
+<h2 id="orgcfc0106"><span class="section-number-2">1</span> Get Started</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-org95de0d9" class="outline-3">
+<h3 id="org95de0d9"><span class="section-number-3">1.1</span> Install TypeScript</h3>
+<div class="outline-text-3" id="text-1-1">
+<div class="org-src-container">
+<pre class="src src-sh">npm install -g typescript
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org451040b" class="outline-3">
+<h3 id="org451040b"><span class="section-number-3">1.2</span> Use TypeScript</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Create a simple TypeScript script:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 1: </span><code>script.ts</code></label><pre class="src src-typescript"><span class="org-keyword">class</span> <span class="org-type">Greeter</span> {
+  greeting: <span class="org-keyword">string</span>;
+  <span class="org-keyword">constructor</span>(message: <span class="org-keyword">string</span>) {
+    <span class="org-keyword">this</span>.greeting = message;
+  }
+  greet() {
+    <span class="org-keyword">return</span> <span class="org-string">"Hello, "</span> + <span class="org-keyword">this</span>.greeting;
+  }
+}
+
+<span class="org-keyword">let</span> <span class="org-variable-name">greeter</span> = <span class="org-keyword">new</span> <span class="org-type">Greeter</span>(<span class="org-string">"world"</span>);
+
+<span class="org-keyword">let</span> <span class="org-variable-name">button</span> = document.createElement(<span class="org-string">"button"</span>);
+button.textContent = <span class="org-string">"Say Hello"</span>;
+button.onclick = <span class="org-keyword">function</span>() {
+  alert(greeter.greet());
+};
+
+document.body.appendChild(button);
+</pre>
+</div>
+
+<p>
+Compile it to JavaScript:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">tsc script.ts
+<span class="org-comment-delimiter"># </span><span class="org-comment">Generates script.js</span>
+</pre>
+</div>
+
+<p>
+Embed the JavaScript file to an HTML document and see the effect.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org72fdad9" class="outline-3">
+<h3 id="org72fdad9"><span class="section-number-3">1.3</span> Set Up the Course Workspace</h3>
+<div class="outline-text-3" id="text-1-3">
+<ul class="org-ul">
+<li><a href="https://www.npmjs.com/package/lite-server">npm | lite-server</a></li>
+</ul>
+
+<p>
+lite-server is a local dev server which loads latest files automatically. Install lite-server:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">npm init
+npm install --save-dev lite-server
+</pre>
+</div>
+
+<p>
+Add an npm command to start lite-server:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 2: </span><code>package.json</code></label><pre class="src src-js">{
+  <span class="org-string">"scripts"</span>: {
+    <span class="org-string">"start"</span>: <span class="org-string">"lite-server"</span>
+  }
+}
+</pre>
+</div>
+
+<p>
+Create a simple <code>index.html</code> and start lite-server, which will open <a href="http://localhost:3000/">http://localhost:3000/</a> in browser.
+</p>
+
+<hr />
+
+<p>
+Initialize the directory as TypeScript project: 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">tsc --init
+<span class="org-comment-delimiter"># </span><span class="org-comment">Generates tsconfig.json</span>
+</pre>
+</div>
+
+<p>
+Then command <code>tsc</code> will compile all TypeScript files in the directory, file names are not needed anymore.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgba22866" class="outline-3">
+<h3 id="orgba22866"><span class="section-number-3">1.4</span> Understand the Created JavaScript Code</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+Once TypeScript is compiled into JavaScript, all the type notations are removed, the result code doesn't have type constraints. TypeScript only prevents type errors during the compiling process.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfb66ae3" class="outline-2">
+<h2 id="orgfb66ae3"><span class="section-number-2">2</span> Using Types For A Better Code</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-org2231019" class="outline-3">
+<h3 id="org2231019"><span class="section-number-3">2.1</span> Module Exercise</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Add types as explicitly as possible to this code:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">let</span> <span class="org-variable-name">bankAccount</span> = {
+    money: 2000,
+    deposit(value) {
+        <span class="org-keyword">this</span>.money += value;
+    }
+};
+
+<span class="org-keyword">let</span> <span class="org-variable-name">myself</span> = {
+    name: <span class="org-string">"Max"</span>,
+    bankAccount: bankAccount,
+    hobbies: [<span class="org-string">"Sports"</span>, <span class="org-string">"Cooking"</span>]
+};
+
+myself.bankAccount.deposit(3000);
+</pre>
+</div>
+
+<p>
+Result:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">type</span> <span class="org-type">BankAccount</span> = {
+    money: <span class="org-keyword">number</span>,
+    deposit: (value: <span class="org-keyword">number</span>) =&gt; <span class="org-keyword">void</span>
+};
+
+<span class="org-keyword">type</span> <span class="org-type">User</span> = {
+    name: <span class="org-keyword">string</span>,
+    bankAccount: BankAccount,
+    hobbies: <span class="org-keyword">string</span>[]
+};
+
+<span class="org-keyword">let</span> <span class="org-variable-name">account</span>: BankAccount = {
+    money: 2000,
+    deposit(value: <span class="org-keyword">number</span>): <span class="org-keyword">void</span> {
+        <span class="org-keyword">this</span>.money += value;
+    }
+};
+
+<span class="org-keyword">let</span> <span class="org-variable-name">me</span>: User = {
+    name: <span class="org-string">"Max"</span>,
+    bankAccount: account,
+    hobbies: [<span class="org-string">"Sports"</span>, <span class="org-string">"Cooking"</span>]
+};
+
+me.bankAccount.deposit(3000);
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9424572" class="outline-2">
+<h2 id="org9424572"><span class="section-number-2">3</span> TypeScript and ES6</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-org75da616" class="outline-3">
+<h3 id="org75da616"><span class="section-number-3">3.1</span> The Spread and Rest Operators</h3>
+<div class="outline-text-3" id="text-3-1">
+<ul class="org-ul">
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax">MDN | JavaScript | Reference | Expressions &amp; Operators | Spread Syntax</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters">MDN | JavaScript | Reference | Functions | Rest Parameters</a></li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">const</span> <span class="org-variable-name">foo</span> = (...args: <span class="org-keyword">string</span>[]) =&gt; { <span class="org-comment-delimiter">// </span><span class="org-comment">Rest</span>
+  console.log(args);
+}
+<span class="org-keyword">let</span> <span class="org-variable-name">bar</span>: <span class="org-keyword">string</span>[] = [<span class="org-string">"b"</span>, <span class="org-string">"a"</span>, <span class="org-string">"r"</span>];
+foo(...bar); <span class="org-comment-delimiter">// </span><span class="org-comment">Spread</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc85f9b4" class="outline-2">
+<h2 id="orgc85f9b4"><span class="section-number-2">4</span> Namespaces and Modules</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-org46c525f" class="outline-3">
+<h3 id="org46c525f"><span class="section-number-3">4.1</span> Namespaces and Multiple Files</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+When a namespace spreads across multiple files:
+</p>
+
+<ul class="org-ul">
+<li>Compile the files individually and include all the <code>.js</code> files in HTML.</li>
+<li>Compile the files into a single file by <code>tsc --outFile app.js foo.ts bar.ts ...</code>.</li>
+<li>Use <code>/// &lt;reference/&gt;</code> notation to declare the dependencies among the files, and compile the entry file. Compiler will automatically include the referenced files.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgfb83e7d" class="outline-3">
+<h3 id="orgfb83e7d"><span class="section-number-3">4.2</span> Limitations of Namespaces</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+When the application grow, dependencies become less maintainable by using namespaces which needs the <code>/// &lt;reference/&gt;</code> notation. Modules should be used in this scenario. 
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2538f21" class="outline-3">
+<h3 id="org2538f21"><span class="section-number-3">4.3</span> Load Modules</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+<a href="https://rollupjs.org/guide/en/">rollup.js</a>
+</p>
+
+<p>
+The config file specifies the module standard to be used by the compiler:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 3: </span><code>tsconfig.json</code></label><pre class="src src-js">{
+  <span class="org-string">"compilerOptions"</span>: {
+    <span class="org-string">"module"</span>: <span class="org-string">"commonjs"</span>
+  }
+}
+</pre>
+</div>
+
+<p>
+Regardless of the module standard, module importing won't work directly in browser. A module loader such as rollup.js needs to be used.
+</p>
+
+<hr />
+
+<p>
+Module usage example:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 4: </span><code>/foo/bar.ts</code></label><pre class="src src-typescript"><span class="org-keyword">export</span> <span class="org-keyword">const</span> <span class="org-variable-name">name</span> = <span class="org-string">'bar'</span>;
+<span class="org-keyword">export</span> <span class="org-keyword">const</span> <span class="org-variable-name">bar</span> = () =&gt; <span class="org-string">'This is bar.'</span>;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 5: </span><code>/app.ts</code></label><pre class="src src-typescript"><span class="org-keyword">import</span> { name, bar } <span class="org-keyword">from</span> <span class="org-string">'./foo/bar'</span>;
+console.log(name);
+console.log(bar());
+</pre>
+</div>
+
+<hr />
+
+<p>
+Install rollup.js:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ npm install --save-dev rollup
+</pre>
+</div>
+
+<p>
+Update compiler config to use ES2015 module standard:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 6: </span><code>tsconfig.json</code></label><pre class="src src-js">{
+  <span class="org-string">"compilerOptions"</span>: {
+    <span class="org-string">"module"</span>: <span class="org-string">"es2015"</span>
+  }
+}
+</pre>
+</div>
+
+<p>
+Add an npm script to invoke rollup.js after compiling TypeScript:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 7: </span><code>package.json</code></label><pre class="src src-js">{
+  <span class="org-string">"scripts"</span>: {
+    <span class="org-string">"build"</span>: <span class="org-string">"tsc &amp;&amp; rollup app.js --format iife --file app.js"</span>
+  }
+}
+</pre>
+</div>
+
+<p>
+Then to compile TypeScript:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ npm run build
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orga1b278d" class="outline-2">
+<h2 id="orga1b278d"><span class="section-number-2">5</span> Generics</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-org3bb879c" class="outline-3">
+<h3 id="org3bb879c"><span class="section-number-3">5.1</span> Module Exercise</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+Write a class that implements a generic map, which stores the given type of elements keyed by strings.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">class</span> <span class="org-type">MyMap</span>&lt;T&gt; {
+  <span class="org-keyword">private</span> map: { [key: <span class="org-keyword">string</span>]: T } = {};
+  setItem(key: <span class="org-keyword">string</span>, value: T) {
+    <span class="org-keyword">this</span>.map[key] = value;
+  }
+  getItem(key: <span class="org-keyword">string</span>) {
+    <span class="org-keyword">return</span> <span class="org-keyword">this</span>.map[key];
+  }
+  clear() {
+    <span class="org-keyword">this</span>.map = {};
+  }
+  print() {
+    <span class="org-keyword">for</span> (<span class="org-keyword">let</span> <span class="org-variable-name">key</span> <span class="org-keyword">in</span> <span class="org-keyword">this</span>.map) {
+      console.log(key + <span class="org-string">':'</span> + <span class="org-keyword">this</span>.map[key]);
+    }
+  }
+}
+
+<span class="org-keyword">let</span> <span class="org-variable-name">map</span> = <span class="org-keyword">new</span> <span class="org-type">MyMap</span>&lt;<span class="org-keyword">number</span>&gt;();
+map.setItem(<span class="org-string">'foo'</span>, 1);
+map.setItem(<span class="org-string">'bar'</span>, 2);
+console.log(map.getItem(<span class="org-string">'foo'</span>));
+map.print();
+map.clear();
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbc99394" class="outline-2">
+<h2 id="orgbc99394"><span class="section-number-2">6</span> Use JavaScript Libraries with TypeScript</h2>
+<div class="outline-text-2" id="text-6">
+</div><div id="outline-container-org52a1e97" class="outline-3">
+<h3 id="org52a1e97"><span class="section-number-3">6.1</span> Use jQuery</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+Include a jQuery distribution file into HTML to make it available for the page. However it can't be used directly in TypeScript code, because <code>$</code> is not defined. One way to define it and get past compiling:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">declare</span> <span class="org-keyword">var</span> <span class="org-variable-name">$</span>: <span class="org-keyword">any</span>;
+$(<span class="org-string">'...'</span>); <span class="org-comment-delimiter">// </span><span class="org-comment">OK</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org76e878a" class="outline-3">
+<h3 id="org76e878a"><span class="section-number-3">6.2</span> Understand Declaration Files</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+TypeScript compiler loads automatically declaration files with <code>.d.ts</code> extensions. Declaration files are similar to header files, where global variables and functions can be defined and shared among all TypeScript files.
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 8: </span><code>jquery.d.ts</code></label><pre class="src src-typescript"><span class="org-keyword">declare</span> <span class="org-keyword">var</span> <span class="org-variable-name">$</span>: <span class="org-keyword">any</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgda3cfc4" class="outline-3">
+<h3 id="orgda3cfc4"><span class="section-number-3">6.3</span> Use Public Type Definitions</h3>
+<div class="outline-text-3" id="text-6-3">
+<ul class="org-ul">
+<li><a href="http://definitelytyped.org/">DefinitelyTyped</a></li>
+<li><a href="https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/jquery">DefinitelyTyped | jQuery</a></li>
+</ul>
+
+<p>
+To install type definitions provided by DefinitelyTyped for jQuery:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ npm init
+$ npm install --save-dev @types/jquery
+</pre>
+</div>
+
+<p>
+TypeScript compiler will automatically pick up the type definitions under <code>node_modules/@types/jquery/</code>. The type definitions also enable IDE to provide type checks and auto completions.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org883f75b" class="outline-2">
+<h2 id="org883f75b"><span class="section-number-2">7</span> TypeScript Workflows</h2>
+<div class="outline-text-2" id="text-7">
+</div><div id="outline-container-orgcac7de3" class="outline-3">
+<h3 id="orgcac7de3"><span class="section-number-3">7.1</span> Add TypeScript to Gulp Workflow</h3>
+<div class="outline-text-3" id="text-7-1">
+<ul class="org-ul">
+<li><a href="https://gulpjs.com/">gulp.js</a></li>
+<li><a href="https://www.npmjs.com/package/gulp-typescript">npm | gulp-typescript</a></li>
+</ul>
+
+<p>
+gulp.js is a build system. gulp-typescript is a plugin which wraps the TypeScript compiler via API.
+</p>
+
+<p>
+Install packages:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ npm install --save-dev gulp gulp-typescript typescript
+</pre>
+</div>
+
+<p>
+Create gulp config file:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 9: </span><code>gulpfile.js</code></label><pre class="src src-js"><span class="org-keyword">var</span> <span class="org-variable-name">gulp</span> = require(<span class="org-string">'gulp'</span>);
+<span class="org-keyword">var</span> <span class="org-variable-name">ts</span> = require(<span class="org-string">'gulp-typescript'</span>);
+
+<span class="org-keyword">var</span> <span class="org-variable-name">tsProject</span> = ts.createProject(<span class="org-string">'tsconfig.json'</span>); <span class="org-comment-delimiter">// </span><span class="org-comment">Load compiler config</span>
+
+gulp.task(<span class="org-string">'typescript'</span>, <span class="org-keyword">function</span>() {
+  <span class="org-keyword">return</span> tsProject.src()      <span class="org-comment-delimiter">// </span><span class="org-comment">Take all source files of the project</span>
+    .pipe(tsProject())        <span class="org-comment-delimiter">// </span><span class="org-comment">Compile with the loaded config</span>
+    .pipe(gulp.dest(<span class="org-string">'dist'</span>)); <span class="org-comment-delimiter">// </span><span class="org-comment">Put the result somewhere</span>
+});
+
+gulp.task(<span class="org-string">'watch'</span>, <span class="org-keyword">function</span>() {
+  gulp.watch(<span class="org-string">'*.ts'</span>, gulp.series(<span class="org-string">'typescript'</span>)); <span class="org-comment-delimiter">// </span><span class="org-comment">Watch for *.ts files and run</span>
+                                                 <span class="org-comment-delimiter">// </span><span class="org-comment">the "typescript" task</span>
+});
+
+gulp.task(<span class="org-string">'default'</span>, gulp.series(<span class="org-string">'watch'</span>)); <span class="org-comment-delimiter">// </span><span class="org-comment">Run "watch" task by default</span>
+</pre>
+</div>
+
+<p>
+Add an npm script to run gulp:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 10: </span><code>package.json</code></label><pre class="src src-js">{
+  <span class="org-string">"scripts"</span>: {
+    <span class="org-string">"build"</span>: <span class="org-string">"gulp"</span>
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge04c283" class="outline-3">
+<h3 id="orge04c283"><span class="section-number-3">7.2</span> Add TypeScript to Webpack Workflow</h3>
+<div class="outline-text-3" id="text-7-2">
+<ul class="org-ul">
+<li><a href="https://www.npmjs.com/package/webpack">npm | webpack</a></li>
+<li><a href="https://www.npmjs.com/package/ts-loader">npm | ts-loader</a></li>
+</ul>
+
+<p>
+Install packages:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ npm install --save-dev webpack webpack-cli ts-loader
+</pre>
+</div>
+
+<p>
+Create webpack config file:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 11: </span><code>webpack.config.js</code></label><pre class="src src-js">module.exports = {
+  entry: <span class="org-string">'./app.ts'</span>,
+  output: {
+    filename: <span class="org-string">'./bundle.js'</span>
+  },
+  module: {
+    rules: [
+      { test: <span class="org-string">/\.ts$/</span>, loader: <span class="org-string">'ts-loader'</span> } <span class="org-comment-delimiter">// </span><span class="org-comment">Use ts-loader for .ts files</span>
+    ]
+  }
+}
+</pre>
+</div>
+
+<p>
+Add an npm script to run webpack:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 12: </span><code>package.json</code></label><pre class="src src-js">{
+  <span class="org-string">"scripts"</span>: {
+    <span class="org-string">"build"</span>: <span class="org-string">"webpack -d --watch"</span>,
+    <span class="org-string">"build:prod"</span>: <span class="org-string">"webpack -p"</span>
+  }
+}
+</pre>
+</div>
+
+<p>
+Importing of jQuery needs to be updated:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-typescript"><span class="org-keyword">import</span> $ <span class="org-keyword">from</span> <span class="org-string">'jquery'</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">Assuming @types/jquery is installed</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org5332d7b" class="outline-2">
+<h2 id="org5332d7b"><span class="section-number-2">8</span> Use TypeScript with ReactJS</h2>
+<div class="outline-text-2" id="text-8">
+</div><div id="outline-container-org9c77bbb" class="outline-3">
+<h3 id="org9c77bbb"><span class="section-number-3">8.1</span> Project Setup</h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+Install packages and create project:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ npm install -g create-react-app
+$ create-react-app ./react-app --scripts-version=react-scripts-ts
+</pre>
+</div>
+
+<p>
+Start the app, changes will be watched:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ cd react-app
+$ npm start
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf0419a9" class="outline-3">
+<h3 id="orgf0419a9"><span class="section-number-3">8.2</span> User PropTypes</h3>
+<div class="outline-text-3" id="text-8-2">
+<p>
+Create a functional component:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 13: </span><code>src/Counter.tsx</code></label><pre class="src src-typescript"><span class="org-keyword">import</span> * <span class="org-keyword">as</span> React <span class="org-keyword">from</span> <span class="org-string">'react'</span>;
+
+<span class="org-keyword">interface</span> <span class="org-type">ICounterProps</span> {
+  counter: <span class="org-keyword">number</span>;
+}
+
+<span class="org-keyword">const</span> <span class="org-variable-name">counter</span> = (props: ICounterProps) =&gt; &lt;p&gt;{props.counter}&lt;/p&gt;;
+
+<span class="org-keyword">export</span> <span class="org-keyword">default</span> counter;
+</pre>
+</div>
+
+<p>
+Use the component:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 14: </span><code>src/App.tsx</code></label><pre class="src src-typescript"><span class="org-keyword">import</span> Counter <span class="org-keyword">from</span> <span class="org-string">'./Counter'</span>;
+
+<span class="org-keyword">class</span> <span class="org-type">App</span> <span class="org-keyword">extends</span> <span class="org-type">React</span>.Component {
+  <span class="org-keyword">public</span> render() {
+    <span class="org-keyword">return</span> &lt;Counter counter={1} /&gt;;
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9c5a55b" class="outline-3">
+<h3 id="org9c5a55b"><span class="section-number-3">8.3</span> Type and Class Components</h3>
+<div class="outline-text-3" id="text-8-3">
+<p>
+Make the counter more functional by adding states and event handlers to the app:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 15: </span><code>src/App.tsx</code></label><pre class="src src-typescript"><span class="org-keyword">interface</span> <span class="org-type">IAppState</span> {
+  counter: <span class="org-keyword">number</span>;
+}
+
+<span class="org-keyword">class</span> <span class="org-type">App</span> <span class="org-keyword">extends</span> <span class="org-type">React</span>.Component&lt;{}, IAppState&gt; { <span class="org-comment-delimiter">// </span><span class="org-comment">React.Component is a generic class</span>
+  <span class="org-keyword">public</span> state = { counter: 0 };
+
+  <span class="org-keyword">public</span> render() {
+    <span class="org-keyword">return</span> (
+      &lt;Counter counter={<span class="org-keyword">this</span>.state.counter} /&gt; <span class="org-comment-delimiter">// </span><span class="org-comment">Pass state to component</span>
+      &lt;button onClick={<span class="org-keyword">this</span>.incrementHandler}&gt;Increment&lt;/button&gt;
+      &lt;button onClick={<span class="org-keyword">this</span>.decrementHandler}&gt;Decrement&lt;/button&gt;
+    );
+  }
+
+  <span class="org-keyword">private</span> incrementHandler = () =&gt; {
+    <span class="org-keyword">this</span>.setState(prevState =&gt; {
+      <span class="org-keyword">return</span> { counter: prevState.counter + 1 };
+    });
+  }
+  <span class="org-keyword">private</span> decrementHandler = () =&gt; {
+    <span class="org-keyword">this</span>.setState(prevState =&gt; {
+      <span class="org-keyword">return</span> { counter: prevState.counter - 1 };
+    });
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf624e96" class="outline-3">
+<h3 id="orgf624e96"><span class="section-number-3">8.4</span> Wrap Up</h3>
+<div class="outline-text-3" id="text-8-4">
+<ul class="org-ul">
+<li><a href="https://github.com/microsoft/TypeScript-React-Starter">GitHub | TypeScript-React-Starter</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2019-10-14 Mon 16:10</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: React Library
+
+* Router
+
+Router 由 =react-router-dom= 库实现。
+
+| =react-router=        | Core navigation library            |
+|-----------------------+------------------------------------|
+| =reate-router-dom=    | DOM-based app navigation           |
+|-----------------------+------------------------------------|
+| =react-router-native= | React-native app navigation        |
+|-----------------------+------------------------------------|
+| =react-router-redux=  | Bindings of Redux and React Router |
+
+| =BrowserRouter= | 修改 URL 路径            | example.com/        |
+|                 |                          | example.com/page    |
+|-----------------+--------------------------+---------------------|
+| =HashRouter=    | 在 =#= 之后修改 URL 路径 | example.com/#/      |
+|                 |                          | example.com/#/page  |
+|-----------------+--------------------------+---------------------|
+| =MemoryRouter=  | 不修改 URL 路径          | example.com/        |
+|                 |                          | example.com/ (page) |
+|-----------------+--------------------------+---------------------|
+| =StaticRouter=  |                          |                     |
+
+** =Route=
+
+=path= 匹配 URL 路径，如果未指定匹配方式为 =exact= 完全匹配，则进行最左匹配。
+
+#+BEGIN_SRC js
+<Route path="/" component={Root} />
+<Route path="/foo" component={Foo} />
+// domain.com     -> Root, Foo
+// domain.com/foo -> Foo
+
+<Route path="/" exact component={Root} />
+<Route path="/foo" component={Foo} />
+// domain.com     -> Root
+// domain.com/foo -> Foo
+#+END_SRC
+
+** =Link=
+
+如果使用 =<a>= 作为页面之间的链接，每次点击将重新获取整个页面并初始化 React 应用。使用 =<Link>= 作为链接，React Router 将阻止浏览器获取新页面，只修改浏览器 URL 并发送给 =BrowserRouter= 进行页面切换。
+
+** 示例
+
+#+BEGIN_SRC js
+import React from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
+
+const PageOne = () => <div>PageOne<Link to="/two">PageTwo</Link></div>;
+const PageTwo = () => <div>PageTwo<Link to="/">PageOne</Link></div>;
+
+const App = () => {
+  return (
+    <BrowserRouter>
+      <div>
+        <Route path="/" exact component={PageOne}></Route>
+        <Route path="/two" component={PageTwo}></Route>
+      </div>
+    </BrowserRouter>
+  )
+}
+
+export default App;
+#+END_SRC

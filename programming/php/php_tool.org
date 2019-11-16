@@ -1,0 +1,92 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: PHP Tool
+
+* CodeSniffer
+** 命令行
+
+#+BEGIN_SRC sh
+phpcs <options> <file/dir>
+
+<options> # 标准
+    --standard= # 指定标准，e.g. PEAR
+    --sniffs=   # 只检查指定规则，e.g. Generic.PHP.LowerCaseConstant
+    -e          # 显示指定标准的规则列表
+
+<options> # 输出
+    -s        # 显示规则代码
+    --report= # 报告格式，默认为 full
+        full
+        summary
+#+END_SRC
+
+* Phing
+
+Phing is a PHP project build tool based on ​Apache Ant. It interprets XML build files and processes PHP source files, for example, copy the files from source directory to target locations.
+
+* PHPUnit
+** 命令行
+
+#+BEGIN_SRC sh
+phpunit <options> <test>
+
+<options> # 日志
+    --log-tap <file> # 以 TAP 格式记录测试结果到文件
+
+<options> # 执行
+    --bootstrap <script> # 用于设置自动加载等
+    -v, --verbose
+
+<test> # 测试类文件，或测试目录
+       # 测试目录下所有定义在 *Test.php 中的测试都将被执行
+#+END_SRC
+
+** 示例
+
+#+BEGIN_SRC php
+class SomeTest extends PHPUnit_Framework_TestCase
+{
+    public function testSomething()
+    {
+        $this->assertEquals(0, $var);
+    }
+}
+#+END_SRC
+** =PHPUnit_Framework_TestCase=
+
+| =assertEquals()=    |   |
+| =assertNotEquals()= |   |
+|---------------------+---|
+| =assertTrue()=      |   |
+| =assertFalse()=     |   |
+|---------------------+---|
+|                     |   |
+
+*** =assertEquals()= =assertNotEquals()=
+
+#+BEGIN_SRC php
+assertEquals (
+assertNotEquals (
+    mixed  $expected
+,   mixed  $actual
+[,  string $message = ''
+])
+#+END_SRC
+
+#+CAPTION: 包含误差
+#+BEGIN_SRC php
+assertEquals(
+    float  $expected
+,   float  $actual
+[,  string $message = ''
+,   float  $delta = 0
+])
+#+END_SRC
+
+*** =assertTrue()= =assertFalse()=
+
+#+BEGIN_SRC php
+assertFalse(
+$expression,
+$message)
+#+END_SRC
+

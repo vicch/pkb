@@ -1,0 +1,494 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Go Package
+
+* =builtin=
+
+|          | =len()=    |                                       |
+|----------+------------+---------------------------------------|
+| *序列*   | =append()= | 向分片中添加元素                      |
+|          | =copy()=   |                                       |
+|          | =delete()= |                                       |
+|----------+------------+---------------------------------------|
+| *实例化* | =new()=    | 实例化类型，返回指针                  |
+|          | =make()=   | 实例化引用类型（slice, map, channel） |
+
+** =append()=
+
+#+BEGIN_SRC go
+func append(
+    slice []Type
+,   elems ...Type
+) []Type
+#+END_SRC
+
+#+CAPTION: 超出分片容量时，会为分片分配新的（更大的）数组
+#+BEGIN_SRC go
+var s []int            // len = 0, cap = 0, []
+s = append(s, 0)       // len = 1, cap = 2, [0]
+s = append(s, 1)       // len = 2, cap = 2, [0 1]
+s = append(s, 2, 3, 4) // len = 5, cap = 8, [0 1 2 3 4]
+#+END_SRC
+
+#+CAPTION: =append()= 返回新的分片，原分片保持不变
+#+BEGIN_SRC go
+a := []int{1, 2, 3}
+b := append(a, 4)
+// a -> [1 2 3]
+// b -> [1 2 3 4]
+#+END_SRC
+
+** =copy()=
+
+#+BEGIN_SRC go
+copy (
+    dst
+,   src []Type
+)
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC go
+a := []int{1, 2, 3}
+b := make([]int, len(a))
+copy(b, a)
+#+END_SRC
+
+** =delete()=
+
+#+BEGIN_SRC go
+func delete(
+    m map[Type]Type1
+,   key Type
+)
+#+END_SRC
+
+** =len()=
+
+| *参数*                   | *返回值* |
+|--------------------------+----------|
+| 数组（指针）、分片、映射 | 元素个数 |
+|--------------------------+----------|
+| 字符串                   | 字节数   |
+
+** =make()=
+
+实例初始化为零值。
+
+#+BEGIN_SRC go
+func make(
+    t Type
+,   size ...IntegerType
+) Type
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC go
+a := make([]int, 5)    // len = 5, [0 0 0 0 0]
+b := make([]int, 0, 5) // len = 0, cap = 5, []
+c := make([][]int, 3)
+for i = 0; i < 3; i++ {
+    c[i] = make([]int, 4)
+}
+#+END_SRC
+
+** =new()=
+
+#+BEGIN_SRC go
+func new(Type) *Type
+#+END_SRC
+
+实例初始化为零值。
+
+#+CAPTION: =new()= 等价于声明变量并获取其地址：
+#+BEGIN_SRC go
+p = new(int)
+*p = 1
+// 等价于
+i := 1
+p := &i
+#+END_SRC
+
+* =fmt=
+
+| *输出* | =Printf()=  |   |
+|        | =Println()= |   |
+|--------+-------------+---|
+| *输入* | =Scan()=    |   |
+|        | =Scanf()=   |   |
+
+** 占位符
+
+[[https://golang.org/pkg/fmt/#hdr-Printing][Package =fmt= Printing | Golang]]
+
+| *布尔*   | =%t=  |                   |
+|----------+-------+-------------------|
+| *整数*   | =%d=  | 十进制            |
+|----------+-------+-------------------|
+| *字符串* | =%q=  | 带引号字符串      |
+|          | =%v=  | 字符串表现形式    |
+|          | =%+v= | Struct 包含字段名 |
+|          | =%#v= | 语法字面值        |
+|----------+-------+-------------------|
+| *元数据* | =%T=  | 类型              |
+
+** =Printf()=
+
+#+BEGIN_SRC go
+fmt.Printf(
+    pattern string,
+    value   mixed,
+    ...
+)
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC go
+type Entity struct {
+    key, value string
+}
+func (e Entity) String() string {
+    return "key = " + e.key + ", value = " + e.value
+}
+func main() {
+   e := Entity{"foo", "bar"}
+   fmt.Printf("%T", e)  // main.Entity
+   fmt.Printf("%v", e)  // key = foo, value = bar
+   fmt.Printf("%#v", e) // main.Entity{key:"foo", value:"bar"}
+}
+#+END_SRC
+
+** =Println()=
+
+#+BEGIN_SRC go
+fmt.Println(
+    s1 string,
+    s2 string,
+    ...
+)
+#+END_SRC
+
+- 多个字符串之间默认用空格连接。
+
+** =Scan()=
+
+#+BEGIN_SRC go
+fmt.Scan(
+    a ...interface{}
+) (n int, err error)
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC go
+var n int
+_, err := fmt.Scan(&n)
+#+END_SRC
+
+** =Scanf()=
+
+#+BEGIN_SRC go
+fmt.Scanf(
+    format string
+,   a ...interface{}
+) (n int, err error)
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC go
+var a, b, c int
+_, err := fmt.Scanf("%d %d %d", &a, &b, &c)
+#+END_SRC
+
+* =io=
+** =Copy()=
+
+#+BEGIN_SRC go
+func Copy(
+    dst Writer
+,   src Reader
+) (written int64, err error)
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC go
+resp, _ := http.Get("http://golang.org")
+io.Copy(os.Stdout, resp.Body)
+#+END_SRC
+
+** =Reader=
+
+#+BEGIN_SRC go
+type Reader interface {
+    Read(p []byte) (n int, err error)
+}
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC go
+resp, _ := http.Get("http://golang.org")
+
+body := make([]byte, 1000)
+len, _ := resp.Body.Read(body)
+fmt.Println(string(body))
+#+END_SRC
+
+* =io/ioutil=
+** =ReadFile()=
+
+#+BEGIN_SRC go
+func ReadFile(
+    filename string
+) ([]byte, error)
+#+END_SRC
+
+** =WriteFile()=
+
+#+BEGIN_SRC go
+func WriteFile(
+    filename string
+,   data []byte
+,   perm os.FileMode
+) error
+#+END_SRC
+
+* =math=
+** Args
+
+| =math.Pi=    |            |
+|--------------+------------|
+| =math.Sqrt2= | 2 的平方根 |
+
+** =Pow()=
+
+#+BEGIN_SRC go
+func Pow(
+    x float64
+,   y float64
+) float64
+#+END_SRC
+
+** =Sqrt()=
+
+#+BEGIN_SRC go
+func Sqrt(x float64) float64
+#+END_SRC
+
+* =math/rand=
+** =Intn()=
+
+#+BEGIN_SRC go
+func Intn(n int) int
+#+END_SRC
+
+生成 [0,n) 之间的伪随机整数。
+
+** =Seed()=
+
+#+BEGIN_SRC go
+func Seed(seed int64)
+#+END_SRC
+
+#+BEGIN_SRC go
+rand.Seed(time.Now().UnixNano())
+x := rand.Intn(100)
+#+END_SRC
+
+* =net/http=
+** =Get()=
+
+#+BEGIN_SRC go
+func Get(
+    url string
+) (resp *Response, err error)
+#+END_SRC
+
+* =os=
+
+| *环境* | =Getenv()=  | 返回环境变量     |
+|        | =Setenv()=  | 设定环境变量     |
+|        | =Environ()= | 返回所有环境变量 |
+|--------+-------------+------------------|
+| *文件* | =Open=      |                  |
+|        | =Remove()=  |                  |
+
+** 变量
+
+#+BEGIN_SRC go
+var (
+    Stdin  = NewFile(uintptr(syscall.Stdin), "/dev/stdin")
+    Stdout = NewFile(uintptr(syscall.Stdout), "/dev/stdout")
+    Stderr = NewFile(uintptr(syscall.Stderr), "/dev/stderr")
+)
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC go
+resp, _ := http.Get("http://golang.org")
+io.Copy(os.Stdout, resp.Body)
+#+END_SRC
+
+** =Args=
+
+命令行参数数组，第一个元素是程序路径。
+
+#+BEGIN_SRC go
+func main() {
+    fmt.Println(os.Args[1:])
+}
+// $ go run main.go 1 2 3
+// [1 2 3]
+#+END_SRC
+
+** =Environ()=
+
+#+BEGIN_SRC go
+func main() {
+    for _, e := range os.Environ() {
+        pair := strings.Split(e, "=") // 返回格式为 key=value
+        fmt.Println(pair[0])
+    } 
+}
+// $ go run main.go
+// PATH
+// SHELL
+// ...
+#+END_SRC
+
+** =Exit()=
+
+#+BEGIN_SRC go
+func Exit(code int)
+#+END_SRC
+
+** =Getenv()=
+
+#+BEGIN_SRC go
+func main() {
+    fmt.Println("FOO =", os.Getenv("FOO"))
+}
+// $ FOO=1 go run main.go
+// FOO = 1
+#+END_SRC
+
+** =Open=
+
+#+BEGIN_SRC go
+func Open(name string) (*File, error)
+#+END_SRC
+
+#+BEGIN_SRC go
+file, _ := os.Open(filename)
+io.Copy(os.Stdout, file)
+#+END_SRC
+
+** =Remove()=
+
+#+BEGIN_SRC go
+func Remove(name string) error
+#+END_SRC
+
+* =sort=
+** =IntsAreSorted()=
+
+#+BEGIN_SRC go
+func IntsAreSorted(a []int) bool
+#+END_SRC
+
+返回 =true= 如果整数数组是正序排序的。
+
+#+BEGIN_SRC go
+sort.IntsAreSorted([]int{1, 2, 3, 4, 5, 6}) // true
+sort.IntsAreSorted([]int{3, 2, 4, 1, 5, 6}) // false
+#+END_SRC
+
+* =strings=
+** =Join()=
+
+#+BEGIN_SRC go
+func Join(
+    a []string
+,   sep string
+) string
+#+END_SRC
+
+** =Split()=
+
+#+BEGIN_SRC go
+func Split(
+    s string
+,   sep string
+) []string
+#+END_SRC
+
+* =testing=
+** =testing.T=
+
+#+BEGIN_SRC go
+func TestFoo(t *testing.T) {
+}
+#+END_SRC
+
+*** =Errorf()=
+
+#+BEGIN_SRC go
+func (c *T) Errorf(
+    format string
+,   args ...interface{}
+)
+#+END_SRC
+
+#+BEGIN_SRC go
+func TestFoo(t *testing.T) {
+    if (<expr>) {
+        t.Errorf("Expected ...", ...)
+    }
+}
+#+END_SRC
+
+* =time=
+
+| =Now()=                        |   |
+|--------------------------------+---|
+| =Year()= =Month()= =Day()=     |   |
+|--------------------------------+---|
+| =Hour()= =Minute()= =Second()= |   |
+|--------------------------------+---|
+| =YearDay()= =WeekDay()=        |   |
+
+** 常量
+
+#+BEGIN_SRC go
+const (
+    Nanosecond  Duration = 1
+    Microsecond          = 1000 * Nanosecond
+    Millisecond          = 1000 * Microsecond
+    Second               = 1000 * Millisecond
+    Minute               = 60 * Second
+    Hour                 = 60 * Minute
+)
+#+END_SRC
+
+** =Now()=
+
+#+BEGIN_SRC go
+func Now() Time
+#+END_SRC
+
+** =Sleep()=
+
+#+BEGIN_SRC go
+func Sleep(d Duration)
+#+END_SRC
+
+** =Time=
+*** =Unix()=
+
+#+BEGIN_SRC go
+func (t Time) Unix() int64
+#+END_SRC
+
+返回 Unix 时间戳。
+
+* 链接
+
+1. [[https://golang.org/pkg/][Go Packages]]
+1. [[https://golanglibs.com/][Go libraries and apps]]

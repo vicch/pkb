@@ -1,0 +1,530 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Python Library
+
+* 数据结构
+** =collections=
+*** =namedtuple()=
+
+Build classes of objects that are just bundles of attributes with no custom methods, like a database record.
+
+#+BEGIN_SRC python
+namedtuple(
+    typename
+,   field_names
+[,  verbose=False ]
+[,  rename=False ]
+)
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+Card = collections.namedtuple('Card', ['rank', 'suit'])
+new_card = Card('7', 'diamonds')
+# Card(rank='7', suit='diamonds')
+#+END_SRC
+
+* 数字
+** =math=
+
+| *常量*   |        |
+|----------+--------|
+| =pi=     |        |
+|----------+--------|
+| *方法*   |        |
+|----------+--------|
+| =sqrt()= | 平方根 |
+
+** =random=
+
+| =choice()=  | 返回序列中的随机元素     |
+|-------------+--------------------------|
+| =random()=  | 返回 0 和 1 之间的随机数 |
+|-------------+--------------------------|
+| =sample()=  |                          |
+|-------------+--------------------------|
+| =shuffle()= |                          |
+
+*** =sample()=
+
+Return a =k= length list of unique elements chosen from the =population= sequence.
+
+#+BEGIN_SRC python
+sample ( population, k )
+#+END_SRC
+
+*** =shuffle()=
+
+#+BEGIN_SRC python
+shuffle (
+    x
+[,  random
+])
+#+END_SRC
+
+* 序列
+** =itertools=
+
+| =combinations()=                  | 元素组合，顺序无关，不可重复使用 |
+|-----------------------------------+----------------------------------|
+| =combinations_with_replacement()= | 元素组合，顺序无关，可重复使用 |
+|-----------------------------------+----------------------------------|
+| =permutations()=                  | 元素排列，顺序有关               |
+|-----------------------------------+----------------------------------|
+| =product()=                       | 求两个序列的笛卡尔积             |
+
+* 日期时间
+** 格式化占位符
+
+[[https://docs.python.org/3.7/library/datetime.html#strftime-and-strptime-behavior][ =strftime()= and =strptime()= Behavior]]
+
+| =%Y= |   |
+|------+---|
+| =%m= |   |
+|------+---|
+| =%d= |   |
+
+** =time=
+
+| =strftime()=      | 输出格式化日期时间字符串                |
+|-------------------+-----------------------------------------|
+| =sleep()=         | Suspend execution of the calling thread |
+
+*** =strftime()=
+
+#+BEGIN_SRC python
+strftime (
+    format
+[,  t
+])
+#+END_SRC
+
+*** =sleep()=
+
+#+BEGIN_SRC python
+sleep ( secs )
+#+END_SRC
+
+** =datetime.datetime=
+*** =datetime()=
+
+#+BEGIN_SRC python
+datetime (
+    year
+,   month
+,   day
+,   hour=0
+,   minute=0
+,   second=0
+,   microsecond=0
+,   tzinfo=None
+)
+#+END_SRC  
+
+*** =datetime.now()=
+
+#+BEGIN_SRC python
+datetime.now(tz=None)
+#+END_SRC
+
+返回 =datetime= 对象。
+
+#+BEGIN_SRC python
+datetime.now()
+# datetime.datetime(2019, 2, 23, 16, 39, 22, 560828)
+#+END_SRC
+
+*** =datetime.strftime()=
+
+#+BEGIN_SRC python
+datetime.strftime(format)
+#+END_SRC
+
+#+BEGIN_SRC python
+datetime(2019, 1, 10).strftime("%m/%d/%Y")
+# "01/10/2019"
+#+END_SRC
+
+*** =datetime.strptime()=
+
+#+BEGIN_SRC python
+datetime.strptime(date_string, format)
+#+END_SRC
+
+#+BEGIN_SRC python
+datetime.strptime("01-10-2019", "%m-%d-%Y")
+# datetime.datetime(2019, 1, 10, 0, 0)
+#+END_SRC
+
+** =datetime.timedelta=
+
+#+BEGIN_SRC python
+datetime(2019, 1, 10) - datetime(2019, 1, 1)
+# datetime.timedelta(days=9)
+#+END_SRC
+
+*** =timedelta()=
+
+#+BEGIN_SRC python
+timedelta (
+    days=0
+,   seconds=0
+,   microseconds=0
+,   milliseconds=0
+,   minutes=0
+,   hours=0
+,   weeks=0
+)
+#+END_SRC  
+
+* 文本
+** =difflib=
+*** =difflib.get_close_matches()=
+
+#+BEGIN_SRC python
+difflib.get_close_matches(
+    word          # 字符串
+,   possibilities # 字符串序列
+,   n=3           # 最多返回 n 个相似结果
+,   cutoff=0.6    # 忽略相似度不足 cutoff 的结果
+)
+#+END_SRC
+
+从字符串序列中寻找与给定字符串相似的结果，返回的结果序列按相似度从高到低排序。
+
+#+BEGIN_SRC python
+get_close_matches('appel', ['ape', 'apple', 'peach', 'puppy'])
+# ['apple', 'ape']
+#+END_SRC
+
+** =difflib.SequenceMatcher=
+
+#+BEGIN_SRC python
+difflib.SequenceMatcher(
+    isjunk=None # 单参数函数，返回 True 时表示该序列元素应该被忽略
+,   a=''        # 序列 A
+,   b=''        # 序列 B
+,   autojunk=True
+)
+#+END_SRC
+
+#+BEGIN_SRC python
+s = SequenceMatcher(
+    lambda x: x == " ",
+    "private Thread currentThread;",
+    "private volatile Thread currentThread;")
+
+s.ratio()       # 序列相似度
+s.quick_ratio() # 序列相似度上限，速度较快
+#+END_SRC
+
+** =re=
+
+#+BEGIN_SRC python
+match (
+    pattern
+,   string
+,   flags = 0
+)
+#+END_SRC
+
+* 文件
+** =csv=
+* 文件系统
+** =os=
+
+|              |            | Linux   | Unix    | Windows |
+|--------------+------------+---------+---------+---------|
+| =name=       | 操作系统名 | =posix= | =posix= | =nt=    |
+|--------------+------------+---------+---------+---------|
+| =sep=        | 路径分隔符 | =/=     | =/=     | =\=     |
+|--------------+------------+---------+---------+---------|
+| =linesep=    | 行尾符     | =\n=    |         | =\r\n=  |
+
+| *目录* | =getcwd()=  | 返回当前工作目录       |
+|--------+-------------+------------------------|
+|        | =listdir()= | 返回目录下文件、目录名 |
+|--------+-------------+------------------------|
+|        | =mkdir()=   | 创建目录               |
+|--------+-------------+------------------------|
+| *文件* | =remove()=  | 删除文件               |
+|--------+-------------+------------------------|
+| *环境* | =system()=  | 执行系统命令           |
+|--------+-------------+------------------------|
+|        | =getenv()=  | 读取环境变量           |
+|--------+-------------+------------------------|
+|        | =putenv()=  | 设置环境变量           |
+
+*** =getenv()=
+
+#+BEGIN_SRC python
+getenv (
+    name
+[,  value
+])
+#+END_SRC
+
+*** =mkdir()=
+
+#+BEGIN_SRC python
+mkdir (
+    path
+[,  mode
+])
+#+END_SRC
+
+*** =putenv()=
+
+#+BEGIN_SRC python
+putenv (
+    name
+,   value
+)
+#+END_SRC
+
+*** =system()=
+
+#+BEGIN_SRC python
+system ( command )
+#+END_SRC
+
+| 返回值 |   | 退出状态码 |
+
+不推荐使用，容易引发严重错误。
+
+** =os.path=
+
+| =exists()= |                  |
+|------------+------------------|
+| =isfile()= |                  |
+|------------+------------------|
+| =isdir()=  |                  |
+|------------+------------------|
+| =split()=  | 返回路径和文件名 |
+
+*** =exists()=
+
+#+BEGIN_SRC python
+exists ( path )
+#+END_SRC
+
+** =glob=
+
+#+BEGIN_SRC python
+glob.glob("*.txt")
+# ["foo.txt", "bar.txt", ...]
+#+END_SRC
+
+* 运行时
+** =sys=
+
+| =argv=       | 命令行参数列表         |
+|--------------+------------------------|
+| =path=       | 查找加载模块的目录列表 |
+|--------------+------------------------|
+| *函数*       |                        |
+|--------------+------------------------|
+| =exit()=     | 中断退出               |
+
+*** =argv=
+
+=argv= 中元素都是字符串，需要手动转换类型。
+
+=argv[0]= 为当前脚本名称。
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+from sys import argv
+
+script, foo, bar = argv
+
+print 'Current script is:', script
+print 'foo =', foo
+print 'bar =', bar
+
+# 运行
+python script.py 1 2
+#+END_SRC
+
+*** =path=
+
+第一个元素为空，表示当前目录。
+
+*** =exit()=
+
+#+BEGIN_SRC python
+exit( [arg] )
+#+END_SRC
+
+* 网络
+** =urllib=
+
+| =urlopen()=        |   |
+|--------------------+---|
+|                    |   |
+
+*** =urlopen()=
+
+#+BEGIN_SRC python
+urlopen (
+    url
+[,  data
+[,  proxies
+[,  context
+]]])
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+url = 'http://example.com/foo.txt'
+for line in urllib.urlopen(url).readlines():
+    print line
+#+END_SRC
+
+* 网络数据
+** =json=
+*** 数据格式
+
+| *JSON*      | *Python* |
+|-------------+----------|
+| object      | =dict=   |
+|-------------+----------|
+| array       | =list=   |
+|-------------+----------|
+| string      | =str=    |
+|-------------+----------|
+| int number  | =int=    |
+| real number | =float=  |
+|-------------+----------|
+| true        | =True=   |
+| false       | =False=  |
+|-------------+----------|
+| null        | =None=   |
+
+*** =json.load()=
+
+#+BEGIN_SRC python
+json.load(
+    fp
+,   *
+,   cls=None
+,   object_hook=None
+,   parse_float=None
+,   parse_int=None
+,   parse_constant=None
+,   object_pairs_hook=None
+,   **kw
+)
+#+END_SRC
+
+将 JSON 文件内容反序列化为 Python 对象。
+
+#+BEGIN_SRC python
+data = json.load(open("data.json"))
+#+END_SRC
+
+* 持久化
+** =pickle=
+
+从文件存取 Python 对象。
+
+#+BEGIN_SRC python
+pickle.dump (
+    obj
+,   file
+[,  protocol
+])
+
+# eg.
+import pickle as p
+f = file('pickle.tmp', 'w')
+p.dump(<obj>, f)
+f.close()
+#+END_SRC
+
+#+BEGIN_SRC python
+pickle.load ( file )
+
+# eg.
+import pickle as p
+f = file('pickle.tmp')
+<obj> = p.load(f)
+f.close()
+#+END_SRC
+
+** =cPickle=
+
+C 语言编写，比 pickle 速度快。
+
+* 测试
+** =doctest=
+
+Standard Python testing package.
+
+Simulates console sessions and verifies that the expressions evaluate to the responses shown. Tests look like transcripts of interactive Python console sessions.
+
+*** 测试
+
+#+BEGIN_SRC python
+def my_function(a, b):
+    """
+    >>> my_function(2, 3)
+    6
+    >>> my_function('a', 3)
+    'aaa'
+    """
+    return a * b
+
+# 测试输出太长时，用 #doctest: +ELLIPSIS 进行省略
+def my_function(a, b):
+    """
+    >>> my_function(1, 10) #doctest: +ELLIPSIS
+    [1, 2, 3, ...]
+    """
+    print(range(a, b))
+#+END_SRC
+
+*** 命令
+
+#+BEGIN_SRC sh
+python -m doctest foo.py
+python -m doctest -v foo.py
+#+END_SRC
+
+* Tkinter
+** =Tk=
+
+Root window.
+
+| =geometry()= |   |
+|--------------+---|
+| =mainloop()= |   |
+
+*** =geometry()=
+
+#+BEGIN_SRC python
+Tk.geometry(<geo_string>)
+#+END_SRC
+
+#+CAPTION: =<geo_string>=
+#+BEGIN_SRC python
+<width>x<height>+/-<x_offset>+/-<y_offset>
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+root = Tk()
+root.geometry("250x150+300-300")
+#+END_SRC
+
+** =Frame=
+
+#+CAPTION: =option=
+| =background= | Hex code: =ffffff=  |
+|              | Color name: =white= |
+|--------------+---------------------|
+|              |                     |
+
+* 链接
+
+1. [[https://docs.python.org/2/library/index.html][The Python Standard Library]]
+1. [[http://infohost.nmt.edu/tcc/help/pubs/tkinter/web/index.html][Tkinter 8.5 reference]]

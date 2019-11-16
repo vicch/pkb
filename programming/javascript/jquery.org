@@ -1,0 +1,217 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: jQuery
+
+* Snippet
+
+#+CAPTION: 元素是否可见
+#+BEGIN_SRC js
+$("#element").is(":visible");
+#+END_SRC
+* Function
+** =ajax()=
+
+[[http://api.jquery.com/jQuery.ajax/][jQuery.ajax()]]
+
+#+BEGIN_SRC js
+jQuery.ajax( url [, settings ])
+#+END_SRC
+
+***  Settings
+
+|               | 类型        | 默认值                                                                                                     |
+|---------------+-------------+------------------------------------------------------------------------------------------------------------|
+| [[jquery_ajax_accepts][=accepts=]]     | PlainObject |                                                                                                            |
+|---------------+-------------+------------------------------------------------------------------------------------------------------------|
+| [[jquery_ajax_async][=async=]]       | Boolean     | =true=                                                                                                     |
+|---------------+-------------+------------------------------------------------------------------------------------------------------------|
+| =beforeSend=  | Function    |                                                                                                            |
+|---------------+-------------+------------------------------------------------------------------------------------------------------------|
+| =cache=       | Boolean     | =true=                                                                                                     |
+|---------------+-------------+------------------------------------------------------------------------------------------------------------|
+| =complete=    | Function    |                                                                                                            |
+|---------------+-------------+------------------------------------------------------------------------------------------------------------|
+| =contents=    | PlainObject |                                                                                                            |
+|---------------+-------------+------------------------------------------------------------------------------------------------------------|
+| =contentType= | Boolean     | =application/x-www-form-urlencoded; charset=UTF-8=                                                         |
+|               | String      |                                                                                                            |
+|---------------+-------------+------------------------------------------------------------------------------------------------------------|
+| =context=     | PlainObject |                                                                                                            |
+|---------------+-------------+------------------------------------------------------------------------------------------------------------|
+| =converters=  | PlainObject | ={"* text": window.String, "text html": true, "text json": jQuery.parseJSON, "text xml": jQuery.parseXML}= |
+|---------------+-------------+------------------------------------------------------------------------------------------------------------|
+| =crossDomain= | Boolean     | =false= for same-domain requests, =true= for cross-domain requests                                         |
+|---------------+-------------+------------------------------------------------------------------------------------------------------------|
+| =data=        | PlainObject |                                                                                                            |
+|               | String      |                                                                                                            |
+|               | Array       |                                                                                                            |
+|---------------+-------------+------------------------------------------------------------------------------------------------------------|
+| =dataFilter=  | Function    |                                                                                                            |
+|---------------+-------------+------------------------------------------------------------------------------------------------------------|
+| =dataType=    | String      | Intelligent guess =xml= =json= =script= =html=                                                             |
+
+#+CAPTION: 示例
+#+BEGIN_SRC js
+function foo(id) {
+    $.ajax({
+        type: "POST",
+        url: "/index.php",
+        data: {id: id},
+        dataType: "json",
+        success: function(response) {
+            if (response.result == "error") {
+                // ...
+            }
+        }
+    });
+}
+#+END_SRC
+
+*** =accepts=
+<<jquery_ajax_accepts>>
+
+A set of key/value pairs that map a given =dataType= to its MIME type, which gets sent in the =Accept= request header.
+
+#+CAPTION: Define a custom type =mycustomtype= to be sent with the request.
+#+BEGIN_SRC js
+$.ajax({
+  accepts: {
+    mycustomtype: 'application/x-some-custom-type'
+  },
+ 
+  // Instructions for how to deserialize a `mycustomtype`
+  converters: {
+    'text mycustomtype': function(result) {
+      // Do Stuff
+      return newresult;
+    }
+  },
+ 
+  // Expect a `mycustomtype` back from server
+  dataType: 'mycustomtype'
+});
+#+END_SRC
+*** =async=
+<<jquery_ajax_async>>
+
+Cross-domain requests and @@html:<code>dataType: "jsonp"</code>@@ requests do not support synchronous operation.
+
+Synchronous requests may temporarily lock the browser, disabling any actions while the request is active.
+
+*** =beforeSend=
+
+A pre-request callback function that can be used to modify the jqXHR object before it is sent. The jqXHR and settings objects are passed as arguments.
+
+#+BEGIN_SRC js
+function ( jqXHR jqXHR, PlainObject settings )
+#+END_SRC
+
+*** =cache=
+
+If set to =false=, it will force requested pages not to be cached by the browser.
+
+Setting to =false= will only work correctly with HEAD and GET requests. It works by appending ~_={timestamp}~ to the GET parameters.
+
+*** =complete=
+
+A function to be called when the request finishes, after =success= and =error= callbacks are executed.
+
+#+BEGIN_SRC js
+function ( jqXHR jqXHR, String textStatus )
+#+END_SRC
+
+#+CAPTION: =textStatus=
+| =success=     |   |
+|---------------+---|
+| =error=       |   |
+|---------------+---|
+| =timeout=     |   |
+|---------------+---|
+| =abort=       |   |
+|---------------+---|
+| =notmodified= |   |
+|---------------+---|
+| =nocontent=   |   |
+|---------------+---|
+| =parsererror= |   |
+
+*** =contents=
+
+An object of string/regular-expression pairs that determine how jQuery will parse the response, given its content type.
+
+*** =contentType=
+
+When sending data to the server, use this content type.
+
+The W3C XMLHttpRequest specification dictates that the charset is always UTF-8; specifying another charset will not force the browser to change the encoding.
+
+For cross-domain requests, setting the content type to anything other than =application/x-www-form-urlencoded= =multipart/form-data= =text/plain= will trigger the browser to send a preflight OPTIONS request to the server.
+
+*** =context=
+
+The context of all Ajax-related callbacks.
+
+By default, the context is an object that represents the Ajax settings used in the call (=$.ajaxSettings= merged with the settings passed to =$.ajax=).
+
+#+CAPTION: Specify a DOM element as the context to make that the context for the complete callback of a request.
+#+BEGIN_SRC js
+$.ajax({
+  url: "test.html",
+  context: document.body
+}).done(function() {
+  $(this).addClass("done");
+});
+#+END_SRC
+
+*** =converters=
+
+An object containing dataType-to-dataType converters. Each converter's value is a function that returns the transformed value of the response.
+
+*** =crossDomain=
+
+Set to =true= to force a crossDomain request (such as JSONP) on the same domain. This allows, for example, server-side redirection to another domain.
+
+*** =data=
+
+Data to be sent to the server.
+
+It is converted to a query string, if not already a string. It's appended to the url for GET-requests.
+
+Object must be Key/Value pairs. If value is an Array, jQuery serializes multiple values with same key based on the value of the =traditional= setting.
+
+*** =dataFilter=
+
+A function to be used to handle the raw response data of XMLHttpRequest. This is a pre-filtering function to sanitize the response.
+
+#+BEGIN_SRC js
+function (
+    String data // Raw data returned from the server
+,   String type // "dataType" parameter
+)
+#+END_SRC
+*** =dataType=
+
+The type of data expected back from the server. If none is specified, jQuery will try to infer it based on the MIME type of the response.
+
+|          | Return            |
+|----------+-------------------|
+| =xml=    | XML document      |
+|----------+-------------------|
+| =html=   | Plain text        |
+|----------+-------------------|
+| =script= | Plain text        |
+|----------+-------------------|
+| =json=   | JavaScript object |
+|----------+-------------------|
+| =jsonp=  |                   |
+
+-----
+
+=html= : Included script tags are evaluated when inserted in the DOM.
+
+-----
+
+=script= : Evaluates the response as JavaScript and returns it as plain text.
+
+-----
+
+=json= : JSON data is parsed in a strict manner. Cross-domain requests are converted to "jsonp" unless the request includes option =jsonp: false=.

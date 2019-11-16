@@ -1,0 +1,193 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: PHP Scrap
+
+* 在 2016 年做 PHP 开发
+
+[[https://www.v2ex.com/t/312651][Source]]
+
+现在比较流行的 PHP 框架有 Symfony 、 Laravel 、 Yii 、 Codeigniter，如果对性能要求比较高或者想开发一些 Socket 相关的功能的话，可以试试看 +Phalcon+ 、 Yaf 、 +Swoole+ 、 +Workerman+ 、 +ReactPHP+ 、 +Kraken+ 。
+
++Ladybug+ 类似 =var_dump= + =die= ，能够把 dump 对象的内容展示地清清楚楚，配合 +Xdebug+ 甚至可以在 IDE 里进行断点调试、临时更改变量的值等等。Xdebug 是一个 PHP 调试工具，安装之后可以像调试 Java 、 C 那样调试 PHP 。
+
+现在没有人直接用客户端连上数据库去建表了，大家都在用 +ORM+ 工具管理数据库。ORM 可以像操作类一样去操作一个数据库，知名的 ORM 工具有： +Doctrine+ 、 +Propel+ 、 +Eloquent+ 。如果直接写 SQL，安全性怎么办？如果字段做了变更怎么更新所有现存的 SQL ？代码的部署回滚怎么和数据库绑定？用了 ORM 之后可以很简单地创建出一个表的 CRUD 表单，甚至可以很简单的写几行代码就实现对这个表的各种 API 操作。
+
+Doctrine 只要用 PHP 类定义一个表的实体结构（ Entity ），就可以自动生成这个表的 DDL ，即使表结构有变更， Doctrine 也会生成所对应的 update 表结构的 DDL 。 Entity 在每个字段上都可以进行设置，可以生成对这个表进行操作的 CRUD 表单，假设某个字段设置的是日期类型，这个字段在 HTML 里就会被自动生成并映射成为一个包含三个下拉框的组件，而这三个下拉框分别是年月日。使用 Doctrine 配合一些工具，只要写几行代码就可以生成基于表的后台管理界面，实现一个基本可用的网站后台。但需要注意 Doctrine 一般是以 Service 的方式被用在项目中的，直接用 Doctrine 并不会很方便。
+
++Service+ 可以理解为一系列可能会用到的第三方应用，他们都通过 Service 的方式被注册到程序中，在用到某个功能的时候，只需要对他们进行调用即可，就像调用一个函数那么简单。 Service 一般都会支持 +IoC+ 和 +DI+ ，所以对将来程序的升级也会很有帮助。PHP 项目中现在也大量使用 IoC 和 DI ，比如 Symfony 和 Laravel 中就都有非常强大的一套 Service 系统，实现了 IoC 和 DI 。
+
+现在没人还在用 XAMPP 了。至少得用 +Vagrant+ 或者 +Docker+ 吧？不然代码准备怎么部署？开发环境和生成环境怎么保证统一？没人还在用 FTP 直接传代码了，最差也得用 rsync 吧？可能没有 Vagrant 或者 Docker ，但至少应该尝试用一个部署工具并配置一套部署脚本，比如 +Deployer+ 、 +Capistrano+ 、 +Ansible+ 、 +Fabric+ 等等，如果配合 CI ，自动检查代码、部署那就更完美了。
+
+Continuous Integration 指的是自动化处理分支的合并、运行测试用例、代码检查、部署等操作，可以用 +Jenkins+ 自己搭一个，也可以用 +Bamboo+ 或者 +circleci.com+ 。为了及时知道代码的 CI 结果，你可以把你的 CI 系统和 +Slack+ 、零信等 IM 工具做整合，这样的话你就可以灵活的在团队里分享并自动化处理各种信息。比如代码如果在线上出错，系统可以自动定位到某一次提交，并且发送邮件给改动人。比如服务器负载高了可以自动水平扩展服务器架构。
+
++水平扩展+ 就是服务器配置不变，但是数量增多，相对应的 +垂直扩展+ 就是服务器的性能变高，但是数量不变。首先程序架构要支持水平扩展，比如 session 和数据库不能存放在单机上。其次是服务器架构要支持水平扩展，如果用的是云服务，一般都会有水平扩展的 API ，直接调用就是了。
+
+如果程序出现问题怎么办，有什么办法能及时通知吗？一般的做法是搭建一套 +ELK+ （Elasticsearch, Logstash and Kibana ）系统进行日志的存储、搜索、展示。如果不想那么麻烦，可以用 +Sentry+ ，或者再简单点自己搭建一个 +log.io+ 。
+
+HipHop 是 Facebook 开发的一款用来加速 PHP 运行的软件，核心原理是把 PHP 代码编译成为一个可以直接执行的程序。现在没人再用 HipHop 了，至少得用 HHVM ，或者 PHP7。因为 HipHop 需要编译才能用，每次 PHP 代码改动都需要重新编译，非常麻烦，所以 Facebook 转而开发了 +HHVM+ 。核心原理差不多，但 HHVM 不再需要编译过程，可以直接执行 PHP 文件了，基本上你可以理解为 HHVM 是一个超级加速版的 PHP 。
+* Restart PHP Service Command
+
+[[https://www.cyberciti.biz/faq/unix-linux-restart-php-service-command/][Source]]
+
+_PHP is associated with either web server or external FastCGI process manager._ In most cases you just need to restart web server such as Apache / Nginx / Lighttpd depending on system and software.
+
+** Restarting web server
+
+#+CAPTION: Restart Apache
+#+BEGIN_SRC sh
+$ /etc/init.d/apache2 restart
+# Or
+$ apache2ctl restart
+#+END_SRC
+
+#+CAPTION: Restart Nginx
+#+BEGIN_SRC sh
+$ /etc/init.d/nginx restart
+# Or
+$ service nginx restart
+# Or
+$ nginx -s reload
+#+END_SRC
+
+#+CAPTION: Restart Lighttpd
+#+BEGIN_SRC sh
+$ /etc/init.d/lighttpd restart
+# Or
+$ service lighttpd restart
+#+END_SRC
+
+** Restart PHP-FAM Fastcgi
+
+#+BEGIN_SRC sh
+$ /etc/init.d/php-fpm restart
+$ /etc/init.d/php5-fpm restart
+# Or
+$ service php-fpm restart
+$ service php5-fpm restart
+# Or
+$ restart php-fpm
+#+END_SRC
+
+** Links
+
+1. [[https://www.cyberciti.biz/faq/star-stop-restart-apache2-webserver/][Start / Stop and Restart Apache 2 Web Server Command]]
+1. [[https://www.cyberciti.biz/faq/ubuntu-linux-start-restart-stop-apache-web-server/][Ubuntu Linux: Start / Restart / Stop Apache Web Server]]
+1. [[https://www.cyberciti.biz/faq/nginx-linux-restart/][Linux: Restart Nginx WebServer]]
+1. [[https://www.cyberciti.biz/faq/stop-lighttpd-server/][Start / Stop / Restart Lighttpd Web Server on Linux / Unix]]
+* CGI, FastCGI, PHP-CGI, PHP-FPM, Spawn-FCGI（未完成）
+
+[[http://www.open-open.com/lib/view/open1464181505908.html][Source]]
+
+** CGI
+
+CGI 全称是「公共网关接口」(Common Gateway Interface)，是 _Web 服务器与其他程序之间传递信息的一种工具。CGI 规范允许 Web 服务器执行外部程序，并将它们的输出发送给客户端。_
+
+_CGI 可以用任何一种语言编写，只要这种语言具有标准输入、输出和环境变量，_ 如 php、perl、tcl 等。
+
+** FastCGI
+
+FastCGI 像是一个常驻（long-live）型的 CGI，它可以一直运行着，不用每次调用都花费时间 fork （这是 CGI 最为人诟病的 fork-and-execute 模式)。它还支持分布式计算, 即 FastCGI 程序可以在 Web 服务器以外的主机上执行并且接受来自其它 Web 服务器的请求。
+
+FastCGI 是语言无关的、可伸缩架构的 CGI 开放扩展，其主要行为是将 CGI 解释器进程保持在内存中，并因此获得较高的性能。 _CGI 解释器的反复加载是 CGI 性能低下的主要原因，如果 CGI 解释器保持在内存中并接受 FastCGI 进程管理器调度，则可以提供良好的性能、伸缩性、fail-over 特性等。_
+
+** FastCGI 工作原理
+
+1. Web 服务器启动时载入 FastCGI 进程管理器（如 IIS ISAPI 或 Apache Module)。
+2. FastCGI 进程管理器初始化，启动多个 _CGI 解释器子进程_ （如 php-cgi）并等待来自 Web 服务器的连接。
+3. 当客户端请求到达 Web 服务器时，FastCGI 进程管理器选择并连接到一个 CGI 解释器。Web 服务器将 CGI 环境变量和标准输入发送到 FastCGI 子进程。
+4. FastCGI 子进程完成处理后将标准输出和错误信息从同一连接返回 Web 服务器。当 FastCGI 子进程关闭连接时，请求便告处理完成。
+5. FastCGI 子进程继续等待并处理来自 FastCGI 进程管理器（运行在 Web 服务器中）的下一个连接。
+
+上述过程如果使用普通 CGI，每一个 Web 请求 PHP 都必须 _解析 =php.ini= ，载入全部扩展，初始化全部数据结构。使用 FastCGI，所有这些都只在进程启动时发生一次。_ 另外，还可以使用持续数据库连接（persistent database connection）。
+
+** 链接
+
+1. [[https://aleen42.gitbooks.io/personalwiki/content/qa/cgi_difference.html][Differences between CGI, FastCGI, PHP-CGI, PHP-FPM, Spawn-FCGI]]
+* 提高 PHP 代码质量 36 计
+
+[[http://www.oschina.net/question/1579_47231][Source]]
+
+** 不要使用相对路径
+
+#+BEGIN_SRC php
+require_once('../../lib/some_class.php');
+#+END_SRC
+
+该写法的缺点：
+
+- 首先查找指定的 PHP 包含路径，然后查找当前目录，因此会检查过多路径。
+- 如果该脚本被另一目录的脚本包含，它的基本目录变成了另一脚本所在的目录。
+- 当定时任务运行该脚本，它的上级目录可能就不是工作目录了。
+
+#+CAPTION: 使用绝对路径
+#+BEGIN_SRC php
+define('ROOT', '/var/www/project/');
+require_once(ROOT . '../../lib/some_class.php');
+#+END_SRC
+
+#+CAPTION: 绝对路径也可能会改变，继续改进
+#+BEGIN_SRC php
+define('ROOT', pathinfo(__FILE__, PATHINFO_DIRNAME));
+require_once(ROOT . '../../lib/some_class.php');
+#+END_SRC
+
+无论移到哪个目录，甚至外网的服务器上，代码都无须更改便可正确运行。
+** 不要直接使用 =require= ， =include=
+
+#+CAPTION: 在脚本头部引入文件、库、工具文件和助手函数等
+#+BEGIN_SRC php
+require_once('lib/Database.php');
+require_once('lib/Mail.php');
+require_once('helpers/utitlity_functions.php');
+#+END_SRC
+
+#+CAPTION: 使用助手函数包含文件，可以更灵活地改变文件路径，且代码更具可读性
+#+BEGIN_SRC php
+function load_class($class_name) {
+    $path = ROOT . '/lib/' . $class_name . '.php';
+    if (file_exists($path)) {
+        require_once($path);
+    }
+}
+load_class('Database');
+load_class('Mail');
+#+END_SRC
+
+更多扩展：
+
+- 在多个目录查找文件，可以覆盖。
+- 可使用类似的函数加载 HTML 文件等。
+
+** 保留调试代码
+
+#+BEGIN_SRC php
+define('ENVIRONMENT' , 'development'); // 开发环境
+define('ENVIRONMENT' , 'production');  // 生产环境
+
+if (!$db->query($query)) {
+    if (ENVIRONMENT == 'development') {
+        echo "$query failed";
+    } else {
+        echo "Database error. Please contact administrator";
+    }
+}
+#+END_SRC
+
+* Fastest way to determine where PHP script exits?
+
+[[https://stackoverflow.com/questions/216963/fastest-way-to-determine-where-php-script-exits]]
+
+#+BEGIN_SRC php
+function write_stack()
+{
+    $GLOBALS['debug_stack'] = debug_backtrace();
+}
+
+function dump_stack()
+{
+    var_dump($GLOBALS['debug_stack']);
+}
+
+declare(ticks=1); // Increase tick to make execution faster
+register_tick_function('write_stack');
+register_shutdown_function('dump_stack');
+#+END_SRC

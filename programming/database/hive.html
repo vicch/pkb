@@ -1,0 +1,1247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Hive</title>
+<!-- 2016-06-21 Tue 11:13 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Hive</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Hive</a>
+<ul>
+<li><a href="#sec-1-1">1.1. Hive vs RDBMS</a></li>
+<li><a href="#sec-1-2">1.2. 组成</a>
+<ul>
+<li><a href="#sec-1-2-1">1.2.1. 服务端</a></li>
+<li><a href="#sec-1-2-2">1.2.2. 客户端</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-3">1.3. 执行</a></li>
+<li><a href="#sec-1-4">1.4. 安装</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. 数据</a>
+<ul>
+<li><a href="#sec-2-1">2.1. 数据类型</a></li>
+<li><a href="#sec-2-2">2.2. 数据模型</a></li>
+<li><a href="#sec-2-3">2.3. 数据存储格式</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. HQL</a>
+<ul>
+<li><a href="#sec-3-1">3.1. 创建</a></li>
+<li><a href="#sec-3-2">3.2. 加载</a></li>
+<li><a href="#sec-3-3">3.3. 查询</a></li>
+<li><a href="#sec-3-4">3.4. 插入</a></li>
+<li><a href="#sec-3-5">3.5. 删除</a></li>
+<li><a href="#sec-3-6">3.6. 示例</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. 函数</a>
+<ul>
+<li><a href="#sec-4-1">4.1. 数学</a></li>
+<li><a href="#sec-4-2">4.2. 字符串</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5. 命令行</a></li>
+<li><a href="#sec-6">6. PHP</a></li>
+<li><a href="#sec-7">7. 资源</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Hive</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Hive
+</p>
+<ul class="org-ul">
+<li>一个基于 Hadoop 的数据仓库（data warehouse）工具
+</li>
+<li>使用类似于 SQL 语法的 HQL 语句，对存储在 Hadoop 中的大规模数据进行 ETL 操作
+</li>
+<li>为存储在 HDFS 的数据赋予特定的结构（数据库、表）
+</li>
+<li>支持 HDFS 或其他（比如 HBase）数据存储系统
+</li>
+<li>通过 MapReduce 执行查询
+</li>
+</ul>
+
+<p>
+Hive 被设计用于海量数据的数据挖掘，数据的访问延迟较高，不适合在线数据查询。
+</p>
+
+<p>
+Hive 适合应用在大规模的只增（append-only）数据的批处理作业，比如日志文件。
+</p>
+
+<hr  />
+
+<p>
+因为数据仓库的特点是读多写少，所以 Hive 不支持对数据的改写、添加，所有的数据加载之后不再改变。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> Hive 的重点</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">可伸缩性（scalability）</th>
+<th scope="col" class="left">通过向 Hadoop 中增加节点扩大规模</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">可扩展性（extensibility）</td>
+<td class="left">通过 MapReduce 框架和 UDF/UDAF/UDTF</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">高容错性</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">低耦合度</td>
+<td class="left">与输入格式解耦</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Hive vs RDBMS</h3>
+<div class="outline-text-3" id="text-1-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">RDBMS</th>
+<th scope="col" class="left">Hive</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">数据规模</td>
+<td class="left">小</td>
+<td class="left">大</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">常态操作</td>
+<td class="left">对数据中的某些行进行操作</td>
+<td class="left">全表扫描，覆盖旧数据或追加新数据</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">性能特征</td>
+<td class="left">数据加载速度慢，查询速度快</td>
+<td class="left">数据加载速度快，查询速度慢</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">执行延迟</td>
+<td class="left">低（&lt; 秒）</td>
+<td class="left">高（分钟级）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">查询语言</td>
+<td class="left">SQL</td>
+<td class="left">HQL</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">数据存储</td>
+<td class="left">Raw Device 或 Local FS</td>
+<td class="left">HDFS</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">数据格式</td>
+<td class="left">系统决定</td>
+<td class="left">用户定义</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">加载时检查数据格式（写时模式）</td>
+<td class="left">读取时检查数据格式（读时模式）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">数据更新</td>
+<td class="left">命令支持</td>
+<td class="left">通过将原表的数据进行变换，存储在新表实现</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">索引支持</td>
+<td class="left">有复杂的索引</td>
+<td class="left">无（0.8 后加入位图索引）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">事务支持</td>
+<td class="left">支持</td>
+<td class="left">不支持</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">执行方式</td>
+<td class="left">Executor</td>
+<td class="left">MapReduce</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">可扩展性</td>
+<td class="left">低</td>
+<td class="left">高</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+写时模式（Schema on write）
+</p>
+<ul class="org-ul">
+<li>加载时检查数据格式
+</li>
+<li>如果数据不符合格式，会拒绝加载
+</li>
+</ul>
+
+<p>
+读时模式（Schema on read）
+</p>
+<ul class="org-ul">
+<li>读取时检查数据格式
+</li>
+<li>加载时不检查数据格式，不更改加载的数据文件
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> 组成</h3>
+<div class="outline-text-3" id="text-1-2">
+
+<div class="figure">
+<p><img src="../images/hive/01.png" alt="01.png" />
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> 服务端</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<p>
+编译器（Compiler）<br  />
+优化器（Optimizer）<br  />
+执行器（Executor）
+</p>
+<ul class="org-ul">
+<li>完成 HQL 查询语句从词法分析、语法分析、编译、优化以及查询计划的生成
+</li>
+<li>生成的查询计划存储在 HDFS 中，然后调用底层的 MapReduce 计算框架
+</li>
+</ul>
+
+<p>
+元数据（Metastore）
+</p>
+<ul class="org-ul">
+<li>通常存储在关系数据库中，如 MySQL、Derby
+</li>
+<li>包括表的名字、表的属性（是否为外部表等）、列、分区及属性、表数据所在目录等
+</li>
+</ul>
+
+<p>
+Thrift 服务
+</p>
+<ul class="org-ul">
+<li>一个软件框架，用来进行可扩展、跨语言的服务的开发
+</li>
+<li>Hive 集成了该服务，为了让不同的编程语言调用 Hive 的接口
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1-2-2" class="outline-4">
+<h4 id="sec-1-2-2"><span class="section-number-4">1.2.2</span> 客户端</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<ul class="org-ul">
+<li>CLI
+</li>
+<li>Web GUI
+</li>
+<li>Thrift 客户端
+<ul class="org-ul">
+<li>一些客户端接口建立在 Thrift 客户端之上，如 JDBC、ODBC 接口
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> 执行</h3>
+<div class="outline-text-3" id="text-1-3">
+
+<div class="figure">
+<p><img src="../images/hive/02.png" alt="02.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> 安装</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+Hive 只需配置在 Hadoop 的 master 节点上。
+</p>
+
+<ol class="org-ol">
+<li>安装配置 Hadoop
+</li>
+<li>安装配置数据库（MySQL 等）
+</li>
+<li>获得 Hive 源码或者可执行代码
+</li>
+<li>配置 Hive 如何访问数据库，如何访问 Hadoop
+</li>
+<li>运行 Hive
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 数据</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 数据类型</h3>
+<div class="outline-text-3" id="text-2-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> 原子数据类型</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="right" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="right">字节</th>
+<th scope="col" class="left">内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>TINYINT</code></td>
+<td class="right">1</td>
+<td class="left">有符号整数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>SMALLINT</code></td>
+<td class="right">2</td>
+<td class="left">有符号整数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>INT</code></td>
+<td class="right">4</td>
+<td class="left">有符号整数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>BIGINT</code></td>
+<td class="right">8</td>
+<td class="left">有符号整数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FLOAT</code></td>
+<td class="right">4</td>
+<td class="left">单精度浮点数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>DOUBLE</code></td>
+<td class="right">8</td>
+<td class="left">双精度浮点数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>BOOLEAN</code></td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>STRING</code></td>
+<td class="right">&#xa0;</td>
+<td class="left">相当于数据库的 <code>varchar</code> 类型，长度可变</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 3:</span> 复杂数据类型</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>ARRAY</code></th>
+<th scope="col" class="left">一组有序字段，字段类型必须相同</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>MAP</code></td>
+<td class="left">一组无序键值对，键必须是原子类型，值可以是任何类型</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">同一个 <code>MAP</code> 的键类型必须相同，值类型也必须相同</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>STRUCT</code></td>
+<td class="left">一组命名字段，字段类型可以不同，eg. <code>Struct('a',1,1,0)</code></td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<label class="org-src-name">声明</label>
+<pre class="src src-sql"><span class="org-keyword">CREATE</span> <span class="org-keyword">TABLE</span> <span class="org-function-name">complex</span>(
+    col1 <span class="org-type">ARRAY</span>&lt;<span class="org-type">INT</span>&gt;,
+    col2 <span class="org-keyword">MAP</span>&lt;STRING,<span class="org-type">INT</span>&gt;,
+    col3 STRUCT&lt;a:STRING,b:<span class="org-type">INT</span>,c:<span class="org-type">DOUBLE</span>&gt;
+);
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">查询</label>
+<pre class="src src-sql"><span class="org-keyword">SELECT</span> col1[0],col2[<span class="org-string">'b'</span>],col3.c <span class="org-builtin">FROM</span> complex;
+</pre>
+</div>
+
+<p>
+Hive 不支持日期类型，日期用字符串来表示，常用的日期格式转化操作是通过自定义函数进行操作。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> 数据模型</h3>
+<div class="outline-text-3" id="text-2-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 4:</span> 表的存储路径： <code>/[warehouse_dir]/[table]/[par]=[value]/.../part-[hash]</code></caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Database</th>
+<th scope="col" class="left">相当于关系数据库里的命名空间</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">将用户和数据库的应用隔离到不同的数据库、模式中</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">Table（托管表）</td>
+<td class="left">和数据库中的 Table 概念类似</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">逻辑上由存储数据和元数据（描述表格中的数据形式）组成</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">存储数据（文件）保存在 HDFS ，元数据保存在关系数据库</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">External Table（外部表）</td>
+<td class="left">数据文件可以保存在数据仓库，或外部的 HDFS 中</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">它和 Table 在元数据的组织上是相同的，而存储数据（文件）则有较大的差异</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Partition（分区）</td>
+<td class="left">对表的数据进行粗略划分的机制，类似索引，但实现方式不同</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">一个分区对应于表存储目录的一个子目录，分区的数据存储在对应的目录中</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">比如，有两个分区，则 <code>par1=100, par2=200</code> 的数据在 <code>/par1=100/par2=200</code> 子目录下</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Bucket（桶）</td>
+<td class="left">对指定列计算 hash，根据 hash 值切分数据</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">存储上，每一个桶对应一个文件，存储 hash 值同余（除以桶数）的记录</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">eg. 桶数为 2，hash 值除以 2 的余数为 1 的记录存储在文件 <code>000001_0</code></td>
+</tr>
+</tbody>
+</table>
+
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 5:</span> 表 vs. 外部表</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">Table</th>
+<th scope="col" class="left">External Table</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>CREATE</code></td>
+<td class="left">创建与数据加载分开（也可以同时完成）</td>
+<td class="left">创建、加载数据同时完成</td>
+</tr>
+
+<tr>
+<td class="left"><code>LOAD</code></td>
+<td class="left">加载数据的过程中，不对数据进行处理</td>
+<td class="left">实际数据是存储在指定的（数据仓库外部的） HDFS 路径</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">只是将数据文件移动到数据仓库目录中</td>
+<td class="left">不会移动到数据仓库目录中</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>SELECT</code></td>
+<td class="left">直接在数据仓库目录中完成</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>DROP</code></td>
+<td class="left">表的数据、元数据同时删除</td>
+<td class="left">仅删除元数据</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> 数据存储格式</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+一般数据库
+</p>
+<ul class="org-ul">
+<li>有不同的存储引擎，且定义了自己的数据格式
+</li>
+<li>所有数据都会按照一定的组织存储，因此，数据库加载数据的过程会比较耗时
+</li>
+</ul>
+
+<p>
+Hive
+</p>
+<ul class="org-ul">
+<li>没有专门的数据存储格式
+</li>
+<li>用户可以自由组织 Hive 中的表，只需要在创建表的时候定义数据格式，Hive 就可以解析数据
+</li>
+</ul>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">列分隔符</th>
+<th scope="col" class="left">e.g. 空格 <code>\t</code> <code>\x001</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">行分隔符</td>
+<td class="left">e.g. <code>\n</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">文件格式</td>
+<td class="left">默认：TextFile，SequenceFile 以及 RCFile</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> HQL</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> 创建</h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+
+<pre class="src src-sql"><span class="org-keyword">CREATE</span> [<span class="org-keyword">EXTERNAL</span>] <span class="org-keyword">TABLE</span> [<span class="org-keyword">IF</span> <span class="org-keyword">NOT</span> <span class="org-keyword">EXISTS</span>] &lt;<span class="org-keyword">table</span>&gt;
+[(&lt;<span class="org-keyword">column</span>&gt; &lt;<span class="org-keyword">type</span>&gt; [<span class="org-keyword">COMMENT</span> &lt;<span class="org-keyword">comment</span>&gt;], ...)]
+[<span class="org-keyword">COMMENT</span> &lt;<span class="org-keyword">comment</span>&gt;]
+[PARTITIONED <span class="org-keyword">BY</span> (&lt;<span class="org-keyword">column</span>&gt; &lt;<span class="org-keyword">type</span>&gt; [<span class="org-keyword">COMMENT</span> &lt;<span class="org-keyword">comment</span>&gt;], ...)]
+[CLUSTERED <span class="org-keyword">BY</span> (&lt;<span class="org-keyword">column</span>&gt;, &lt;<span class="org-keyword">column</span>&gt;, ...)]
+[SORTED <span class="org-keyword">BY</span> (&lt;<span class="org-keyword">column</span>&gt; [<span class="org-keyword">ASC</span>|<span class="org-keyword">DESC</span>], ...)]
+[<span class="org-keyword">INTO</span> &lt;<span class="org-keyword">number</span>&gt; BUCKETS]
+[<span class="org-type">ROW</span> FORMAT &lt;format&gt;]
+[STORED <span class="org-keyword">AS</span> &lt;format&gt;]
+[LOCATION &lt;<span class="org-keyword">path</span>&gt;]
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>EXTERNAL</code></th>
+<th scope="col" class="left">创建外部表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>PARTITIONED BY</code></td>
+<td class="left">创建分区列</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>INTO num_buckets BUCKETS</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>ROW FORMAT</code></td>
+<td class="left">eg. <code>\t</code> 分隔行： <code>ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>STORED AS</code></td>
+<td class="left">eg. 保存格式为文本文件： <code>STORED AS TEXTFILE</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>LOCATION</code></td>
+<td class="left">指定外部表数据文件的路径，如果不加，会存储到 Hive 数据仓库中</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> 加载</h3>
+<div class="outline-text-3" id="text-3-2">
+<div class="org-src-container">
+
+<pre class="src src-sql"><span class="org-keyword">LOAD</span> <span class="org-keyword">DATA</span> [<span class="org-keyword">LOCAL</span>] INPATH <span class="org-string">'&lt;path&gt;'</span> [OVERWRITE]
+<span class="org-keyword">INTO</span> <span class="org-keyword">TABLE</span> &lt;<span class="org-keyword">table</span>&gt;
+[PARTITION (&lt;par&gt;=&lt;<span class="org-keyword">value</span>&gt;, ...)]
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>LOCAL</code></th>
+<th scope="col" class="left">表示在本地文件系统中查找文件，否则使用 HDFS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>INPATH</code></td>
+<td class="left">可以是相对路径、绝对路径、URL</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">可以是文件（加载一个文件）、目录（加载目录下所有文件）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>OVERWRITE</code></td>
+<td class="left">目标表（或者分区）中的内容（如果有）会先被删除</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>PARTITION</code></td>
+<td class="left">必须指定每一个分区列的值</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Hive 在从文件加载数据时，只是把指定文件存储到目的位置，文件按原样存储，Hive 不进行解析或转存为内部数据库格式。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> 查询</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+一个 <code>SELECT</code> 语句可以是一个 <code>UNION</code> 查询或一个子查询的一部分。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sql"><span class="org-keyword">SELECT</span> [<span class="org-keyword">ALL</span>|<span class="org-keyword">DISTINCT</span>] &lt;expr&gt;, ...
+<span class="org-builtin">FROM</span> &lt;<span class="org-keyword">table</span>&gt;
+[<span class="org-keyword">WHERE</span> &lt;condition&gt;]
+[<span class="org-keyword">GROUP</span> <span class="org-keyword">BY</span> &lt;<span class="org-keyword">column</span>&gt;]
+[CLUSTER <span class="org-keyword">BY</span> &lt;<span class="org-keyword">column</span>&gt; | [DISTRIBUTE <span class="org-keyword">BY</span> &lt;<span class="org-keyword">column</span>&gt;] [SORT <span class="org-keyword">BY</span> &lt;<span class="org-keyword">column</span>&gt;]]
+[<span class="org-keyword">LIMIT</span> &lt;<span class="org-keyword">number</span>&gt;]
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>FROM</code></th>
+<th scope="col" class="left">可以是一个普通表、一个视图、一个 <code>JOIN</code> 或一个子查询</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>WHERE</code></td>
+<td class="left">Hive 不支持 <code>IN</code> <code>EXIST</code> 或子查询</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>DISTRIBUTE BY</code></td>
+<td class="left">使某一列的值相同的数据，都被集中一个 Reduce 节点执行 Reduce 任务</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>CLUSTER BY</code></td>
+<td class="left">= <code>SORT BY</code> + <code>DISTRIBUTE BY</code></td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<label class="org-src-name"><code>SELECT</code> 可以使用正则表达式做列选择</label>
+<pre class="src src-sql"><span class="org-comment">## eg. &#26597;&#35810;&#38500;&#20102; ds &#21644; hr &#20043;&#22806;&#30340;&#25152;&#26377;&#21015;&#65306;</span>
+<span class="org-keyword">SELECT</span> `(ds|hr)?+.+` <span class="org-builtin">FROM</span> sales
+</pre>
+</div>
+
+<hr  />
+
+<p>
+分区剪枝
+</p>
+<ul class="org-ul">
+<li>查询时只扫描一个表中关心的那一部分
+</li>
+<li>当分区条件出现在离 <code>FROM</code> 子句最近的 <code>WHERE</code> 子句中时，查询就可以利用这个特性
+</li>
+</ul>
+
+<hr  />
+
+<p>
+<code>HAVING</code>
+</p>
+<ul class="org-ul">
+<li>Hive 暂不支持 <code>HAVING</code> 子句，可以转化为一个子查询
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-sql"><span class="org-keyword">SELECT</span> col1 <span class="org-builtin">FROM</span> t1 <span class="org-keyword">GROUP</span> <span class="org-keyword">BY</span> col1 <span class="org-keyword">HAVING</span> <span class="org-builtin">SUM</span>(col2) &gt; 10;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">转化为</label>
+<pre class="src src-sql"><span class="org-keyword">SELECT</span> col1 <span class="org-builtin">FROM</span> (
+    <span class="org-keyword">SELECT</span> col1, <span class="org-builtin">SUM</span>(col2) <span class="org-keyword">AS</span> col2sum
+    <span class="org-builtin">FROM</span> t1 <span class="org-keyword">GROUP</span> <span class="org-keyword">BY</span> col1
+) t2 <span class="org-keyword">WHERE</span> t2.col2sum &gt; 10;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> 插入</h3>
+<div class="outline-text-3" id="text-3-4">
+<div class="org-src-container">
+
+<pre class="src src-sql"><span class="org-keyword">INSERT</span> [OVERWRITE|<span class="org-keyword">INTO</span>] <span class="org-keyword">TABLE</span> &lt;<span class="org-keyword">table</span>&gt; <span class="org-keyword">SELECT</span> ...                // &#21040;&#21478;&#19968;&#20010; Hive &#34920;
+<span class="org-keyword">INSERT</span> [OVERWRITE|<span class="org-keyword">INTO</span>] <span class="org-keyword">LOCAL</span> <span class="org-keyword">DIRECTORY</span> <span class="org-string">'/path/file'</span> <span class="org-keyword">SELECT</span> ... // &#21040;&#26412;&#22320;&#25991;&#20214;&#31995;&#32479;
+<span class="org-keyword">INSERT</span> [OVERWRITE|<span class="org-keyword">INTO</span>] <span class="org-keyword">DIRECTORY</span> <span class="org-string">'/path/file'</span> <span class="org-keyword">SELECT</span> ...       // &#21040; HDFS
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-5" class="outline-3">
+<h3 id="sec-3-5"><span class="section-number-3">3.5</span> 删除</h3>
+<div class="outline-text-3" id="text-3-5">
+<div class="org-src-container">
+
+<pre class="src src-sql"><span class="org-keyword">DROP</span> <span class="org-keyword">TABLE</span> [<span class="org-keyword">IF</span> <span class="org-keyword">EXISTS</span>] &lt;<span class="org-keyword">table</span>&gt; [PURGE];
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-6" class="outline-3">
+<h3 id="sec-3-6"><span class="section-number-3">3.6</span> 示例</h3>
+<div class="outline-text-3" id="text-3-6">
+<div class="org-src-container">
+<label class="org-src-name">通过临时表 <code>JOIN</code> 方式实现 <code>IN</code> 条件筛选：</label>
+<pre class="src src-sql"><span class="org-keyword">CREATE</span> <span class="org-keyword">TABLE</span> <span class="org-keyword">IF</span> <span class="org-keyword">NOT</span> <span class="org-keyword">EXISTS</span> tmp_filter_ (col STRING);
+<span class="org-keyword">LOAD</span> <span class="org-keyword">DATA</span> <span class="org-keyword">LOCAL</span> INPATH <span class="org-string">''</span> OVERWRITE <span class="org-keyword">INTO</span> <span class="org-keyword">TABLE</span> tmp_filter_;
+<span class="org-keyword">SELECT</span> ... <span class="org-builtin">FROM</span> ... a <span class="org-keyword">JOIN</span> tmp_filter_ <span class="org-keyword">ON</span> a.=tmp_filter_.col <span class="org-keyword">WHERE</span> ...;
+<span class="org-keyword">DROP</span> <span class="org-keyword">TABLE</span> <span class="org-keyword">IF</span> <span class="org-keyword">EXISTS</span> tmp_filter_;
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 函数</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> 数学</h3>
+<div class="outline-text-3" id="text-4-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left"><code>rand()</code></td>
+<td class="left">返回 0 到 1 之间的随机数</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> 字符串</h3>
+<div class="outline-text-3" id="text-4-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>regexp_extract(subject, pattern, index)</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<label class="org-src-name">示例：从 <code>sample</code> 列的值 <code>key1=&gt;val1;...keyN=&gt;valN,...</code> 中提取 <code>valN</code> ，格式为数字</label>
+<pre class="src src-sql">regexp_extract(sample, <span class="org-string">'keyN=&gt;(\\d*)\;'</span>, 1)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> 命令行</h2>
+<div class="outline-text-2" id="text-5">
+<div class="org-src-container">
+
+<pre class="src src-sh">hive &lt;options&gt;
+                 <span class="org-comment-delimiter"># </span><span class="org-comment">&#65288;&#20026;&#31354;&#65289;&#21551;&#21160; Hive shell &#29615;&#22659;</span>
+    -e &lt;query&gt;   <span class="org-comment-delimiter"># </span><span class="org-comment">&#36816;&#34892; SQL</span>
+    -f &lt;file&gt;    <span class="org-comment-delimiter"># </span><span class="org-comment">&#36816;&#34892;&#25991;&#20214;&#20013;&#30340;&#21629;&#20196;</span>
+    -S, --silent <span class="org-comment-delimiter"># </span><span class="org-comment">&#19981;&#25226;&#36816;&#34892;&#20449;&#24687;&#25171;&#21360;&#21040;&#26631;&#20934;&#38169;&#35823;&#36755;&#20986;&#65292;&#21482;&#25171;&#21360;&#26597;&#35810;&#32467;&#26524;</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">查询结果放入文件</label>
+<pre class="src src-sh">hive -S -e <span class="org-string">"SELECT ..."</span> &gt; &lt;file&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">终止任务</label>
+<pre class="src src-sh">hadoop job -kill &lt;job_id&gt;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> PHP</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+主要流程
+</p>
+<ol class="org-ol">
+<li>PHP 通过 Thrift 向 Hive 提交 SQL 查询
+</li>
+<li>Hive 将 SQL 查询转换成 Hadoop 任务
+</li>
+<li>Hadoop 执行完毕后，返回一个结果 URI
+</li>
+<li>PHP 读取 URI 中的内容
+</li>
+</ol>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-comment-delimiter">// </span><span class="org-comment">Thrift &#20381;&#36182;&#21253;&#36335;&#24452;</span>
+$<span class="org-constant">GLOBALS</span>[<span class="org-string">'THRIFT_ROOT'</span>] = <span class="org-string">'/server/www/third_part/thrift-0.5.0'</span>;
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#21152;&#36733;&#36830;&#25509; Hive &#25152;&#38656;&#30340;&#25991;&#20214;</span>
+<span class="org-keyword">require_once</span> $<span class="org-constant">GLOBALS</span>[<span class="org-string">'THRIFT_ROOT'</span>].<span class="org-string">'/Thrift.php'</span>;
+<span class="org-keyword">require_once</span> $<span class="org-constant">GLOBALS</span>[<span class="org-string">'THRIFT_ROOT'</span>].<span class="org-string">'/packages/scribe/scribe.php'</span>;
+<span class="org-keyword">require_once</span> $<span class="org-constant">GLOBALS</span>[<span class="org-string">'THRIFT_ROOT'</span>].<span class="org-string">'/protocol/TBinaryProtocol.php'</span>;
+<span class="org-keyword">require_once</span> $<span class="org-constant">GLOBALS</span>[<span class="org-string">'THRIFT_ROOT'</span>].<span class="org-string">'/transport/TSocket.php'</span>;
+<span class="org-keyword">require_once</span> $<span class="org-constant">GLOBALS</span>[<span class="org-string">'THRIFT_ROOT'</span>].<span class="org-string">'/transport/THttpClient.php'</span>;
+<span class="org-keyword">require_once</span> $<span class="org-constant">GLOBALS</span>[<span class="org-string">'THRIFT_ROOT'</span>].<span class="org-string">'/transport/TFramedTransport.php'</span>;
+<span class="org-keyword">require_once</span> $<span class="org-constant">GLOBALS</span>[<span class="org-string">'THRIFT_ROOT'</span>].<span class="org-string">'/transport/TBufferedTransport.php'</span>;
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#29983;&#25104;&#30340;&#25991;&#20214;&#65311;</span>
+<span class="org-keyword">require_once</span> <span class="org-function-name">dirname</span>(<span class="org-constant">__FILE__</span>) . <span class="org-string">'/Hive.php'</span>;
+
+<span class="org-function-name">ERROR_REPORTING</span>(<span class="org-constant">E_ALL</span>);
+<span class="org-function-name">INI_SET</span>(<span class="org-string">'DISPLAY_ERRORS'</span>,<span class="org-string">'ON'</span>);
+
+$<span class="org-variable-name">socket</span> = <span class="org-keyword">new</span> <span class="org-constant">TS</span>ocket(<span class="org-string">'hive.corp.gj.com'</span>,<span class="org-default">13080</span>);
+$<span class="org-variable-name">socket</span>-&gt;<span class="org-function-name">setDebug</span>(<span class="org-warning">TRUE</span>);
+$<span class="org-variable-name">socket</span>-&gt;<span class="org-function-name">setSendTimeout</span>(<span class="org-default">10000</span>);
+$<span class="org-variable-name">socket</span>-&gt;<span class="org-function-name">setRecvTimeout</span>(<span class="org-default">10000</span>);
+
+$<span class="org-variable-name">transport</span> = <span class="org-keyword">new</span> <span class="org-constant">TF</span>ramedTransport($<span class="org-variable-name">socket</span>);
+$<span class="org-variable-name">protocol</span>  = <span class="org-keyword">new</span> <span class="org-constant">TB</span>inaryProtocol($<span class="org-variable-name">transport</span>);
+$<span class="org-variable-name">client</span>    = <span class="org-keyword">new</span> <span class="org-constant">H</span>iveClient($<span class="org-variable-name">protocol</span>);
+
+<span class="org-keyword">try</span> {
+    $<span class="org-variable-name">transport</span>-&gt;<span class="org-function-name">open</span>();
+} <span class="org-keyword">catch</span>(<span class="org-type">TException</span> $<span class="org-variable-name">tx</span>) {
+    <span class="org-keyword">echo</span> $<span class="org-variable-name">tx</span>-&gt;<span class="org-function-name">getMessage</span>();
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#25552;&#20132;&#26597;&#35810;&#20219;&#21153;</span>
+$<span class="org-variable-name">taskId</span> = $<span class="org-variable-name">client</span>-&gt;<span class="org-function-name">submitTask</span>(<span class="org-string">'xxx@xxx.com'</span>,<span class="org-string">'web'</span>,<span class="org-string">'SELECT ...'</span>);
+
+<span class="org-keyword">if</span>($<span class="org-variable-name">client</span>-&gt;<span class="org-function-name">isTaskFinished</span>($<span class="org-variable-name">taskId</span>)) {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#33719;&#21462;&#32467;&#26524; URI</span>
+    $<span class="org-variable-name">url</span> = $<span class="org-variable-name">client</span>-&gt;<span class="org-function-name">getResultURI</span>($<span class="org-variable-name">taskId</span>);
+    $<span class="org-variable-name">handle</span> = <span class="org-function-name">fopen</span>($<span class="org-variable-name">url</span>,<span class="org-string">"rb"</span>);
+    $<span class="org-variable-name">content</span> = <span class="org-function-name">stream_get_contents</span>($<span class="org-variable-name">handle</span>);
+    <span class="org-function-name">fclose</span>($<span class="org-variable-name">handle</span>);
+}
+
+$<span class="org-variable-name">transport</span>-&gt;<span class="org-function-name">close</span>();
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> 资源</h2>
+<div class="outline-text-2" id="text-7">
+<ol class="org-ol">
+<li><a href="https://cwiki.apache.org/confluence/display/Hive/Home">Apache Hive</a>
+</li>
+<li><a href="https://cwiki.apache.org/confluence/display/Hive/LanguageManual">Apache Hive - Language Manual</a>
+</li>
+<li><a href="http://www.cnblogs.com/sharpxiajun/archive/2013/06/03/3114560.html">Hive 的数据类型和数据模型</a>
+</li>
+<li><a href="http://shiyanjun.cn/archives/588.html">Hive JOIN 使用详解</a>
+</li>
+<li><a href="http://www.open-open.com/lib/view/open1341214750402.html">Hive 查询优化总结</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2016-06-21 Tue 11:13</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

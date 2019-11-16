@@ -1,0 +1,49 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Storage
+
+* RAID
+
+- Redundant Array of Independent Disks (Redundant Array of Inexpensive Disks)
+
+|        |                                               | *写* | *读* | *容量* |
+|--------+-----------------------------------------------+------+------+--------|
+| RAID 0 | striping, without mirroring or parity         | N    | N    | N      |
+|--------+-----------------------------------------------+------+------+--------|
+| RAID 1 | mirroring, without striping or parity         | 1    | N    | 1      |
+|--------+-----------------------------------------------+------+------+--------|
+| RAID 5 | block-level striping, with distributed parity | N-1  | N-1  | N-1    |
+
+** RAID 0
+
+file:../images/storage/01.png
+
+- 数据等分地写入所有磁盘
+- 没有冗余，单个磁盘故障会造成全部数据无法读取
+
+** RAID 1
+
+file:../images/storage/02.png
+
+- 数据镜像地写入所有磁盘
+- 
+
+** RAID 5
+
+file:../images/storage/03.png
+
+- 一个磁盘存储数据的校验区块，数据等分地写入其他磁盘
+- 单个磁盘故障不会造成数据丢失，但两个磁盘同时故障会造成所有数据丢失
+- 性能接近 RAID 0，但提供冗余保护
+
+** RAID 6
+
+file:../images/storage/04.png
+
+** RAID 10
+
+file:../images/storage/05.png
+
+* 资源
+
+1. [[https://en.wikipedia.org/wiki/RAID][RAID]]
+1. [[http://www.seagate.com/ca/en/manuals/network-storage/business-storage-nas-os/raid-modes/][RAID Modes]]

@@ -1,0 +1,220 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: PHP Practice
+
+* PSR
+
+PSR
+- PHP Standards Recommendation
+- PSR-1: Basic code style
+- PSR-2: Strict code style
+- PSR-3: Logger interface
+- PSR-4: Autoloading
+
+Tools
+- [[https://github.com/squizlabs/PHP_CodeSniffer][PHP Code Sniffer (phpcs)]]
+- [[https://github.com/FriendsOfPHP/PHP-CS-Fixer][PHP-CS-Fixer]]
+
+** PSR-1
+
+| PHP tags       | =<?php ?>= or ~<?= ?>~                                                        |
+|----------------+-------------------------------------------------------------------------------|
+| Encoding       | UTF-8 without a byte order mark (BOM)                                         |
+|----------------+-------------------------------------------------------------------------------|
+| Objective      | a single file can do one, but not both of                                     |
+|                | - define symbols, eg. class, trait, function, constant                        |
+|                | - perform an action that has side effects, eg. create output, manipulate data |
+|----------------+-------------------------------------------------------------------------------|
+| Autoloading    | namespaces and classes must support the PSR-4 autoloader standard             |
+|----------------+-------------------------------------------------------------------------------|
+| Class names    | CamelCase                                                                     |
+|----------------+-------------------------------------------------------------------------------|
+| Method names   | camelCase                                                                     |
+|----------------+-------------------------------------------------------------------------------|
+| Constant names | all uppercase characters, may use underscores                                 |
+
+** PSR-2
+
+| Indentation        | 4 space characters                                                        |
+|--------------------+---------------------------------------------------------------------------|
+| Lines              | - not exceed 120 characters (not exceed 80 recommended)                   |
+|                    | - use Unix linefeed (LF) endings                                          |
+|                    | - not have trailing white space                                           |
+|--------------------+---------------------------------------------------------------------------|
+| Files              | - not include a trailing =?>= (to avoid unexpected output errors)         |
+|                    | - end with a single blank line                                            |
+|--------------------+---------------------------------------------------------------------------|
+| Keywords           | use only lowercase characters, eg. =true=, =false=, =null=                |
+|--------------------+---------------------------------------------------------------------------|
+| Namespaces         | - declaration is followed by one blank line                               |
+|                    | - import or alias is followed by one blank line                           |
+|--------------------+---------------------------------------------------------------------------|
+| Classes            | - ={= and =}= reside on a new line                                        |
+|                    | - =extends= and =implements= appear on the same line as the class name    |
+|--------------------+---------------------------------------------------------------------------|
+| Methods            | - ={= and =}= reside on a new line                                        |
+|                    | - =(= does not have a trailing space                                      |
+|                    | - =)= does not have a preceding space                                     |
+|                    | - each method argument (except the last) is followed by =,= and one space |
+|--------------------+---------------------------------------------------------------------------|
+| Visibility         | - declare a visibility for each class property and method                 |
+|                    | - =abstract= and =final= appear before the visibility                     |
+|                    | - =static= appears after the visibility                                   |
+|--------------------+---------------------------------------------------------------------------|
+| Control structures | - keywords are followed by a single space                                 |
+|                    | - ={= remains on the same line as the keyword                             |
+|                    | - =}= resides on a new line                                               |
+|                    | - =(= does not have a trailing space                                      |
+|                    | - =)= does not have a preceding space                                     |
+
+** PSR-3
+
+Logger component
+- must include a class that implements the interface =Psr\Log\LoggerInterface=
+- [[https://github.com/Seldaek/monolog][monolog/monolog]]
+
+PSR-3 interface
+- replicates the RFC 5424 syslog protocol
+- each interface method maps to a RFC 5424 protocol level
+- =$message= must be
+  + a string
+  + an object with a =__toString()= method
+- =$context=
+  + an associative array
+  + keys are placeholder names
+  + values replace ={placeholder_name}= in =$message=
+
+PSR-3 interface
+#+BEGIN_SRC php
+<?php
+namespace Psr\Log;
+
+interface LoggerInterface
+{
+    public function emergency($message, array $context = array());
+    public function alert($message, array $context = array());
+    public function critical($message, array $context = array());
+    public function error($message, array $context = array());
+    public function warning($message, array $context = array());
+    public function notice($message, array $context = array());
+    public function info($message, array $context = array());
+    public function debug($message, array $context = array());
+    public function log($level, $message, array $context = array());
+}
+#+END_SRC
+
+** PSR-4
+
+Autoloader
+- a strategy for
+  + finding a class, interface, or trait
+  + loading it into interpreter on-demand at runtime
+
+Without autoloader
+- explicitly include files with =include= or =require=
+
+PSR-4
+- enables autoloading all components with only one autoloader
+- suggests how code is organized into filesystem directories and namespaces
+- map a namespace prefix to a filesystem directory
+
+Without PSR-4
+- use =__autoload()= and =spl_autoload_register()= to register custom autoloaders
+- register unique autoloaders for every component
+
+PSR-4 autoloader example
+#+BEGIN_SRC php
+<?php
+/**
+ * An example of a project-specific implementation.
+ *
+ * After registering this autoload function with SPL, the following line
+ * would cause the function to attempt to load the \Foo\Bar\Baz\Qux class
+ * from /path/to/project/src/Baz/Qux.php:
+ *
+ * new \Foo\Bar\Baz\Qux;
+ *
+ * @param string $class The fully qualified class name.
+ * @return void
+ */
+spl_autoload_register(function ($class) {
+    // project-specific namespace prefix
+    $prefix = 'Foo\\Bar\\';
+
+    // base directory for the namespace prefix
+    $base_dir = __DIR__ . '/src/';
+
+    // does the class use the namespace prefix?
+    $len = strlen($prefix);
+    if (strncmp($prefix, $class, $len) !== 0) {
+        // no, move to the next registered autoloader
+        return;
+    }
+
+    // get the relative class name
+    $relative_class = substr($class, $len);
+
+    // replace the namespace prefix with the base directory, replace namespace
+    // separators with directory separators in the relative class name, append
+    // with .php
+    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+
+    // if the file exists, require it
+    if (file_exists($file)) {
+        require $file;
+    }
+});
+#+END_SRC
+
+* 项目结构
+
+#+BEGIN_SRC sh
+application/     # Application specific code
+    controllers/
+    models/
+    views/
+config/
+db/              # Database backup
+library/         # Framework code
+public/          # Publicly accessible content
+    css/
+    img/
+    js/
+scripts/         # CMD utilities
+tmp/
+    cache/
+    logs/
+    sessions/
+#+END_SRC
+
+* Front Controller
+
+- a single entry point (=index.php=)
+- all requests (except css/js/image) are forwarded to
+- enables usage of SEO-friendly URLs
+- responsible for routing the request and dispatching the appropriate code
+
+#+CAPTION: =.htaccess=
+#+BEGIN_SRC sh
+# Redirect calls to public/
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteRule    ^$   public/   [L]
+    RewriteRule    (.*) public/$1 [L]
+</IfModule>
+
+# Redirect calls to public/index.php
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # Redirect calls when the path is not file or directory
+    # Redirect to index.php?url=PATHNAME
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php?url=$1 [PT,L]
+</IfModule>
+#+END_SRC
+
+#+CAPTION: =index.php=
+
+* 资源
+
+1. [[http://www.php-fig.org/psr/][PHP Standards Recommendations]]

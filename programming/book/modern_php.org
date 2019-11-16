@@ -1,0 +1,119 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Modern PHP
+
+* Chapter 1: The New PHP
+
+The PHP language is experiencing a renaissance. PHP is transforming into a modern scripting language with helpful features like _namespaces, traits, closures, and a builtin opcode cache_. The modern PHP ecosystem is evolving, too. PHP developers rely less on monolithic frameworks and more on _smaller specialized components_. The +Composer+ dependency manager is revolutionizing how we build PHP applications; it emancipates us from a framewor's walled garden and lets us _mix and match interoperable PHP components best suited for our custom PHP applications_. Component interoperability would not be possible without _community standards_ proposed and curated by the _PHP Framework Interop Group_.
+
+** Past
+
+PHP is an interpreted server-side scripting language. PHP is typically used with a web server like Apache or nginx to serve dynamic content. However, _PHP can also be used to build powerful command-line applications_ (just like bash, Ruby, Python, and so on). 
+
+PHP began as a collection of CGI scripts written by Rasmus Lerdorf to track visits to his online resume. Lerdorf named his set of CGI scripts "Personal Home Page Tools."
+
+Between 1994 and 1998, PHP underwent numerous revisions and even received a few ground-up rewrites. Andi Gutmans and Zeev Suraski, two developers from Tel Aviv, joined forces with Rasmus Lerdorf to transform PHP from a small collection of CGI tools into a full-fledged programming language with a more consistent syntax and basic support for object-oriented programming. They named their final product PHP 3 and released it in late 1998. The new PHP moniker was a departure from earlier names, and it is a recursive acronym for PHP: Hypertext Preprocessor.
+
+PHP 3 was the first version that most resembled the PHP we know today. It provided superior extensibility to various databases, protocols, and APIs. PHP 3's extensibility attracted many new developers to the project. By late 1998, PHP 3 was already installed on a staggering 10% of the world's web servers.
+
+** Present
+
+Local development environments are identical to production servers thanks to _virtualization tools_ like +Vagrant+ and _provisioning tools_ like +Ansible+, +Chef+, and +Puppet+. We deploy our applications with PHP's +FastCGI+ process manager behind a web server like nginx. And we increase application performance with an +opcode+ cache. 
+
+PHP now has an official draft specification ¡ª something it lacked until 2014. Most mature programming languages have a specification. In layman's terms, _a specification is a canonical blueprint that defines what it means to be PHP_. This blueprint is _used by developers who create programs that parse, interpret, and execute PHP code_. It is not for developers who create applications and websites with PHP.
+
+An official PHP language specification is becoming more important given the introduction of multiple competing PHP engines. The original PHP engine is the +Zend Engine+, a PHP interpreter written in C and introduced in PHP 4. The Zend Engine was created by Rasmus Lerdorf, Andi Gutmans, and Zeev Suraski. Today the Zend Engine is the Zend company's main contribution to the PHP community. However, there is now a second major PHP engine ¡ª the +HipHop Virtual Machine+ from Facebook. _A language specification ensures that both engines maintain a baseline compatibility._
+
+** Future
+
++Hack+ is a new programming language built on top of PHP. It introduces _static typing, new data structures, and additional interfaces while maintaining backward compatibility_ with existing dynamically typed PHP code. Hack is targeted at developers who appreciate _PHP's rapid development characteristics but need the predictability and stability from static typing_.
+
+The HipHop Virtual Machine (+HHVM+) is a PHP and Hack interpreter that uses a just in time (+JIT+) compiler to improve application performance and reduce memory usage.
+
+Increasing competition has prompted the Zend Engine core team to announce +PHP 7+, an optimized Zend Engine said to be on par with HHVM.
+
+* Chapter 2: Features
+
++Namespaces+, are a cornerstone of modern PHP standards and enable development practices that modern PHP developers take for granted (e.g., autoloading).
+
+** Namespaces
+*** Why We Use Namespaces
+
+Namespaces are important because they let us _create sandboxed code that works alongside other developers' code_. This is the cornerstone concept of the modern PHP component ecosystem. This problem applies to your own in-house projects, too. If you write _custom PHP components or classes for a project_, that code _must work alongside_ your project's _third-party dependencies_.
+
+*** Helpful Tips
+**** Multiple imports
+
+PHP accepts a shorthand import syntax that combines multiple use statements on a single line like this:
+
+#+BEGIN_SRC php
+<?php
+use Symfony\Component\HttpFoundation\Request,
+    Symfony\Component\HttpFoundation\Response,
+    Symfony\Component\HttpFoundation\Cookie;
+#+END_SRC
+
+Don't do this. It's confusing and easy to mess up. I recommend you _keep each use statement on its own line_ like this:
+
+#+BEGIN_SRC php
+<?php
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Cookie;
+#+END_SRC
+
+You'll type a few extra characters, but your code is easier to read and troubleshoot.
+
+**** Multiple namespaces in one file
+
+PHP lets you define multiple namespaces in a single PHP file like this:
+
+#+BEGIN_SRC php
+<?php
+namespace Foo {
+    // Declare classes, interfaces, functions, and constants here
+}
+namespace Bar {
+    // Declare classes, interfaces, functions, and constants here
+}
+#+END_SRC
+
+This is confusing and violates the recommended _one class per file_ good practice. _Use only one namespace per file_ to make your code simpler and easier to troubleshoot.
+
+* Chapter 4: Components
+** Components Versus Frameworks
+
+Before I knew better, I instinctually started PHP applications with a massive framework like Symfony or CodeIgniter. _The problem with frameworks is that they are an expensive investment._
+
+_When we choose a framework, we invest in that framework's future._ We put our faith behind the framework's core development team. We assume the framework's developers will continue investing their own time into developing the framework and ensuring that its code remains up-to-date with modern standards.
+
+_When we choose a framework, we invest in that framework's tools._ Sometimes we need a specific something that the framework does not provide, and it becomes our burden to find and integrate a custom PHP library. _Integrating third-party code into a framework is difficult because the third-party code and the PHP framework probably don't share common interfaces._
+
+Times have changed, and we are no longer beholden to monolithic frameworks and their walled gardens. Today, we choose from a vast and continually growing collection of _specialized components to create custom applications_.
+
+*** Not All Frameworks Are Bad
+
++Symfony+ is an excellent example of a modern PHP framework. Fabien Potencier and Sensio Labs built the Symfony Framework as an amalgam of _smaller and decoupled Symfony components_. These components _can be used together as a framework or piecemeal in custom applications_.
+
++Drupal 8+ is a ginormous and commendable leap into modern PHP. Drupal 8 leverages the comparative advantages of many different PHP components to build a modern content management platform.
+
+Like Symfony, +Laravel+ is built atop its own Illuminate component library. However (at time of publishing), Laravel's components are not easily decoupled for use in non-Laravel applications.
+
+*** Use the Right Tool for the Job
+
+Components also help our code remain _lightweight and nimble_. We _use only the code we need_, and it's super-easy to _swap one component with another that may be better suited_ for our project.
+
+_Frameworks make many decisions for us and require us to adhere to its set of conventions._ Frameworks are _less flexible_, but we do get far _more out-of-the-box_ than we do with a collection of PHP components. 
+
+** Use PHP Components
+
+Autoloading is the process of automatically loading PHP classes on-demand without _explicitly loading them with the =require()=, =require_once()=, =include()=, or =include_once()= functions_.
+
+Older PHP versions let us _write custom autoloaders with the =\__autoload()= function_; this function is automatically invoked by the PHP interpreter when we instantiate a class that has not already been loaded.
+
+PHP later introduced the _more flexible =spl_autoload_register()= function in its SPL library_. Exactly how a PHP class is autoloaded is entirely up to the developer. Unfortunately, _the lack of a common autoloader standard often necessitates a unique autoloader implementation for every project_. This makes it difficult to use code created and shared by other developers if each developer provides a unique autoloader.
+
+The PHP Framework Interop Group recognized this problem and created the PSR-4 standard. _The PSR-4 standard suggests how to organize code into namespaces and filesystem directories so it is compatible with one standard autoloader implementation._
+
+We don't have to write a PSR-4 autoloader on our own. Instead, _Composer automatically generates a PSR-compatible autoloader for all of our project's PHP components. Composer effectively abstracts away dependency management and autoloading._
+
+-----

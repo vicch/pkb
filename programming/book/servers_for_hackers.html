@@ -1,0 +1,993 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-11-13 Tue 10:25 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Servers for Hackers</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Servers for Hackers</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org1ea5a25">1. Security</a>
+<ul>
+<li><a href="#orgd30ba47">1.1. Users and Access</a></li>
+<li><a href="#orgd630f76">1.2. Iptables</a></li>
+</ul>
+</li>
+<li><a href="#org189039d">2. Permissions and User Management</a>
+<ul>
+<li><a href="#org61e0a26">2.1. Running Processes</a></li>
+</ul>
+</li>
+<li><a href="#org9f04015">3. Web Servers</a>
+<ul>
+<li><a href="#org7bc2284">3.1. HTTP, Web Servers and Web Sites</a></li>
+<li><a href="#orgf8384da">3.2. DNS and Hosts File</a></li>
+<li><a href="#org77b2482">3.3. Hosting Web Applications</a>
+<ul>
+<li><a href="#org9be2230">3.3.1. Applications and HTTP Interfaces</a></li>
+<li><a href="#org85c1ace">3.3.2. Gateway</a></li>
+<li><a href="#org6109077">3.3.3. Web Server</a></li>
+</ul>
+</li>
+<li><a href="#org1463c5d">3.4. Apache</a>
+<ul>
+<li><a href="#orgbfd55ae">3.4.1. Apache with PHP</a></li>
+<li><a href="#org63512b7">3.4.2. Apache with HTTP</a></li>
+<li><a href="#org684b498">3.4.3. Apache with FastCGI</a></li>
+<li><a href="#orgf813939">3.4.4. Apache with uWSGI</a></li>
+<li><a href="#org963f018">3.4.5. MPM Configuration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgb676b88">4. Monitoring Processes</a>
+<ul>
+<li><a href="#orgda90a19">4.1. System Services</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1ea5a25" class="outline-2">
+<h2 id="org1ea5a25"><span class="section-number-2">1</span> Security</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-orgd30ba47" class="outline-3">
+<h3 id="orgd30ba47"><span class="section-number-3">1.1</span> Users and Access</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Providers purchase IP addresses in blocks. Finding the ranges of IP addresses used by a hosting provider is not difficult. Automated bots may scan for vulnerabilities open on the server.
+</p>
+
+<p>
+Think of servers as disposable or prone to fail is always a pertinent thing to do. Backup important files, configurations and data somewhere else. Amazon AWS's S3 service is an excellent, cheap place to put backups.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd630f76" class="outline-3">
+<h3 id="orgd630f76"><span class="section-number-3">1.2</span> Iptables</h3>
+<div class="outline-text-3" id="text-1-2">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 1: </span>创建规则链用于记录异常数据包</label><pre class="src src-sh">iptables -N LOGGING
+iptables -D INPUT -j DROP    <span class="org-comment-delimiter"># </span><span class="org-comment">&#21024;&#38500;&#24403;&#21069;&#40664;&#35748;&#30446;&#26631;</span>
+iptables -A INPUT -j LOGGING <span class="org-comment-delimiter"># </span><span class="org-comment">&#23558;&#40664;&#35748;&#30446;&#26631;&#25351;&#21521;&#26032;&#30340;&#35268;&#21017;&#38142;</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#21152;&#20837;&#35760;&#24405;&#26085;&#24535;&#30340;&#35268;&#21017;&#65292;&#40664;&#35748;&#35760;&#24405;&#21040;&#20869;&#26680;&#26085;&#24535; /var/log/kern.log</span>
+iptables -A LOGGING -m limit --limit 2/min -j LOG --log-prefix <span class="org-string">"IPTables Packet Dropped: "</span> --log-level 7
+iptables -A LOGGING -j DROP  <span class="org-comment-delimiter"># </span><span class="org-comment">&#35760;&#24405;&#26085;&#24535;&#20043;&#21518;&#20002;&#24323;&#25968;&#25454;&#21253;</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org189039d" class="outline-2">
+<h2 id="org189039d"><span class="section-number-2">2</span> Permissions and User Management</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-org61e0a26" class="outline-3">
+<h3 id="org61e0a26"><span class="section-number-3">2.1</span> Running Processes</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Processes (programs) are run as specific users and groups. Therefore we can regulate what processes can do using file and directory permissions.
+</p>
+
+<p>
+Core processes which need system access are often run as user <code>root</code>, but then spawn processes as other users. This "downgrading" of privileges is used for security. For example, Apache is started as user <code>root</code>. The master process then downgrades spawned processes to less privileged users.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9f04015" class="outline-2">
+<h2 id="org9f04015"><span class="section-number-2">3</span> Web Servers</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-org7bc2284" class="outline-3">
+<h3 id="org7bc2284"><span class="section-number-3">3.1</span> HTTP, Web Servers and Web Sites</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+A web server can handle serving more than one web site. <span class="underline">Web server reads the HTTP request's <code>Host</code> header and routes incoming requests to the correct web site.</span> If the <code>Host</code> header is not present or doesn't match a defined site, the web server routes the request to a default site.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ curl -I 127.0.0.1            <span class="org-comment-delimiter"># </span><span class="org-comment">Send request without Host header</span>
+HTTP/1.1 301 Moved Permanently <span class="org-comment-delimiter"># </span><span class="org-comment">Nginx sends 301 redirection</span>
+...                            <span class="org-comment-delimiter"># </span><span class="org-comment">Some web servers serve default site directly</span>
+Location: http://foo.com/      <span class="org-comment-delimiter"># </span><span class="org-comment">Default site</span>
+
+$ curl -I -H <span class="org-string">"Host: foo.com"</span> 127.0.0.1 <span class="org-comment-delimiter"># </span><span class="org-comment">Send with Host header</span>
+HTTP/1.1 200 OK
+...
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf8384da" class="outline-3">
+<h3 id="orgf8384da"><span class="section-number-3">3.2</span> DNS and Hosts File</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+When purchasing a domain from a registrar, it often also needs to add domain name servers for the domain. Many registrars setup their own domain name services. But domain name information can also be controlled on other services: AWS Route 53, CloudFlare CDN etc.
+</p>
+
+<p>
+It is recommended to not use DNS provided by hosting, in case the DNS servers of cloud server providers be attacked. Using a separate DNS service is an easy way to not put eggs all in one basket.
+</p>
+
+<p>
+DNS records need to be added to point the domain names to web servers.
+</p>
+</div>
+</div>
+<div id="outline-container-org77b2482" class="outline-3">
+<h3 id="org77b2482"><span class="section-number-3">3.3</span> Hosting Web Applications</h3>
+<div class="outline-text-3" id="text-3-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+<caption class="t-above"><span class="table-number">Table 1:</span> Hosting a web application requires 3 actors</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>Application</b></th>
+<th scope="col" class="org-left">Accept requests from gateway</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">Return valid responses</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>Gateway</b></td>
+<td class="org-left">Accept requests from web server</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Translate requests for application</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>Web Server</b></td>
+<td class="org-left">Accept HTTP requests</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Translate requests to protocols gateway listen for</td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="figure">
+<p><img src="../images/servers_for_hackers/01.png" alt="01.png" />
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9be2230" class="outline-4">
+<h4 id="org9be2230"><span class="section-number-4">3.3.1</span> Applications and HTTP Interfaces</h4>
+<div class="outline-text-4" id="text-3-3-1">
+<p>
+Most languages are either general purpose or do not concentrate on the web. They have a process of <span class="underline">translating an HTTP request (the bytes constituting HTTP request data) into code</span>. Libraries called <del>HTTP interfaces</del> are used to handle and translate HTTP requests for application code. HTTP interface also standardizes and encapsulates HTTP concerns. Newer languages include HTTP interfaces as part of standard library.
+</p>
+
+<ul class="org-ul">
+<li>Python uses WSGI to specify an interface between web servers and Python applications.</li>
+<li>PHP uses cURL and Guzzle package to accept web requests.</li>
+<li>NodeJS and Golang can handle HTTP requests directly.</li>
+</ul>
+</div>
+
+<ol class="org-ol"><li><a id="org8a275a9"></a>PHP<br /><div class="outline-text-5" id="text-3-3-1-1">
+<p>
+PHP is unique in that it's a language built specifically for the web, it was built under the assumption that it is run during an HTTP request. It contained no process for converting the bytes of an HTTP request into something for code to handle. By the time the code was run, that was dealt with. For example, PHP-FPM, the gateway for PHP, takes a web request's data and fills in the PHP super globals <code>$_SERVER</code>, <code>$_GET</code>, <code>$_POST</code> etc., and PHP code doesn't need to do work to get these data when it is run.
+</p>
+
+<p>
+Modern and more structured applications often need to deal with HTTP in great detail, for example, to encrypt cookies or set cache headers. This often requires the use of HTTP objects, which are populated by PHP's environment/state. PHP uses libraries to use built-in HTTP-related functions to read in request and create response. Such libraries include Symfony's HTTP libraries, and the PSR-7 standard, which defines the HTTP interface for PHP.
+</p>
+
+<p>
+PHP is no longer limited to being run within context of an HTTP request. But that is an evolution, not starting point.
+</p>
+</div></li></ol>
+</div>
+
+<div id="outline-container-org85c1ace" class="outline-4">
+<h4 id="org85c1ace"><span class="section-number-4">3.3.2</span> Gateway</h4>
+<div class="outline-text-4" id="text-3-3-2">
+<p>
+Gateways are sometimes called HTTP servers or process managers. Their main purpose is usually to accept and translate requests to speak an application's "language". For example, a web server such as Nginx can "speak" uwsgi in order to communicate with the gateway uWSGI. uWSGI, in turn, translates that request to WSGI in order to communicate with a Python application. The application accepts the WSGI-compliant request by using Werkzeug library.
+</p>
+
+<p>
+Gateways aren't necessarily language-specific. For example, uWSGI, Gunicorn and Unicorn have all been used with applications of various languages. This is why specifications exist. They allow for language-agnostic implementations.
+</p>
+</div>
+
+<ol class="org-ol"><li><a id="org40d5d74"></a>Functions<br /><div class="outline-text-5" id="text-3-3-2-1">
+<ul class="org-ul">
+<li>Listen for requests (HTTP, FastCGI, uwsgi etc.)</li>
+<li>Translate requests to application code</li>
+<li>Spawn multiple processes and/or threads of applications</li>
+<li>Monitor spawned processes</li>
+<li>Load balance requests between processes</li>
+<li>Reporting and logging</li>
+</ul>
+</div></li>
+
+<li><a id="orgbb57f30"></a>Specifications<br /><div class="outline-text-5" id="text-3-3-2-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> Gateway support for specifications</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>Gateway</b></th>
+<th scope="col" class="org-left"><b>FastCGI</b></th>
+<th scope="col" class="org-left"><b>WSGI (Python)</b></th>
+<th scope="col" class="org-left"><b>Rack (Ruby)</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">PHP-FPM</td>
+<td class="org-left">Yes</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">uWSGI</td>
+<td class="org-left">Yes</td>
+<td class="org-left">Yes</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Gevent</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Yes</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Gunicorn</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Tornado</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Twisted Web</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Phusion Passenger</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Yes</td>
+</tr>
+
+<tr>
+<td class="org-left">Puma</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Thin</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Unicorn</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div></li>
+
+<li><a id="org7bbe290"></a>PHP-FPM<br /><div class="outline-text-5" id="text-3-3-2-3">
+<p>
+PHP-FPM is the gateway for PHP. It is an implementation of FastCGI, which means it accepts and translates FastCGI requests. Before PHP-FPM, PHP was commonly run directly in Apache without using gateway. Apache's PHP module loaded PHP directly, allowing PHP to be run inline of any files processed.
+</p>
+</div></li>
+
+<li><a id="org688c969"></a>uWSGI<br /><div class="outline-text-5" id="text-3-3-2-4">
+<p>
+WSGI is a gateway interface originally defined by Python's PEP 333. A common implementation of the WSGI protocol is the uWSGI gateway. uWSGI is popularly used as a WSGI gateway, but can also handle HTTP and FastCGI.
+</p>
+</div></li>
+
+<li><a id="org39d1076"></a>Skip gateways<br /><div class="outline-text-5" id="text-3-3-2-5">
+<p>
+Applications built in languages that have HTTP interfaces included in standard library can skip the use of gateways, and web server will send HTTP requests directly to the application. But applications can still benefit from the use of a gateway. For example, running application in multiple processes (managed by gateway) on multi-core servers allows for more concurrent requests to be handled.
+</p>
+</div></li></ol>
+</div>
+
+<div id="outline-container-org6109077" class="outline-4">
+<h4 id="org6109077"><span class="section-number-4">3.3.3</span> Web Server</h4>
+<div class="outline-text-4" id="text-3-3-3">
+<p>
+A web server translates HTTP requests to protocols (HTTP, FastCGI, uwsgi) that the gateway expects, based on configuration. Nginx and Apache can both "speak" HTTP, uwsgi, and FastCGI.
+</p>
+
+<p>
+Web server accepts, translates, and passes (proxies) HTTP requests to a gateway. Gateways are various implementations and flavors of CGI. Web server can also proxy to web applications over HTTP.
+</p>
+
+<ul class="org-ul">
+<li>Python applications use the uWSGI gateway.</li>
+<li>PHP, when not directly loaded by Apache, can use PHP-FPM, which is an implementation of the FastCGI gateway.</li>
+<li>NodeJS and Golang listen for HTTP connections directly.</li>
+</ul>
+</div>
+
+<ol class="org-ol"><li><a id="org84f5835"></a>Functions<br /><div class="outline-text-5" id="text-3-3-3-1">
+<ul class="org-ul">
+<li>Hosting site(s)</li>
+<li>Serving static files</li>
+<li>Proxying requests to other processes</li>
+<li>Load balancing</li>
+<li>HTTP caching</li>
+<li>Streaming media</li>
+</ul>
+</div></li></ol>
+</div>
+</div>
+
+<div id="outline-container-org1463c5d" class="outline-3">
+<h3 id="org1463c5d"><span class="section-number-3">3.4</span> Apache</h3>
+<div class="outline-text-3" id="text-3-4">
+</div><div id="outline-container-orgbfd55ae" class="outline-4">
+<h4 id="orgbfd55ae"><span class="section-number-4">3.4.1</span> Apache with PHP</h4>
+<div class="outline-text-4" id="text-3-4-1">
+<p>
+PHP applications are commonly loaded and parsed directly by Apache. Apache does not send PHP requests off to a gateway. Instead, it uses the module <code>mod_php</code> to parse PHP requests directly. This <span class="underline">allows PHP files to be used seamlessly alongside static files.</span>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org63512b7" class="outline-4">
+<h4 id="org63512b7"><span class="section-number-4">3.4.2</span> Apache with HTTP</h4>
+<div class="outline-text-4" id="text-3-4-2">
+<p>
+Some languages speak HTTP directly, which means the web server can be skipped altogether and HTTP requests can be served to application directly. But a more typical setup is to put the web server (Apache) "in front of" an application. Apache can handle HTTP requests either by itself or proxy the requests to the application gateway. Benefits:
+</p>
+
+<ul class="org-ul">
+<li>Apache can handles requests for static assets, which frees the application from wasting resources on them.</li>
+<li>Apache can perform load balancing by sending requests to a pool of resources of the application, which increases the number of requests the application can handlesimultaneously.</li>
+<li>Gateway can manage and send request to multiple application processes. Gateway exposes one HTTP listener for Apache.</li>
+</ul>
+</div>
+
+<ol class="org-ol"><li><a id="orgdc76ed4"></a>Proxy to HTTP listeners<br /><div class="outline-text-5" id="text-3-4-2-1">
+<p>
+Apache's <code>proxy</code> module is handy for proxying requests to HTTP listeners, which include gateways listening on HTTP, and applications written in NodeJS or Golang.
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 2: </span>Configure Apache to proxy HTTP requests to a NodeJS application listening at port 9000 of local host</label><pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Enable modules</span>
+$ sudo a2enmod proxy proxy_http
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Configure vhost</span>
+$ sudo vim /etc/apache2/sites-available/example.com.conf
+&lt;VirtualHost *:80&gt;
+    &lt;Directory /var/www/example.com/public&gt;
+        &lt;Proxy *&gt;               <span class="org-comment-delimiter"># </span><span class="org-comment">Apply to matched content, * matches all</span>
+            Require all granted <span class="org-comment-delimiter"># </span><span class="org-comment">Authorize all hosts (clients) to use the proxy</span>
+        &lt;/Proxy&gt;
+        &lt;Location /&gt;                         <span class="org-comment-delimiter"># </span><span class="org-comment">Apply to all URL</span>
+            ProxyPass http://localhost:9000/ <span class="org-comment-delimiter"># </span><span class="org-comment">Proxy requests to application</span>
+            ProxyPassReverse http://localhost:9000/
+        &lt;/Location&gt;
+        &lt;Location /static&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">Apply to URL start with /static</span>
+            ProxyPass !    <span class="org-comment-delimiter"># </span><span class="org-comment">Do not proxy requests</span>
+        &lt;Location&gt;
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+</pre>
+</div>
+
+<p>
+Apache should handle requests for static assets. This is easy with PHP, whose files typically end with <code>.php</code>, which allows us to pass requests ending in <code>.php</code> off to the application. But application of other languages typically don't run through specific files. One popular solution is to put all static assets a specific directory, for example <code>/static</code>, and config Apache not to proxy the requests by <code>ProxyPass !</code>.
+</p>
+</div></li>
+
+<li><a id="org703017a"></a>Proxy to load balancer<br /><div class="outline-text-5" id="text-3-4-2-2">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 3: </span>Configure Apache to proxy HTTP requests and load balance between multiple backends</label><pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Enable modules</span>
+$ sudo a2enmod proxy_balancer lbmethod_byrequests
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Configure vhost</span>
+$ sudo vim /etc/apache2/sites-available/example.com.conf
+&lt;VirtualHost *:80&gt;
+    &lt;Directory /var/www/example.com/public&gt;
+        &lt;Proxy balancer://cluster&gt;                <span class="org-comment-delimiter"># </span><span class="org-comment">Define balancer cluster</span>
+            BalancerMember http://localhost:9000/ <span class="org-comment-delimiter"># </span><span class="org-comment">Define multiple backends</span>
+            BalancerMember http://localhost:9001/
+            BalancerMember http://localhost:9002/
+        &lt;/Proxy&gt;
+        &lt;Location /&gt;
+            ProxyPass balancer://cluster/ <span class="org-comment-delimiter"># </span><span class="org-comment">Proxy requests to balancer cluster</span>
+            ProxyPassReverse balancer://cluster/
+        &lt;/Location&gt;
+        &lt;Location /static&gt;
+            ProxyPass !
+        &lt;Location&gt;
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+</pre>
+</div>
+</div></li></ol>
+</div>
+
+<div id="outline-container-org684b498" class="outline-4">
+<h4 id="org684b498"><span class="section-number-4">3.4.3</span> Apache with FastCGI</h4>
+<div class="outline-text-4" id="text-3-4-3">
+</div><ol class="org-ol"><li><a id="orgaafd467"></a><code>mod_fcgi</code><br /><div class="outline-text-5" id="text-3-4-3-1">
+<p>
+<code>mod_fcgi</code> is used before Apache 2.4 to send requests to FastCGI gateways, but it's complex to configure. It is replaced by <code>mod_proxy_fcgi</code> since Apache 2.4.
+</p>
+</div></li>
+
+<li><a id="org20469ef"></a>Match file name with <code>ProxyPassMatch</code><br /><div class="outline-text-5" id="text-3-4-3-2">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 4: </span>Proxy to PHP-FPM using <code>ProxyPassMatch</code> directive</label><pre class="src src-sh">&lt;VirtualHost *:80&gt;
+    ProxyPassMatch ^/(<span class="org-builtin">.</span>*<span class="org-string">\.</span>php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/example/$<span class="org-variable-name">1</span>
+&lt;/VirtualHost&gt;
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>No Unix domain socket support. <span class="underline">Unix domain sockets are slightly faster than TCP sockets</span>, and are the default used in Debian/Ubuntu for PHP-FPM.</li>
+<li>Requires the document root set and maintained in the vhost configuration.</li>
+</ul>
+</div></li>
+
+<li><a id="org6b2a618"></a>Match file name with <code>FilesMatch</code><br /><div class="outline-text-5" id="text-3-4-3-3">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 5: </span>Handle PHP requests with <code>FilesMatch</code> and <code>SetHandler</code> directives</label><pre class="src src-sh">&lt;VirtualHost *:80&gt;
+    &lt;FilesMatch <span class="org-string">\.</span>php$&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">Match files ending in .php</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">Proxy to FastCGI using TCP socket</span>
+        SetHandler <span class="org-string">"proxy:fcgi://127.0.0.1:9000"</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">Or using Unix domain socket</span>
+        SetHandler <span class="org-string">"proxy:unix:/var/run/php-fpm.sock|fcgi:"</span>
+    &lt;/FilesMatch&gt;
+&lt;/VirtualHost&gt;
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>No need to pass document root to handler. Configuration can be more dynamic and reusable.</li>
+<li>Can use TCP or Unix domain socket.</li>
+</ul>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 6: </span>Make as a global configuration and include in vhost configuration</label><pre class="src src-sh">$ vim /etc/apache2/php-fpm.conf
+&lt;FilesMatch <span class="org-string">\.</span>php$&gt;
+    SetHandler <span class="org-string">"proxy:unix:/var/run/php5-fpm.sock|fcgi:"</span>
+&lt;/FilesMatch&gt;
+
+$ vim /etc/apache2/sites-available/example.com.conf
+&lt;VirtualHost *:80&gt;
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Include under &lt;Directory&gt; for security</span>
+    &lt;Directory /var/www/example.com/public&gt;
+        Include php-fpm.conf
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+</pre>
+</div>
+</div></li>
+
+<li><a id="org8538799"></a>Match file directory with <code>&lt;Location&gt;</code><br /><div class="outline-text-5" id="text-3-4-3-4">
+<p>
+The problem of matching files with <code>ProxyPassMatch</code> or <code>FilesMatch</code> is that for PHP contained in non <code>.php</code> files, for example <code>.html</code>, it takes more work to handle. And for other languages who don't have a file-based point of entry like PHP's <code>index.php</code> to which all requests can be routed, URIs can't be matched to files. In these cases, <code>&lt;Location&gt;</code> is used to match against directory-style URIs.
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 7: </span>Configure <code>proxy_fcgi</code> similar to <code>proxy_http</code></label><pre class="src src-sh">&lt;VirtualHost *:80&gt;
+    &lt;Directory /var/www/example.com/public&gt;
+        &lt;Proxy *&gt;
+            Require all granted
+        &lt;/Proxy&gt;
+        &lt;Location /&gt;
+            <span class="org-comment-delimiter"># </span><span class="org-comment">TCP socket</span>
+            ProxyPass fcgi://localhost:9000/ <span class="org-comment-delimiter"># </span><span class="org-comment">fcgi:// instead of http://</span>
+            ProxyPassReverse fcgi://localhost:9000/
+            <span class="org-comment-delimiter"># </span><span class="org-comment">Or Unix domain socket</span>
+            ProxyPass unix:/var/run/php-fpm.sock|fcgi:
+            ProxyPassReverse unix:/var/run/php-fpm.sock|fcgi:
+        &lt;/Location&gt;
+        &lt;Location /static&gt;
+            ProxyPass !
+        &lt;Location&gt;
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+</pre>
+</div>
+</div></li>
+<li><a id="org5d79ebd"></a>Proxy to load balancer<br /><div class="outline-text-5" id="text-3-4-3-5">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 8: </span>Configure to proxy requests and load balance between multiple FastCGI backends</label><pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Enable modules</span>
+$ sudo a2enmod proxy_balancer lbmethod_byrequests
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Configure vhost</span>
+$ sudo vim /etc/apache2/sites-available/example.com.conf
+&lt;VirtualHost *:80&gt;
+    &lt;Directory /var/www/example.com/public&gt;
+        &lt;Proxy balancer://cluster&gt;
+            BalancerMember fcgi://localhost:9000/
+            BalancerMember fcgi://localhost:9001/
+            BalancerMember fcgi://localhost:9002/
+        &lt;/Proxy&gt;
+        &lt;Location /&gt;
+            ProxyPass balancer://cluster/
+            ProxyPassReverse balancer://cluster/
+        &lt;/Location&gt;
+        &lt;Location /static&gt;
+            ProxyPass !
+        &lt;Location&gt;
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+</pre>
+</div>
+</div></li></ol>
+</div>
+
+<div id="outline-container-orgf813939" class="outline-4">
+<h4 id="orgf813939"><span class="section-number-4">3.4.4</span> Apache with uWSGI</h4>
+<div class="outline-text-4" id="text-3-4-4">
+</div><ol class="org-ol"><li><a id="org26fb45e"></a><code>mod_uwsgi</code><br /><div class="outline-text-5" id="text-3-4-4-1">
+<p>
+<code>mod_uwsgi</code> is used to work with uWSGI gateway, but it's complex to configure. It's replaced by <code>mod_proxy_uwsgi</code>.
+</p>
+</div></li>
+
+<li><a id="org2afdf2f"></a>Proxy to uWSGI<br /><div class="outline-text-5" id="text-3-4-4-2">
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Install and enable module</span>
+$ sudo apt-get install libapache2-mod-proxy-uwsgi
+$ sudo a2enmod proxy proxy_uwsgi
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Run uWSGI with Python application to listen on 127.0.0.1:9000</span>
+$ uwsgi --socket 127.0.0.1:9000 --module myapp --callable=app <span class="org-sh-escaped-newline">\</span>
+--stats 127.0.0.1:9191 --master --processes 4 --threads 2
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Configure vhost to proxy to uWSGI</span>
+$ vim /etc/apache2/site-available/example.com.conf
+&lt;VirtualHost *:80&gt;
+    &lt;Directory /var/www/example.com/public&gt;
+        &lt;Proxy *&gt;
+            Require all granted
+        &lt;/Proxy&gt;
+        &lt;Location /&gt;
+            ProxyPass uwsgi://127.0.0.1:9000/
+            ProxyPassReverse uwsgi://127.0.0.1:9000/
+            <span class="org-comment-delimiter"># </span><span class="org-comment">Or Unix domain socket</span>
+            ProxyPass unix:/path/to/uwsgi.sock|uwsgi:
+            ProxyPassReverse unix:/path/to/uwsgi.sock|uwsgi:
+        &lt;/Location&gt;
+        &lt;Location /static&gt;
+            ProxyPass !
+        &lt;/Location&gt;
+    &lt;/Directory&gt;
+&lt;/VirtualHost
+</pre>
+</div>
+</div></li>
+
+<li><a id="org9453f4d"></a>Proxy to load balancer<br /><div class="outline-text-5" id="text-3-4-4-3">
+<p>
+Usually there is no need to load balance uWSGI, as uWSGI  manages and load balances by itself multiple processes and threads for Python application.
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 9: </span>Configure to proxy requests and load balance between multiple uWSGI backends</label><pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Enable modules</span>
+$ sudo a2enmod proxy_balancer lbmethod_byrequests
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Configure vhost</span>
+$ sudo vim /etc/apache2/sites-available/example.com.conf
+&lt;VirtualHost *:80&gt;
+    &lt;Directory /var/www/example.com/public&gt;
+        &lt;Proxy balancer://cluster&gt;
+            BalancerMember uwsgi://localhost:9000/
+            BalancerMember uwsgi://localhost:9001/
+            BalancerMember uwsgi://localhost:9002/
+        &lt;/Proxy&gt;
+        &lt;Location /&gt;
+            ProxyPass balancer://cluster/
+            ProxyPassReverse balancer://cluster/
+        &lt;/Location&gt;
+        &lt;Location /static&gt;
+            ProxyPass !
+        &lt;Location&gt;
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+</pre>
+</div>
+</div></li></ol>
+</div>
+<div id="outline-container-org963f018" class="outline-4">
+<h4 id="org963f018"><span class="section-number-4">3.4.5</span> MPM Configuration</h4>
+<div class="outline-text-4" id="text-3-4-5">
+<p>
+A process is an instance of an application being run. It is isolated and separate from other processes.
+</p>
+
+<p>
+A thread is created and owned by a process. Threads are not isolated from each other. They share some state and memory. Threads are smaller than processes as they aren't whole instances of an application. Threads take up less memory, allowing for more concurrent requests. They can also be created and destroyed more quickly than a process.
+</p>
+
+<p>
+When Apache is started, a master process is created, which can create more processes and threads. The master process is run as <code>root</code>, processes and threads are created as the configured user and group, usually <code>www-data</code> or <code>apache</code>.
+</p>
+</div>
+
+<ol class="org-ol"><li><a id="org9019dd3"></a>Prefork<br /><div class="outline-text-5" id="text-3-4-5-1">
+<p>
+Prefork does not use threads. It creates <span class="underline">one process per HTTP request</span>.
+</p>
+
+<p>
+Prefork is <span class="underline">slightly quicker than a threaded model, because there's no processing time spent creating and tracking threads</span>. But it eats up CPU and memory in the situation of many simultaneous requests.
+</p>
+</div></li>
+
+<li><a id="orgb5c0371"></a>Worker<br /><div class="outline-text-5" id="text-3-4-5-2">
+<p>
+Worker uses threading. Each process can spawn multiple threads. Worker creates <span class="underline">one thread per HTTP connection. Multiple HTTP requests can be made per connection.</span> When a connection is closed, the thread opens up to accept the next connection.
+</p>
+
+<p>
+<span class="underline">Threads can handle more concurrent requests by reducing the average memory needed to handle each request.</span> 
+</p>
+</div></li>
+
+<li><a id="org7d74a17"></a>Event<br /><div class="outline-text-5" id="text-3-4-5-3">
+<p>
+Event creates <span class="underline">one thread per HTTP request</span>, rather than per connection. A thread will free up when the HTTP request is complete, rather than when the
+connection is closed. Connections are managed within the parent process rather than the threads.
+</p>
+
+<p>
+Event is <span class="underline">better for handling long-lasting (<code>Keep-Alive</code>) requests</span>, for example, applications using server-push, long-polling or web sockets. With Worker, each long-running connection would use a whole thread. With Event, threads don't need to be taken up by connections which may or may not be sending data at the moment.
+</p>
+
+<p>
+If a connection is made using SSL or TLS, Event defaults back to working just like Worker. It will handle a connection per thread.
+</p>
+</div></li></ol>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb676b88" class="outline-2">
+<h2 id="orgb676b88"><span class="section-number-2">4</span> Monitoring Processes</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+A service is basically a long running process. Service managers are used to
+</p>
+
+<ul class="org-ul">
+<li>start the service on system boot</li>
+<li>monitor and restart the service if it fails</li>
+</ul>
+</div>
+
+<div id="outline-container-orgda90a19" class="outline-3">
+<h3 id="orgda90a19"><span class="section-number-3">4.1</span> System Services</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+When Linux starts, the Kernel goes through a startup process, which includes initializing devices, mounting filesystems and then moves onto beginning the system init process. The init process starts and monitors various services and processes. This includes core services such as the network, and installed applications such as Apache or Nginx.
+</p>
+
+<p>
+There are various popular init processes, from older to newer:
+</p>
+
+<ul class="org-ul">
+<li>System V Init (SysVinit, SysV)</li>
+<li>Upstart</li>
+<li>Systemd</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2018-11-13 Tue 10:25</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

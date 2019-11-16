@@ -1,0 +1,170 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Just Enough Software Architecture
+
+* Preface
+
+There is a difference between being able to hit a tennis ball and knowing why you are able to hit it, what psychologists refer to as procedural knowledge versus declarative knowledge.
+
+-----
+
+What the best developers do is drill down into obstacles in detail, understand them, then pop back up to relate the nature of those obstacles to the architecture as a whole.
+
+* Chapter 1: Introduction
+
+Decade after decade, software systems have seen orders-of-magnitude increases in their size and complexity. Today's software systems are arguably the largest and most complex things ever built.
+
+The increases in software size and complexity have been matched by advances in software engineering. We are no smarter than developers of the previous generation, but our improved weapons allow us to build software of greater size and complexity. Assembly language programming gave way to higher-level languages and structured programming. Procedures have, in many domains, given way to objects. And software reuse, which used to mean just subroutines, is now also done with extensive libraries and frameworks.
+
+-----
+
+Consider a coach and a rookie (a novice sports player) watching the same game. The coach sees more than the rookie, not because the coach's eyes are more acute, but because he has an intangible weapon. He has built up a set of mental abstractions that allow him to convert his perceptions of raw phenomena. Your "point of view is worth 80 IQ points".
+
+** Partitioning, knowledge, and abstractions
+
+Developers partition a problem so that its parts are smaller and more tractable, they apply knowledge of similar problems, and they use abstractions to help them reason.
+
+** Reflections
+
+Despite having the same functionality, systems differ in their modifiability, scalability, and latency. _Quality attributes usually trade off against each other._ The third system was much more scalable than the other two, but its scalability came at the price of reduced ability to make ad hoc queries and a longer wait before results were available.
+
+-----
+
+A "job" is an abstraction that obeys more constraints than an arbitrary "chunk of code" does. _It is hard to reason about an arbitrary chunk of code specifically because you cannot tell what it does not do._ For example, if they constrain jobs to have no side effects, they can run the same job twice, in parallel.
+
+** Perspective shift
+
+Developers, being human, have a hard time envisioning how the static statements of a program will execute at runtime. =GOTO= statements complicate the reasoning about runtime execution, so it is best to avoid =GOTO= statements and embrace structured programming.
+
+-----
+
+If you do not consciously choose the architecture of your systems, then it may end up being a big ball of mud, which they estimate is the most common software architecture. Imagine what a system with 10 classes would look like, then scale it up to 100, 1000, ..., without any new abstractions or partitions, and let the objects in the system communicate with each other as is expedient.
+
+** About this book
+
+Software architecture acts as the skeleton of a system, influences quality attributes, is orthogonal to functionality, and uses constraints to influence a system's properties.
+
+-----
+
+Building encapsulation boundaries is a crucial skill in software architecture. Users of a component or module can often ignore how it works internally, freeing their minds to solve other hard problems. And the builders of an encapsulated component or module have the freedom to change its implementation without perturbing its users.
+
+* Chapter 2: Software Architecture
+
+Architecture choices are most important when:
+
+- the solution space is small
+- the risk of failure is high
+- there are difficult quality attribute requirements
+- you are working in a new domain
+
+** What is software architecture?
+
+#+BEGIN_QUOTE
+As the size and complexity of software systems increase, the design and specification of overall system structure become more significant issues than the choice of algorithms and data structures of computation. Structural issues include the organization of a system as a composition of components; global control structures; the protocols for communication, synchronization, and data access; the assignment of functionality to design elements; the composition of design elements; physical distribution; scaling and performance; dimensions of evolution; and selection among design alternatives. This is the software architecture level of design.
+#+END_QUOTE
+
+-----
+
+Examples of architectural details that are not limited to the biggest parts in a system: The naming pattern for methods is about as low-level a decision as possible, yet it is architecturally significant for Java Beans. An architecture may prohibit threads, require a method to complete within 100ms, require computation to be divided into jobs, or other details that are down deep in the code.
+
+-----
+
+There is a chain of intentionality from a few high-level intentions or decisions of the architect that reaches down to some low-level details. Most of the details are left open to any reasonable implementation, but some are constrained, via a chain back to the top-level intentions of the designer.
+
+-----
+
+If a detail is important to achieve an overall quality of the system, it is probably architectural.
+
+** Why is software architecture important?
+
+_Architecture is the art of imposing just enough constraints so that the system has the quality attributes you want._ A design that ensures scalability may require some components to be stateless in order to achieve that scalability.
+
+- _Constraints reduce needless creativity of developers._
+- _Constraints are a means to transfer wisdom or understanding from one developer to another._
+- Constraints can factor out complexity, yielding a system with evident underlying principles. (Once complexity has joined the party, it can be difficult to send it home.)
+
+-----
+
+An architecture is more than the big visible parts, and the invisible parts are often more important. For example, your locking policy, memory management strategy, or technique for integrating third-party components.
+
+-----
+
+Functional requirements that evolve over time are a challenge to any system, but evolving quality attributes can force drastic changes. A system that was designed to support a hundred users may be impossible to scale up to a hundred thousand without an architectural change. You often see successive generations or waves of an application as it outgrows its old architecture, somewhat like a crab outgrowing its shell.
+
+-----
+
+A single good idea consistently applied is better than several brilliant ideas scattered across a system.
+
+** Presumptive architectures
+
+A presumptive architecture is a family of architectures that is dominant in a particular domain. Rather than justifying their choice to use it, developers in that domain may have to justify a choice that differs from the presumptive architecture.
+
+A reference architecture is a family of architectures that describes an architectural solution to a problem and it is usually written down as a specification. A publisher of a reference architecture may hope that it becomes a presumptive architecture, but that may never happen. That is, a reference architecture is often an aspirational standard, while a presumptive architecture is a de facto standard.
+
+** How should software architecture be used?
+
+Architecture-focused design is compatible with your goals, though that choice does not provide assurances, only opportunities.
+
+Architecture hoisting requires your architecture to play an active role, one that you can rely on to achieve your goals. When following an architecture hoisting approach, developers design the architecture with the intent of guaranteeing a goal or property of the system.
+
+The idea is that _once a goal or property has been hoisted into the architecture, developers should not need to write any additional code to achieve it._ In the architecture-indifferent or architecture-focused designs there was no code that you could point to and say, "This is the code that ensures our 50ms response time."
+
+Architecture hoisting can be seen as a kind of tyranny over developers, burdening them with additional constraints and bureaucracy. Or it can be seen as liberation for developers, _freeing them to focus on functionality instead of quality attributes._
+
+Volkswagen GTI designers had followed architecture-focused design and included seatbelts, but I had to remember to buckle them each time. Its architecture was compatible with safety, but did not guarantee it. Today, it is impossible to buy a car that has not hoisted safety into its architecture, because every car is required to have airbags that deploy automatically. 
+
+** Architecture-focused design
+
+Architecture-focused design seeks architectural solutions, rather than local fixes, to problems.
+
+-----
+
+Be on the lookout for requirements that will influence your architecture choices, but these requirements are rarely stated clearly. They may be hidden in a cryptic statement from a stakeholder or be common to other systems in your domain.
+
+* Chapter 3: Risk-Driven Model
+
+#+BEGIN_QUOTE
+The concept of failure is central to the design process, and it is by thinking in terms of obviating failure that successful designs are achieved. Failure considerations and proactive failure analysis are essential for achieving success.
+#+END_QUOTE
+
+To address failure risks, the earliest software developers invented design techniques, such as domain modeling, security analyses, and encapsulation.
+
+** What is the risk-driven model?
+
+Use risk to decide how much architecture work to do. Build successful systems by taking a path that spends your time most effectively. Apply architecture and design techniques but only when they are motivated by risks. _The effort spent on designing software architecture should be commensurate with the risk of failure._
+
+** Are you risk-driven now?
+
+Imagine a company that builds a 3-tier system. The first tier has the user interface and is exposed to the internet. Its biggest risks might be usability and security. The second and third tiers implement business rules and persistence; they are behind a firewall. The biggest risks might be throughput and scalability
+
+** Risks
+
+risk = perceived probability of failure x perceived impact
+
+-----
+
+#+CAPTION: Examples of project management and engineering risks
+| *Project management risks*     | *Software engineering risks*                                          |
+|--------------------------------+-----------------------------------------------------------------------|
+| Lead developer hit by bus.     | The server may not scale to 1000 users.                               |
+|--------------------------------+-----------------------------------------------------------------------|
+| Customer needs not understood. | Parsing of the response messages may be buggy.                        |
+|--------------------------------+-----------------------------------------------------------------------|
+| Senior VP hates our manager.   | The system is working now but if we touch anything it may fall apart. |
+
+-----
+
+It is better to describe risks such that you can later test to see if they have been mitigated. Describe each risk of failure as a testable failure scenario, such as "During peak loads, customers experience user interface latencies greater than five seconds."
+
+** Guidance on choosing techniques
+
+In his book How to Solve It, George Polya identifies two distinct kinds of math problems: problems to find and problems to prove. _Finding things tends to be easier than proving things because for proofs you need to demonstrate something is true in all possible cases._
+
+It is easy to imagine writing a test case for "Can the database hold names up to 100 characters?" Conversely, it is hard to imagine a small set of test cases providing persuasive evidence when you have a problem to prove. Your tests could succeed, but there could be a case you have not yet seen. An example of a problem to prove is deadlock: Any number of tests can run successfully without revealing a problem in a locking protocol.
+
+-----
+
+In an analogic model, each model element has an analogue in the domain of interest. A radar screen is an analogic model of some terrain, where blips on the screen correspond to airplanes, the blip and the airplane are analogues. Analogic models support analysis only indirectly, and usually domain knowledge or human reasoning are required. A radar screen can't answer the question "Are these planes on a collision course?" To do so you need to use your special purpose brainpower.
+
+_An analytic model, by contrast, directly supports computational analysis._ Mathematical equations are examples of analytic models, as are state machines. You could imagine an analytic model of the airplanes where each is represented by a vector. Mathematics provides an analytic capability to relate the vectors, so you could quantitatively answer questions about collision courses.
+
+When you know what risks you want to mitigate, you can appropriately choose an analytic or analogic model. For example, if you are concerned that your engineers may not understand the relationships between domain entities, you may build an analogic model in UML and confirm it with domain experts. Conversely, if you need to calculate response time distributions, then you will want an analytic model.

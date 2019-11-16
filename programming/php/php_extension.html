@@ -1,0 +1,3332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>PHP Extension</title>
+<!-- 2017-09-16 Sat 17:16 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">PHP Extension</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. PEAR &amp; PECL</a>
+<ul>
+<li><a href="#sec-1-1">1.1. PEAR 命令行</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. bcompiler</a></li>
+<li><a href="#sec-3">3. Date/Time</a>
+<ul>
+<li><a href="#sec-3-1">3.1. <code>DateTime</code></a></li>
+<li><a href="#sec-3-2">3.2. <code>DateInterval</code></a></li>
+<li><a href="#sec-3-3">3.3. <code>DateTimezone</code></a></li>
+<li><a href="#sec-3-4">3.4. <code>DatePeriod</code></a>
+<ul>
+<li><a href="#sec-3-4-1">3.4.1. <code>__construct()</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-4">4. Exception</a></li>
+<li><a href="#sec-5">5. Filter</a>
+<ul>
+<li><a href="#sec-5-1">5.1. 常量</a></li>
+<li><a href="#sec-5-2">5.2. <code>filter_var()</code></a></li>
+<li><a href="#sec-5-3">5.3. <code>filter_input()</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6. Hash</a>
+<ul>
+<li><a href="#sec-6-1">6.1. <code>password_hash()</code></a></li>
+<li><a href="#sec-6-2">6.2. <code>password_needs_rehash()</code></a></li>
+<li><a href="#sec-6-3">6.3. <code>password_verify()</code></a></li>
+<li><a href="#sec-6-4">6.4. 注册、登录示例</a>
+<ul>
+<li><a href="#sec-6-4-1">6.4.1. <code>register.php</code></a></li>
+<li><a href="#sec-6-4-2">6.4.2. <code>login.php</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-7">7. JSON</a>
+<ul>
+<li><a href="#sec-7-1">7.1. <code>json_decode()</code></a></li>
+<li><a href="#sec-7-2">7.2. <code>json_encode()</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-8">8. Multibyte</a>
+<ul>
+<li><a href="#sec-8-1">8.1. Encoding</a>
+<ul>
+<li><a href="#sec-8-1-1">8.1.1. <code>mb_check_encoding()</code></a></li>
+<li><a href="#sec-8-1-2">8.1.2. <code>mb_convert_encoding()</code></a></li>
+<li><a href="#sec-8-1-3">8.1.3. <code>mb_detect_encoding()</code></a></li>
+<li><a href="#sec-8-1-4">8.1.4. <code>mb_internal_encoding()</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-9">9. OPcache</a>
+<ul>
+<li><a href="#sec-9-1">9.1. Enable</a></li>
+<li><a href="#sec-9-2">9.2. Configure</a></li>
+</ul>
+</li>
+<li><a href="#sec-10">10. PDO</a>
+<ul>
+<li><a href="#sec-10-1">10.1. DSN</a></li>
+<li><a href="#sec-10-2">10.2. <code>PDO</code></a>
+<ul>
+<li><a href="#sec-10-2-1">10.2.1. 常量</a></li>
+<li><a href="#sec-10-2-2">10.2.2. <code>__construct()</code></a></li>
+<li><a href="#sec-10-2-3">10.2.3. <code>prepare()</code></a></li>
+<li><a href="#sec-10-2-4">10.2.4. <code>beginTransaction()</code></a></li>
+<li><a href="#sec-10-2-5">10.2.5. <code>commit()</code></a></li>
+<li><a href="#sec-10-2-6">10.2.6. <code>rollBack()</code></a></li>
+<li><a href="#sec-10-2-7">10.2.7. <code>inTransaction()</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-10-3">10.3. <code>PDOStatement</code></a>
+<ul>
+<li><a href="#sec-10-3-1">10.3.1. <code>bindParam()</code></a></li>
+<li><a href="#sec-10-3-2">10.3.2. <code>bindValue()</code></a></li>
+<li><a href="#sec-10-3-3">10.3.3. <code>execute()</code></a></li>
+<li><a href="#sec-10-3-4">10.3.4. <code>fetch()</code></a></li>
+<li><a href="#sec-10-3-5">10.3.5. <code>fetchAll()</code></a></li>
+<li><a href="#sec-10-3-6">10.3.6. <code>fetchColumn()</code></a></li>
+<li><a href="#sec-10-3-7">10.3.7. <code>fetchObject()</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-11">11. Reflection</a>
+<ul>
+<li><a href="#sec-11-1">11.1. <code>Reflection</code></a>
+<ul>
+<li><a href="#sec-11-1-1">11.1.1. <code>export()</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-11-2">11.2. <code>ReflectionClass</code></a>
+<ul>
+<li><a href="#sec-11-2-1">11.2.1. <code>export</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-11-3">11.3. 示例</a></li>
+</ul>
+</li>
+<li><a href="#sec-12">12. SPL</a>
+<ul>
+<li><a href="#sec-12-1">12.1. 自动加载</a>
+<ul>
+<li><a href="#sec-12-1-1">12.1.1. <code>spl_autoload()</code></a></li>
+<li><a href="#sec-12-1-2">12.1.2. <code>spl_autoload_call()</code></a></li>
+<li><a href="#sec-12-1-3">12.1.3. <code>spl_autoload_extensions()</code></a></li>
+<li><a href="#sec-12-1-4">12.1.4. <code>spl_autoload_functions()</code></a></li>
+<li><a href="#sec-12-1-5">12.1.5. <code>spl_autoload_register()</code></a></li>
+<li><a href="#sec-12-1-6">12.1.6. <code>spl_autoload_unregister()</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-12-2">12.2. 函数</a>
+<ul>
+<li><a href="#sec-12-2-1">12.2.1. <code>class_implements()</code></a></li>
+<li><a href="#sec-12-2-2">12.2.2. <code>class_parents()</code></a></li>
+<li><a href="#sec-12-2-3">12.2.3. <code>class_uses()</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-12-3">12.3. Datastructures</a></li>
+<li><a href="#sec-12-4">12.4. Iterators</a></li>
+<li><a href="#sec-12-5">12.5. Interfaces</a></li>
+<li><a href="#sec-12-6">12.6. Exceptions</a></li>
+<li><a href="#sec-12-7">12.7. Classes</a></li>
+</ul>
+</li>
+<li><a href="#sec-13">13. Stream</a>
+<ul>
+<li><a href="#sec-13-1">13.1. Stream</a>
+<ul>
+<li><a href="#sec-13-1-1">13.1.1. <code>stream_context_create()</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-13-2">13.2. Stream wrapper</a>
+<ul>
+<li><a href="#sec-13-2-1">13.2.1. <code>php://stdin</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-13-3">13.3. Stream filter</a>
+<ul>
+<li><a href="#sec-13-3-1">13.3.1. <code>stream_filter_append()</code></a></li>
+<li><a href="#sec-13-3-2">13.3.2. <code>stream_filter_register()</code></a></li>
+<li><a href="#sec-13-3-3">13.3.3. 自定义 stream filter</a></li>
+</ul>
+</li>
+<li><a href="#sec-13-4">13.4. 示例</a></li>
+</ul>
+</li>
+<li><a href="#sec-14">14. Xdebug</a></li>
+<li><a href="#sec-15">15. XHProf</a>
+<ul>
+<li><a href="#sec-15-1">15.1. 安装</a></li>
+<li><a href="#sec-15-2">15.2. 使用</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> PEAR &amp; PECL</h2>
+<div class="outline-text-2" id="text-1">
+<dl class="org-dl">
+<dt> PEAR </dt><dd>PHP Extension and Application Repository <br  />
+          PHP 代码仓库，提供一个结构化的代码库，用来分发和管理代码包，并提倡统一的编程风格。
+</dd>
+
+<dt> PECL </dt><dd>PHP Extension Community Library <br  />
+          从 PEAR 中分支并独立出来的 PHP 代码仓库。
+</dd>
+</dl>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> PEAR 命令行</h3>
+<div class="outline-text-3" id="text-1-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">pear channel-discover
+pear install
+pear upgrade
+pear uninstall
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> bcompiler</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Normal PHP execution
+</p>
+<ul class="org-ul">
+<li>PHP interpreter
+<ul class="org-ul">
+<li>parses script code
+</li>
+<li>compiles the code into Zend Opcodes (machine-code instructions)
+</li>
+<li>executes the bytecode
+</li>
+</ul>
+</li>
+<li>happens for each PHP file during every request, overhead is huge
+</li>
+</ul>
+
+<p>
+Bytecode cache
+</p>
+<ul class="org-ul">
+<li>stores precompiled PHP bytecode
+</li>
+<li>PHP interpreter
+<ul class="org-ul">
+<li>reads the precompiled bytecode from memory
+</li>
+<li>executes the bytecode
+</li>
+</ul>
+</li>
+<li>reduces application response times and stress on system resources
+</li>
+</ul>
+
+<p>
+Bytecode cache extension
+</p>
+<ul class="org-ul">
+<li>Alternative PHP Cache (APC)
+</li>
+<li>eAccelerator
+</li>
+<li>ionCube
+</li>
+<li>XCache
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Date/Time</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> <code>DateTime</code></h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-php">$<span class="org-variable-name">datetime</span> = <span class="org-keyword">new</span> <span class="org-type">DateTime</span>(); <span class="org-comment-delimiter">// </span><span class="org-comment">&#40664;&#35748;&#20026;&#24403;&#21069;&#26085;&#26399;&#12289;&#26102;&#38388;</span>
+$<span class="org-variable-name">datetime</span> = <span class="org-keyword">new</span> <span class="org-type">DateTime</span>(<span class="org-string">'2014-04-27 5:03 AM'</span>);
+$<span class="org-variable-name">datetime</span> = <span class="org-type">DateTime</span>::<span class="org-function-name">createFromFormat</span>(<span class="org-string">'M j, Y H:i:s'</span>, <span class="org-string">'Jan 2, 2014 23:04:12'</span>);
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> <code>DateInterval</code></h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+用于修改 <code>DateTime</code> 实例。
+</p>
+
+<p>
+时间长度为绝对（e.g. "2 days"）或相对（e.g. "yesterday"）。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">时间长度语法</label>
+<pre class="src src-sh">P&lt;n&gt;&lt;unit&gt;...[T&lt;n&gt;&lt;unit&gt;...]
+    P      <span class="org-comment-delimiter"># </span><span class="org-comment">Period</span>
+    T      <span class="org-comment-delimiter"># </span><span class="org-comment">&#20998;&#38548;&#12300;&#24180;&#26376;&#21608;&#26085;&#12301;&#19982;&#12300;&#26102;&#20998;&#31186;&#12301;</span>
+    &lt;unit&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">Y, M, W, D, H, M, S</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">时间长度示例</label>
+<pre class="src src-sh">P2D      <span class="org-comment-delimiter"># </span><span class="org-comment">2 &#22825;</span>
+P2DT5H2M <span class="org-comment-delimiter"># </span><span class="org-comment">2 &#22825; 5 &#23567;&#26102; 2 &#20998;</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-php">$<span class="org-variable-name">datetime</span> = <span class="org-keyword">new</span> <span class="org-type">DateTime</span>(<span class="org-string">'2014-01-01 14:00:00'</span>);
+$<span class="org-variable-name">interval</span> = <span class="org-keyword">new</span> <span class="org-type">DateInterval</span>(<span class="org-string">'P2W'</span>);
+$<span class="org-variable-name">interval</span> = <span class="org-type">\DateInterval</span>::<span class="org-function-name">createFromDateString</span>(<span class="org-string">'-1 day'</span>);
+$<span class="org-variable-name">datetime</span>-&gt;<span class="org-function-name">add</span>($<span class="org-variable-name">interval</span>);
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> <code>DateTimezone</code></h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+建议用法
+</p>
+<ul class="org-ul">
+<li>设置服务器时区和 PHP 默认时区为 UTC，代码和存储始终使用 UTC 时区。
+</li>
+<li>显示时将 UTC 时区时间转换为需要的时区时间。
+</li>
+</ul>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-php">$<span class="org-variable-name">timezone</span> = <span class="org-keyword">new</span> <span class="org-type">DateTimeZone</span>(<span class="org-string">'America/New_York'</span>);
+$<span class="org-variable-name">datetime</span> = <span class="org-keyword">new</span> <span class="org-type">DateTime</span>(<span class="org-string">'2014-08-20'</span>, $<span class="org-variable-name">timezone</span>);
+$<span class="org-variable-name">datetime</span>-&gt;<span class="org-function-name">setTimezone</span>(<span class="org-keyword">new</span> <span class="org-type">DateTimeZone</span>(<span class="org-string">'Asia/Hong_Kong'</span>));
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> <code>DatePeriod</code></h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+指定间隔的日期时间序列。实例是迭代器，每个元素是一个 <code>DateTime</code> 实例。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-php">$<span class="org-variable-name">start</span> = <span class="org-keyword">new</span> <span class="org-type">DateTime</span>();
+$<span class="org-variable-name">interval</span> = <span class="org-keyword">new</span> <span class="org-type">DateInterval</span>(<span class="org-string">'P2W'</span>);
+$<span class="org-variable-name">period</span> = <span class="org-keyword">new</span> <span class="org-type">DatePeriod</span>($<span class="org-variable-name">start</span>, $<span class="org-variable-name">interval</span>, <span class="org-default">3</span>);
+<span class="org-keyword">foreach</span> ($<span class="org-variable-name">period</span> <span class="org-keyword">as</span> <span class="org-function-name">$nextDateTime</span>) {
+    <span class="org-keyword">echo</span> $<span class="org-variable-name">nextDateTime</span>-&gt;<span class="org-function-name">format</span>(<span class="org-string">'Y-m-d H:i:s'</span>), <span class="org-constant">PHP_EOL</span>;
+}
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-3-4-1" class="outline-4">
+<h4 id="sec-3-4-1"><span class="section-number-4">3.4.1</span> <code>__construct()</code></h4>
+<div class="outline-text-4" id="text-3-4-1">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">DatePeriod</span>::<span class="org-function-name">__construct</span> (
+    <span class="org-type">DateTimeInterface</span> $<span class="org-variable-name">start</span>       <span class="org-comment-delimiter">// </span><span class="org-comment">&#24320;&#22987;&#26102;&#38388;</span>
+,   <span class="org-type">DateInterval</span>      $<span class="org-variable-name">interval</span>    <span class="org-comment-delimiter">// </span><span class="org-comment">&#26102;&#38388;&#38388;&#38548;</span>
+,   <span class="org-type">int</span>               $<span class="org-variable-name">recurrences</span> <span class="org-comment-delimiter">// </span><span class="org-comment">&#37325;&#22797;&#27425;&#25968;</span>
+[,  <span class="org-type">int</span>               $<span class="org-variable-name">options</span>
+] )
+
+<span class="org-type">DatePeriod</span>::<span class="org-function-name">__construct</span> (
+    <span class="org-type">DateTimeInterface</span> $<span class="org-variable-name">start</span>    <span class="org-comment-delimiter">// </span><span class="org-comment">&#24320;&#22987;&#20107;&#20214;</span>
+,   <span class="org-type">DateInterval</span>      $<span class="org-variable-name">interval</span> <span class="org-comment-delimiter">// </span><span class="org-comment">&#26102;&#38388;&#38388;&#38548;</span>
+,   <span class="org-type">DateTimeInterface</span> $<span class="org-variable-name">end</span>      <span class="org-comment-delimiter">// </span><span class="org-comment">&#32467;&#26463;&#26102;&#38388;</span>
+[,  <span class="org-type">int</span>               $<span class="org-variable-name">options</span>
+] )
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Exception</h2>
+<div class="outline-text-2" id="text-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>getCode()</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>getFile()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>getLine()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>getMessage()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>getTrace()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>getTraceAsString()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Filter</h2>
+<div class="outline-text-2" id="text-5">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><a href="#filter_var"><code>filter_var()</code></a></th>
+<th scope="col" class="left">使用指定 filter 过滤一个变量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><a href="#filter_input"><code>filter_input()</code></a></td>
+<td class="left">获取指定名称的外部变量，并过滤</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> 常量</h3>
+<div class="outline-text-3" id="text-5-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>FILTER_VALIDATE_BOOLEAN</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>FILTER_VALIDATE_EMAIL</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FILTER_VALIDATE_FLOAT</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FILTER_VALIDATE_INT</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FILTER_VALIDATE_IP</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FILTER_VALIDATE_MAC</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FILTER_VALIDATE_REGEXP</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FILTER_VALIDATE_URL</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>FILTER_SANITIZE_EMAIL</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>FILTER_SANITIZE_ENCODED</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FILTER_SANITIZE_MAGIC_QUOTES</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FILTER_SANITIZE_NUMBER_FLOAT</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FILTER_SANITIZE_NUMBER_INT</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FILTER_SANITIZE_SPECIAL_CHARS</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FILTER_SANITIZE_FULL_SPECIAL_CHARS</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FILTER_SANITIZE_STRING</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FILTER_SANITIZE_STRIPPED</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FILTER_SANITIZE_URL</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FILTER_UNSAFE_RAW</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> <code>filter_var()</code></h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+<a id="filter_var" name="filter_var"></a>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">mixed</span> <span class="org-function-name">filter_var</span> (
+    <span class="org-type">mixed</span> $<span class="org-variable-name">variable</span>
+[,  <span class="org-type">int</span>   $<span class="org-variable-name">filter</span> = <span class="org-constant">FILTER_DEFAULT</span>
+[,  <span class="org-type">mixed</span> $<span class="org-variable-name">options</span>
+]] )
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left">返回值</td>
+<td class="left">输入数据</td>
+<td class="left">验证成功时</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>false</code></td>
+<td class="left">验证失败时</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<label class="org-src-name">示例 1</label>
+<pre class="src src-php"><span class="org-preprocessor">&lt;?php</span>
+$<span class="org-variable-name">email</span> = <span class="org-string">'john@example.com'</span>;
+$<span class="org-variable-name">emailSafe</span> = <span class="org-function-name">filter_var</span>($<span class="org-variable-name">email</span>, <span class="org-constant">FILTER_SANITIZE_EMAIL</span>);
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例 2</label>
+<pre class="src src-php">$<span class="org-variable-name">input</span> = <span class="org-string">'john@example.com'</span>;
+$<span class="org-variable-name">isEmail</span> = <span class="org-function-name">filter_var</span>($<span class="org-variable-name">input</span>, <span class="org-constant">FILTER_VALIDATE_EMAIL</span>);
+<span class="org-keyword">if</span> ($<span class="org-variable-name">isEmail</span> !== <span class="org-constant">false</span>) {
+    <span class="org-keyword">echo</span> <span class="org-string">"Success"</span>;
+} <span class="org-keyword">else</span> {
+    <span class="org-keyword">echo</span> <span class="org-string">"Fail"</span>;
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例 3</label>
+<pre class="src src-php">$<span class="org-variable-name">string</span> = <span class="org-string">"\nI&#241;t&#235;rn&#226;ti&#244;n&#224;liz&#230;ti&#248;n\t"</span>;
+$<span class="org-variable-name">safeString</span> = <span class="org-function-name">filter_var</span>(
+    $<span class="org-variable-name">string</span>,
+    <span class="org-constant">FILTER_SANITIZE_STRING</span>,
+    <span class="org-constant">FILTER_FLAG_STRIP_LOW</span>|<span class="org-constant">FILTER_FLAG_ENCODE_HIGH</span>
+);
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> <code>filter_input()</code></h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+<a id="filter_input" name="filter_input"></a>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">mixed</span> <span class="org-function-name">filter_input</span> (
+    <span class="org-type">int</span>    $<span class="org-variable-name">type</span>
+,   <span class="org-type">string</span> $<span class="org-variable-name">variable_name</span>
+[,  <span class="org-type">int</span>    $<span class="org-variable-name">filter</span> = <span class="org-constant">FILTER_DEFAULT</span>
+[,  <span class="org-type">mixed</span>  $<span class="org-variable-name">options</span>
+]] )
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> <code>$type</code></caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>INPUT_GET</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>INPUT_POST</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>INPUT_COOKIE</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>INPUT_SERVER</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>INPUT_ENV</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Hash</h2>
+<div class="outline-text-2" id="text-6">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><a href="#password_hash"><code>password_hash()</code></a></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><a href="#password_needs_rehash"><code>password_needs_rehash()</code></a></td>
+<td class="left">检查 hash 是否符合指定的算法和选项</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="#password_verify"><code>password_verify()</code></a></td>
+<td class="left">密码验证</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> <code>password_hash()</code></h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+<a id="password_hash" name="password_hash"></a>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">string</span> <span class="org-function-name">password_hash</span> (
+    <span class="org-type">string</span>  $<span class="org-variable-name">password</span>
+,   <span class="org-type">int</span>     $<span class="org-variable-name">algo</span>
+[,  <span class="org-type">array</span>   $<span class="org-variable-name">options</span>
+] )
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>$algo</code></th>
+<th scope="col" class="left"><code>int</code></th>
+<th scope="col" class="left">算法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>$options</code></td>
+<td class="left"><code>array</code></td>
+<td class="left">算法选项</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">返回值</td>
+<td class="left"><code>string</code></td>
+<td class="left">使用的算法、cost、salt 也包含在其中</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>false</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> <code>$algo</code></caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>PASSWORD_BCRYPT</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>PASSWORD_DEFAULT</code></td>
+<td class="left">PHP 5.5 此值为 <code>PASSWORD_BCRYPT</code></td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 3:</span> <code>$options</code></caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>salt</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>cost</code></td>
+<td class="left">bycrypt work factor</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> <code>password_needs_rehash()</code></h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+<a id="password_needs_rehash" name="password_needs_rehash"></a>
+</p>
+
+<p>
+用于确保 hash 使用最新的算法、选项。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">boolean</span> <span class="org-function-name">password_needs_rehash</span> (
+    <span class="org-type">string</span>  $<span class="org-variable-name">hash</span>
+,   <span class="org-type">integer</span> $<span class="org-variable-name">algo</span>
+[,  <span class="org-type">array</span>   $<span class="org-variable-name">options</span>
+] )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-3" class="outline-3">
+<h3 id="sec-6-3"><span class="section-number-3">6.3</span> <code>password_verify()</code></h3>
+<div class="outline-text-3" id="text-6-3">
+<p>
+<a id="password_verify" name="password_verify"></a>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">boolean</span> <span class="org-function-name">password_verify</span> (
+    <span class="org-type">string</span> $<span class="org-variable-name">password</span>
+,   <span class="org-type">string</span> $<span class="org-variable-name">hash</span>
+)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-4" class="outline-3">
+<h3 id="sec-6-4"><span class="section-number-3">6.4</span> 注册、登录示例</h3>
+<div class="outline-text-3" id="text-6-4">
+</div><div id="outline-container-sec-6-4-1" class="outline-4">
+<h4 id="sec-6-4-1"><span class="section-number-4">6.4.1</span> <code>register.php</code></h4>
+<div class="outline-text-4" id="text-6-4-1">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-preprocessor">&lt;?php</span>
+<span class="org-keyword">try</span> {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Validate email</span>
+    $<span class="org-variable-name">email</span> = <span class="org-function-name">filter_input</span>(<span class="org-constant">INPUT_POST</span>, <span class="org-string">'email'</span>, <span class="org-constant">FILTER_VALIDATE_EMAIL</span>);
+    <span class="org-keyword">if</span> (!$<span class="org-variable-name">email</span>) {
+        <span class="org-keyword">throw</span> <span class="org-keyword">new</span> <span class="org-type">Exception</span>(<span class="org-string">'Invalid email'</span>);
+    }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Validate password</span>
+    $<span class="org-variable-name">password</span> = <span class="org-function-name">filter_input</span>(<span class="org-constant">INPUT_POST</span>, <span class="org-string">'password'</span>);
+    <span class="org-keyword">if</span> (!$<span class="org-variable-name">password</span> || <span class="org-function-name">mb_strlen</span>($<span class="org-variable-name">password</span>) &lt; <span class="org-default">8</span>) {
+        <span class="org-keyword">throw</span> <span class="org-keyword">new</span> <span class="org-type">Exception</span>(<span class="org-string">'Password must contain 8+ characters'</span>);
+    }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Create password hash</span>
+    $<span class="org-variable-name">passwordHash</span> = <span class="org-function-name">password_hash</span>(
+        $<span class="org-variable-name">password</span>,
+        <span class="org-constant">PASSWORD_DEFAULT</span>,
+        [<span class="org-string">'cost'</span> =<span class="org-constant">&gt;</span> <span class="org-default">12</span>]
+    );
+    <span class="org-keyword">if</span> ($<span class="org-variable-name">passwordHash</span> === <span class="org-constant">false</span>) {
+        <span class="org-keyword">throw</span> <span class="org-keyword">new</span> <span class="org-type">Exception</span>(<span class="org-string">'Password hash failed'</span>);
+    }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Create user account (THIS IS PSUEDO-CODE)</span>
+    $<span class="org-variable-name">user</span> = <span class="org-keyword">new</span> <span class="org-type">User</span>();
+    $<span class="org-variable-name">user</span>-&gt;<span class="org-variable-name">email</span> = $<span class="org-variable-name">email</span>;
+    $<span class="org-variable-name">user</span>-&gt;<span class="org-variable-name">password_hash</span> = $<span class="org-variable-name">passwordHash</span>;
+    $<span class="org-variable-name">user</span>-&gt;<span class="org-function-name">save</span>();
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Redirect to login page</span>
+    <span class="org-function-name">header</span>(<span class="org-string">'HTTP/1.1 302 Redirect'</span>);
+    <span class="org-function-name">header</span>(<span class="org-string">'Location: /login.php'</span>);
+
+} <span class="org-keyword">catch</span> (<span class="org-type">Exception</span> $<span class="org-variable-name">e</span>) {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Report error</span>
+    <span class="org-function-name">header</span>(<span class="org-string">'HTTP/1.1 400 Bad request'</span>);
+    <span class="org-keyword">echo</span> $<span class="org-variable-name">e</span>-&gt;<span class="org-function-name">getMessage</span>();
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6-4-2" class="outline-4">
+<h4 id="sec-6-4-2"><span class="section-number-4">6.4.2</span> <code>login.php</code></h4>
+<div class="outline-text-4" id="text-6-4-2">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-preprocessor">&lt;?php</span>
+<span class="org-function-name">session_start</span>();
+<span class="org-keyword">try</span> {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Get email address from request body</span>
+    $<span class="org-variable-name">email</span> = <span class="org-function-name">filter_input</span>(<span class="org-constant">INPUT_POST</span>, <span class="org-string">'email'</span>);
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Get password from request body</span>
+    $<span class="org-variable-name">password</span> = <span class="org-function-name">filter_input</span>(<span class="org-constant">INPUT_POST</span>, <span class="org-string">'password'</span>);
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Find account with email address (THIS IS PSUEDO-CODE)</span>
+    $<span class="org-variable-name">user</span> = <span class="org-type">User</span>::<span class="org-function-name">findByEmail</span>($<span class="org-variable-name">email</span>);
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Verify password with account password hash</span>
+    <span class="org-keyword">if</span> (<span class="org-function-name">password_verify</span>($<span class="org-variable-name">password</span>, $<span class="org-variable-name">user</span>-<span class="org-constant">&gt;</span><span class="org-variable-name">password_hash</span>) === <span class="org-constant">false</span>) {
+        <span class="org-keyword">throw</span> <span class="org-keyword">new</span> <span class="org-type">Exception</span>(<span class="org-string">'Invalid password'</span>);
+    }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Re-hash password if necessary (see note below)</span>
+    $<span class="org-variable-name">currentHashAlgorithm</span> = <span class="org-constant">PASSWORD_DEFAULT</span>;
+    $<span class="org-variable-name">currentHashOptions</span> = <span class="org-function-name">array</span>(<span class="org-string">'cost'</span> =&gt; <span class="org-default">15</span>);
+    $<span class="org-variable-name">passwordNeedsRehash</span> = <span class="org-function-name">password_needs_rehash</span>(
+        $<span class="org-variable-name">user</span>-&gt;<span class="org-variable-name">password_hash</span>,
+        $<span class="org-variable-name">currentHashAlgorithm</span>,
+        $<span class="org-variable-name">currentHashOptions</span>
+    );
+    <span class="org-keyword">if</span> ($<span class="org-variable-name">passwordNeedsRehash</span> === <span class="org-constant">true</span>) {
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Save new password hash (THIS IS PSUEDO-CODE)</span>
+        $<span class="org-variable-name">user</span>-&gt;<span class="org-variable-name">password_hash</span> = <span class="org-function-name">password_hash</span>(
+            $<span class="org-variable-name">password</span>,
+            $<span class="org-variable-name">currentHashAlgorithm</span>,
+            $<span class="org-variable-name">currentHashOptions</span>
+        );
+        $<span class="org-variable-name">user</span>-&gt;<span class="org-function-name">save</span>();
+    }
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Save login status to session</span>
+    $<span class="org-constant">_SESSION</span>[<span class="org-string">'user_logged_in'</span>] = <span class="org-string">'yes'</span>;
+    $<span class="org-constant">_SESSION</span>[<span class="org-string">'user_email'</span>] = $<span class="org-variable-name">email</span>;
+
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Redirect to profile page</span>
+    <span class="org-function-name">header</span>(<span class="org-string">'HTTP/1.1 302 Redirect'</span>);
+    <span class="org-function-name">header</span>(<span class="org-string">'Location: /user-profile.php'</span>);
+
+} <span class="org-keyword">catch</span> (<span class="org-type">Exception</span> $<span class="org-variable-name">e</span>) {
+    <span class="org-function-name">header</span>(<span class="org-string">'HTTP/1.1 401 Unauthorized'</span>);
+    <span class="org-keyword">echo</span> $<span class="org-variable-name">e</span>-&gt;<span class="org-function-name">getMessage</span>();
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> JSON</h2>
+<div class="outline-text-2" id="text-7">
+</div><div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> <code>json_decode()</code></h3>
+<div class="outline-text-3" id="text-7-1">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">mixed</span> <span class="org-function-name">json_decode</span> (
+    <span class="org-type">string</span> $<span class="org-variable-name">json</span>
+[,  <span class="org-type">bool</span>   $<span class="org-variable-name">assoc</span> = <span class="org-constant">false</span>
+[,  <span class="org-type">int</span>    $<span class="org-variable-name">depth</span> = <span class="org-default">512</span>
+[,  <span class="org-type">int</span>    $<span class="org-variable-name">options</span> = <span class="org-default">0</span>
+]]] )
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>$json</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>$assoc</code></td>
+<td class="left">when <code>true</code>, returned objects will be converted into associative arrays</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>$depth</code></td>
+<td class="left">recursion depth</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-7-2" class="outline-3">
+<h3 id="sec-7-2"><span class="section-number-3">7.2</span> <code>json_encode()</code></h3>
+<div class="outline-text-3" id="text-7-2">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">string</span> <span class="org-function-name">json_encode</span> (
+    <span class="org-type">mixed</span> $<span class="org-variable-name">value</span>
+[,  <span class="org-type">int</span>   $<span class="org-variable-name">options</span> = <span class="org-default">0</span>
+[,  <span class="org-type">int</span>   $<span class="org-variable-name">depth</span> = <span class="org-default">512</span>
+]] )
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-php"><span class="org-keyword">function</span> <span class="org-function-name">ajaxAction</span>()
+{
+    $<span class="org-variable-name">response</span> = <span class="org-function-name">array</span>(
+        <span class="org-string">'result'</span>  =&gt; <span class="org-string">'error'</span>,
+        <span class="org-string">'message'</span> =&gt; <span class="org-string">'...'</span>,
+    );
+    <span class="org-keyword">echo</span> <span class="org-function-name">json_encode</span>($<span class="org-variable-name">response</span>);
+    <span class="org-keyword">exit</span>;
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Multibyte</h2>
+<div class="outline-text-2" id="text-8">
+</div><div id="outline-container-sec-8-1" class="outline-3">
+<h3 id="sec-8-1"><span class="section-number-3">8.1</span> Encoding</h3>
+<div class="outline-text-3" id="text-8-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>mb_check_encoding()</code></th>
+<th scope="col" class="left">检查字符串对于指定的编码是否有效</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>mb_convert_encoding()</code></td>
+<td class="left">转换字符串编码</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>mb_detect_encoding()</code></td>
+<td class="left">检查字符串编码</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>mb_internal_encoding()</code></td>
+<td class="left">读取、设置内部字符编码</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-8-1-1" class="outline-4">
+<h4 id="sec-8-1-1"><span class="section-number-4">8.1.1</span> <code>mb_check_encoding()</code></h4>
+<div class="outline-text-4" id="text-8-1-1">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">bool</span> <span class="org-function-name">mb_check_encoding</span> (
+[   <span class="org-type">string</span> $<span class="org-variable-name">var</span> = <span class="org-constant">null</span>
+[,  <span class="org-type">string</span> $<span class="org-variable-name">encoding</span> = <span class="org-function-name">mb_internal_encoding</span>()
+]] )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-8-1-2" class="outline-4">
+<h4 id="sec-8-1-2"><span class="section-number-4">8.1.2</span> <code>mb_convert_encoding()</code></h4>
+<div class="outline-text-4" id="text-8-1-2">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">string</span> <span class="org-function-name">mb_convert_encoding</span> (
+    <span class="org-type">string</span> $<span class="org-variable-name">str</span>
+,   <span class="org-type">string</span> $<span class="org-variable-name">to_encoding</span>
+[,  <span class="org-type">mixed</span>  $<span class="org-variable-name">from_encoding</span> = <span class="org-function-name">mb_internal_encoding</span>()
+] )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-8-1-3" class="outline-4">
+<h4 id="sec-8-1-3"><span class="section-number-4">8.1.3</span> <code>mb_detect_encoding()</code></h4>
+<div class="outline-text-4" id="text-8-1-3">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">string</span> <span class="org-function-name">mb_detect_encoding</span> (
+    <span class="org-type">string</span> $<span class="org-variable-name">str</span>
+[,  <span class="org-type">mixed</span>  $<span class="org-variable-name">encoding_list</span> = <span class="org-function-name">mb_detect_order</span>()
+[,  <span class="org-type">bool</span>   $<span class="org-variable-name">strict</span> = <span class="org-constant">false</span>
+]] )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-8-1-4" class="outline-4">
+<h4 id="sec-8-1-4"><span class="section-number-4">8.1.4</span> <code>mb_internal_encoding()</code></h4>
+<div class="outline-text-4" id="text-8-1-4">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">mixed</span> <span class="org-function-name">mb_internal_encoding</span> ( [ <span class="org-type">string</span> $<span class="org-variable-name">encoding</span> = <span class="org-function-name">mb_internal_encoding</span>() ] )
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left">返回值</td>
+<td class="left"><code>string</code></td>
+<td class="left"><code>$encoding</code> 为空时，返回当前字符编码</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>true</code></td>
+<td class="left">设置字符编码成功</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>false</code></td>
+<td class="left">设置字符编码失败</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> OPcache</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+PHP &gt;= 5.5
+</p>
+</div>
+
+<div id="outline-container-sec-9-1" class="outline-3">
+<h3 id="sec-9-1"><span class="section-number-3">9.1</span> Enable</h3>
+<div class="outline-text-3" id="text-9-1">
+<p>
+Enable OPcache in PHP <code>./configure</code> command when compile
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">--enable-opcache
+</pre>
+</div>
+
+<p>
+Check path to OPcache extension (is also displayed after PHP compiling)
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">php-config --extension-dir
+</pre>
+</div>
+
+<p>
+Specify the path to OPcache extension in <code>php.ini</code>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">## </span><span class="org-comment">Must be loaded before Xdebug if applicable</span>
+zend_extension = /path/to/opcache.so
+</pre>
+</div>
+
+<p>
+Confirm OPcache is working
+</p>
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-preprocessor">&lt;?php</span>
+<span class="org-function-name">phpinfo</span>();
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-9-2" class="outline-3">
+<h3 id="sec-9-2"><span class="section-number-3">9.2</span> Configure</h3>
+<div class="outline-text-3" id="text-9-2">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">php.ini</span>
+opcache.validate_timestamps = 1 <span class="org-comment-delimiter"># </span><span class="org-comment">Set to "0" in production</span>
+                                <span class="org-comment-delimiter"># </span><span class="org-comment">If set to "0", must manually clear cache for changes</span>
+opcache.revalidate_freq = 0
+opcache.memory_consumption = 64
+opcache.interned_strings_buffer = 16
+opcache.max_accelerated_files = 4000
+opcache.fast_shutdown = 1
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> PDO</h2>
+<div class="outline-text-2" id="text-10">
+<dl class="org-dl">
+<dt> PDO </dt><dd>PHP Data Objects <br  />
+         PHP 原生扩展，一组通过单一的用户接口操作不同 SQL 数据库的类的集合。
+</dd>
+</dl>
+</div>
+
+<div id="outline-container-sec-10-1" class="outline-3">
+<h3 id="sec-10-1"><span class="section-number-3">10.1</span> DSN</h3>
+<div class="outline-text-3" id="text-10-1">
+<dl class="org-dl">
+<dt> DSN </dt><dd>Data Source Name <br  />
+          数据库连接信息。
+</dd>
+</dl>
+
+<div class="org-src-container">
+<label class="org-src-name">语法</label>
+<pre class="src src-sh">&lt;driver&gt;:&lt;key&gt;=&lt;value&gt;;...
+    &lt;driver&gt;    <span class="org-comment-delimiter"># </span><span class="org-comment">database driver name, eg. mysql, sqlite</span>
+    &lt;key&gt;
+        host    <span class="org-comment-delimiter"># </span><span class="org-comment">host name or IP</span>
+        port
+        dbname
+        charset
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-2" class="outline-3">
+<h3 id="sec-10-2"><span class="section-number-3">10.2</span> <code>PDO</code></h3>
+<div class="outline-text-3" id="text-10-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 4:</span> 方法</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>__construct()</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>prepare()</code></td>
+<td class="left">准备声明，返回 <code>PDOStatement</code> 对象</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 5:</span> 事务方法</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>beginTransaction()</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>inTransaction()</code></td>
+<td class="left">判断是否在事务中</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>commit()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>rollBack()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-10-2-1" class="outline-4">
+<h4 id="sec-10-2-1"><span class="section-number-4">10.2.1</span> 常量</h4>
+<div class="outline-text-4" id="text-10-2-1">
+<p>
+<a id="pdo_param_" name="pdo_param_"></a>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>PARAM_BOOL</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>PARAM_NULL</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>PARAM_INT</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>PARAM_STR</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>PARAM_LOB</code></td>
+<td class="left">SQL large object</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>PARAM_STMT</code></td>
+<td class="left">Recordset</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>PARAM_INPUT_OUTPUT</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<a id="pdo_fetch" name="pdo_fetch"></a>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>FETCH_ASSOC</code></th>
+<th scope="col" class="left">Array indexed by column name, <a href="#pdo_fetch_example">example</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>FETCH_BOTH</code></td>
+<td class="left">Array indexed by both column name and number, <a href="#pdo_fetch_example">example</a></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FETCH_BOUND</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FETCH_CLASS</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FETCH_INTO</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FETCH_LAZY</code></td>
+<td class="left">Anonymous object with column names as properties, <a href="#pdo_fetch_example">example</a></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FETCH_NAMED</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FETCH_NUM</code></td>
+<td class="left">Array indexed by column number as returned in result set, <a href="#pdo_fetch_example">example</a></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>FETCH_OBJ</code></td>
+<td class="left">Anonymous object with column names as properties, <a href="#pdo_fetch_example">example</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-10-2-2" class="outline-4">
+<h4 id="sec-10-2-2"><span class="section-number-4">10.2.2</span> <code>__construct()</code></h4>
+<div class="outline-text-4" id="text-10-2-2">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-keyword">public</span> <span class="org-type">PDO</span>::<span class="org-function-name">__construct</span> (
+    <span class="org-type">string</span> $<span class="org-variable-name">dsn</span>
+[,  <span class="org-type">string</span> $<span class="org-variable-name">username</span>
+[,  <span class="org-type">string</span> $<span class="org-variable-name">password</span>
+[,  <span class="org-type">array</span>  $<span class="org-variable-name">options</span>
+]]] )
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-php"><span class="org-keyword">try</span> {
+    $<span class="org-variable-name">pdo</span> = <span class="org-keyword">new</span> <span class="org-type">PDO</span>(
+        <span class="org-string">'mysql:host=127.0.0.1;dbname=books;port=3306;charset=utf8'</span>,
+        <span class="org-string">'USERNAME'</span>,
+        <span class="org-string">'PASSWORD'</span>
+    );
+} <span class="org-keyword">catch</span> (<span class="org-type">PDOException</span> $<span class="org-variable-name">e</span>) {
+    <span class="org-keyword">echo</span> <span class="org-string">"Database connection failed"</span>;
+    <span class="org-keyword">exit</span>;
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-2-3" class="outline-4">
+<h4 id="sec-10-2-3"><span class="section-number-4">10.2.3</span> <code>prepare()</code></h4>
+<div class="outline-text-4" id="text-10-2-3">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">PDOStatement</span> <span class="org-type">PDO</span>::<span class="org-function-name">prepare</span> (
+    <span class="org-type">string</span> $<span class="org-variable-name">statement</span>
+[,  <span class="org-type">array</span>  $<span class="org-variable-name">driver_options</span> = <span class="org-function-name">array</span>()
+] )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-2-4" class="outline-4">
+<h4 id="sec-10-2-4"><span class="section-number-4">10.2.4</span> <code>beginTransaction()</code></h4>
+<div class="outline-text-4" id="text-10-2-4">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">bool</span> <span class="org-type">PDO</span>::<span class="org-function-name">beginTransaction</span> ( )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-2-5" class="outline-4">
+<h4 id="sec-10-2-5"><span class="section-number-4">10.2.5</span> <code>commit()</code></h4>
+<div class="outline-text-4" id="text-10-2-5">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">bool</span> <span class="org-type">PDO</span>::<span class="org-function-name">commit</span> ( )
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-php">$<span class="org-variable-name">dbh</span>-&gt;<span class="org-function-name">beginTransaction</span>();
+$<span class="org-variable-name">sth</span> = $<span class="org-variable-name">dbh</span>-&gt;<span class="org-function-name">exec</span>(<span class="org-string">"DROP TABLE fruit"</span>);
+$<span class="org-variable-name">dbh</span>-&gt;<span class="org-function-name">commit</span>();
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-2-6" class="outline-4">
+<h4 id="sec-10-2-6"><span class="section-number-4">10.2.6</span> <code>rollBack()</code></h4>
+<div class="outline-text-4" id="text-10-2-6">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">bool</span> <span class="org-type">PDO</span>::<span class="org-function-name">rollBack</span> ( )
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-php">$<span class="org-variable-name">dbh</span>-&gt;<span class="org-function-name">beginTransaction</span>();
+$<span class="org-variable-name">sth</span> = $<span class="org-variable-name">dbh</span>-&gt;<span class="org-function-name">exec</span>(<span class="org-string">"DROP TABLE fruit"</span>);
+$<span class="org-variable-name">sth</span> = $<span class="org-variable-name">dbh</span>-&gt;<span class="org-function-name">exec</span>(<span class="org-string">"UPDATE dessert SET name = 'hamburger'"</span>);
+<span class="org-comment-delimiter">/* </span><span class="org-comment">Recognize mistake and roll back changes </span><span class="org-comment-delimiter">*/</span>
+$<span class="org-variable-name">dbh</span>-&gt;<span class="org-function-name">rollBack</span>();
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-2-7" class="outline-4">
+<h4 id="sec-10-2-7"><span class="section-number-4">10.2.7</span> <code>inTransaction()</code></h4>
+<div class="outline-text-4" id="text-10-2-7">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">bool</span> <span class="org-type">PDO</span>::<span class="org-function-name">inTransaction</span> ( )
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-3" class="outline-3">
+<h3 id="sec-10-3"><span class="section-number-3">10.3</span> <code>PDOStatement</code></h3>
+<div class="outline-text-3" id="text-10-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>bindParam()</code></th>
+<th scope="col" class="left">为声明中的参数绑定值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>bindValue()</code></td>
+<td class="left">为声明中的参数绑定值</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>execute()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>fetch()</code></td>
+<td class="left">获取结果集下一行</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>fetchAll()</code></td>
+<td class="left">获取结果集所有行</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>fetchColumn()</code></td>
+<td class="left">获取结果集下一行的一列</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>fetchObject()</code></td>
+<td class="left">获取结果集下一行为对象</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-10-3-1" class="outline-4">
+<h4 id="sec-10-3-1"><span class="section-number-4">10.3.1</span> <code>bindParam()</code></h4>
+<div class="outline-text-4" id="text-10-3-1">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">bool</span> <span class="org-type">PDOStatement</span>::<span class="org-function-name">bindParam</span> (
+    <span class="org-type">mixed</span>  $<span class="org-variable-name">parameter</span>
+,   <span class="org-type">mixed</span> &amp;$<span class="org-variable-name">variable</span> <span class="org-comment-delimiter">// </span><span class="org-comment">&#21464;&#37327;&#24341;&#29992;&#65292;&#19982; bindValue() &#19981;&#21516;</span>
+[,  <span class="org-type">int</span>    $<span class="org-variable-name">data_type</span> = <span class="org-type">PDO</span>::<span class="org-constant">PARAM_STR</span>
+[,  <span class="org-type">int</span>    $<span class="org-variable-name">length</span>
+[,  <span class="org-type">mixed</span>  $<span class="org-variable-name">driver_options</span>
+]]] )
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left"><code>$data_type</code></td>
+<td class="left"><code>int</code></td>
+<td class="left"><a href="#pdo_param_"><code>PDO::PARAM_</code></a></td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<label class="org-src-name">示例 1</label>
+<pre class="src src-php">$<span class="org-variable-name">calories</span> = <span class="org-default">150</span>;
+$<span class="org-variable-name">colour</span> = <span class="org-string">'red'</span>;
+$<span class="org-variable-name">sth</span> = $<span class="org-variable-name">dbh</span>-&gt;<span class="org-function-name">prepare</span>(<span class="org-string">'SELECT name, colour, calories</span>
+<span class="org-string">    FROM fruit WHERE calories &lt; :calories AND colour = :colour'</span>);
+$<span class="org-variable-name">sth</span>-<span class="org-constant">&gt;</span><span class="org-function-name">bindParam</span>(<span class="org-string">':calories'</span>, $<span class="org-variable-name">calories</span>, <span class="org-type">PDO</span>::<span class="org-constant">PARAM_INT</span>);
+$<span class="org-variable-name">sth</span>-&gt;<span class="org-function-name">bindParam</span>(<span class="org-string">':colour'</span>, $<span class="org-variable-name">colour</span>, <span class="org-type">PDO</span>::<span class="org-constant">PARAM_STR</span>, <span class="org-default">12</span>);
+$<span class="org-variable-name">sth</span>-&gt;<span class="org-function-name">execute</span>();
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例 2</label>
+<pre class="src src-php">$<span class="org-variable-name">calories</span> = <span class="org-default">150</span>;
+$<span class="org-variable-name">colour</span> = <span class="org-string">'red'</span>;
+$<span class="org-variable-name">sth</span> = $<span class="org-variable-name">dbh</span>-&gt;<span class="org-function-name">prepare</span>(<span class="org-string">'SELECT name, colour, calories</span>
+<span class="org-string">    FROM fruit WHERE calories &lt; ? AND colour = ?'</span>);
+$<span class="org-variable-name">sth</span>-<span class="org-constant">&gt;</span><span class="org-function-name">bindParam</span>(<span class="org-default">1</span>, $<span class="org-variable-name">calories</span>, <span class="org-type">PDO</span>::<span class="org-constant">PARAM_INT</span>);
+$<span class="org-variable-name">sth</span>-&gt;<span class="org-function-name">bindParam</span>(<span class="org-default">2</span>, $<span class="org-variable-name">colour</span>, <span class="org-type">PDO</span>::<span class="org-constant">PARAM_STR</span>, <span class="org-default">12</span>);
+$<span class="org-variable-name">sth</span>-&gt;<span class="org-function-name">execute</span>();
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例 3</label>
+<pre class="src src-php">$<span class="org-variable-name">colour</span> = <span class="org-string">'red'</span>;
+$<span class="org-variable-name">sth</span> = $<span class="org-variable-name">dbh</span>-&gt;<span class="org-function-name">prepare</span>(<span class="org-string">'CALL puree_fruit(?)'</span>);
+$<span class="org-variable-name">sth</span>-&gt;<span class="org-function-name">bindParam</span>(<span class="org-default">1</span>, $<span class="org-variable-name">colour</span>, <span class="org-type">PDO</span>::<span class="org-constant">PARAM_STR</span>|<span class="org-type">PDO</span>::<span class="org-constant">PARAM_INPUT_OUTPUT</span>, <span class="org-default">12</span>);
+$<span class="org-variable-name">sth</span>-&gt;<span class="org-function-name">execute</span>();
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-3-2" class="outline-4">
+<h4 id="sec-10-3-2"><span class="section-number-4">10.3.2</span> <code>bindValue()</code></h4>
+<div class="outline-text-4" id="text-10-3-2">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">bool</span> <span class="org-type">PDOStatement</span>::<span class="org-function-name">bindValue</span> (
+    <span class="org-type">mixed</span> $<span class="org-variable-name">parameter</span>
+,   <span class="org-type">mixed</span> $<span class="org-variable-name">value</span>
+[,  <span class="org-type">int</span>   $<span class="org-variable-name">data_type</span> = <span class="org-type">PDO</span>::<span class="org-constant">PARAM_STR</span>
+] )
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left"><code>$data_type</code></td>
+<td class="left"><code>int</code></td>
+<td class="left"><a href="#pdo_param_"><code>PDO::PARAM_</code></a></td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-php">$<span class="org-variable-name">sql</span> = <span class="org-string">'SELECT id FROM users WHERE email = :email AND id = :id'</span>;
+$<span class="org-variable-name">statement</span> = $<span class="org-variable-name">pdo</span>-&gt;<span class="org-function-name">prepare</span>($<span class="org-variable-name">sql</span>);
+
+$<span class="org-variable-name">email</span> = <span class="org-function-name">filter_input</span>(<span class="org-constant">INPUT_GET</span>, <span class="org-string">'email'</span>);
+$<span class="org-variable-name">statement</span>-&gt;<span class="org-function-name">bindValue</span>(<span class="org-string">':email'</span>, $<span class="org-variable-name">email</span>);
+
+$<span class="org-variable-name">userId</span> = <span class="org-function-name">filter_input</span>(<span class="org-constant">INPUT_GET</span>, <span class="org-string">'id'</span>);
+$<span class="org-variable-name">statement</span>-&gt;<span class="org-function-name">bindValue</span>(<span class="org-string">':id'</span>, $<span class="org-variable-name">userId</span>, <span class="org-type">PDO</span>::<span class="org-constant">PARAM_INT</span>);
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-3-3" class="outline-4">
+<h4 id="sec-10-3-3"><span class="section-number-4">10.3.3</span> <code>execute()</code></h4>
+<div class="outline-text-4" id="text-10-3-3">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">bool</span> <span class="org-type">PDOStatement</span>::<span class="org-function-name">execute</span> ( [ <span class="org-type">array</span> $<span class="org-variable-name">input_parameters</span> ] )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-3-4" class="outline-4">
+<h4 id="sec-10-3-4"><span class="section-number-4">10.3.4</span> <code>fetch()</code></h4>
+<div class="outline-text-4" id="text-10-3-4">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">mixed</span> <span class="org-type">PDOStatement</span>::<span class="org-function-name">fetch</span> (
+[   <span class="org-type">int</span> $<span class="org-variable-name">fetch_style</span>
+[,  <span class="org-type">int</span> $<span class="org-variable-name">cursor_orientation</span> = <span class="org-type">PDO</span>::<span class="org-constant">FETCH_ORI_NEXT</span>
+[,  <span class="org-type">int</span> $<span class="org-variable-name">cursor_offset</span> = <span class="org-default">0</span>
+]]] )
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>$fetch_style</code></th>
+<th scope="col" class="left"><code>int</code></th>
+<th scope="col" class="left"><i><code>PDO::FETCH_</code></i>，默认为 <code>PDO::FETCH_BOTH</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">返回值</td>
+<td class="left"><code>mixed</code></td>
+<td class="left">取决于 <code>$fetch_style</code></td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>false</code></td>
+<td class="left">失败，eg. 结果集为空</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<label class="org-src-name">迭代结果集</label>
+<pre class="src src-php"><span class="org-keyword">while</span> (($<span class="org-variable-name">result</span> = $<span class="org-variable-name">statement</span>-&gt;<span class="org-function-name">fetch</span>(<span class="org-type">PDO</span>::<span class="org-constant">FETCH_ASSOC</span>)) !== <span class="org-constant">false</span>) {
+    <span class="org-keyword">echo</span> $<span class="org-variable-name">result</span>[<span class="org-string">'email'</span>];
+}
+</pre>
+</div>
+
+<p>
+<a id="pdo_fetch_example" name="pdo_fetch_example"></a>
+</p>
+<div class="org-src-container">
+<label class="org-src-name"><code>$fetch_style</code> 示例</label>
+<pre class="src src-php">$<span class="org-variable-name">sth</span> = $<span class="org-variable-name">dbh</span>-&gt;<span class="org-function-name">prepare</span>(<span class="org-string">"SELECT name, colour FROM fruit"</span>);
+$<span class="org-variable-name">sth</span>-&gt;<span class="org-function-name">execute</span>();
+
+$<span class="org-variable-name">result</span> = $<span class="org-variable-name">sth</span>-&gt;<span class="org-function-name">fetch</span>(<span class="org-type">PDO</span>::<span class="org-constant">FETCH_ASSOC</span>);
+<span class="org-comment-delimiter">// </span><span class="org-comment">Array</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">(</span>
+<span class="org-comment-delimiter">//    </span><span class="org-comment">[name] =&gt; apple</span>
+<span class="org-comment-delimiter">//    </span><span class="org-comment">[colour] =&gt; red</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">)</span>
+
+$<span class="org-variable-name">result</span> = $<span class="org-variable-name">sth</span>-&gt;<span class="org-function-name">fetch</span>(<span class="org-type">PDO</span>::<span class="org-constant">FETCH_BOTH</span>);
+<span class="org-comment-delimiter">// </span><span class="org-comment">Array</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">(</span>
+<span class="org-comment-delimiter">//     </span><span class="org-comment">[name] =&gt; apple</span>
+<span class="org-comment-delimiter">//     </span><span class="org-comment">[0] =&gt; apple</span>
+<span class="org-comment-delimiter">//     </span><span class="org-comment">[colour] =&gt; red</span>
+<span class="org-comment-delimiter">//     </span><span class="org-comment">[1] =&gt; red</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">)</span>
+
+$<span class="org-variable-name">result</span> = $<span class="org-variable-name">sth</span>-&gt;<span class="org-function-name">fetch</span>(<span class="org-type">PDO</span>::<span class="org-constant">FETCH_NUM</span>);
+<span class="org-comment-delimiter">// </span><span class="org-comment">Array</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">(</span>
+<span class="org-comment-delimiter">//     </span><span class="org-comment">[0] =&gt; apple</span>
+<span class="org-comment-delimiter">//     </span><span class="org-comment">[1] =&gt; red</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">)</span>
+
+$<span class="org-variable-name">result</span> = $<span class="org-variable-name">sth</span>-&gt;<span class="org-function-name">fetch</span>(<span class="org-type">PDO</span>::<span class="org-constant">FETCH_LAZY</span>);
+<span class="org-comment-delimiter">// </span><span class="org-comment">PDORow Object</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">(</span>
+<span class="org-comment-delimiter">//     </span><span class="org-comment">[name] =&gt; apple</span>
+<span class="org-comment-delimiter">//     </span><span class="org-comment">[colour] =&gt; red</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">)</span>
+
+$<span class="org-variable-name">result</span> = $<span class="org-variable-name">sth</span>-&gt;<span class="org-function-name">fetch</span>(<span class="org-type">PDO</span>::<span class="org-constant">FETCH_OBJ</span>);
+<span class="org-keyword">echo</span> $<span class="org-variable-name">result</span>-&gt;<span class="org-variable-name">name</span>, <span class="org-string">' '</span>, $<span class="org-variable-name">result</span>-&gt;<span class="org-variable-name">color</span>;
+<span class="org-comment-delimiter">// </span><span class="org-comment">apple red</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-3-5" class="outline-4">
+<h4 id="sec-10-3-5"><span class="section-number-4">10.3.5</span> <code>fetchAll()</code></h4>
+<div class="outline-text-4" id="text-10-3-5">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">array</span> <span class="org-type">PDOStatement</span>::<span class="org-function-name">fetchAll</span> (
+[   <span class="org-type">int</span>   $<span class="org-variable-name">fetch_style</span>
+[,  <span class="org-type">mixed</span> $<span class="org-variable-name">fetch_argument</span>
+[,  <span class="org-type">array</span> $<span class="org-variable-name">ctor_args</span> = <span class="org-function-name">array</span>()
+]]] )
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left"><code>$fetch_style</code></td>
+<td class="left"><code>int</code></td>
+<td class="left"><i><code>PDO_FETCH_</code></i></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+在不确定结果集是否能放入内存的情况下，避免使用 <code>fetchAll()</code> 。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-php">$<span class="org-variable-name">results</span> = $<span class="org-variable-name">statement</span>-&gt;<span class="org-function-name">fetchAll</span>(<span class="org-type">PDO</span>::<span class="org-constant">FETCH_ASSOC</span>);
+<span class="org-keyword">foreach</span> ($<span class="org-variable-name">results</span> <span class="org-keyword">as</span> <span class="org-function-name">$result</span>) {
+    <span class="org-keyword">echo</span> $<span class="org-variable-name">result</span>[<span class="org-string">'email'</span>];
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-3-6" class="outline-4">
+<h4 id="sec-10-3-6"><span class="section-number-4">10.3.6</span> <code>fetchColumn()</code></h4>
+<div class="outline-text-4" id="text-10-3-6">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">mixed</span> <span class="org-type">PDOStatement</span>::<span class="org-function-name">fetchColumn</span> ( [ <span class="org-type">int</span> $<span class="org-variable-name">column_number</span> = <span class="org-default">0</span> ] )
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-php"><span class="org-keyword">while</span> (($<span class="org-variable-name">email</span> = $<span class="org-variable-name">statement</span>-&gt;<span class="org-function-name">fetchColumn</span>(<span class="org-default">1</span>)) !== <span class="org-constant">false</span>) {
+    <span class="org-keyword">echo</span> $<span class="org-variable-name">email</span>;
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-3-7" class="outline-4">
+<h4 id="sec-10-3-7"><span class="section-number-4">10.3.7</span> <code>fetchObject()</code></h4>
+<div class="outline-text-4" id="text-10-3-7">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">mixed</span> <span class="org-type">PDOStatement</span>::<span class="org-function-name">fetchObject</span> (
+[   <span class="org-type">string</span> $<span class="org-variable-name">class_name</span> = <span class="org-string">"stdClass"</span>
+[,  <span class="org-type">array</span>  $<span class="org-variable-name">ctor_args</span>
+]] )
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-php"><span class="org-keyword">while</span> (($<span class="org-variable-name">result</span> = $<span class="org-variable-name">statement</span>-&gt;<span class="org-function-name">fetchObject</span>()) !== <span class="org-constant">false</span>) {
+    <span class="org-keyword">echo</span> $<span class="org-variable-name">result</span>-&gt;<span class="org-variable-name">name</span>;
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> Reflection</h2>
+<div class="outline-text-2" id="text-11">
+<p>
+用于分析类、属性、方法，比内置函数（如 <code>get_class_methods()</code> ）功能更强，且不需要实例化类（如 <code>var_dump()</code> ）。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>Reflector</code></th>
+<th scope="col" class="left"><code>Reflection*</code> 类都实现 <code>Reflector</code> 接口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>Reflection</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>ReflectionClass</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>ReflectionMethod</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>ReflectionParameter</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-11-1" class="outline-3">
+<h3 id="sec-11-1"><span class="section-number-3">11.1</span> <code>Reflection</code></h3>
+<div class="outline-text-3" id="text-11-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left"><code>export()</code></td>
+<td class="left">输出 <code>Reflector</code> 对象信息</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-11-1-1" class="outline-4">
+<h4 id="sec-11-1-1"><span class="section-number-4">11.1.1</span> <code>export()</code></h4>
+<div class="outline-text-4" id="text-11-1-1">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">string</span> <span class="org-function-name">export</span> (
+    <span class="org-type">Reflector</span> $<span class="org-variable-name">reflector</span>
+[,  <span class="org-type">bool</span>      $<span class="org-variable-name">return</span> = <span class="org-constant">false</span>
+] )
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-keyword">class</span> <span class="org-type">Foo</span> {
+    <span class="org-keyword">public</span> $<span class="org-variable-name">bar</span>;
+    <span class="org-keyword">public</span> <span class="org-keyword">function</span> <span class="org-function-name">baz</span>($<span class="org-variable-name">arg</span>) {}
+}
+<span class="org-type">Reflection</span>::<span class="org-function-name">export</span>(<span class="org-keyword">new</span> <span class="org-type">ReflectionClass</span>(<span class="org-string">'Foo'</span>));
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-11-2" class="outline-3">
+<h3 id="sec-11-2"><span class="section-number-3">11.2</span> <code>ReflectionClass</code></h3>
+<div class="outline-text-3" id="text-11-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>__construct()</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>export()</code></td>
+<td class="left">输出类的信息</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-11-2-1" class="outline-4">
+<h4 id="sec-11-2-1"><span class="section-number-4">11.2.1</span> <code>export</code></h4>
+<div class="outline-text-4" id="text-11-2-1">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">string</span> <span class="org-function-name">export</span> (
+    <span class="org-type">mixed</span> $<span class="org-variable-name">argument</span> <span class="org-comment-delimiter">// </span><span class="org-comment">&#31867;&#21517;&#25110;&#23545;&#35937;</span>
+[,  <span class="org-type">bool</span>  $<span class="org-variable-name">return</span> = <span class="org-constant">false</span>
+] )
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-keyword">class</span> <span class="org-type">Foo</span> {
+    <span class="org-keyword">public</span> $<span class="org-variable-name">bar</span>;
+    <span class="org-keyword">public</span> <span class="org-keyword">function</span> <span class="org-function-name">baz</span>($<span class="org-variable-name">arg</span>) {}
+}
+<span class="org-type">ReflectionClass</span>::<span class="org-function-name">export</span>(<span class="org-string">'Foo'</span>);
+<span class="org-type">ReflectionClass</span>::<span class="org-function-name">export</span>(<span class="org-keyword">new</span> <span class="org-type">Foo</span>());
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-11-3" class="outline-3">
+<h3 id="sec-11-3"><span class="section-number-3">11.3</span> 示例</h3>
+<div class="outline-text-3" id="text-11-3">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-keyword">interface</span> <span class="org-type">Module</span> {
+    <span class="org-keyword">public</span> <span class="org-keyword">function</span> <span class="org-function-name">execute</span>();
+}
+
+<span class="org-keyword">class</span> <span class="org-type">ModuleManager</span> {
+    <span class="org-keyword">private</span> <span class="org-keyword">static</span> $<span class="org-variable-name">interface</span> = <span class="org-string">'Module'</span>;
+    <span class="org-keyword">private</span> $<span class="org-variable-name">config</span> = [];
+    <span class="org-keyword">private</span> $<span class="org-variable-name">modules</span> = [];
+
+    <span class="org-keyword">public</span> <span class="org-keyword">function</span> <span class="org-function-name">__construct</span>($<span class="org-variable-name">config</span>) {
+        $<span class="org-constant">this</span>-&gt;<span class="org-variable-name">config</span> = $<span class="org-variable-name">config</span>;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-keyword">function</span> <span class="org-function-name">init</span>() {
+        <span class="org-keyword">foreach</span> ($<span class="org-constant">this</span>-&gt;<span class="org-variable-name">config</span> <span class="org-keyword">as</span> <span class="org-function-name">$name</span> =&gt; $<span class="org-variable-name">config</span>) {
+            $<span class="org-variable-name">module</span> = <span class="org-constant">self</span>::<span class="org-function-name">initModule</span>($<span class="org-variable-name">name</span>, $<span class="org-variable-name">config</span>);
+            <span class="org-function-name">array_push</span>($<span class="org-constant">this</span>-&gt;<span class="org-variable-name">modules</span>, $<span class="org-variable-name">module</span>);
+        }
+    }
+
+    <span class="org-keyword">private</span> <span class="org-keyword">static</span> <span class="org-keyword">function</span> <span class="org-function-name">initModule</span>($<span class="org-variable-name">name</span>, $<span class="org-variable-name">config</span>) {
+        $<span class="org-variable-name">class</span> = <span class="org-keyword">new</span> <span class="org-type">ReflectionClass</span>($<span class="org-variable-name">name</span>);
+        <span class="org-keyword">if</span> (!$<span class="org-variable-name">class</span>-&gt;<span class="org-function-name">implementsInterface</span>(<span class="org-constant">self</span>::$<span class="org-variable-name">interface</span>)) {
+            <span class="org-keyword">throw</span> <span class="org-keyword">new</span> <span class="org-type">Exception</span>(<span class="org-string">'Bad module name "'</span> . $<span class="org-variable-name">name</span> . <span class="org-string">'"'</span>);
+        }
+        $<span class="org-variable-name">module</span> = $<span class="org-variable-name">class</span>-&gt;<span class="org-function-name">newInstance</span>();
+
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Init params</span>
+        <span class="org-keyword">foreach</span> ($<span class="org-variable-name">config</span> <span class="org-keyword">as</span> <span class="org-function-name">$name</span> =&gt; $<span class="org-variable-name">value</span>) {
+            <span class="org-comment-delimiter">// </span><span class="org-comment">Setter method</span>
+            $<span class="org-variable-name">methodName</span> = <span class="org-string">'set'</span> . <span class="org-function-name">ucfirst</span>($<span class="org-variable-name">name</span>);
+            <span class="org-keyword">if</span> (!$<span class="org-variable-name">class</span>-&gt;<span class="org-function-name">hasMethod</span>($<span class="org-variable-name">methodName</span>)) {
+                <span class="org-keyword">continue</span>;
+            }
+            $<span class="org-variable-name">method</span> = $<span class="org-variable-name">class</span>-&gt;<span class="org-function-name">getMethod</span>($<span class="org-variable-name">methodName</span>);
+
+            <span class="org-comment-delimiter">// </span><span class="org-comment">Check if param should be object</span>
+            $<span class="org-variable-name">params</span> = $<span class="org-variable-name">method</span>-&gt;<span class="org-function-name">getParameters</span>();
+            $<span class="org-variable-name">paramClass</span> = $<span class="org-variable-name">params</span>[<span class="org-default">0</span>]-&gt;<span class="org-function-name">getClass</span>();
+
+            <span class="org-comment-delimiter">// </span><span class="org-comment">Invoke setter and pass in param</span>
+            <span class="org-keyword">if</span> (<span class="org-keyword">empty</span>($<span class="org-variable-name">paramClass</span>)) {
+                $<span class="org-variable-name">method</span>-&gt;<span class="org-function-name">invoke</span>($<span class="org-variable-name">module</span>, $<span class="org-variable-name">value</span>);
+            } <span class="org-keyword">else</span> {
+                $<span class="org-variable-name">method</span>-&gt;<span class="org-function-name">invoke</span>($<span class="org-variable-name">module</span>, $<span class="org-variable-name">paramClass</span>-&gt;<span class="org-function-name">newInstance</span>($<span class="org-variable-name">value</span>));
+            }
+        }
+        <span class="org-keyword">return</span> $<span class="org-variable-name">module</span>;
+    }
+
+    <span class="org-keyword">public</span> <span class="org-keyword">function</span> <span class="org-function-name">execute</span>() {
+        <span class="org-keyword">foreach</span> ($<span class="org-constant">this</span>-&gt;<span class="org-variable-name">modules</span> <span class="org-keyword">as</span> <span class="org-function-name">$module</span>) {
+            $<span class="org-variable-name">module</span>-&gt;<span class="org-function-name">execute</span>();
+        }
+    }
+}
+
+<span class="org-keyword">class</span> <span class="org-type">FooModule</span> <span class="org-keyword">implements</span> <span class="org-type">Module</span> {
+    <span class="org-keyword">private</span> $<span class="org-variable-name">foo</span>;
+    <span class="org-keyword">public</span> <span class="org-keyword">function</span> <span class="org-function-name">setFoo</span>($<span class="org-variable-name">foo</span>) {
+        $<span class="org-constant">this</span>-&gt;<span class="org-variable-name">foo</span> = $<span class="org-variable-name">foo</span>;
+    }
+    <span class="org-keyword">public</span> <span class="org-keyword">function</span> <span class="org-function-name">execute</span>() {
+        <span class="org-keyword">echo</span> <span class="org-string">'foo = '</span> . $<span class="org-constant">this</span>-&gt;<span class="org-variable-name">foo</span>;
+    }
+}
+
+<span class="org-keyword">class</span> <span class="org-type">BarModule</span> <span class="org-keyword">implements</span> <span class="org-type">Module</span> {
+    <span class="org-keyword">private</span> $<span class="org-variable-name">bar</span>;
+    <span class="org-keyword">public</span> <span class="org-keyword">function</span> <span class="org-function-name">setBar</span>($<span class="org-variable-name">bar</span>) {
+        $<span class="org-constant">this</span>-&gt;<span class="org-variable-name">bar</span> = $<span class="org-variable-name">bar</span>;
+    }
+    <span class="org-keyword">public</span> <span class="org-keyword">function</span> <span class="org-function-name">execute</span>() {
+        <span class="org-keyword">echo</span> <span class="org-string">'bar = '</span> . $<span class="org-constant">this</span>-&gt;<span class="org-variable-name">bar</span>;
+    }
+}
+
+$<span class="org-variable-name">config</span> = [
+    <span class="org-string">'FooModule'</span> =&gt; [<span class="org-string">'foo'</span> =&gt; <span class="org-default">1</span>],
+    <span class="org-string">'BarModule'</span> =&gt; [<span class="org-string">'bar'</span> =&gt; <span class="org-default">2</span>]
+];
+$<span class="org-variable-name">manager</span> = <span class="org-keyword">new</span> <span class="org-type">ModuleManager</span>($<span class="org-variable-name">config</span>);
+$<span class="org-variable-name">manager</span>-&gt;<span class="org-function-name">init</span>();
+$<span class="org-variable-name">manager</span>-&gt;<span class="org-function-name">execute</span>();
+<span class="org-comment-delimiter">// </span><span class="org-comment">foo = 1, bar = 2</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> SPL</h2>
+<div class="outline-text-2" id="text-12">
+</div><div id="outline-container-sec-12-1" class="outline-3">
+<h3 id="sec-12-1"><span class="section-number-3">12.1</span> 自动加载</h3>
+<div class="outline-text-3" id="text-12-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><a href="#spl_spl_autoload"><code>spl_autoload()</code></a></th>
+<th scope="col" class="left">默认自动加载函数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><a href="#spl_spl_autoload_call"><code>spl_autoload_call()</code></a></td>
+<td class="left">手动查找类或接口，并调用 autoload 函数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="#spl_spl_autoload_extenstions"><code>spl_autoload_extensions()</code></a></td>
+<td class="left">注册并返回 <code>spl_autoload()</code> 使用的后缀名</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="#spl_spl_autoload_functions"><code>spl_autoload_functions()</code></a></td>
+<td class="left">返回所有已注册的 autoload 函数名</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="#spl_spl_autoload_register"><code>spl_autoload_register()</code></a></td>
+<td class="left">注册为自动加载函数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><a href="#spl_spl_autoload_unregister"><code>spl_autoload_unregister()</code></a></td>
+<td class="left">取消注册为自动加载函数</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-12-1-1" class="outline-4">
+<h4 id="sec-12-1-1"><span class="section-number-4">12.1.1</span> <code>spl_autoload()</code></h4>
+<div class="outline-text-4" id="text-12-1-1">
+<p>
+<a id="spl_spl_autoload" name="spl_spl_autoload"></a>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">void</span> <span class="org-function-name">spl_autoload</span> (
+    <span class="org-type">string</span> $<span class="org-variable-name">class_name</span>
+[,  <span class="org-type">string</span> $<span class="org-variable-name">file_extensions</span> = <span class="org-function-name">spl_autoload_extensions</span>()
+])
+</pre>
+</div>
+
+<p>
+未指定 autoloader，或不加参数调用 <code>spl_autoload_register()</code> 时， <code>spl_autoload()</code> 将代替 <code>__autoload()</code> 被调用，自动加载类文件。
+</p>
+
+<p>
+<code>spl_autoload()</code> 由 C 实现，比一般 PHP 实现的 autoload 函数速度快。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">支持命名空间映射为目录层级。</label>
+<pre class="src src-php"><span class="org-comment-delimiter">// </span><span class="org-comment">./lib/Foo/Bar/Object.class.php</span>
+<span class="org-keyword">namespace</span> <span class="org-type">Foo\Bar</span>;
+<span class="org-keyword">class</span> <span class="org-type">Object</span> {}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">./index.php</span>
+<span class="org-function-name">define</span>(<span class="org-string">'LIB_DIR'</span>, <span class="org-string">'lib/'</span>);
+<span class="org-function-name">set_include_path</span>(<span class="org-function-name">get_include_path</span>() . <span class="org-constant">PATH_SEPARATOR</span> . <span class="org-constant">LIB_DIR</span>);
+<span class="org-function-name">spl_autoload_extensions</span>(<span class="org-string">'.class.php'</span>);
+<span class="org-function-name">spl_autoload_register</span>();
+$<span class="org-variable-name">obj</span> = <span class="org-keyword">new</span> <span class="org-type">Foo\Bar\Object</span>(); <span class="org-comment-delimiter">// </span><span class="org-comment">&#21152;&#36733; lib/Foo/Bar/Object.class.php</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-12-1-2" class="outline-4">
+<h4 id="sec-12-1-2"><span class="section-number-4">12.1.2</span> <code>spl_autoload_call()</code></h4>
+<div class="outline-text-4" id="text-12-1-2">
+<p>
+<a id="spl_spl_autoload_call" name="spl_spl_autoload_call"></a>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">void</span> <span class="org-function-name">spl_autoload_call</span> ( <span class="org-type">string</span> $<span class="org-variable-name">class_name</span> )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-12-1-3" class="outline-4">
+<h4 id="sec-12-1-3"><span class="section-number-4">12.1.3</span> <code>spl_autoload_extensions()</code></h4>
+<div class="outline-text-4" id="text-12-1-3">
+<p>
+<a id="spl_spl_autoload_extenstions" name="spl_spl_autoload_extenstions"></a>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">string</span> <span class="org-function-name">spl_autoload_extensions</span> ([ <span class="org-type">string</span> $<span class="org-variable-name">file_extensions</span> ] )
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-function-name">spl_autoload_extensions</span>(<span class="org-string">'.php,.class.php'</span>);
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-12-1-4" class="outline-4">
+<h4 id="sec-12-1-4"><span class="section-number-4">12.1.4</span> <code>spl_autoload_functions()</code></h4>
+<div class="outline-text-4" id="text-12-1-4">
+<p>
+<a id="spl_spl_autoload_functions" name="spl_spl_autoload_functions"></a>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">array</span> <span class="org-function-name">spl_autoload_functions</span> ( <span class="org-type">void</span> )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-12-1-5" class="outline-4">
+<h4 id="sec-12-1-5"><span class="section-number-4">12.1.5</span> <code>spl_autoload_register()</code></h4>
+<div class="outline-text-4" id="text-12-1-5">
+<p>
+<a id="spl_spl_autoload_register" name="spl_spl_autoload_register"></a>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">bool</span> <span class="org-function-name">spl_autoload_register</span> (
+[   <span class="org-type">callable</span> $<span class="org-variable-name">autoload_function</span>
+[,  <span class="org-type">bool</span>     $<span class="org-variable-name">throw</span> = <span class="org-constant">true</span>
+[,  <span class="org-type">bool</span>     $<span class="org-variable-name">prepend</span> = <span class="org-constant">false</span>
+]]])
+</pre>
+</div>
+
+<p>
+支持注册多个自动加载函数，需要加载类文件时，将按注册顺序依次调用，直到类可以实例化。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">自定义自动加载函数。</label>
+<pre class="src src-php"><span class="org-comment-delimiter">// </span><span class="org-comment">./Foo/Bar.class.php</span>
+<span class="org-keyword">class</span> <span class="org-type">Foo_Bar</span> {}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">./index.php</span>
+<span class="org-keyword">function</span> <span class="org-function-name">autoload</span>($<span class="org-variable-name">class</span>) {
+    $<span class="org-variable-name">path</span> = <span class="org-function-name">str_replace</span>(<span class="org-string">'_'</span>, <span class="org-string">'/'</span>, $<span class="org-variable-name">class</span>);
+    $<span class="org-variable-name">file</span> = <span class="org-constant">__DIR__</span> . <span class="org-string">'/'</span> . $<span class="org-variable-name">path</span> . <span class="org-string">'.class.php'</span>;
+    <span class="org-keyword">if</span> (<span class="org-function-name">file_exists</span>($<span class="org-variable-name">file</span>)) {
+        <span class="org-keyword">require_once</span>($<span class="org-variable-name">file</span>);
+    }
+}
+<span class="org-function-name">spl_autoload_register</span>(<span class="org-string">'autoload'</span>);
+$<span class="org-variable-name">foo</span> = <span class="org-keyword">new</span> <span class="org-type">Foo_Bar</span>(); <span class="org-comment-delimiter">// </span><span class="org-comment">&#21152;&#36733; Foo/Bar.class.php</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">支持命名空间的自动加载函数。</label>
+<pre class="src src-php"><span class="org-comment-delimiter">// </span><span class="org-comment">./Foo/Bar/Object.class.php</span>
+<span class="org-keyword">namespace</span> <span class="org-type">Foo\Bar</span>;
+<span class="org-keyword">class</span> <span class="org-type">Object</span> {}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">./index.php</span>
+<span class="org-keyword">function</span> <span class="org-function-name">autoload</span>($<span class="org-variable-name">class</span>) {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#36755;&#20837;&#21442;&#25968;&#26159; fully qualified &#31867;&#21517;&#65292;&#19981;&#20197; \ &#24320;&#22836;</span>
+    <span class="org-comment-delimiter">// </span><span class="org-comment">$class == 'Foo\Bar\Object'</span>
+    $<span class="org-variable-name">file</span> = <span class="org-constant">__DIR__</span> . <span class="org-string">'/'</span> . $<span class="org-variable-name">class</span> . <span class="org-string">'.class.php'</span>;
+    <span class="org-keyword">if</span> (<span class="org-function-name">preg_match</span>(<span class="org-string">'/\\\\/'</span>, $<span class="org-variable-name">file</span>)) {
+        $<span class="org-variable-name">file</span> = <span class="org-function-name">str_replace</span>(<span class="org-string">'\\'</span>, <span class="org-string">'/'</span>, $<span class="org-variable-name">file</span>);
+    }
+    <span class="org-keyword">if</span> (<span class="org-function-name">file_exists</span>($<span class="org-variable-name">file</span>)) {
+        <span class="org-keyword">require_once</span>($<span class="org-variable-name">file</span>);
+    }
+}
+<span class="org-function-name">spl_autoload_register</span>(<span class="org-string">'autoload'</span>);
+$<span class="org-variable-name">obj</span> = <span class="org-keyword">new</span> <span class="org-type">Foo\Bar\Object</span>();
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-12-1-6" class="outline-4">
+<h4 id="sec-12-1-6"><span class="section-number-4">12.1.6</span> <code>spl_autoload_unregister()</code></h4>
+<div class="outline-text-4" id="text-12-1-6">
+<p>
+<a id="spl_spl_autoload_unregister" name="spl_spl_autoload_unregister"></a>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">bool</span> <span class="org-function-name">spl_autoload_unregister</span> ( <span class="org-type">mixed</span> $<span class="org-variable-name">autoload_function</span> )
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-12-2" class="outline-3">
+<h3 id="sec-12-2"><span class="section-number-3">12.2</span> 函数</h3>
+<div class="outline-text-3" id="text-12-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>类</b></th>
+<th scope="col" class="left"><a href="#spl_class_implements"><code>class_implements()</code></a></th>
+<th scope="col" class="left">返回类或接口实现的接口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><a href="#spl_class_parents"><code>class_parents()</code></a></td>
+<td class="left">返回基类</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><a href="#spl_class_uses"><code>class_uses()</code></a></td>
+<td class="left">返回类使用的 trait</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>迭代器</b></td>
+<td class="left"><code>iterator_apply()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>iterator_count()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>iterator_to_array()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>其他</b></td>
+<td class="left"><code>spl_classes()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>spl_object_hash()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-12-2-1" class="outline-4">
+<h4 id="sec-12-2-1"><span class="section-number-4">12.2.1</span> <code>class_implements()</code></h4>
+<div class="outline-text-4" id="text-12-2-1">
+<p>
+<a id="spl_class_implements" name="spl_class_implements"></a>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">array</span> <span class="org-function-name">class_implements</span> (
+    <span class="org-type">mixed</span> $<span class="org-variable-name">class</span>
+[,  <span class="org-type">bool</span>  $<span class="org-variable-name">autoload</span> = <span class="org-constant">true</span>
+])
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-keyword">interface</span> <span class="org-type">Foo</span> {}
+<span class="org-keyword">class</span> <span class="org-type">Bar</span> <span class="org-keyword">implements</span> <span class="org-type">Foo</span> {}
+<span class="org-function-name">class_implements</span>(<span class="org-string">'Bar'</span>);     <span class="org-comment-delimiter">// </span><span class="org-comment">['Foo' =&gt; 'Foo']</span>
+<span class="org-function-name">class_implements</span>(<span class="org-keyword">new</span> <span class="org-type">Bar</span>()); <span class="org-comment-delimiter">// </span><span class="org-comment">['Foo' =&gt; 'Foo']</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-12-2-2" class="outline-4">
+<h4 id="sec-12-2-2"><span class="section-number-4">12.2.2</span> <code>class_parents()</code></h4>
+<div class="outline-text-4" id="text-12-2-2">
+<p>
+<a id="spl_class_parents" name="spl_class_parents"></a>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">array</span> <span class="org-function-name">class_parents</span> (
+    <span class="org-type">mixed</span> $<span class="org-variable-name">class</span>
+[,  <span class="org-type">bool</span>  $<span class="org-variable-name">autoload</span> = <span class="org-constant">true</span>
+])
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-keyword">class</span> <span class="org-type">foo</span> {}
+<span class="org-keyword">class</span> <span class="org-type">bar</span> <span class="org-keyword">extends</span> <span class="org-type">foo</span> {}
+<span class="org-keyword">class</span> <span class="org-type">baz</span> <span class="org-keyword">extends</span> <span class="org-type">bar</span> {}
+
+<span class="org-function-name">print_r</span>(<span class="org-function-name">class_parents</span>(<span class="org-keyword">new</span> <span class="org-type">baz</span>));
+<span class="org-function-name">print_r</span>(<span class="org-function-name">class_parents</span>(<span class="org-string">'baz'</span>));
+<span class="org-comment-delimiter">// </span><span class="org-comment">Array</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">(</span>
+<span class="org-comment-delimiter">//     </span><span class="org-comment">[bar] =&gt; bar</span>
+<span class="org-comment-delimiter">//     </span><span class="org-comment">[foo] =&gt; foo</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-12-2-3" class="outline-4">
+<h4 id="sec-12-2-3"><span class="section-number-4">12.2.3</span> <code>class_uses()</code></h4>
+<div class="outline-text-4" id="text-12-2-3">
+<p>
+<a id="spl_class_uses" name="spl_class_uses"></a>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">array</span> <span class="org-function-name">class_uses</span> (
+    <span class="org-type">mixed</span> $<span class="org-variable-name">class</span>
+[,  <span class="org-type">bool</span>  $<span class="org-variable-name">autoload</span> = <span class="org-constant">true</span>
+])
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-php"><span class="org-keyword">trait</span> <span class="org-type">foo</span> {}
+<span class="org-keyword">class</span> <span class="org-type">bar</span> {
+    <span class="org-keyword">use</span> <span class="org-type">foo</span>;
+}
+
+<span class="org-function-name">print_r</span>(<span class="org-function-name">class_uses</span>(<span class="org-keyword">new</span> <span class="org-type">bar</span>));
+<span class="org-function-name">print_r</span>(<span class="org-function-name">class_uses</span>(<span class="org-string">'bar'</span>));
+<span class="org-comment-delimiter">// </span><span class="org-comment">Array</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">(</span>
+<span class="org-comment-delimiter">//     </span><span class="org-comment">[foo] =&gt; foo</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-12-3" class="outline-3">
+<h3 id="sec-12-3"><span class="section-number-3">12.3</span> Datastructures</h3>
+<div class="outline-text-3" id="text-12-3">
+<p>
+Datastructures
+</p>
+<ul class="org-ul">
+<li><code>SplDoublyLinkedList</code>
+</li>
+<li><code>SplStack</code>
+</li>
+<li><code>SplQueue</code>
+</li>
+<li><code>SplHeap</code>
+</li>
+<li><code>SplMaxHeap</code>
+</li>
+<li><code>SplMinHeap</code>
+</li>
+<li><code>SplPriorityQueue</code>
+</li>
+<li><code>SplFixedArray</code>
+</li>
+<li><code>SplObjectStorage</code>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-12-4" class="outline-3">
+<h3 id="sec-12-4"><span class="section-number-3">12.4</span> Iterators</h3>
+<div class="outline-text-3" id="text-12-4">
+<p>
+Iterators
+</p>
+<ul class="org-ul">
+<li><code>AppendIterator</code>
+</li>
+<li><code>ArrayIterator</code>
+</li>
+<li><code>CachingIterator</code>
+</li>
+<li><code>CallbackFilterIterator</code>
+</li>
+<li><code>DirectoryIterator</code>
+</li>
+<li><code>EmptyIterator</code>
+</li>
+<li><code>FilesystemIterator</code>
+</li>
+<li><code>FilterIterator</code>
+</li>
+<li><code>GlobIterator</code>
+</li>
+<li><code>InfiniteIterator</code>
+</li>
+<li><code>IteratorIterator</code>
+</li>
+<li><code>LimitIterator</code>
+</li>
+<li><code>MultipleIterator</code>
+</li>
+<li><code>NoRewindIterator</code>
+</li>
+<li><code>ParentIterator</code>
+</li>
+<li><code>RecursiveArrayIterator</code>
+</li>
+<li><code>RecursiveCachingIterator</code>
+</li>
+<li><code>RecursiveCallbackFilterIterator</code>
+</li>
+<li><code>RecursiveDirectoryIterator</code>
+</li>
+<li><code>RecursiveFilterIterator</code>
+</li>
+<li><code>RecursiveIteratorIterator</code>
+</li>
+<li><code>RecursiveRegexIterator</code>
+</li>
+<li><code>RecursiveTreeIterator</code>
+</li>
+<li><code>RegexIterator</code>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-12-5" class="outline-3">
+<h3 id="sec-12-5"><span class="section-number-3">12.5</span> Interfaces</h3>
+<div class="outline-text-3" id="text-12-5">
+<p>
+Interfaces
+</p>
+<ul class="org-ul">
+<li><code>Countable</code>
+</li>
+<li><code>OuterIterator</code>
+</li>
+<li><code>RecursiveIterator</code>
+</li>
+<li><code>SeekableIterator</code>
+</li>
+<li><code>SplObserver</code>
+</li>
+<li><code>SplSubject</code>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-12-6" class="outline-3">
+<h3 id="sec-12-6"><span class="section-number-3">12.6</span> Exceptions</h3>
+<div class="outline-text-3" id="text-12-6">
+<p>
+<code>Exception</code>
+</p>
+<ul class="org-ul">
+<li><code>LogicException</code>
+<ul class="org-ul">
+<li><code>BadFunctionCallException</code>
+<ul class="org-ul">
+<li><code>BadMethodCallException</code>
+</li>
+</ul>
+</li>
+<li><code>DomainException</code>
+</li>
+<li><code>InvalidArgumentException</code>
+</li>
+<li><code>LengthException</code>
+</li>
+<li><code>OutOfRangeException</code>
+</li>
+</ul>
+</li>
+<li><code>RuntimeException</code>
+<ul class="org-ul">
+<li><code>OutOfBoundsException</code>
+</li>
+<li><code>OverflowException</code>
+</li>
+<li><code>RangeException</code>
+</li>
+<li><code>UnderflowException</code>
+</li>
+<li><code>UnexpectedValueException</code>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-12-7" class="outline-3">
+<h3 id="sec-12-7"><span class="section-number-3">12.7</span> Classes</h3>
+<div class="outline-text-3" id="text-12-7">
+<ul class="org-ul">
+<li><code>ArrayObject</code>
+</li>
+<li><code>SplFileInfo</code>
+</li>
+<li><code>SplFileObject</code>
+</li>
+<li><code>SplTempFileObject</code>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> Stream</h2>
+<div class="outline-text-2" id="text-13">
+</div><div id="outline-container-sec-13-1" class="outline-3">
+<h3 id="sec-13-1"><span class="section-number-3">13.1</span> Stream</h3>
+<div class="outline-text-3" id="text-13-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left"><a href="#stream_context_create"><code>stream_context_create()</code></a></td>
+<td class="left">Creates a stream context</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-13-1-1" class="outline-4">
+<h4 id="sec-13-1-1"><span class="section-number-4">13.1.1</span> <code>stream_context_create()</code></h4>
+<div class="outline-text-4" id="text-13-1-1">
+<p>
+<a id="stream_context_create" name="stream_context_create"></a>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">resource</span> <span class="org-function-name">stream_context_create</span> (
+[   <span class="org-type">array</span> $<span class="org-variable-name">options</span>
+[,  <span class="org-type">array</span> $<span class="org-variable-name">params</span>
+]] )
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-php">$<span class="org-variable-name">requestBody</span> = <span class="org-string">'{"username":"josh"}'</span>;
+$<span class="org-variable-name">context</span> = <span class="org-function-name">stream_context_create</span>(<span class="org-function-name">array</span>(
+    <span class="org-string">'http'</span> =&gt; <span class="org-function-name">array</span>(
+        <span class="org-string">'method'</span> =&gt; <span class="org-string">'POST'</span>,
+        <span class="org-string">'header'</span> =&gt; <span class="org-string">"Content-Type: application/json;charset=utf-8;\r\n"</span> .
+                    <span class="org-string">"Content-Length: "</span> . <span class="org-function-name">mb_strlen</span>($<span class="org-variable-name">requestBody</span>),
+        <span class="org-string">'content'</span> =&gt; $<span class="org-variable-name">requestBody</span>
+    )
+));
+$<span class="org-variable-name">response</span> = <span class="org-function-name">file_get_contents</span>(<span class="org-string">'https://my-api.com/users'</span>, <span class="org-constant">false</span>, $<span class="org-variable-name">context</span>);
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-13-2" class="outline-3">
+<h3 id="sec-13-2"><span class="section-number-3">13.2</span> Stream wrapper</h3>
+<div class="outline-text-3" id="text-13-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><a href="#php_stdin"><code>php://stdin</code></a></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>php://stdout</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>php://stderr</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>php://input</code></td>
+<td class="left">Raw data of request body</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>php://output</code></td>
+<td class="left">Output buffer</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>php://fd</code></td>
+<td class="left">File descriptor</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>php://memory</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>php://temp</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>php://filter</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+<p>
+<a href="http://php.net/manual/en/wrappers.php">http://php.net/manual/en/wrappers.php</a>
+</p>
+</div>
+
+<div id="outline-container-sec-13-2-1" class="outline-4">
+<h4 id="sec-13-2-1"><span class="section-number-4">13.2.1</span> <code>php://stdin</code></h4>
+<div class="outline-text-4" id="text-13-2-1">
+<p>
+<a id="php_stdin" name="php_stdin"></a>
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-php">$<span class="org-variable-name">handleIn</span>  = <span class="org-function-name">fopen</span>(<span class="org-string">'php://stdin'</span>, <span class="org-string">'r'</span>);
+$<span class="org-variable-name">handleOut</span> = <span class="org-function-name">fopen</span>(<span class="org-string">'output.txt'</span>, <span class="org-string">'w+'</span>);
+<span class="org-keyword">while</span> ($<span class="org-variable-name">line</span> = <span class="org-function-name">fgets</span>($<span class="org-variable-name">handleIn</span>)) {
+    <span class="org-function-name">fwrite</span>($<span class="org-variable-name">handleOut</span>, $<span class="org-variable-name">line</span>);
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-13-3" class="outline-3">
+<h3 id="sec-13-3"><span class="section-number-3">13.3</span> Stream filter</h3>
+<div class="outline-text-3" id="text-13-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 6:</span> Stream filter 函数</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><a href="#stream_filter_append"><code>stream_filter_append()</code></a></th>
+<th scope="col" class="left">Attach a filter to a stream</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><a href="#stream_filter_register"><code>stream_filter_register()</code></a></td>
+<td class="left">Register a user defined stream filter</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 7:</span> Stream filter 列表</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>string.toupper</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>string.tolower</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>string.strip_tags</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>string.rot13</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+<p>
+<a href="http://php.net/manual/en/filters.php">http://php.net/manual/en/filters.php</a>  
+</p>
+</div>
+
+<div id="outline-container-sec-13-3-1" class="outline-4">
+<h4 id="sec-13-3-1"><span class="section-number-4">13.3.1</span> <code>stream_filter_append()</code></h4>
+<div class="outline-text-4" id="text-13-3-1">
+<p>
+<a id="stream_filter_append" name="stream_filter_append"></a>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">resource</span> <span class="org-function-name">stream_filter_append</span> (
+    <span class="org-type">resource</span> $<span class="org-variable-name">stream</span>
+,   <span class="org-type">string</span>   $<span class="org-variable-name">filtername</span>
+[,  <span class="org-type">int</span>      $<span class="org-variable-name">read_write</span>
+[,  <span class="org-type">mixed</span>    $<span class="org-variable-name">params</span>
+]] )
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-php">$<span class="org-variable-name">handle</span> = <span class="org-function-name">fopen</span>(<span class="org-string">'data.txt'</span>, <span class="org-string">'rb'</span>);
+<span class="org-function-name">stream_filter_append</span>($<span class="org-variable-name">handle</span>, <span class="org-string">'string.toupper'</span>);
+<span class="org-keyword">while</span> (<span class="org-function-name">feof</span>($<span class="org-variable-name">handle</span>) !== <span class="org-constant">true</span>) {
+    <span class="org-keyword">echo</span> <span class="org-function-name">fgets</span>($<span class="org-variable-name">handle</span>);
+}
+<span class="org-function-name">fclose</span>($<span class="org-variable-name">handle</span>);
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-13-3-2" class="outline-4">
+<h4 id="sec-13-3-2"><span class="section-number-4">13.3.2</span> <code>stream_filter_register()</code></h4>
+<div class="outline-text-4" id="text-13-3-2">
+<p>
+<a id="stream_filter_register" name="stream_filter_register"></a>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">bool</span> <span class="org-function-name">stream_filter_register</span> (
+    <span class="org-type">string</span> $<span class="org-variable-name">filtername</span>
+,   <span class="org-type">string</span> $<span class="org-variable-name">classname</span>
+)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-13-3-3" class="outline-4">
+<h4 id="sec-13-3-3"><span class="section-number-4">13.3.3</span> 自定义 stream filter</h4>
+<div class="outline-text-4" id="text-13-3-3">
+<p>
+自定义 stream filter 必须扩展 <code>php_user_filter</code> 类并实现 <code>filter()</code> 方法。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">自定义 stream filter 示例</label>
+<pre class="src src-php"><span class="org-keyword">class</span> <span class="org-type">DirtyWordsFilter</span> <span class="org-keyword">extends</span> <span class="org-type">php_user_filter</span>
+{
+    <span class="org-comment-delimiter">/**</span>
+<span class="org-comment">     * @param resource $in       Incoming bucket brigade</span>
+<span class="org-comment">     * @param resource $out      Outgoing bucket brigade</span>
+<span class="org-comment">     * @param int      $consumed Number of bytes consumed</span>
+<span class="org-comment">     * @param bool     $closing  Last bucket brigade in stream?</span>
+<span class="org-comment">     </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-keyword">public</span> <span class="org-keyword">function</span> <span class="org-function-name">filter</span>($<span class="org-variable-name">in</span>, $<span class="org-variable-name">out</span>, &amp;$<span class="org-variable-name">consumed</span>, $<span class="org-variable-name">closing</span>)
+    {
+        $<span class="org-variable-name">words</span> = <span class="org-function-name">array</span>(<span class="org-string">'grime'</span>, <span class="org-string">'dirt'</span>, <span class="org-string">'grease'</span>);
+        $<span class="org-variable-name">wordData</span> = <span class="org-function-name">array</span>();
+        <span class="org-keyword">foreach</span> ($<span class="org-variable-name">words</span> <span class="org-keyword">as</span> <span class="org-function-name">$word</span>) {
+            $<span class="org-variable-name">replacement</span> = <span class="org-function-name">array_fill</span>(<span class="org-default">0</span>, <span class="org-function-name">mb_strlen</span>($<span class="org-variable-name">word</span>), <span class="org-string">'*'</span>);
+            $<span class="org-variable-name">wordData</span>[$<span class="org-variable-name">word</span>] = <span class="org-function-name">implode</span>(<span class="org-string">''</span>, $<span class="org-variable-name">replacement</span>);
+        }
+        <span class="org-comment-delimiter">// </span><span class="org-comment">array('grime', 'dirt', 'grease');</span>
+        $<span class="org-variable-name">bad</span> = <span class="org-function-name">array_keys</span>($<span class="org-variable-name">wordData</span>);
+        <span class="org-comment-delimiter">// </span><span class="org-comment">array('*****', '****', '******');</span>
+        $<span class="org-variable-name">good</span> = <span class="org-function-name">array_values</span>($<span class="org-variable-name">wordData</span>);
+        <span class="org-comment-delimiter">// </span><span class="org-comment">Iterate each bucket from incoming bucket brigade</span>
+        <span class="org-keyword">while</span> ($<span class="org-variable-name">bucket</span> = <span class="org-function-name">stream_bucket_make_writeable</span>($<span class="org-variable-name">in</span>)) {
+            <span class="org-comment-delimiter">// </span><span class="org-comment">Censor dirty words in bucket data</span>
+            $<span class="org-variable-name">bucket</span>-&gt;<span class="org-variable-name">data</span> = <span class="org-function-name">str_replace</span>($<span class="org-variable-name">bad</span>, $<span class="org-variable-name">good</span>, $<span class="org-variable-name">bucket</span>-&gt;<span class="org-variable-name">data</span>);
+            <span class="org-comment-delimiter">// </span><span class="org-comment">Increment total data consumed</span>
+            $<span class="org-variable-name">consumed</span> += $<span class="org-variable-name">bucket</span>-&gt;<span class="org-variable-name">datalen</span>;
+            <span class="org-comment-delimiter">// </span><span class="org-comment">Send bucket to downstream brigade</span>
+            <span class="org-function-name">stream_bucket_append</span>($<span class="org-variable-name">out</span>, $<span class="org-variable-name">bucket</span>);
+        }
+        <span class="org-keyword">return</span> <span class="org-constant">PSFS_PASS_ON</span>;
+    }
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-function-name">stream_filter_register</span>(<span class="org-string">'dirty_words_filter'</span>, <span class="org-string">'DirtyWordsFilter'</span>);
+
+$<span class="org-variable-name">handle</span> = <span class="org-function-name">fopen</span>(<span class="org-string">'data.txt'</span>, <span class="org-string">'rb'</span>);
+<span class="org-function-name">stream_filter_append</span>($<span class="org-variable-name">handle</span>, <span class="org-string">'dirty_words_filter'</span>);
+<span class="org-keyword">while</span> (<span class="org-function-name">feof</span>($<span class="org-variable-name">handle</span>) !== <span class="org-constant">true</span>) {
+    <span class="org-keyword">echo</span> <span class="org-function-name">fgets</span>($<span class="org-variable-name">handle</span>);
+}
+<span class="org-function-name">fclose</span>($<span class="org-variable-name">handle</span>);
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-13-4" class="outline-3">
+<h3 id="sec-13-4"><span class="section-number-3">13.4</span> 示例</h3>
+<div class="outline-text-3" id="text-13-4">
+<p>
+功能
+</p>
+<ul class="org-ul">
+<li>从 FTP 读取指定时间范围的日志文件
+</li>
+<li>日志文件被 bzip2 压缩
+</li>
+<li>筛选出日志中包含特定字符串的行
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-php">$<span class="org-variable-name">dateStart</span> = <span class="org-keyword">new</span> <span class="org-type">\DateTime</span>();
+$<span class="org-variable-name">dateInterval</span> = <span class="org-type">\DateInterval</span>::<span class="org-function-name">createFromDateString</span>(<span class="org-string">'-1 day'</span>);
+$<span class="org-variable-name">datePeriod</span> = <span class="org-keyword">new</span> <span class="org-type">\DatePeriod</span>($<span class="org-variable-name">dateStart</span>, $<span class="org-variable-name">dateInterval</span>, <span class="org-default">30</span>);
+<span class="org-keyword">foreach</span> ($<span class="org-variable-name">datePeriod</span> <span class="org-keyword">as</span> <span class="org-function-name">$date</span>) {
+    $<span class="org-variable-name">file</span> = <span class="org-string">'sftp://USER:PASS@rsync.net/'</span> . $<span class="org-variable-name">date</span>-&gt;<span class="org-function-name">format</span>(<span class="org-string">'Y-m-d'</span>) . <span class="org-string">'.log.bz2'</span>;
+    <span class="org-keyword">if</span> (<span class="org-function-name">file_exists</span>($<span class="org-variable-name">file</span>)) {
+        $<span class="org-variable-name">handle</span> = <span class="org-function-name">fopen</span>($<span class="org-variable-name">file</span>, <span class="org-string">'rb'</span>);
+        <span class="org-function-name">stream_filter_append</span>($<span class="org-variable-name">handle</span>, <span class="org-string">'bzip2.decompress'</span>);
+        <span class="org-keyword">while</span> (<span class="org-function-name">feof</span>($<span class="org-variable-name">handle</span>) !== <span class="org-constant">true</span>) {
+            $<span class="org-variable-name">line</span> = <span class="org-function-name">fgets</span>($<span class="org-variable-name">handle</span>);
+            <span class="org-keyword">if</span> (<span class="org-function-name">strpos</span>($<span class="org-variable-name">line</span>, <span class="org-string">'www.example.com'</span>) !== <span class="org-constant">false</span>) {
+                <span class="org-function-name">fwrite</span>(<span class="org-constant">STDOUT</span>, $<span class="org-variable-name">line</span>);
+            }
+        }
+    <span class="org-function-name">fclose</span>($<span class="org-variable-name">handle</span>);
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> Xdebug</h2>
+</div>
+<div id="outline-container-sec-15" class="outline-2">
+<h2 id="sec-15"><span class="section-number-2">15</span> XHProf</h2>
+<div class="outline-text-2" id="text-15">
+<p>
+<a href="https://pecl.php.net/package/xhprof">XHProf (Hierarchical Profiler)</a>
+</p>
+</div>
+
+<div id="outline-container-sec-15-1" class="outline-3">
+<h3 id="sec-15-1"><span class="section-number-3">15.1</span> 安装</h3>
+<div class="outline-text-3" id="text-15-1">
+<div class="org-src-container">
+<label class="org-src-name">安装 XHProf</label>
+<pre class="src src-sh">wget http://pecl.php.net/get/xhprof-0.9.4.tgz
+tar zxf xhprof-0.9.4.tgz
+<span class="org-builtin">cd</span> xhprof-0.9.4/extension/
+phpize
+./configure
+make
+make install
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">移动 <code>lib</code> 和 <code>html</code> 目录</label>
+<pre class="src src-sh">cp -r xhprof_lib xhprof_html &lt;app_root&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">安装 Graphviz</label>
+<pre class="src src-sh">wget http://www.graphviz.org/pub/graphviz/stable/SOURCES/graphviz-2.38.0.tar.gz
+tar zxf graphviz-2.38.0.tar.gz
+<span class="org-builtin">cd</span> graphviz-2.38.0
+./configure
+make
+make install
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">修改 <code>php.ini</code></label>
+<pre class="src src-sh">[xhprof]
+<span class="org-variable-name">extension</span>=xhprof.so
+xhprof.output_dir=&lt;dir_path&gt;
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#20026;&#20102;&#20351;&#29992; Graphviz &#32472;&#22270;&#21151;&#33021;&#65292;&#21462;&#28040;&#31105;&#29992;&#26041;&#27861;</span>
+;disable_functions = ...
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">重启 php-fpm</label>
+<pre class="src src-sh">cat /usr/local/php/var/run/php-fpm.pid
+kill -USR2 &lt;ps_num&gt;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-15-2" class="outline-3">
+<h3 id="sec-15-2"><span class="section-number-3">15.2</span> 使用</h3>
+<div class="outline-text-3" id="text-15-2">
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-php"><span class="org-comment-delimiter">// </span><span class="org-comment">&#20195;&#30721;&#20043;&#21069;</span>
+<span class="org-function-name">xhprof_enable</span>(<span class="org-warning">XHPROF_FLAGS_CPU</span> + <span class="org-constant">XHPROF_FLAGS_MEMORY</span>);
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#36816;&#34892;&#20195;&#30721;</span>
+...
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#20195;&#30721;&#20043;&#21518;</span>
+<span class="org-keyword">include_once</span> <span class="org-constant">APP_PATH</span> . <span class="org-string">'/xhprof_lib/utils/xhprof_lib.php'</span>;
+<span class="org-keyword">include_once</span> <span class="org-constant">APP_PATH</span> . <span class="org-string">'/xhprof_lib/utils/xhprof_runs.php'</span>;
+$<span class="org-variable-name">xhprof_data</span> = <span class="org-function-name">xhprof_disable</span>();
+$<span class="org-variable-name">xhprof_runs</span> = <span class="org-keyword">new</span> <span class="org-type">XHProfRuns_Default</span>();
+$<span class="org-variable-name">run_id</span> = $<span class="org-variable-name">xhprof_runs</span>-&gt;<span class="org-function-name">save_run</span>($<span class="org-variable-name">xhprof_data</span>, <span class="org-string">'xhprof'</span>);
+
+$<span class="org-variable-name">url</span> = <span class="org-constant">APP_PATH</span> . <span class="org-string">'/xhprof_html/index.php?run='</span> . $<span class="org-variable-name">run_id</span> . <span class="org-string">'&amp;source=xhprof'</span>;
+<span class="org-keyword">echo</span> <span class="org-string">'&lt;a href="'</span>.$<span class="org-variable-name">url</span>.<span class="org-string">'"&gt;'</span>.$<span class="org-variable-name">url</span>.<span class="org-string">'&lt;/a&gt;'</span>;
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2017-09-16 Sat 17:16</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

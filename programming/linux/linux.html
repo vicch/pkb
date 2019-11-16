@@ -1,0 +1,1246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-04-13 Sat 17:37 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Linux</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Linux</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org42e3052">1 内核</a>
+<ul>
+<li><a href="#org633dcb6">1.1 运行级别</a>
+<ul>
+<li><a href="#orgf74250a">1.1.1 优势</a></li>
+<li><a href="#org56b9e76">1.1.2 切换</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org435bb19">2 进程</a>
+<ul>
+<li><a href="#org9722b7b">2.1 信号</a></li>
+<li><a href="#orgc17c8d0">2.2 权限</a></li>
+<li><a href="#org3b38ab7">2.3 调度优先级</a></li>
+<li><a href="#org2038719">2.4 系统调用</a></li>
+</ul>
+</li>
+<li><a href="#org9e8ae66">3 文件系统</a>
+<ul>
+<li><a href="#org3dd81fe">3.1 Glob</a></li>
+<li><a href="#org9ad0b00">3.2 Inode</a></li>
+<li><a href="#org641dea9">3.3 常用</a></li>
+</ul>
+</li>
+<li><a href="#orgadf6a39">4 流</a>
+<ul>
+<li><a href="#orgee2fb57">4.1 输入</a></li>
+</ul>
+</li>
+<li><a href="#orgf78d578">5 用户、组</a>
+<ul>
+<li><a href="#org3d08d8d">5.1 <code>/etc/passwd</code></a></li>
+</ul>
+</li>
+<li><a href="#orgc466914">6 权限</a>
+<ul>
+<li><a href="#org684e2fc">6.1 Umask</a></li>
+<li><a href="#orgc7f3196">6.2 Sticky Bit</a></li>
+</ul>
+</li>
+<li><a href="#orgf0c28ae">7 启动</a>
+<ul>
+<li><a href="#org6e1285c">7.1 运行级</a></li>
+<li><a href="#orgd69a705">7.2 开机运行</a></li>
+<li><a href="#org2541e23">7.3 Shell 登录运行</a></li>
+</ul>
+</li>
+<li><a href="#org285009b">8 Shell</a>
+<ul>
+<li><a href="#org39bd5d0">8.1 命令</a></li>
+<li><a href="#org73ed4d4">8.2 变量</a>
+<ul>
+<li><a href="#org11ad1dc">8.2.1 Shell 变量</a></li>
+<li><a href="#org08f211d">8.2.2 环境变量</a></li>
+<li><a href="#org8f629d0">8.2.3 环境变量列表</a></li>
+</ul>
+</li>
+<li><a href="#org3821d00">8.3 快捷键</a></li>
+</ul>
+</li>
+<li><a href="#org187de53">9 环境</a>
+<ul>
+<li><a href="#orgc499c78">9.1 用户配置</a>
+<ul>
+<li><a href="#orgdc9669c">9.1.1 <code>.bashrc</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgca70e4f">10 发行版</a></li>
+<li><a href="#orgc257bca">11 链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org42e3052" class="outline-2">
+<h2 id="org42e3052"><span class="section-number-2">1</span> 内核</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-org633dcb6" class="outline-3">
+<h3 id="org633dcb6"><span class="section-number-3">1.1</span> 运行级别</h3>
+<div class="outline-text-3" id="text-1-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>用户态</b></th>
+<th scope="col" class="org-left">执行一般任务，如数学计算</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>内核态</b></td>
+<td class="org-left">对硬件外设进行操作，如读取磁盘文件、发送网络数据</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-orgf74250a" class="outline-4">
+<h4 id="orgf74250a"><span class="section-number-4">1.1.1</span> 优势</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<ul class="org-ul">
+<li>安全性：进程必须通过内核提供的系统调用来操作硬件，所以不用担心应用程序对硬件进行非法操作。</li>
+<li>简化开发模型：由于将底层的实现都封装在系统调用中，简化了用户态应用开发的难度。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org56b9e76" class="outline-4">
+<h4 id="org56b9e76"><span class="section-number-4">1.1.2</span> 切换</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<p>
+进程切换到内核态通常有两种方式：
+</p>
+
+<ul class="org-ul">
+<li>直接使用内核提供的系统调用（system call）。</li>
+<li>使用 C 库函数（ <code>libc</code> ）封装的系统调用，即 C API。</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="../images/linux/04.png" alt="04.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org435bb19" class="outline-2">
+<h2 id="org435bb19"><span class="section-number-2">2</span> 进程</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-org9722b7b" class="outline-3">
+<h3 id="org9722b7b"><span class="section-number-3">2.1</span> 信号</h3>
+<div class="outline-text-3" id="text-2-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">值</th>
+<th scope="col" class="org-left">信号</th>
+<th scope="col" class="org-left">动作</th>
+<th scope="col" class="org-left">按键</th>
+<th scope="col" class="org-left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">1</td>
+<td class="org-left"><code>SIGHUP</code></td>
+<td class="org-left">挂起（hang up）</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-right">2</td>
+<td class="org-left"><code>SIGINT</code></td>
+<td class="org-left">终止（interrupt）</td>
+<td class="org-left"><code>Ctrl+C</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-right">3</td>
+<td class="org-left"><code>SIGQUIT</code></td>
+<td class="org-left">停止</td>
+<td class="org-left"><code>Ctrl+\</code></td>
+<td class="org-left">进行 core dump</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-right">9</td>
+<td class="org-left"><code>SIGKILL</code></td>
+<td class="org-left">无条件终止</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">无法捕获、忽略</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-right">15</td>
+<td class="org-left"><code>SIGTERM</code></td>
+<td class="org-left">终止</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">可以捕获、忽略</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-right">17</td>
+<td class="org-left"><code>SIGSTOP</code></td>
+<td class="org-left">无条件停止</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">不终止</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-right">18</td>
+<td class="org-left"><code>SIGTSTP</code></td>
+<td class="org-left">暂停（temporary stop）</td>
+<td class="org-left"><code>Ctrl+Z</code></td>
+<td class="org-left">不终止（程序保留在内存，可以从停止的位置继续）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-right">19</td>
+<td class="org-left"><code>SIGCONT</code></td>
+<td class="org-left">继续</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgc17c8d0" class="outline-3">
+<h3 id="orgc17c8d0"><span class="section-number-3">2.2</span> 权限</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>进程是作为特定用户和组运行的，核心进程通常作为 <code>root</code> 运行。</li>
+<li>为了安全性，子进程会进行「降级」，比如 Apache 主进程作为 <code>root</code> 运行，而子进程作为其他用户运行。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org3b38ab7" class="outline-3">
+<h3 id="org3b38ab7"><span class="section-number-3">2.3</span> 调度优先级</h3>
+<div class="outline-text-3" id="text-2-3">
+<ul class="org-ul">
+<li>系统内核将 CPU 时间轮流分配给每个进程，调度优先级决定分配给进程的时间总量。</li>
+<li>数值为从 -20（最高） 到 +20（最低） 的整数。默认所有进程都以相同的优先级 0 启动。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2038719" class="outline-3">
+<h3 id="org2038719"><span class="section-number-3">2.4</span> 系统调用</h3>
+<div class="outline-text-3" id="text-2-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>fork</b></th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>exec</b></td>
+<td class="org-left">通知内核执行一个程序，这个程序将会替代正在被调用的程序。</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">新程序执行完成后，难以返回之前的程序。</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9e8ae66" class="outline-2">
+<h2 id="org9e8ae66"><span class="section-number-2">3</span> 文件系统</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-org3dd81fe" class="outline-3">
+<h3 id="org3dd81fe"><span class="section-number-3">3.1</span> Glob</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+Shell 通过简单模式匹配文件和目录名的方式称为 globbing，Shell 将包含 glob 的参数替换为匹配的文件和目录名，这个过程称为扩展（expansion）。Shell 进行扩展是在运行具体命令之前，即 Shell 将扩展的结果作为参数传递给命令。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 1: </span>示例</label><pre class="src src-sh">$ echo .bash*
+.bash_history  .bash_logout  .bashrc
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 2: </span>使用引号包围 glob 可以避免 Shell 进行扩展。</label><pre class="src src-sh">$ echo .bash<span class="org-string">'*'</span>
+.bash*
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 3: </span>当 glob 无法匹配到任何结果时，Shell 直接输出 glob 字符串。</label><pre class="src src-sh">$ echo notfound*
+notfound*
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 4: </span>Glob 不匹配 <code>.</code> 字符，需要显式使用 <code>.</code> 。</label><pre class="src src-sh">$ echo .*
+. .. .file
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 5: </span>避免匹配 <code>.</code> 和 <code>..</code> 。</label><pre class="src src-sh">$ echo .[^.]*
+.file
+$ echo .??*
+.file
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9ad0b00" class="outline-3">
+<h3 id="org9ad0b00"><span class="section-number-3">3.2</span> Inode</h3>
+<div class="outline-text-3" id="text-3-2">
+
+<div class="figure">
+<p><img src="../images/linux/03.png" alt="03.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org641dea9" class="outline-3">
+<h3 id="org641dea9"><span class="section-number-3">3.3</span> 常用</h3>
+<div class="outline-text-3" id="text-3-3">
+<div class="org-src-container">
+<pre class="src src-sh">/
+    bin/   <span class="org-comment-delimiter"># </span><span class="org-comment">GNU &#29992;&#25143;&#32423;&#24037;&#20855;</span>
+    boot/  <span class="org-comment-delimiter"># </span><span class="org-comment">&#21551;&#21160;&#25991;&#20214;</span>
+    dev/   <span class="org-comment-delimiter"># </span><span class="org-comment">&#35774;&#22791;&#33410;&#28857;</span>
+    etc/   <span class="org-comment-delimiter"># </span><span class="org-comment">&#31995;&#32479;&#37197;&#32622;&#25991;&#20214;</span>
+        group
+        hosts
+        inittab  <span class="org-comment-delimiter"># </span><span class="org-comment">&#31995;&#32479;&#36816;&#34892;&#32423;</span>
+        password
+        profile
+        shadow   <span class="org-comment-delimiter"># </span><span class="org-comment">&#23494;&#30721;</span>
+    home/  <span class="org-comment-delimiter"># </span><span class="org-comment">&#29992;&#25143;&#30446;&#24405;</span>
+    lib/   <span class="org-comment-delimiter"># </span><span class="org-comment">&#31995;&#32479;&#21644;&#24212;&#29992;&#31243;&#24207;&#30340;&#24211;&#25991;&#20214;</span>
+    media/ <span class="org-comment-delimiter"># </span><span class="org-comment">&#21487;&#31227;&#21160;&#23186;&#20307;&#35774;&#22791;&#25346;&#36733;&#28857;</span>
+    mnt/   <span class="org-comment-delimiter"># </span><span class="org-comment">&#21487;&#31227;&#21160;&#23186;&#20307;&#35774;&#22791;&#25346;&#36733;&#28857;</span>
+    opt/   <span class="org-comment-delimiter"># </span><span class="org-comment">&#21487;&#36873;&#36719;&#20214;&#21253;</span>
+    proc/
+        loadavg <span class="org-comment-delimiter"># </span><span class="org-comment">&#31995;&#32479;&#36127;&#36733;&#21644;&#36827;&#31243;&#38431;&#21015;&#25968;&#25454;</span>
+        meminfo <span class="org-comment-delimiter"># </span><span class="org-comment">&#20869;&#23384;&#20351;&#29992;&#25968;&#25454;</span>
+    root/  <span class="org-comment-delimiter"># </span><span class="org-comment">&#26681;&#20027;&#30446;&#24405;</span>
+    sbin/  <span class="org-comment-delimiter"># </span><span class="org-comment">GNU &#31649;&#29702;&#21592;&#32423;&#24037;&#20855;</span>
+    tmp/   <span class="org-comment-delimiter"># </span><span class="org-comment">&#20020;&#26102;&#25991;&#20214;</span>
+    usr/   <span class="org-comment-delimiter"># </span><span class="org-comment">&#29992;&#25143;&#23433;&#35013;&#31243;&#24207;</span>
+        bin/       <span class="org-comment-delimiter"># </span><span class="org-comment">&#31995;&#32479;&#31243;&#24207;</span>
+        etc/       <span class="org-comment-delimiter"># </span><span class="org-comment">&#38468;&#21152;&#31243;&#24207;</span>
+        local/bin/ <span class="org-comment-delimiter"># </span><span class="org-comment">&#33258;&#23450;&#20041;&#21629;&#20196;&#21644;&#33050;&#26412;</span>
+        share/
+            dict/words <span class="org-comment-delimiter"># </span><span class="org-comment">&#23383;&#20856;&#25991;&#20214;</span>
+    var/   <span class="org-comment-delimiter"># </span><span class="org-comment">&#21487;&#21464;&#25991;&#20214;&#65292;&#22914;&#26085;&#24535;</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgadf6a39" class="outline-2">
+<h2 id="orgadf6a39"><span class="section-number-2">4</span> 流</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-orgee2fb57" class="outline-3">
+<h3 id="orgee2fb57"><span class="section-number-3">4.1</span> 输入</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+<code>Ctrl+D</code> 表示文件结束符。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf78d578" class="outline-2">
+<h2 id="orgf78d578"><span class="section-number-2">5</span> 用户、组</h2>
+<div class="outline-text-2" id="text-5">
+<ul class="org-ul">
+<li>用户属于一个 primary 组，多个 secondary 组。</li>
+<li>新建的用户默认属于与其同名的组。</li>
+<li>新建的文件、目录默认属于创建者和创建者所属的组。</li>
+</ul>
+</div>
+
+<div id="outline-container-org3d08d8d" class="outline-3">
+<h3 id="org3d08d8d"><span class="section-number-3">5.1</span> <code>/etc/passwd</code></h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+存储已创建的用户的信息。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">&lt;user&gt;:&lt;password&gt;:&lt;uid&gt;:&lt;gid&gt;:&lt;info&gt;:&lt;home_dir&gt;:&lt;shell&gt;
+    &lt;password&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">x &#34920;&#31034;&#21152;&#23494;&#23494;&#30721;</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#31034;&#20363;</span>
+root:x:0:0:root:/root:/bin/bash
+ubuntu:x:1001:1001:Ubuntu:/home/ubuntu:/bin/bash
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc466914" class="outline-2">
+<h2 id="orgc466914"><span class="section-number-2">6</span> 权限</h2>
+<div class="outline-text-2" id="text-6">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">文件</th>
+<th scope="col" class="org-left">目录</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>r</code></td>
+<td class="org-left">读文件</td>
+<td class="org-left">读目录内容</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>w</code></td>
+<td class="org-left">写、删除文件</td>
+<td class="org-left">新建、重命名文件</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">新建、重命名、删除子目录</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>x</code></td>
+<td class="org-left">执行文件</td>
+<td class="org-left">进入（ <code>cd</code> ）目录</td>
+</tr>
+</tbody>
+</table>
+
+<ul class="org-ul">
+<li>执行脚本语言文件必须同时有 <code>r</code> 权限。</li>
+</ul>
+</div>
+
+<div id="outline-container-org684e2fc" class="outline-3">
+<h3 id="org684e2fc"><span class="section-number-3">6.1</span> Umask</h3>
+<div class="outline-text-3" id="text-6-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">Read</th>
+<th scope="col" class="org-left">Write</th>
+<th scope="col" class="org-left">Execute</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>0</code></td>
+<td class="org-left">&check;</td>
+<td class="org-left">&check;</td>
+<td class="org-left">&check;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>1</code></td>
+<td class="org-left">&check;</td>
+<td class="org-left">&check;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>2</code></td>
+<td class="org-left">&check;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&check;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>3</code></td>
+<td class="org-left">&check;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>4</code></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&check;</td>
+<td class="org-left">&check;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>5</code></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&check;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>6</code></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&check;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>7</code></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 6: </span>执行权限只赋予新建的目录，不赋予新建的文件</label><pre class="src src-sh">$ umask
+0002
+$ touch tmp
+-rw-rw-r-- ...
+$ mkdir tmp
+drwxrwxr-x ...
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc7f3196" class="outline-3">
+<h3 id="orgc7f3196"><span class="section-number-3">6.2</span> Sticky Bit</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+目录设置 sticky bit 后，目录下新建的文件和目录会继承此目录的所属组。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ mkdir foo
+drwxrwxr-x ... root root ... foo/
+$ chgrp foo foo
+drwxrwxr-x ... root foo ... foo/
+$ chmod g+s foo                  <span class="org-comment-delimiter"># </span><span class="org-comment">&#35774;&#32622; sticky bit</span>
+drwxrwsr-x ... root foo ... foo/ <span class="org-comment-delimiter"># </span><span class="org-comment">&#32452;&#26435;&#38480;&#21464;&#20026; rws</span>
+$ cd foo
+$ touch bar
+-rw-rw-r-- ... root foo ... bar  <span class="org-comment-delimiter"># </span><span class="org-comment">&#32487;&#25215;&#25152;&#23646;&#32452; foo</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf0c28ae" class="outline-2">
+<h2 id="orgf0c28ae"><span class="section-number-2">7</span> 启动</h2>
+<div class="outline-text-2" id="text-7">
+</div><div id="outline-container-org6e1285c" class="outline-3">
+<h3 id="org6e1285c"><span class="section-number-3">7.1</span> 运行级</h3>
+<div class="outline-text-3" id="text-7-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">0</th>
+<th scope="col" class="org-left">关机</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">1</td>
+<td class="org-left">单用户模式</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-right">2</td>
+<td class="org-left">多用户模式（无网络）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-right">3</td>
+<td class="org-left">多用户模式（全功能）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-right">4</td>
+<td class="org-left">可定义用户</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-right">5</td>
+<td class="org-left">多用户模式（网络，图形化 X Window）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-right">6</td>
+<td class="org-left">重启</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+不同的运行级启动不同的程序和脚本。
+</p>
+
+<p>
+<code>/etc/inittab</code> 中列出系统的运行级，开机过程中会被读取。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd69a705" class="outline-3">
+<h3 id="orgd69a705"><span class="section-number-3">7.2</span> 开机运行</h3>
+<div class="outline-text-3" id="text-7-2">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 7: </span>系统开机运行脚本（发行版之间不同）</label><pre class="src src-sh">/etc/rc&lt;n&gt;.d <span class="org-comment-delimiter"># </span><span class="org-comment">n &#20026;&#36816;&#34892;&#32423;&#65292;rc = run commands</span>
+/etc/init.d
+/etc/init.d/rc.d
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 8: </span>本地自定义开机运行脚本（发行版之间不同）</label><pre class="src src-sh">/etc/init.d/rc.local
+/etc/init.d/boot.local
+/etc/rc.d/rc.local
+/etc/rc.local
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2541e23" class="outline-3">
+<h3 id="org2541e23"><span class="section-number-3">7.3</span> Shell 登录运行</h3>
+<div class="outline-text-3" id="text-7-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>~/.bash_profile</code></th>
+<th scope="col" class="org-left">登录时（交互式 login 方式）运行一次</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>~/.bashrc</code></td>
+<td class="org-left">登录时及每次打开新 shell 时（交互式 non-login 方式）运行</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>~/.bash_logout</code></td>
+<td class="org-left">shell 退出时运行</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-org285009b" class="outline-2">
+<h2 id="org285009b"><span class="section-number-2">8</span> Shell</h2>
+<div class="outline-text-2" id="text-8">
+</div><div id="outline-container-org39bd5d0" class="outline-3">
+<h3 id="org39bd5d0"><span class="section-number-3">8.1</span> 命令</h3>
+<div class="outline-text-3" id="text-8-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">内部命令</td>
+<td class="org-left">不需要单独的进程来运行</td>
+<td class="org-left"><code>cd</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">外部命令</td>
+<td class="org-left">需要创建（fork）和执行一个子进程</td>
+<td class="org-left"><code>/bin/ls</code></td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">对应 <code>/bin</code> 或 <code>/usr/bin</code> 下的程序</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="figure">
+<p><object type="image/svg+xml" data="../images/linux/01.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org73ed4d4" class="outline-3">
+<h3 id="org73ed4d4"><span class="section-number-3">8.2</span> 变量</h3>
+<div class="outline-text-3" id="text-8-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>Shell 变量</b></th>
+<th scope="col" class="org-left">专属于 Shell 的临时变量，不能被 Shell 运行的命令使用。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>环境变量</b></td>
+<td class="org-left">操作系统将 Shell 环境变量传递给 Shell 运行的命令。</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-org11ad1dc" class="outline-4">
+<h4 id="org11ad1dc"><span class="section-number-4">8.2.1</span> Shell 变量</h4>
+<div class="outline-text-4" id="text-8-2-1">
+<div class="org-src-container">
+<pre class="src src-sh">$ &lt;NAME&gt;=&lt;value&gt;
+$ echo $&lt;NAME&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org08f211d" class="outline-4">
+<h4 id="org08f211d"><span class="section-number-4">8.2.2</span> 环境变量</h4>
+<div class="outline-text-4" id="text-8-2-2">
+<div class="org-src-container">
+<pre class="src src-sh">$ &lt;NAME&gt;=&lt;value&gt;
+$ export &lt;NAME&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8f629d0" class="outline-4">
+<h4 id="org8f629d0"><span class="section-number-4">8.2.3</span> 环境变量列表</h4>
+<div class="outline-text-4" id="text-8-2-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>HOME</code></th>
+<th scope="col" class="org-left">Home 目录</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>PATH</code></td>
+<td class="org-left">命令搜索路径</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3821d00" class="outline-3">
+<h3 id="org3821d00"><span class="section-number-3">8.3</span> 快捷键</h3>
+<div class="outline-text-3" id="text-8-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>Ctrl</code> <code>A</code></th>
+<th scope="col" class="org-left">移动到行首</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>Ctrl</code> <code>E</code></td>
+<td class="org-left">移动到行尾</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>Ctrl</code> <code>W</code></td>
+<td class="org-left">剪切前一个词</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>Ctrl</code> <code>U</code></td>
+<td class="org-left">剪切行首到光标位置</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>Ctrl</code> <code>K</code></td>
+<td class="org-left">剪切光标位置到行尾</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>Ctrl</code> <code>Y</code></td>
+<td class="org-left">粘贴</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org187de53" class="outline-2">
+<h2 id="org187de53"><span class="section-number-2">9</span> 环境</h2>
+<div class="outline-text-2" id="text-9">
+</div><div id="outline-container-orgc499c78" class="outline-3">
+<h3 id="orgc499c78"><span class="section-number-3">9.1</span> 用户配置</h3>
+<div class="outline-text-3" id="text-9-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>~/.bashrc</code></th>
+<th scope="col" class="org-left">登录时自动运行，用于设定自定义环境变量等</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>~/.profile</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>~/.bash_profile</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-orgdc9669c" class="outline-4">
+<h4 id="orgdc9669c"><span class="section-number-4">9.1.1</span> <code>.bashrc</code></h4>
+<div class="outline-text-4" id="text-9-1-1">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 9: </span>示例：SSH 连接时显示账号过期时间</label><pre class="src src-sh"><span class="org-keyword">if</span> [ <span class="org-string">"x${SSH_TTY}"</span> != <span class="org-string">"x"</span> ]; <span class="org-keyword">then</span>
+    chage -l &lt;account&gt; | grep <span class="org-string">"Account expires"</span> | tr -d <span class="org-string">"\t"</span>
+<span class="org-keyword">fi</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgca70e4f" class="outline-2">
+<h2 id="orgca70e4f"><span class="section-number-2">10</span> 发行版</h2>
+<div class="outline-text-2" id="text-10">
+
+<div class="figure">
+<p><img src="../images/linux/02.png" alt="02.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc257bca" class="outline-2">
+<h2 id="orgc257bca"><span class="section-number-2">11</span> 链接</h2>
+<div class="outline-text-2" id="text-11">
+<ol class="org-ol">
+<li><a href="http://linux.die.net/man/">Linux man pages</a></li>
+<li><a href="http://www.linfo.org/index.html">The Linux Information Project</a></li>
+</ol>
+
+<hr />
+
+<ol class="org-ol">
+<li><a href="http://syscalls.kernelgrok.com/">Linux Syscall Reference</a></li>
+<li><a href="http://www.tutorialspoint.com/unix_system_calls/index.htm">Linux System Call</a></li>
+</ol>
+
+<hr />
+
+<ol class="org-ol">
+<li><a href="http://www.pathname.com/fhs/pub/fhs-2.3.html">Filesystem Hierarchy Standard</a></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2019-04-13 Sat 17:37</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Just Enough Software Architecture</title>
+<!-- 2018-01-28 Sun 19:48 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Just Enough Software Architecture</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Preface</a></li>
+<li><a href="#sec-2">2. Chapter 1: Introduction</a>
+<ul>
+<li><a href="#sec-2-1">2.1. Partitioning, knowledge, and abstractions</a></li>
+<li><a href="#sec-2-2">2.2. Reflections</a></li>
+<li><a href="#sec-2-3">2.3. Perspective shift</a></li>
+<li><a href="#sec-2-4">2.4. About this book</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. Chapter 2: Software Architecture</a>
+<ul>
+<li><a href="#sec-3-1">3.1. What is software architecture?</a></li>
+<li><a href="#sec-3-2">3.2. Why is software architecture important?</a></li>
+<li><a href="#sec-3-3">3.3. Presumptive architectures</a></li>
+<li><a href="#sec-3-4">3.4. How should software architecture be used?</a></li>
+<li><a href="#sec-3-5">3.5. Architecture-focused design</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. Chapter 3: Risk-Driven Model</a>
+<ul>
+<li><a href="#sec-4-1">4.1. What is the risk-driven model?</a></li>
+<li><a href="#sec-4-2">4.2. Are you risk-driven now?</a></li>
+<li><a href="#sec-4-3">4.3. Risks</a></li>
+<li><a href="#sec-4-4">4.4. Guidance on choosing techniques</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Preface</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+There is a difference between being able to hit a tennis ball and knowing why you are able to hit it, what psychologists refer to as procedural knowledge versus declarative knowledge.
+</p>
+
+<hr  />
+
+<p>
+What the best developers do is drill down into obstacles in detail, understand them, then pop back up to relate the nature of those obstacles to the architecture as a whole.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Chapter 1: Introduction</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Decade after decade, software systems have seen orders-of-magnitude increases in their size and complexity. Today's software systems are arguably the largest and most complex things ever built.
+</p>
+
+<p>
+The increases in software size and complexity have been matched by advances in software engineering. We are no smarter than developers of the previous generation, but our improved weapons allow us to build software of greater size and complexity. Assembly language programming gave way to higher-level languages and structured programming. Procedures have, in many domains, given way to objects. And software reuse, which used to mean just subroutines, is now also done with extensive libraries and frameworks.
+</p>
+
+<hr  />
+
+<p>
+Consider a coach and a rookie (a novice sports player) watching the same game. The coach sees more than the rookie, not because the coach's eyes are more acute, but because he has an intangible weapon. He has built up a set of mental abstractions that allow him to convert his perceptions of raw phenomena. Your "point of view is worth 80 IQ points".
+</p>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Partitioning, knowledge, and abstractions</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Developers partition a problem so that its parts are smaller and more tractable, they apply knowledge of similar problems, and they use abstractions to help them reason.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Reflections</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Despite having the same functionality, systems differ in their modifiability, scalability, and latency. <span class="underline">Quality attributes usually trade off against each other.</span> The third system was much more scalable than the other two, but its scalability came at the price of reduced ability to make ad hoc queries and a longer wait before results were available.
+</p>
+
+<hr  />
+
+<p>
+A "job" is an abstraction that obeys more constraints than an arbitrary "chunk of code" does. <span class="underline">It is hard to reason about an arbitrary chunk of code specifically because you cannot tell what it does not do.</span> For example, if they constrain jobs to have no side effects, they can run the same job twice, in parallel.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Perspective shift</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Developers, being human, have a hard time envisioning how the static statements of a program will execute at runtime. <code>GOTO</code> statements complicate the reasoning about runtime execution, so it is best to avoid <code>GOTO</code> statements and embrace structured programming.
+</p>
+
+<hr  />
+
+<p>
+If you do not consciously choose the architecture of your systems, then it may end up being a big ball of mud, which they estimate is the most common software architecture. Imagine what a system with 10 classes would look like, then scale it up to 100, 1000, &#x2026;, without any new abstractions or partitions, and let the objects in the system communicate with each other as is expedient.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> About this book</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+Software architecture acts as the skeleton of a system, influences quality attributes, is orthogonal to functionality, and uses constraints to influence a system's properties.
+</p>
+
+<hr  />
+
+<p>
+Building encapsulation boundaries is a crucial skill in software architecture. Users of a component or module can often ignore how it works internally, freeing their minds to solve other hard problems. And the builders of an encapsulated component or module have the freedom to change its implementation without perturbing its users.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Chapter 2: Software Architecture</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Architecture choices are most important when:
+</p>
+
+<ul class="org-ul">
+<li>the solution space is small
+</li>
+<li>the risk of failure is high
+</li>
+<li>there are difficult quality attribute requirements
+</li>
+<li>you are working in a new domain
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> What is software architecture?</h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-quote-container">
+<blockquote>
+<p>
+As the size and complexity of software systems increase, the design and specification of overall system structure become more significant issues than the choice of algorithms and data structures of computation. Structural issues include the organization of a system as a composition of components; global control structures; the protocols for communication, synchronization, and data access; the assignment of functionality to design elements; the composition of design elements; physical distribution; scaling and performance; dimensions of evolution; and selection among design alternatives. This is the software architecture level of design.
+</p>
+</blockquote>
+</div>
+
+<hr  />
+
+<p>
+Examples of architectural details that are not limited to the biggest parts in a system: The naming pattern for methods is about as low-level a decision as possible, yet it is architecturally significant for Java Beans. An architecture may prohibit threads, require a method to complete within 100ms, require computation to be divided into jobs, or other details that are down deep in the code.
+</p>
+
+<hr  />
+
+<p>
+There is a chain of intentionality from a few high-level intentions or decisions of the architect that reaches down to some low-level details. Most of the details are left open to any reasonable implementation, but some are constrained, via a chain back to the top-level intentions of the designer.
+</p>
+
+<hr  />
+
+<p>
+If a detail is important to achieve an overall quality of the system, it is probably architectural.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Why is software architecture important?</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+<span class="underline">Architecture is the art of imposing just enough constraints so that the system has the quality attributes you want.</span> A design that ensures scalability may require some components to be stateless in order to achieve that scalability.
+</p>
+
+<ul class="org-ul">
+<li><span class="underline">Constraints reduce needless creativity of developers.</span>
+</li>
+<li><span class="underline">Constraints are a means to transfer wisdom or understanding from one developer to another.</span>
+</li>
+<li>Constraints can factor out complexity, yielding a system with evident underlying principles. (Once complexity has joined the party, it can be difficult to send it home.)
+</li>
+</ul>
+
+<hr  />
+
+<p>
+An architecture is more than the big visible parts, and the invisible parts are often more important. For example, your locking policy, memory management strategy, or technique for integrating third-party components.
+</p>
+
+<hr  />
+
+<p>
+Functional requirements that evolve over time are a challenge to any system, but evolving quality attributes can force drastic changes. A system that was designed to support a hundred users may be impossible to scale up to a hundred thousand without an architectural change. You often see successive generations or waves of an application as it outgrows its old architecture, somewhat like a crab outgrowing its shell.
+</p>
+
+<hr  />
+
+<p>
+A single good idea consistently applied is better than several brilliant ideas scattered across a system.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Presumptive architectures</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+A presumptive architecture is a family of architectures that is dominant in a particular domain. Rather than justifying their choice to use it, developers in that domain may have to justify a choice that differs from the presumptive architecture.
+</p>
+
+<p>
+A reference architecture is a family of architectures that describes an architectural solution to a problem and it is usually written down as a specification. A publisher of a reference architecture may hope that it becomes a presumptive architecture, but that may never happen. That is, a reference architecture is often an aspirational standard, while a presumptive architecture is a de facto standard.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> How should software architecture be used?</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+Architecture-focused design is compatible with your goals, though that choice does not provide assurances, only opportunities.
+</p>
+
+<p>
+Architecture hoisting requires your architecture to play an active role, one that you can rely on to achieve your goals. When following an architecture hoisting approach, developers design the architecture with the intent of guaranteeing a goal or property of the system.
+</p>
+
+<p>
+The idea is that <span class="underline">once a goal or property has been hoisted into the architecture, developers should not need to write any additional code to achieve it.</span> In the architecture-indifferent or architecture-focused designs there was no code that you could point to and say, "This is the code that ensures our 50ms response time."
+</p>
+
+<p>
+Architecture hoisting can be seen as a kind of tyranny over developers, burdening them with additional constraints and bureaucracy. Or it can be seen as liberation for developers, <span class="underline">freeing them to focus on functionality instead of quality attributes.</span>
+</p>
+
+<p>
+Volkswagen GTI designers had followed architecture-focused design and included seatbelts, but I had to remember to buckle them each time. Its architecture was compatible with safety, but did not guarantee it. Today, it is impossible to buy a car that has not hoisted safety into its architecture, because every car is required to have airbags that deploy automatically. 
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-5" class="outline-3">
+<h3 id="sec-3-5"><span class="section-number-3">3.5</span> Architecture-focused design</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+Architecture-focused design seeks architectural solutions, rather than local fixes, to problems.
+</p>
+
+<hr  />
+
+<p>
+Be on the lookout for requirements that will influence your architecture choices, but these requirements are rarely stated clearly. They may be hidden in a cryptic statement from a stakeholder or be common to other systems in your domain.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Chapter 3: Risk-Driven Model</h2>
+<div class="outline-text-2" id="text-4">
+<div class="org-quote-container">
+<blockquote>
+<p>
+The concept of failure is central to the design process, and it is by thinking in terms of obviating failure that successful designs are achieved. Failure considerations and proactive failure analysis are essential for achieving success.
+</p>
+</blockquote>
+</div>
+
+<p>
+To address failure risks, the earliest software developers invented design techniques, such as domain modeling, security analyses, and encapsulation.
+</p>
+</div>
+
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> What is the risk-driven model?</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+Use risk to decide how much architecture work to do. Build successful systems by taking a path that spends your time most effectively. Apply architecture and design techniques but only when they are motivated by risks. <span class="underline">The effort spent on designing software architecture should be commensurate with the risk of failure.</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Are you risk-driven now?</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+Imagine a company that builds a 3-tier system. The first tier has the user interface and is exposed to the internet. Its biggest risks might be usability and security. The second and third tiers implement business rules and persistence; they are behind a firewall. The biggest risks might be throughput and scalability
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> Risks</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+risk = perceived probability of failure x perceived impact
+</p>
+
+<hr  />
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> Examples of project management and engineering risks</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>Project management risks</b></th>
+<th scope="col" class="left"><b>Software engineering risks</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">Lead developer hit by bus.</td>
+<td class="left">The server may not scale to 1000 users.</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Customer needs not understood.</td>
+<td class="left">Parsing of the response messages may be buggy.</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Senior VP hates our manager.</td>
+<td class="left">The system is working now but if we touch anything it may fall apart.</td>
+</tr>
+</tbody>
+</table>
+
+<hr  />
+
+<p>
+It is better to describe risks such that you can later test to see if they have been mitigated. Describe each risk of failure as a testable failure scenario, such as "During peak loads, customers experience user interface latencies greater than five seconds."
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> Guidance on choosing techniques</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+In his book How to Solve It, George Polya identifies two distinct kinds of math problems: problems to find and problems to prove. <span class="underline">Finding things tends to be easier than proving things because for proofs you need to demonstrate something is true in all possible cases.</span>
+</p>
+
+<p>
+It is easy to imagine writing a test case for "Can the database hold names up to 100 characters?" Conversely, it is hard to imagine a small set of test cases providing persuasive evidence when you have a problem to prove. Your tests could succeed, but there could be a case you have not yet seen. An example of a problem to prove is deadlock: Any number of tests can run successfully without revealing a problem in a locking protocol.
+</p>
+
+<hr  />
+
+<p>
+In an analogic model, each model element has an analogue in the domain of interest. A radar screen is an analogic model of some terrain, where blips on the screen correspond to airplanes, the blip and the airplane are analogues. Analogic models support analysis only indirectly, and usually domain knowledge or human reasoning are required. A radar screen can't answer the question "Are these planes on a collision course?" To do so you need to use your special purpose brainpower.
+</p>
+
+<p>
+<span class="underline">An analytic model, by contrast, directly supports computational analysis.</span> Mathematical equations are examples of analytic models, as are state machines. You could imagine an analytic model of the airplanes where each is represented by a vector. Mathematics provides an analytic capability to relate the vectors, so you could quantitatively answer questions about collision courses.
+</p>
+
+<p>
+When you know what risks you want to mitigate, you can appropriately choose an analytic or analogic model. For example, if you are concerned that your engineers may not understand the relationships between domain entities, you may build an analogic model in UML and confirm it with domain experts. Conversely, if you need to calculate response time distributions, then you will want an analytic model.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2018-01-28 Sun 19:48</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

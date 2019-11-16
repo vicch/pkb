@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>PHP Tool</title>
+<!-- 2017-08-26 Sat 22:56 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">PHP Tool</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. CodeSniffer</a>
+<ul>
+<li><a href="#sec-1-1">1.1. 命令行</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. Phing</a></li>
+<li><a href="#sec-3">3. PHPUnit</a>
+<ul>
+<li><a href="#sec-3-1">3.1. 命令行</a></li>
+<li><a href="#sec-3-2">3.2. 示例</a></li>
+<li><a href="#sec-3-3">3.3. <code>PHPUnit_Framework_TestCase</code></a>
+<ul>
+<li><a href="#sec-3-3-1">3.3.1. <code>assertEquals()</code> <code>assertNotEquals()</code></a></li>
+<li><a href="#sec-3-3-2">3.3.2. <code>assertTrue()</code> <code>assertFalse()</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> CodeSniffer</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> 命令行</h3>
+<div class="outline-text-3" id="text-1-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">phpcs &lt;options&gt; &lt;file/dir&gt;
+
+&lt;options&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#26631;&#20934;</span>
+    --standard= <span class="org-comment-delimiter"># </span><span class="org-comment">&#25351;&#23450;&#26631;&#20934;&#65292;e.g. PEAR</span>
+    --sniffs=   <span class="org-comment-delimiter"># </span><span class="org-comment">&#21482;&#26816;&#26597;&#25351;&#23450;&#35268;&#21017;&#65292;e.g. Generic.PHP.LowerCaseConstant</span>
+    -e          <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#25351;&#23450;&#26631;&#20934;&#30340;&#35268;&#21017;&#21015;&#34920;</span>
+
+&lt;options&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#36755;&#20986;</span>
+    -s        <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#35268;&#21017;&#20195;&#30721;</span>
+    --report= <span class="org-comment-delimiter"># </span><span class="org-comment">&#25253;&#21578;&#26684;&#24335;&#65292;&#40664;&#35748;&#20026; full</span>
+        full
+        summary
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Phing</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Phing is a PHP project build tool based on ​Apache Ant. It interprets XML build files and processes PHP source files, for example, copy the files from source directory to target locations.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> PHPUnit</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> 命令行</h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">phpunit &lt;options&gt; &lt;test&gt;
+
+&lt;options&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#26085;&#24535;</span>
+    --log-tap &lt;file&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#20197; TAP &#26684;&#24335;&#35760;&#24405;&#27979;&#35797;&#32467;&#26524;&#21040;&#25991;&#20214;</span>
+
+&lt;options&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#25191;&#34892;</span>
+    --bootstrap &lt;script&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#29992;&#20110;&#35774;&#32622;&#33258;&#21160;&#21152;&#36733;&#31561;</span>
+    -v, --verbose
+
+&lt;test&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#27979;&#35797;&#31867;&#25991;&#20214;&#65292;&#25110;&#27979;&#35797;&#30446;&#24405;</span>
+       <span class="org-comment-delimiter"># </span><span class="org-comment">&#27979;&#35797;&#30446;&#24405;&#19979;&#25152;&#26377;&#23450;&#20041;&#22312; *Test.php &#20013;&#30340;&#27979;&#35797;&#37117;&#23558;&#34987;&#25191;&#34892;</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> 示例</h3>
+<div class="outline-text-3" id="text-3-2">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-keyword">class</span> <span class="org-type">SomeTest</span> <span class="org-keyword">extends</span> <span class="org-type">PHPUnit_Framework_TestCase</span>
+{
+    <span class="org-keyword">public</span> <span class="org-keyword">function</span> <span class="org-function-name">testSomething</span>()
+    {
+        $<span class="org-constant">this</span>-&gt;<span class="org-function-name">assertEquals</span>(<span class="org-default">0</span>, $<span class="org-variable-name">var</span>);
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> <code>PHPUnit_Framework_TestCase</code></h3>
+<div class="outline-text-3" id="text-3-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>assertEquals()</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+
+<tr>
+<th scope="col" class="left"><code>assertNotEquals()</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>assertTrue()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left"><code>assertFalse()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-3-3-1" class="outline-4">
+<h4 id="sec-3-3-1"><span class="section-number-4">3.3.1</span> <code>assertEquals()</code> <code>assertNotEquals()</code></h4>
+<div class="outline-text-4" id="text-3-3-1">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-function-name">assertEquals</span> (
+<span class="org-function-name">assertNotEquals</span> (
+    <span class="org-type">mixed</span>  $<span class="org-variable-name">expected</span>
+,   <span class="org-type">mixed</span>  $<span class="org-variable-name">actual</span>
+[,  <span class="org-type">string</span> $<span class="org-variable-name">message</span> = <span class="org-string">''</span>
+])
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">包含误差</label>
+<pre class="src src-php"><span class="org-function-name">assertEquals</span>(
+    <span class="org-type">float</span>  $<span class="org-variable-name">expected</span>
+,   <span class="org-type">float</span>  $<span class="org-variable-name">actual</span>
+[,  <span class="org-type">string</span> $<span class="org-variable-name">message</span> = <span class="org-string">''</span>
+,   <span class="org-type">float</span>  $<span class="org-variable-name">delta</span> = <span class="org-default">0</span>
+])
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-3-2" class="outline-4">
+<h4 id="sec-3-3-2"><span class="section-number-4">3.3.2</span> <code>assertTrue()</code> <code>assertFalse()</code></h4>
+<div class="outline-text-4" id="text-3-3-2">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-function-name">assertFalse</span>(
+$<span class="org-variable-name">expression</span>,
+$<span class="org-variable-name">message</span>)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2017-08-26 Sat 22:56</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

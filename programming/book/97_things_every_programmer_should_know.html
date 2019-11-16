@@ -1,0 +1,1824 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>97 Things Every Programmer Should Know</title>
+<!-- 2017-03-01 Wed 22:22 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
+
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">97 Things Every Programmer Should Know</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. API</a>
+<ul>
+<li><a href="#sec-1-1">1.1. Convenience Is Not an -ility</a></li>
+<li><a href="#sec-1-2">1.2. The Golden Rule of API Design</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. Architecture</a>
+<ul>
+<li><a href="#sec-2-1">2.1. Better Scalability in Parallel Systems</a></li>
+<li><a href="#sec-2-2">2.2. Large, Interconnected Data Belongs to a Database</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. Basics</a>
+<ul>
+<li><a href="#sec-3-1">3.1. Floating-Point Numbers</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. Build</a>
+<ul>
+<li><a href="#sec-4-1">4.1. Keep the Build Clean</a></li>
+<li><a href="#sec-4-2">4.2. The Linker</a></li>
+<li><a href="#sec-4-3">4.3. Own and Refactor the Build</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5. Code Analysis</a>
+<ul>
+<li><a href="#sec-5-1">5.1. Automate Coding Standard</a></li>
+<li><a href="#sec-5-2">5.2. Code Analysis Tools</a></li>
+<li><a href="#sec-5-3">5.3. Dirty Code Bombs</a></li>
+<li><a href="#sec-5-4">5.4. Let Your Project Speak for Itself</a></li>
+<li><a href="#sec-5-5">5.5. Write Small Functions Using Examples</a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6. Coding</a>
+<ul>
+<li><a href="#sec-6-1">6.1. Before You Refactor</a></li>
+<li><a href="#sec-6-2">6.2. Beware the Share</a></li>
+<li><a href="#sec-6-3">6.3. Code Layout Matters</a></li>
+<li><a href="#sec-6-4">6.4. Coding with Reason</a></li>
+<li><a href="#sec-6-5">6.5. Improve Code by Removing It</a></li>
+<li><a href="#sec-6-6">6.6. Know Your Next Commit</a></li>
+<li><a href="#sec-6-7">6.7. Only the Code Tells the Truth</a></li>
+<li><a href="#sec-6-8">6.8. Read Code</a></li>
+</ul>
+</li>
+<li><a href="#sec-7">7. Commenting</a>
+<ul>
+<li><a href="#sec-7-1">7.1. A Comment on Comments</a></li>
+<li><a href="#sec-7-2">7.2. Comment Only What the Code Cannot Say</a></li>
+</ul>
+</li>
+<li><a href="#sec-8">8. Debugging</a>
+<ul>
+<li><a href="#sec-8-1">8.1. Check Your Code First</a></li>
+<li><a href="#sec-8-2">8.2. How to Use a Bug Tracker</a></li>
+<li><a href="#sec-8-3">8.3. Two Wrongs Can Make a Right</a></li>
+</ul>
+</li>
+<li><a href="#sec-9">9. Deployment</a>
+<ul>
+<li><a href="#sec-9-1">9.1. Deploy Early and Often</a></li>
+<li><a href="#sec-9-2">9.2. Don't Touch That Code!</a></li>
+<li><a href="#sec-9-3">9.3. One Binary</a></li>
+</ul>
+</li>
+<li><a href="#sec-10">10. Design Principles</a>
+<ul>
+<li><a href="#sec-10-1">10.1. Don't Repeat Yourself</a></li>
+<li><a href="#sec-10-2">10.2. The Single Responsibility Principle</a></li>
+<li><a href="#sec-10-3">10.3. Thinking in States</a></li>
+</ul>
+</li>
+<li><a href="#sec-11">11. Design Patterns</a>
+<ul>
+<li><a href="#sec-11-1">11.1. The Singleton Pattern</a></li>
+</ul>
+</li>
+<li><a href="#sec-12">12. Domains</a>
+<ul>
+<li><a href="#sec-12-1">12.1. Code in the Language of the Domain</a></li>
+<li><a href="#sec-12-2">12.2. Prefer Domain-Specific Types</a></li>
+</ul>
+</li>
+<li><a href="#sec-13">13. Errors</a>
+<ul>
+<li><a href="#sec-13-1">13.1. Business Exceptions</a></li>
+<li><a href="#sec-13-2">13.2. Don't Ignore That Error!</a></li>
+<li><a href="#sec-13-3">13.3. Prevent Errors</a></li>
+<li><a href="#sec-13-4">13.4. Verbose Logging</a></li>
+</ul>
+</li>
+<li><a href="#sec-14">14. Learning</a>
+<ul>
+<li><a href="#sec-14-1">14.1. Continuous Learning</a></li>
+<li><a href="#sec-14-2">14.2. Deliberate Practice</a></li>
+<li><a href="#sec-14-3">14.3. Hard Work Does Not Pay Off</a></li>
+<li><a href="#sec-14-4">14.4. Know More Programming Languages</a></li>
+<li><a href="#sec-14-5">14.5. Reinvent the Wheel Often</a></li>
+</ul>
+</li>
+<li><a href="#sec-15">15. OOP</a>
+<ul>
+<li><a href="#sec-15-1">15.1. Encapsulate Behavior and State</a></li>
+<li><a href="#sec-15-2">15.2. Polymorphism</a></li>
+</ul>
+</li>
+<li><a href="#sec-16">16. Performance</a>
+<ul>
+<li><a href="#sec-16-1">16.1. Interprocess Communication</a></li>
+<li><a href="#sec-16-2">16.2. Know Your Limits</a></li>
+</ul>
+</li>
+<li><a href="#sec-17">17. Practice</a>
+<ul>
+<li><a href="#sec-17-1">17.1. Don't Rely on "Magic Happens Here"</a></li>
+<li><a href="#sec-17-2">17.2. Learn to Estimate</a></li>
+<li><a href="#sec-17-3">17.3. Make the Invisible More Visible</a></li>
+<li><a href="#sec-17-4">17.4. The Boy Scout Rule</a></li>
+</ul>
+</li>
+<li><a href="#sec-18">18. Quality</a>
+<ul>
+<li><a href="#sec-18-1">18.1. Code Is Design</a></li>
+</ul>
+</li>
+<li><a href="#sec-19">19. Teamwork</a>
+<ul>
+<li><a href="#sec-19-1">19.1. Code Reviews</a></li>
+<li><a href="#sec-19-2">19.2. Pair Program</a></li>
+<li><a href="#sec-19-3">19.3. Start from Yes</a></li>
+<li><a href="#sec-19-4">19.4. Two Heads Are Better Than One</a></li>
+</ul>
+</li>
+<li><a href="#sec-20">20. Testing</a>
+<ul>
+<li><a href="#sec-20-1">20.1. Test for Required Behavior</a></li>
+<li><a href="#sec-20-2">20.2. Testing Is the Engineering Rigor of Software Development</a></li>
+<li><a href="#sec-20-3">20.3. Test Precisely and Concretely</a></li>
+<li><a href="#sec-20-4">20.4. Test While You Sleep</a></li>
+<li><a href="#sec-20-5">20.5. When Programmers and Testers Collaborate</a></li>
+<li><a href="#sec-20-6">20.6. Write Tests for People</a></li>
+</ul>
+</li>
+<li><a href="#sec-21">21. Tools</a>
+<ul>
+<li><a href="#sec-21-1">21.1. Command-Line Tools</a></li>
+<li><a href="#sec-21-2">21.2. Step Back and Automate</a></li>
+<li><a href="#sec-21-3">21.3. Unix Tools</a></li>
+<li><a href="#sec-21-4">21.4. Version Control</a></li>
+</ul>
+</li>
+<li><a href="#sec-22">22. Users</a>
+<ul>
+<li><a href="#sec-22-1">22.1. Customers Do Not Mean What They Say</a></li>
+<li><a href="#sec-22-2">22.2. Read the Humanities</a></li>
+<li><a href="#sec-22-3">22.3. What Would the User Do?</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> API</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Convenience Is Not an -ility</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+APIs are supposed to hide underlying complexity.
+</p>
+
+<p>
+A good API follows a consistent level of abstraction, exhibits consistency and symmetry, and forms the vocabulary for an expressive language, which enables the next layer above to ask and answer useful questions.
+</p>
+
+<p>
+A diverse vocabulary allows us to express subtleties in meaning. For example, we prefer to say <code>run()</code> instead of <code>walk(true)</code>.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> The Golden Rule of API Design</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+When designing and API, you have to think about how you might change it in the future and whether the changes might break client code. The easiest way is to lock down the API, present the API through a singleton or use <code>static</code> factory methods to guard it from people who might override behavior.
+</p>
+
+<p>
+It's not enough to write tests for an API you develop; you have to write unit tests for code that uses your API. 
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Architecture</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Better Scalability in Parallel Systems</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Concurrency, and especially parallelism, a special subset of concurrency is hard. Almost all the <span class="underline">problems of concurrency relate to the use of shared mutable memory</span>: race conditions, deadlock, livelock, etc.
+</p>
+
+<p>
+Harnessing true parallelism becomes more important, because computers have more cores, and we can no longer rely on increasing processor clock speeds to improve application performance.
+</p>
+
+<p>
+Instead of using threads and shared memory as programming model, we can use processes and message passing. Such systems do not have all the synchronization stresses that shared-memory, multithreaded systems have. Use — or, if they don't exist, create — libraries and frameworks that provide process models and message passing, avoiding all use of shared mutable memory.
+</p>
+
+<p>
+A formal model, Communicating Sequential Processes (CSP), can be applied as part of the engineering of such systems.
+</p>
+
+<p>
+Alternatively we can adopt dataflow systems as a way of computing. In a dataflow system, there is no explicitly programmed control flow. Instead, a directed graph of operators, connected by data paths, is set up and then data is fed into the system. Evaluation is controlled by the readiness of data within the system. There is no synchronization problem.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Large, Interconnected Data Belongs to a Database</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+<del>Embedded database systems</del> can be linked as libraries directly into the application, requiring almost no setup or management. Two notable open source ones are SQLite and HSQLDB.
+</p>
+
+<p>
+If the application's data is larger than the system's RAM, an indexed RDBMS table will perform orders of magnitude faster than the library's map collection type, which will thrash virtual memory pages.
+</p>
+
+<p>
+Another advantage of basing code around an RDBMS involves the handling of relationships between data elements. You can describe consistency constraints on data in a declarative way, avoiding the risk of the dangling pointers if you forget to update data in an edge case.
+</p>
+
+<p>
+You can also create efficient links between the entities stored in the database at any time, simply by creating an index.
+</p>
+
+<p>
+Coding around a database allows multiple applications to access data in a safe way. This makes it easy to upgrade the application for concurrent use and also to code each part of the application using the most appropriate language and platform.
+</p>
+
+<p>
+RDBMS will optimize SQL commands, allowing you to concentrate on the application's functionality rather than on algorithmic tuning.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Basics</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Floating-Point Numbers</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+Floating-point numbers have limited precision. They are approximations of real numbers. Floating-point numbers are intended for efficient scientific computation.
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">Floating-point numbers are not evenly spaced throughout their range:</label>
+<pre class="src src-c"><span class="org-type">float</span> <span class="org-variable-name">a</span> = 2147483647;   <span class="org-comment-delimiter">// </span><span class="org-comment">Largest 32-bit signed integer</span>
+printf(<span class="org-string">"%f\n"</span>, a);      <span class="org-comment-delimiter">// </span><span class="org-comment">2147483648.000000</span>
+printf(<span class="org-string">"%f\n"</span>, a - 64); <span class="org-comment-delimiter">// </span><span class="org-comment">2147483648.000000</span>
+printf(<span class="org-string">"%f\n"</span>, a - 65); <span class="org-comment-delimiter">// </span><span class="org-comment">2147483520.000000</span>
+</pre>
+</div>
+
+<p>
+Because the spacing between adjacent floats in that range is 128, and floating-point operations round to the nearest floating-point number.
+</p>
+
+<p>
+Don't use floating-point numbers for financial applications — that's what <code>decimal</code> classes in languages like Python and C# are for.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Build</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Keep the Build Clean</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+Ignoring things is mental work. Get rid of all the unnecessary mental work. When something appears that it is unnecessary to see, deal with it right away, (instead of deciding if it is irrelevant every time it is encountered).
+</p>
+
+<p>
+Keeping the build clean is not just about keeping it free of compilation errors or test failures: warnings are also an important and critical part of code hygiene.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> The Linker</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+A linker does:
+</p>
+
+<ul class="org-ul">
+<li>concatenate together the code and data sections of the object files
+</li>
+<li>connect the references to symbols with their definitions
+</li>
+<li>pull unresolved symbols out of the library
+</li>
+<li>write out an executable
+</li>
+</ul>
+
+<div class="org-src-container">
+<label class="org-src-name">Declarations (normally in header files) generate external references to the symbols:</label>
+<pre class="src src-c"><span class="org-keyword">extern</span> <span class="org-type">int</span> <span class="org-variable-name">foo</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">Generates an external reference to the symbol "foo"</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">Definitions (usually in implementation files) set aside storage for the symbols:</label>
+<pre class="src src-c"><span class="org-type">int</span> <span class="org-variable-name">foo</span> = 3;
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>Linker reports "multiply defined" when more than 1 definition is found for a symbol.
+</li>
+<li>Linker reports "unresolved symbol" when no definition is found for a symbol.
+</li>
+</ul>
+
+<p>
+Linker generates a map file, which is a list of all the symbols in the executable, along with their addresses. This tells what modules were linked in from the library, and the sizes of each module. 
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> Own and Refactor the Build</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+<span class="underline">The build is an essential part of the development process.</span> It <span class="underline">creates executable artifacts</span> for developers and end users to test and run. It <span class="underline">defines the component architecture</span> of the application. Build scripts are often written in a different language than source code.
+</p>
+
+<p>
+Testing as we code is necessary to being able to deliver value predictably. In much the same way, the build process needs to be owned by the development team.
+</p>
+
+<p>
+Automating configuration in the build can enable you to get consistent results when multiple people are working on a project, avoiding an "it works for me" conversation.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Code Analysis</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Automate Coding Standard</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+One reason to format the code in a uniform way is so that nobody can "own" a piece of code by formatting it in his private way. 
+</p>
+
+<ul class="org-ul">
+<li>Make code formatting part of the build process.
+</li>
+<li>Use static code analysis tools to scan the code for antipatterns.
+</li>
+<li>Do not only measure test coverage, but automatically check the results. Break the build if test coverage is too low.
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> Code Analysis Tools</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+Most languages, particularly ones branded dynamic, expose their abstract syntax tree and compiler tools as part of their standard library. These often contain hidden gems that are useful for static analysis and dynamic testing.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> Dirty Code Bombs</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+Measure and control the degree and depth of coupling and complexity of code. Software metrics can be used to count the occurrences of specific features in code.
+</p>
+
+<ul class="org-ul">
+<li>Fan-out: the number of classes referenced either directly or indirectly from a class of interest, or the count of all the classes that must be compiled before this class can be compiled.
+</li>
+<li>Fan-in: the count of all classes that depend upon the class of interest.
+</li>
+</ul>
+
+<p>
+Instability factor: $I = \text{fo} / (\text{fi} + \text{fo})$. As \(I\) approaches 0, the package becomes more stable. The goal in refactoring is to move \(I\) closer to 0.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-4" class="outline-3">
+<h3 id="sec-5-4"><span class="section-number-3">5.4</span> Let Your Project Speak for Itself</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+Include static code analysis in continuous integration server to gather code metrics. Delegate this task to the project itself and rely on it to report when things get worse.
+</p>
+
+<p>
+Give your project a voice by email or instant messaging, informing the developers about the latest decline or improvement in numbers. Use extreme feedback device (XFD) to drive a physical device such as a lamp, a toy robot, or even a USB rocket launcher, based on the results of the automatic analysis.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-5" class="outline-3">
+<h3 id="sec-5-5"><span class="section-number-3">5.5</span> Write Small Functions Using Examples</h3>
+<div class="outline-text-3" id="text-5-5">
+<p>
+<span class="underline">Tests can demonstrate the presence of features, but tests cannot prove the absence of bugs.</span> To write code that is correct, and have evidence on hand that it is correct, we need to think about the "size" of a function — the size of the mathematical function that the code manifests.
+</p>
+
+<p>
+A mathematical function can be understood as a set, some subset of the Cartesian product of the sets that are its domain (all possible arguments) and range (all possible results).
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">In the game of Go there is a condition called atari in which a player's stones may be captured by opponent: a stone with 2 or more free spaces adjacent to it (called liberties) is not in atari.</label>
+<pre class="src src-c"><span class="org-type">boolean</span> <span class="org-function-name">atari</span>(<span class="org-type">int</span> <span class="org-variable-name">libertyCount</span>)
+    libertyCount &lt; 2
+</pre>
+</div>
+
+<p>
+If argument <code>int</code> can have 2^32 = 4,294,976,296 different values, and result <code>boolean</code> can have 2 values, then there are 8,589,934,592 members in the Cartesian product of the sets, and half of these belong to the subset which is the function. To provide complete evidence that the function is correct, it will need to check around 4.3E9 examples.
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">The nature of Go means that the number of liberties of a stone is not any <code>int</code>, but exactly one of <code>{1,2,3,4}</code>. So it can be alternatively wrote:</label>
+<pre class="src src-c">LibertyCount = {1,2,3,4}
+<span class="org-type">boolean</span> <span class="org-function-name">atari</span>(<span class="org-type">LibertyCount</span> <span class="org-variable-name">libertyCount</span>)
+    libertyCount == 1
+</pre>
+</div>
+
+<p>
+This is one reason why it's a good idea to <span class="underline">use types closely related to the problem domain to write programs, rather than native types</span>. Using domain-inspired types can often make the functions much smaller.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Coding</h2>
+<div class="outline-text-2" id="text-6">
+</div><div id="outline-container-sec-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Before You Refactor</h3>
+<div class="outline-text-3" id="text-6-1">
+<ul class="org-ul">
+<li>Avoid the temptation to rewrite everything. It is best to reuse as much code as possible.
+</li>
+<li>Many incremental changes are better than one massive change.
+</li>
+</ul>
+
+<p>
+Throwing away the old code means throwing away months (or years) of tested, battle-hardened code that may have had certain workarounds and bug fixes you aren't aware of.
+</p>
+
+<p>
+That the style or the structure of the code does not meet your personal preference is not a valid reason for restructuring. Thinking you could do a better job than the previous programmer is not a valid reason, either.
+</p>
+
+<p>
+New technology is an insufficient reason to refactor. Unless a cost-benefit analysis shows that a new language or framework will result in significant improvements in functionality, maintainability, or productivity, it is best to leave it as it is.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> Beware the Share</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+The fact that wildly different parts of the system performed some logic in the same way meant less than you thought. Similar code were accidental, a temporal anomaly, a coincidence. They could evolve independently. Each could change its logic to suit the needs of the system's changing business environment.
+</p>
+
+<p>
+While the absolute number of lines of code is decreased, the number of dependencies could be increased.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-6-3" class="outline-3">
+<h3 id="sec-6-3"><span class="section-number-3">6.3</span> Code Layout Matters</h3>
+<div class="outline-text-3" id="text-6-3">
+<p>
+A research suggests that we spend much more of programming time navigating and reading code — finding where to make the change — than actually typing.
+</p>
+
+<p>
+People are good at visual pattern matching. If <span class="underline">code that behaves the same looks the same</span>, then perceptual system will help pick out the differences.
+</p>
+
+<p>
+Line breaks and groupings reflect the intention of the code.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-6-4" class="outline-3">
+<h3 id="sec-6-4"><span class="section-number-3">6.4</span> Coding with Reason</h3>
+<div class="outline-text-3" id="text-6-4">
+<p>
+Divide the code into short sections, at each endpoint, the state of the program (namely, the program counter and the values of all objects) satisfies an easily described property, and so that the functionality of that section (state transformation) is easy to describe as a single task.
+</p>
+
+<ul class="org-ul">
+<li>Avoid using modifiable global variables.
+</li>
+<li>Each variable should have the smallest possible scope.
+</li>
+<li>If you need a nested section, make it a function.
+</li>
+<li>Grouping related parameters into a single object.
+</li>
+<li>Each unit of code, from a block to a library, should have a narrow interface.
+<ul class="org-ul">
+<li>Getters that return internal state are a liability. <span class="underline">Don't ask an object for information to work with. Instead, ask the object to do the work with the information it already has.</span>
+</li>
+<li>In order to preserve class invariants, usage of setters should be discouraged.
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-6-5" class="outline-3">
+<h3 id="sec-6-5"><span class="section-number-3">6.5</span> Improve Code by Removing It</h3>
+<div class="outline-text-3" id="text-6-5">
+<ul class="org-ul">
+<li>Write code because it adds value, not because it amuses you.
+</li>
+<li>If you don't need it right now, don't write it right now.
+</li>
+<li>It always takes longer to write and to maintain extra code. A small, extra bit of code snowballs over time into a large piece of work that needs maintenance.
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-6-6" class="outline-3">
+<h3 id="sec-6-6"><span class="section-number-3">6.6</span> Know Your Next Commit</h3>
+<div class="outline-text-3" id="text-6-6">
+<p>
+Know your next commit. If you cannot finish, throw away your changes, then define a new task you believe in with the insights you have gained. Do speculative experimentation whenever needed, but do not let yourself slip into speculative mode without noticing. Do not commit guesswork into repository.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-6-7" class="outline-3">
+<h3 id="sec-6-7"><span class="section-number-3">6.7</span> Only the Code Tells the Truth</h3>
+<div class="outline-text-3" id="text-6-7">
+<p>
+To make code tell the truth as clearly as possible:
+</p>
+
+<ul class="org-ul">
+<li>Strive for good names.
+</li>
+<li>Structure code with respect to cohesive functionality.
+</li>
+<li>Decouple code to achieve orthogonality.
+</li>
+<li>Write automated tests explaining the intended behavior and check the interfaces.
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-6-8" class="outline-3">
+<h3 id="sec-6-8"><span class="section-number-3">6.8</span> Read Code</h3>
+<div class="outline-text-3" id="text-6-8">
+<p>
+Reading other people's code is particularly hard. Not necessarily because other people's code is bad, but because they probably think and solve problems in a different way than you.
+</p>
+
+<p>
+Dependency-breaking techniques may be good for low coupling, but they can sometimes also make code harder to read.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Commenting</h2>
+<div class="outline-text-2" id="text-7">
+</div><div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> A Comment on Comments</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+Header comments should give any programmer enough information to use the code without having to read it, while inline comments should assist the next developer in fixing or extending it.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-7-2" class="outline-3">
+<h3 id="sec-7-2"><span class="section-number-3">7.2</span> Comment Only What the Code Cannot Say</h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+Comments that parrot the code offer nothing extra to the reader. <span class="underline">Comments should be treated as though they were code.</span> Each comment should add some value for the reader.
+</p>
+
+<p>
+Any shortfall <span class="underline">between what you can express in code and what you would like to express</span> in total becomes a plausible candidate for a useful comment.
+</p>
+
+<p>
+Version-related comments and commented-out code try to address questions of versioning and history. These questions have already been answered (far more effectively) by version control tools.
+</p>
+
+<p>
+A prevalence of noisy comments and incorrect comments in a codebase encourages programmers to ignore all comments.
+</p>
+
+<p>
+<span class="underline">Instead of compensating for poor method or class names, rename them. Instead of commenting sections in long functions, extract smaller functions whose names capture the former sections' intent.</span>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Debugging</h2>
+<div class="outline-text-2" id="text-8">
+</div><div id="outline-container-sec-8-1" class="outline-3">
+<h3 id="sec-8-1"><span class="section-number-3">8.1</span> Check Your Code First</h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+Usual debugging advices:
+</p>
+
+<ul class="org-ul">
+<li>Isolate the problem, stub out calls, and surround it with tests.
+</li>
+<li>Check calling conventions, shared libraries, and version numbers.
+</li>
+<li>Explain it to someone else.
+</li>
+<li>Look out for stack corruption and variable type mismatches.
+</li>
+<li>Try the code on different machines and build configurations.
+</li>
+</ul>
+
+<p>
+All the recommendations to favor simple code are multiplied when a system is multithreaded. Debugging and unit tests cannot be relied on to find such bugs with any consistency, so simplicity of design is paramount.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-8-2" class="outline-3">
+<h3 id="sec-8-2"><span class="section-number-3">8.2</span> How to Use a Bug Tracker</h3>
+<div class="outline-text-3" id="text-8-2">
+<p>
+A good bug report needs to convey:
+</p>
+
+<ul class="org-ul">
+<li>How to reproduce the bug.
+</li>
+<li>What should have happened.
+</li>
+<li>What actually happened.
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-8-3" class="outline-3">
+<h3 id="sec-8-3"><span class="section-number-3">8.3</span> Two Wrongs Can Make a Right</h3>
+<div class="outline-text-3" id="text-8-3">
+<p>
+Code never lies, but it can contradict itself.
+</p>
+
+<p>
+Consider a function that returns a completion status. Imagine that it returns <code>false</code> when it should return <code>true</code>. Now imagine that the calling function neglects to check the return value. Everything works fine until one day someone notices the missing check and inserts it.
+</p>
+
+<p>
+Consider an application that stores state as an XML document. Imagine that one of the nodes is incorrectly written as <code>TimeToLive</code> instead of <code>TimeToDie</code>, as the documentation says it should. Everything appears fine while the writer code and the reader code both contain the same error. But fix one, or add a new application reading the same document, and the symmetry is broken.
+</p>
+
+<p>
+<span class="underline">When two defects in the code create one visible fault, the methodical approach to fixing faults can itself break down.</span> When the first defect is fixed, the second defect is at work. So the first fix is removed. The second underlying defect is found, and a fix applied for that. But the first defect has returned. The process repeats.
+</p>
+
+<p>
+The problem also exists in written requirements documents. An error in the code compensates for an error in the written description.
+</p>
+
+<p>
+Single wrongs can be easy to spot and easy to fix. It is the problems with multiple causes, needing multiple changes, that are harder to resolve. In part, this is because <span class="underline">easy problems are so easily fixed that people tend to fix them relatively quickly and store up the more difficult problems for a later date</span>.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> Deployment</h2>
+<div class="outline-text-2" id="text-9">
+</div><div id="outline-container-sec-9-1" class="outline-3">
+<h3 id="sec-9-1"><span class="section-number-3">9.1</span> Deploy Early and Often</h3>
+<div class="outline-text-3" id="text-9-1">
+<p>
+The installation/deployment process is the first thing that the customer sees, and a simple one is the first step to having a reliable (or, at least, easy to debug) production environment.
+</p>
+
+<p>
+Starting your project with an installation process. Running and testing the installation process on a clean environment periodically, to check for assumptions in the code that rely on the development or test environments.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-9-2" class="outline-3">
+<h3 id="sec-9-2"><span class="section-number-3">9.2</span> Don't Touch That Code!</h3>
+<div class="outline-text-3" id="text-9-2">
+<p>
+In most web-based development environments, the architecture can be broken down:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>Environment</b></th>
+<th scope="col" class="left"><b>Tests</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">Local development (developer's machine)</td>
+<td class="left">Unit testing</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Development server</td>
+<td class="left">Manual or automated integration testings</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Staging server</td>
+<td class="left">Acceptance testings by QA team and users</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Production server</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+A developer should never have access beyond the development server.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-9-3" class="outline-3">
+<h3 id="sec-9-3"><span class="section-number-3">9.3</span> One Binary</h3>
+<div class="outline-text-3" id="text-9-3">
+<p>
+Don't use build to rewrite the code to generate custom settings for each target environment. Hold environment-specific details in the environment (in the component container, in a known file, or in the path).
+</p>
+
+<p>
+Keep the environment information versioned. The environmental information should be versioned separately from the code, since they'll change at different rates and for different reasons.
+</p>
+
+<p>
+Separate core features with platform-specific features.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> Design Principles</h2>
+<div class="outline-text-2" id="text-10">
+</div><div id="outline-container-sec-10-1" class="outline-3">
+<h3 id="sec-10-1"><span class="section-number-3">10.1</span> Don't Repeat Yourself</h3>
+<div class="outline-text-3" id="text-10-1">
+<p>
+<span class="underline">Every line of code that goes into an application must be maintained, and is a potential source of future bugs.</span> Duplication needlessly bloats the codebase, resulting in more opportunities for bugs and adding accidental complexity to the system. DRY requires that <span class="underline">every piece of knowledge must have a single, unambiguous, authoritative representation within a system</span>.
+</p>
+
+<p>
+Wherever painful manual processes exist that can be automated, they should be automated and standardized. The goal is to <span class="underline">ensure that there is only one way of accomplishing the task, and it is as painless as possible</span>.
+</p>
+
+<p>
+Many design patterns have the explicit goal of reducing or eliminating duplication in logic within an application.
+</p>
+
+<ul class="org-ul">
+<li>If an object typically requires several things to happen before it can be used, this can be accomplished with an Abstract Factory or a Factory Method pattern.
+</li>
+<li>If an object has many possible variations in its behavior, these behaviors can be injected using the Strategy pattern rather than large if-then structures.
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-10-2" class="outline-3">
+<h3 id="sec-10-2"><span class="section-number-3">10.2</span> The Single Responsibility Principle</h3>
+<div class="outline-text-3" id="text-10-2">
+<p>
+One foundational principle of good design, known as the <span class="underline">Single Responsibility Principle, or SRP: Gather together those things that change for the same reason, and separate those things that change for different reasons.</span> A subsystem, module, class, or even a function, should not have more than one reason to change.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">Employee</span> { <span class="org-comment-delimiter">// </span><span class="org-comment">Any class depending on Employee will be affected by changes below</span>
+    <span class="org-keyword">public</span> <span class="org-type">Money</span> <span class="org-function-name">calculatePay</span>() {} <span class="org-comment-delimiter">// </span><span class="org-comment">Changes when rules for calculating pay change</span>
+    <span class="org-keyword">public</span> <span class="org-type">String</span> <span class="org-function-name">reportHours</span>() {} <span class="org-comment-delimiter">// </span><span class="org-comment">Changes when a different format of report is needed</span>
+    <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">save</span>() {}          <span class="org-comment-delimiter">// </span><span class="org-comment">Changes when database schema changes</span>
+}
+</pre>
+</div>
+
+<p>
+Good system design means <span class="underline">separating the system into components that can be independently deployed</span>. Component design (or <del>SOA</del>, if you prefer the trendier name) means when one component is changed, we do not have to redeploy any of the others.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">Employee</span> {
+    <span class="org-keyword">public</span> <span class="org-type">Money</span> <span class="org-function-name">calculatePay</span>() {}
+}
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">EmployeeReporter</span> {
+    <span class="org-keyword">public</span> <span class="org-type">String</span> <span class="org-function-name">reportHours</span>(<span class="org-type">Employee</span> <span class="org-variable-name">e</span>) {}
+}
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">EmployeeRepository</span> {
+    <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">save</span>(<span class="org-type">Employee</span> <span class="org-variable-name">e</span>) {}
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10-3" class="outline-3">
+<h3 id="sec-10-3"><span class="section-number-3">10.3</span> Thinking in States</h3>
+<div class="outline-text-3" id="text-10-3">
+<p>
+<del>Design by Contract (DbC)</del>: ensure a valid state by validating incoming data and the object itself on entry and exit of each public method.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> Design Patterns</h2>
+<div class="outline-text-2" id="text-11">
+</div><div id="outline-container-sec-11-1" class="outline-3">
+<h3 id="sec-11-1"><span class="section-number-3">11.1</span> The Singleton Pattern</h3>
+<div class="outline-text-3" id="text-11-1">
+<p>
+The single-instance requirement is often imagined. In many cases, it's pure speculation that no additional instances will be needed in the future. <span class="underline">Requirements will change. Good design embraces this.</span> Singletons don't.
+</p>
+
+<p>
+Singletons cause implicit dependencies between conceptually independent units of code.
+</p>
+
+<p>
+Singletons also carry implicit persistent state, which hinders unit testing. Unit testing depends on tests being independent of one another, so the tests can be run in any order and the program can be set to a known state before the execution of every unit test. Once singletons with mutable state are introduced, this may be hard to achieve. Such globally accessible persistent state makes it harder to reason about the code, especially in a multithreaded environment.
+</p>
+
+<p>
+The cleanup of singletons may present a final challenge. There is no support for explicitly killing singletons. There is no order to the implicit cleanup of singletons at program exit. This can be troublesome for applications that contain singletons with interdependencies.
+</p>
+
+<ul class="org-ul">
+<li>Restrict use of the Singleton pattern to the classes that truly must never be instantiated more than once.
+</li>
+<li>Don't use a singleton's global access point from arbitrary code. Instead, direct access to the singleton should come from only a few well-defined places, from where it can be passed around via an interface. User code of the interface does not depend on whether a singleton or any other kind of class implements the interface.
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> Domains</h2>
+<div class="outline-text-2" id="text-12">
+</div><div id="outline-container-sec-12-1" class="outline-3">
+<h3 id="sec-12-1"><span class="section-number-3">12.1</span> Code in the Language of the Domain</h3>
+<div class="outline-text-3" id="text-12-1">
+<div class="org-src-container">
+
+<pre class="src src-java"><span class="org-comment-delimiter">// </span><span class="org-comment">Algorithmic approach</span>
+<span class="org-keyword">if</span> (portfolioIdsByTraderId.get(trader.getId()).containsKey(portfolio.getId())) { ... }
+<span class="org-comment-delimiter">// </span><span class="org-comment">Business concept approach</span>
+<span class="org-keyword">if</span> (trader.canView(portfolio)) { ... }
+</pre>
+</div>
+
+<p>
+"Computer science" was about spending effort mapping the real world into the restrictive data structures.
+</p>
+
+<p>
+Making domain concepts explicit in the code means other programmers can gather the intent of the code much more easily than by trying to retrofit an algorithm into what they understand about a domain.
+</p>
+
+<p>
+Coupled with good encapsulation, the chances are good that the rule will exist in only one place. When the domain model evolves, you are in a good position to evolve the code.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-12-2" class="outline-3">
+<h3 id="sec-12-2"><span class="section-number-3">12.2</span> Prefer Domain-Specific Types</h3>
+<div class="outline-text-3" id="text-12-2">
+<p>
+On September 23, 1999, the $327.6 million Mars Climate Orbiter was lost while entering orbit around Mars due to a software error back on Earth. The error was later called the metric mix-up. The ground-station software was working in pounds, while the spacecraft expected newtons, leading the ground station to underestimate the power of the spacecraft’s thrusters by a factor of 4.45.
+</p>
+
+<p>
+One of Ada language's primary design goals was to implement embedded safety-critical software. Ada has strong typing with static checking for both primitive types and user-defined types.
+</p>
+
+<p>
+In other languages, domain-specific typing can be applied by using classes instead primitive types:
+</p>
+
+<ul class="org-ul">
+<li>The code becomes more readable, as it expresses concepts of a domain.
+</li>
+<li>The code becomes more testable, as the code encapsulates behavior.
+</li>
+<li>The code facilitates reuse.
+</li>
+</ul>
+
+<p>
+Developers using statically typed languages get some help from the compiler, while those embracing dynamically typed languages are more likely to rely on their unit tests.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> Errors</h2>
+<div class="outline-text-2" id="text-13">
+</div><div id="outline-container-sec-13-1" class="outline-3">
+<h3 id="sec-13-1"><span class="section-number-3">13.1</span> Business Exceptions</h3>
+<div class="outline-text-3" id="text-13-1">
+<p>
+There are basically two reasons that things go wrong at runtime:
+</p>
+
+<ul class="org-ul">
+<li>Technical problems that prevent us from using the application.
+</li>
+<li>Business logic that prevents us from misusing the application.
+</li>
+</ul>
+
+<p>
+It is a potential source of confusion to represent them both using the same exception hierarchy. Separating the cases gives clarity and increases the chances that technical exceptions will be handled by some application framework, while the business domain exceptions actually are considered and handled by the client code.
+</p>
+
+<p>
+An unresolvable technical problem can occur when there is a programming error. Let the exception bubble up to the highest architectural level and let some general exception-handling mechanism do what it can to ensure that the system is in a safe state, such as rolling back a transaction, logging and alerting administration, and reporting back (politely) to the user.
+</p>
+
+<p>
+An exception: the situation where you cannot complete the call for a domain-logical reason. Unusual and undesirable, but not bizarre or programmatically in error. Throwing an exception is just an alternative return path that is part of the model and that the client should be aware of and be prepared to handle. It is appropriate to create a specific exception or a separate exception hierarchy so that the client can handle the situation on its own terms.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-13-2" class="outline-3">
+<h3 id="sec-13-2"><span class="section-number-3">13.2</span> Don't Ignore That Error!</h3>
+<div class="outline-text-3" id="text-13-2">
+<ul class="org-ul">
+<li>Return codes can be used as the resulting value of a function to mean "it didn't work".
+</li>
+<li>Exceptions are a more structured language-supported way of signaling and handling errors.
+</li>
+<li>Deal with problems at the earliest opportunity.
+</li>
+<li>Check all potential errors in the code, and expose all potentially erroneous conditions in the interfaces.
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-13-3" class="outline-3">
+<h3 id="sec-13-3"><span class="section-number-3">13.3</span> Prevent Errors</h3>
+<div class="outline-text-3" id="text-13-3">
+<p>
+Cues are different from instructions: cues tend to be hints; instructions are verbose. Cues occur at the point of interaction; instructions appear before the point of interaction.
+</p>
+
+<p>
+<span class="underline">Instructions are ineffective at preventing error. Users tend to assume that interfaces will work in line with their past experience.</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-13-4" class="outline-3">
+<h3 id="sec-13-4"><span class="section-number-3">13.4</span> Verbose Logging</h3>
+<div class="outline-text-3" id="text-13-4">
+<p>
+Too much logging can be as useless as none at all. Make sure from day one that if something is logged in the error log, you're willing to have someone call and wake you in the middle of the night about it.
+</p>
+
+<p>
+Simulate load on the system during system testing, looking at a noise-free error log is also a good first indication that the system is reasonably robust.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> Learning</h2>
+<div class="outline-text-2" id="text-14">
+</div><div id="outline-container-sec-14-1" class="outline-3">
+<h3 id="sec-14-1"><span class="section-number-3">14.1</span> Continuous Learning</h3>
+<div class="outline-text-3" id="text-14-1">
+<ul class="org-ul">
+<li>A good way to learn something is to teach or speak about it.
+</li>
+<li>Join or start a study group or a local user group for a language, technology.
+</li>
+<li>Learn a new language every year. At least learn a new technology or tool.
+</li>
+<li>Learn how to be more productive.
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-14-2" class="outline-3">
+<h3 id="sec-14-2"><span class="section-number-3">14.2</span> Deliberate Practice</h3>
+<div class="outline-text-3" id="text-14-2">
+<p>
+Do deliberate practice to improve your ability. Perform the task with the aim of increasing your mastery. Challeng yourself with a task that is just beyond your current ability, trying it, analyzing your performance while and after doing it, and correcting any mistakes.
+</p>
+
+<p>
+Greatness is largely a matter of conscious choice. You have to have a minimum amount of natural ability to get started in a sport or profession. After that, the people who excel are the ones who work the hardest.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-14-3" class="outline-3">
+<h3 id="sec-14-3"><span class="section-number-3">14.3</span> Hard Work Does Not Pay Off</h3>
+<div class="outline-text-3" id="text-14-3">
+<p>
+Programming and software development as a whole involve a continuous learning process. You always need to learn more about software development in general and programming techniques in particular. Keep yourself updated in your field of expertise.
+</p>
+
+<p>
+<span class="underline">Most software projects are more like a long orienteering marathon. In the dark. With only a sketchy map as guidance.</span> You need to keep a sustainable pace, and you need to adjust the course when you learn more about where you are and where you are heading.
+</p>
+
+<p>
+Act like a professional: prepare, effect, observe, reflect, and change.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-14-4" class="outline-3">
+<h3 id="sec-14-4"><span class="section-number-3">14.4</span> Know More Programming Languages</h3>
+<div class="outline-text-3" id="text-14-4">
+<p>
+Programming expertise is related directly to the number of different programming paradigms that a programmer is comfortable with, that he can genuinely program with.
+</p>
+
+<p>
+It generally takes a good few months of use, even if part-time, to gain a proper working knowledge of a language. It is the idioms of use, not just the syntax and computational model, that are the important factors.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-14-5" class="outline-3">
+<h3 id="sec-14-5"><span class="section-number-3">14.5</span> Reinvent the Wheel Often</h3>
+<div class="outline-text-3" id="text-14-5">
+<p>
+More often than not, existing code is working code. It has already gone through some sort of quality control and rigorous testing, and is being used successfully.
+</p>
+
+<p>
+The same way that watching a movie about sailing is very different from going sailing, so too is using existing code versus designing your own software from the ground up, testing it, breaking it, repairing it, and improving it along the way.
+</p>
+
+<p>
+There are lessons learned from trial and error that have an emotional component to them that reading a technical book alone just cannot deliver. Becoming a great programmer is as much about acquiring experience as it is about collecting facts.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-15" class="outline-2">
+<h2 id="sec-15"><span class="section-number-2">15</span> OOP</h2>
+<div class="outline-text-2" id="text-15">
+</div><div id="outline-container-sec-15-1" class="outline-3">
+<h3 id="sec-15-1"><span class="section-number-3">15.1</span> Encapsulate Behavior and State</h3>
+<div class="outline-text-3" id="text-15-1">
+<p>
+<span class="underline">An object encapsulates both state and behavior, where the behavior is defined by the actual state.</span>
+</p>
+
+<p>
+Less experienced object-oriented developers might decide to wrap all the business rules into an object very often referred to as <code>OrderManager</code> or <code>OrderService</code>. In these designs, <code>Order</code>, <code>Customer</code>, and <code>Item</code> are treated as little more than record types. All logic is factored out of the classes and tied together in one large, procedural method with a lot of internal <code>if-then-else</code> constructs. These methods are easily broken and are almost impossible to maintain. The reason? The encapsulation is broken.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-15-2" class="outline-3">
+<h3 id="sec-15-2"><span class="section-number-3">15.2</span> Polymorphism</h3>
+<div class="outline-text-3" id="text-15-2">
+<p>
+Polymorphism, taken from Greek, means many (poly) forms (morph).
+</p>
+
+<p>
+Used carefully, <span class="underline">polymorphism creates tiny localized execution contexts that eliminate the need for verbose <code>if-then-else</code> blocks.</span> While there are cases where it's much more practical to use <code>if-then-else</code> instead of polymorphism, it is more often the case that a more <span class="underline">polymorphic coding style will yield a smaller, more readable and less fragile codebase</span>.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-16" class="outline-2">
+<h2 id="sec-16"><span class="section-number-2">16</span> Performance</h2>
+<div class="outline-text-2" id="text-16">
+</div><div id="outline-container-sec-16-1" class="outline-3">
+<h3 id="sec-16-1"><span class="section-number-3">16.1</span> Interprocess Communication</h3>
+<div class="outline-text-3" id="text-16-1">
+<p>
+Much performance management literature still focuses on data structures and algorithms, issues that can make a difference in some cases but are far less likely to dominate performance in modern multitier enterprise applications. In such applications, response time depends most strongly on the number of remote interprocess communications (IPCs) conducted in response to a stimulus.
+</p>
+
+<p>
+Strategies for reducing the number of remote IPCs:
+</p>
+
+<ul class="org-ul">
+<li>Optimize the interface between processes so that exactly the right data is exchanged with the minimum amount of interaction.
+</li>
+<li>Parallelize the IPCs, so that the overall response time becomes driven mainly by the longest-latency IPC.
+</li>
+<li>Cache the results of previous IPCs.
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-16-2" class="outline-3">
+<h3 id="sec-16-2"><span class="section-number-3">16.2</span> Know Your Limits</h3>
+<div class="outline-text-3" id="text-16-2">
+<p>
+Know the space and time complexity of data structures and algorithms, and the architecture and performance characteristics of the systems. Your job is to create an optimal marriage of software and systems.
+</p>
+
+<p>
+For achievable \(n\), all complexity classes amount to near-constant, near-linear, or near-infinite.
+</p>
+
+<p>
+Modern computer systems are organized as hierarchies of physical and virtual machines, including language runtimes, operating systems, CPUs, cache memory, random-access memory, disk drives, and networks.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> <span class="underline">Random access time and storage capacity for a typical networked server:</span></caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left"><b>Access time</b></th>
+<th scope="col" class="left"><b>Capacity</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">Register</td>
+<td class="left">&lt; 1 ns</td>
+<td class="left">64 b</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">L1 cache</td>
+<td class="left">1 ns</td>
+<td class="left">64 KB</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">L2 cache</td>
+<td class="left">4 ns</td>
+<td class="left">8 MB</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">RAM</td>
+<td class="left">20 ns</td>
+<td class="left">32 GB</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Disk</td>
+<td class="left">10 ms</td>
+<td class="left">10 TB</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">LAN</td>
+<td class="left">20 ms</td>
+<td class="left">&gt; 1 PB</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Internet</td>
+<td class="left">100 ms</td>
+<td class="left">&gt; 1 ZB</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Caching and lookahead are used heavily at every level of the systems to hide this variation, but they only work when access is predictable. When cache misses are frequent, the system will be thrashing. Reaccessing recently used items and accessing items sequentially are usually a win.
+</p>
+
+<p>
+Random access is not predictable. To randomly inspect every byte on a hard drive could take 32 years. Even to randomly inspect every byte in RAM could take 11 minutes.
+</p>
+
+<p>
+Algorithms and data structures vary in how effectively they use caches:
+</p>
+
+<ul class="org-ul">
+<li>Linear search makes good use of lookahead, but requires $O(n)$ comparisons. Linear search is competitive for small arrays, but loses exponentially for larger arrays.
+</li>
+<li>Binary search of a sorted array requires only $O(\log{n})$ comparisons.
+</li>
+<li>Search of a van Emde Boas tree is $O(\log{n})$ and cache-oblivious. van Emde Boas tree is fastest for searching, thanks to its predictable access pattern.
+</li>
+</ul>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> Time (ns) required to search arrays of 64-bit integers:</caption>
+
+<colgroup>
+<col  class="right" />
+
+<col  class="left" />
+
+<col  class="right" />
+
+<col  class="right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="right">&#xa0;</th>
+<th scope="col" class="left"><b>Linear</b></th>
+<th scope="col" class="right"><b>Binary</b></th>
+<th scope="col" class="right"><b>vEB</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="right">8</td>
+<td class="left">50</td>
+<td class="right">90</td>
+<td class="right">40</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="right">64</td>
+<td class="left">180</td>
+<td class="right">150</td>
+<td class="right">70</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="right">512</td>
+<td class="left">1,200</td>
+<td class="right">230</td>
+<td class="right">100</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="right">4,096</td>
+<td class="left">17,000</td>
+<td class="right">320</td>
+<td class="right">160</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-17" class="outline-2">
+<h2 id="sec-17"><span class="section-number-2">17</span> Practice</h2>
+<div class="outline-text-2" id="text-17">
+</div><div id="outline-container-sec-17-1" class="outline-3">
+<h3 id="sec-17-1"><span class="section-number-3">17.1</span> Don't Rely on "Magic Happens Here"</h3>
+<div class="outline-text-3" id="text-17-1">
+<p>
+If you look at any activity, process, or discipline from far enough away, it looks simple. When you aren't actively involved in things, there is an unconscious tendency to assume that they are simple and happen "by magic". You don't have to understand all the magic that makes the project work, but make sure that when the magic stops, it can be started again.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-17-2" class="outline-3">
+<h3 id="sec-17-2"><span class="section-number-3">17.2</span> Learn to Estimate</h3>
+<div class="outline-text-3" id="text-17-2">
+<ul class="org-ul">
+<li>An estimate is a factual measure based on hard data and previous experience. An estimate cannot be precise.
+</li>
+<li>A target is a statement of a desirable business objective.
+</li>
+<li>A commitment is a promise to deliver specified functionality at a certain level of quality by a certain date or event.
+</li>
+</ul>
+
+<p>
+Estimates, targets, and commitments are independent from one another, but targets and commitments should be based on sound estimates. The primary purpose of software estimation is not to predict a project's outcome; it is to determine whether a project's targets are realistic enough to allow the project to be controlled to meet them.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-17-3" class="outline-3">
+<h3 id="sec-17-3"><span class="section-number-3">17.3</span> Make the Invisible More Visible</h3>
+<div class="outline-text-3" id="text-17-3">
+<p>
+Lack of visible progress is synonymous with lack of progress. Invisibility can be dangerous. You think more clearly when you have something concrete to tie your thinking to. You manage things better when you can see them and see them constantly changing.
+</p>
+
+<ul class="org-ul">
+<li>Unit tests help reveal the presence (or absence) of developmental qualities you'd like the code to exhibit, such as low coupling and high cohesion.
+</li>
+<li>Using bulletin boards and cards makes progress visible and concrete.
+</li>
+</ul>
+
+<p>
+It's best to develop software with plenty of regular visible evidence. Visibility gives confidence that progress is genuine and not an illusion, deliberate and not unintentional, repeatable and not accidental.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-17-4" class="outline-3">
+<h3 id="sec-17-4"><span class="section-number-3">17.4</span> The Boy Scout Rule</h3>
+<div class="outline-text-3" id="text-17-4">
+<p>
+Try and leave this world a little better than you found it.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-18" class="outline-2">
+<h2 id="sec-18"><span class="section-number-2">18</span> Quality</h2>
+<div class="outline-text-2" id="text-18">
+</div><div id="outline-container-sec-18-1" class="outline-3">
+<h3 id="sec-18-1"><span class="section-number-3">18.1</span> Code Is Design</h3>
+<div class="outline-text-3" id="text-18-1">
+<p>
+Some life-or-death projects will be more diligent, but in many cases, companies can always patch the broken buildings and vehicles they sell. And it points to a startlingly counterintuitive conclusion: our sole premise was a dramatic reduction in construction costs, with the result that quality got worse. If we accept that code is design — a creative process rather than a mechanical one — the software crisis is explained.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-19" class="outline-2">
+<h2 id="sec-19"><span class="section-number-2">19</span> Teamwork</h2>
+<div class="outline-text-2" id="text-19">
+</div><div id="outline-container-sec-19-1" class="outline-3">
+<h3 id="sec-19-1"><span class="section-number-3">19.1</span> Code Reviews</h3>
+<div class="outline-text-3" id="text-19-1">
+<p>
+Instead of simply correcting mistakes in code, <span class="underline">the purpose of code reviews should be to share knowledge and establish common coding guidelines</span>. Sharing code with other programmers <span class="underline">enables collective code ownership</span>.
+</p>
+
+<p>
+Introduce different roles for the review meeting, having one reviewer focus on documentation, another on exceptions, and a third to look at the functionality.
+</p>
+
+<p>
+Code reviews will flow more easily if the team has coding conventions that are checked by tools.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-19-2" class="outline-3">
+<h3 id="sec-19-2"><span class="section-number-3">19.2</span> Pair Program</h3>
+<div class="outline-text-3" id="text-19-2">
+<p>
+As a team, introduce pair programming to promote distribution of skills and knowledge.
+</p>
+
+<p>
+Truck factor: how many team members would have to be hit by a truck before the team became unable to complete the final deliverable? In other words, how dependent is the delivery on certain team members? Is knowledge privileged or shared?
+</p>
+</div>
+</div>
+<div id="outline-container-sec-19-3" class="outline-3">
+<h3 id="sec-19-3"><span class="section-number-3">19.3</span> Start from Yes</h3>
+<div class="outline-text-3" id="text-19-3">
+<p>
+Starting from yes means working with your colleagues, not against them.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-19-4" class="outline-3">
+<h3 id="sec-19-4"><span class="section-number-3">19.4</span> Two Heads Are Better Than One</h3>
+<div class="outline-text-3" id="text-19-4">
+<p>
+Lottery risk: one of your expert developers wins the lottery and
+quits the next day.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-20" class="outline-2">
+<h2 id="sec-20"><span class="section-number-2">20</span> Testing</h2>
+<div class="outline-text-2" id="text-20">
+</div><div id="outline-container-sec-20-1" class="outline-3">
+<h3 id="sec-20-1"><span class="section-number-3">20.1</span> Test for Required Behavior</h3>
+<div class="outline-text-3" id="text-20-1">
+<p>
+Tests need to state contractual obligations rather than parrot implementations. They need to take a blackbox view of the units under test.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-20-2" class="outline-3">
+<h3 id="sec-20-2"><span class="section-number-3">20.2</span> Testing Is the Engineering Rigor of Software Development</h3>
+<div class="outline-text-3" id="text-20-2">
+<p>
+Over the past few thousand years, engineers have developed mathematics and physics they can use for a structural solution without having to build it to see what it does. We don't have anything like that in software, and perhaps never will because software is in fact very different. the
+building process in software is ridiculously cheap. We’ve developed an entire ecosystem of tools that make it easy to do just that: unit testing, mock objects, test harnesses.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-20-3" class="outline-3">
+<h3 id="sec-20-3"><span class="section-number-3">20.3</span> Test Precisely and Concretely</h3>
+<div class="outline-text-3" id="text-20-3">
+<p>
+There are two ways of constructing a software design: one way is to make it so simple that there are obviously no deficiencies and the other is to make it so complicated that there are no obvious deficiencies.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-20-4" class="outline-3">
+<h3 id="sec-20-4"><span class="section-number-3">20.4</span> Test While You Sleep</h3>
+<div class="outline-text-3" id="text-20-4">
+<p>
+More often than not, the test servers are idling overnight and over the weekend. You can use this to your advantage. Break down large test suite into two or more profiles:
+</p>
+
+<ul class="org-ul">
+<li>A smaller, mandatory test profile that is quick to run will help to ensure that tests are run before each commit.
+</li>
+<li>Other test profiles can be automated to run overnight, ready to report their results in the morning.
+</li>
+</ul>
+
+<p>
+Longer-running tests, or soak tests, are vital for identifying memory leaks and other stability issues.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-20-5" class="outline-3">
+<h3 id="sec-20-5"><span class="section-number-3">20.5</span> When Programmers and Testers Collaborate</h3>
+<div class="outline-text-3" id="text-20-5">
+<ul class="org-ul">
+<li>Less time spent sending bugs back and forth through the defect tracking system.
+</li>
+<li>Less time wasted trying to figure out whether something is a bug or a new feature.
+</li>
+</ul>
+
+<p>
+Acceptance Test-Driven Development (ATDD): Testers write and automate acceptance tests using the language of their domain with tools such as Fit (Framework for Integrated Test), and give to the programmers before the coding begins. Programmers write the fixtures to run the tests, and then code to make the tests pass. Defects are prevented because the tests clarify many of the initial ideas. These tests then become part of the regression suite.
+</p>
+
+<p>
+When testers stop thinking that their only job is to break the software and find bugs in the programmers' code, programmers stop thinking that testers are "out to get them", and are more open to collaboration.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-20-6" class="outline-3">
+<h3 id="sec-20-6"><span class="section-number-3">20.6</span> Write Tests for People</h3>
+<div class="outline-text-3" id="text-20-6">
+<p>
+Good tests act as documentation for the code they are testing. They describe how the code works.
+</p>
+
+<ul class="org-ul">
+<li>Describe the context, starting point, or preconditions.
+</li>
+<li>Illustrate how the software is invoked.
+</li>
+<li>Describe the expected results or postconditions.
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-21" class="outline-2">
+<h2 id="sec-21"><span class="section-number-2">21</span> Tools</h2>
+<div class="outline-text-2" id="text-21">
+</div><div id="outline-container-sec-21-1" class="outline-3">
+<h3 id="sec-21-1"><span class="section-number-3">21.1</span> Command-Line Tools</h3>
+<div class="outline-text-3" id="text-21-1">
+<p>
+Typically, when a tool is easy to use, it's because the tool is making decisions for you and doing a lot of things automatically, behind the scenes.
+</p>
+
+<p>
+Command-line tools inherently support scripting, which allows for the automation of tasks such as producing scheduled daily builds, creating multiple versions of a project, and running test suites.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-21-2" class="outline-3">
+<h3 id="sec-21-2"><span class="section-number-3">21.2</span> Step Back and Automate</h3>
+<div class="outline-text-3" id="text-21-2">
+<ul class="org-ul">
+<li>Automate repetitive tasks: version control, compiling, building JAR files, documentation generation, deployment, and reporting.
+</li>
+<li>Modern IDEs have thousands of potential settings, and it is essentially impossible to ensure that all team members have identical configurations. Build automation systems such as Ant or Autotools give control and repeatability.
+</li>
+<li>Do it early in a project when time is usually easier to find.
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-21-3" class="outline-3">
+<h3 id="sec-21-3"><span class="section-number-3">21.3</span> Unix Tools</h3>
+<div class="outline-text-3" id="text-21-3">
+<p>
+Unix tools were developed in an age when a multiuser computer had 128KB
+of RAM. The ingenuity that went into their design means that nowadays they can handle huge data sets extremely efficiently.
+</p>
+
+<p>
+Most tools work like filters, processing just a single line at the time, meaning that there is no upper limit in the amount of data they can handle.
+</p>
+
+<p>
+Unix commands executing as pipelines, which naturally distribute their load among the many processing units of modern multicore CPUs.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-21-4" class="outline-3">
+<h3 id="sec-21-4"><span class="section-number-3">21.4</span> Version Control</h3>
+<div class="outline-text-3" id="text-21-4">
+<p>
+Put everything in your project under version control.
+</p>
+
+<ul class="org-ul">
+<li>Tag release with a symbolic name to easily revisit in the future the exact version of the software the customer runs.
+</li>
+<li>In addition to the source code, include the documentation, tools, build scripts, test cases, artwork, and even libraries.
+</li>
+<li>Commit each logical change in a separate operation.
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-22" class="outline-2">
+<h2 id="sec-22"><span class="section-number-2">22</span> Users</h2>
+<div class="outline-text-2" id="text-22">
+</div><div id="outline-container-sec-22-1" class="outline-3">
+<h3 id="sec-22-1"><span class="section-number-3">22.1</span> Customers Do Not Mean What They Say</h3>
+<div class="outline-text-3" id="text-22-1">
+<p>
+Customers generally don't lie, but they speak in customer speak, not developer speak. They use their terms and their contexts. They leave out significant details.
+</p>
+
+<ul class="org-ul">
+<li>Challenge your customers early, and challenge them often.
+</li>
+<li>Try restating the problem 2 or 3 times.
+</li>
+<li>Have multiple people tell the same topic in separate conversations to uncover separate yet related facts.
+</li>
+<li>Using visual aids helps lengthen our attention span and increases the retention rate of the information.
+</li>
+</ul>
+
+<blockquote>
+<p>
+When she saw the product, her exact words about the background color were, "When I said black, I meant white."
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-22-2" class="outline-3">
+<h3 id="sec-22-2"><span class="section-number-3">22.2</span> Read the Humanities</h3>
+<div class="outline-text-3" id="text-22-2">
+<p>
+Our ability to understand one another does not arise from shared definitions, it arises from a shared experience. Language is largely metaphorical, and that these metaphors offer an insight into how we understand the world.
+</p>
+
+<p>
+For users, tools only become objects of interest when they don't work.
+</p>
+
+<p>
+When programmers ask users about their desires for a system, they tend to ask for definitions built out of predicates. This is very convenient for programmers. The terms in the predicates can very easily become attributes on a class or columns in a table. But that just isn't how people in general understand the world. They understand it in ways that are based on examples. 
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-22-3" class="outline-3">
+<h3 id="sec-22-3"><span class="section-number-3">22.3</span> What Would the User Do?</h3>
+<div class="outline-text-3" id="text-22-3">
+<p>
+We all tend to assume that other people think like us. Psychologists call this the false consensus bias.
+</p>
+
+<p>
+The best way to find out how a user thinks is to watch one. <span class="underline">The best way to capture requirements is to watch users.</span>
+</p>
+
+<p>
+If you must have instructions or help text, make sure to locate it right next to problem areas.
+</p>
+
+<p>
+Users tend to muddle through. They'll find a way that works and stick with it.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2017-03-01 Wed 22:22</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

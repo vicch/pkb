@@ -1,0 +1,1157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-11-10 Sun 16:12 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kubernetes</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Kubernetes</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org186469c">1 Kubernetes</a></li>
+<li><a href="#orgde0ec57">2 Config</a>
+<ul>
+<li><a href="#org31dd5c5">2.1 <code>ObjectMeta</code></a></li>
+<li><a href="#orgca86f60">2.2 <code>LabelSelector</code></a></li>
+<li><a href="#orgc194f1e">2.3 <code>Secret</code></a></li>
+</ul>
+</li>
+<li><a href="#orgf49023f">3 Container</a>
+<ul>
+<li><a href="#orgd4cd08d">3.1 Container</a></li>
+<li><a href="#orgc4aec45">3.2 Pod</a></li>
+<li><a href="#org7dab167">3.3 Deployment</a></li>
+</ul>
+</li>
+<li><a href="#org6989712">4 Service</a>
+<ul>
+<li><a href="#org2eeeb91">4.1 <code>ClusterIP</code></a></li>
+<li><a href="#org242223b">4.2 <code>LoadBalancer</code></a></li>
+<li><a href="#org80ec6dc">4.3 <code>NodePort</code></a></li>
+</ul>
+</li>
+<li><a href="#orgc404481">5 Storage</a>
+<ul>
+<li><a href="#org5ad8907">5.1 Volume</a></li>
+<li><a href="#orgb028b0b">5.2 Persistent Volume</a></li>
+<li><a href="#org3aa6028">5.3 Persistent Volume Claim</a></li>
+</ul>
+</li>
+<li><a href="#orgb596826">6 Ingress</a>
+<ul>
+<li><a href="#org45aeba2">6.1 <code>ingress-nginx</code></a></li>
+<li><a href="#org9d87daf">6.2 <code>Ingress</code></a></li>
+</ul>
+</li>
+<li><a href="#org39ff95c">7 RBAC</a>
+<ul>
+<li><a href="#org02a1acf">7.1 Account</a></li>
+<li><a href="#org2628862">7.2 Roles</a></li>
+</ul>
+</li>
+<li><a href="#org51e9467">8 Helm</a>
+<ul>
+<li><a href="#org3c16498">8.1 运行</a></li>
+</ul>
+</li>
+<li><a href="#orga27ecf5">9 <code>kubectl</code></a>
+<ul>
+<li><a href="#orgdab81ba">9.1 命令</a></li>
+<li><a href="#org7576ff1">9.2 <code>apply</code></a></li>
+<li><a href="#org04a224e">9.3 <code>create</code></a>
+<ul>
+<li><a href="#org2b01ba1">9.3.1 <code>create clusterrolebinding</code></a></li>
+<li><a href="#orgfb8be72">9.3.2 <code>create secret</code></a></li>
+<li><a href="#org416ebca">9.3.3 <code>create serviceaccount</code></a></li>
+</ul>
+</li>
+<li><a href="#org2391b65">9.4 <code>delete</code></a></li>
+<li><a href="#org4e127ea">9.5 <code>describe</code></a></li>
+<li><a href="#orgc638419">9.6 <code>get</code></a></li>
+<li><a href="#orgba4a57d">9.7 <code>logs</code></a></li>
+<li><a href="#org9f8255a">9.8 <code>set</code></a>
+<ul>
+<li><a href="#org2b1c2dd">9.8.1 <code>set image</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orga8bcb54">10 Minikube</a>
+<ul>
+<li><a href="#orga99ce2c">10.1 命令</a></li>
+<li><a href="#org1b9f564">10.2 <code>docker-env</code></a></li>
+</ul>
+</li>
+<li><a href="#org2d594d6">11 Links</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org186469c" class="outline-2">
+<h2 id="org186469c"><span class="section-number-2">1</span> Kubernetes</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Kubernetes 是用于部署容器化应用的系统。Kubernetes 不构建，而是直接获取（比如从 Docker Hub）镜像。
+</p>
+
+<p>
+Kubernetes 包含两种机器（实体或虚拟）：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>Master</b></th>
+<th scope="col" class="org-left">运行管理程序，根据配置文件定义的目标状态，管理（启动、重启等）在其他机器上运行的容器。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>Node</b></td>
+<td class="org-left">运行容器。</td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="figure">
+<p><img src="../images/kubernetes/01.png" alt="01.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgde0ec57" class="outline-2">
+<h2 id="orgde0ec57"><span class="section-number-2">2</span> Config</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 1: </span>配置文件格式</label><pre class="src src-yaml"><span class="org-variable-name">apiVersion</span>: &lt;string&gt;   <span class="org-comment-delimiter"># </span><span class="org-comment">v1</span>
+<span class="org-variable-name">kind</span>: &lt;string&gt;         <span class="org-comment-delimiter"># </span><span class="org-comment">E.g. Deployment</span>
+<span class="org-variable-name">metadata</span>: &lt;ObjectMeta&gt;
+<span class="org-variable-name">spec</span>: &lt;ObjectSpec&gt;     <span class="org-comment-delimiter"># </span><span class="org-comment">&#19981;&#21516; kind &#26377;&#19981;&#21516; spec &#23545;&#35937;&#31867;&#22411;&#65292;e.g. DeploymentSpec</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org31dd5c5" class="outline-3">
+<h3 id="org31dd5c5"><span class="section-number-3">2.1</span> <code>ObjectMeta</code></h3>
+<div class="outline-text-3" id="text-2-1">
+<div class="org-src-container">
+<pre class="src src-yaml"><span class="org-variable-name">metadata</span>:
+  <span class="org-variable-name">name</span>: &lt;string&gt;
+  <span class="org-variable-name">labels</span>: &lt;object&gt;
+  <span class="org-variable-name">annotations</span>: &lt;object&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#29992;&#20110;&#22806;&#37096;&#24037;&#20855;&#30340;&#20803;&#25968;&#25454;&#65292;&#22914; Ingress</span>
+  ...
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgca86f60" class="outline-3">
+<h3 id="orgca86f60"><span class="section-number-3">2.2</span> <code>LabelSelector</code></h3>
+<div class="outline-text-3" id="text-2-2">
+<div class="org-src-container">
+<pre class="src src-yaml"><span class="org-variable-name">selector</span>:
+  <span class="org-variable-name">matchLabels</span>: &lt;object&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#38190;&#20540;&#23545;&#65292;&#29992;&#20110;&#21305;&#37197; metadata &#20013;&#30340; labels</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc194f1e" class="outline-3">
+<h3 id="orgc194f1e"><span class="section-number-3">2.3</span> <code>Secret</code></h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+用于存储敏感信息，如密码，但密码通常使用 <code>kubectl create secret</code> 命令创建，而不是使用配置文件。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf49023f" class="outline-2">
+<h2 id="orgf49023f"><span class="section-number-2">3</span> Container</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-orgd4cd08d" class="outline-3">
+<h3 id="orgd4cd08d"><span class="section-number-3">3.1</span> Container</h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 2: </span><code>Container</code></label><pre class="src src-yaml"><span class="org-variable-name">name</span>: &lt;string&gt;
+<span class="org-variable-name">image</span>: &lt;string&gt;
+<span class="org-variable-name">env</span>:
+  - <span class="org-variable-name">name</span>: &lt;string&gt;     <span class="org-comment-delimiter"># </span><span class="org-comment">&#29615;&#22659;&#21464;&#37327;&#21517;</span>
+<span class="org-yaml-tab">    </span><span class="org-variable-name">value</span>: &lt;string&gt;    <span class="org-comment-delimiter"># </span><span class="org-comment">&#29615;&#22659;&#21464;&#37327;&#20540;</span>
+<span class="org-yaml-tab">                    </span>   <span class="org-comment-delimiter"># </span><span class="org-comment">&#25968;&#23383;&#38656;&#35201;&#36716;&#25442;&#20026;&#23383;&#31526;&#20018;&#65292;e.g. '1234'</span>
+<span class="org-yaml-tab">    </span><span class="org-variable-name">valueFrom</span>:         <span class="org-comment-delimiter"># </span><span class="org-comment">&#20174;&#20854;&#20182;&#26469;&#28304;&#33719;&#21462;&#20540;&#65292;&#22914; Secret</span>
+<span class="org-yaml-tab">    </span><span class="org-variable-name">  secretKeyRef</span>:
+<span class="org-yaml-tab">        </span><span class="org-variable-name">name</span>: &lt;string&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">Secret &#23545;&#35937;&#21517;</span>
+<span class="org-yaml-tab">        </span><span class="org-variable-name">key</span>: &lt;string&gt;  <span class="org-comment-delimiter"># </span><span class="org-comment">Secret &#20013;&#30340; key</span>
+<span class="org-variable-name">ports</span>:
+  - <span class="org-variable-name">containerPort</span>: &lt;integer&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#26292;&#38706;&#30340; Pod &#31471;&#21475;</span>
+<span class="org-yaml-tab">    </span><span class="org-variable-name">hostPort</span>: &lt;integer&gt;      <span class="org-comment-delimiter"># </span><span class="org-comment">&#26292;&#38706;&#30340;&#20027;&#26426;&#31471;&#21475;</span>
+<span class="org-variable-name">volumeMounts</span>:
+  - <span class="org-variable-name">name</span>: &lt;string&gt;           <span class="org-comment-delimiter"># </span><span class="org-comment">&#21305;&#37197; Volume &#30340; name</span>
+<span class="org-yaml-tab">    </span><span class="org-variable-name">mountPath</span>: &lt;string&gt;      <span class="org-comment-delimiter"># </span><span class="org-comment">&#23481;&#22120;&#20869; mount &#36335;&#24452;</span>
+<span class="org-yaml-tab">    </span><span class="org-variable-name">subPath</span>: &lt;string&gt;        <span class="org-comment-delimiter"># </span><span class="org-comment">Volume &#20869;&#23384;&#25918;&#27492;&#23481;&#22120; volume &#30340;&#36335;&#24452;&#65292;&#40664;&#35748;&#20026;&#31354;&#65292;&#21363; Volume &#26681;&#30446;&#24405;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc4aec45" class="outline-3">
+<h3 id="orgc4aec45"><span class="section-number-3">3.2</span> Pod</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Pod 用于运行一个或一组相关的容器。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 3: </span><code>PodSpec</code></label><pre class="src src-yaml"><span class="org-variable-name">containers</span>:
+  - &lt;Container&gt;
+<span class="org-variable-name">volumes</span>:
+  - &lt;Volume&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7dab167" class="outline-3">
+<h3 id="org7dab167"><span class="section-number-3">3.3</span> Deployment</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+Deployment 用于描述一组 Pod 的理想状态（desired state），Deployment 控制器负责监控并改变当前状态以达到理想状态。
+</p>
+
+<p>
+Deployment 可以定义一个 Pod 模版，根据此模版生成一组相同的 Pod。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 4: </span><code>DeploymentSpec</code></label><pre class="src src-yaml"><span class="org-variable-name">replicas</span>: &lt;integer&gt;       <span class="org-comment-delimiter"># </span><span class="org-comment">&#29702;&#24819;&#29366;&#24577; Pod &#25968;&#37327;</span>
+<span class="org-variable-name">selector</span>: &lt;LabelSelector&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#21482;&#24433;&#21709;&#31526;&#21512;&#27492; selector &#30340; Pod</span>
+<span class="org-variable-name">template</span>:
+  <span class="org-variable-name">metadata</span>: &lt;ObjectMeta&gt;
+  <span class="org-variable-name">spec</span>: &lt;PodSpec&gt;         <span class="org-comment-delimiter"># </span><span class="org-comment">&#26684;&#24335;&#21516; Pod &#37197;&#32622;&#65292;&#22914; containers</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6989712" class="outline-2">
+<h2 id="org6989712"><span class="section-number-2">4</span> Service</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Service 用于配置 Kubernetes 集群的网络环境。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml"><span class="org-variable-name">apiVersion</span>: ...
+<span class="org-variable-name">kind</span>: Service
+<span class="org-variable-name">metadata</span>: ...
+<span class="org-variable-name">spec</span>:
+  <span class="org-variable-name">type</span>: &lt;string&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">ClusterIP&#65288;&#40664;&#35748;&#65289;</span>
+<span class="org-yaml-tab">                </span> <span class="org-comment-delimiter"># </span><span class="org-comment">NodePort</span>
+<span class="org-yaml-tab">                </span> <span class="org-comment-delimiter"># </span><span class="org-comment">ExternalName</span>
+<span class="org-yaml-tab">                </span> <span class="org-comment-delimiter"># </span><span class="org-comment">LoadBalancer</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org2eeeb91" class="outline-3">
+<h3 id="org2eeeb91"><span class="section-number-3">4.1</span> <code>ClusterIP</code></h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+<code>ClusterIP</code> 用于向集群中的其他对象暴露（expose）指定 Pod 的端口。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml"><span class="org-comment">...</span>
+<span class="org-variable-name">spec</span>:
+  <span class="org-variable-name">type</span>: ClusterIP
+  <span class="org-variable-name">selector</span>: &lt;object&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#21305;&#37197; label &#30340;&#38190;&#20540;&#23545;</span>
+  <span class="org-variable-name">ports</span>:
+<span class="org-yaml-tab">    </span><span class="org-variable-name">- port</span>: &lt;integer&gt;       <span class="org-comment-delimiter"># </span><span class="org-comment">&#26292;&#38706;&#32473;&#38598;&#32676;&#20869;&#20854;&#20182; Pod &#30340;&#31471;&#21475;</span>
+<span class="org-yaml-tab">    </span><span class="org-variable-name">  targetPort</span>: &lt;integer&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">Pod &#30446;&#26631;&#31471;&#21475;</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 5: </span><code>ClusterIP</code> 的 <code>name</code> 将作为 Pod 的主机名</label><pre class="src src-yaml"><span class="org-comment-delimiter"># </span><span class="org-comment">Foo Deployment</span>
+<span class="org-variable-name">kind</span>: Deployment
+<span class="org-variable-name">metadata</span>:
+  <span class="org-variable-name">name</span>: foo-deployment
+<span class="org-variable-name">spec</span>:
+  <span class="org-variable-name">template</span>:
+<span class="org-yaml-tab">    </span><span class="org-variable-name">metadata</span>:
+<span class="org-yaml-tab">    </span><span class="org-variable-name">  labels</span>:
+<span class="org-yaml-tab">        </span><span class="org-variable-name">component</span>: foo
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Foo CluterIP</span>
+<span class="org-variable-name">kind</span>: Service
+<span class="org-variable-name">metadata</span>:
+  <span class="org-variable-name">name</span>: foo-cluster-ip-service
+<span class="org-variable-name">spec</span>:
+  <span class="org-variable-name">type</span>: ClusterIP
+  <span class="org-variable-name">selector</span>:
+<span class="org-yaml-tab">    </span><span class="org-variable-name">component</span>: foo
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Bar Deployment</span>
+<span class="org-variable-name">kind</span>: Deployment
+<span class="org-variable-name">metadata</span>:
+  <span class="org-variable-name">name</span>: bar-deployment
+<span class="org-variable-name">spec</span>:
+  <span class="org-variable-name">template</span>:
+<span class="org-yaml-tab">    </span><span class="org-variable-name">spec</span>:
+<span class="org-yaml-tab">    </span><span class="org-variable-name">  containers</span>:
+<span class="org-yaml-tab">        </span><span class="org-variable-name">- name</span>: bar
+<span class="org-yaml-tab">        </span><span class="org-variable-name">  env</span>:
+<span class="org-yaml-tab">            </span><span class="org-variable-name">- name</span>: FOO_HOST
+<span class="org-yaml-tab">            </span><span class="org-variable-name">  value</span>: foo-cluster-ip-service <span class="org-comment-delimiter"># </span><span class="org-comment">&#21305;&#37197; ClusterIP &#30340; name</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org242223b" class="outline-3">
+<h3 id="org242223b"><span class="section-number-3">4.2</span> <code>LoadBalancer</code></h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+作为集群入口，现在更常用 <code>Ingress</code> 。 <code>LoadBalancer</code> 需要依赖云服务本身的负载均衡，如 AWS 的 ALB。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org80ec6dc" class="outline-3">
+<h3 id="org80ec6dc"><span class="section-number-3">4.3</span> <code>NodePort</code></h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+<code>NodePort</code> 用于向外部网络暴露（expose）指定 Pod 的端口，一般只用于开发环境。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml"><span class="org-comment">...</span>
+<span class="org-variable-name">spec</span>:
+  <span class="org-variable-name">type</span>: NodePort
+  <span class="org-variable-name">selector</span>: &lt;object&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#29992;&#20110;&#21305;&#37197; label &#30340;&#38190;&#20540;&#23545;</span>
+  <span class="org-variable-name">ports</span>:
+<span class="org-yaml-tab">    </span><span class="org-variable-name">- port</span>: &lt;integer&gt;       <span class="org-comment-delimiter"># </span><span class="org-comment">&#26292;&#38706;&#32473;&#38598;&#32676;&#20869;&#20854;&#20182; Pod &#30340;&#31471;&#21475;</span>
+<span class="org-yaml-tab">    </span><span class="org-variable-name">  nodePort</span>: &lt;integer&gt;   <span class="org-comment-delimiter"># </span><span class="org-comment">&#26292;&#38706;&#32473;&#22806;&#37096;&#32593;&#32476;&#30340;&#31471;&#21475;</span>
+<span class="org-yaml-tab">    </span><span class="org-variable-name">  targetPort</span>: &lt;integer&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">Pod &#30446;&#26631;&#31471;&#21475;</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc404481" class="outline-2">
+<h2 id="orgc404481"><span class="section-number-2">5</span> Storage</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-org5ad8907" class="outline-3">
+<h3 id="org5ad8907"><span class="section-number-3">5.1</span> Volume</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+Volume 使容器能在 Pod 级别存储数据，以解决两个问题：
+</p>
+
+<ul class="org-ul">
+<li>当 Pod 中的一个容器重启，它的文件系统将被清空，倒置存储的数据丢失。</li>
+<li>Pod 中的容器之间需要共享文件。</li>
+</ul>
+
+<p>
+Volume 的生命周期与 Pod 一致，Pod 关闭后，Volume 也被清空。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 6: </span><code>Volume</code></label><pre class="src src-yaml"><span class="org-variable-name">name</span>: &lt;string&gt;
+<span class="org-variable-name">persistentVolumeClaim</span>:
+  <span class="org-variable-name">claimName</span>: &lt;string&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#21305;&#37197; PersistentVolumeClaim &#30340; name</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb028b0b" class="outline-3">
+<h3 id="orgb028b0b"><span class="section-number-3">5.2</span> Persistent Volume</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+<a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/">Persistent Volume | Kubernetes Documentation</a>
+</p>
+
+<p>
+Persistent Volume 独立于 Pod，因此比 Pod 的 Volume 更持久化，在 Pod 关闭之后也不会丢失。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/kubernetes/02.png" alt="02.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3aa6028" class="outline-3">
+<h3 id="org3aa6028"><span class="section-number-3">5.3</span> Persistent Volume Claim</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+Persistent Volume Claim (PVC) 是 Pod 对于它所需要的 Persistent Volume 的声明。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 7: </span><code>PersistentVolumeClaimSpec</code></label><pre class="src src-yaml"><span class="org-variable-name">accessModes</span>:
+  - &lt;string&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">ReadWriteOnce&#65292;&#21333;&#20010;&#33410;&#28857;&#35835;&#20889;</span>
+<span class="org-yaml-tab">            </span> <span class="org-comment-delimiter"># </span><span class="org-comment">ReadOnlyMany&#65292;&#22810;&#20010;&#33410;&#28857;&#21482;</span>
+<span class="org-yaml-tab">            </span> <span class="org-comment-delimiter"># </span><span class="org-comment">ReadWriteMany&#65292;&#22810;&#20010;&#33410;&#28857;&#35835;&#20889;</span>
+<span class="org-variable-name">resources</span>:
+  <span class="org-variable-name">requests</span>:
+<span class="org-yaml-tab">    </span><span class="org-variable-name">storage</span>: &lt;string&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">E.g. 2Gi</span>
+<span class="org-variable-name">storageClassName</span>: &lt;string&gt;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb596826" class="outline-2">
+<h2 id="orgb596826"><span class="section-number-2">6</span> Ingress</h2>
+<div class="outline-text-2" id="text-6">
+</div><div id="outline-container-org45aeba2" class="outline-3">
+<h3 id="org45aeba2"><span class="section-number-3">6.1</span> <code>ingress-nginx</code></h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+<code>ingress-nginx</code> （或 Nginx Ingress Controller）用于在 Kubernetes 集群中实现一个基于 Nginx 的负载均衡器，以连接云服务（或 minikube）提供的负载均衡器和集群的业务节点。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/kubernetes/03.png" alt="03.png" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/kubernetes/04.png" alt="04.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9d87daf" class="outline-3">
+<h3 id="org9d87daf"><span class="section-number-3">6.2</span> <code>Ingress</code></h3>
+<div class="outline-text-3" id="text-6-2">
+<div class="org-src-container">
+<pre class="src src-yaml"><span class="org-variable-name">apiVersion</span>: ... <span class="org-comment-delimiter"># </span><span class="org-comment">extensions/v1beta1</span>
+<span class="org-variable-name">kind</span>: Ingress
+<span class="org-variable-name">metadata</span>:
+  ...
+  <span class="org-variable-name">annotations</span>:
+<span class="org-yaml-tab">    </span><span class="org-variable-name">kubernetes.io/ingress.class</span>: nginx              <span class="org-comment-delimiter"># </span><span class="org-comment">&#21019;&#24314;&#22522;&#20110; Nginx &#30340; Ingress controller</span>
+<span class="org-yaml-tab">    </span><span class="org-variable-name">nginx.ingress.kubernetes.io/rewrite-target</span>: /$1 <span class="org-comment-delimiter"># </span><span class="org-comment">&#36716;&#21457;&#35831;&#27714;&#26102;&#31227;&#38500; URL &#20013;&#30340;&#36335;&#24452;&#65292;e.g. /api/ -&gt; /</span>
+<span class="org-variable-name">spec</span>:
+  <span class="org-variable-name">rules</span>:
+<span class="org-yaml-tab">    </span><span class="org-variable-name">- http</span>:
+<span class="org-yaml-tab">        </span><span class="org-variable-name">paths</span>:
+<span class="org-yaml-tab">        </span><span class="org-variable-name">  - path</span>: /?(.*)
+<span class="org-yaml-tab">            </span><span class="org-variable-name">backend</span>:
+<span class="org-yaml-tab">            </span><span class="org-variable-name">  serviceName</span>: &lt;string&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#21305;&#37197; ClusterIP Service &#30340; name</span>
+<span class="org-yaml-tab">            </span><span class="org-variable-name">  servicePort</span>: &lt;integer&gt;
+<span class="org-yaml-tab">        </span><span class="org-variable-name">  - path</span>: /foo/?(.*)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org39ff95c" class="outline-2">
+<h2 id="org39ff95c"><span class="section-number-2">7</span> RBAC</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+<a href="https://kubernetes.io/docs/reference/access-authn-authz/rbac/">Kubernetes Reference | Using RBAC Authorization</a>
+</p>
+
+<p>
+Kubernetes RBAC (Role-Based Access Control) limits access and modification of cluster objects. RBAC is not enabled by default in local dev environments such as Minikube, but should be enabled in prod environments such as Google Cloud.
+</p>
+
+<p>
+RBAC consists of accounts and roles.
+</p>
+</div>
+
+<div id="outline-container-org02a1acf" class="outline-3">
+<h3 id="org02a1acf"><span class="section-number-3">7.1</span> Account</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+Account is for identification. Accounts include:
+</p>
+
+<ul class="org-ul">
+<li>User account: identifies a person.</li>
+<li>Service account: identifies an object such as a <code>Pod</code>.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2628862" class="outline-3">
+<h3 id="org2628862"><span class="section-number-3">7.2</span> Roles</h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+Role is for authorization, it contains a set of permissions. A role can be bound to an account by using "role binding" to authorize the account to perform the allowed actions.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>Role</code></th>
+<th scope="col" class="org-left">A namespaced role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>ClusterRole</code></td>
+<td class="org-left">A cluster-wide role</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>RoleBinding</code></td>
+<td class="org-left">Grants namespaced permissions</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>ClusterRoleBinding</code></td>
+<td class="org-left">Grants cluster-wide permissions</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org51e9467" class="outline-2">
+<h2 id="org51e9467"><span class="section-number-2">8</span> Helm</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+Helm is a tool used to manage Kubernetes applications, such as <code>ingress-nginx</code>.
+</p>
+
+<p>
+Helm has 2 parts:
+</p>
+
+<ul class="org-ul">
+<li>Helm: the client, receives commands from user and calls <code>tiller</code>.</li>
+<li>Tiller: the server, modifies Kubernetes cluster such as installing objects.</li>
+</ul>
+</div>
+
+<div id="outline-container-org3c16498" class="outline-3">
+<h3 id="org3c16498"><span class="section-number-3">8.1</span> 运行</h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+<a href="https://helm.sh/docs/using_helm/#from-script">Helm Documentation | Installing Helm | Using Script</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">&#23433;&#35013;</span>
+curl -LO https://git.io/get_helm.sh
+chmod 700 get_helm.sh
+./get_helm.sh
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#37197;&#32622; Tiller &#26435;&#38480;</span>
+kubectl create serviceaccount --namespace kube-system tiller
+kubectl create clusterrolebinding tiller-cluster-role --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#21021;&#22987;&#21270;</span>
+helm init --service-account tiller --upgrade
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga27ecf5" class="outline-2">
+<h2 id="orga27ecf5"><span class="section-number-2">9</span> <code>kubectl</code></h2>
+<div class="outline-text-2" id="text-9">
+<p>
+<code>kubectl</code> 是 Kubernetes 的命令行工具，用于控制 Kubernetes 集群。
+</p>
+</div>
+
+<div id="outline-container-orgdab81ba" class="outline-3">
+<h3 id="orgdab81ba"><span class="section-number-3">9.1</span> 命令</h3>
+<div class="outline-text-3" id="text-9-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>操作</b></th>
+<th scope="col" class="org-left"><code>apply</code></th>
+<th scope="col" class="org-left">应用配置</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><code>create</code></th>
+<th scope="col" class="org-left">创建</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><code>delete</code></th>
+<th scope="col" class="org-left">删除</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><code>set</code></th>
+<th scope="col" class="org-left">修改</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>状态</b></td>
+<td class="org-left"><code>get</code></td>
+<td class="org-left">资源列表</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>describe</code></td>
+<td class="org-left">资源信息</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>logs</code></td>
+<td class="org-left">日志</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>cluster-info</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org7576ff1" class="outline-3">
+<h3 id="org7576ff1"><span class="section-number-3">9.2</span> <code>apply</code></h3>
+<div class="outline-text-3" id="text-9-2">
+<div class="org-src-container">
+<pre class="src src-sh">kubectl apply &lt;options&gt;
+  -f, --filename &lt;file&gt;|&lt;dir&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#25351;&#23450;&#30446;&#24405;&#26102;&#65292;&#23558;&#24212;&#29992;&#30446;&#24405;&#19979;&#25152;&#26377;&#37197;&#32622;&#25991;&#20214;</span>
+  --validate=&lt;bool&gt;           <span class="org-comment-delimiter"># </span><span class="org-comment">&#26159;&#21542;&#26816;&#26597;&#35821;&#27861;&#65292;&#22240;&#20026;&#23458;&#25143;&#31471;&#21644;&#26381;&#21153;&#22120;&#29256;&#26412;&#19981;&#21516;&#32780;&#25253;&#38169;&#26102;&#21487;&#20197;&#35774;&#20026; false</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org04a224e" class="outline-3">
+<h3 id="org04a224e"><span class="section-number-3">9.3</span> <code>create</code></h3>
+<div class="outline-text-3" id="text-9-3">
+<div class="org-src-container">
+<pre class="src src-sh">kubectl create &lt;type&gt; ...
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org2b01ba1" class="outline-4">
+<h4 id="org2b01ba1"><span class="section-number-4">9.3.1</span> <code>create clusterrolebinding</code></h4>
+<div class="outline-text-4" id="text-9-3-1">
+<div class="org-src-container">
+<pre class="src src-sh">kubectl create clusterrolebinding &lt;options&gt; &lt;name&gt;
+  &lt;options&gt;
+    --clusterrole=&lt;role&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">e.g. cluster-admin</span>
+    --serviceaccount=&lt;namespace&gt;:&lt;name&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfb8be72" class="outline-4">
+<h4 id="orgfb8be72"><span class="section-number-4">9.3.2</span> <code>create secret</code></h4>
+<div class="outline-text-4" id="text-9-3-2">
+<p>
+创建 <code>Secret</code> 对象，用于存储密码等敏感信息。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">kubectl create secret &lt;subtype&gt; &lt;name&gt; &lt;options&gt; &lt;key&gt;=&lt;value&gt;
+  &lt;subtype&gt;
+    generic        <span class="org-comment-delimiter"># </span><span class="org-comment">&#20174;&#26412;&#22320;&#25991;&#20214;&#25110;&#21629;&#20196;&#21442;&#25968;&#21019;&#24314;&#23545;&#35937; </span>
+  &lt;name&gt;           <span class="org-comment-delimiter"># </span><span class="org-comment">&#29992;&#20110;&#22312; Pod &#37197;&#32622;&#20869;&#24341;&#29992;</span>
+  &lt;options&gt;
+    --from-literal <span class="org-comment-delimiter"># </span><span class="org-comment">&#20174;&#21629;&#20196;&#21442;&#25968;&#21019;&#24314;&#65292;&#32780;&#19981;&#26159;&#20174;&#25991;&#20214;&#35835;&#21462;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org416ebca" class="outline-4">
+<h4 id="org416ebca"><span class="section-number-4">9.3.3</span> <code>create serviceaccount</code></h4>
+<div class="outline-text-4" id="text-9-3-3">
+<div class="org-src-container">
+<pre class="src src-sh">kubectl create serviceaccount &lt;options&gt; &lt;name&gt;
+  &lt;options&gt;
+    --namespace &lt;namespace&gt;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2391b65" class="outline-3">
+<h3 id="org2391b65"><span class="section-number-3">9.4</span> <code>delete</code></h3>
+<div class="outline-text-3" id="text-9-4">
+<div class="org-src-container">
+<pre class="src src-sh">kubectl delete &lt;options&gt;
+  -f, --filename &lt;file&gt;
+
+kubectl delete &lt;type&gt; &lt;name&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4e127ea" class="outline-3">
+<h3 id="org4e127ea"><span class="section-number-3">9.5</span> <code>describe</code></h3>
+<div class="outline-text-3" id="text-9-5">
+<div class="org-src-container">
+<pre class="src src-sh">kubectl describe &lt;type&gt; &lt;name&gt;
+  &lt;type&gt;
+    storageclass <span class="org-comment-delimiter"># </span><span class="org-comment">&#23384;&#20648;&#31354;&#38388;&#31867;&#21035;&#65292;&#29992;&#20110; Persistent Volume</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc638419" class="outline-3">
+<h3 id="orgc638419"><span class="section-number-3">9.6</span> <code>get</code></h3>
+<div class="outline-text-3" id="text-9-6">
+<div class="org-src-container">
+<pre class="src src-sh">kubectl get &lt;options&gt; &lt;type&gt;
+  &lt;options&gt;
+    -o, --output [wide|json|yaml] <span class="org-comment-delimiter"># </span><span class="org-comment">&#36755;&#20986;&#26684;&#24335;</span>
+  &lt;type&gt;
+    deployments
+    persistentvolume (pv)
+    persistentvolumeclaim (pvc)
+    pods
+    services
+    storageclass (sc) <span class="org-comment-delimiter"># </span><span class="org-comment">&#23384;&#20648;&#31354;&#38388;&#31867;&#21035;&#65292;&#29992;&#20110; Persistent Volume</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgba4a57d" class="outline-3">
+<h3 id="orgba4a57d"><span class="section-number-3">9.7</span> <code>logs</code></h3>
+<div class="outline-text-3" id="text-9-7">
+<div class="org-src-container">
+<pre class="src src-sh">kubectl logs &lt;name&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9f8255a" class="outline-3">
+<h3 id="org9f8255a"><span class="section-number-3">9.8</span> <code>set</code></h3>
+<div class="outline-text-3" id="text-9-8">
+<div class="org-src-container">
+<pre class="src src-sh">kubectl set &lt;command&gt;
+  image <span class="org-comment-delimiter"># </span><span class="org-comment">&#20462;&#25913; Pod &#27169;&#29256;&#30340;&#38236;&#20687;</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org2b1c2dd" class="outline-4">
+<h4 id="org2b1c2dd"><span class="section-number-4">9.8.1</span> <code>set image</code></h4>
+<div class="outline-text-4" id="text-9-8-1">
+<div class="org-src-container">
+<pre class="src src-sh">kubectl set image &lt;type&gt;/&lt;name&gt; &lt;container&gt;=&lt;image&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 8: </span><code>foo-deployment.yml</code></label><pre class="src src-yaml"><span class="org-comment">...</span>
+<span class="org-variable-name">kind</span>: Deployment
+<span class="org-variable-name">metadata</span>:
+  <span class="org-variable-name">name</span>: foo-deployment
+<span class="org-variable-name">spec</span>:
+  ...
+  <span class="org-variable-name">template</span>:
+<span class="org-yaml-tab">    </span><span class="org-variable-name">spec</span>:
+<span class="org-yaml-tab">    </span><span class="org-variable-name">  containers</span>:
+<span class="org-yaml-tab">        </span><span class="org-variable-name">- name</span>: bar
+<span class="org-yaml-tab">        </span><span class="org-variable-name">  image</span>: project/bar-image
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 9: </span>指定镜像</label><pre class="src src-sh">kubectl set image deployment/foo-deployment <span class="org-variable-name">bar</span>=project/bar-image:v1
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga8bcb54" class="outline-2">
+<h2 id="orga8bcb54"><span class="section-number-2">10</span> Minikube</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+Minikube 是用于开发环境的 Kubernetes 集群配置和管理工具。Minikube 在一个 Linux 虚拟机（需要虚拟机环境如 VirtualBox）中运行一个单节点的 Kubernetes 集群。
+</p>
+</div>
+
+<div id="outline-container-orga99ce2c" class="outline-3">
+<h3 id="orga99ce2c"><span class="section-number-3">10.1</span> 命令</h3>
+<div class="outline-text-3" id="text-10-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>控制</b></th>
+<th scope="col" class="org-left"><code>start</code></th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>状态</b></td>
+<td class="org-left"><code>status</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>dashboard</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>ip</code></td>
+<td class="org-left">获取 IP 地址</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>docker-env</code></td>
+<td class="org-left">Docker 环境变量</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org1b9f564" class="outline-3">
+<h3 id="org1b9f564"><span class="section-number-3">10.2</span> <code>docker-env</code></h3>
+<div class="outline-text-3" id="text-10-2">
+<div class="org-src-container">
+<pre class="src src-sh">minikube docker-env
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ minikube docker-env
+<span class="org-builtin">export</span> <span class="org-variable-name">DOCKER_TLS_VERIFY</span>=<span class="org-string">"1"</span>
+<span class="org-builtin">export</span> <span class="org-variable-name">DOCKER_HOST</span>=<span class="org-string">"tcp://&lt;ip&gt;:&lt;port&gt;"</span>
+<span class="org-builtin">export</span> <span class="org-variable-name">DOCKER_CERT_PATH</span>=<span class="org-string">"&lt;path&gt;/.minikube/certs"</span>
+<span class="org-builtin">export</span> <span class="org-variable-name">DOCKER_API_VERSION</span>=<span class="org-string">"1.35"</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#22312;&#24403;&#21069;&#20250;&#35805;&#20869;&#23558;&#26412;&#22320; Docker client &#25351;&#21521; minikube &#20869;&#30340; Docker server</span>
+$ eval $(minikube docker-env)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2d594d6" class="outline-2">
+<h2 id="org2d594d6"><span class="section-number-2">11</span> Links</h2>
+<div class="outline-text-2" id="text-11">
+<ol class="org-ol">
+<li><a href="https://kubernetes.io/docs/home/?path=browse">Kubernetes Documentaion</a></li>
+<li><a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.13/">Kubernetes API Reference</a></li>
+<li><a href="https://kubernetes.github.io/ingress-nginx/">Nginx Ingress Controller</a></li>
+<li><a href="https://helm.sh/">Helm</a></li>
+<li><a href="https://github.com/kubernetes/minikube">Minikube</a></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2019-11-10 Sun 16:12</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

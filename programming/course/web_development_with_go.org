@@ -1,0 +1,52 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Web Development with Go
+
+* Get Started
+** Why Choose Go for Web Development?
+
+The first dual-core CPU was created around 2006. Google started developing Go in 2007, with the goal to take advantage of multicore CPUs, and moreover, to run on multiple machines in distributed environments. It was one of the first programming languages designed to do so.
+
+* Templates
+
+- [[https://golang.org/pkg/text/template/][Go | Packages | text/template]]
+- [[https://golang.org/pkg/html/template/][Go | Packages | html/template]]
+
+** Template with Concatenation
+
+Output HTML directly:
+
+#+BEGIN_SRC go
+name := "Foo Bar"
+html := `
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test Page</title>
+    </head>
+    <body>
+        <h1>` + name + `</h1>
+    </body>
+</html>
+`
+fmt.Println(html)
+#+END_SRC
+
+Output HTML to a file:
+
+#+BEGIN_SRC go
+name := "Foo Bar"
+html := `
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test Page</title>
+    </head>
+    <body>
+        <h1>` + name + `</h1>
+    </body>
+</html>
+`
+file, _ := os.Create("index.html")
+defer file.Close()
+io.Copy(file, strings.NewReader(html))
+#+END_SRC

@@ -1,0 +1,1167 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Yii
+
+* Yii
+
+| Basic    | 简单网站，没有子系统、前后台  |
+|----------+-------------------------------|
+| Advanced | 中型网站，两套界面：前台、CMS |
+
+-----
+
+组成
+| MVC                   |                                                                                      |
+|-----------------------+--------------------------------------------------------------------------------------|
+| Entry script          | PHP scripts that are directly accessible by end users                                |
+|                       | Responsible for starting a request handling cycle                                    |
+|-----------------------+--------------------------------------------------------------------------------------|
+| Application           | Globally accessible objects                                                          |
+|                       | Manage application components, and coordinate them to fulfill requests               |
+|-----------------------+--------------------------------------------------------------------------------------|
+| Application component | Objects registered with applications                                                 |
+|                       | Provide various services for fulfilling requests                                     |
+|-----------------------+--------------------------------------------------------------------------------------|
+| Module                | Self-contained packages that contain complete MVC by themselves                      |
+|                       | An application can be organized in terms of multiple modules                         |
+|-----------------------+--------------------------------------------------------------------------------------|
+| Filter                | Code to be invoked before / after the actual handling of each request by controllers |
+|-----------------------+--------------------------------------------------------------------------------------|
+| Widget                | Objects that can be embedded in views                                                |
+|                       | May contain controller logic and can be reused in different views                    |
+
+file:../images/yii/01.png
+
+-----
+
+请求流程
+- web server 接受请求，传递到 =index.php= ；
+- 创建 =Application= 对象，决定处理请求需要使用的 =Controller= 类；
+- =Controller= 对象创建，决定需要执行的 =Action= 并执行，传递请求细节数据；
+- 动作执行，返回渲染结果；
+- 一个特殊组件（component）将数据格式化；
+- 结果数据：HTML、JSON、XML 返回给用户；
+
+* Dir
+
+Project root
+| =backend/=         | Advanced 后台                 |
+|--------------------+-------------------------------|
+| =common/=          | 前后台共用代码                |
+|--------------------+-------------------------------|
+| =console/=         | 自定义 console 命令           |
+|--------------------+-------------------------------|
+| =frontend/=        | Advanced 前台                 |
+|--------------------+-------------------------------|
+| =vendor/=          | Composer 安装的包             |
+|--------------------+-------------------------------|
+| =requirements.php= | 检查部署环境是否满足 Yii 要求 |
+
+-----
+
+=@app/=
+- Application root;
+- For Basic app, it's project root;
+- For Advanced app, it's =backend/= or =frontend/= under project root;
+
+| =config/=      | 配置文件     |
+|----------------+--------------|
+| =controllers/= |              |
+|----------------+--------------|
+| =models/=      |              |
+|----------------+--------------|
+| =views/=       |              |
+|----------------+--------------|
+| =web/=         | 应用公开目录 |
+
+** 项目文件
+
+| =controllers/<Menu>Controller.php= |   |
+|------------------------------------+---|
+| =models/<model>/<Model>.php=       |   |
+| =models/<model>/<Model>Record.php= |   |
+|------------------------------------+---|
+| =views/<menu>/<action>.php=        |   |
+
+* Config
+
+=config/=
+| =console.php= |   |
+|---------------+---|
+| [[config_db][=db.php=]]      |   |
+|---------------+---|
+| =web.php=     |   |
+
+=config/web.php=
+| =id=                                        |           | 应用名                              |
+|---------------------------------------------+-----------+-------------------------------------|
+| =basePath=                                  |           | 应用绝对路径，所有相对路径都基于此  |
+|---------------------------------------------+-----------+-------------------------------------|
+| =components.request.cookieValidationKey=    |           | 用于基于 Cookie 的身份验证          |
+| =components.request.enableCookieValidation= |           | 设为 =false= 关闭基于 Cookie 的认证 |
+|---------------------------------------------+-----------+-------------------------------------|
+| =components.urlManager.enablePrettyUrl=     | =boolean= | 优化 URL 模式                   |
+| =components.urlManager.showScriptName=      | =boolean= | URL 是否显示 =index.php=            |
+
+=config/db.php= <<config_db>>
+| =class=    |   |
+|------------+---|
+| =dsn=      |   |
+|------------+---|
+| =username= |   |
+|------------+---|
+| =password= |   |
+
+** 常量
+
+| =YII_DEBUG= | Debug 模式开关 |
+|-------------+----------------|
+|             |                |
+
+** Web server 配置
+
+Apache
+#+BEGIN_SRC code
+# Set document root to be "basic/web"
+DocumentRoot "path/to/basic/web"
+
+<Directory "path/to/basic/web">
+    # use mod_rewrite for pretty URL support
+    RewriteEngine on
+    # If a directory or a file exists, use the request directly
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    # Otherwise forward the request to index.php
+    RewriteRule . index.php
+
+    # ...other settings...
+</Directory>
+#+END_SRC
+
+-----
+
+Nginx
+#+BEGIN_SRC code
+server {
+    charset utf-8;
+    client_max_body_size 128M;
+
+    listen 80; ## listen for ipv4
+    #listen [::]:80 default_server ipv6only=on; ## listen for ipv6
+
+    server_name mysite.local;
+    root        /path/to/basic/web;
+    index       index.php;
+
+    access_log  /path/to/basic/log/access.log;
+    error_log   /path/to/basic/log/error.log;
+
+    location / {
+        # Redirect everything that isn't a real file to index.php
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    # uncomment to avoid processing of calls to non-existing static files by Yii
+    #location ~ \.(js|css|png|jpg|gif|swf|ico|pdf|mov|fla|zip|rar)$ {
+    #    try_files $uri =404;
+    #}
+    #error_page 404 /404.html;
+
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
+        fastcgi_pass  127.0.0.1:9000;
+        #fastcgi_pass unix:/var/run/php5-fpm.sock;
+        try_files $uri =404;
+    }
+
+    location ~ /\.(ht|svn|git) {
+        deny all;
+    }
+}
+#+END_SRC
+
+* Controller
+** 路由
+
+| 默认 URL | =http://yourdomain/index.php?r=menu/action= |
+|----------+---------------------------------------------|
+| 优化 URL | =http://yourdomain/menu/action=             |
+
+=config/web.php=
+#+BEGIN_SRC php
+$config = [
+    'components' => [
+        'urlManager' => [
+            'class' => 'yii\web\UrlManager',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+                '<controller:\w+>/<id:\d+>' => '<controller>/view',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+            ],
+        ],
+    ],
+];
+#+END_SRC
+
+** 示例
+=controllers/<Menu>Controller.php=
+#+BEGIN_SRC php
+namespace app\controllers; // 属于 Application 类的 controllerNamespace 定义的命名空间
+use yii\web\Controller;    // 继承 \yii\web\Controller 或 \yii\base\Controller（用于 console）
+
+class MenuController extends Controller // 类名以 Controller 为后缀
+{
+    public $layout = 'menu';
+
+    // 列表动作
+    public function actionIndex()       // 方法名以 action 为前缀
+    {
+        $records = $this->findRecords();
+        return $this->render('index', compact('records'));
+    }
+
+    // 添加动作
+    public function actionAdd()
+    {
+        $model = new ModelRecord();
+        if ($this->load($model, $_POST)) // Yii 假设渲染表单的路径，也是表单提交的动作
+        {
+            $this->store($this->makeModel($model));
+            return $this->redirect('/menu');
+        }
+        return $this->render('add', compact('model'));
+    }
+
+    // 查询动作
+    public function actionQuery()
+    {
+        return $this->render('query');
+    }
+
+    private function findRecords()
+    {
+        $property = Yii::$app->request->get('property');
+        $records = $this->getRecordsByProperty($property);
+        $dataProvider = $this->wrapIntoDataProvider($records);
+        return $dataProvider;
+    }
+
+    private function getRecordsByProperty($property)
+    {
+        $record = ModelRecord::findOne(['property' => $property]);
+        if (!$record)
+            return [];
+        return [$this->makeModel($record)];
+    }
+
+    private function wrapIntoDataProvider($data)
+    {
+        return new ArrayDataProvider([
+            'allModels' => $data,
+            'pagination' => false
+        ]);
+    }
+
+    private function load(ModelRecord $model, array $post)
+    {
+        return $model->load($post) // 从 POST 请求数据中读取 Model 属性
+           and $model->validate(); // 数据验证
+    }
+
+    // 将数据库记录生成 Model
+    private function makeModel(ModelRecord $record)
+    {
+        $property = $record->property;
+        $model = new Model($property);
+        return $model;
+    }
+
+    // 将 Model 数据存储到数据库
+    private function store(Model $model)
+    {
+        $record = new ModelRecord();
+        $record->property = $model->property;
+        ...
+        $record->save();
+        // save() 之后生成了 $record->id
+    }
+}
+#+END_SRC
+
+* Model
+
+- Model 被用作数据的容器，而不直接与数据库相关；
+
+** 示例
+
+=models/<model>/<Model>.php=
+#+BEGIN_SRC php
+namespace app\models\model; // 将相关类组织在一个命名空间
+                            // 对应目录 models/model/
+Class Model
+{
+    // Properties
+    ...
+
+    public function __construct()
+    {
+    }
+}
+#+END_SRC
+
+** API
+
+| =load()=     |   |
+|--------------+---|
+| =validate()= |   |
+
+| =$errors= | 存储 =validate()= 产生的错误信息 |
+
+* AR
+
+- ActiveRecord；
+- 对象关系映射（ORM），定义类与数据表之间的映射关系；
+- 存储到数据库之前对字段进行验证；
+- 通过主键、属性、自定义查询，从数据库获取记录数据；
+
+** 示例
+
+=models/<model>/<Model>Record.php=
+#+BEGIN_SRC php
+namespace yii\models\model;
+use yii\db\ActiveRecord;
+
+class ModelRecord extends ActiveRecord
+{
+    public static function tableName()
+    {
+        return '<table>';
+    }
+    
+    public function rules()
+    {
+        return [
+            ['<column>', '<rule>', ...],
+            ...
+        ];
+    }
+}
+#+END_SRC
+
+** API
+
+| =rules()=   |   |
+|-------------+---|
+| =save()=    |   |
+|-------------+---|
+| =findOne()= |   |
+
+-----
+
+验证规则
+| 类型 | =number=   |         |
+|      | =string=   |         |
+|      | =date=     |         |
+|------+------------+---------|
+| 存在 | =required= |         |
+|      | =safe=     |         |
+|------+------------+---------|
+| 长度 | =max=      | =256=   |
+|------+------------+---------|
+| 格式 | =format=   | =Y-m-d= |
+
+- =safe= 表示无特定规则，可被 =setAttributes()= 设置；
+
+* View
+
+- Controller 执行 =render()= ，将数据传递给 View；
+- Controller 调用 Layout，将渲染结果通过 =$content= 传递给 Layout；
+
+变量
+| =$this=    | View component =yii\web\View=    |
+|------------+----------------------------------|
+| 预定义变量 | 由 Controller 传递给 View 的数据 |
+|            | 通常用块注释在 View 的头部列出   |
+
+** Layout
+
+- Views that represent the common parts of multiple views, eg. header, footer;
+- Stored in =@app/views/layouts= by default, can be customized by configuring =yii\base\Module::$layoutPath=;
+
+Trigger methods
+|               | Example data                           | Event              |
+|---------------+----------------------------------------+--------------------|
+| =beginPage()= |                                        | =EVENT_BEGIN_PAGE= |
+|---------------+----------------------------------------+--------------------|
+| =head()=      | Link tags, meta tags                   |                    |
+|---------------+----------------------------------------+--------------------|
+| =beginBody()= | JS targeted at =<body>= begin position | =EVENT_BEGIN_BODY= |
+|---------------+----------------------------------------+--------------------|
+| =endBody()=   | JS targeted at =<body>= end position   | =EVENT_END_BODY=   |
+|---------------+----------------------------------------+--------------------|
+| =endPage()=   |                                        | =EVENT_END_PAGE=   |
+
+Example
+#+BEGIN_SRC php
+<?php
+use yii\helpers\Html;
+
+/* @var $this yii\web\View */
+/* @var $content string */
+?>
+<?php $this->beginPage() ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <?= Html::csrfMetaTags() ?>
+    <title><?= Html::encode($this->title) ?></title>
+    <?php $this->head() ?>
+</head>
+<body>
+<?php $this->beginBody() ?>
+    <header>My Company</header>
+    <?= $content ?> /* Rendering result of content views */
+                    /* Pushed into the layout when yii\base\Controller::render() is called */
+    <footer>&copy; 2014 by My Company</footer>
+<?php $this->endBody() ?>
+</body>
+</html>
+<?php $this->endPage() ?>
+#+END_SRC
+
+** Block
+
+- Specify view content in one place, display it in another place;
+
+In View
+#+BEGIN_SRC html
+<?php $this->beginBlock('block'); ?>
+... content ...
+<?php $this->endBlock(); ?>
+#+END_SRC
+
+In Layout
+#+BEGIN_SRC html
+<?php if (isset($this->blocks['block'])): ?>
+    <?= $this->blocks['block'] ?>
+<?php else: ?>
+    ... default content ...
+<?php endif; ?>
+#+END_SRC
+
+** 示例
+*** 列表
+列表页面 =views/<menu>/index.php=
+#+BEGIN_SRC php
+echo \yii\widgets\ListView::widget([
+	'options' => [
+		'class' => 'list-view',
+		'id'    => 'search_results' // 显示列表的 HTML 标签的 id
+	],
+	'itemView' => '_model',
+	'dataProvider' => $records
+]);
+#+END_SRC
+
+-----
+
+列表项 =views/<menu>/_<model>.php=
+#+BEGIN_SRC php
+echo \yii\widgets\DetailView::widget([
+	'model' => $model,
+	'attributes' => [
+		['attribute' => '<property>'],
+		['attribute' => '<property>', 'value' => $model->property],
+		'<property>:text',
+		['label' => '<Property'>, 'attribute' => 'property.0.number']
+	]
+]);
+#+END_SRC
+
+*** 表单
+
+=views/<menu>/add.php=
+#+BEGIN_SRC php
+use app\models\model\ModelRecord;
+use yii\web\View;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+
+$form = ActiveForm::begin([
+    'id' => 'form',
+]);
+echo $form->errorSummary([$model]);   // 验证错误信息
+                                      // Model 对象由 render() 方法传入
+echo $form->field($model, '<field>');
+echo Html::submitButton('Submit', ['class' => 'btn btn-primary']);
+ActiveForm::end();
+#+END_SRC
+
+#+BEGIN_SRC php
+<?php
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+
+/* @var $this yii\web\View */
+/* @var $form yii\widgets\ActiveForm */
+/* @var $model app\models\LoginForm */
+
+$this->title = 'Login';
+?>
+<h1><?= Html::encode($this->title) ?></h1>
+
+<p>Please fill out the following fields to login:</p>
+
+<?php $form = ActiveForm::begin(); ?>
+    <?= $form->field($model, 'username') ?>
+    <?= $form->field($model, 'password')->passwordInput() ?>
+    <?= Html::submitButton('Login') ?>
+<?php ActiveForm::end(); ?>
+#+END_SRC
+
+*** 查询
+
+=viewe/<menu>/query.php=
+#+BEGIN_SRC php
+use yii\helpers\Html;
+
+echo Html::beginForm(['/menu'], 'get');
+echo Html::label('Property to search:', 'property');
+echo Html::textInput('property');
+echo Html::submitButton('Search');
+echo Html::endForm();
+#+END_SRC
+
+** =yii\base\View=
+
+| [[view_begincontent][=beginContent()=]] | Begins rendering of content decorated by specified view |
+|------------------+---------------------------------------------------------|
+|                  |                                                         |
+
+*** =beginContent()=
+
+<<view_begincontent>>
+#+BEGIN_SRC php
+beginContent (
+    $viewFile,
+    $params = []
+)
+#+END_SRC
+
+| =$viewFile= | String                         | The view file to decorate the content enclosed                  |
+|             |                                | Can be view file path or path alias                             |
+|-------------+--------------------------------+-----------------------------------------------------------------|
+| =$params=   | Array                          | Variables to be extracted and made available in decorative view |
+|-------------+--------------------------------+-----------------------------------------------------------------|
+| Return      | =yii\widgets\ContentDecorator= |                                                                 |
+
+Implement nested layout
+#+BEGIN_SRC html
+<?php $this->beginContent('@app/views/layouts/base.php'); ?>
+... layout content ...
+<?php $this->endContent(); ?>
+#+END_SRC
+
+** =yii\helpers\BaseHtml=
+
+View 中调用
+#+BEGIN_SRC php
+<?= Html::<method>() ?>
+#+END_SRC
+
+-----
+
+=$options= 属性值通用规则
+- 值为 Null 时，属性不会输出；
+- 值为 Boolean 时，属性只输出名称，eg. =checked= =disabled= ；
+- 自动通过 =Html::encode()= 编码；
+- 值为数组时：
+  + 属性名属于 =yii\helpers\Html::$dataAttributes= 时，会生成多个数据属性：
+    - =['data' => ['id' => 1, 'name' => 'yii']]= 生成 @@html:<code>data-id="1" data-name="yii"</code>@@ ；
+    - =['data' => ['params' => ['id' => 1, 'name' => 'yii'], 'status' => 'ok']]= 生成 @@html:<code>data-params='{"id":1,"name":"yii"}' data-status="ok"</code>@@ ；
+  + 属性为 =class= 时，属性值用空格分隔：
+    - =['class' => ['btn', 'btn-default']]= 生成 @@html:<code>class="btn btn-default"</code>@@ ；
+  + 其他属性名，属性值输出成 JSON 格式：
+    - =['params' => ['id' => 1, 'name' => 'yii']= 生成 @@html:<code>params='{"id":1,"name":"yii"}'</code>@@ ；
+
+-----
+
+内容
+| [[html_encode][=encode()=]] | 特殊字符编码为 HTML entity |
+| [[html_decode][=decode()=]] | HTML entity 解码成字符     |
+
+标签
+| [[html_tag][=tag()=]]      | 完整标签 |
+|--------------+----------|
+| [[html_beginTag][=beginTag()=]] | 起始标签 |
+| [[html_endTag][=endTag()=]]   | 结束标签 |
+
+Form
+| [[html_beginForm][=beginForm()=]]    |   |
+| [[html_endForm][=endForm()=]]      |   |
+|------------------+---|
+| [[html_input][=input()=]]        |   |
+|------------------+---|
+| [[html_button][=button()=]]       |   |
+| [[html_submitButton][=submitButton()=]] |   |
+| [[html_resetButton][=resetButton()=]]  |   |
+
+CSS
+| [[html_addCssClass][=addCssClass()=]]       |   |
+| [[html_removeCssClass][=removeCssClass()=]]    |   |
+|-----------------------+---|
+| [[html_addCssStyle][=addCssStyle()=]]       |   |
+| [[html_removeCssStyle][=removeCssStyle()=]]    |   |
+|-----------------------+---|
+| [[html_cssStyleFromArray][=cssStyleFromArray()=]] |   |
+| [[html_cssStyleToArray][=cssStyleToArray()=]]   |   |
+
+*** =addCssClass()= =removeCssClass()=
+
+<<html_addCssClass>>
+#+BEGIN_SRC php
+void addCssClass (
+   &$options
+,   $class
+)
+#+END_SRC
+
+<<html_removeCssClass>>
+#+BEGIN_SRC php
+void removeCssClass (
+   &$options
+,   $class
+)
+#+END_SRC
+
+| =$options= | Array          |
+|------------+----------------|
+| =$class=   | String / Array |
+
+示例
+#+BEGIN_SRC php
+$options = ['class' => 'btn btn-default'];
+if ($type === 'success') {
+    Html::removeCssClass($options, 'btn-default');
+    Html::addCssClass($options, ['btn-success', 'btn-submit']);
+}
+// <div class="btn btn-success btn-submit">content</div>
+echo Html::tag('div', 'content', $options);
+#+END_SRC
+
+*** =addCssStyle()= =removeCssStyle()=
+
+<<html_addCssStyle>>
+#+BEGIN_SRC php
+void addCssStyle (
+   &$options
+,   $style
+,   $overwrite = true
+)
+#+END_SRC
+
+-----
+
+<<html_removeCssStyle>>
+#+BEGIN_SRC php
+void removeCssStyle (
+   &$options
+,   $properties
+)
+#+END_SRC
+
+示例
+#+BEGIN_SRC php
+$options = ['style' => ['width' => '100px', 'height' => '100px']];
+// new style="width: 100px; height: 200px; position: absolute;"
+Html::addCssStyle($options, 'height: 200px; position: absolute;');
+// new style="position: absolute;"
+Html::removeCssStyle($options, ['width', 'height']);
+#+END_SRC
+
+*** =beginForm()= =endForm()=
+
+<<html_beginForm>>
+#+BEGIN_SRC php
+string beginForm (
+    $action = '',
+    $method = 'post', 
+    $options = []
+)
+#+END_SRC
+
+| =$action=  | Array / String | 提交动作，由 =yii\helpers\Url::to()= 处理 | @@html:<code>order/update</code>@@ |
+|------------+----------------+-------------------------------------------+------------------------------------|
+| =$method=  | String         |                                           |                                    |
+|------------+----------------+-------------------------------------------+------------------------------------|
+| =$options= | Array          |                                           |                                    |
+
+示例
+#+BEGIN_SRC php
+<?= Html::beginForm(['order/update', 'id' => $id], 'post', ['enctype' => 'multipart/form-data']) ?>
+#+END_SRC
+
+-----
+
+<<html_endForm>>
+#+BEGIN_SRC php
+string endForm ( )
+#+END_SRC
+
+*** =beginTag()= =endTag()=
+
+<<html_beginTag>>
+#+BEGIN_SRC php
+string beginTag (
+    $name,
+    $options = []
+)
+#+END_SRC
+
+-----
+
+<<html_endTag>>
+#+BEGIN_SRC php
+string endTag ( $name )
+#+END_SRC
+
+*** =button()= =submitButton()= =resetButton()=
+
+<<html_button>>
+#+BEGIN_SRC php
+string button (
+    $content = 'Button',
+    $options = []
+)
+#+END_SRC
+
+| =$content= | String | 不经过转码，所以可以使用图片标签等 |
+|------------+--------+------------------------------------|
+| =$options= |        |                                    |
+
+-----
+
+<<html_submitButton>>
+#+BEGIN_SRC php
+string submitButton (
+    $content = 'Submit',
+    $options = []
+)
+#+END_SRC
+
+-----
+
+<<html_resetButton>>
+#+BEGIN_SRC php
+string resetButton (
+    $content = 'Reset',
+    $options = []
+)
+#+END_SRC
+
+*** =cssStyleFromArray()= =cssStyleToArray()=
+
+<<html_cssStyleFromArray>>
+#+BEGIN_SRC php
+string cssStyleFromArray ( array $style )
+#+END_SRC
+
+<<html_cssStyleToArray>>
+#+BEGIN_SRC php
+array cssStyleToArray ( $style )
+#+END_SRC
+
+示例
+#+BEGIN_SRC php
+// 'width: 100px; height: 200px;'
+Html::cssStyleFromArray(['width' => '100px', 'height' => '200px']);
+// ['width' => '100px', 'height' => '200px']
+Html::cssStyleToArray('width: 100px; height: 200px;');
+#+END_SRC
+
+*** =encode()= =decode()=
+
+<<html_encode>>
+#+BEGIN_SRC php
+string encode (
+    $content,
+    $doubleEncode = true
+)
+#+END_SRC
+
+- 编码字符集取决于 =yii\base\Application::$charset= ；
+
+| =$content=      | String  |                                     |
+|-----------------+---------+-------------------------------------|
+| =$doubleEncode= | Boolean | 是否对已有 HTML entity 进行二次编码 |
+
+-----
+
+<<html_decode>>
+#+BEGIN_SRC php
+string decode ( $content )
+#+END_SRC
+
+*** =input()=
+
+<<html_input>>
+#+BEGIN_SRC php
+string input (
+    $type
+,   $name = null
+,   $value = null
+,   $options = []
+)
+#+END_SRC
+
+| =$type=    | String |   |
+|------------+--------+---|
+| =$name=    | String |   |
+|------------+--------+---|
+| =$value=   | String |   |
+|------------+--------+---|
+| =$options= | Array  |   |
+
+*** =tag()=
+
+<<html_tag>>
+#+BEGIN_SRC php
+string tag (
+    $name,
+    $content = '',
+    $options = []
+)
+#+END_SRC
+
+| =$name=    | String | 标签名称                                 | @@html:<code>'p'</code>@@  |
+|------------+--------+------------------------------------------+----------------------------|
+| =$content= | String | 标签内容                                 | =Html::encode($userName)=  |
+|            |        | 不进行 HTML 编码，需要用 =encode()= 处理 |                            |
+|------------+--------+------------------------------------------+----------------------------|
+| =$options= | Array  | 标签属性                                 | =['class' => 'list-item']= |
+|------------+--------+------------------------------------------+----------------------------|
+| 返回值     | String |                                          |                            |
+* Widget
+
+- 渲染数据的辅助类，进行排序、分页、过滤等操作；
+
+| DetailView |   |
+|------------+---|
+| ListView   |   |
+|------------+---|
+| GridView   |   |
+
+* Database
+
+| [[config_db][=config/db.php=]] | 配置文件 |
+
+* API
+
+=\yii\=
+| =Yii= | Bootstrap 类 |
+
+=\yii\web\=
+|               | 继承                    |
+|---------------+-------------------------|
+| =Application= | =\yii\base\Application= |
+|---------------+-------------------------|
+| =Request=     | =\yii\base\Request=     |
+
+** =\yii\web\Request=
+
+| =get()= | 获取 GET 参数 |
+|---------+---------------|
+|         |               |
+
+*** =get()=
+
+#+BEGIN_SRC php
+mixed get (
+    $name = null,
+    $defaultValue = null
+)
+#+END_SRC
+
+| =$name= | String |                           |
+|         | Null   | 返回全部 GET 参数（数组） |
+|---------+--------+---------------------------|
+|         |        |                           |
+
+* Tool
+
+| Composer    | 依赖管理 |
+|-------------+----------|
+| Codeception | 测试框架 |
+|-------------+----------|
+| Console     | 命令行   |
+|-------------+----------|
+| MongoDB     |          |
+
+** Composer
+
+| =composer.json= | 依赖信息、Composer 数据 |
+
+=composer.json=
+#+BEGIN_SRC code
+{
+    "require": {
+        "<package>": "<version>",
+        ...
+    }
+}
+#+END_SRC
+
+命令
+#+BEGIN_SRC sh
+## 安装
+curl -sS https://getcomposer.org/installer | php
+
+php composer.phar install
+php composer.phar update
+
+## 将依赖加入 .json 文件并执行 update
+php composer.phar require "<package>:<version>"
+#+END_SRC
+
+** Codeception
+
+| =vendor/bin/codecept=           | 可执行文件 |
+|---------------------------------+------------|
+| =tests/codeception/*.suite.yml= | 配置文件   |
+
+命令
+#+BEGIN_SRC sh
+## 在项目根目录安装
+php composer.phar require "codeception/codeception:*"
+alias cept="./vendor/bin/codecept"
+
+## 生成 tests 目录和配置树
+cept bootstrap
+
+## 生成测试文件 tests/acceptance/SmokeTestCept.php
+cept generate:cept acceptance SmokeTest
+
+## 运行测试
+cept run
+
+## 修改配置文件后 rebuild
+cept build
+#+END_SRC
+
+-----
+
+| Acceptance test | 接受测试，模拟用户通过浏览器访问，速度慢 |
+|-----------------+------------------------------------------|
+| Functional test |                                          |
+|-----------------+------------------------------------------|
+| Unit test       | 单元测试，速度快                         |
+** Console
+
+| =yii=                | 默认 Console，位于项目根目录 |
+|----------------------+------------------------------|
+| =config/console.php= | 配置文件                     |
+
+命令
+| =migrate= |   | 
+
+*** =migrate=
+
+#+BEGIN_SRC sh
+./yii migrate/create <table> # 在 migrations/ 目录下创建迁移 Migration 类脚本
+./yii migrate/up             # 运行 migrations/ 下所有脚本的 up() 方法
+./yii migrate/down
+#+END_SRC
+
+=Migration= 类
+#+BEGIN_SRC php
+class ... extends Migration
+{
+    public function up()
+    {
+        $this->createTable(
+            '<table>',
+            [
+                '<column>' => '<type_and_options>',
+                ...
+            ],
+            'ENGINE=InnoDB'
+        );
+        $this->addForeignKey(
+            '<key_name>',
+            '<table>',
+            '<column>',
+            '<foreign_table>',
+            '<foreign_column>'
+        );
+    }
+
+    public function down()
+    {
+        $this->dropForeignKey('<key_name>', '<table>');
+        $this->dropTable('<table>');
+    }
+}
+#+END_SRC
+
+** MongoDB
+*** 安装
+
+#+BEGIN_SRC sh
+sudo pecl install mongo
+## php.ini 加入一行
+extension=mongo.so
+
+php composer.phar require --prefer-dist yiisoft/yii2-mongodb
+#+END_SRC
+
+*** 配置
+
+=config/web.php=
+#+BEGIN_SRC php
+$config = [
+    'components' => [
+        'mongodb' => [
+            'class' => '\yii\mongodb\Connection',
+            'dsn'   => 'mongodb://<user>:<password>@localhost:27017/<db>',
+        ],
+    ],
+];
+#+END_SRC
+
+*** 示例
+
+插入
+#+BEGIN_SRC php
+use Yii;
+
+$collection = Yii::$app->mongodb->getCollection('<coll>');
+$collection->insert(['<key>' => '<value>', ...]);
+#+END_SRC
+
+查询
+#+BEGIN_SRC php
+use yii\mongodb\Query;
+
+$query = new Query;
+$query->select(['<key>', ...])
+      ->from('<coll>')
+      ->limit(<int>);
+$rows = $query->all();
+#+END_SRC
+
+*** ActiveRecord
+
+ActiveRecord 类
+#+BEGIN_SRC php
+use yii\mongodb\ActiveRecord;
+
+class ModelRecord extends ActiveRecord
+{
+    public static function collectionName()
+    {
+        return '<coll>';
+    }
+
+    public function attributes()
+    {
+        return ['_id', '<key>', ...];
+    }
+}
+#+END_SRC
+
+查询示例 1
+#+BEGIN_SRC php
+use yii\data\ActiveDataProvider;
+use yii\mongodb\Query;
+
+$query = new Query;
+$query->from('<coll>')->where(['<key>' => '<value>']);
+$provider = new ActiveDataProvider([
+    'query' => $query,
+    'pagination' => [
+        'pageSize' => <size>,
+    ]
+]);
+$models = $provider->getModels();
+#+END_SRC
+
+查询示例 2
+#+BEGIN_SRC php
+use yii\data\ActiveDataProvider;
+use app\models\Model;
+
+$provider = new ActiveDataProvider([
+    'query' => Model::find(),
+    'pagination' => [
+        'pageSize' => <size>,
+    ]
+]);
+$models = $provider->getModels();
+#+END_SRC
+
+** 组件
+
+| Debug console |              |
+|---------------+--------------|
+| Gii           | 代码生成工具 |
+|---------------+--------------|
+| SwiftMailer   |              |
+
+* Install
+
+Basic 应用
+#+BEGIN_SRC sh
+## 设定安装目录
+cd /usr/local/yii
+
+## 下载 Composer PHP ARchive (PHAR)
+curl -sS https://getcomposer.org/installer | php
+sudo php composer.phar global require "fxp/composer-asset-plugin:~1.0.0"
+
+## 创建子目录，生成 basic 项目
+php composer.phar create-project --prefer-dist --stability=dev yiisoft/yii2-app-basic basic
+
+## 启动 PHP 内置 web server
+php -S localhost:8000 -t basic/web
+#+END_SRC
+
+-----
+
+Advanced 应用
+#+BEGIN_SRC sh
+## 设定安装目录
+cd /usr/local/yii
+
+## 下载 Composer PHP ARchive (PHAR)
+curl -sS https://getcomposer.org/installer | php
+sudo php composer.phar global require "fxp/composer-asset-plugin:~1.0.0"
+
+## 创建子目录，生成 advanced 项目
+php composer.phar create-project --prefer-dist --stability=dev yiisoft/yii2-app-advanced advanced
+
+## 生成本地配置
+cd advanced
+php init
+
+## 迁移数据库，需要先建立一个本地 MySQL 数据库
+## -h localhost -P 3306 -u root（无密码）
+mysql -u root -e "create database yii2advanced"
+php yii migrate
+
+## 启动 PHP 内置 web server
+php -S localhost:8080 -t frontend/web
+php -S localhost:8081 -t backend/web
+#+END_SRC
+
+-----
+
+自定义项目
+- 不依赖于 Yii 的目录结构，只使用类；
+
+#+BEGIN_SRC sh
+php composer.phar require "yiisoft/yii2:*"
+php composer.phar install
+#+END_SRC

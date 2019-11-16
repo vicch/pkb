@@ -1,0 +1,492 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Javascript
+
+* Type
+** String
+*** Template Literals
+
+[[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals][MDN | JavaScript | Reference | Template Literals]]
+
+Template literal 是可换行、可嵌入表达式的字符串：
+
+#+BEGIN_SRC js
+`line 1
+line 2`
+
+`string foo is ${foo}`
+#+END_SRC
+
+** Object
+
+#+BEGIN_SRC js
+const obj = { foo: 1, bar: 2 };
+const foo = obj.foo;  // 1
+const str = 'bar';
+const bar = obj[str]; // 2
+#+END_SRC
+
+动态对象 key：
+
+#+BEGIN_SRC js
+const key = 'foo';
+const map = { [key]: 'bar' };
+#+END_SRC
+
+*** Iteration
+
+#+BEGIN_SRC js
+let obj = { foo: 1, bar: 2 };
+for (let k in obj) {
+  console.log(k + ':' + obj[k]);
+}
+#+END_SRC
+
+*** Equality
+
+使用 ~===~ 比较对象时，比较的是对象地址。
+
+#+BEGIN_SRC js
+function update(obj, key, val) {
+  obj[key] = val;
+  return obj;
+}
+const a = { foo: 1, bar: 2 };
+const b = update(a, 'foo', 3); // Object is passed by reference
+const c = (a === b);           // True
+#+END_SRC
+
+* Expression
+** =async=
+
+#+BEGIN_SRC js
+function bar() { ... } // 异步函数，返回 Promise 对象
+
+// 不使用 async
+function foo() {
+  bar().then(function () { ... }); // bar() 返回后调用回调函数
+}
+
+// 使用 async
+async function foo() {
+  var result = await bar();
+}
+#+END_SRC
+
+** =const=
+
+[[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const][MDN | JavaScript | Reference | Statements & Declarations | const]]
+
+=const= 的作用域为代码块（block），只能被赋值一次。
+
+#+BEGIN_SRC js
+if (1) {
+  const a = 1; // 此处 a = 1
+  a = 2;       // Compiler error
+}
+if (1) {
+  const a = 3; // 此处 a = 3
+}
+#+END_SRC
+
+** =export=
+
+[[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export][MDN | JavaScript | Reference | Statements & Declarations | export]]
+
+#+BEGIN_SRC js
+export default Foo;          // Default export
+export const foo = () => {}; // Named export
+#+END_SRC
+
+** =import=
+
+[[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import][MDN | JavaScript | Reference | Statements & Declarations | import]]
+
+#+BEGIN_SRC js
+import Foo from 'foo';                 // Default import
+import { foo1, foo2, ... } from 'foo'; // Named import
+import Foo, { foo1 } from 'foo';       // Default and named import
+#+END_SRC
+
+#+CAPTION: Default export 和 named export 区别
+#+BEGIN_SRC js
+import ReactDOM from 'react-dom';
+ReactDOM.render(...);
+
+import { render } from 'react-dom';
+render(...);
+#+END_SRC
+
+** =let=
+
+[[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let][MDN | JavaScript | Reference | Statements & Declarations | let]]
+
+=let= 的作用域为代码块（block），可以被多次赋值。
+
+#+BEGIN_SRC js
+if (1) {
+  let a = 1;
+  a = 2;
+}
+if (1) {
+  let a = 3;
+  a = 4;
+}
+#+END_SRC
+
+* Statement
+** Destructuring
+
+[[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment][MDN | JavaScript | Reference | Expressions & Operators | Destructuring Assignment]]
+
+#+BEGIN_SRC js
+// Array
+const list = [10, 20];
+const [a, b] = list; // a = 10, b = 20
+
+// Array with spread
+const list = [10, 20, 30, 40, 50];
+const [a, b, ...rest] = list; // a = 10, b = 20, rest = [30, 40, 50]
+
+// Object, keys must match
+const map = { a: 'foo', b: 'bar' };
+const { a, b } = map;       // a = 'foo', b = 'bar'
+const { a: c, b: d } = map; // c = 'foo', d = 'bar'
+
+// Object with spread
+const map = { a: 'foo', b: 'bar', c: 'hoge', d: 'fuga' };
+const { a, b, ...rest } = map; // a = 'foo', b = 'bar', rest = { c: 'hoge', d: 'fuga' };
+#+END_SRC
+
+** Spread
+
+[[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax][MDN | JavaScript | Reference | Expressions & Operators | Spread Syntax]]
+
+Spread 语法将一个数组（或字符串）扩展为一组元素。
+
+#+BEGIN_SRC js
+foo = (x, y, z) => {};
+let args = [0, 1, 2];
+foo(...args); // foo(0, 1, 2);
+#+END_SRC
+
+数组 spread 可用于复制（shallow copy）、连接、扩展数组：
+
+#+BEGIN_SRC js
+const a = [1, 2, 3];
+const b = [4, 5, 6];
+const c = [...a];       // 复制，c = [1, 2, 3]
+const d = [...a, ...b]; // 连接，d = [1, 2, 3, 4, 5, 6]
+const e = [...a, 7, 8]; // 扩展, e = [1, 2, 3, 7, 8]
+                        // Spread 扩展会生成新数组，而不是修改原数组
+#+END_SRC
+
+对象 spread 可用于复制（shallow copy）、扩展对象：
+
+#+BEGIN_SRC js
+const a = { x: 1, y: 2 };
+
+const b = {...a};             // 复制，b = { x: 1, y: 2 }
+const c = {...a, y: 3, z: 4}; // 扩展，重复的 key 会被覆盖
+                              // c = { x: 1, y: 3, z: 4 }
+#+END_SRC
+
+* Function
+** 箭头函数
+
+[[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions][MDN | JavaScript | Reference | Functions | Arrow Functions]]
+
+#+BEGIN_SRC js
+(<param>, ...) => { <statement> ... }
+(<param>, ...) => <expression> // 等价于 => { return <expression>; }
+#+END_SRC
+
+#+BEGIN_SRC js
+// 函数体仅为 return <expr> 时可以省略 {}
+const a = () => 'b';
+// var a = function a() { return 'b'; }
+
+// 参数个数为 1 时可以省略 ()
+const a = x => x + 1;
+// var a = function a(x) { return x + 1; }
+
+// 参数个数不定时使用 ...args
+const a = (...args) => {
+  return args.map(x => Math.pow(x, 2));
+}
+// var a = function a() {
+//   for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+//     args[_key] = arguments[_key];
+//   }
+//   return args.map(function (x) {
+//     return Math.pow(x, 2);
+//   });
+// };
+#+END_SRC
+
+** 参数默认值
+
+[[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters][MDN | JavaScript | Reference | Functions | Default Parameters]]
+
+传入参数为 =undefined= 时，函数将使用参数默认值。
+
+#+BEGIN_SRC js
+const foo = (bar = 'default') => {};
+#+END_SRC
+
+** Getter & Setter
+
+- [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get][MDN | JavaScript | Reference | Functions | Getter]]
+- [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/set][MDN | JavaScript | Reference | Functions | Setter]]
+
+#+BEGIN_SRC js
+const foo = {
+  _bar: '',
+  get bar() {
+    return this._bar;
+  },
+  set bar(value) {
+    this._bar = 'bar is ' + value;
+  }
+}
+
+foo.bar = 'test';
+console.log(foo.bar); // bar is test
+#+END_SRC
+
+** Rest
+
+[[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters][MDN | JavaScript | Reference | Functions | Rest Parameters]]
+
+Rest 参数即用数组代表不确定个数的参数。
+
+#+BEGIN_SRC js
+function sum(...args) {
+  return args.reduce((previous, current) => {
+    return previous + current;
+  });
+}
+sum(1, 2, 3); // 6
+#+END_SRC
+
+** IIFE
+
+[[https://developer.mozilla.org/en-US/docs/Glossary/IIFE][MDN | Glossary | IIFE]]
+
+IIFE (Immediately Invoked Function Expression) 是定义后立即调用的函数。
+
+#+BEGIN_SRC js
+(function () {
+    <statements>
+})();
+#+END_SRC
+
+* Class
+** 示例
+
+#+BEGIN_SRC js
+class Foo {
+  constructor(arg) {
+    this.bar = arg;
+  }
+  getBar() {
+    return this.bar;
+  }
+}
+
+const foo = new Foo('bar');
+foo.getBar();
+#+END_SRC
+
+** =static=
+
+#+BEGIN_SRC js
+class Foo {
+  static bar = 'bar';
+  static getClassName() {
+    return 'Foo';
+  }
+}
+
+const a = Foo.bar;
+Foo.getClassName();
+#+END_SRC
+
+** =this=
+
+类成员函数中的 =this= 在函数调用时会指向调用此函数的变量（对象），因此将从外部被调用的函数（比如 event handler）中如果使用 =this= ，函数必须 bind 到类实例。
+
+*** Unbound instance
+
+#+BEGIN_SRC js
+class Foo {
+  constructor(value) { this.bar = value; }
+  getBar() { return this.bar; }
+}
+
+const foo1 = new Foo('bar1');
+foo1.getBar(); // bar1: getBar() 中 this -> foo1
+
+const foo2 = {
+  bar: 'bar2',
+  getBar: foo1.getBar
+}
+foo2.getBar(); // bar2: getBar() 中 this -> foo2
+
+const getBar = foo1.getBar;
+getBar(); // Error: Cannot read propery of 'bar' of undefined
+          // 因为未 bind 的 getBar() 中 this 是 undefined
+#+END_SRC
+
+*** Bound instance
+
+#+CAPTION: ES2016 之前
+#+BEGIN_SRC js
+class Foo {
+  constructor(value) {
+    this.bar = value;
+    this.getBar = this.getBar.bind(this); // Bind
+  }
+  getBar() { return this.bar; }
+}
+
+const foo = new Foo('bar');
+const getBar = foo.getBar;
+getBar();
+#+END_SRC
+
+#+CAPTION: ES2016 之后（并使用 babel stage-2 以上 preset）
+#+BEGIN_SRC js
+class Foo {
+  constructor(value) { this.bar = value; }
+  getBar = () => this.bar; // Bind
+}
+
+const foo = new Foo('bar');
+const getBar = foo.getBar;
+getBar();
+#+END_SRC
+
+* Standard Object
+** =Array=
+*** =filter()=
+
+[[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter][Array.prototype.filter() | MDN]]
+
+#+BEGIN_SRC js
+var foo = [1, 2, 3];
+var bar = foo.filter(function(n) {
+  return n !== 2; // 返回 true 则保留元素，否则删除
+});
+// foo = [1, 2, 3] 原数组保持不变
+// bar = [1, 3]
+#+END_SRC
+
+*** =map()=
+
+[[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map][Array.prototype.map() | MDN]]
+
+#+BEGIN_SRC js
+var foo = [1, 2, 3, 4];
+var bar = foo.map(function(n) {
+  return n * 2;
+});
+// bar = [2, 4, 6, 8]
+
+var foo = [
+  { key: 'a', value: 1 },
+  { key: 'b', value: 2 }
+];
+var bar = foo.map(function({ key }) { // Destructing assignment
+  return key + '_new';
+});
+// bar = ['a_new', 'b_new']
+#+END_SRC
+
+** =Date=
+
+[[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date][Date | MDN]]
+
+* Module
+** =import=
+
+[[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import][MDN | JavaScript | Reference | Statements | import]]
+
+*** Named Import
+
+#+CAPTION: =foo/bar.js=
+#+BEGIN_SRC js
+export const exec = () => 'bar';
+#+END_SRC
+
+#+CAPTION: =index.js=
+#+BEGIN_SRC js
+import { exec } from './foo/bar';
+console.log(exec());
+#+END_SRC
+
+*** All Import
+
+#+CAPTION: =foo/bar.js=
+#+BEGIN_SRC js
+export const name = 'bar';
+export const exec = () => 'bar';
+#+END_SRC
+
+#+CAPTION: =index.js=
+#+BEGIN_SRC js
+import * as Bar from './foo/bar';
+console.log(Bar.name);
+console.log(Bar.exec());
+#+END_SRC
+
+*** Default Import
+
+#+CAPTION: =foo/bar.js=
+#+BEGIN_SRC js
+const exec = () => 'bar';
+export default exec;
+#+END_SRC
+
+#+CAPTION: =index.js=
+#+BEGIN_SRC js
+import exec from './foo/bar';
+console.log(exec());
+#+END_SRC
+
+* Web API
+** =Document=
+*** =querySelector()=
+
+[[https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector][Document.querySelector() | MDN]]
+
+#+BEGIN_SRC js
+Element document.querySelector(DOMString selectors);
+#+END_SRC
+
+#+BEGIN_SRC js
+var root = document.querySelector('#root');
+var container = document.querySelector('div.containerh');
+#+END_SRC
+
+** =Event=
+*** =change=
+
+#+BEGIN_SRC js
+<input type="text" onChange="handleChange" />
+function handleChange(event) {
+  var value = event.target.value;
+}
+#+END_SRC
+
+*** =preventDefault()=
+
+#+BEGIN_SRC js
+<form onSubmit="handleSubmit"></form>
+function handleSubmit(event) {
+  event.preventDefault();
+}
+#+END_SRC
+
+* Link
+
+1. [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference][MDN | JavaScript | Reference]]

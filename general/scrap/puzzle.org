@@ -1,0 +1,36 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Puzzle
+
+* 1000 瓶毒药
+
+[[http://www.matrix67.com/blog/archives/4361][Source]]
+
+#+BEGIN_QUOTE
+有 1000 个一模一样的瓶子，其中有 999 瓶是普通的水，有一瓶是毒药。任何喝下毒药的生物都会在一星期之后死亡。现在，你只有 10 只小白鼠和一星期的时间，如何检验出哪个瓶子里有毒药？
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+把瓶子从 0 到 999 依次编号，然后全部转换为 10 位二进制数。让第一只老鼠喝掉所有二进制数右起第一位是 1 的瓶子，让第二只老鼠喝掉所有二进制数右起第二位是 1 的瓶子，等等。一星期后，如果第一只老鼠死了，就知道毒药瓶子的二进制编号中，右起第一位是 1 ；如果第二只老鼠没死，就知道毒药瓶子的二进制编号中，右起第二位是 0 ⋯⋯ 每只老鼠的死活都能确定出 10 位二进制数的其中一位，由此便可知道毒药瓶子的编号了。
+#+END_QUOTE
+
+*** 变形
+
+#+BEGIN_QUOTE
+如果你有两个星期的时间（换句话说你可以做两轮实验），为了从 1000 个瓶子中找出毒药，你最少需要几只老鼠？注意，在第一轮实验中死掉的老鼠，就无法继续参与第二次实验了。
+#+END_QUOTE
+
+#+BEGIN_QUOTE
+7 只老鼠就足够了。事实上，7 只老鼠足以从 3^7 = 2187 个瓶子中找出毒药来。首先，把所有瓶子从 0 到 2186 编号，然后全部转换为 7 位三进制数。现在，让第一只老鼠喝掉所有三进制数右起第一位是 2 的瓶子，让第二只老鼠喝掉所有三进制数右起第二位是 2 的瓶子，等等。一星期之后，如果第一只老鼠死了，就知道毒药瓶子的三进制编号中，右起第一位是 2 ；如果第二只老鼠没死，就知道毒药瓶子的三进制编号中，右起第二位不是 2，只可能是 0 或者 1 ⋯⋯也就是说，每只死掉的老鼠都用自己的生命确定出了，三进制编号中自己负责的那一位是 2 ；但每只活着的老鼠都只能确定，它所负责的那一位不是 2 。于是，问题就归约到了只剩一个星期时的情况。在第二轮实验里，让每只活着的老鼠继续自己未完成的任务，喝掉它负责的那一位是 1 的所有瓶子。再过一星期，毒药瓶子的三进制编号便能全部揭晓了。
+
+类似地，我们可以证明，n 只小白鼠 t 周的时间可以从 (t+1)^n 个瓶子中检验出毒药来。
+#+END_QUOTE
+
+* An airport-inspired puzzle
+
+[[https://terrytao.wordpress.com/2008/12/09/an-airport-inspired-puzzle/][Source]]
+
+Suppose you are trying to get from one end A of a terminal to the other end B.  (For simplicity, assume the terminal is a one-dimensional line segment.)  Some portions of the terminal have moving walkways (in both directions); other portions do not. Your walking speed is a constant =v=, but while on a walkway, it is boosted by the speed =u= of the walkway for a net speed of =v+u=. (Obviously, given a choice, one would only take those walkways that are going in the direction one wishes to travel in.)  Your objective is to get from A to B in the shortest time possible.
+
+1. Suppose you need to pause for some period of time, say to tie your shoe.  Is it more efficient to do so while on a walkway, or off the walkway?  Assume the period of time required is the same in both cases.
+2. Suppose you have a limited amount of energy available to run and increase your speed to a higher quantity @@html:<code>v'</code>@@ (or =v'+u=, if you are on a walkway).  Is it more efficient to run while on a walkway, or off the walkway?  Assume that the energy expenditure is the same in both cases.
+3. Do the answers to the above questions change if one takes into account the various effects of special relativity?  (This is of course an academic question rather than a practical one.  But presumably it should be the time in the airport frame that one wants to minimise, not time in one's personal frame.)

@@ -1,0 +1,811 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>MongoDB</title>
+<!-- 2016-01-05 周二 23:28 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../../styles/bigblow/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/bigblow/css/bigblow-normal.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/bigblow/css/hideshow.css"/>
+<script type="text/javascript" src="../styles/bigblow/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/bigblow.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/hideshow.js"></script>
+<link rel="alternate stylesheet" type="text/css" href="../../styles/bigblow/css/htmlize.css" />
+<link rel="alternate stylesheet" type="text/css" href="../../styles/bigblow/css/bigblow.css" />
+<link rel="alternate stylesheet" type="text/css" href="../../styles/bigblow/css/hideshow.css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">MongoDB</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. 数据结构</a>
+<ul>
+<li><a href="#sec-1-1">1.1. Collection</a></li>
+<li><a href="#sec-1-2">1.2. Document</a></li>
+<li><a href="#sec-1-3">1.3. 关联</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. 数据类型</a></li>
+<li><a href="#sec-3">3. 目录</a></li>
+<li><a href="#sec-4">4. 操作</a>
+<ul>
+<li><a href="#sec-4-1">4.1. 数据库</a></li>
+<li><a href="#sec-4-2">4.2. 数据表</a></li>
+<li><a href="#sec-4-3">4.3. <code>find()</code></a></li>
+<li><a href="#sec-4-4">4.4. 记录</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5. 命令行</a></li>
+<li><a href="#sec-6">6. 安装</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 数据结构</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>灵活，不需要事先定义数据表结构；
+</li>
+</ul>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">数据库</th>
+<th scope="col" class="left">Database</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">数据表</td>
+<td class="left">Collection</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">记录</td>
+<td class="left">Document</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Collection</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>一组相关的 document，共享索引；
+</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="../images/mongodb/03.png" alt="03.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Document</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li>键值对，BSON 格式；
+</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="../images/mongodb/04.png" alt="04.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> 关联</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Reference
+</p>
+<ul class="org-ul">
+<li>类似 RDBMS 的外链；
+</li>
+<li>用于复杂的多对多关系，或者复杂层级数据；
+</li>
+<li>更灵活，可以减少冗余数据
+</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="../images/mongodb/01.png" alt="01.png" />
+</p>
+</div>
+
+<hr  />
+
+<p>
+Embedded document
+</p>
+<ul class="org-ul">
+<li>用于一对一、一对多的「包含」关系；
+</li>
+<li>「读」性能更好，可以用一次操作读取、更新相关数据；
+</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="../images/mongodb/02.png" alt="02.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 数据类型</h2>
+<div class="outline-text-2" id="text-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">字符串</th>
+<th scope="col" class="left"><code>'&lt;string&gt;'</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">整数</td>
+<td class="left"><code>&lt;int&gt;</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">双精度数</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Boolean</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">数组</td>
+<td class="left"><code>[&lt;value&gt;, ...]</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">对象</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">对象 ID</td>
+<td class="left"><code>ObjectId(&lt;hex&gt;)</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">时间戳</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">日期</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Null</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">二进制数据</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">代码</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">正则表达式</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>Min keys</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left"><code>Max keys</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 目录</h2>
+<div class="outline-text-2" id="text-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">数据目录</th>
+<th scope="col" class="left"><code>/var/lib/mongodb</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">日志目录</td>
+<td class="left"><code>/var/log/mongodb</code></td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left">配置文件</td>
+<td class="left"><code>/etc/mongod.conf</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 操作</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> 数据库</h3>
+<div class="outline-text-3" id="text-4-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>show dbs</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>use &lt;db&gt;</code></td>
+<td class="left">切换到数据库，创建数据库</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>db</code></td>
+<td class="left">查看当前操作的数据库</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>db.dropDatabase()</code></td>
+<td class="left">删除数据库</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> 数据表</h3>
+<div class="outline-text-3" id="text-4-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>show collections</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>db.createCollection(&lt;collection&gt;, &lt;options&gt;)</code></td>
+<td class="left">创建</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>db.&lt;collection&gt;.drop()</code></td>
+<td class="left">删除</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>db.&lt;collection&gt;.count()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> <code>find()</code></h3>
+<div class="outline-text-3" id="text-4-3">
+<div class="org-src-container">
+
+<pre class="src src-code">db.&lt;collection&gt;.find(
+    &lt;condition&gt;,
+    &lt;projection&gt;
+).&lt;modifier&gt;()
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/mongodb/05.png" alt="05.png" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/mongodb/06.png" alt="06.png" />
+</p>
+</div>
+
+<hr  />
+
+<p>
+<code>&lt;condition&gt;</code>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">类比 <code>WHERE</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>{&lt;key&gt;:&lt;value&gt;}</code></td>
+<td class="left"><code>&lt;key&gt; = &lt;value&gt;</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>{&lt;key&gt;:{$lt:&lt;value&gt;}}</code></td>
+<td class="left"><code>&lt;key&gt; &lt; &lt;value&gt;</code></td>
+</tr>
+
+<tr>
+<td class="left"><code>{&lt;key&gt;:{$lte:&lt;value&gt;}}</code></td>
+<td class="left"><code>&lt;key&gt; &lt;= &lt;value&gt;</code></td>
+</tr>
+
+<tr>
+<td class="left"><code>{&lt;key&gt;:{$gt:&lt;value&gt;}}</code></td>
+<td class="left"><code>&lt;key&gt; &gt; &lt;value&gt;</code></td>
+</tr>
+
+<tr>
+<td class="left"><code>{&lt;key&gt;:{$ge:&lt;value&gt;}}</code></td>
+<td class="left"><code>&lt;key&gt; &gt;= &lt;value&gt;</code></td>
+</tr>
+
+<tr>
+<td class="left"><code>{&lt;key&gt;:{$ne:&lt;value&gt;}}</code></td>
+<td class="left"><code>&lt;key&gt; != &lt;value&gt;</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>{&lt;cond1&gt;, &lt;cond2&gt;}</code></td>
+<td class="left"><code>&lt;cond1&gt; AND &lt;cond2&gt;</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>{$or: [{&lt;cond1&gt;}, {&lt;cond2&gt;}]}</code></td>
+<td class="left"><code>&lt;cond1&gt; OR &lt;cond2&gt;</code></td>
+</tr>
+</tbody>
+</table>
+
+<hr  />
+
+<p>
+<code>&lt;projection&gt;</code>
+</p>
+<ul class="org-ul">
+<li>指定查询返回的列，相当于 <code>SELECT &lt;key&gt;, ...</code> ；
+<ul class="org-ul">
+<li>查询默认返回所有列；
+</li>
+<li><code>{&lt;key1&gt;: 1, &lt;key2&gt;: 0}</code> 表示包含 <code>&lt;key1&gt;</code> 列，排除 <code>&lt;key2&gt;</code> 列；
+</li>
+<li><code>_id</code> 除非指定排除，否则默认始终包含；
+</li>
+</ul>
+</li>
+</ul>
+
+<hr  />
+
+<p>
+<code>&lt;modifier&gt;</code>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>limit()</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>sort()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>pretty()</code></td>
+<td class="left">输出格式化的查询结果</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> 记录</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+<code>db.&lt;collection&gt;.</code>
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>insert(&lt;document&gt;)</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>update(&lt;cond&gt;, {$set: {&lt;key&gt;:&lt;value&gt;}})</code></td>
+<td class="left">更新</td>
+</tr>
+
+<tr>
+<td class="left"><code>update(&lt;cond&gt;, {$set: {&lt;key&gt;:&lt;value&gt;}}, {multi:true})</code></td>
+<td class="left">更新多条</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>save({_id:ObjectId(...), &lt;key&gt;:&lt;value&gt;, ...})</code></td>
+<td class="left">替换现有记录</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>remove(&lt;cond&gt;)</code></td>
+<td class="left">移除</td>
+</tr>
+
+<tr>
+<td class="left"><code>remove(&lt;cond&gt;, &lt;max&gt;)</code></td>
+<td class="left">最多移除几条</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<code>&lt;document&gt;</code>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-code">{
+    _id: ObjectId(...),
+    &lt;key&gt;: &lt;value&gt;,
+    ...
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> 命令行</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+服务
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">sudo service mongod start
+sudo service mongod stop
+sudo service mongod restart
+
+sudo mongod --config=/etc/mongod.conf
+</pre>
+</div>
+
+<p>
+连接
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">mongo
+</pre>
+</div>
+
+<p>
+导出
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">mongoexport &lt;options&gt;
+    --host &lt;&gt;
+    --port &lt;&gt;
+    --username &lt;&gt;
+    --password &lt;&gt;
+
+    --db &lt;&gt;
+    --collection &lt;&gt;
+    --query &lt;&gt;
+
+    --out &lt;file&gt;
+
+<span style="color: #75715E;">## </span><span style="color: #75715E;">eg.</span>
+mongoexport --db vdict --collection word --out word.json
+</pre>
+</div>
+
+<p>
+导入
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">mongoimport &lt;options&gt;
+    --db &lt;&gt;
+    --collection &lt;&gt;
+
+    --file &lt;&gt;
+
+<span style="color: #75715E;">## </span><span style="color: #75715E;">eg.</span>
+mongoimport --db vdict --collection word --file word.json
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> 安装</h2>
+<div class="outline-text-2" id="text-6">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span style="color: #75715E;">## </span><span style="color: #75715E;">&#23548;&#20837;&#20844;&#20849; GPG key</span>
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+
+<span style="color: #75715E;">## </span><span style="color: #75715E;">&#21019;&#24314;&#21015;&#34920;&#25991;&#20214;</span>
+<span style="color: #F92672;">echo</span> <span style="color: #E6DB74;">"deb http://repo.mongodb.org/apt/ubuntu "</span>$(lsb_release -sc)<span style="color: #E6DB74;">"/mongodb-org/3.0 multiverse"</span> | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
+
+<span style="color: #75715E;">## </span><span style="color: #75715E;">&#37325;&#26032;&#21152;&#36733;&#26412;&#22320;&#21253;&#25968;&#25454;&#24211;</span>
+sudo apt-get update
+
+<span style="color: #75715E;">## </span><span style="color: #75715E;">&#23433;&#35013; MongoDB &#21253;&#65288;&#26368;&#26032;&#65289;</span>
+sudo apt-get install -y mongodb-org
+</pre>
+</div>
+
+<p>
+<a href="http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/">http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/</a>
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2016-01-05 周二 23:28</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

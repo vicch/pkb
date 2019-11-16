@@ -1,0 +1,886 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Operating System Scrap</title>
+<!-- 2017-04-13 Thu 11:17 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Operating System Scrap</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. 进程与线程的一个简单解释</a></li>
+<li><a href="#sec-2">2. 一个线程的独白</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 进程与线程的一个简单解释</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html">Source</a>
+</p>
+
+<p>
+进程（process）和线程（thread）是操作系统的基本概念，但是它们比较抽象，不容易掌握。最近，我读到一篇 <a href="http://www.qnx.com/developers/docs/6.4.1/neutrino/getting_started/s1_procs.html">Processes and Threads</a>，发现一个很好的类比，可以把它们解释地清晰易懂。
+</p>
+
+<p>
+计算机的核心是 CPU，它承担了所有的计算任务。它就像一座工厂，时刻在运行。
+</p>
+
+<p>
+假定工厂的电力有限，一次只能供给一个车间使用。也就是说，一个车间开工的时候，其他车间都必须停工。背后的含义就是，单个 CPU 一次只能运行一个任务。进程就好比工厂的车间，它代表 <span class="underline">CPU 所能处理的单个任务。任一时刻，CPU 总是运行一个进程，其他进程处于非运行状态。</span>
+</p>
+
+<p>
+一个进程可以包括多个线程。 <span class="underline">线程就好比车间里的很多工人，他们协同完成一个任务。</span> 车间的空间是工人们共享的，比如许多房间是每个工人都可以进出的。 <span class="underline">一个进程的内存空间是共享的，每个线程都可以使用这些共享内存。</span>
+</p>
+
+<p>
+可是，每间房间的大小不同，有些房间最多只能容纳一个人，比如厕所。里面有人的时候，其他人就不能进去了。这代表 <span class="underline">一个线程使用某些共享内存时，其他线程必须等它结束，</span> 才能使用这一块内存。一个防止他人进入的简单方法，就是门口加一把锁。先到的人锁上门，后到的人看到上锁，就在门口排队，等锁打开再进去。这就叫 <del>互斥锁</del> （mutual exclusion，缩写 mutex），防止多个线程同时读写某一块内存区域。
+</p>
+
+<p>
+还有些房间，可以同时容纳 N 个人，比如厨房。也就是说，如果人数大于 N，多出来的人只能在外面等着。这好比某些内存区域，只能供给固定数目的线程使用。这时的解决方法，就是在门口挂 N 把钥匙。进去的人就取一把钥匙，出来时再把钥匙挂回原处。后到的人发现钥匙架空了，就知道必须在门口排队等着了。这种做法叫做 <del>信号量</del> （semaphore），用来保证多个线程不会互相冲突。
+</p>
+
+<p>
+不难看出，mutex 是 semaphore 在 N = 1 时的特殊情况。也就是说，完全可以用后者替代前者。但是，因为 <span class="underline">mutex 较为简单，且效率高，所以在必须保证资源独占的情况下，还是采用这种设计。</span>
+</p>
+
+<p>
+操作系统的设计，因此可以归结为三点：
+</p>
+
+<ul class="org-ul">
+<li>以多进程形式，允许多个任务同时运行。
+</li>
+<li>以多线程形式，允许单个任务分成不同的部分运行。
+</li>
+<li>提供协调机制，一方面防止进程之间和线程之间产生冲突，另一方面允许进程之间和线程之间共享资源。
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 一个线程的独白</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+我是一个线程，我一出生就被编了个号：0x3704, 然后被领到一个昏暗的屋子里， 这里我发现了很多和我一模一样的同伴。
+</p>
+
+<p>
+我身边的同伴 0x6900 等待的时间比较长，他带着沧桑的口气对我说：「我们线程的宿命就是处理包裹。把包裹处理完以后还得马上回到这里，否则可能永远回不来了。」
+</p>
+
+<p>
+我一脸懵懂，包裹，什么包裹？
+</p>
+
+<p>
+「不要着急，马上你就会明白了，我们这里是不养闲人的。」
+</p>
+
+<p>
+果然，没多久，屋子的门开了，一个面貌凶恶的家伙吼道：「0x3704，出来！」
+</p>
+
+<p>
+我一出来就被塞了一个沉甸甸的包裹，上面还有附带着一个写满了操作步骤的纸。
+</p>
+
+<p>
+「快去，把这个包裹处理了。」
+</p>
+
+<p>
+「去哪儿处理？」
+</p>
+
+<p>
+「跟着指示走，先到就绪车间。」
+</p>
+
+<p>
+果然，地上有指示箭头，跟着它来到了一间明亮的大屋子，这里已经有不少线程了，大家都很紧张，好像时刻准备着往前冲。
+</p>
+
+<p>
+我刚一进来，就听见广播说：「0x3704, 进入车间。」
+</p>
+
+<p>
+我赶紧往前走，身后很多人议论说：「他太幸运了，刚进入就绪状态就能运行。」「你看人家的优先级多高。」
+</p>
+
+<p>
+前边就是车间，这里简直是太美了，怪不得老线程总是唠叨着说「要是能一直待在这里就好了」。
+</p>
+
+<p>
+这里空间大，视野好，空气清新，鸟语花香，还有很多从来没见过的人，像服务员一样等着为我服务。他们也都有编号，更重要的是每个人还有个标签，上面写着：硬盘，数据库，内存，网卡……
+</p>
+
+<p>
+我现在理解不了，看看操作步骤吧：
+</p>
+
+<p>
+第一步：从包裹中取出参数  
+</p>
+
+<p>
+打开包裹，里边有个 HttpRequest 对象, 可以取到 userName, password 两个参数。
+</p>
+
+<p>
+第二步：执行登录操作
+</p>
+
+<p>
+原来是有人要登录啊，我把 userName/password 交给数据库服务员，他拿着数据，慢腾腾地走了。他怎么这么慢？不过我是不是正好可以在车间里多待一会儿？反正也没法执行第三步。
+</p>
+
+<p>
+就在这时，车间里的广播响了：「0x3704，我是 CPU，记住你正在执行的步骤，马上带包裹离开。」
+</p>
+
+<p>
+离开这个车间，又来到一个大屋子，这里很多线程慢腾腾地在喝茶，打牌。
+</p>
+
+<p>
+「哥们，你们没事干了？」
+</p>
+
+<p>
+「你新来的吧，你不知道我在等数据库服务员给我数据啊！据说他们比我们慢好几十万倍，在这里好好歇吧。」
+</p>
+
+<p>
+「这么慢？我这里有人在登录系统，能等这么长时间吗？」
+</p>
+
+<p>
+放心，你没听说过人间一天，CPU 一年吗，我们这里是用纳秒、毫秒计时的，人间等待一秒，相当于我们好几天呢，来得及。」
+</p>
+
+<p>
+不知道过了多久，大喇叭又开始广播了：「0x3704，你的数据来了，快去执行。」
+</p>
+
+<p>
+我转身就往 CPU 车间跑，发现这里的门只出不进！后面传来阵阵哄笑声：「果然是新人，不知道还得去就绪车间等。」
+</p>
+
+<p>
+于是赶紧到就绪车间，这次没有那么好运了，等了好久才被再次叫进 CPU 车间。在等待的时候，我听见有人小声议论：
+</p>
+
+<p>
+「听说了吗，最近有个线程被 kill 掉了。」
+</p>
+
+<p>
+「为啥？」
+</p>
+
+<p>
+「这家伙赖在 CPU 车间不走，把 CPU 利用率一直搞成 100%，后来就被 kill 掉了。」
+</p>
+
+<p>
+「Kill 掉以后弄哪儿去了？」
+</p>
+
+<p>
+「可能被垃圾回收了吧。」
+</p>
+
+<p>
+我心里打了个寒噤，赶紧接着处理，剩下的动作快多了，第二步登录成功了。
+</p>
+
+<p>
+第三步：构建登录成功后的主页
+</p>
+
+<p>
+这一步有点费时间，因为有很多 HTML 需要处理。我正在紧张地制作 HTML，CPU 又开始叫了：「0x3704,  我是 CPU，记住你正在执行的步骤，马上带包裹离开。」
+</p>
+
+<p>
+「为啥？」
+</p>
+
+<p>
+「每个线程只能在 CPU 上运行一段时间，到了时间就得让别人用了，你去就绪车间待着，等着叫你吧。」
+</p>
+
+<p>
+就这样，我一直在「就绪—运行」这两个状态，不知道轮转了多少次，终于安装步骤清单把工作做完了。最后顺利地把包含 HTML 的包裹发了回去。至于登录以后干什么事儿，我就不管了。
+</p>
+
+<p>
+马上就要回到我那昏暗的房间了，真有点舍不得这里。不过相对于有些线程，我还是幸运的，他们运行完以后就彻底的销毁了，而我还活着 ！
+</p>
+
+<p>
+回到了小黑屋，老线程 0x6900 问：「怎么样？第一天有什么感觉？」
+</p>
+
+<p>
+「我们的世界规则很复杂，首先你不知道什么时候会被挑中执行；第二，在执行的过程中随时可能被打断，让出 CPU 车间；第三，一旦出现硬盘，数据库这样耗时的操作也得让出 CPU，去等待；第四，就是数据来了，你也不一定马上执行，还得等着 CPU 挑选。」
+</p>
+
+<p>
+「小伙子理解的不错啊。」
+</p>
+
+<p>
+「我不明白为什么很多线程都执行完就死了，咱们还活着？」
+</p>
+
+<p>
+「你还不知道，长生不老是我们的特权，我们这里有个正式的名称，叫做线程池！」
+</p>
+
+<p>
+平淡的日子就这么一天天过去，作为一个线程，我每天的生活都是取包裹，处理包裹，然后回到我们昏暗的家：线程池。我每天的工作就是处理用户的登录，浏览， 购物车，下单，付款。
+</p>
+
+<p>
+我问线程池的元老 0x6900：「我们要工作到什么时候？」
+</p>
+
+<p>
+「要一直等到系统重启的那一刻」，0x6900 说。
+</p>
+
+<p>
+「那你经历过系统重启吗？」
+</p>
+
+<p>
+「怎么可能？系统重启就是我们的死亡时刻，也就是世界末日，一旦重启，整个线程池全部销毁，时间和空间全部消失，一切从头再来。好好享受眼前的生活吧……」
+</p>
+
+<hr  />
+
+<p>
+其实生活丰富多彩，我最喜欢的包裹是上传图片，由于网络慢，所以能在就绪车间、CPU 车间待很长很长时间，可以认识很多好玩的线程。
+</p>
+
+<p>
+比如说上次认识了 memecached 线程，他说通过他缓存了很多的用户数据，还是分布式的，很多机器上都有！我说「怪不得后来的登录操作快了那么多，原来是不再从数据库取数据了你那里就有啊，对了你是分布式的，你去过别的机器没有？」
+</p>
+
+<p>
+他说「怎么可能我每次也只能通过网络往那个机器发送一个 GET、PUT 命令存取数据而已，别的一概不知。」
+</p>
+
+<p>
+再比如说，上次在等待的时候遇到了数据库连接的线程，我才知道他那里也是一个连接池，和我们线程池几乎一模一样。
+</p>
+
+<p>
+他说「有些包裹太变态了，竟然查看一年的订单数据，简直把我累死了。」
+</p>
+
+<p>
+我说「你那是纯数据，你把数据传给我以后，我还得组装成 HTML，工作量不知道比你大多少倍。」
+</p>
+
+<p>
+他说「一定你要和 memecached 搞好关系，直接从他那儿拿数据，尽量少直接调用数据库，我们 JDBC connection 也能活地轻松点。」
+</p>
+
+<p>
+我说「关键是你得提前把数据搞到缓存，要不然我先问一遍缓存，没有数据，不还得找你吗？」
+</p>
+
+<hr  />
+
+<p>
+有一天我遇到一件可怕的事情，差一点死在外边，回不了线程池了……
+</p>
+
+<p>
+前几天我处理过一些从 HTTP 发来的存款和取款的包裹， 老线程 0x6900 特意嘱咐我：「处理这些包裹的时候要特别小心，一定要先获得一把锁，在对账户存款或者取款的时候一定要把账户给锁住，要不然别的线程就会在你等待的时候趁虚而入搞破坏，我年轻那会儿很毛糙，就捅了篓子。」
+</p>
+
+<p>
+好心的 0x6900 还给了我两个表格：
+</p>
+
+<ul class="org-ul">
+<li>一个银行账号 A，余额 1000 元
+</li>
+<li>一个存款线程
+</li>
+<li>一个取款线程
+</li>
+</ul>
+
+<p>
+1、没有加锁的情况
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>存款线程</b></th>
+<th scope="col" class="left"><b>取款线程</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">获得当前余额：1000</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">计算新余额：1000 + 300 = 1300</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">线程中断，等待下次被系统挑中执行</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">获得当前余额：1000</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">计算新余额：1000 - 200 = 800</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">线程中断，等待下次被系统挑中执行</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">再次执行，更新余额：1300</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">再次执行，更新余额：800</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">（存入的钱丢失了！）</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+2、加锁的情况
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>存款线程</b></th>
+<th scope="col" class="left"><b>取款线程</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">获取账户 A 的锁：成功</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">获取当前余额：1000</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">计算新余额：1000 + 300 = 1300</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">线程中断，等待下次被系统挑中执行</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">获取账户 A 的锁：失败，进入阻塞状态</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">再次执行，更新余额：1300</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">释放账户 A 的锁</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">获取账户 A 的锁：成功</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">获取当前余额：1300</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">计算新余额：1300 - 200 = 1100</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">更新余额：1100</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">释放账户 A 的锁</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+从此以后看到存款、取款的包裹就倍加小心，还好，没有出过事故。
+</p>
+
+<p>
+今天我收到的一个包裹是转账，我按照老线程的吩咐，先对账号 A 加锁，再对账号 B 加锁。可我万万没想到的是，还有一个线程，竟然同时在从 B 往 A 转账。于是乎，就出现了这个情况：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>线程 0x3704：A 向 B 转账</b></th>
+<th scope="col" class="left"><b>线程 0x7954：B 向 A 转账</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">获取账户 A 的锁：成功</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">线程中断，等待下次被系统挑中执行</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">获取账户 B 的锁：成功</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">线程中断，等待下次被系统挑中执行</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">获取账户 B 的锁：失败，进入阻塞状态</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">获取账户 A 的锁：失败，进入阻塞状态</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+刚开始我还不知道什么情况，一直坐在等待车间等，可是等的时间太长了，长达几十秒！我可从来没有经历过这样的事件。
+</p>
+
+<p>
+这时候我就看到了线程 0x7954，他悠闲地坐在那里喝咖啡，我和他聊了起来：「哥们，我看你已经喝了 8 杯咖啡了，怎么还不去干活？」
+</p>
+
+<p>
+「你不喝了 9 杯茶了吗？」0x7954 回敬到。
+</p>
+
+<p>
+「我在等一个锁，不知道哪个孙子一直不释放。」
+</p>
+
+<p>
+「我也在等锁啊，我要是知道哪个孙子不释放锁，我非揍死他不可。」0x7954 毫不示弱。
+</p>
+
+<p>
+我偷偷地看了一眼，这家伙怀里不就抱着我正在等的账户 B 的锁嘛？0x7954 也发现了我正抱着他正在等待的锁。我们两个就吵了起来，互不相让：
+</p>
+
+<p>
+「把你的锁先给我，让我先做完。」
+</p>
+
+<p>
+「不行，从来都是做完工作才释放锁，现在绝对不能给你。」
+</p>
+
+<p>
+更重要的是，我们俩不仅仅持有这两个账户的锁，还有很多其他的锁，导致等待的线程越来越多，把屋子都挤满了。
+</p>
+
+<p>
+最后事情真的闹大了，我从来没见过终极大 Boss 操作系统也来了。大 Boss 毕竟是见多识广，他看了一眼，哼了一声：「又出现死锁了。你们俩要 kill 掉一个，来吧，过来抽签。」
+</p>
+
+<p>
+我战战兢兢地抽了签，打开一看，是个「活」字。小命终于保住了。可怜的 0x7954 被迫交出了所有的资源以后，很不幸地被 kill 掉，消失了。
+</p>
+
+<p>
+大 Boss 操作系统如一阵风似地消失了，身后只传来他的声音：「记住，我们这里账户 A &gt; 账户 B，无论认识情况都要先获得账户 A 的锁。」
+</p>
+
+<p>
+由于不仅仅是只有 A 和 B，还有很多其他账户，Boss 留下了一个算法，用来计算资源的大小，永远按照从大到小的方式来获得锁：假定有账户 A 和账户 B 两个资源，经过计算，发现 A &gt; B，则转账时获得锁的次序是先 A 后 B。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>线程 1：A 向 B 转账</b></th>
+<th scope="col" class="left"><b>线程 2：B 向 A 转账</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">获取账户 A 的锁：成功</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">线程中断，等待下次被系统挑中执行</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">获取账户 A 的锁：失败，进入阻塞状态</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">继续执行，获取账户 B 的锁：成功</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">执行转账</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">释放账户 B 的锁</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">释放账户 A 的锁</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">获取账户 A 的锁：成功</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">获取账户 B 的锁：成功</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">执行转账</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">释放账户 B 的锁</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">释放账户 A 的锁</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+线程调度员把大 Boss 的算法贴到了墙上。每天早上，我们都得大声背诵：「多个资源加锁要牢记，一定要按 Boss 的算法比大小，然后从最大的开始加锁。」
+</p>
+
+<hr  />
+
+<p>
+又过了很多天，我和其他线程们发现了一个奇怪的事情：包裹的处理越来越简单。任何包裹，不管是登录、浏览、存钱，处理的步骤都是一样的, 返回一个固定的 HTML 页面。
+</p>
+
+<p>
+有一次我偷偷地看了一眼，上面写着：「本系统将于今晚 00:00 至 4:00 进行维护升级，给您带来的不便我们深感抱歉。」
+</p>
+
+<p>
+我去告诉了老线程 0x6904, 他叹了一口气说：「我们的生命也到头了，看来马上就要重启系统，我们就要消失了，再见吧兄弟。」
+</p>
+
+<p>
+系统重启的那一刻终于到来了。
+</p>
+
+<p>
+我看到屋子里的东西一个个地不见了，等待车间，就绪车间，甚至 CPU 车间都慢慢地消失了。
+</p>
+
+<p>
+我身边的线程兄弟也越来越少，最后只剩我自己了。
+</p>
+
+<p>
+我在空旷的原野上大喊：还有人吗？
+</p>
+
+<p>
+无人应答。
+</p>
+
+<p>
+我们这一代线程池完成了使命。
+</p>
+
+<p>
+下一代线程池将很快重生。
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2017-04-13 Thu 11:17</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

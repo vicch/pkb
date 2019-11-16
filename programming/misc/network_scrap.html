@@ -1,0 +1,1851 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Network Scrap</title>
+<!-- 2017-01-09 Mon 14:13 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Network Scrap</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. 互联网协议入门</a>
+<ul>
+<li><a href="#sec-1-1">1.1. 概述</a>
+<ul>
+<li><a href="#sec-1-1-1">1.1.1. 五层模型</a></li>
+<li><a href="#sec-1-1-2">1.1.2. 互联网协议</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-2">1.2. 物理层</a></li>
+<li><a href="#sec-1-3">1.3. 链路层</a>
+<ul>
+<li><a href="#sec-1-3-1">1.3.1. 定义</a></li>
+<li><a href="#sec-1-3-2">1.3.2. 以太网协议</a></li>
+<li><a href="#sec-1-3-3">1.3.3. MAC 地址</a></li>
+<li><a href="#sec-1-3-4">1.3.4. 广播</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-4">1.4. 网络层</a>
+<ul>
+<li><a href="#sec-1-4-1">1.4.1. 由来</a></li>
+<li><a href="#sec-1-4-2">1.4.2. IP 协议</a></li>
+<li><a href="#sec-1-4-3">1.4.3. IP 数据包</a></li>
+<li><a href="#sec-1-4-4">1.4.4. ARP 协议</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-5">1.5. 传输层</a>
+<ul>
+<li><a href="#sec-1-5-1">1.5.1. 由来</a></li>
+<li><a href="#sec-1-5-2">1.5.2. UDP 协议</a></li>
+<li><a href="#sec-1-5-3">1.5.3. TCP 协议</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-6">1.6. 应用层</a></li>
+<li><a href="#sec-1-7">1.7. DHCP 协议</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. DNS 原理入门</a>
+<ul>
+<li><a href="#sec-2-1">2.1. DNS 服务器</a></li>
+<li><a href="#sec-2-2">2.2. 域名层级</a></li>
+<li><a href="#sec-2-3">2.3. 分级查询</a></li>
+<li><a href="#sec-2-4">2.4. 分级查询实例</a></li>
+<li><a href="#sec-2-5">2.5. DNS 记录类型</a>
+<ul>
+<li><a href="#sec-2-5-1">2.5.1. <code>CNAME</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-2-6">2.6. 链接</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. SSH 原理与运用</a>
+<ul>
+<li><a href="#sec-3-1">3.1. 什么是 SSH？</a></li>
+<li><a href="#sec-3-2">3.2. 基本用法</a></li>
+<li><a href="#sec-3-3">3.3. 中间人攻击</a></li>
+<li><a href="#sec-3-4">3.4. 口令登录</a></li>
+<li><a href="#sec-3-5">3.5. 公钥登录</a></li>
+<li><a href="#sec-3-6">3.6. 远程操作</a></li>
+<li><a href="#sec-3-7">3.7. 绑定本地端口</a></li>
+<li><a href="#sec-3-8">3.8. 本地端口转发</a></li>
+<li><a href="#sec-3-9">3.9. 远程端口转发</a></li>
+<li><a href="#sec-3-10">3.10. SSH 其他参数</a></li>
+<li><a href="#sec-3-11">3.11. 参考文献</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. 深入浅出 RPC</a>
+<ul>
+<li><a href="#sec-4-1">4.1. 定义</a></li>
+<li><a href="#sec-4-2">4.2. 起源</a></li>
+<li><a href="#sec-4-3">4.3. 目标</a></li>
+<li><a href="#sec-4-4">4.4. 分类</a></li>
+<li><a href="#sec-4-5">4.5. 结构</a></li>
+<li><a href="#sec-4-6">4.6. 实现</a>
+<ul>
+<li><a href="#sec-4-6-1">4.6.1. 导出</a></li>
+<li><a href="#sec-4-6-2">4.6.2. 导入</a></li>
+<li><a href="#sec-4-6-3">4.6.3. 协议</a></li>
+<li><a href="#sec-4-6-4">4.6.4. 传输</a></li>
+<li><a href="#sec-4-6-5">4.6.5. 执行</a></li>
+<li><a href="#sec-4-6-6">4.6.6. 异常</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-5">5. History of REST, SOAP, POX and JSON Web Services</a>
+<ul>
+<li><a href="#sec-5-1">5.1. HTTP</a></li>
+<li><a href="#sec-5-2">5.2. XML</a></li>
+<li><a href="#sec-5-3">5.3. REST</a></li>
+<li><a href="#sec-5-4">5.4. SOAP</a></li>
+<li><a href="#sec-5-5">5.5. POX</a></li>
+<li><a href="#sec-5-6">5.6. JSON</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 互联网协议入门</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html">Source</a>
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> 概述</h3>
+<div class="outline-text-3" id="text-1-1">
+</div><div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> 五层模型</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+互联网的实现，分成好几层。每一层都有自己的功能，就像建筑物一样，每一层都靠下一层支持。用户接触到的，只是最上面的一层，根本没有感觉到下面的层。要理解互联网，必须从最下层开始，自下而上理解每一层的功能。
+</p>
+
+<p>
+如何分层有不同的模型，有的模型分七层，有的分四层。我觉得，把互联网分成五层，比较容易解释。越下面的层，越靠近硬件；越上面的层，越靠近用户：
+</p>
+
+<ul class="org-ul">
+<li>应用层（application layer）
+</li>
+<li>传输层（transport layer）
+</li>
+<li>网络层（network layer）
+</li>
+<li>链路层（link layer）
+</li>
+<li>物理层（physical layer）
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1-1-2" class="outline-4">
+<h4 id="sec-1-1-2"><span class="section-number-4">1.1.2</span> 互联网协议</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<p>
+每一层都是为了完成一种功能。为了实现这些功能，就需要遵守共同的规则，即「协议」（protocol）。互联网的每一层，都定义了很多协议。这些协议的总称，就叫做「互联网协议」（Internet Protocol Suite）。它们是互联网的核心。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> 物理层</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+电脑要组网，第一件事要干什么？当然是先把电脑连起来，可以用光缆、电缆、双绞线、无线电波等方式。这就是「物理层」，是把电脑连接起来的物理手段。它主要规定了网络的一些电气特性，作用是负责传送 0 和 1 的电信号。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> 链路层</h3>
+<div class="outline-text-3" id="text-1-3">
+</div><div id="outline-container-sec-1-3-1" class="outline-4">
+<h4 id="sec-1-3-1"><span class="section-number-4">1.3.1</span> 定义</h4>
+<div class="outline-text-4" id="text-1-3-1">
+<p>
+单纯的 0 和 1 没有任何意义，必须规定解读方式：多少个电信号算一组？每个信号位有何意义？这就是「链路层」的功能，它 <span class="underline">确定了 0 和 1 的分组方式</span> 。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-3-2" class="outline-4">
+<h4 id="sec-1-3-2"><span class="section-number-4">1.3.2</span> 以太网协议</h4>
+<div class="outline-text-4" id="text-1-3-2">
+<p>
+<span class="underline">早期的时候，每家公司都有自己的电信号分组方式。逐渐地，一种叫做「以太网」（Ethernet）的协议，占据了主导地位。</span>
+</p>
+
+<p>
+以太网规定，一组电信号构成 <span class="underline">一个数据包，叫做「帧」（Frame）。每一帧分成两个部分：报头（head）和数据（data）。</span> 报头包含数据包的一些说明项，比如发送者、接受者、数据类型等；数据则是数据包的具体内容。
+</p>
+
+<p>
+报头的长度，固定为 18 字节。数据的长度，最短为 46 字节，最长为 1500 字节。因此，整个帧最短为 64 字节，最长为 1518 字节。如果数据很长，就必须分割成多个帧进行发送。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-3-3" class="outline-4">
+<h4 id="sec-1-3-3"><span class="section-number-4">1.3.3</span> MAC 地址</h4>
+<div class="outline-text-4" id="text-1-3-3">
+<p>
+以太网数据包的报头包含了发送者和接受者的信息。那么，发送者和接受者是如何标识呢？ <span class="underline">以太网规定，连入网络的所有设备，都必须具有网卡接口。数据包必须是从一块网卡，传送到另一块网卡。网卡的地址，就是数据包的发送地址和接收地址，叫做 MAC 地址。</span>
+</p>
+
+<p>
+每块网卡出厂的时候，都有一个独一无二的 MAC 地址，长度是 <span class="underline">48 个二进制位</span> ，通常用 12 个十六进制数表示。前 6 个十六进制数是厂商编号，后 6 个是该厂商的网卡流水号。有了 MAC 地址，就可以定位网卡和数据包的路径了。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-3-4" class="outline-4">
+<h4 id="sec-1-3-4"><span class="section-number-4">1.3.4</span> 广播</h4>
+<div class="outline-text-4" id="text-1-3-4">
+<p>
+定义地址只是第一步，后面还有更多的步骤。
+</p>
+
+<p>
+首先，一块网卡怎么会知道另一块网卡的 MAC 地址？回答是有一种 ARP 协议，可以解决这个问题。这里只需要知道，以太网数据包必须知道接收方的 MAC 地址，然后才能发送。
+</p>
+
+<p>
+其次，有了 MAC 地址，系统怎样才能把数据包准确送到接收方？回答是以太网采用了一种很原始的方式，它 <span class="underline">不是把数据包准确送到接收方，而是向本网络内所有计算机发送，</span> 让每台计算机自己判断，是否为接收方。
+</p>
+
+<p>
+上图中，1 号计算机向 2 号发送一个数据包，同一个子网络的 3 号、4 号、5 号都会收到这个包。它们 <span class="underline">读取这个包的报头，找到接收方的 MAC 地址，然后与自身的 MAC 地址相比较，如果两者相同，就接受这个包，做进一步处理，否则就丢弃这个包。这种发送方式就叫做「广播」（broadcasting）。</span>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> 网络层</h3>
+<div class="outline-text-3" id="text-1-4">
+</div><div id="outline-container-sec-1-4-1" class="outline-4">
+<h4 id="sec-1-4-1"><span class="section-number-4">1.4.1</span> 由来</h4>
+<div class="outline-text-4" id="text-1-4-1">
+<p>
+以太网协议依靠 MAC 地址发送数据。理论上，单单依靠 MAC 地址，上海的网卡就可以找到洛杉矶的网卡了，技术上是可以实现的。
+</p>
+
+<p>
+但是，这样做有一个重大的缺点。 <span class="underline">以太网采用广播方式发送数据包，不仅效率低，而且局限在发送者所在的子网络。</span> 也就是说，如果两台计算机不在同一个子网络，广播是传不过去的。互联网是无数子网络共同组成的一个巨型网络，这种设计是合理的，否则互联网上每一台计算机都会收到所有包，那会引起灾难。
+</p>
+
+<p>
+因此，必须找到一种方法，能够区分哪些 MAC 地址属于同一个子网络。如果是同一个子网络，就采用广播方式发送，否则就采用「路由」方式发送。「路由」的意思，就是指如何向不同的子网络分发数据包。遗憾的是，MAC 地址本身无法做到这一点。它只与厂商有关，与所处网络无关。
+</p>
+
+<p>
+这就导致了 <span class="underline">「网络层」的诞生。它的作用是引进一套新的地址，区分不同的计算机是否属于同一个子网络。</span> 于是，「网络层」出现以后，每台计算机有了两种地址，一种是 MAC 地址，另一种是网络地址。 两种地址之间没有任何联系，MAC 地址是绑定在网卡上的，网络地址则是管理员分配的，它们只是随机组合在一起。 <span class="underline">网络地址确定计算机所在的子网络，MAC 地址则将数据包送到该子网络中的目标网卡。</span> 因此，从逻辑上可以推断，必定是先处理网络地址，然后再处理 MAC 地址。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-4-2" class="outline-4">
+<h4 id="sec-1-4-2"><span class="section-number-4">1.4.2</span> IP 协议</h4>
+<div class="outline-text-4" id="text-1-4-2">
+<p>
+规定网络地址的协议，叫做 IP 协议。它所定义的地址，就被称为 <span class="underline">IP 地址</span> 。目前，广泛采用的是 IP 协议第四版，简称 IPv4。这个版本规定，网络地址由 <span class="underline">32 个二进制位</span> 组成。习惯上用分成 4 段的十进制数表示 IP 地址，从 0.0.0.0 一直到 255.255.255.255。
+</p>
+
+<p>
+互联网上的每一台计算机，都会分配到一个 IP 地址。这个地址 <span class="underline">分成两个部分，前一部分代表网络，后一部分代表主机。</span> 比如，IP 地址 172.16.254.1，这是一个 32 位的地址，假定它的网络部分是前 24 位（172.16.254），主机部分是后 8 位（最后的 1）。处于 <span class="underline">同一个子网络的电脑，它们 IP 地址的网络部分必定是相同的，</span> 也就是说 172.16.254.2 应该与 172.16.254.1 处在同一个子网络。
+</p>
+
+<p>
+但是，问题在于单单从 IP 地址，无法判断网络部分。还是以 172.16.254.1 为例，它的网络部分，到底是前 24 位，还是前 16 位，甚至前 28 位，从 IP 地址上是看不出来的。 <span class="underline">判断两台计算机是否属于同一个子网络要用到另一个参数「子网掩码」（subnet mask）。</span>
+</p>
+
+<p>
+所谓「子网掩码」，就是表示子网络特征的一个参数。它在形式上等同于 IP 地址，也是一个 32 位二进制数字，它的网络部分全部为 1，主机部分全部为 0。比如，IP 地址 172.16.254.1，如果已知网络部分是前 24 位，主机部分是后 8 位，那么子网络掩码就是 11111111.11111111.11111111.00000000，写成十进制就是 255.255.255.0。判断任意两个 IP 地址是否处在同一个子网络，方法是将两个 IP 地址与子网掩码分别进行「与」运算，然后比较结果是否相同。
+</p>
+
+<p>
+总结一下，IP 协议的作用主要有两个，一个是为每一台计算机分配 IP 地址，另一个是确定哪些地址在同一个子网络。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-4-3" class="outline-4">
+<h4 id="sec-1-4-3"><span class="section-number-4">1.4.3</span> IP 数据包</h4>
+<div class="outline-text-4" id="text-1-4-3">
+<p>
+根据 IP 协议发送的数据，就叫做 IP 数据包。不难想象，其中必定包括 IP 地址。但是前面说过，以太网数据包只包含 MAC 地址，并没有 IP 地址的栏位。那么是否需要修改数据定义，再添加一个栏位呢？回答是不需要，我们可以 <span class="underline">把 IP 数据包直接放进以太网数据包的「数据」部分，因此完全不用修改以太网的规格。这就是互联网分层结构的好处：上层的变动完全不涉及下层的结构。</span>
+</p>
+
+<p>
+IP 数据包也分为「报头」和「数据」两个部分。「报头」部分主要包括版本、长度、IP 地址等信息，「数据」部分则是 IP 数据包的具体内容。IP 数据包的「报头」部分的长度为 20 到 60 字节，整个数据包的总长度最大为 65,535 字节。因此，理论上， <span class="underline">IP 数据包的「数据」部分，最长为 65,515 字节。前面说过，以太网数据包的「数据」部分，最长只有 1500 字节。因此，如果 IP 数据包超过了 1500 字节，就需要分割成几个以太网数据包，分开发送。</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-4-4" class="outline-4">
+<h4 id="sec-1-4-4"><span class="section-number-4">1.4.4</span> ARP 协议</h4>
+<div class="outline-text-4" id="text-1-4-4">
+<p>
+因为 IP 数据包是放在以太网数据包里发送的，所以必须同时知道两个地址：对方的 MAC 地址和 IP 地址。通常情况下，对方的 IP 地址是已知的，但是不知道它的 MAC 地址。所以，需要一种机制，能够从 IP 地址得到 MAC 地址。
+</p>
+
+<p>
+这里又可以分成两种情况。第一种情况， <span class="underline">如果两台主机不在同一个子网络，事实上没有办法得到对方的 MAC 地址，只能把数据包传送到两个子网络连接处的「网关」（gateway），让网关去处理。</span>
+</p>
+
+<p>
+第二种情况， <span class="underline">如果两台主机在同一个子网络，那么可以用 ARP 协议得到对方的 MAC 地址。</span> ARP 协议也是发出一个数据包（包含在以太网数据包中），其中包含它所要查询主机的 IP 地址，在对方的 MAC 地址这一栏，填的是 <code>FF:FF:FF:FF:FF:FF</code> ，表示这是一个「广播」地址。它所在子网络的每一台主机，都会收到这个数据包，从中取出 IP 地址，与自身的 IP 地址进行比较。如果两者相同，都做出回复，向对方报告自己的 MAC 地址，否则就丢弃这个包。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> 传输层</h3>
+<div class="outline-text-3" id="text-1-5">
+</div><div id="outline-container-sec-1-5-1" class="outline-4">
+<h4 id="sec-1-5-1"><span class="section-number-4">1.5.1</span> 由来</h4>
+<div class="outline-text-4" id="text-1-5-1">
+<p>
+有了 MAC 地址和 IP 地址，已经可以在互联网上任意两台主机上建立通信。接下来的问题是， <span class="underline">同一台主机上有许多程序都需要用到网络，</span> 当一个数据包从互联网上发来的时候，怎么知道它是表示网页的内容，还是表示在线聊天的内容？也就是说， <span class="underline">还需要一个参数，表示这个数据包到底供哪个程序（进程）使用。</span>
+</p>
+
+<p>
+这个参数叫做 <span class="underline">「端口」（port），它是每一个使用网卡的程序的编号。每个数据包都发到主机的特定端口，不同的程序就能取到自己所需要的数据。</span> 「端口」是 0 到 65535 之间的一个整数，正好 16 个二进制位。0 到 1023 的端口被系统占用，用户只能选用大于 1023 的端口。不管是浏览网页还是在线聊天，应用程序会随机选用一个端口，然后与服务器的相应端口联系。
+</p>
+
+<p>
+「传输层」的功能，就是建立「端口到端口」的通信。相比之下，「网络层」的功能是建立「主机到主机」的通信。 <span class="underline">只要确定主机和端口，就能实现程序之间的交流。因此，Unix 系统就把「主机+端口」叫做「套接字」（socket）。</span> 有了它，就可以进行网络应用程序开发。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-5-2" class="outline-4">
+<h4 id="sec-1-5-2"><span class="section-number-4">1.5.2</span> UDP 协议</h4>
+<div class="outline-text-4" id="text-1-5-2">
+<p>
+<span class="underline">要在数据包中加入端口信息，就需要新的协议。最简单的实现叫做 UDP 协议，</span> 它的格式几乎就是在数据前面，加上端口号。
+</p>
+
+<p>
+UDP 数据包，也是由「报头」和「数据」两部分组成。「报头」部分主要定义了发出端口和接收端口，「数据」部分就是具体的内容。UDP 数据包非常简单，「标头」部分一共只有 8 个字节，总长度不超过 65,535 字节，正好放进一个 IP 数据包。整个 UDP 数据包放入 IP 数据包的「数据」部分，而 IP 数据包又是放在以太网数据包之中。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-5-3" class="outline-4">
+<h4 id="sec-1-5-3"><span class="section-number-4">1.5.3</span> TCP 协议</h4>
+<div class="outline-text-4" id="text-1-5-3">
+<p>
+<span class="underline">UDP 协议的优点是比较简单，容易实现，但是缺点是可靠性较差，</span> 一旦数据包发出，无法知道对方是否收到。 <span class="underline">为了提高网络可靠性，TCP 协议就诞生了。这个协议非常复杂，但可以近似认为，它就是有确认机制的 UDP 协议，每发出一个数据包都要求确认。如果有一个数据包遗失（收不到确认），发出方就知道有必要重发这个数据包了。</span>
+</p>
+
+<p>
+因此，TCP 协议能够确保数据不会遗失。它的 <span class="underline">缺点是过程复杂、实现困难、消耗较多的资源。</span> TCP 数据包和 UDP 数据包一样，都是内嵌在 IP 数据包的「数据」部分。TCP 数据包没有长度限制，理论上可以无限长，但是为了保证网络的效率，通常 TCP 数据包的长度不会超过 IP 数据包的长度，以确保单个 TCP 数据包不必再分割。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> 应用层</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+应用程序收到传输层的数据，接下来就要进行解读。 <span class="underline">由于互联网是开放架构，数据来源五花八门，必须事先规定好格式，否则无法解读。「应用层」的作用，就是规定应用程序的数据格式。</span>
+</p>
+
+<p>
+举例来说，TCP 协议可以为各种各样的程序传递数据，比如 Email、WWW、FTP 等等。那么，必须有不同协议规定电子邮件、网页、FTP 数据的格式，这些应用程序协议就构成了「应用层」。这是最高的一层，直接面对用户。它的数据就放在 TCP 数据包的「数据」部分。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> DHCP 协议</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+DHCP 是一种应用层协议，建立在 UDP 协议之上。这个协议规定，每一个子网络中，有一台计算机负责管理本网络的所有 IP 地址，叫做「DHCP 服务器」。新的计算机加入网络，必须向 DHCP 服务器发送一个「DHCP 请求」数据包，申请 IP 地址和相关的网络参数。
+</p>
+
+<p>
+但是两台计算机在同一个子网络，必须知道对方的 MAC 地址和 IP 地址，才能发送数据包。新加入的计算机不知道这两个地址，怎么发送数据包呢？DHCP 协议做了一些巧妙的规定。
+</p>
+
+<ul class="org-ul">
+<li>数据包的以太网报头，设置发出方（本机）的 MAC 地址和接收方（DHCP 服务器）的 MAC 地址，后者这时不知道，就填入一个广播地址 <code>FF-FF-FF-FF-FF-FF</code> 。
+</li>
+<li>数据包的 IP 报头，设置发出方的 IP 地址和接收方的 IP 地址。这两者本机都不知道，于是，发出方的 IP 地址就设为 0.0.0.0，接收方的 IP 地址设为 255.255.255.255。
+</li>
+<li>最后的 UDP 报头，设置发出方的端口和接收方的端口。DHCP 协议规定发出方是 68 端口，接收方是 67 端口。
+</li>
+</ul>
+
+<p>
+以太网是广播发送，同一个子网络的每台计算机都收到了这个包。因为接收方的 MAC 地址是 <code>FF-FF-FF-FF-FF-FF</code> ，看不出是发给谁的，所以每台收到这个包的计算机，还必须分析这个包的 IP 地址，才能确定是不是发给自己的。当看到发出方 IP 地址是 0.0.0.0，接收方是 255.255.255.255，DHCP 服务器知道「这个包是发给我的」，而其他计算机就可以丢弃这个包。
+</p>
+
+<p>
+接下来，DHCP 服务器读出这个包的数据内容，分配好 IP 地址，发送回去一个「DHCP 响应」数据包。这个响应包的结构也是类似的，以太网标头的 MAC 地址是双方的网卡地址，IP 标头的 IP 地址是 DHCP 服务器的 IP 地址（发出方）和 255.255.255.255（接收方），UDP 标头的端口是 67（发出方）和 68（接收方），分配给请求端的 IP 地址和本网络的具体参数则包含在数据部分。
+</p>
+
+<p>
+新加入的计算机收到这个响应包，就知道了自己的 IP 地址、子网掩码、网关地址、DNS 服务器等参数。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> DNS 原理入门</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2016/06/dns.html">Source</a>
+</p>
+
+<p>
+DNS（Domain Name System）的作用非常简单，就是根据域名查出 IP 地址。可以把它想象成电话本。虽然只需要返回一个 IP 地址，但是 DNS 的查询过程非常复杂，分成多个步骤。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><code>dig</code> 命令可以显示整个查询过程：</label>
+<pre class="src src-sh">$ dig math.stackexchange.com
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> DNS 服务器</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+DNS 服务器的 IP 地址可能是动态的，每次上网时由网关分配，即 DHCP 机制；也有可能是事先指定的固定地址。Linux 系统下 DNS 服务器的 IP 地址保存在 <code>/etc/resolv.conf</code> 文件。
+</p>
+
+<p>
+DNS 服务器通常是内网地址，有一些公网的 DNS 服务器也可以使用，其中最有名的就是 Google 的 <code>8.8.8.8</code> 和 Level 3 的 <code>4.2.2.2</code> 。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> 域名层级</h3>
+<div class="outline-text-3" id="text-2-2">
+<div class="org-src-container">
+<label class="org-src-name"><code>dig</code> 命令输出中的查询部分：</label>
+<pre class="src src-sh">;; QUESTION SECTION:
+;math.stackexchange.com.        IN      A
+</pre>
+</div>
+
+<p>
+所有域名的尾部，实际上都有一个根域名。 <code>www.example.com</code> 真正的域名是 <code>www.example.com.root</code> ，因为 <span class="underline">根域名 <code>.root</code> 对于所有域名都是一样的，所以可以省略，</span> 简写为 <code>www.example.com.</code> 。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">域名的层级结构</label>
+<pre class="src src-sh">host.sld.tld.root
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>顶级域名（Top-Level Domain，缩写为 TLD），比如 <code>.com</code> 、 <code>.net</code> 。
+</li>
+<li>次级域名（Second-Level Domain，缩写为 SLD），比如 <code>.example</code> ，用户可以注册次级域名。
+</li>
+<li>主机名（host），又称为三级域名，比如 <code>www</code> ，是用户在自己的域里为服务器分配的名称，用户可以任意分配。
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> 分级查询</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+每一级域名都有自己的 NS 记录，指向该级域名的域名服务器，这些服务器知道下一级域名的各种记录。DNS 服务器根据域名的层级，进行 <span class="underline">分级查询，从根域名开始，依次查询每一级域名的 NS 记录，直到查到最终的 IP 地址。</span>
+</p>
+
+<ol class="org-ol">
+<li>从「根域名服务器」查询到「顶级域名服务器」的 NS 记录和 A 记录（IP 地址）
+</li>
+<li>从「顶级域名服务器」查询到「次级域名服务器」的 NS 记录和 A 记录（IP 地址）
+</li>
+<li>从「次级域名服务器」查出「主机名」的 IP 地址
+</li>
+</ol>
+
+<p>
+而「根域名服务器」的 NS 记录和 IP 地址一般不会变化，内置在 DNS 服务器里。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">内置的根域名服务器 IP 地址（<a href="https://www.cyberciti.biz/faq/unix-linux-update-root-hints-data-file/">How Do I Update The Root Hints Data File for BIND Named Server?</a>）</label>
+<pre class="src src-sh">; formerly NS.INTERNIC.NET
+;
+.                        3600000  IN  NS    A.ROOT-SERVERS.NET.
+A.ROOT-SERVERS.NET.      3600000      A     198.41.0.4
+A.ROOT-SERVERS.NET.      3600000      AAAA  2001:503:BA3E::2:30
+;
+; formerly NS1.ISI.EDU
+;
+.                        3600000      NS    B.ROOT-SERVERS.NET.
+B.ROOT-SERVERS.NET.      3600000      A     192.228.79.201
+;
+; formerly C.PSI.NET
+;
+.                        3600000      NS    C.ROOT-SERVERS.NET.
+C.ROOT-SERVERS.NET.      3600000      A     192.33.4.12
+</pre>
+</div>
+
+<p>
+目前，世界上一共有 13 组根域名服务器，从 <code>A.ROOT-SERVERS.NET</code> 到 <code>M.ROOT-SERVERS.NET</code> 。根域名服务器的 TTL 值是 3600000 秒，相当于 1000 小时。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> 分级查询实例</h3>
+<div class="outline-text-3" id="text-2-4">
+<div class="org-src-container">
+
+<pre class="src src-sh">$ dig +trace math.stackexchange.com
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">第一段：列出根域名 <code>.</code> 的所有 NS 记录，即所有根域名服务器：</label>
+<pre class="src src-code">; &lt;&lt;&gt;&gt; DiG 9.9.4-RedHat-9.9.4-29.el7_2.4 &lt;&lt;&gt;&gt; +trace math.stackexchange.com
+;; global options: +cmd
+.                       79737   IN      NS      e.root-servers.net.
+.                       79737   IN      NS      d.root-servers.net.
+.                       79737   IN      NS      k.root-servers.net.
+.                       79737   IN      NS      c.root-servers.net.
+.                       79737   IN      NS      g.root-servers.net.
+.                       79737   IN      NS      j.root-servers.net.
+.                       79737   IN      NS      m.root-servers.net.
+.                       79737   IN      NS      l.root-servers.net.
+.                       79737   IN      NS      b.root-servers.net.
+.                       79737   IN      NS      h.root-servers.net.
+.                       79737   IN      NS      a.root-servers.net.
+.                       79737   IN      NS      i.root-servers.net.
+.                       79737   IN      NS      f.root-servers.net.
+;; Received 241 bytes from 127.0.0.1#53(127.0.0.1) in 4 ms
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">第二段：向根域名服务器查询顶级域名 <code>com.</code> ，返回顶级域名的 NS 记录，以及最先返回结果的服务器：</label>
+<pre class="src src-code">com.                    172800  IN      NS      a.gtld-servers.net.
+com.                    172800  IN      NS      b.gtld-servers.net.
+com.                    172800  IN      NS      c.gtld-servers.net.
+com.                    172800  IN      NS      d.gtld-servers.net.
+com.                    172800  IN      NS      e.gtld-servers.net.
+com.                    172800  IN      NS      f.gtld-servers.net.
+com.                    172800  IN      NS      g.gtld-servers.net.
+com.                    172800  IN      NS      h.gtld-servers.net.
+com.                    172800  IN      NS      i.gtld-servers.net.
+com.                    172800  IN      NS      j.gtld-servers.net.
+com.                    172800  IN      NS      k.gtld-servers.net.
+com.                    172800  IN      NS      l.gtld-servers.net.
+com.                    172800  IN      NS      m.gtld-servers.net.
+;; Received 874 bytes from 2001:500:a8::e#53(e.root-servers.net) in 23 ms
+</pre>
+</div>
+
+<p>
+最先回复的根域名服务器将被缓存，之后 DNS 服务器只向这台服务器发送请求。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">第三段：向顶级域名服务器查询次级域名 <code>stackexchange.com.</code> ，返回次级域名的 NS 记录，以及最先返回结果的服务器：</label>
+<pre class="src src-code">stackexchange.com.      172800  IN      NS      ns-463.awsdns-57.com.
+stackexchange.com.      172800  IN      NS      ns-925.awsdns-51.net.
+stackexchange.com.      172800  IN      NS      ns-1029.awsdns-00.org.
+stackexchange.com.      172800  IN      NS      ns-1832.awsdns-37.co.uk.
+;; Received 705 bytes from 2001:503:231d::2:30#53(b.gtld-servers.net) in 2 ms
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">第四段：向次级域名服务器查询主机名 <code>math.stackexchange.com.</code> ，返回主机的 IP 地址，以及最先返回结果的服务器：</label>
+<pre class="src src-code">math.stackexchange.com. 300     IN      A       151.101.129.69
+math.stackexchange.com. 300     IN      A       151.101.65.69
+math.stackexchange.com. 300     IN      A       151.101.1.69
+math.stackexchange.com. 300     IN      A       151.101.193.69
+;; Received 252 bytes from 205.251.196.5#53(ns-1029.awsdns-00.org) in 1 ms
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> DNS 记录类型</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+域名与 IP 之间的对应关系，称为「记录」（record）。根据使用场景，记录可以分成不同的类型（type）。常见的 DNS 记录类型：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>A</code></th>
+<th scope="col" class="left">地址（Address）记录</th>
+<th scope="col" class="left">域名指向的 IP 地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>NS</code></td>
+<td class="left">域名服务器（Name Server）记录，</td>
+<td class="left">下一级域名信息的服务器地址</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">该记录只能设置为域名，不能设置为 IP 地址</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>CNAME</code></td>
+<td class="left">规范名称（Canonical Name）记录</td>
+<td class="left">用于域名的内部跳转</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>MX</code></td>
+<td class="left">邮件交换（Mail eXchange）记录</td>
+<td class="left">接收电子邮件的服务器地址</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>PTR</code></td>
+<td class="left">逆向查询（Pointer Record）记录</td>
+<td class="left">用于从 IP 地址反查询域名</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+一般为了服务的可靠性，至少有两条 <code>NS</code> 记录， <code>A</code> 记录和 <code>MX</code> 记录也可以有多条，以提供服务的冗余性，防止单点故障。
+</p>
+</div>
+
+<div id="outline-container-sec-2-5-1" class="outline-4">
+<h4 id="sec-2-5-1"><span class="section-number-4">2.5.1</span> <code>CNAME</code></h4>
+<div class="outline-text-4" id="text-2-5-1">
+<p>
+<code>CNAME</code> 为服务器配置提供灵活性，用户感知不到。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">举例来说，=facebook.github.io= 就是一个 <code>CNAME</code> 记录：</label>
+<pre class="src src-sh">$ dig facebook.github.io
+
+;; ANSWER SECTION:
+facebook.github.io.     3600    IN      CNAME   github.map.fastly.net.
+github.map.fastly.net.  30      IN      A       151.101.48.133
+</pre>
+</div>
+
+<p>
+用户查询 <code>facebook.github.io</code> 时，实际上返回的是 <code>github.map.fastly.net</code> 的 IP 地址。
+</p>
+
+<p>
+由于 <code>CNAME</code> 记录就是一个替换，所以域名设置 <code>CNAME</code> 记录以后，为了防止冲突，不允许再设置其他记录（比如 <code>A</code> 记录和 <code>MX</code> 记录）。比如两个域名有各自的 <code>MX</code> 记录，如果两者不一致，就会产生问题。由于顶级域名通常要设置 <code>MX</code> 记录，所以一般不允许用户对顶级域名设置 <code>CNAME</code> 记录。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> 链接</h3>
+<div class="outline-text-3" id="text-2-6">
+<ol class="org-ol">
+<li><a href="https://www.petekeen.net/dns-the-good-parts">DNS: The Good Parts</a>
+</li>
+<li><a href="http://www.integralist.co.uk/posts/dnsbasics.html">DNS 101</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> SSH 原理与运用</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html">Source</a>
+</p>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> 什么是 SSH？</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+简单说，SSH 是一种网络协议，用于计算机之间的加密登录。如果一个用户从本地计算机，使用 SSH 协议登录另一台远程计算机，就可以认为，这种登录是安全的，即使被中途截获，密码也不会泄露。
+</p>
+
+<p>
+最早的时候，互联网通信都是明文通信，一旦被截获，内容就暴露无疑。 <span class="underline">1995 年，芬兰学者 Tatu Ylonen 设计了 SSH 协议，将登录信息全部加密，成为互联网安全的一个基本解决方案，</span> 迅速在全世界获得推广，目前已经成为 Linux 系统的标准配置。
+</p>
+
+<p>
+<span class="underline">SSH 只是一种协议，存在多种实现，</span> 既有商业实现，也有开源实现。本文针对的实现是 OpenSSH，它是自由软件，应用非常广泛。此外，本文只讨论 SSH 在 Linux Shell 中的用法。如果要在 Windows 系统中使用 SSH，会用到另一种软件 PuTTY，这需要另文介绍。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> 基本用法</h3>
+<div class="outline-text-3" id="text-3-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">$ ssh &lt;user&gt;@&lt;host&gt;
+$ ssh &lt;host&gt;                  <span class="org-comment-delimiter"># </span><span class="org-comment">&#26412;&#22320;&#29992;&#25143;&#21517;&#19982;&#36828;&#31243;&#29992;&#25143;&#21517;&#19968;&#33268;&#26102;&#21487;&#20197;&#30465;&#30053;</span>
+$ ssh -p &lt;port&gt; &lt;user&gt;@&lt;host&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#25351;&#23450;&#31471;&#21475;&#65292;&#40664;&#35748;&#31471;&#21475;&#26159; 22</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> 中间人攻击</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+SSH 之所以能够保证安全，原因在于它采用了 <span class="underline">公钥加密</span> 。
+</p>
+
+<ol class="org-ol">
+<li>远程主机收到用户的登录请求，把自己的公钥发送给用户。
+</li>
+<li>用户使用这个公钥，将登录密码加密，发送回主机。
+</li>
+<li>远程主机用自己的私钥，解密登录密码，如果密码正确，就同意用户登录。
+</li>
+</ol>
+
+<p>
+这个过程本身是安全的，但是实施的时候存在一个风险： 如果有人截获了登录请求，然后冒充远程主机，将伪造的公钥发给用户，那么用户很难辨别真伪。因为 <span class="underline">不像 HTTPS 协议，SSH 协议的公钥是没有证书中心（CA）公证的，也就是说，都是自己签发的。</span>
+</p>
+
+<p>
+可以设想， <span class="underline">如果攻击者插在用户与远程主机之间（比如在公共的 wifi 区域），用伪造的公钥，获取用户的登录密码。再用这个密码登录远程主机，那么 SSH 的安全机制就荡然无存了。这种风险就是著名的「中间人攻击」（Man-in-the-middle attack）。</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> 口令登录</h3>
+<div class="outline-text-3" id="text-3-4">
+<div class="org-src-container">
+<label class="org-src-name">如果是第一次登录对方主机，系统会出现下面的提示：</label>
+<pre class="src src-sh">$ ssh user@host
+
+The authenticity of host <span class="org-string">'host (12.18.429.21)'</span> can<span class="org-string">'t be established.</span>
+<span class="org-string">RSA key fingerprint is 98:2e:d7:e0:de:9f:ac:67:28:c2:42:2d:37:16:58:4d.</span>
+<span class="org-string">Are you sure you want to continue connecting (yes/no)?</span>
+</pre>
+</div>
+
+<p>
+这段话的意思是，无法确认主机的真实性，只知道它的公钥指纹，询问还继续连接吗？所谓 <span class="underline">「公钥指纹」，是因为公钥长度较长（这里采用 RSA 算法，长达 1024 位），所以对其进行 MD5 计算，将它变成一个 128 位的指纹，再进行比较。</span>
+</p>
+
+<p>
+很自然的一个问题就是，用户怎么知道远程主机的公钥指纹应该是多少？回答是没有好办法， <span class="underline">远程主机必须在自己的网站上贴出公钥指纹，以便用户自行核对。</span>
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">如果决定接受这个远程主机的公钥，系统会出现一句提示，表示主机已经得到认可：</label>
+<pre class="src src-sh">Warning: Permanently added <span class="org-string">'host 12.18.429.21'</span> (RSA) to the list of known hosts.
+</pre>
+</div>
+
+<p>
+<span class="underline">当远程主机的公钥被接受以后，它就会被保存在 <code>~/.ssh/known_hosts</code> 中。下次再连接这台主机，系统就会认出它的公钥已经保存在本地了，从而跳过警告部分，直接提示输入密码。</span> 每个 SSH 用户都有自己的 <code>known_hosts</code> 文件，此外系统也有一个文件，通常是 <code>/etc/ssh/ssh_known_hosts</code> ，保存一些对所有用户都可信赖的远程主机的公钥。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-5" class="outline-3">
+<h3 id="sec-3-5"><span class="section-number-3">3.5</span> 公钥登录</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+使用密码登录，每次都必须输入密码，非常麻烦。好在 SSH 还提供了公钥登录，可以省去输入密码的步骤。
+</p>
+
+<ol class="org-ol">
+<li>用户将自己的公钥储存在远程主机上。
+</li>
+<li>登录时，远程主机向用户发送一段随机字符串。
+</li>
+<li>用户用自己的私钥强字符串加密后，再发送回主机。
+</li>
+<li>远程主机用事先储存的公钥进行解密，如果成功，就证明用户是可信的，直接允许登录，不再要求密码。
+</li>
+</ol>
+
+<div class="org-src-container">
+<label class="org-src-name">这种方法要求用户提供自己的公钥。如果没有，可以直接用 <code>ssh-keygen</code> 生成一个：</label>
+<pre class="src src-sh">$ ssh-keygen
+</pre>
+</div>
+
+<p>
+运行上面的命令以后，系统会出现一系列提示，可以一路回车。其中有一个问题是，要不要对私钥设置口令（passphrase），如果担心私钥的安全，这里可以设置一个。运行结束以后，在 <code>~/.ssh/</code> 目录下，会新生成两个文件： <code>id_rsa.pub</code> 和 <code>id_rsa</code> ，前者是你的公钥，后者是你的私钥。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">将公钥传送到远程主机上：</label>
+<pre class="src src-sh">$ ssh-copy-id user@host
+</pre>
+</div>
+
+<p>
+之后就可以进行公钥登录，不需要输入密码了。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">如果失败，查看远程主机的 <code>/etc/ssh/sshd_config</code> ，将下面几行取消注释：</label>
+<pre class="src src-sh">RSAAuthentication yes
+PubkeyAuthentication yes
+AuthorizedKeysFile .ssh/authorized_keys
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">然后重启 SSH 服务：</label>
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Ubuntu</span>
+service ssh restart
+<span class="org-comment-delimiter"># </span><span class="org-comment">Debian</span>
+/etc/init.d/ssh restart
+</pre>
+</div>
+
+<p>
+远程主机将用户的公钥保存在 <code>~/.ssh/authorized_keys</code> 文件中。公钥实际是一段字符串，只要把它追加在文件的末尾，效果是一样的。可以不使用 <code>ssh-copy-id</code> ，可以用下面的命令进行公钥保存：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$ ssh user@host <span class="org-string">'mkdir -p .ssh &amp;&amp; cat &gt;&gt; .ssh/authorized_keys'</span> &lt; ~/.ssh/id_rsa.pub
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-6" class="outline-3">
+<h3 id="sec-3-6"><span class="section-number-3">3.6</span> 远程操作</h3>
+<div class="outline-text-3" id="text-3-6">
+<p>
+SSH 不仅可以用于远程主机登录，还可以直接在远程主机上执行操作。 <span class="underline">SSH 可以在用户和远程主机之间，建立命令和数据的传输通道。</span>
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">将 <code>~/src/</code> 目录复制到远程主机的 <code>~/src/</code> 目录：</label>
+<pre class="src src-sh">$ cd ~ &amp;&amp; tar czv src | ssh user@host <span class="org-string">'tar xz'</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">将远程主机 <code>~/src/</code> 目录复制到用户的当前目录：</label>
+<pre class="src src-sh">$ ssh user@host <span class="org-string">'tar cz src'</span> | tar xzv
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">查看远程主机是否运行 <code>httpd</code> 进程：</label>
+<pre class="src src-sh">$ ssh user@host <span class="org-string">'ps ax | grep [h]ttpd'</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-7" class="outline-3">
+<h3 id="sec-3-7"><span class="section-number-3">3.7</span> 绑定本地端口</h3>
+<div class="outline-text-3" id="text-3-7">
+<p>
+既然 SSH 可以传送数据，那么 <span class="underline">可以让不加密的网络连接全部改走 SSH 连接，从而提高安全性。</span>
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">比如让 8080 端口的数据都通过 SSH 传向远程主机：</label>
+<pre class="src src-sh">$ ssh -D 8080 user@host
+</pre>
+</div>
+
+<p>
+SSH 会建立一个 socket，监听本地的 8080 端口，一旦有数据传向那个端口，就自动把它转移到 SSH 连接上面，发往远程主机。如果 8080 端口原来是一个不加密端口，现在将变成一个加密端口。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-8" class="outline-3">
+<h3 id="sec-3-8"><span class="section-number-3">3.8</span> 本地端口转发</h3>
+<div class="outline-text-3" id="text-3-8">
+<p>
+有时，绑定本地端口还不够，还必须指定数据传送的目标主机，从而形成点对点的「端口转发」。为了区别后文的「远程端口转发」，把这种情况称为「本地端口转发」（local forwarding）。
+</p>
+
+<p>
+假定 host1 是本地主机，host2 是远程主机。由于种种原因，这 <span class="underline">两台主机之间无法连通。但是，另外还有一台 host3，可以同时连通前面两台主机，很自然的想法就是，通过 host3，将 host1 连上 host2。</span>
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">在 host1 执行：</label>
+<pre class="src src-sh">$ ssh -L 2121:host2:21 host3
+</pre>
+</div>
+
+<p>
+<code>L</code> 参数一共接受三个值，分别是「本地端口:目标主机:目标主机端口」，它们之间用冒号分隔。这条命令的意思是指定 SSH 绑定本地端口 2121，然后指定 host3 将所有的数据转发到目标主机 host2 的 21 端口。这样一来，只要连接 host1 的 2121 端口，就等于连上了 host2 的 21 端口：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$ ftp localhost:2121
+</pre>
+</div>
+
+<p>
+「本地端口转发」使得 host1 和 host2 之间仿佛形成一个数据传输的秘密隧道，因此又被称为「SSH 隧道」。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">将本机的 5900 端口绑定 host3 的 5900 端口：</label>
+<pre class="src src-sh">$ ssh -L 5900:localhost:5900 host3 <span class="org-comment-delimiter"># </span><span class="org-comment">localhost &#25351;&#30340;&#26159; host3&#65292;&#22240;&#20026;&#30446;&#26631;&#20027;&#26426;&#26159;&#30456;&#23545; host3 &#32780;&#35328;&#30340;</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">通过 host3 的端口转发，SSH 登录 host2：</label>
+<pre class="src src-sh">$ ssh -L 9001:host2:22 host3
+$ ssh -p 9001 localhost <span class="org-comment-delimiter"># </span><span class="org-comment">SSH &#30331;&#24405;&#26412;&#26426;&#30340; 9001 &#31471;&#21475;&#65292;&#23601;&#30456;&#24403;&#20110; SSH &#30331;&#24405; host2</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-9" class="outline-3">
+<h3 id="sec-3-9"><span class="section-number-3">3.9</span> 远程端口转发</h3>
+<div class="outline-text-3" id="text-3-9">
+<p>
+既然「本地端口转发」是指绑定本地端口的转发，那么「远程端口转发」（remote forwarding）当然是指绑定远程端口的转发。
+</p>
+
+<p>
+还是上面的例子，host1 与 host2 之间无法连通，必须借助 host3 转发。但是，特殊情况出现了，host3 是一台内网机器，它可以连接外网的 host1，但是反过来就不行，外网的 host1 连不上内网的 host3。解决办法是，既然 host3 可以连接 host1，那么就从 host3 上建立与 host1 的 SSH 连接，然后在 host1 上使用这条连接就可以了。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">在 host3 执行：</label>
+<pre class="src src-sh">$ ssh -R 2121:host2:21 host1
+</pre>
+</div>
+
+<p>
+<code>R</code> 参数也接受三个值，分别是「远程主机端口:目标主机:目标主机端口」。这条命令就是让 host1 监听它自己的 2121 端口，然后将所有数据经由 host3，转发到 host2 的 21 端口。由于对于 host3 来说，host1 是远程主机，所以这种情况就被称为「远程端口绑定」。绑定之后，在 host1 就可以连接 host2 了：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$ ftp localhost:2121
+</pre>
+</div>
+
+<p>
+注意「远程端口转发」的前提条件是，host1 和 host3 两台主机都有 sshD 和 ssh 客户端。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-10" class="outline-3">
+<h3 id="sec-3-10"><span class="section-number-3">3.10</span> SSH 其他参数</h3>
+<div class="outline-text-3" id="text-3-10">
+<p>
+<code>N</code> 参数表示只连接远程主机，不打开远程 Shell。 <code>T</code> 参数表示不为这个连接分配 TTY。这个两个参数一起使用，代表这个 SSH 连接只用来传数据，不执行远程操作：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$ ssh -NT -D 8080 host
+</pre>
+</div>
+
+<p>
+<code>f</code> 参数表示 SSH 连接成功后，转入后台运行。这样就可以在不中断 SSH 连接的情况下，在本地 Shell 中执行其他操作。要关闭这个后台连接，就只有用 <code>kill</code> 命令去杀掉进程：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$ ssh -f -D 8080 host
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-11" class="outline-3">
+<h3 id="sec-3-11"><span class="section-number-3">3.11</span> 参考文献</h3>
+<div class="outline-text-3" id="text-3-11">
+<ol class="org-ol">
+<li><a href="http://docstore.mik.ua/orelly/networking_2ndEd/ssh/ch02_04.htm">SSH, The Secure Shell: The Definitive Guide: 2.4. Authentication by Cryptographic Key</a>
+</li>
+<li><a href="http://docstore.mik.ua/orelly/networking_2ndEd/ssh/ch09_02.htm">SSH, The Secure Shell: The Definitive Guide: 9.2. Port Forwarding</a>
+</li>
+<li><a href="http://shebang.brandonmintern.com/tips-for-remote-unix-work-ssh-screen-and-vnc">Tips for Remote Unix Work (SSH, screen, and VNC)</a>
+</li>
+<li><a href="http://www.symantec.com/connect/articles/ssh-host-key-protection">SSH Host Key Protection</a>
+</li>
+<li><a href="http://www.symantec.com/connect/articles/ssh-user-identities">SSH User Identities</a>
+</li>
+<li><a href="http://www.ibm.com/developerworks/cn/linux/l-cn-sshforward/">实战 SSH 端口转发</a>
+</li>
+<li><a href="http://blog.jianingy.com/2009/09/ssh%E9%9A%A7%E9%81%93%E6%8A%80%E6%9C%AF%E7%AE%80%E4%BB%8B/">SSH 隧道技术简介</a>
+</li>
+<li><a href="http://en.wikibooks.org/wiki/Internet_Technologies/SSH">WikiBooks: Internet Technologies/SSH</a>
+</li>
+<li><a href="http://chamibuddhika.wordpress.com/2012/03/21/ssh-tunnelling-explained/">SSH Tunneling Explained</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 深入浅出 RPC</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<a href="http://blog.csdn.net/mindfloating/article/details/39473807">Source</a>
+</p>
+
+<p>
+近几年的项目中， <del>服务化</del> 和微服务化渐渐成为中大型 <del>分布式系统架构</del> 的主流方式，而 RPC 在其中扮演着关键的作用。在平时的日常开发中我们都在隐式或显式的使用 RPC，一些刚入行的程序员会感觉 RPC 比较神秘，而一些有多年使用 RPC 经验的程序员虽然使用经验丰富，但有些对其原理也不甚了了。缺乏对原理层面的理解，往往也会造成开发中的一些误用。
+</p>
+</div>
+
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> 定义</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+RPC 的全称是 Remote Procedure Call。是 <span class="underline">一种进程间通信方式。它允许程序调用另一个地址空间（通常是共享网络的另一台机器上）的过程或函数，而不用程序员显式编码这个远程调用的细节</span> 。即程序员无论是调用本地的还是远程的，本质上编写的调用代码基本相同。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> 起源</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+RPC 这个概念在上世纪 80 年代由 Bruce Jay Nelson 提出。这里我们追溯下当初开发 RPC 的原动机是什么？在 Nelson 的论文 <a href="http://birrell.org/andrew/papers/ImplementingRPC.pdf">"Implementing Remote Procedure Calls"</a> 中他提到了几点：
+</p>
+
+<ol class="org-ol">
+<li>简单：RPC 的语义十分清晰和简单，这样建立分布式计算就更容易。
+</li>
+<li>高效：过程调用看起来十分简单而且高效。
+</li>
+<li>通用：在单机计算中「过程」往往是不同算法部分间最重要的通信机制。
+</li>
+</ol>
+
+<p>
+通俗一点说，就是一般程序员对于本地的过程调用很熟悉，那么我们把 RPC 作成和本地调用完全类似，就更容易被接受，使用起来毫无障碍。Nelson 的论文发表于 30 年前，其观点今天看来确实高瞻远瞩，今天我们使用的 RPC 框架基本就是按这个目标来实现的。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> 目标</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+<span class="underline">RPC 的主要目标是让构建分布式计算（应用）更容易，在提供强大的远程调用能力时不损失本地调用的语义简洁性。</span> 为实现该目标，RPC 框架需提供一种透明调用机制让使用者不必显式的区分本地调用和远程调用。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> 分类</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+RPC 调用分以下两种：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>同步调用：</b></th>
+<th scope="col" class="left">客户端等待调用执行完成并获取执行结果。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>异步调用：</b></td>
+<td class="left">客户端调用后不等待执行结果，可以通过回调、通知等方式获取结果。</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">若客户端不关心调用结果，则变成单向异步调用，不用返回结果。</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-4-5" class="outline-3">
+<h3 id="sec-4-5"><span class="section-number-3">4.5</span> 结构</h3>
+<div class="outline-text-3" id="text-4-5">
+<p>
+Nelson 的论文中指出实现 RPC 的程序包括 5 个部分：
+</p>
+
+<ol class="org-ol">
+<li>Client
+</li>
+<li>Client stub
+</li>
+<li>RPC runtime
+</li>
+<li>Server stub
+</li>
+<li>Server
+</li>
+</ol>
+
+
+<div class="figure">
+<p><img src="../images/network_scrap/02.svg" alt="02.svg" />
+</p>
+</div>
+
+<p>
+当客户端发起一个远程调用时，它实际是通过本地调用 client stub。client stub 负责将调用的接口、方法和参数通过约定的协议规范进行编码并通过本地的 RPC runtime 实例传输到远端的实例。远端 RPC runtime 实例收到请求后交给 server stub 进行解码后发起本地端调用，调用结果再返回给服务器端。
+</p>
+
+<p>
+上面给出了一个比较粗粒度的 RPC 实现理论模型概念结构，这里我们进一步细化它应该由哪些组件构成，如下图所示。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/network_scrap/03.png" alt="03.png" />
+</p>
+</div>
+
+<ul class="org-ul">
+<li>RPC 服务端通过 RpcServer 导出远程接口方法，而客户端通过 RpcClient 导入远程接口方法。
+</li>
+<li>客户端像调用本地方法一样调用远程接口方法，RPC 框架提供接口的代理实现，实际的调用将委托给代理 RpcProxy 。
+</li>
+<li>代理封装调用信息并将调用转交给 RpcInvoker 实际执行。
+</li>
+<li>客户端的 RpcInvoker 通过连接器 RpcConnector 去维持与服务端的通道 RpcChannel，并使用 RpcProtocol 执行协议编码并将编码后的请求消息通过通道发送给服务端。
+</li>
+<li>RPC 服务端接收器 RpcAcceptor 接收客户端的调用请求，同样使用 RpcProtocol 执行协议解码。 
+</li>
+<li>解码后的调用信息传递给 RpcProcessor 去控制处理调用过程，最后再委托调用给 RpcInvoker 去实际执行并返回调用结果。
+</li>
+</ul>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> 组件的职责划分</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">RpcServer</th>
+<th scope="col" class="left">导出远程接口</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">RpcClient</td>
+<td class="left">导入远程接口的代理实现</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">RpcProxy</td>
+<td class="left">远程接口的代理实现</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">RpcInvoker</td>
+<td class="left">客户端：编码调用信息，发送调用请求到服务端，等待调用结果返回</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">服务端：调用服务端接口的具体实现，返回调用结果</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">RpcProtocol</td>
+<td class="left">协议编码、解码</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">RpcConnector</td>
+<td class="left">维持客户端和服务端的连接通道，发送数据到服务端</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">RpcAcceptor</td>
+<td class="left">接收客户端请求，返回请求结果</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">RpcProcessor</td>
+<td class="left">在服务端控制调用过程，包括管理调用线程池、超时时间等</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">RpcChannel</td>
+<td class="left">数据传输通道</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-4-6" class="outline-3">
+<h3 id="sec-4-6"><span class="section-number-3">4.6</span> 实现</h3>
+<div class="outline-text-3" id="text-4-6">
+<p>
+Nelson 论文中给出的这个实现结构也成为后来大家参考的标准范本。大约 10 年前，我最早接触分布式计算时使用的 CORBAR 实现结构基本与此类似。CORBAR 为了解决异构平台的 RPC，使用了 <del>IDL（Interface Definition Language）</del> 来定义远程接口，并将其映射到特定的平台语言中。后来大部分的跨语言平台 RPC 基本都采用了此类方式，比如我们熟悉的 <del>Web Service（SOAP）</del> ，近年开源的 <del>Thrift</del> 等。他们大部分都 <span class="underline">通过 IDL 定义，并提供工具来映射生成不同语言平台的 client stub 和 server stub，并通过框架库来提供 RPC runtime 的支持</span> 。不过貌似每个不同的 RPC 框架都定义了各自不同的 IDL 格式，导致程序员的学习成本进一步上升， <span class="underline">Web Service 尝试建立业界标准，无奈标准规范复杂而效率偏低，否则 Thrift 等更高效的 RPC 框架就没必要出现了</span> 。
+</p>
+
+<p>
+<span class="underline">IDL 是为了跨平台语言实现 RPC 不得已的选择，要解决更广泛的问题自然导致了更复杂的方案。而对于同一平台内的 RPC 而言显然没必要搞个中间语言出来</span> ，例如 Java 原生的 RMI，这样对于 Java 程序员而言显得更直接简单，降低使用的学习成本。目前市面上提供的 RPC 框架已经可算是五花八门，百家争鸣了。需要根据实际使用场景谨慎选型，需要考虑的选型因素我觉得至少包括下面几点：
+</p>
+
+<ol class="org-ol">
+<li>性能指标
+</li>
+<li>是否需要跨语言平台
+</li>
+<li>内网开放还是公网开放
+</li>
+<li>开源 RPC 框架本身的质量、社区活跃度
+</li>
+</ol>
+
+<p>
+下面以 Java 平台实现 RPC 框架为例，详细分析实现中需要考虑的因素。
+</p>
+</div>
+
+<div id="outline-container-sec-4-6-1" class="outline-4">
+<h4 id="sec-4-6-1"><span class="section-number-4">4.6.1</span> 导出</h4>
+<div class="outline-text-4" id="text-4-6-1">
+<p>
+导出是指暴露远程接口，只有导出的接口可以供远程调用。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">Java 中导出接口的代码示例：</label>
+<pre class="src src-java"><span class="org-type">DemoService</span> <span class="org-variable-name">demo</span>   = <span class="org-keyword">new</span> ...;
+<span class="org-type">RpcServer</span>   <span class="org-variable-name">server</span> = <span class="org-keyword">new</span> ...;
+server.export(DemoService.<span class="org-keyword">class</span>, demo, options);
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">可以细粒度地只导出接口中的某些方法：</label>
+<pre class="src src-java"><span class="org-comment-delimiter">// </span><span class="org-comment">&#21482;&#23548;&#20986; DemoService &#20013;&#31614;&#21517;&#20026; hi(String s) &#30340;&#26041;&#27861;</span>
+server.export(DemoService.<span class="org-keyword">class</span>, demo, <span class="org-string">"hi"</span>, <span class="org-keyword">new</span> <span class="org-type">Class</span>&lt;?&gt;[] { String.<span class="org-keyword">class</span> }, options);
+</pre>
+</div>
+
+<p>
+Java 还有一种特殊的调用就是多态，就是一个接口有多个实现，那么远程调用时到底调用哪个？本地调用的语义是通过 JVM 提供的引用多态性隐式实现的，RPC 跨进程的调用没法隐式实现。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">如果 DemoService 接口有 2 个实现，在导出接口时就需要特殊标记不同的实现：</label>
+<pre class="src src-java"><span class="org-type">DemoService</span> <span class="org-variable-name">demo</span>   = <span class="org-keyword">new</span> ...;
+<span class="org-type">DemoService</span> <span class="org-variable-name">demo2</span>  = <span class="org-keyword">new</span> ...;
+<span class="org-type">RpcServer</span>   <span class="org-variable-name">server</span> = <span class="org-keyword">new</span> ...;
+server.export(DemoService.<span class="org-keyword">class</span>, demo, options);
+server.export(<span class="org-string">"demo2"</span>, DemoService.<span class="org-keyword">class</span>, demo2, options);
+</pre>
+</div>
+
+<p>
+远程调用时也需要传递该标记才能调用到正确的实现类，这样就解决了多态调用的语义。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-6-2" class="outline-4">
+<h4 id="sec-4-6-2"><span class="section-number-4">4.6.2</span> 导入</h4>
+<div class="outline-text-4" id="text-4-6-2">
+<p>
+导入相对于导出而言，客户端代码要发起调用，必须要获得远程接口的方法或过程定义。目前， <span class="underline">大部分跨语言平台 RPC 框架是根据 IDL 定义，通过代码生成器生成 client stub 代码，实际导入的过程是通过代码生成器在编译期完成的。</span> 我所使用过的一些跨语言平台 RPC 框架如 CORBAR、WebService、ICE、 <del>Thrift</del> 均是此方式。代码生成的方式对跨语言平台 RPC 框架而言是必然的选择，而对于同一语言平台的 RPC 则可以通过共享接口定义来实现。 
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">Java 导入接口的代码示例：</label>
+<pre class="src src-java"><span class="org-type">RpcClient</span> <span class="org-variable-name">client</span> = <span class="org-keyword">new</span> ...;
+<span class="org-type">DemoService</span> <span class="org-variable-name">demo</span> = client.refer(DemoService.<span class="org-keyword">class</span>);
+demo.hi(<span class="org-string">"how are you?"</span>);
+</pre>
+</div>
+
+<p>
+在 Java 中 <code>import</code> 是关键字，所以代码中用 <code>refer</code> 来导入接口。这种导入方式本质也是一种代码生成技术，只不过是在运行时生成，比静态编译期的代码生成更简洁。Java 至少提供了两种技术来进行动态代码生成，一种是 JDK 动态代理，另外一种是字节码生成。动态代理相比字节码生成更方便，但动态代理方式在性能上逊色于直接的字节码生成，而字节码生成在代码可读性上要差很多。两者权衡起来，作为一种底层通用框架，个人更倾向于选择性能优先。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-6-3" class="outline-4">
+<h4 id="sec-4-6-3"><span class="section-number-4">4.6.3</span> 协议</h4>
+<div class="outline-text-4" id="text-4-6-3">
+<p>
+协议指 RPC 调用在网络传输中约定的数据封装方式，包括：编解码、消息头、消息体。
+</p>
+
+<hr  />
+
+<p>
+<b>编解码</b>
+</p>
+
+<p>
+客户端代理在发起调用前，需要对调用信息进行编码，需要考虑编码的信息，和传输的格式。出于效率考虑，编码的信息越少越好（传输数据少），编码的规则越简单越好（执行效率高）。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> 调用编码包含的信息</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">接口方法</th>
+<th scope="col" class="left">接口名、方法名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">方法参数</td>
+<td class="left">参数类型、参数值</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">调用属性</td>
+<td class="left">调用属性信息，例如调用附加的隐式参数、调用超时时间等</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 3:</span> 返回编码包含的信息</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">返回结果</th>
+<th scope="col" class="left">接口方法中定义的返回值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">返回码</td>
+<td class="left">异常返回码</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">返回异常信息</td>
+<td class="left">调用异常信息</td>
+</tr>
+</tbody>
+</table>
+
+<hr  />
+
+<p>
+<b>消息头</b>
+</p>
+
+<p>
+除以上调用信息，可能还需要一些元信息，以方便程序编解码，及未来可能的扩展。这样编码消息就分成了两部分：元信息，和调用的必要信息。元信息可以放在协议消息头中，必要信息放在协议消息体中。
+</p>
+
+<p>
+一种概念上的 RPC 协议消息头设计格式：
+</p>
+
+
+<div class="figure">
+<p><img src="../images/network_scrap/04.png" alt="04.png" />
+</p>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>magic</code></th>
+<th scope="col" class="left">协议魔数，为解码设计</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>header size</code></td>
+<td class="left">协议头长度，为扩展设计</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>version</code></td>
+<td class="left">协议版本，为兼容设计</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>st</code></td>
+<td class="left">消息体序列化类型</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>hb</code></td>
+<td class="left">心跳消息标记，为长连接传输层心跳设计</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>ow</code></td>
+<td class="left">单向消息标记</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>rp</code></td>
+<td class="left">响应消息标记，不置位默认是请求消息</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>status code</code></td>
+<td class="left">响应消息状态码</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>reserved</code></td>
+<td class="left">为字节对齐保留</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>message id</code></td>
+<td class="left">消息 ID</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>body size</code></td>
+<td class="left">消息体长度</td>
+</tr>
+</tbody>
+</table>
+
+<hr  />
+
+<p>
+<b>消息体</b>
+</p>
+
+<p>
+消息体常采用序列化编码，常见有以下序列化方式：
+</p>
+
+<ul class="org-ul">
+<li>XML，如 WebServie（SOAP）
+</li>
+<li>JSON，如 JSON-RPC
+</li>
+<li>Binary，如 <del>Thrift</del> 、Hessian、Kryo
+</li>
+</ul>
+
+<p>
+格式确定后编解码就简单了，因为头长度一定，所以比较值得注意的是消息体的序列化方式。序列化主要注意的三个方面：
+</p>
+
+<ul class="org-ul">
+<li>效率：序列化和反序列化的效率，越快越好。
+</li>
+<li>长度：序列化后的字节长度，越小越好。
+</li>
+<li>兼容：序列化和反序列化的兼容性，接口参数对象若增加了字段，是否兼容。
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-4-6-4" class="outline-4">
+<h4 id="sec-4-6-4"><span class="section-number-4">4.6.4</span> 传输</h4>
+<div class="outline-text-4" id="text-4-6-4">
+<p>
+<span class="underline">RPC 的应用场景实质是一种可靠的请求应答消息流，和 HTTP 类似。因此选择长连接方式的 TCP 协议会更高效，与 HTTP 不同的是在协议层面定义了每个消息的唯一 ID，因此可以更容易的复用连接。</span>
+</p>
+
+<p>
+使用长连接的一个问题是，客户端和服务端之间需要多少根连接。实际上单连接和多连接在使用上没有区别，对于数据传输量较小的应用类型，单连接基本足够。 <span class="underline">单连接和多连接最大的区别在于，每根连接都有自己私有的发送和接收缓冲区，因此大数据量传输时分散在不同的连接缓冲区会得到更好的吞吐效率。</span> 如果数据传输量不足以让单连接的缓冲区一直处于饱和状态的话，那么使用多连接并不会产生任何明显的提升，反而会增加连接管理的开销。
+</p>
+
+<p>
+连接是由客户端发起建立并维持的，如果客户端和服务端之间是直连的，那么连接一般不会中断（当然物理链路故障除外）。 <span class="underline">如果客户端和服务端连接经过中转设备，有可能连接一段时间不活跃时会被这些中间设备中断。为了保持连接有必要定时为每个连接发送心跳数据以维持连接不中断。</span> 心跳消息是 RPC 框架库使用的内部消息，在前文协议头结构中也有一个专门的心跳位，就是用来标记心跳消息的，它对业务应用透明。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-6-5" class="outline-4">
+<h4 id="sec-4-6-5"><span class="section-number-4">4.6.5</span> 执行</h4>
+<div class="outline-text-4" id="text-4-6-5">
+<p>
+客户端 stub 所做的事情只是编码消息并传输给服务方，真正调用过程发生在服务端。服务端 stub 的结构细分了 RpcProcessor 和 RpcInvoker 两个组件，一个负责控制调用过程，一个负责真正调用。 以 Java 实现这两个组件为例来分析下它们到底需要做什么。
+</p>
+
+<p>
+Java 中实现代码的动态接口调用目前一般通过 <del>反射调用</del> 。除了原生 JDK 自带的反射，一些第三方库提供了性能更优的反射调用。RpcInvoker 就是封装了反射调用的实现细节。
+</p>
+
+<p>
+调用过程的控制需要考虑的因素（RpcProcessor 需要提供的调用控制服务）：
+</p>
+
+<ul class="org-ul">
+<li><b>效率提升</b> ：请求应该尽快被执行，因此不能等收到请求时创建线程，需要提供 <del>线程池</del> 服务。
+</li>
+<li><b>资源隔离</b> ：导出多个远程接口时，如何避免单一接口调用占据所有线程资源，而引发其他接口执行阻塞。
+</li>
+<li><b>超时控制</b> ：当某个接口执行缓慢，而客户端已经超时放弃等待后，服务端的线程继续执行毫无意义。
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-4-6-6" class="outline-4">
+<h4 id="sec-4-6-6"><span class="section-number-4">4.6.6</span> 异常</h4>
+<div class="outline-text-4" id="text-4-6-6">
+<p>
+无论 RPC 如何努力把远程调用伪装成本地调用，它们依然有很大不同，而有一些异常本地调用时不会出现的。先比较下本地调用和 RPC 调用的一些差异：
+</p>
+
+<ul class="org-ul">
+<li><span class="underline">本地调用一定会执行，而远程调用则不一定，调用消息可能因为网络原因并未发送到服务方。</span>
+</li>
+<li><span class="underline">本地调用只会抛出接口声明的异常，而远程调用还会抛出 RPC 框架运行时的异常。</span>
+</li>
+<li>本地调用和远程调用的性能可能差距很大，这取决于 RPC 固有消耗所占的比重。
+</li>
+</ul>
+
+<p>
+这些区别决定了使用 RPC 时需要更多考量。当调用远程接口抛出异常时，可能是一个业务异常，也可能是 RPC 框架抛出的运行时异常（如网络中断）。业务异常表明服务方已经执行了调用，可能因为某些原因导致未能正常执行，而 RPC 运行时异常则有可能服务方根本没有执行，对调用方而言的异常处理策略自然需要区分。
+</p>
+
+<p>
+<span class="underline">RPC 固有的消耗相对本地调用高出几个数量级，本地调用的固有消耗是纳秒级，而 RPC 的固有消耗是在毫秒级。</span> 对于过于轻量的计算任务就不适合导出远程接口，应由独立的进程提供服务， <span class="underline">只有当计算任务所需的时间远远高于 RPC 的固有消耗时，才值得导出为远程接口提供服务。</span>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> History of REST, SOAP, POX and JSON Web Services</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<a href="https://github.com/ServiceStackV3/mythz_blog/blob/master/pages/154.md">Source</a>
+</p>
+
+<p>
+The W3C defines a "web service" as "a software system designed to support interoperable machine-to-machine interaction over a network". The key parts of this definition are that it should be interoperable and that it facilitates communication over a network. Unfortunately over the years different companies have had different ideas on what the most ideal interoperable protocol should be, leaving a debt-load of legacy binary and proprietary protocols in its wake.
+</p>
+</div>
+
+<div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> HTTP</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+HTTP – The defacto web services transport protocol.
+</p>
+
+<p>
+HTTP the Internet's protocol is the undisputed champ and will be for the foreseeable future. It's universally accepted, can be proxied and is pretty much the only protocol allowed through most firewalls which is the reason why Service Stack (and most other Web Service frameworks) support it. Note: the future roadmap will also support the more optimized HTML5 "Web Sockets" standard.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> XML</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+Out of the ashes another winning format looking to follow in HTTP's success, is the XML text serialization format.
+</p>
+
+<p>
+Advantages of XML
+</p>
+<ul class="org-ul">
+<li>Simple, open, self-describing text-based format
+</li>
+<li>Human and computer readable and writeable
+</li>
+<li>Verifiable
+</li>
+<li>Provides a rich set of common data types
+</li>
+<li>Can define higher-level custom types
+</li>
+</ul>
+
+<p>
+Disadvantages of XML
+</p>
+<ul class="org-ul">
+<li>Verbose
+</li>
+<li>Slow to parse resulting wasted CPU cycles
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> REST</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+Despite the win, all is not well in XML camp. It seems that two teams are at odds looking to branch the way XML is used in web services. On one side, the REST camp (despite REST being more than just XML) approach to developing web services is centred around resources and prefers to err on simplicity and convention, choosing to re-use the other existing HTTP metaphors where they're semantically correct. E.g. calling <code>GET http://host/customers</code> will most likely return a list of customers, whilst <code>POST</code> a "customer" against the same URL will, if supported append the "customer" to the existing list of customers.
+</p>
+
+<p>
+The URL used in REST-ful web services also forms a core part of the API, it is normally logically formed and clearly describes the type of data that is expected, e.g. viewing a particular customer's order would look something like <code>GET http://location/customers/mythz/orders/1001</code> .
+</p>
+
+<p>
+The benefit of using a logical URL scheme is that other parts of the web service API can be inferred, e.g.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-text">GET http://location/customers/mythz/orders // return all of "mythz" orders
+GET http://location/customers/mythz        // return details about the customer "mythz"
+GET http://location/customers              // return a list of all customers
+</pre>
+</div>
+
+<p>
+If supported, you may have access to different operations on the same resources via other HTTP methods: <code>POST</code>, <code>PUT</code> and <code>DELETE</code>. One of the limitations of having a REST-ful web services API is that although the API may be conventional and inferable by humans, it isn't friendly to computers and likely requires another unstructured document accompanying the web services API identifying the list, schema and capabilities of each service. This makes it a hard API to provide rich tooling support for or to be able to generate a programmatic API against.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-4" class="outline-3">
+<h3 id="sec-5-4"><span class="section-number-3">5.4</span> SOAP</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+SOAP school discards this URL nonsense and teaches that there is only one true method – the HTTP <code>POST</code>, and there is only one URL (end point) to worry about – which depending on the technology chosen would look something like <code>http://location/CustomerService.svc</code> . Importantly nothing is left to the human imagination, everything is structured and explicitly defined by the web services WSDL which could be also obtained via a URL, e.g. <code>http://location/CustomerService.svc?wsdl</code> . The WSDL is an intimately detailed list of everything to know about the definition of the web service. Unfortunately it's detailed to the point of being unnecessarily complex where you have layers of artificial constructs, named messages, bindings, ports, parts, input and output operations, etc. most of which remains un-utilized and seems to be too much info that can be achieved with a simple <code>GET</code> request.
+</p>
+
+<p>
+What it does give, is a structured list of all the operations available, including the schema of all the custom types each operation accepts. From this document, tools can generate a client proxy into your preferred programming language providing a nice, strongly-typed API to code against. SOAP is generally favoured by a lot of enterprises for internal web services as in a lot of cases if the code compiles then there's a good chance it will just work.
+</p>
+
+<p>
+Ultimately on the wire, SOAP services are simply HTTP <code>POST</code> to the same end point where each payload is wrapped inside the body of a SOAP envelope. This layer stops a lot of people from accessing the XML payload directly and have to resort to using a SOAP client library just to access the core data.
+</p>
+
+<p>
+This complexity is not stopping Microsoft and IBM behind the SOAP specification any-time soon. They're finishing their latest creations that are adding additional layers on top of SOAP which is commonly referred to as the WS-* standards. Interestingly the WS-* stack happens to be complex enough that they are the only companies able to supply the complying software and tooling to support it, which funnily enough works seamlessly with their expensive servers.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-5" class="outline-3">
+<h3 id="sec-5-5"><span class="section-number-3">5.5</span> POX</h3>
+<div class="outline-text-3" id="text-5-5">
+<p>
+For a pragmatic programmer, it's becoming a hard task to follow the WS-* stack and still be able to get any work done. For what appears to be a growing trend, a lot of developers have taken the best bits from SOAP and WSDL and combined them in what is commonly referred to as POX or REST+POX. Basically this is Plain Old XML over HTTP and REST-like URLs. In this case a lot of the cruft inside a WSDL can be reduced to a simple XSD and a URL.
+</p>
+
+<p>
+The interesting part about POX is that although there seems to be no formal specs published, a lot of accomplished web service developers have ultimately ended up at the same solution. The advantages this has over SOAP are numerous, many of which are the same reasons that have made HTTP+XML ubiquitous. It is much simpler, smaller and faster at both development and runtime performance – while at the same time retaining a strongly-typed API (which is one of the major benefits of SOAP).
+</p>
+
+<p>
+Even though it's lacking a formal API, it can be argued that POX is still more interoperable than SOAP as clients no longer require a SOAP client to consume the web service and can access it simply with a standard Web Client and XML parser present in most programming environments, even most browsers.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-6" class="outline-3">
+<h3 id="sec-5-6"><span class="section-number-3">5.6</span> JSON</h3>
+<div class="outline-text-3" id="text-5-6">
+<p>
+One of the major complaints of XML is that it's too verbose, which given a large enough dataset consumes a lot of bandwidth. It is also much stricter than a lot of people would like, and given the potential for an XML document to be composed from many different namespaces and for a type to have both elements and attributes, it is not an ideal fit for most programming models. As a result of this, parsing XML can be quite cumbersome especially inside of a browser.
+</p>
+
+<p>
+A popular format which is seeking to overcome both of these problems, and is now the preferred serialization format for AJAX applications, is JSON. It is very simple to parse and maps perfectly to a JavaScript object, it is also safe format which is the reason why it's chosen over pure JavaScript. It's also a more dynamic and resilient format than XML, meaning that adding new or renaming existing elements or their types will not break the de-serialization routine as there is no formal spec to adhere to, which is both advantage and disadvantage.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2017-01-09 Mon 14:13</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

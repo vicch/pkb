@@ -1,0 +1,1338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Algorithm Scrap</title>
+<!-- 2018-02-25 Sun 11:39 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
+
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Algorithm Scrap</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. KMP 字符串匹配算法</a>
+<ul>
+<li><a href="#sec-1-1">1.1. 部分匹配表</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. Boyer-Moore 字符串匹配算法</a></li>
+<li><a href="#sec-3">3. 贝叶斯推断及其互联网应用</a>
+<ul>
+<li><a href="#sec-3-1">3.1. 贝叶斯推断</a></li>
+<li><a href="#sec-3-2">3.2. 条件概率公式</a></li>
+<li><a href="#sec-3-3">3.3. 全概率公式</a></li>
+<li><a href="#sec-3-4">3.4. 贝叶斯推断的含义</a></li>
+<li><a href="#sec-3-5">3.5. 水果糖问题</a></li>
+<li><a href="#sec-3-6">3.6. 假阳性问题</a></li>
+<li><a href="#sec-3-7">3.7. 贝叶斯过滤器</a></li>
+<li><a href="#sec-3-8">3.8. 贝叶斯过滤器使用过程</a></li>
+<li><a href="#sec-3-9">3.9. 联合概率</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. 平凡而又神奇的贝叶斯方法</a>
+<ul>
+<li><a href="#sec-4-1">4.1. 历史</a>
+<ul>
+<li><a href="#sec-4-1-1">4.1.1. 自然语言的二义性</a></li>
+<li><a href="#sec-4-1-2">4.1.2. 贝叶斯公式</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-5">5. 相似图片搜索的原理</a>
+<ul>
+<li><a href="#sec-5-1">5.1. 感知哈希算法</a></li>
+<li><a href="#sec-5-2">5.2. 颜色分布法</a></li>
+<li><a href="#sec-5-3">5.3. 内容特征法</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> KMP 字符串匹配算法</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html">Source</a>
+</p>
+
+<p>
+<a href="http://en.wikipedia.org/wiki/String_searching_algorithm">字符串匹配</a> 是计算机的基本任务之一。许多算法可以完成这个任务，Knuth-Morris-Pratt 算法（简称 KMP）是最常用的之一。它以三个发明者命名，K 就是著名科学家 Donald Knuth。这种算法不太容易理解，网上有很多解释，但读起来都很费劲。直到读到 Jake Boxer 的 <a href="http://jakeboxer.com/blog/2009/12/13/the-knuth-morris-pratt-algorithm-in-my-own-words/">The Knuth-Morris-Pratt Algorithm in my own words</a>，我才真正理解这种算法。
+</p>
+
+<p>
+字符串 <code>BBC ABCDAB ABCDABCDABDE</code> 的第一个字符与搜索词 <code>ABCDABD</code> 的第一个字符，进行比较。因为 <code>B</code> 与 <code>A</code> 不匹配，所以搜索词后移一位：
+</p>
+
+
+<div class="figure">
+<p><img src="../images/algorithm_scrap/01.png" alt="01.png" />
+</p>
+</div>
+
+<p>
+直到字符串有一个字符，与搜索词的第一个字符相同为止：
+</p>
+
+
+<div class="figure">
+<p><img src="../images/algorithm_scrap/02.png" alt="02.png" />
+</p>
+</div>
+
+<p>
+接着比较字符串和搜索词的下一个字符，直到字符串有一个字符，与搜索词对应的字符不相同为止：
+</p>
+
+
+<div class="figure">
+<p><img src="../images/algorithm_scrap/03.png" alt="03.png" />
+</p>
+</div>
+
+<p>
+最自然的反应是，将搜索词整个后移一位，再从头逐个比较。这样做虽然可行，但是效率很差，因为要把搜索位置移到已经比较过的位置，重比一遍。一个基本事实是， <span class="underline">当空格与 <code>D</code> 不匹配时，已经知道前面 6 个字符是 <code>ABCDAB</code> 。KMP 算法的想法是，设法利用这个已知信息，不把搜索位置移回已经比较过的位置，继续向后移，这样就提高了效率。</span>
+</p>
+
+<p>
+可以针对搜索词，算出一张 <del>部分匹配表</del> （partial match table）。空格与 <code>D</code> 不匹配时，前面六个字符 <code>ABCDAB</code> 是匹配的。查表可知，最后一个匹配字符 <code>B</code> 对应的「部分匹配值」为 2，按照公式算出向后移动的位数： <span class="underline">移动位数 = 已匹配的字符数 - 对应的部分匹配值</span> 。因为 6 - 2 = 4，所以将搜索词向后移动 4 位：
+</p>
+
+
+<div class="figure">
+<p><img src="../images/algorithm_scrap/04.png" alt="04.png" />
+</p>
+</div>
+
+<p>
+因为空格与 <code>C</code> 不匹配，搜索词还要继续往后移。这时，已匹配的字符数为 2，「部分匹配值」为 0。所以，移动位数为 2：
+</p>
+
+
+<div class="figure">
+<p><img src="../images/algorithm_scrap/05.png" alt="05.png" />
+</p>
+</div>
+
+<p>
+以此类推，直到搜索词的最后一位，发现完全匹配，于是搜索完成。如果还要继续搜索（即找出全部匹配），移动位数 7 - 0 = 7，这里就不再重复了。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/algorithm_scrap/06.png" alt="06.png" />
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> 部分匹配表</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+首先，要了解两个概念：「前缀」和「后缀」。 「前缀」指除了最后一个字符以外，一个字符串的全部头部组合；「后缀」指除了第一个字符以外，一个字符串的全部尾部组合。 <span class="underline">「部分匹配值」就是「前缀」和「后缀」的最长的共有元素的长度。</span>
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> 以 <code>ABCDABD</code> 为例：</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">前缀</th>
+<th scope="col" class="left">后缀</th>
+<th scope="col" class="right">共有元素长度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>A</code></td>
+<td class="left">空集</td>
+<td class="left">空集</td>
+<td class="right">0</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>AB</code></td>
+<td class="left"><code>[A]</code></td>
+<td class="left"><code>[B]</code></td>
+<td class="right">0</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>ABC</code></td>
+<td class="left"><code>[A, AB]</code></td>
+<td class="left"><code>[BC, C]</code></td>
+<td class="right">0</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>ABCD</code></td>
+<td class="left"><code>[A, AB, ABC]</code></td>
+<td class="left"><code>[BCD, CD, D]</code></td>
+<td class="right">0</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>ABCDA</code></td>
+<td class="left"><code>[A, AB, ABC, ABCD]</code></td>
+<td class="left"><code>[BCDA, CDA, DA, A]</code></td>
+<td class="right">1</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>ABCDAB</code></td>
+<td class="left"><code>[A, AB, ABC, ABCD, ABCDA]</code></td>
+<td class="left"><code>[BCDAB, CDAB, DAB, AB, B]</code></td>
+<td class="right">2</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>ABCDABD</code></td>
+<td class="left"><code>[A, AB, ABC, ABCD, ABCDA, ABCDAB]</code></td>
+<td class="left"><code>[BCDABD, CDABD, DABD, ABD, BD, D]</code></td>
+<td class="right">0</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+「部分匹配」的实质是：字符串头部和尾部有重复。比如， <code>ABCDAB</code> 之中有两个 <code>AB</code> ，那么它的「部分匹配值」就是 2。搜索词移动的时候，第一个 <code>AB</code> 向后移动 4 位（字符串长度 - 部分匹配值），就可以来到第二个 <code>AB</code> 的位置。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Boyer-Moore 字符串匹配算法</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+KMP 算法不是效率最高的算法，实际采用并不多。各种文本编辑器的「查找」功能，大多采用 Boyer-Moore 算法。Boyer-Moore 算法不仅效率高，而且构思巧妙，容易理解。1977 年，德克萨斯大学的 Robert S. Boyer 教授和 J Strother Moore 教授发明了这种算法。
+</p>
+
+<p>
+假定字符串为 <code>HERE IS A SIMPLE EXAMPLE</code> ，搜索词为 <code>EXAMPLE</code> 。
+</p>
+
+<p>
+首先，字符串与搜索词头部对齐，从尾部开始比较。如果尾部字符不匹配，那么只要一次比较，就可以知道前 7 个字符肯定不是要找的结果。 <code>S</code> 与 <code>E</code> 不匹配， <code>S</code> 被称为「坏字符」（bad character），即不匹配的字符：
+</p>
+
+
+<div class="figure">
+<p><img src="../images/algorithm_scrap/07.png" alt="07.png" />
+</p>
+</div>
+
+<p>
+还发现， <span class="underline"><code>S</code> 不包含在搜索词 <code>EXAMPLE</code> 之中，这意味着可以把搜索词直接移到 <code>S</code> 的后一位。</span> 依然从尾部开始比较，发现 <code>P</code> 与 <code>E</code> 不匹配，所以 <code>P</code> 是坏字符：
+</p>
+
+
+<div class="figure">
+<p><img src="../images/algorithm_scrap/08.png" alt="08.png" />
+</p>
+</div>
+
+<p>
+但是， <code>P</code> 包含在搜索词 <code>EXAMPLE</code> 之中。所以，将搜索词后移两位，两个 <code>P</code> 对齐：
+</p>
+
+
+<div class="figure">
+<p><img src="../images/algorithm_scrap/09.png" alt="09.png" />
+</p>
+</div>
+
+<p>
+我们由此总结出 <span class="underline">「坏字符规则」：后移位数 = 坏字符的位置 - 搜索词中的上一次出现位置。如果坏字符不包含在搜索词之中，则上一次出现位置为 -1。</span>
+</p>
+
+<p>
+以 <code>P</code> 为例，它作为坏字符，出现在搜索词的第 6 位（索引值从 0 开始），在搜索词中的上一次出现位置为 4，所以后移 6 - 4 = 2 位。再以前面第二步的 <code>S</code> 为例，它出现在第 6 位，上一次出现位置是 -1（即未出现），则整个搜索词后移 6 - (-1) = 7 位。
+</p>
+
+<p>
+继续从最后一个字符 <code>E</code> 开始比较，直到 <code>MPLE</code> 与 <code>MPLE</code> 匹配。我们把这种情况称为「好后缀」（good suffix），即所有尾部匹配的字符串。注意， <code>MPLE</code> 、 <code>PLE</code> 、 <code>LE</code> 、 <code>E</code> 都是好后缀。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/algorithm_scrap/10.png" alt="10.png" />
+</p>
+</div>
+
+<p>
+比较前一位，发现 <code>I</code> 与 <code>A</code> 不匹配。根据坏字符规则，此时搜索词应该后移 2 - (-1) = 3 位。问题是，此时有没有更好的移法？
+</p>
+
+
+<div class="figure">
+<p><img src="../images/algorithm_scrap/11.png" alt="11.png" />
+</p>
+</div>
+
+<p>
+可以采用 <span class="underline">「好后缀规则」：后移位数 = 好后缀的位置 - 搜索词中的上一次出现位置。</span> 这个规则有三个注意点：
+</p>
+
+<ul class="org-ul">
+<li>好后缀的位置以最后一个字符为准。
+</li>
+<li>如果好后缀在搜索词中只出现一次，则它的上一次出现位置为 -1。
+</li>
+<li>如果好后缀有多个，则除了最长的，其他好后缀的上一次出现位置必须在头部。比如，假定 <code>BABCDAB</code> 的好后缀是 <code>DAB</code> 、 <code>AB</code> 、 <code>B</code> ，此时采用的好后缀是 <code>B</code> ，它的上一次出现位置是头部，即第 0 位。这个规则也可以这样表达：如果最长的好后缀只出现一次，则可以把搜索词改写成如下形式进行位置计算 <code>(DA)BABCDAB</code> ，即虚拟加入最前面的 <code>DA</code> 。
+</li>
+</ul>
+
+<p>
+举例来说，如果字符串 <code>ABCDAB</code> 的后一个 <code>AB</code> 是好后缀。那么它的位置是 5（最后一个字符 <code>B</code> 的索引值），在搜索词中的上一次出现位置是 1（第一个 <code>B</code> 的位置），所以后移 5 - 1 = 4 位，前一个 <code>AB</code> 移到后一个 <code>AB</code> 的位置。再举一个例子，如果字符串 <code>ABCDEF</code> 的 <code>EF</code> 是好后缀，则 <code>EF</code> 的位置是 5 ，上一次出现的位置是 -1（即未出现），所以后移 5 - (-1) = 6 位，即整个字符串移到 <code>F</code> 的后一位。
+</p>
+
+<p>
+上文的例子。此时，所有的好后缀（ <code>MPLE</code> 、 <code>PLE</code> 、 <code>LE</code> 、 <code>E</code> ）之中，只有 <code>E</code> 在 <code>EXAMPLE</code> 中出现在头部，所以后移 6 - 0 = 6 位：
+</p>
+
+
+<div class="figure">
+<p><img src="../images/algorithm_scrap/12.png" alt="12.png" />
+</p>
+</div>
+
+<p>
+可以看到，坏字符规则只能移 3 位，好后缀规则可以移 6 位。所以，Boyer-Moore 算法的基本思想是， <span class="underline">每次后移这两个规则之中的较大值。</span> 更巧妙的是， <span class="underline">这两个规则的移动位数，只与搜索词有关，与原字符串无关。因此，可以预先计算生成「坏字符规则表」和「好后缀规则表」。</span> 使用时，只要查表比较一下就可以了。
+</p>
+
+<p>
+继续从尾部开始比较， <code>P</code> 与 <code>E</code> 不匹配，因此 <code>P</code> 是坏字符，后移 6 - 4 = 2 位：
+</p>
+
+
+<div class="figure">
+<p><img src="../images/algorithm_scrap/13.png" alt="13.png" />
+</p>
+</div>
+
+<p>
+从尾部开始逐位比较，发现全部匹配，于是搜索结束。如果还要继续查找（即找出全部匹配），则根据好后缀规则，后移 6 - 0 = 6 位，即头部的 <code>E</code> 移到尾部的 <code>E</code> 的位置。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 贝叶斯推断及其互联网应用</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2011/08/bayesian_inference_part_one.html">Source</a>
+</p>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> 贝叶斯推断</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+贝叶斯推断（<a href="https://en.wikipedia.org/wiki/Bayesian_inference">Bayesian inference</a>）是一种统计学方法，用来估计统计量的某种性质。它是贝叶斯定理（<a href="https://en.wikipedia.org/wiki/Bayes%27_theorem">Bayes' theorem</a>）的应用。英国数学家托马斯·贝叶斯（Thomas Bayes）在 1763 年发表的一篇论文中，首先提出了这个定理。
+</p>
+
+<p>
+贝叶斯推断与其他统计学推断方法截然不同，它 <span class="underline">建立在主观判断的基础上，也就是说，可以不需要客观证据，先估计一个值，然后根据实际结果不断修正。</span> 正是因为它的主观性太强，曾经遭到许多统计学家的诟病。
+</p>
+
+<p>
+贝叶斯推断需要大量的计算，因此历史上很长一段时间，无法得到广泛应用。只有计算机诞生以后，它才获得真正的重视。人们发现， <span class="underline">许多统计量是无法事先进行客观判断的，而互联网时代出现的大型数据集，再加上高速运算能力，为验证这些统计量提供了方便，</span> 也为应用贝叶斯推断创造了条件，它的威力正在日益显现。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> 条件概率公式</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+要理解贝叶斯推断，必须先理解贝叶斯定理，实际上就是计算条件概率的公式。所谓 <del>条件概率（<a href="https://en.wikipedia.org/wiki/Conditional_probability">conditional probability</a>）</del> ，是指 <span class="underline">在事件 B 发生的情况下，事件 A 发生的概率，用 $P(A \mid B)$ 来表示。</span>
+</p>
+
+
+<div class="figure">
+<p><img src="../images/algorithm_scrap/16.jpg" alt="16.jpg" />
+</p>
+</div>
+
+<p>
+从文氏图可以看出：
+</p>
+
+<p>
+$$ P(A \mid B) = \frac{P(A \bigcap B)}{P(B)} $$
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">因此：</th>
+<th scope="col" class="left">$P(A \bigcap B) = P(A \mid B)P(B)$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">同理：</td>
+<td class="left">$P(B \bigcap A) = P(B \mid A)P(A)$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">所以：</td>
+<td class="left">$P(A \mid B)P(B) = P(B \mid A)P(A)$</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+于是可以得出 <span class="underline">条件概率公式</span> ：
+</p>
+
+<p>
+$$ P(A \mid B) = P(B \mid A) \frac{P(A)}{P(B)} $$
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> 全概率公式</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+假定样本空间 \(S\) 是两个事件 \(A\) 与 $A'$ 的和，事件 \(B\) 可以划分成两个部分。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/algorithm_scrap/17.png" alt="17.png" />
+</p>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">即：</th>
+<th scope="col" class="left">$P(B) = P(B \bigcap A) + P(B \bigcap A')$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">前面已经推导出：</td>
+<td class="left">$P(B \bigcap A) = P(B \mid A)P(A)$</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">$P(B \bigcap A') = P(B \mid A')P(A')$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">所以：</td>
+<td class="left"><span class="underline">$P(B) = P(B \mid A)P(A) + P(B \mid A')P(A')$</span></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+这就是 <span class="underline">全概率（total probability）公式</span> 。它的含义是：如果 \(A\) 和 $A'$ 构成样本空间的一个划分，那么事件 \(B\) 的概率，就等于 \(A\) 和 $A'$ 的概率分别乘以 \(B\) 对这两个事件的条件概率之和。
+</p>
+
+<p>
+将这个公式代入上一节的条件概率公式，就得到了条件概率的另一种写法：
+</p>
+
+<p>
+$$ P(A \mid B) = \frac{P(B \mid A)P(A)}{P(B \mid A)P(A) + P(B \mid A')P(A')} $$
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> 贝叶斯推断的含义</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+对条件概率公式进行变形，可以得到如下形式：
+</p>
+
+<p>
+$$ P(A \mid B) = P(A) \frac{P(B \mid A)}{P(B)} $$
+</p>
+
+<ul class="org-ul">
+<li>$P(A)$ 称为「先验概率」（prior probability），即在事件 \(B\) 发生之前，对事件 \(A\) 概率的一个判断。
+</li>
+<li>$P(A \mid B)$ 称为「后验概率」（posterior probability），即在事件 \(B\) 发生之后，对事件 \(A\) 概率的重新评估。
+</li>
+<li>$P(B \mid A) / P(B)$ 称为「可能性函数」（likelyhood），是一个调整因子，使得预估概率更接近真实概率。
+</li>
+</ul>
+
+<p>
+所以， <span class="underline">条件概率可以理解成：后验概率 = 先验概率 $\times$ 调整因子</span>
+</p>
+
+<p>
+这就是贝叶斯推断的含义：先预估一个先验概率，然后加入实验结果，看这个实验到底是增强还是削弱了先验概率，由此得到更接近事实的后验概率。
+</p>
+
+<ul class="org-ul">
+<li>如果「可能性函数 &gt; 1」，意味着先验概率被增强，事件 \(A\) 发生的可能性变大。
+</li>
+<li>如果「可能性函数 = 1」，意味着事件 \(B\) 无助于判断事件 \(A\) 的可能性。
+</li>
+<li>如果「可能性函数 &lt; 1」，意味着先验概率被削弱，事件 \(A\) 的可能性变小。
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-3-5" class="outline-3">
+<h3 id="sec-3-5"><span class="section-number-3">3.5</span> 水果糖问题</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+两个一模一样的碗，一号碗有 30 颗水果糖和 10 颗巧克力糖，二号碗有水果糖和巧克力糖各 20 颗。现在随机选择一个碗，从中摸出一颗糖，发现是水果糖，那么这个碗是一号碗的概率有多大？
+</p>
+
+<p>
+首先 $P(H_1) = P(H_2) = 0.5$ ，也就是说在取出水果糖之前，两个碗被选中的概率相同，这个概率就是先验概率，即没有做实验之前，随机选到 $H_1$ 的概率是 0.5。
+</p>
+
+<p>
+用事件 \(E\) 表示取出水果糖，在事件 \(E\) 发生后再判断 $H_1$ 发生的概率，即求 $P(H_1 \mid E)$，这个概率就是后验概率，即在事件 \(E\) 发生之后对 $P(H_1)$ 的修正。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border middle">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">根据条件概率公式，得到：</th>
+<th scope="col" class="left">$P(H_1 \mid E) = P(H_1) \frac{P(E \mid H_1)}{P(E)}$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">已知：</td>
+<td class="left">$P(H_1) = P(H_2) = 0.5$</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">$P(E \mid H_1) = 0.75$</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">$P(E \mid H_2) = 0.5$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">又根据全概率公式：</td>
+<td class="left">$P(E) = P(E \mid H_1)P(H_1) + P(E \mid H_2)P(H_2)$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">所以：</td>
+<td class="left">$P(E) = 0.75 \times 0.5 + 0.5 \times 0.5 = 0.625$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">代入条件概率公式，得到：</td>
+<td class="left">$P(H_1 \mid E) = 0.5 \times \frac{0.75}{0.625} = 0.6$</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+这表明，水果糖来自一号碗的概率是 0.6。也就是说，取出水果糖之后，事件 $H_1$ 的可能性得到了增强。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-6" class="outline-3">
+<h3 id="sec-3-6"><span class="section-number-3">3.6</span> 假阳性问题</h3>
+<div class="outline-text-3" id="text-3-6">
+<p>
+已知某种疾病的发病率是 0.001，现有一种试剂可以检验患者是否得病，它的准确率是 0.99，即在患者确实得病的情况下，它有 99% 的可能呈现阳性。它的误报率是 5%，即在患者没有得病的情况下，它有 5% 的可能呈现阳性。现有一个病人的检验结果为阳性，他确实得病的可能性有多大？
+</p>
+
+<p>
+用事件 \(A\) 表示得病，即 $P(A) = 0.001$，这就是先验概率，即没有做试验之前预计的发病率。用事件 \(B\) 表示检测结果为阳性，那么要计算的就是 $P(A \mid B)$，这就是后验概率，即做了试验以后，对发病率的估计。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border middle">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">根据条件概率公式：</th>
+<th scope="col" class="left">$P(A \mid B) = P(A) \frac{P(B \mid A)}{P(B)}$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">用全概率公式替换 $P(B)$：</td>
+<td class="left">$P(A \mid B) = P(A) \frac{P(B \mid A)}{P(B \mid A)P(A) + P(B \mid \bar{A})P(\bar{A})}$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">根据已知代入数字：</td>
+<td class="left">$P(A \mid B) = 0.001 \times \frac{0.99}{0.99 \times 0.001 + 0.05 \times 0.999} \approx 0.019$</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+也就是说，即使检验呈现阳性，病人得病的概率也只是从 0.1% 增加到了 2% 左右。这就是所谓的「假阳性」，即阳性结果完全不足以说明病人得病。为什么这种检验的准确率高达 99%，但是可信度却不到 2%？这与它的误报率太高有关。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-7" class="outline-3">
+<h3 id="sec-3-7"><span class="section-number-3">3.7</span> 贝叶斯过滤器</h3>
+<div class="outline-text-3" id="text-3-7">
+<p>
+正确识别垃圾邮件的技术难度非常大，传统的垃圾邮件过滤方法，主要有「关键词法」和「校验码法」等，前者的过滤依据是特定的词语；后者则是计算邮件文本的校验码，再与已知的垃圾邮件进行对比。它们的识别效果都不理想，而且很容易规避。
+</p>
+
+<p>
+2002 年，Paul Graham 提出使用「贝叶斯推断」过滤垃圾邮件（<a href="http://www.paulgraham.com/spam.html">A Plan for Spam</a>），效果好得不可思议，1000 封垃圾邮件可以过滤掉 995 封，且没有误判。另外，这种过滤器还具有自我学习的功能，会根据新收到的邮件不断调整，收到的垃圾邮件越多，它的准确率就越高。
+</p>
+
+<p>
+贝叶斯过滤器是一种统计学过滤器，建立在已有的统计结果之上。所以，必须预先提供两组已经识别好的邮件，一组是正常邮件，另一组是垃圾邮件。用这两组邮件，对过滤器进行「训练」。这两组邮件的规模越大，训练效果就越好。Paul Graham 使用的邮件规模，是正常邮件和垃圾邮件各 4000 封。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-8" class="outline-3">
+<h3 id="sec-3-8"><span class="section-number-3">3.8</span> 贝叶斯过滤器使用过程</h3>
+<div class="outline-text-3" id="text-3-8">
+<p>
+首先，解析所有邮件，提取每一个词。然后，计算每个词语在正常邮件和垃圾邮件中的出现频率。比如，假设「sex」这个词在 4000 封垃圾邮件中的 200 封出现，那么它的出现频率就是 5%；而在 4000 封正常邮件中，只有 2 封包含这个词，那么出现频率就是 0.05%。如果某个词只出现在垃圾邮件中，Paul Graham 就假设它在正常邮件的出现频率是 1%，反之亦然。这样做是为了避免概率为 0。随着邮件数量的增加，计算结果会自动调整。
+</p>
+
+<p>
+现在，收到了一封新邮件。在未经统计分析之前，假设它是垃圾邮件的概率为 50%。有研究表明，用户收到的电子邮件中，80% 是垃圾邮件。但是，这里仍然假设垃圾邮件的先验概率为 50%。用 \(S\) 表示垃圾邮件（spam），\(H\) 表示正常邮件（healthy），因此 $P(S) = P(H) = 0.5$。
+</p>
+
+<p>
+然后，对这封邮件进行解析，发现其中包含了「sex」这个词，那么这封邮件属于垃圾邮件的概率有多高？用 \(W\) 表示「sex」这个词，那么问题就变成了计算 $P(S \mid W)$，即在某个词语已经存在的条件下，垃圾邮件的概率有多大。根据条件概率公式：
+</p>
+
+<p>
+$$ P(S \mid W) = P(S) \frac{P(W \mid S)}{P(W \mid S)P(S) + P(W \mid H)P(H)} = 0.5 \times \frac{0.05}{0.05 \times 0.5 + 0.0005 \times 0.5} = 0.99$$
+</p>
+
+<p>
+因此，这封新邮件是垃圾邮件的概率等于 99%，这说明「sex」这个词的推断能力很强，将 50% 的先验概率一下子提高到了 99% 的后验概率。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-9" class="outline-3">
+<h3 id="sec-3-9"><span class="section-number-3">3.9</span> 联合概率</h3>
+<div class="outline-text-3" id="text-3-9">
+<p>
+通过计算条件概率，能否得出结论，这封新邮件就是垃圾邮件？回答是不能。因为一封邮件包含很多词语，一些词语表明这是垃圾邮件，另一些表明这不是，如何知道以哪个词为准？Paul Graham 的做法是，选出这封信中 $P(S \mid W)$ 最高的 15 个词，计算它们的联合概率。如果有的词是第一次出现，无法计算 $P(S \mid W)$，Paul Graham 就假设它等于 0.4，因为垃圾邮件使用的往往是固定的词语，所以如果从来没见过某个词，它多半是一个正常的词。
+</p>
+
+<p>
+所谓联合概率，就是指在多个事件发生的情况下，另一个事件发生概率有多大。比如，$W_1$ 和 $W_2$ 是两个不同的词语，它们都出现在某封电子邮件中时这封邮件是垃圾邮件的概率，就是联合概率。
+</p>
+
+<p>
+在已知 $W_1$ 和 $W_2$ 都出现的情况下，无非就是两种结果：垃圾邮件（事件 $E_1$）或正常邮件（事件 $E_2$）。（对原文补充：$E_1$ 表示 $W_1$ 和 $W_2$ 都出现且是垃圾邮件的事件，$E_2$ 表示 $W_1$ 和 $W_2$ 都出现且是普通邮件的事件。）
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">$W_1$ 出现</th>
+<th scope="col" class="left">$W_2$ 出现</th>
+<th scope="col" class="left">先验概率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">$E_1$（是垃圾邮件）概率</td>
+<td class="left">$P(S \mid W_1)$</td>
+<td class="left">$P(S \mid W_2)$</td>
+<td class="left">$P(S)$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">$E_2$（是普通邮件）概率</td>
+<td class="left">$1 - P(S \mid W_1)$</td>
+<td class="left">$1 - P(S \mid W_2)$</td>
+<td class="left">$1 - P(S)$</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border middle">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">假设所有事件都是独立事件：</th>
+<th scope="col" class="left">$P(E_1) = P(S \mid W_1)P(S \mid W_2)P(S)$</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">（严格地说这个假设不成立，但是可以忽略）</th>
+<th scope="col" class="left">$P(E_2) = (1 - P(S \mid W_1))(1 - P(S \mid W_2))(1 - P(S))$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">而在 $W_1$ 和 $W_2$ 都出现的情况下，垃圾邮件的概率为：</td>
+<td class="left">$P = \frac{P(E_1)}{P(E_1) + P(E_2)}$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">即：</td>
+<td class="left">$P = \frac{P(S \mid W_1)P(S \mid W_2)P(S)}{P(S \mid W_1)P(S \mid W_2)P(S) + (1 - P(S \mid W_1))(1 - P(S \mid W_2))(1 - P(S))}$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">代入 $P(S) = 0.5$：</td>
+<td class="left">$P = \frac{P(S \mid W_1)P(S \mid W_2)}{P(S \mid W_1)P(S \mid W_2) + (1 - P(S \mid W_1))(1 - P(S \mid W_2))}$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">将 $P(S \mid W_1)$ 记为 $P_1$，$P(S \mid W_2)$ 记为 $P_2$：</td>
+<td class="left">$P = \frac{P_1 P_2}{P_1 P_2 + (1 - P_1)(1 - P_2)}$</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+这就是联合概率的计算公式（<a href="http://www.mathpages.com/home/kmath267/kmath267.htm">Combining Probabilities</a>），将之扩展到 15 个词的情况，就得到了最终的概率计算公式：
+</p>
+
+<p>
+$$ P = \frac{P_1 P_2 \ldots P_{15}}{P_1 P_2 \ldots P_{15} + (1 - P_1)(1 - P_2) \ldots (1 - P_{15})}$$
+</p>
+
+<p>
+这个公式就用来判断一封邮件是不是垃圾邮件，这时还需要一个用于比较的门槛值，Paul Graham 的门槛值是 0.9，即结果大于 0.9 表示 15 个词联合认定这封邮件有 90% 以上的可能属于垃圾邮件。有了这个公式，一封正常的信件即使出现「sex」这个词，也不会被认定为垃圾邮件了。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 平凡而又神奇的贝叶斯方法</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<a href="http://mindhacks.cn/2008/09/21/the-magical-bayesian-method/">Source</a>
+</p>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+概率论只不过是把常识用数学公式表达了出来。—— 拉普拉斯
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> 历史</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+托马斯·贝叶斯（<a href="https://en.wikipedia.org/wiki/Thomas_Bayes">Thomas Bayes</a>）Wikipedia 上的一段简介：
+</p>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+所谓的贝叶斯方法源于他生前为解决一个「逆概」问题写的一篇文章，而这篇文章是在他死后才由他的一位朋友发表出来的。在贝叶斯写这篇文章之前，人们已经能够计算「正向概率」，如「假设袋子里面有 N 个白球，M 个黑球，你伸手进去摸一把，摸出黑球的概率是多大」。而一个自然而然的问题是反过来：「如果我们事先并不知道袋子里面黑白球的比例，而是闭着眼睛摸出一个（或好几个）球，观察这些取出来的球的颜色之后，那么我们可以就此对袋子里面的黑白球的比例作出什么样的推测」。这个问题，就是所谓的逆概问题。
+</p>
+</blockquote>
+</div>
+
+<p>
+实际上，贝叶斯当时的论文只是对这个问题的一个直接的求解尝试，并不清楚他当时是不是已经意识到这里面包含着的深刻的思想。后来， <span class="underline">贝叶斯方法席卷了概率论，并将应用延伸到各个问题领域，所有需要作出概率预测的地方都可以见到贝叶斯方法的影子，</span> 特别地，贝叶斯是机器学习的核心方法之一。 <span class="underline">这背后的深刻原因在于，现实世界本身就是不确定的，人类的观察能力是有局限性的，</span> 我们日常所观察到的只是事物表面上的结果，沿用刚才那个袋子里面取球的比方， <span class="underline">我们往往只能知道从里面取出来的球是什么颜色，而并不能直接看到袋子里面实际的情况。</span>
+</p>
+
+<p>
+这个时候，我们就需要提供一个猜测（hypothesis，更为严格的说法是「假设」），所谓猜测，当然就是不确定的（可能有好多乃至无数种猜测都能满足目前的观测），但也绝对不是两眼一抹黑。具体地说，我们需要做两件事情：
+</p>
+
+<ul class="org-ul">
+<li>计算各种猜测的可能性，即计算特定猜测的后验概率，对于连续的猜测空间则是计算猜测的概率密度函数。
+</li>
+<li>计算最可能的猜测是什么，即模型比较，如果不考虑先验概率的话就是最大似然方法。
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-4-1-1" class="outline-4">
+<h4 id="sec-4-1-1"><span class="section-number-4">4.1.1</span> 自然语言的二义性</h4>
+<div class="outline-text-4" id="text-4-1-1">
+<p>
+一个自然语言的不确定性的例子：
+</p>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+The girl saw the boy with a telescope.
+</p>
+</blockquote>
+</div>
+
+<p>
+平常人肯定会说：那个女孩拿望远镜看见了那个男孩（即对这个句子的实际语法结构的猜测是：The girl saw-with-a-telescope the boy ）。然而，仔细一想，你会发现这个句子完全可以解释成：那个女孩看见了那个拿着望远镜的男孩（即：The girl saw the-boy-with-a-telescope ）。那为什么平常生活中每个人能够迅速地对这种二义性进行消解呢？这背后到底隐藏着什么样的思维法则？我们留到后面解释。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-1-2" class="outline-4">
+<h4 id="sec-4-1-2"><span class="section-number-4">4.1.2</span> 贝叶斯公式</h4>
+<div class="outline-text-4" id="text-4-1-2">
+<p>
+贝叶斯公式是怎么来的？还是使用 Wikipedia 上的一个例子：
+</p>
+
+<div class="org-quote-container">
+<blockquote>
+<p>
+一所学校里面有 60% 的男生，40% 的女生。男生总是穿长裤，女生则一半穿长裤一半穿裙子。有了这些信息之后我们可以容易地计算「随机选取一个学生，他（她）穿长裤的概率和穿裙子的概率是多大」，这个就是前面说的「正向概率」的计算。然而，假设你走在校园中，迎面走来一个穿长裤的学生，你能够推断出他（她）是男生的概率是多大吗？
+</p>
+</blockquote>
+</div>
+
+<p>
+一些认知科学的研究表明（《决策与判断》以及《<a href="http://www.douban.com/subject/3199621/">Rationality for Mortals</a>》第 12 章：小孩也可以解决贝叶斯问题），我们对形式化的贝叶斯问题不擅长，但对于以频率形式呈现的等价问题却很擅长。在这里，不妨把问题重新叙述成：你在校园里面随机游走，遇到了 N 个穿长裤的人，这里面有多少个女生多少个男生。你说，这还不简单：算出学校里面有多少穿长裤的，然后在这些人里面再算出有多少女生，不就行了？
+</p>
+
+<p>
+假设学生总数是 $U$，于是共有 $U \times P(\text{boy}) P(\text{pants} \mid \text{boy})$ 个穿长裤的男生，共有 $U \times P(\text{girl}) P(\text{pants} \mid \text{girl})$ 个穿长裤的女生。所以：
+</p>
+
+<p>
+$$ P(\text{girl} \mid \text{pants}) = \frac{U \times P(\text{girl}) P(\text{pants} \mid \text{girl})}{U \times P(\text{boy}) P(\text{pants} \mid \text{boy}) + U \times P(\text{girl}) P(\text{pants} \mid \text{girl})} $$
+</p>
+
+<p>
+容易发现这里校园内人的总数是无关的，可以消去，于是得到：
+</p>
+
+<p>
+$$ P(\text{girl} \mid \text{pants}) = \frac{P(\text{girl}) P(\text{pants} \mid \text{girl})}{P(\text{boy}) P(\text{pants} \mid \text{boy}) + P(\text{girl}) P(\text{pants} \mid \text{girl})} $$
+</p>
+
+<p>
+对上式进行替换，分母就是所有穿长裤的学生，即 $P(\text{pants})$，分子就是穿长裤的女生，即 $P(\text{pants} \bigcap \text{girl})$。而这个比例很自然地就读作：所有穿长裤的人里面有多少穿长裤的女生：
+</p>
+
+<p>
+$$ P(\text{girl} \mid \text{pants}) = \frac{P(\text{pants} \bigcap \text{girl})}{P(\text{pants})} $$
+</p>
+
+<p>
+上式中的元素可以指代一切东西，其一般形式就是：
+</p>
+
+<p>
+$$ P(B \mid A) = \frac{P(A \mid B) P(B)}{P(A \mid B) P(B) + P(A \mid \bar{B}) P(\bar{B})} $$
+</p>
+
+<p>
+即：
+</p>
+
+<p>
+$$ P(B \mid A) = \frac{P(A \bigcap B)}{P(A)}$$
+</p>
+
+<p>
+难怪拉普拉斯说概率论只是把常识用数学公式表达了出来。然而，后面会逐渐发现，看似这么平凡的贝叶斯公式，背后却隐含着非常深刻的原理。
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> 相似图片搜索的原理</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2011/07/principle_of_similar_image_search.html">Source</a> <br  />
+<a href="http://www.ruanyifeng.com/blog/2013/03/similar_image_search_part_ii.html">Source</a>
+</p>
+</div>
+
+<div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> 感知哈希算法</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+来源：<a href="http://www.hackerfactor.com/blog/index.php?/archives/432-Looks-Like-It.html">Looks Like It</a>
+</p>
+
+<p>
+关键技术是 <span class="underline">「感知哈希算法」（perceptual hash algorithm），对每张图片生成一个「指纹」字符串，然后比较不同图片的指纹，结果越接近，就说明图片越相似。</span>
+</p>
+
+<p>
+一个最简单的实现：
+</p>
+
+<p>
+第一步，缩小尺寸。将图片缩小到 8 x 8 共 64 个像素。这一步的作用是去除图片的细节，只保留结构、明暗等基本信息，摒弃不同尺寸、比例带来的图片差异。
+</p>
+
+<p>
+第二步，简化色彩。将缩小后的图片，转为 64 级灰度，即所有像素点最多只有 64 种颜色。
+</p>
+
+<p>
+第三步，计算 64 个像素的灰度平均值。
+</p>
+
+<p>
+第四步，比较像素的灰度。将每个像素的灰度，与平均值进行比较。大于或等于平均值，记为 1；小于平均值，记为 0。
+</p>
+
+<p>
+第五步，计算哈希值。上一步的结果组合成一个 64 位的整数，就是图片的指纹。组合的次序并不重要，只要保证所有图片都采用同样次序。
+</p>
+
+<p>
+得到指纹后，就可以对比不同的图片，计算 64 位中有多少位是不一样的，理论上等于计算 <del>汉明距离（<a href="https://en.wikipedia.org/wiki/Hamming_distance">Hamming distance</a>）</del> 。如果不相同的位不超过 5，就说明两张图片很相似；如果大于 10，就说明这是两张不同的图片。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">具体的代码实现 <code>imgHash.py</code></label>
+<pre class="src src-python"><span class="org-comment-delimiter">#</span><span class="org-comment">!/usr/bin/python</span>
+
+<span class="org-keyword">import</span> glob
+<span class="org-keyword">import</span> os
+<span class="org-keyword">import</span> sys
+
+<span class="org-keyword">from</span> PIL <span class="org-keyword">import</span> Image
+
+<span class="org-variable-name">EXTS</span> = <span class="org-string">'jpg'</span>, <span class="org-string">'jpeg'</span>, <span class="org-string">'JPG'</span>, <span class="org-string">'JPEG'</span>, <span class="org-string">'gif'</span>, <span class="org-string">'GIF'</span>, <span class="org-string">'png'</span>, <span class="org-string">'PNG'</span>
+
+<span class="org-keyword">def</span> <span class="org-function-name">avhash</span>(im):
+    <span class="org-keyword">if</span> <span class="org-keyword">not</span> <span class="org-builtin">isinstance</span>(im, Image.Image):
+        <span class="org-variable-name">im</span> = Image.<span class="org-builtin">open</span>(im)
+    <span class="org-variable-name">im</span> = im.resize((8, 8), Image.ANTIALIAS).convert(<span class="org-string">'L'</span>)
+    <span class="org-variable-name">avg</span> = <span class="org-builtin">reduce</span>(<span class="org-keyword">lambda</span> x, y: x + y, im.getdata()) / 64.
+    <span class="org-keyword">return</span> <span class="org-builtin">reduce</span>(<span class="org-keyword">lambda</span> x, (y, z): x | (z &lt;&lt; y),
+                  <span class="org-builtin">enumerate</span>(<span class="org-builtin">map</span>(<span class="org-keyword">lambda</span> i: 0 <span class="org-keyword">if</span> i &lt; avg <span class="org-keyword">else</span> 1, im.getdata())),
+                  0)
+
+<span class="org-keyword">def</span> <span class="org-function-name">hamming</span>(h1, h2):
+    <span class="org-variable-name">h</span>, <span class="org-variable-name">d</span> = 0, h1 ^ h2
+    <span class="org-keyword">while</span> d:
+        <span class="org-variable-name">h</span> += 1
+        <span class="org-variable-name">d</span> &amp;= d - 1
+    <span class="org-keyword">return</span> h
+
+<span class="org-keyword">if</span> <span class="org-builtin">__name__</span> == <span class="org-string">'__main__'</span>:
+    <span class="org-keyword">if</span> <span class="org-builtin">len</span>(sys.argv) &lt;= 1 <span class="org-keyword">or</span> <span class="org-builtin">len</span>(sys.argv) &gt; 3:
+        <span class="org-keyword">print</span> <span class="org-string">"Usage: %s image.jpg [dir]"</span> % sys.argv[0]
+    <span class="org-keyword">else</span>:
+        <span class="org-variable-name">im</span>, wd = sys.argv[1], <span class="org-string">'.'</span> <span class="org-keyword">if</span> <span class="org-builtin">len</span>(sys.argv) &lt; 3 <span class="org-keyword">else</span> sys.argv[2]
+        h = avhash(im)
+
+        os.chdir(wd)
+        images = []
+        <span class="org-keyword">for</span> ext <span class="org-keyword">in</span> EXTS:
+            images.extend(glob.glob(<span class="org-string">'*.%s'</span> % ext))
+
+        seq = []
+        prog = <span class="org-builtin">int</span>(<span class="org-builtin">len</span>(images) &gt; 50 <span class="org-keyword">and</span> sys.stdout.isatty())
+        <span class="org-keyword">for</span> f <span class="org-keyword">in</span> images:
+            seq.append((f, hamming(avhash(f), h)))
+            <span class="org-keyword">if</span> prog:
+                perc = 100. * prog / <span class="org-builtin">len</span>(images)
+                x = <span class="org-builtin">int</span>(2 * perc / 5)
+                <span class="org-keyword">print</span> <span class="org-string">'\rCalculating... ['</span> + <span class="org-string">'#'</span> * x + <span class="org-string">' '</span> * (40 - x) + <span class="org-string">']'</span>,
+                <span class="org-keyword">print</span> <span class="org-string">'%.2f%%'</span> % perc, <span class="org-string">'(%d/%d)'</span> % (prog, <span class="org-builtin">len</span>(images)),
+                sys.stdout.flush()
+                prog += 1
+
+        <span class="org-keyword">if</span> prog: <span class="org-keyword">print</span>
+        <span class="org-keyword">for</span> f, ham <span class="org-keyword">in</span> <span class="org-builtin">sorted</span>(seq, key=<span class="org-keyword">lambda</span> i: i[1]):
+            <span class="org-keyword">print</span> <span class="org-string">"%d\t%s"</span> % (ham, f)
+</pre>
+</div>
+
+<p>
+第一个参数是基准图片，第二个参数是用来比较的其他图片所在的目录，返回结果是两张图片之间不相同的数据位数量，即汉明距离。
+</p>
+
+<p>
+这种算法的优点是简单快速，不受图片大小缩放的影响，缺点是图片的内容不能变更。如果在图片上加几个文字，它就认不出来了。所以，它的最佳用途是根据缩略图，找出原图。
+</p>
+
+<p>
+实际应用中，往往采用更强大的 <a href="http://www.phash.org/">pHash</a> 算法和 <a href="https://en.wikipedia.org/wiki/Scale-invariant_feature_transform">SIFT</a> 算法，它们能够识别图片的变形。只要变形程度不超过 25%，它们就能匹配原图。这些算法虽然更复杂，但是原理与上面的简便算法是一样的，就是先将图片转化成 hash 字符串，然后进行比较。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> 颜色分布法</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+来源：<a href="http://www.isnowfy.com/similar-image-search/">关于相似图片搜索</a>
+</p>
+
+<p>
+每张图片都可以生成颜色分布的直方图（color histogram）。如果两张图片的颜色直方图很接近，就认为它们很相似。
+</p>
+
+<p>
+任何一种颜色都是由红绿蓝三原色（RGB）构成的，所以每张图有 4 张直方图（三原色直方图 + 最后合成的直方图）。如果每种原色都可以取 256 个值，那么整个颜色空间共有 1600 万种颜色，计算量太大。可以采用简化方法，将 256 个值分成 4 个区：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">0 ~ 63</th>
+<th scope="col" class="left">第 0 区</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">64 ~ 127</td>
+<td class="left">第 1 区</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">128 ~ 191</td>
+<td class="left">第 2 区</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">192 ~ 255</td>
+<td class="left">第 3 区</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+每种原色分为 4 个区，总共可以构成 64 种组合。任何一种颜色必然属于这 64 种组合中的一种，然后统计每一种组合包含的像素数量，得到一个 64 维向量，就是这张图片的特征值或者「指纹」。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/algorithm_scrap/14.png" alt="14.png" />
+</p>
+</div>
+
+<p>
+于是，寻找相似图片就变成了找出与其最相似的向量。这可以用皮尔逊相关系数（<a href="https://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient">Pearson product-moment correlation coefficient</a>）或余弦相似度（<a href="https://en.wikipedia.org/wiki/Cosine_similarity">Cosine similarity</a>）算出。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> 内容特征法</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+如果两张图片很相似，它们的黑白轮廓应该是相近的。
+</p>
+
+<p>
+首先，将原图转成一张较小的灰度图片，比如 50 x 50 像素。然后，确定一个阈值，将灰度图片转成黑白图片。问题是如何确定一个合理的阈值，正确呈现照片中的轮廓。显然，前景色与背景色反差越大，轮廓就越明显。这意味着，如果我们找到一个值，可以使得前景色和背景色各自的「类内差异最小」（minimizing the intra-class variance），或者「类间差异最大」（maximizing the inter-class variance），这个值就是理想的阈值。
+</p>
+
+<p>
+1979 年，日本学者大津展之证明了，「类内差异最小」与「类间差异最大」是同一件事，即对应同一个阈值。他提出一种简单的算法，可以求出这个阈值，这被称为「大津法」（<a href="https://en.wikipedia.org/wiki/Otsu's_method">Otsu's method</a>）。
+</p>
+
+<p>
+假设一张图片有 n 个像素，其中灰度值小于阈值的像素数量为 $n_1$，大于等于阈值的像素数量为 $n_2$，$w_1$ 和 $w_2$ 表示这两种像素各自的比重：
+</p>
+
+<p>
+$$w_1 = n_1 / n \\ w_2 = n_2 / n$$
+</p>
+
+<p>
+所有灰度值小于阈值的像素的平均值和方差为 $\mu_1$ 和 $&sigma;_1$，所有灰度值大于等于阈值的像素的平均值和方差分别为 $\mu_2$ 和 $&sigma;_2$。
+</p>
+
+<p>
+$$\text{intra-class variance} = w_1 \sigma_1^2 + w_2 \sigma_2^2 \\
+\text{inter-class variance} = w_1 w_2 (\mu_1 - \mu_2)^2$$
+</p>
+
+<p>
+可以证明，这两个式子是等价的，即得到「类内差异」的最小值，等同于得到「类间差异」的最大值。不过，从计算难度看，后者的计算要容易一些。
+</p>
+
+<p>
+下一步使用穷举法，取阈值从灰度的最低值到最高值，分别代入上面的算式。使得「类内差异最小」或「类间差异最大」的那个值，就是最终的阈值。实例和 Java 算法：<a href="http://www.labbookpages.co.uk/software/imgProc/otsuThreshold.html">Otsu Thresholding</a>。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/algorithm_scrap/15.png" alt="15.png" />
+</p>
+</div>
+
+<p>
+有了 50 x 50 像素的黑白缩略图，就等于有了一个 50 x 50 的 0-1 矩阵。矩阵的每个值对应原图的一个像素，0 表示黑色，1 表示白色。这个矩阵就是一张图片的特征矩阵。两个特征矩阵的不同之处越少，就代表两张图片越相似。这可以用异或运算实现，结果中的 1 越少，就是越相似的图片。
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2018-02-25 Sun 11:39</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

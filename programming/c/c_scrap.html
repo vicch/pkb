@@ -1,0 +1,1103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>C Scrap</title>
+<!-- 2017-01-23 Mon 14:12 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">C Scrap</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. 编译器的工作过程</a>
+<ul>
+<li><a href="#sec-1-1">1.1. 第一步：配置（configure）</a></li>
+<li><a href="#sec-1-2">1.2. 第二步：确定标准库和头文件位置</a></li>
+<li><a href="#sec-1-3">1.3. 第三步：确定依赖关系</a></li>
+<li><a href="#sec-1-4">1.4. 第四步：预编译（precompilation）</a></li>
+<li><a href="#sec-1-5">1.5. 第五步：预处理（preprocessing）</a></li>
+<li><a href="#sec-1-6">1.6. 第六步：编译（compilation）</a></li>
+<li><a href="#sec-1-7">1.7. 第七步：链接（linking）</a></li>
+<li><a href="#sec-1-8">1.8. 第八步：安装（installation）</a></li>
+<li><a href="#sec-1-9">1.9. 第九步：操作系统连接</a></li>
+<li><a href="#sec-1-10">1.10. 第十步：生成安装包</a></li>
+<li><a href="#sec-1-11">1.11. 第十一步：动态链接（dynamic linking）</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. Make 命令</a>
+<ul>
+<li><a href="#sec-2-1">2.1. 概念</a></li>
+<li><a href="#sec-2-2">2.2. 规则</a></li>
+<li><a href="#sec-2-3">2.3. Makefile</a></li>
+<li><a href="#sec-2-4">2.4. Makefile 规则</a>
+<ul>
+<li><a href="#sec-2-4-1">2.4.1. 目标</a></li>
+<li><a href="#sec-2-4-2">2.4.2. 伪目标</a></li>
+<li><a href="#sec-2-4-3">2.4.3. 前置条件</a></li>
+<li><a href="#sec-2-4-4">2.4.4. 命令</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-5">2.5. Makefile 语法</a>
+<ul>
+<li><a href="#sec-2-5-1">2.5.1. 注释</a></li>
+<li><a href="#sec-2-5-2">2.5.2. 输出</a></li>
+<li><a href="#sec-2-5-3">2.5.3. 模式匹配</a></li>
+<li><a href="#sec-2-5-4">2.5.4. 变量</a></li>
+<li><a href="#sec-2-5-5">2.5.5. 内置变量</a></li>
+<li><a href="#sec-2-5-6">2.5.6. 自动变量</a></li>
+<li><a href="#sec-2-5-7">2.5.7. 判断</a></li>
+<li><a href="#sec-2-5-8">2.5.8. 循环</a></li>
+<li><a href="#sec-2-5-9">2.5.9. 函数</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-6">2.6. Makefile 实例</a></li>
+<li><a href="#sec-2-7">2.7. 链接</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 编译器的工作过程</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2014/11/compiler.html">Source</a>
+</p>
+
+<p>
+源码要运行，必须先转成二进制的机器码，这是编译器的任务。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">源码：</label>
+<pre class="src src-c"><span class="org-comment-delimiter">// </span><span class="org-comment">test.c</span>
+<span class="org-preprocessor">#include</span> <span class="org-string">&lt;stdio.h&gt;</span>
+
+<span class="org-type">int</span> <span class="org-function-name">main</span>(<span class="org-type">void</span>)
+{
+    fputs(<span class="org-string">"Hello, world!\n"</span>, stdout);
+    <span class="org-keyword">return</span> 0;
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">编译和运行：</label>
+<pre class="src src-sh">$ gcc test.c
+$ ./a.out
+Hello, world!
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">对于复杂的项目，编译过程分成三步：</label>
+<pre class="src src-sh">$ ./configure
+$ make  
+$ make install
+</pre>
+</div>
+
+<p>
+这些命令到底在干什么？大多数的书籍和资料，都语焉不详。本文介绍编译器的工作过程，也就是上面三个命令各自的任务。主要参考了 Alex Smith 的 <a href="http://nethack4.org/blog/building-c.html">Building C Projects</a>。需要声明的是，本文主要针对 gcc 编译器，也就是针对 C 和 C++，不一定适用于其他语言的编译。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/c_scrap/01.png" alt="01.png" />
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> 第一步：配置（configure）</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+编译器在开始工作之前，需要知道当前的系统环境，比如标准库的路径、软件的安装路径、需要安装哪些组件等。这是因为不同计算机的系统环境不一样，通过指定编译参数，编译器就可以适应环境，编译出各种环境都能运行的机器码。这个 <span class="underline">确定编译参数</span> 的步骤，就叫做「配置」（configure）。
+</p>
+
+<p>
+这些 <span class="underline">配置信息保存在一个配置文件之中，通常是 <code>configure</code> 脚本文件，由 <del>autoconf</del> 工具生成。</span> 编译器通过运行这个脚本，获知编译参数。 <span class="underline"><code>configure</code> 脚本已经尽量考虑到不同系统的差异，对各种编译参数给出了默认值。</span> 如果用户的系统环境比较特别，或者有一些特定的需求，就需要手动向 <code>configure</code> 脚本提供编译参数。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">PHP 的一种编译配置，指定安装后的文件保存在 <code>www</code> 目录，并且编译时加入 mysql 模块的支持：</label>
+<pre class="src src-sh">$ ./configure --prefix=/www --with-mysql
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> 第二步：确定标准库和头文件位置</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+源码肯定会用到标准库函数（standard library）和头文件（header）。它们可以存放在系统的任意目录中，编译器实际上没办法自动检测它们的位置，只有通过配置文件才能知道。
+</p>
+
+<p>
+编译的第二步，就是 <span class="underline">从配置文件中获得标准库和头文件的位置，配置文件会列出几个目录，编译器按顺序在目录下寻找目标。</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> 第三步：确定依赖关系</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+大型项目的源码文件之间往往存在依赖关系，编译器需要确定编译的先后顺序。假定 A 文件依赖于 B 文件，编译器应该保证做到：
+</p>
+
+<ul class="org-ul">
+<li>在 B 文件编译完成后，才开始编译 A 文件。
+</li>
+<li>当 B 文件发生变化时，A 文件会被重新编译。
+</li>
+</ul>
+
+<p>
+编译顺序保存在 <code>makefile</code> 文件中，里面列出文件编译的先后顺序。而 <span class="underline"><code>makefile</code> 文件由 <code>configure</code> 脚本运行生成，所以 <code>configure</code> 必须首先运行。</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> 第四步：预编译（precompilation）</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+在确定依赖关系的同时，编译器也确定了编译时会用到哪些头文件。不同的源码文件，可能引用同一个头文件（比如 <code>stdio.h</code> ）。编译时，头文件也必须一起编译。 <span class="underline">为节省时间，编译器会在编译源码之前，先编译头文件。这保证了头文件只需编译一次，</span> 不必每次用到的时候，都重新编译了。
+</p>
+
+<p>
+不是头文件的所有内容都会被预编译，用来声明宏的 <code>#define</code> 命令，就不会被预编译。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> 第五步：预处理（preprocessing）</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+预编译完成后，编译器就开始 <span class="underline">替换源码中的头文件和宏，插入头文件预编译后的结果，</span> 编译器在这一步还会移除注释。以头文件 <code>stdio.h</code> 为例，替换后的源码：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-c"><span class="org-keyword">extern</span> <span class="org-type">int</span> <span class="org-function-name">fputs</span>(<span class="org-keyword">const</span> <span class="org-type">char</span> *, <span class="org-type">FILE</span> *);
+<span class="org-keyword">extern</span> <span class="org-type">FILE</span> *<span class="org-variable-name">stdout</span>;
+...
+
+<span class="org-type">int</span> main(<span class="org-type">void</span>)
+{
+    fputs(<span class="org-string">"Hello, world!\n"</span>, stdout);
+    <span class="org-keyword">return</span> 0;
+}
+</pre>
+</div>
+
+<p>
+这一步称为「预处理」（preprocessing）。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> 第六步：编译（compilation）</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+预处理之后，编译器就开始生成机器码。对于某些编译器来说，还存在一个中间步骤，会先把源码转为汇编码（assembly），再把汇编码转为机器码。转码后的文件称为 <span class="underline">对象文件（object file）</span> 。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">示例源码转换成的汇编码：</label>
+<pre class="src src-c">    .file   <span class="org-string">"test.c"</span>
+    .section    .rodata
+.LC0:
+    .string <span class="org-string">"Hello, world!\n"</span>
+    .text
+    .globl  main
+    .type   main, @function
+main:
+.LFB0:
+    .cfi_startproc
+    pushq   %rbp
+    .cfi_def_cfa_offset 16
+    .cfi_offset 6, -16
+    movq    %rsp, %rbp
+    .cfi_def_cfa_register 6
+    movq    stdout(%rip), %rax
+    movq    %rax, %rcx
+    movl    $14, %edx
+    movl    $1, %esi
+    movl    $.LC0, %edi
+    call    fwrite
+    movl    $0, %eax
+    popq    %rbp
+    .cfi_def_cfa 7, 8
+    ret
+    .cfi_endproc
+.LFE0:
+    .size   main, .-main
+    .ident  <span class="org-string">"GCC: (Debian 4.9.1-19) 4.9.1"</span>
+    .section    .note.GNU-stack,<span class="org-string">""</span>,@progbits
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> 第七步：链接（linking）</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+对象文件还不能运行，必须进一步转成可执行文件。仔细看上一步的转码结果，会发现其中引用了 <code>stdout</code> 函数和 <code>fwrite</code> 函，也就是说，程序要正常运行，还必须有 <code>stdout</code> 和 <code>fwrite</code> 这两个函数的代码，它们是由 C 语言的标准库提供的。
+</p>
+
+<p>
+编译器的下一步工作，就是 <span class="underline">把外部函数的代码（通常是后缀名为 <code>.lib</code> 和 <code>.a</code> 的文件），添加到可执行文件中，这一步操作叫做链接（linking）。</span> 这种 <span class="underline">通过拷贝，将外部函数库添加到可执行文件的方式，叫做静态链接（static linking），</span> 后文会提到还有动态链接（dynamic linking）。
+</p>
+
+<p>
+<span class="underline"><code>make</code> 命令的作用是从预编译开始，一直到完成链接。</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-8" class="outline-3">
+<h3 id="sec-1-8"><span class="section-number-3">1.8</span> 第八步：安装（installation）</h3>
+<div class="outline-text-3" id="text-1-8">
+<p>
+<span class="underline">链接是在内存中进行的，编译器在内存中生成了可执行文件。下一步是将可执行文件保存到用户事先指定的安装目录，还必须完成创建目录、保存文件、设置权限等步骤。</span> 整个的保存过程称为「安装」（installation）。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-9" class="outline-3">
+<h3 id="sec-1-9"><span class="section-number-3">1.9</span> 第九步：操作系统连接</h3>
+<div class="outline-text-3" id="text-1-9">
+<p>
+可执行文件安装后，必须以某种方式通知操作系统，让其知道可以使用这个程序了。比如，安装了文本阅读程序，往往希望双击 <code>.txt</code> 文件，该程序就会自动运行。这要求在操作系统中登记这个程序的元数据：文件名、文件描述、关联后缀名等等。
+</p>
+
+<p>
+Linux 系统中，这些信息通常保存在 <code>/usr/share/applications</code> 目录下的 <code>.desktop</code> 文件中。在 Windows 操作系统中，还需要在 Start 启动菜单中建立一个快捷方式。这些操作就叫做「操作系统连接」。
+</p>
+
+<p>
+<span class="underline"><code>make install</code> 命令完成「安装」和「操作系统连接」这两步。</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-10" class="outline-3">
+<h3 id="sec-1-10"><span class="section-number-3">1.10</span> 第十步：生成安装包</h3>
+<div class="outline-text-3" id="text-1-10">
+<p>
+源码编译的整个过程已经基本完成了。但是只有很少一部分用户，愿意从头到尾进行一遍这个过程，大部分用户要的是一个二进制的可执行程序，立刻就能运行。这就要求开发者， <span class="underline">将上一步生成的可执行文件，做成可以分发的安装包。</span> 所以，编译器还必须有生成安装包的功能。 <span class="underline">通常是将可执行文件（连带相关的数据文件），以某种目录结构，保存成压缩文件包，交给用户使用。</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-11" class="outline-3">
+<h3 id="sec-1-11"><span class="section-number-3">1.11</span> 第十一步：动态链接（dynamic linking）</h3>
+<div class="outline-text-3" id="text-1-11">
+<p>
+正常情况下，到这一步，程序已经可以运行了。至于运行期间（runtime）发生的事情，与编译器无关。但是，开发者可以 <span class="underline">在编译阶段选择可执行文件链接外部函数库的方式，静态链接（编译时链接），或动态链接（运行时链接）。</span>
+</p>
+
+<p>
+<span class="underline">静态链接是把外部函数库拷贝到可执行文件中，</span> 这样做的好处是， <span class="underline">适用范围广，不用担心用户机器缺少某个库文件；缺点是安装包会比较大，而且多个应用程序之间无法共享库文件。</span>
+</p>
+
+<p>
+<span class="underline">动态链接是指外部函数库不进入安装包，只在运行时动态引用。</span> 好处是 <span class="underline">安装包会比较小，多个应用程序可以共享库文件；缺点是用户必须事先安装好库文件，而且版本和安装位置都必须符合要求，否则就不能正常运行。</span>
+</p>
+
+<p>
+现实中，大部分软件采用动态链接，共享库文件。这种 <span class="underline">动态共享的库文件，Linux 平台是后缀名为 <code>.so</code> 的文件，Windows 平台是 <code>.dll</code> 文件，</span> Mac 平台是 <code>.dylib</code> 文件。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Make 命令</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2015/02/make.html">Source</a>
+</p>
+
+<p>
+由代码生成可执行文件的过程，叫做编译（compile）；编译的具体顺序和步骤，叫做构建（build）。<a href="https://en.wikipedia.org/wiki/Make_%28software%29">Make</a> 是最常用的构建工具，诞生于 1977 年，主要用于 C 语言的项目，但实际上 <span class="underline">任何「某个文件有变化，就需要重新构建」的项目，都可以用 Make 构建。</span>
+</p>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 概念</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Make 的意思是「做出」某个文件。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$ make a.txt
+</pre>
+</div>
+
+<p>
+但是 Make 命令本身并不知道如何「做出」 <code>a.txt</code> ，需要有人告诉它，如何调用其他命令完成这个目标。Make 只是一个根据指定的 Shell 命令进行构建的工具，它的规则很简单： <span class="underline">需要构建的文件，依赖的源文件，当源文件改变时，如何重新构建。</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> 规则</h3>
+<div class="outline-text-3" id="text-2-2">
+<div class="org-src-container">
+<label class="org-src-name">假设文件 <code>a.txt</code> 依赖于 <code>b.txt</code> 和 <code>c.txt</code> ，是两个文件连接的产物，Make 规则：</label>
+<pre class="src src-sh">a.txt: b.txt c.txt
+    cat b.txt c.txt &gt; a.txt
+</pre>
+</div>
+
+<p>
+这条规则分为两步：
+</p>
+
+<ol class="org-ol">
+<li>确认 <code>b.txt</code> 和 <code>c.txt</code> 已经存在。
+</li>
+<li>使用 <code>cat</code> 将这两个文件合并，输出为新文件。
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Makefile</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Make 命令的规则都写在 Makefile（ 默认为 <code>makefile</code> ）中，Make 命令依赖 Makefile 进行构建。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">Makefile 可以用命令行参数指定为其他文件名：</label>
+<pre class="src src-sh">$ make -f rules.txt
+$ make --file=rules.txt
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Makefile 规则</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+Makefile 文件由一系列规则构成，每条规则的形式如下：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-code">&lt;target&gt;: &lt;prerequisites&gt;
+    &lt;commands&gt;
+</pre>
+</div>
+
+<p>
+每条规则明确两件事：构建目标的前置条件是什么，以及如何构建。目标是必需的，不可省略，前置条件和命令可选，但是两者之中必须至少存在一个。
+</p>
+
+<hr  />
+
+<p>
+如果 Make 命令没有指定目标，默认会执行 Makefile 的第一个目标。
+</p>
+</div>
+
+<div id="outline-container-sec-2-4-1" class="outline-4">
+<h4 id="sec-2-4-1"><span class="section-number-4">2.4.1</span> 目标</h4>
+<div class="outline-text-4" id="text-2-4-1">
+<p>
+目标通常是文件名，表示 Make 命令所要构建的对象。目标可以是一个或多个文件名，之间用空格分隔。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-4-2" class="outline-4">
+<h4 id="sec-2-4-2"><span class="section-number-4">2.4.2</span> 伪目标</h4>
+<div class="outline-text-4" id="text-2-4-2">
+<div class="org-src-container">
+<label class="org-src-name">目标还可以是某个操作的名字，这称为「伪目标」（phony target）：</label>
+<pre class="src src-sh">clean:
+    rm *.o
+</pre>
+</div>
+
+<p>
+如果当前目录正好有一个文件 <code>clean</code> ，那么这个命令不会执行，因为 Make 发现 <code>clean</code> 已经存在，认为没有必要重新构建。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">为避免这种情况，可以显式声明 <code>clean</code> 是伪目标：</label>
+<pre class="src src-sh">.PHONY: clean
+clean:
+    rm *.o
+</pre>
+</div>
+
+<p>
+其他的内置目标名：<a href="https://www.gnu.org/software/make/manual/html_node/Special-Targets.html#Special-Targets">Special Built-in Target Names</a>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-4-3" class="outline-4">
+<h4 id="sec-2-4-3"><span class="section-number-4">2.4.3</span> 前置条件</h4>
+<div class="outline-text-4" id="text-2-4-3">
+<p>
+前置条件通常是一组文件名，之间用空格分隔。它指定了 <span class="underline">目标需要重新构建的判断标准：当一个前置文件不存在，或者有过修改（比较前置条件与目标的修改时间戳）时，</span> 目标就需要重新构建，否则， Make 命令不执行任何操作，目标也不会重新生成。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">如果前置条件不存在，通常需要另一条规则来生成前置条件：</label>
+<pre class="src src-sh">result.txt: source.txt
+    cp source.txt result.txt
+
+source.txt:
+    <span class="org-builtin">echo</span> <span class="org-string">"Hello world"</span> &gt; source.txt
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">使用命令为空的伪目标一次生成多个文件：</label>
+<pre class="src src-code">source: file_1 file_2 file_3
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-4-4" class="outline-4">
+<h4 id="sec-2-4-4"><span class="section-number-4">2.4.4</span> 命令</h4>
+<div class="outline-text-4" id="text-2-4-4">
+<p>
+命令表示如何更新目标文件，由一行或多行 Shell 命令组成，运行结果通常是生成目标文件。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">命令之前必须有一个 tab 字符，可以通过内置变量进行修改：</label>
+<pre class="src src-sh">.RECIPEPREFIX = &gt;
+all:
+&gt; echo Hello, world
+</pre>
+</div>
+
+<hr  />
+
+<div class="org-src-container">
+<label class="org-src-name">每行命令默认在一个单独的 Shell 中执行，这些 Shell 之间没有继承关系：</label>
+<pre class="src src-sh">var-lost:
+    <span class="org-builtin">export</span> <span class="org-variable-name">foo</span>=bar
+    <span class="org-builtin">echo</span> <span class="org-string">"foo=[$$foo]"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#21462;&#19981;&#21040; foo &#30340;&#20540;</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">解决办法一：将两行命令写在一行，中间用分号分隔：</label>
+<pre class="src src-sh">var-kept:
+    <span class="org-builtin">export</span> <span class="org-variable-name">foo</span>=bar; <span class="org-builtin">echo</span> <span class="org-string">"foo=[$$foo]"</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">解决办法二：换行符前加反斜杠：</label>
+<pre class="src src-sh">var-kept:
+    <span class="org-builtin">export</span> <span class="org-variable-name">foo</span>=bar; <span class="org-sh-escaped-newline">\</span>
+    <span class="org-builtin">echo</span> <span class="org-string">"foo=[$$foo]"</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">解决办法三：使用 <code>.ONESHELL:</code> 命令：</label>
+<pre class="src src-sh">.ONESHELL:
+var-kept:
+    <span class="org-builtin">export</span> <span class="org-variable-name">foo</span>=bar; 
+    <span class="org-builtin">echo</span> <span class="org-string">"foo=[$$foo]"</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Makefile 语法</h3>
+<div class="outline-text-3" id="text-2-5">
+</div><div id="outline-container-sec-2-5-1" class="outline-4">
+<h4 id="sec-2-5-1"><span class="section-number-4">2.5.1</span> 注释</h4>
+<div class="outline-text-4" id="text-2-5-1">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Comment</span>
+result.txt: source.txt
+    cp source.txt result.txt <span class="org-comment-delimiter"># </span><span class="org-comment">Comment</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-5-2" class="outline-4">
+<h4 id="sec-2-5-2"><span class="section-number-4">2.5.2</span> 输出</h4>
+<div class="outline-text-4" id="text-2-5-2">
+<div class="org-src-container">
+<label class="org-src-name">Make 命令默认会在执行前打印每条命令，称为回声（echoing）：</label>
+<pre class="src src-sh">target:
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Comment</span>
+
+$ make target
+<span class="org-comment-delimiter"># </span><span class="org-comment">Comment</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">使用 <code>@</code> 关闭回声：</label>
+<pre class="src src-sh">target:
+    @# Comment
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">由于在构建过程中，需要了解当前执行的命令，所以通常只在注释和 <code>echo</code> 命令前面加 <code>@</code> ：</label>
+<pre class="src src-sh">target:
+    @# Comment
+    @echo TODO
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-5-3" class="outline-4">
+<h4 id="sec-2-5-3"><span class="section-number-4">2.5.3</span> 模式匹配</h4>
+<div class="outline-text-4" id="text-2-5-3">
+<p>
+Make 命令允许对文件名进行匹配，使用匹配符 <code>%</code> 可以使大量同类型的文件只用一条规则就完成构建。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">假设需要将 <code>f1.c</code> 和 <code>f2.c</code> 两个源文件编译为对象文件：</label>
+<pre class="src src-sh">%.o: %.c
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#31561;&#21516;&#20110;</span>
+f1.o: f1.c
+f2.o: f2.c
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-5-4" class="outline-4">
+<h4 id="sec-2-5-4"><span class="section-number-4">2.5.4</span> 变量</h4>
+<div class="outline-text-4" id="text-2-5-4">
+<p>
+Makefile 允许使用自定义变量，语法为 <code>$(&lt;var&gt;)</code> 。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">示例：</label>
+<pre class="src src-sh">txt = Hello World
+target:
+    @echo $(txt)
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">使用 Shell 变量名需要两个 <code>$</code> ，因为 Make 命令会对 <code>$</code> 转义：</label>
+<pre class="src src-sh">target:
+    @echo $<span class="org-variable-name">$HOME</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">变量的值可能指向另一个变量：</label>
+<pre class="src src-sh">v1 = $(v2)
+</pre>
+</div>
+
+<p>
+这会产生一个问题， <code>v1</code> 的值是在定义时扩展（静态扩展），还是在运行时扩展（动态扩展）？如果 <code>v2</code> 的值是动态的，这两种扩展方式的结果不同。为了解决类似问题，Makefile 提供了 4 个赋值运算符，它们的区别：<a href="http://stackoverflow.com/questions/448910/makefile-variable-assignment">Makefile variable assignment</a>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">VARIABLE = value  <span class="org-comment-delimiter"># </span><span class="org-comment">&#25191;&#34892;&#26102;&#25193;&#23637;&#65292;&#20801;&#35768;&#36882;&#24402;&#25193;&#23637;</span>
+VARIABLE := value <span class="org-comment-delimiter"># </span><span class="org-comment">&#23450;&#20041;&#26102;&#25193;&#23637;</span>
+VARIABLE ?= value <span class="org-comment-delimiter"># </span><span class="org-comment">&#21482;&#26377;&#21464;&#37327;&#20026;&#31354;&#26102;&#25165;&#36171;&#20540;</span>
+VARIABLE += value <span class="org-comment-delimiter"># </span><span class="org-comment">&#23558;&#20540;&#36861;&#21152;&#21040;&#21464;&#37327;&#30340;&#26411;&#23614;</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-5-5" class="outline-4">
+<h4 id="sec-2-5-5"><span class="section-number-4">2.5.5</span> 内置变量</h4>
+<div class="outline-text-4" id="text-2-5-5">
+<p>
+Make 命令提供一系列内置变量，比如， <code>$(CC)</code> 指向当前使用的编译器， <code>$(MAKE)</code> 指向当前使用的 Make 工具。这主要是为了跨平台的兼容性，详细的内置变量清单：<a href="https://www.gnu.org/software/make/manual/html_node/Implicit-Variables.html">Variables Used by Implicit Rules</a> 。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">output:
+    $(CC) -o output input.c
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-5-6" class="outline-4">
+<h4 id="sec-2-5-6"><span class="section-number-4">2.5.6</span> 自动变量</h4>
+<div class="outline-text-4" id="text-2-5-6">
+<p>
+Make 命令还提供一些自动变量，它们的值与当前规则有关。所有的自动变量清单：<a href="https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html">Automatic Variables</a> 。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>$@</code></th>
+<th scope="col" class="left">目标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>$(@D)</code></td>
+<td class="left">目标的目录名</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>$(@F)</code></td>
+<td class="left">目标的文件名</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>$^</code></td>
+<td class="left">所有前置条件</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>$&lt;</code></td>
+<td class="left">第一个前置条件</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>$(&lt;D)</code></td>
+<td class="left">第一个前置条件的目录名</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>$(&lt;F)</code></td>
+<td class="left">第一个前置条件的文件名</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>$?</code></td>
+<td class="left">比目标更新的前置条件</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>$*</code></td>
+<td class="left"><code>%</code> 匹配的部分</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">dest/%.txt: src/%.txt
+    @[ -d dest ] || mkdir dest <span class="org-comment-delimiter"># </span><span class="org-comment">&#22914;&#26524; dest &#30446;&#24405;&#19981;&#23384;&#22312;&#21017;&#26032;&#24314;</span>
+    cp $&lt; $<span class="org-variable-name">@</span>                   <span class="org-comment-delimiter"># </span><span class="org-comment">&#23558; src &#30446;&#24405;&#19979;&#30340; .txt &#25991;&#20214;&#25335;&#36125;&#21040; dest &#30446;&#24405;</span>
+</pre>
+</div>
+</div>
+
+<ol class="org-ol"><li><code>$@</code><br  /><div class="outline-text-5" id="text-2-5-6-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">a.txt:
+    touch $<span class="org-variable-name">@</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#31561;&#20215;&#20110; touch a.txt</span>
+</pre>
+</div>
+</div>
+</li>
+<li><code>$(@D)</code> <code>$(@F)</code><br  /><div class="outline-text-5" id="text-2-5-6-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">src/input.c: <span class="org-comment-delimiter"># </span><span class="org-comment">$(@D) = src</span>
+             <span class="org-comment-delimiter"># </span><span class="org-comment">$(@F) = input.c</span>
+</pre>
+</div>
+</div>
+</li>
+<li><code>$&lt;</code><br  /><div class="outline-text-5" id="text-2-5-6-3">
+<div class="org-src-container">
+
+<pre class="src src-sh">a.txt: b.txt c.txt
+    cp $&lt; $<span class="org-variable-name">@</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#31561;&#20215;&#20110; cp b.txt a.txt</span>
+</pre>
+</div>
+</div>
+</li>
+<li><code>$*</code><br  /><div class="outline-text-5" id="text-2-5-6-4">
+<div class="org-src-container">
+
+<pre class="src src-sh">%.o: %.c
+    cp $<span class="org-variable-name">*</span>.c $<span class="org-variable-name">*</span>.o <span class="org-comment-delimiter"># </span><span class="org-comment">&#23545;&#20110; f1.o&#65292;$* &#34920;&#31034; f1</span>
+</pre>
+</div>
+</div>
+</li></ol>
+</div>
+<div id="outline-container-sec-2-5-7" class="outline-4">
+<h4 id="sec-2-5-7"><span class="section-number-4">2.5.7</span> 判断</h4>
+<div class="outline-text-4" id="text-2-5-7">
+<div class="org-src-container">
+<label class="org-src-name">根据编译器指定不同的库文件</label>
+<pre class="src src-sh"><span class="org-function-name">ifeq</span> ($(CC), gcc)
+  libs = $(libs_for_gcc)
+<span class="org-keyword">else</span>
+  libs = $(normal_libs)
+endif
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-5-8" class="outline-4">
+<h4 id="sec-2-5-8"><span class="section-number-4">2.5.8</span> 循环</h4>
+<div class="outline-text-4" id="text-2-5-8">
+<div class="org-src-container">
+
+<pre class="src src-sh">LIST = one two three
+all:
+    <span class="org-keyword">for</span> i<span class="org-keyword"> in</span> $(LIST); <span class="org-keyword">do</span> <span class="org-sh-escaped-newline">\</span>
+        <span class="org-builtin">echo</span> $<span class="org-variable-name">$i</span>; <span class="org-sh-escaped-newline">\</span>
+    <span class="org-keyword">done</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-5-9" class="outline-4">
+<h4 id="sec-2-5-9"><span class="section-number-4">2.5.9</span> 函数</h4>
+<div class="outline-text-4" id="text-2-5-9">
+<div class="org-src-container">
+<label class="org-src-name">Makefile 可以使用函数：</label>
+<pre class="src src-sh">$(&lt;func&gt; &lt;args&gt;)
+${&lt;func&gt; &lt;args&gt;}
+</pre>
+</div>
+
+<p>
+内置函数列表：<a href="https://www.gnu.org/software/make/manual/html_node/Functions.html">Functions for Transforming Text</a>
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>shell</code></th>
+<th scope="col" class="left">执行 Shell 命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>wildcard</code></td>
+<td class="left">替换 Bash 通配符</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>subst</code></td>
+<td class="left">文本替换</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>patsubst</code></td>
+<td class="left">模式匹配替换</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<ol class="org-ol"><li><code>shell</code><br  /><div class="outline-text-5" id="text-2-5-9-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">srcfiles := $(shell echo src/{00..99}.txt)
+</pre>
+</div>
+</div>
+</li>
+<li><code>wildcard</code><br  /><div class="outline-text-5" id="text-2-5-9-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">srcfiles := $(wildcard src/*.txt)
+</pre>
+</div>
+</div>
+</li>
+<li><code>subst</code><br  /><div class="outline-text-5" id="text-2-5-9-3">
+<div class="org-src-container">
+
+<pre class="src src-sh">$(subst &lt;from&gt;,&lt;to&gt;,&lt;text&gt;)
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例 1</label>
+<pre class="src src-sh">$(subst ee,EE,feet on the street) <span class="org-comment-delimiter"># </span><span class="org-comment">fEEt on the strEEt</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例 2</label>
+<pre class="src src-sh">comma := ,
+empty :=                   <span class="org-comment-delimiter"># </span><span class="org-comment">&#31354;&#21464;&#37327;</span>
+space := $(empty) $(empty) <span class="org-comment-delimiter"># </span><span class="org-comment">&#29992;&#20004;&#20010;&#31354;&#21464;&#37327;&#20316;&#20026;&#26631;&#35782;&#31526;&#65292;&#20013;&#38388;&#26159;&#19968;&#20010;&#31354;&#26684;</span>
+foo := a b c
+bar := $(subst $(space),$(comma),$(foo)) <span class="org-comment-delimiter"># </span><span class="org-comment">bar = a,b,c</span>
+</pre>
+</div>
+</div>
+</li>
+<li><code>patsubst</code><br  /><div class="outline-text-5" id="text-2-5-9-4">
+<div class="org-src-container">
+
+<pre class="src src-sh">$(patsubst &lt;pattern&gt;,&lt;replace&gt;,&lt;text&gt;)
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-sh">$(patsubst %.c,%.o,f1.c f2.c) <span class="org-comment-delimiter"># </span><span class="org-comment">f1.o f2.o</span>
+</pre>
+</div>
+</div>
+</li>
+<li>替换后缀名<br  /><div class="outline-text-5" id="text-2-5-9-5">
+<p>
+实际上是 <code>patsubst</code> 的简写形式。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">&lt;var&gt;:&lt;from&gt;=&lt;to&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-sh">min: $(OUTPUT:.js=.min.js) <span class="org-comment-delimiter"># </span><span class="org-comment">&#23558;&#21464;&#37327; OUTPUT &#20013;&#30340;&#21518;&#32512;&#21517; .js &#26367;&#25442;&#20026; .min.js</span>
+</pre>
+</div>
+</div>
+</li></ol>
+</div>
+</div>
+<div id="outline-container-sec-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Makefile 实例</h3>
+<div class="outline-text-3" id="text-2-6">
+<div class="org-src-container">
+<label class="org-src-name">执行多个目标</label>
+<pre class="src src-sh">.PHONY: cleanall cleanobj cleandiff
+
+cleanall: cleanobj cleandiff
+    rm program
+
+cleanobj:
+    rm *.o
+
+cleandiff:
+    rm *.diff
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">编译 C 项目</label>
+<pre class="src src-sh">edit: main.o kbd.o command.o display.o 
+    cc -o edit main.o kbd.o command.o display.o
+
+main.o: main.c defs.h
+    cc -c main.c
+
+kbd.o: kbd.c defs.h command.h
+    cc -c kbd.c
+
+command.o: command.c defs.h command.h
+    cc -c command.c
+
+display.o: display.c defs.h
+    cc -c display.c
+
+clean:
+    rm edit main.o kbd.o command.o display.o
+
+.PHONY: edit clean
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-7" class="outline-3">
+<h3 id="sec-2-7"><span class="section-number-3">2.7</span> 链接</h3>
+<div class="outline-text-3" id="text-2-7">
+<ol class="org-ol">
+<li><a href="https://gist.github.com/isaacs/62a2d1825d04437c6f08">Makefile</a>
+</li>
+<li><a href="https://www.gnu.org/software/make/manual/make.html">GNU make</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2017-01-23 Mon 14:12</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

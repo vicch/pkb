@@ -1,0 +1,974 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Programming Language Scrap</title>
+<!-- 2016-12-15 Thu 10:38 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
+
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Programming Language Scrap</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. 几种计算机语言的评价</a>
+<ul>
+<li><a href="#sec-1-1">1.1. C</a></li>
+<li><a href="#sec-1-2">1.2. C++</a></li>
+<li><a href="#sec-1-3">1.3. Shell</a></li>
+<li><a href="#sec-1-4">1.4. Perl</a></li>
+<li><a href="#sec-1-5">1.5. Python</a></li>
+<li><a href="#sec-1-6">1.6. Java</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. 符号：抽象、语义</a>
+<ul>
+<li><a href="#sec-2-1">2.1. 前言</a></li>
+<li><a href="#sec-2-2">2.2. 抽象</a></li>
+<li><a href="#sec-2-3">2.3. 语义</a></li>
+<li><a href="#sec-2-4">2.4. λ 演算：严格的函数运算</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. 函数式编程初探</a>
+<ul>
+<li><a href="#sec-3-1">3.1. 定义</a></li>
+<li><a href="#sec-3-2">3.2. 特点</a>
+<ul>
+<li><a href="#sec-3-2-1">3.2.1. 函数是「第一等公民」</a></li>
+<li><a href="#sec-3-2-2">3.2.2. 只用「表达式」，不用「语句」</a></li>
+<li><a href="#sec-3-2-3">3.2.3. 没有「副作用」</a></li>
+<li><a href="#sec-3-2-4">3.2.4. 不修改状态</a></li>
+<li><a href="#sec-3-2-5">3.2.5. 引用透明</a></li>
+</ul>
+</li>
+<li><a href="#sec-3-3">3.3. 意义</a>
+<ul>
+<li><a href="#sec-3-3-1">3.3.1. 代码简洁，开发快速</a></li>
+<li><a href="#sec-3-3-2">3.3.2. 接近自然语言，易于理解</a></li>
+<li><a href="#sec-3-3-3">3.3.3. 更方便的代码管理</a></li>
+<li><a href="#sec-3-3-4">3.3.4. 易于「并发编程」</a></li>
+<li><a href="#sec-3-3-5">3.3.5. 代码的热升级</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-4">4. Functors, Applicatives, And Monads (in progress)</a>
+<ul>
+<li><a href="#sec-4-1">4.1. Functor</a>
+<ul>
+<li><a href="#sec-4-1-1">4.1.1. <code>fmap</code></a></li>
+<li><a href="#sec-4-1-2">4.1.2. <code>Maybe</code></a></li>
+<li><a href="#sec-4-1-3">4.1.3. List</a></li>
+<li><a href="#sec-4-1-4">4.1.4. Function</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 几种计算机语言的评价</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2010/03/programming_language_evaluations_revised.html">Source</a>
+</p>
+
+<p>
+编程新手都有一个同样的问题：「我应该学习哪一种语言？」。
+</p>
+
+<p>
+《Unix 编程艺术》（Eric Raymond 著）第十四章，对各种语言进行了评价，正好可以用来回答这个问题。下面整理了六种主要计算机语言的优缺点。读完就会知道，对于不同的任务，应该选择哪一种语言了。
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> C</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+C 语言的优点是，运行效率高（接近机器语言）。它特别适用于以下几种程序：
+</p>
+
+<ul class="org-ul">
+<li>对运行速度要求很高的程序。
+</li>
+<li>与操作系统内核关系密切的程序。
+</li>
+<li>必须在多个操作系统上移植的程序。
+</li>
+</ul>
+
+<p>
+除此之外，学习 C 语言有一个最大的理由，那就是它能帮助我们学会 <span class="underline">在硬件层次上考虑问题</span> 。如果你想以编程作为自己的人生事业，C 是一定要学习的。
+</p>
+
+<p>
+C 的最大缺点是，在编程过程中，你不得不花很多时间，考虑与你要解决的问题完全无关、且非常复杂的硬件资源管理问题。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> C++</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+C++ 在 80 年代中期推出，支持 OO，原意是作为 C 语言的取代者。但是它没能做到做一点，原因有以下几个：
+</p>
+
+<ul class="org-ul">
+<li>它也没有解决内存管理问题，虽然比 C 有所改善。
+</li>
+<li><span class="underline">标准化不成功。各个编译器都只支持自己选择的一个子集，导致跨平台性不如 C。</span>
+</li>
+<li><span class="underline">过分精细和复杂。C++ 的复杂度，超过了 C 和 OO 的复杂度之和。</span>
+</li>
+<li>OO 并没有带来多少优势，反而带来了一些副作用，比如厚重的胶合层和庞大的代码体积。
+</li>
+</ul>
+
+<p>
+总的来说，C++ 的优势还是程序效率，以及面向对象编程能力，糟糕之处是它 <span class="underline">鼓励复杂的设计</span> 。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Shell</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Shell 程序写起来很容易，对于简单的任务，开发速度很快。
+</p>
+
+<p>
+当程序变大时，它就不太适合了，很难维护，而且将变得非常专用（只能在你自己的机器上使用），因为 Shell 必须调用各种外部程序，无法保证每一台机器都同样安装了这些程序。另外，Shell 只能在 Unix 上使用，无法跨平台。
+</p>
+
+<p>
+最常见的 Shell 是 bash，它的一些语法规则很混乱，会产生很难阅读的代码。
+</p>
+
+<p>
+Shell 的最佳用途如下：
+</p>
+
+<ul class="org-ul">
+<li>执行简单的系统管理任务。
+</li>
+<li>编写系统启动时的初始化脚本。
+</li>
+<li>作为其他语言开发的程序的包装器。
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Perl</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+Perl 发布于 1987 年，基本上就是一个增强的 Shell。
+</p>
+
+<p>
+它的最大长处是强劲的 <span class="underline">文本处理能力，无与伦比的正则表达式支持，而且有全套 Unix API 的内部支持</span> ，显著减少了对 C 的需求。
+</p>
+
+<p>
+Perl 的主要缺点是某些部分设计得非常丑陋，且无法补救，某些部分也过于复杂。当程序规模增大时，必须严格遵守约定，才能保证模块化和设计的可控性，难于维护。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> Python</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+Python 发布于 1991 年，是一种与 C 语言紧密集成的脚本语言。
+</p>
+
+<p>
+Python 的优点是非常干净优雅，鼓励清晰易读的代码，易学易用；提供了面向对象编程的可能，但并不把这个选择强加于设计者；具有出色的模块化特性，同 Java 一样，适合用来做需要协同开发的大型复杂项目。在很多方面，它都比 Java 简单。此外，Python 标准中包括了对许多网络协议的支持，因此也很适合网络管理任务。
+</p>
+
+<p>
+Python 的缺点主要是效率低下，速度缓慢。在执行速度上，它不仅无法与 C/C++ 竞争，而且也不如其他主要的脚本语言。但是，这其实并不是一个严重的问题，有时网络或磁盘的延迟，会完全抵消 Python 本身消耗的时间。而且 <span class="underline">因为 Python 特别容易和 C 结合起来，因此性能关键的 Python 模块，可以很方便地转化成 C 语言来提高速度</span> 。
+</p>
+
+<p>
+总的来说，对于小型项目和大量依靠正则表达式的项目，Python 不如 Perl 的表达能力强。至于更小的项目，Python 则是大材小用，Shell 也许更适合。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> Java</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+Java 发布于 1995 年，设计目标有两个。一个是「write once, run anywhere」（一次编写，到处运行），即不依赖于特定的平台；另一个是在网页中嵌入交互程序（applet），可以在任何一个浏览器中运行。由于它的所有者 Sun 公司的一系列失误，第一个目标并没有完全实现，第二个目标则是彻底失败。但是 Java 依然在系统编程和应用编程方面非常强大，足以挑战 C 和 C++。
+</p>
+
+<p>
+Java 的优点是比 C++ 小巧简单，可以自动管理内存，支持类似 C 的语法和 OO 编程，与 C 程序的结合也很好。
+</p>
+
+<p>
+Java 的缺点是某些部分过于复杂，比如内部类和匿名类的运用会产生很混乱费解的代码；某些部分功能不完善，也无法利用操作系统提供的功能接口，比如在 Java 中读取和处理文本文件，并不像其他语言那样容易。此外，Java 配置环境和版本的混乱，也让人很头疼。
+</p>
+
+<p>
+总的来说，除了系统编程和某些对运行速度要求很高的编程之外，Java 都是比 C++ 更好的选择。如果和 Python 相比，Java 可能在大型项目上有优势，但是也不是绝对的。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 符号：抽象、语义</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<a href="http://mp.weixin.qq.com/s?__biz=MzIwMDgyNzUzNw==&mid=2247483658&idx=1&sn=2dde89033d2fef0cba307db9b8b5489e&scene=0#wechat_redirect">Source</a>
+</p>
+
+<blockquote>
+<p>
+符号常常比发明它们的数学家更能推广。— F·克莱茵
+</p>
+</blockquote>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 前言</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+一个语言系统就是一个符号系统，其中不同符号的组合便是语言表达式。符号的出现增加了人们的思维能力，正是基于符号表达才使得逻辑推演得以达成。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> 抽象</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+数学在已有符号上抽象出简单接口，以表示不同的形式。比如数学中的求和符号正是由希腊字母演化而来：
+</p>
+
+<p>
+$$\Sigma \rightarrow \sum\limits_{i=1}^n X_i = X_1 + X_2 + X_3 + \dotsc$$
+</p>
+
+<p>
+软件开发中的接口设计和算法实现时，同样可以类比数学中的抽象，来确保整个系统的可扩展性。
+</p>
+
+<p>
+数学中用简单的记号表示复杂的事物，然而一旦符号越来越多，各立山头，而不属于一个统一的形式化系统，数学、物理中的符号抽象和表达经常不知所以，导致语义混乱。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> 语义</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+数学中令人误解的函数语义。我们经常用：
+</p>
+
+<p>
+$$y = x^2 - 2x + 1$$
+</p>
+
+<p>
+表示 \(y\) 是 \(x\) 的函数。但是，如果我们令：
+</p>
+
+<p>
+$$\begin{align} & f(x) = x^2 - 2x + 1 \\ & g(x) = x^2 \end{align}$$
+</p>
+
+<p>
+那么可能是 $y = f(x)$，也可能是 $y = g(x-1)$，而这时 \(y\) 实际上是 $x-1$ 的函数。
+</p>
+
+<p>
+为什么会出现这种混淆？
+</p>
+
+<ol class="org-ol">
+<li>因为 <span class="underline">传统的函数表示方法中没有显式给出函数的自变量</span> ，即使是后面两种表达方法，也是把函数体和自变量的说明分开了，这种表达方式依然有问题。
+</li>
+<li>传统数学中对函数的定义和调用不加严格区分 $x^2 - 2x + 1$ 既可以看成是函数 $f(x)$ 的定义，又可以看成是函数 $g(x)$ 对变量 $x-1$ 的调用。
+</li>
+</ol>
+
+<p>
+<span class="underline">定义和调用在概念上有很大区别，传统函数表示方法很难表达清楚这种函数结构层次上的表化</span> ，更不用说多变量函数以及泛函了。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> λ 演算：严格的函数运算</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+丘奇等数学家给出了解决方法：λ 演算。基本定义形式如下：
+</p>
+
+<p>
+$$\lambda \langle\text{variable}\rangle. \langle\text{expression}\rangle$$
+</p>
+
+<p>
+用这种方法定义的函数叫 <del>λ 表达式</del> 。
+</p>
+
+<p>
+比如：$&lambda; x. x^2 + 2x + 1$，其中显式地指出了 \(x\) 是变量。
+</p>
+
+<p>
+当将 λ 表达式定义应用于具体的变量值时，需要用一对括号把表达式括起来：
+</p>
+
+<p>
+$$(\lambda \langle\text{variable}\rangle. \langle\text{expression}\rangle)\langle\text{argument}\rangle$$
+</p>
+
+<p>
+比如：$(\lambda x. x^2 + 2x + 1)1$
+</p>
+
+<p>
+应用过程是把变量值赋值给表达式中的 \(x\) ，过程如下：
+</p>
+
+<p>
+$$(\lambda x. x^2 - 2*x + 1)1 = 1 - 2*1 + 1 = 0$$
+</p>
+
+<p>
+这其实就对应着程序语言中的函数定义、参数传递、函数调用。函数式编程语言 Lisp 表达的也正是这种形式。
+</p>
+
+<p>
+如果有多个变量，应该按照固定的顺序排列和传递，比如：
+</p>
+
+<p>
+$$\lambda x. \lambda y. x + y$$
+</p>
+
+<p>
+调用过程：
+</p>
+
+<p>
+$$((\lambda x. \lambda y. 2*x + y)1)2 = (\lambda y. 2 + y)2 = 4$$
+</p>
+
+<p>
+计算顺序是固定的，从里层到外层，一层层归约，如果改变变量的次序，会影响返回值，比如：
+</p>
+
+<p>
+$$((\lambda y. \lambda x. 2*x + y)1)2 = (\lambda x. 2*x + 1)2 = 5$$
+</p>
+
+<p>
+这便是语义。
+</p>
+
+<p>
+<span class="underline">函数的返回值也可以是一个函数</span> ，这样不同函数的层次问题也解决了，也就是传统数学中高阶函数、泛函的表示。在函数式编程语言中，函数是一等公民与此也是一致的。
+</p>
+
+<p>
+λ 演算之所以被程序语言学家如此推崇，正是因为 <span class="underline">λ 演算系统的构建过程就是一个程序语言从无到有的构建过程</span> ，整个系统中任何一个复杂的 λ 表达式都是由：λ 抽象、应用和括号，粘合在一起的。
+</p>
+
+<p>
+下面给出 Scheme 语言对数学中求和函数的定义和调用形式，来结束吧：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-scheme">(<span class="org-keyword">define</span> <span class="org-function-name">sum</span>
+    (<span class="org-keyword">lambda</span> (L)
+        (<span class="org-keyword">cond</span>
+            ((eqv? L '())0)
+            (<span class="org-keyword">else</span> (+ (car L) (sum (cdr L))))
+        )
+    )
+)
+
+(sum '(1 2 3))
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 函数式编程初探</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2012/04/functional_programming.html">Source</a>
+</p>
+
+<p>
+诞生 50 多年之后，函数式编程（functional programming）开始获得越来越多的关注。不仅最古老的函数式语言 Lisp 重获青春，而且 <span class="underline">新的函数式语言层出不穷，比如 Erlang、clojure、Scala、F# 等。目前最当红的 Python、Ruby、Javascript，对函数式编程的支持都很强，就连老牌的面向对象的 Java、面向过程的 PHP，都忙不迭地加入对匿名函数的支持。</span> 越来越多的迹象表明，函数式编程已经不再是学术界的最爱，开始大踏步地在业界投入实用。也许继「面向对象编程」之后，「函数式编程」会成为下一个编程的主流范式（paradigm）。未来的程序员恐怕或多或少都必须懂一点。
+</p>
+
+<p>
+但是，「函数式编程」看上去比较难，缺乏通俗的入门教程，各种介绍文章都充斥着数学符号和专用术语，让人读了如坠云雾。就连最基本的问题「什么是函数式编程」，网上都搜不到易懂的回答。
+</p>
+
+<p>
+下面是我的「函数式编程」学习笔记，内容不涉及数学（我也不懂 Lambda Calculus），也不涉及高级特性（比如 lazy evaluation 和 currying），只求尽量简单通俗地整理和表达我所理解的「函数式编程」以及它的意义。我主要参考了 Slava Akhmechet 的 <a href="http://www.defmacro.org/ramblings/fp.html">Functional Programming For The Rest of Us</a>。
+</p>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> 定义</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+简单说，「函数式编程」是一种编程范式"（programming paradigm），也就是如何编写程序的方法论。它 <span class="underline">属于「结构化编程」的一种，主要思想是把运算过程尽量写成一系列嵌套的函数调用。</span>
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">举例来说，现在有一个数学表达式：</label>
+<pre class="src src-code">(1 + 2) * 3 - 4
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">传统的过程式编程，可能这样写：</label>
+<pre class="src src-js"><span class="org-keyword">var</span> <span class="org-variable-name">a</span> = 1 + 2;
+<span class="org-keyword">var</span> <span class="org-variable-name">b</span> = a * 3;
+<span class="org-keyword">var</span> <span class="org-variable-name">c</span> = b - 4;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">函数式编程要求使用函数，我们可以把运算过程定义（<a href="https://lostechies.com/derickbailey/2012/01/24/some-thoughts-on-functional-javascript/">Some Thoughts On Functional JavaScript</a>）为不同的函数，然后写成这样：</label>
+<pre class="src src-js"><span class="org-keyword">var</span> <span class="org-variable-name">result</span> = subtract(multiply(add(1, 2), 3), 4);
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> 特点</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+函数式编程具有五个鲜明的特点。
+</p>
+</div>
+
+<div id="outline-container-sec-3-2-1" class="outline-4">
+<h4 id="sec-3-2-1"><span class="section-number-4">3.2.1</span> 函数是「第一等公民」</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<p>
+所谓「第一等公民」（<a href="https://en.wikipedia.org/wiki/First-class_function">first-class function</a>），指的是 <span class="underline">函数与其他数据类型地位平等，可以赋值给其他变量，也可以作为参数、传入另一个函数，或者作为其他函数的返回值。</span>
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">举例来说，下面的 <code>print</code> 变量就是一个函数，可以作为另一个函数的参数。</label>
+<pre class="src src-js"><span class="org-keyword">var</span> <span class="org-variable-name">print</span> = <span class="org-keyword">function</span>(<span class="org-variable-name">i</span>) { console.log(i); };
+[1, 2, 3].forEach(print);
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-2-2" class="outline-4">
+<h4 id="sec-3-2-2"><span class="section-number-4">3.2.2</span> 只用「表达式」，不用「语句」</h4>
+<div class="outline-text-4" id="text-3-2-2">
+<p>
+<span class="underline">「表达式」（expression）是一个单纯的运算过程，总是有返回值；「语句」（statement）是执行某种操作，没有返回值。函数式编程要求，只使用表达式，不使用语句。</span> 也就是说，每一步都是单纯的运算，而且都有返回值。
+</p>
+
+<p>
+原因是，函数式编程的开发动机，一开始就是为了处理运算（computation），不考虑系统的读写（I/O）。 <span class="underline">语句属于对系统的读写操作</span> ，所以就被排斥在外。当然，实际应用中，不做 I/O 是不可能的。因此，编程过程中， <span class="underline">函数式编程只要求把 I/O 限制到最小，不要有不必要的读写行为，保持计算过程的单纯性。</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-2-3" class="outline-4">
+<h4 id="sec-3-2-3"><span class="section-number-4">3.2.3</span> 没有「副作用」</h4>
+<div class="outline-text-4" id="text-3-2-3">
+<p>
+所谓「副作用」（<a href="https://en.wikipedia.org/wiki/Side_effect_(computer_science)">side effect</a>），指的是函数内部与外部互动（最典型的情况，就是修改全局变量的值），产生运算以外的其他结果。 <span class="underline">函数式编程强调没有「副作用」，意味着函数要保持独立，所有功能就是返回一个新的值，没有其他行为，尤其是不得修改外部变量的值。</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-2-4" class="outline-4">
+<h4 id="sec-3-2-4"><span class="section-number-4">3.2.4</span> 不修改状态</h4>
+<div class="outline-text-4" id="text-3-2-4">
+<p>
+上一点已经提到，函数式编程只是返回新的值，不修改系统变量。因此，不修改变量，也是它的一个重要特点。 在其他类型的语言中， <span class="underline">变量往往用来保存「状态」（state）。不修改变量，意味着状态不能保存在变量中。函数式编程使用参数保存状态，</span> 最好的例子就是递归。下面的代码是一个将字符串逆序排列的函数，它演示了不同的参数如何决定了运算所处的「状态」。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-js"><span class="org-keyword">function</span> <span class="org-function-name">reverse</span>(<span class="org-variable-name">string</span>) {
+    <span class="org-keyword">if</span> (string.length == 0) {
+        <span class="org-keyword">return</span> string;
+    } <span class="org-keyword">else</span> {
+        <span class="org-keyword">return</span> reverse(string.substring(1, string.length)) + string.substring(0, 1);
+    }
+}
+</pre>
+</div>
+
+<p>
+<span class="underline">由于使用了递归，函数式语言的运行速度比较慢，</span> 这是它长期不能在业界推广的主要原因。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-2-5" class="outline-4">
+<h4 id="sec-3-2-5"><span class="section-number-4">3.2.5</span> 引用透明</h4>
+<div class="outline-text-4" id="text-3-2-5">
+<p>
+<span class="underline">引用透明（referential transparency），指的是函数的运行不依赖于外部变量或「状态」，只依赖于输入的参数，任何时候只要参数相同，引用函数所得到的返回值总是相同的。</span> 有了前面的第三点和第四点，这点是很显然的。其他类型的语言，函数的返回值往往与系统状态有关，不同的状态之下，返回值是不一样的。这就叫「引用不透明」，很不利于观察和理解程序的行为。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> 意义</h3>
+<div class="outline-text-3" id="text-3-3">
+</div><div id="outline-container-sec-3-3-1" class="outline-4">
+<h4 id="sec-3-3-1"><span class="section-number-4">3.3.1</span> 代码简洁，开发快速</h4>
+<div class="outline-text-4" id="text-3-3-1">
+<p>
+函数式编程大量使用函数，减少了代码的重复，因此程序比较短，开发速度较快。
+</p>
+
+<p>
+Paul Graham 在《黑客与画家》一书中写道：同样功能的程序，极端情况下，Lisp 代码的长度可能是 C 代码的二十分之一。如果程序员每天所写的代码行数基本相同，这就意味着，「C 语言需要一年时间完成开发某个功能，Lisp 语言只需要不到3 个星期。反过来说，如果某个新功能，Lisp 语言完成开发需要三个月，C 语言需要写五年。」当然，这样的对比故意夸大了差异，但是「在一个高度竞争的市场中，即使开发速度只相差两三倍，也足以使得你永远处在落后的位置。」
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-3-2" class="outline-4">
+<h4 id="sec-3-3-2"><span class="section-number-4">3.3.2</span> 接近自然语言，易于理解</h4>
+<div class="outline-text-4" id="text-3-3-2">
+<div class="org-src-container">
+<label class="org-src-name">前文将表达式 <code>(1 + 2) * 3 - 4</code> 写成函数式语言：</label>
+<pre class="src src-js">subtract(multiply(add(1, 2), 3), 4)
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">对它进行变形，基本就是自然语言的表达了：</label>
+<pre class="src src-js">add(1, 2).multiply(3).subtract(4)
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">另外的例子：</label>
+<pre class="src src-js">merge([1, 2], [3, 4]).sort().search(<span class="org-string">"2"</span>)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-3-3" class="outline-4">
+<h4 id="sec-3-3-3"><span class="section-number-4">3.3.3</span> 更方便的代码管理</h4>
+<div class="outline-text-4" id="text-3-3-3">
+<p>
+函数式编程不依赖、也不会改变外界的状态，只要给定输入参数，返回的结果必定相同。因此， <span class="underline">每一个函数都可以被看做独立单元，很有利于进行单元测试和 debug，以及模块化组合。</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-3-4" class="outline-4">
+<h4 id="sec-3-3-4"><span class="section-number-4">3.3.4</span> 易于「并发编程」</h4>
+<div class="outline-text-4" id="text-3-3-4">
+<p>
+函数式编程不需要考虑死锁（deadlock），因为 <span class="underline">不修改变量，所以不存在「锁」线程的问题。不必担心一个线程的数据，被另一个线程修改，</span> 所以可以很放心地把工作分摊到多个线程，部署并发编程（concurrency）。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-js"><span class="org-keyword">var</span> <span class="org-variable-name">s1</span> = op1();
+<span class="org-keyword">var</span> <span class="org-variable-name">s2</span> = op2();
+<span class="org-keyword">var</span> <span class="org-variable-name">s3</span> = concat(s1, s2);
+</pre>
+</div>
+
+<p>
+由于 <code>s1</code> 和 <code>s2</code> 互不干扰，不会修改变量，谁先执行是无所谓的，所以可以放心地增加线程，把它们分配在两个线程上完成。其他类型的语言就做不到这一点，因为 <code>s1</code> 可能会修改系统状态，而 <code>s2</code> 可能会用到这些状态，所以必须保证 <code>s2</code> 在 <code>s1</code> 之后运行，自然也就不能部署到其他线程上了。
+</p>
+
+<p>
+多核 CPU 是将来的潮流，所以函数式编程的这个特性非常重要。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-3-5" class="outline-4">
+<h4 id="sec-3-3-5"><span class="section-number-4">3.3.5</span> 代码的热升级</h4>
+<div class="outline-text-4" id="text-3-3-5">
+<p>
+函数式编程没有副作用，只要保证接口不变，内部实现是外部无关的。所以， <span class="underline">可以在运行状态下直接升级代码，不需要重启，也不需要停机。</span> Erlang 语言早就证明了这一点，它是瑞典爱立信公司为了管理电话系统而开发的，电话系统的升级当然是不能停机的。
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Functors, Applicatives, And Monads (in progress)</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<a href="http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html">Source</a>
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">A simple value:</label>
+<pre class="src src-code">2
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">To apply a function to this value:</label>
+<pre class="src src-code">2 -&gt; (+3)2 -&gt; 5
+</pre>
+</div>
+
+<p>
+Let's extend this by saying that any <span class="underline">value can be in a context</span> .
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">Think of a context as a box that you can put a value in:</label>
+<pre class="src src-code">[2] = Just 2 &lt;- Value and context
+</pre>
+</div>
+
+<p>
+Applying a function to this value will <span class="underline">return different results depending on the context</span> . This is the idea that Functors, Applicatives, Monads, Arrows etc are all based on.
+</p>
+</div>
+
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Functor</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+<code>Functor</code> is a <a href="http://learnyouahaskell.com/types-and-typeclasses">typeclass</a>. <span class="underline">A <code>Functor</code> is any data type that defines how <code>fmap</code> applies to it.</span>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-haskell">class Functor f where    // To make data type f a Functor
+    fmap::(a-&gt;b)-&gt;fa-&gt;fb // Data type f needs to define how fmap works with it
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-4-1-1" class="outline-4">
+<h4 id="sec-4-1-1"><span class="section-number-4">4.1.1</span> <code>fmap</code></h4>
+<div class="outline-text-4" id="text-4-1-1">
+<p>
+How <code>fmap</code> works:
+</p>
+
+
+<div class="figure">
+<p><img src="../images/programming_language_scrap/01.png" alt="01.png" />
+</p>
+</div>
+
+<p>
+When a value is wrapped in a context, you can't apply a normal function to it. This is where <code>fmap</code> comes in. <span class="underline"><code>fmap</code> knows how to apply functions to values that are wrapped in a context.</span>
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">For example, to apply <code>(+3)</code> to <code>Just 2</code>:</label>
+<pre class="src src-haskell">&gt; fmap (+3) (Just 2)
+Just 5
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/programming_language_scrap/03.png" alt="03.png" />
+</p>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">To apply <code>(+3)</code> to <code>Nothing</code>:</label>
+<pre class="src src-haskell">&gt; fmap (+3) Nothing
+Nothing
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/programming_language_scrap/04.png" alt="04.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-1-2" class="outline-4">
+<h4 id="sec-4-1-2"><span class="section-number-4">4.1.2</span> <code>Maybe</code></h4>
+<div class="outline-text-4" id="text-4-1-2">
+<div class="org-src-container">
+<label class="org-src-name">The <code>Maybe</code> data type defines two related contexts:</label>
+<pre class="src src-haskell">data Maybe a = Nothing | Just a
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><code>Maybe</code> specifies how <code>fmap</code> applies to <code>Just</code> and <code>Nothing</code>:</label>
+<pre class="src src-haskell">instance Functor Maybe where
+    fmap func (Just val) = Just (func val)
+    fmap func Nothing = Nothing
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">How to work with a database record in a language without <code>Maybe</code>:</label>
+<pre class="src src-python"><span class="org-variable-name">post</span> = Post.find_by_id(1)
+<span class="org-keyword">if</span> post:
+    <span class="org-keyword">return</span> post.title
+<span class="org-keyword">else</span>
+    <span class="org-keyword">return</span> nil
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">In Haskell:</label>
+<pre class="src src-haskell">fmap (getPostTitle) (findPost 1)
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><code>&lt;$&gt;</code> is the infix version of <code>fmap</code>:</label>
+<pre class="src src-haskell">getPostTitle &lt;$&gt; (findPost 1)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4-1-3" class="outline-4">
+<h4 id="sec-4-1-3"><span class="section-number-4">4.1.3</span> List</h4>
+<div class="outline-text-4" id="text-4-1-3">
+<div class="org-src-container">
+<label class="org-src-name">Lists are functors too. The definition:</label>
+<pre class="src src-haskell">instance Functor [] where
+    fmap = map
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/programming_language_scrap/05.png" alt="05.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-1-4" class="outline-4">
+<h4 id="sec-4-1-4"><span class="section-number-4">4.1.4</span> Function</h4>
+<div class="outline-text-4" id="text-4-1-4">
+<div class="org-src-container">
+<label class="org-src-name">Functions are Functors too:</label>
+<pre class="src src-haskell">instance Functor ((-&gt;) r) where
+    fmap f g = f . g
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">To apply a function to another function:</label>
+<pre class="src src-haskell">&gt; import Control.Applicative
+&gt; let foo = fmap (+3) (+2)
+&gt; foo 10
+15
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/programming_language_scrap/06.png" alt="06.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2016-12-15 Thu 10:38</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

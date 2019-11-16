@@ -1,0 +1,1307 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: C++ Library
+
+* C vs C++
+
+| =<string.h>= | C 库                 |
+|--------------+----------------------|
+| =<cstring>=  | C 库（用于 C++ 中）  |
+|--------------+----------------------|
+| =<string>=   | C++ =std::string= 类 |
+
+* C Library
+** =<math>=
+
+#+CAPTION: Macros
+| =M_PI= | $\pi$   |
+|--------+---------|
+| =M_E=  | $e$     |
+
+http://pubs.opengroup.org/onlinepubs/7908799/xsh/math.h.html  
+
+** =<cstring>=
+
+| =strlen()=  |   |
+|-------------+---|
+| *复制*      |   |
+|-------------+---|
+| =strcpy()=  |   |
+|-------------+---|
+| *比较*      |   |
+|-------------+---|
+| =strncmp()= |   |
+
+*** =strcpy()=
+
+#+BEGIN_SRC cpp
+char * strcpy (
+  char *       destination
+, const char * source
+);
+#+END_SRC
+
+*** =strlen()=
+
+#+BEGIN_SRC cpp
+size_t strlen ( const char * str );
+#+END_SRC
+
+=strlen()= 不包含字符串结尾 null 字符，所以存储字符串需要的长度是 =strlen()= 结果加 1。
+
+*** =strncmp()=
+
+#+BEGIN_SRC cpp
+int strncmp (
+  const char * str1
+, const char * str2
+, size_t       num
+);
+#+END_SRC
+
+比较两个字符串直到
+- 出现不同的字符
+- 遇到 null 字符
+- 达到最大字符数
+
+| =str1= |                    |                                        |
+|--------+--------------------+----------------------------------------|
+| =str2= |                    |                                        |
+|--------+--------------------+----------------------------------------|
+| =num=  | =unsigned integer= | 比较的最大字符数                       |
+|--------+--------------------+----------------------------------------|
+| 返回值 | =0=                | 两个字符串相同                         |
+|        | =>0=               | 第一个不匹配的字符 =str1= 比 =str2= 大 |
+|        | =<0=               | 第一个不匹配的字符 =str1= 比 =str2= 小 |
+
+** =<cstdio>=
+
+| =printf()= |   |
+|------------+---|
+| =scanf()=  |   |
+
+*** 占位符
+
+| =%c=              | char          |
+|-------------------+---------------|
+| =%s=              | string        |
+|-------------------+---------------|
+| =%d= =%i=         | int           |
+|-------------------+---------------|
+| =%ld=             | long int      |
+|-------------------+---------------|
+| =%lld=            | long long int |
+|-------------------+---------------|
+| =%.<precision>f=  | float         |
+|-------------------+---------------|
+| =%lf=             | double        |
+|-------------------+---------------|
+| =%<width><type>=  | 左填充        |
+|-------------------+---------------|
+| =%-<width><type>= | 右填充        |
+
+*** =printf()=
+
+#+BEGIN_SRC cpp
+int printf ( const char* format, ... );
+#+END_SRC
+
+*** =scanf()=
+
+#+BEGIN_SRC cpp
+int scanf ( const char* format, ... );
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC cpp
+char c;
+double d;
+scanf("%c %lf", &c, &d);
+#+END_SRC
+
+** =<cstdlib>=
+
+#+CAPTION: 伪随机序列
+ | [[rand][=rand()=]]  | Generate random number             |
+|-----------+------------------------------------|
+| [[srand][=srand()=]] | Initialize random number generator |
+
+#+CAPTION: 环境
+| =abort()= |   |
+|-----------+---|
+| =exit()=  |   |
+
+*** =rand()=
+<<rand>>
+
+Returns a pseudo-random integral number in the range between 0 and =RAND_MAX=.
+
+#+BEGIN_SRC cpp
+int rand ( void );
+#+END_SRC
+
+#+CAPTION: 示例 1
+#+BEGIN_SRC cpp
+#include <stdlib.h>
+
+v1 = rand() % 100;       // v1 in the range 0 to 99
+v2 = rand() % 100 + 1;   // v2 in the range 1 to 100
+v3 = rand() % 30 + 1985; // v3 in the range 1985-2014
+#+END_SRC
+
+#+CAPTION: 示例 2
+#+BEGIN_SRC cpp
+#include <stdio.h>  /* printf, scanf, puts, NULL */
+#include <stdlib.h> /* srand, rand */
+#include <time.h>   /* time */
+
+int main ()
+{
+  int iSecret, iGuess;
+
+  /* initialize random seed: */
+  srand(time(NULL));
+
+  /* generate secret number between 1 and 10: */
+  iSecret = rand() % 10 + 1;
+
+  do {
+    printf("Guess the number (1 to 10): ");
+    scanf("%d", &iGuess);
+    if (iSecret < iGuess) puts ("The secret number is lower");
+    else if (iSecret > iGuess) puts ("The secret number is higher");
+  } while (iSecret != iGuess);
+
+  puts ("Congratulations!");
+  return 0;
+}
+#+END_SRC
+
+*** =srand()=
+<<srand>>
+
+The pseudo-random number generator is initialized using the argument passed as =seed=.
+
+For every different =seed= used, the pseudo-random number generator can be expected to generate a different succession of results in the subsequent calls to =rand=.
+
+Two different initializations with the same =seed= will generate the same succession of results in subsequent calls to =rand=.
+
+If =seed= is set to =1=, the generator is reinitialized to its initial value and produces the same values as before any call to =rand= or =srand=.
+
+#+BEGIN_SRC cpp
+void srand ( unsigned int seed );
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC cpp
+#include <stdio.h>  /* printf, NULL */
+#include <stdlib.h> /* srand, rand */
+#include <time.h>   /* time */
+
+int main ()
+{
+  printf ("First number: %d\n", rand() % 100);
+  srand (time(NULL));
+  printf ("Random number: %d\n", rand() % 100);
+  srand (1);
+  printf ("Again the first number: %d\n", rand() % 100);
+
+  return 0;
+}
+#+END_SRC
+
+#+CAPTION: 示例输出
+#+BEGIN_SRC text
+First number: 41
+Random number: 13
+Again the first number: 41
+#+END_SRC
+
+*** =exit()=
+
+#+BEGIN_SRC cpp
+void exit ( int status )
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC cpp
+exit(0);
+#+END_SRC
+
+* C++ Library
+** =<algorithm>=
+
+| *比较* | [[algorithm_equal][=equal()=]]       |                                |
+|--------+-----------------+--------------------------------|
+| *排序* | [[algorithm_sort][=sort()=]]        |                                |
+|--------+-----------------+--------------------------------|
+| *查找* | [[algorithm_lower_bound][=lower_bound()=]] | 返回查找值或更大值出现的首位置 |
+|--------+-----------------+--------------------------------|
+|        | [[algorithm_upper_bound][=upper_bound()=]] | 返回更大值出现的首位置         |
+|--------+-----------------+--------------------------------|
+| *极值* | =min()=         |                                |
+|        | =max()=         |                                |
+|--------+-----------------+--------------------------------|
+|        | [[algorithn_min_element][=min_element()=]] |                                |
+|        | [[algorithn_max_element][=max_element()=]] |                                |
+
+*** =equal()=
+<<algorithm_equal>>
+
+#+BEGIN_SRC cpp
+template <class InputIterator1, class InputIterator2>
+bool equal (
+    InputIterator1 first1
+,   InputIterator1 last1
+,   InputIterator2 first2
+);
+
+template <class InputIterator1, class InputIterator2, class BinaryPredicate>
+bool equal (
+    InputIterator1 first1
+,   InputIterator1 last1
+,   InputIterator2 first2
+,   BinaryPredicate pred
+);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC cpp
+int a[] = {1, 3, 5, 7, 9};
+int b[] = {1, 3, 5, 2, 4};
+vector<int> c(a, a + 5);
+
+cout << equal(a, a + 3, b) << endl;                 // 1
+cout << equal(a, a + 4, b) << endl;                 // 0
+cout << equal(c.begin(), c.begin() + 3, b) << endl; // 1
+cout << equal(c.begin(), c.end(), b) << endl;       // 0
+#+END_SRC
+
+*** =lower_bound()=
+<<algorithm_lower_bound>>
+
+#+BEGIN_SRC cpp
+ForwardIterator lower_bound (
+    ForwardIterator first
+,   ForwardIterator last
+,   const T& val
+);
+
+ForwardIterator lower_bound (
+    ForwardIterator first
+,   ForwardIterator last
+,   const T& val
+,   Compare comp
+);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC cpp
+int nums[] = {10,20,30,30,20,10,10,20};
+vector<int> vec(nums, nums + 8);
+sort(vec.begin(), vec.end());
+
+vector<int>::iterator low;
+low = lower_bound(vec.begin(), vec.end(), 20);
+cout << "lower bound at " << low - vec.begin() << endl;
+#+END_SRC
+
+*** =min_element()= =max_element()=
+<<algorithn_min_element>><<algorithn_max_element>>
+
+#+BEGIN_SRC cpp
+template <class ForwardIterator>
+ForwardIterator min_element (
+    ForwardIterator first
+,   ForwardIterator last
+);
+
+template <class ForwardIterator, class Compare>
+ForwardIterator min_element (
+    ForwardIterator first
+,   ForwardIterator last
+,   Compare comp
+);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC cpp
+int arr[5] = {3, 1, 4, 1, 5};
+int min = *min_element(arr, arr + 4);
+
+vector<int> vec{3, 1, 4, 1, 5};
+int min = *min_element(vec.begin(), vec.end());
+#+END_SRC
+
+*** =sort()=
+<<algorithm_sort>>
+
+#+BEGIN_SRC cpp
+void sort (
+    RandomAccessIterator first
+,   RandomAccessIterator last
+,[  Compare comp
+,]);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC cpp
+int nums[] = {32,71,12,45,26,80,53,33};
+vector<int> vec (nums, nums + 8);
+
+sort(vec.begin(), vec.begin());
+
+bool sortfunc (int i, int j) { return i < j; }
+sort(vec.begin(), vec.begin(), sortfunc);
+
+struct sortclass {
+    bool operator () (int i, int j) { return i < j;}
+} sortobj;
+sort(vec.begin(), vec.begin(), sortobj);
+#+END_SRC
+
+*** =upper_bound()=
+<<algorithm_lower_bound>>
+
+#+BEGIN_SRC cpp
+template <class ForwardIterator, class T>
+ForwardIterator upper_bound (
+    ForwardIterator first
+,   ForwardIterator last
+,   const T& val
+);
+
+template <class ForwardIterator, class T, class Compare>
+ForwardIterator upper_bound (
+    ForwardIterator first
+,   ForwardIterator last
+,   const T& val
+,   Compare comp
+);
+#+END_SRC
+
+** =<exception>=
+
+#+CAPTION: 衍生类型
+| =bad_alloc=         | =bad_array_new_length= |
+|---------------------+------------------------|
+| =bad_cast=          |                        |
+|---------------------+------------------------|
+| =bad_exception=     |                        |
+|---------------------+------------------------|
+| =bad_function_call= |                        |
+|---------------------+------------------------|
+| =bad_typeid=        |                        |
+|---------------------+------------------------|
+| =bad_weak_ptr=      |                        |
+|---------------------+------------------------|
+| =logic_error=       | =domain_error=         |
+|                     | =future_error=         |
+|                     | =invalid_argument=     |
+|                     | =length_error=         |
+|                     | =out_of_range=         |
+|---------------------+------------------------|
+| =runtime_error=     | =overflow_error=       |
+|                     | =range_error=          |
+|                     | =system_error=         |
+|                     | =underflow_error=      |
+
+#+CAPTION: 示例
+#+BEGIN_SRC cpp
+class Calculator {
+public:
+    int power(int n, int p) {
+        if (n < 0 || p < 0)
+            throw invalid_argument("n and p should be non-negative");
+        else
+            return pow(n, p);
+    }
+};
+#+END_SRC
+
+** =<numeric>=
+
+| =accumulate()= |   |
+|----------------+---|
+|                |   | 
+
+*** =accumulate()=
+
+#+BEGIN_SRC cpp
+// 求和：将 [first, last) 范围内的值累加到 init
+template <class InputIterator, class T>
+T accumulate (
+    InputIterator first
+,   InputIterator last
+,   T init
+);
+
+// 自定义
+template <class InputIterator, class T, class BinaryOperation>
+T accumulate (
+    InputIterator first
+,   InputIterator last
+,   T init
+,   BinaryOperation binary_op
+);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC cpp
+int myfunc(int x, int y) { return x + 2 * y; }
+
+struct myclass {
+	int operator () (int x, int y) { return x + 3 * y; }
+} myobject;
+
+int init = 100;
+int nums[] = {10, 20, 30};
+
+cout << accumulate(nums, nums + 3, init);               // 160 (100 + 10 + 20 + 30)
+cout << accumulate(nums, nums + 3, init, minus<int>()); // 40 (100 - 10 - 20 -30)
+cout << accumulate(nums, nums + 3, init, myfunc);       // 220 (100 + 20 + 40 + 60)
+cout << accumulate(nums, nums + 3, init, myobject);     // 280 (100 + 30 + 60 + 90)
+#+END_SRC
+
+** =<string>=
+
+| *长度* | =length()=  |                                  |
+|        | =size()=    |                                  |
+|--------+-------------+----------------------------------|
+| *迭代* | =begin()=   |                                  |
+|        | =end()=     |                                  |
+|--------+-------------+----------------------------------|
+|        | =rbegin()=  |                                  |
+|        | =rend()=    |                                  |
+|--------+-------------+----------------------------------|
+| *修改* | [[std_string_insert][=insert()=]]  |                                  |
+|--------+-------------+----------------------------------|
+|        | [[std_string_erase][=erase()=]]   |                                  |
+|--------+-------------+----------------------------------|
+|        | [[std_string_replace][=replace()=]] |                                  |
+|--------+-------------+----------------------------------|
+| *查找* | [[std_string_find][=find()=]]    |                                  |
+|--------+-------------+----------------------------------|
+| *重载* | [[string_getline][=getline()=]] | Get line from stream into string |
+|--------+-------------+----------------------------------|
+| *其他* | [[std_string_substr][=substr()=]]  |                                  |
+
+*** 迭代
+
+#+BEGIN_SRC cpp
+string s = "abc";
+for (char c: s)
+    cout << c << endl;
+#+END_SRC
+
+*** =erase=
+<<std_string_erase>>
+
+- Erases part of the string, reducing its length
+
+#+CAPTION: Sequence
+#+BEGIN_SRC cpp
+string& erase (
+  size_t pos = 0
+, size_t len = npos
+);
+#+END_SRC
+
+*** =find()=
+<<std_string_find>>
+
+Searches the string for the first occurrence of the sequence specified by its arguments.
+
+#+BEGIN_SRC cpp
+size_t find (
+  const string& str
+, size_t pos = 0
+) const noexcept;
+#+END_SRC
+
+*** =getline()=
+<<string_getline>>
+
+#+BEGIN_SRC cpp
+istream& getline (
+  istream& is
+, string&  str
+, char     delim
+);
+#+END_SRC
+
+*** =insert()=
+<<std_string_insert>>
+
+Inserts additional characters into the string right before the character indicated by =pos=.
+
+#+CAPTION: String
+#+BEGIN_SRC cpp
+string& insert (
+  size_t pos
+, const string& str
+);
+#+END_SRC
+
+#+CAPTION: Substring
+#+BEGIN_SRC cpp
+string& insert (
+  size_t pos
+, const string& str
+, size_t subpos
+, size_t sublen
+);
+#+END_SRC
+
+*** =rbegin()= =rend()=
+
+#+BEGIN_SRC cpp
+reverse_iterator rbegin();
+reverse_iterator rend();
+const_reverse_iterator rbegin() const;
+const_reverse_iterator rend() const;
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC cpp
+bool ends_with(const string& a, const string& b) {
+    if (b.size() > a.size()) return false;
+    return equal(b.rbegin(), b.rend(), a.rbegin());
+}
+
+cout << ends_with("abcd", "cd") << endl;  // 1
+cout << ends_with("abcd", "acd") << endl; // 0
+#+END_SRC
+
+*** =replace()=
+<<std_string_replace>>
+
+Replaces the portion of the string that begins at character =pos= and spans =len= characters by new contents.
+
+#+CAPTION: String
+#+BEGIN_SRC cpp
+string& replace (
+  size_t pos
+, size_t len
+, const string& str
+);
+#+END_SRC
+
+#+CAPTION: Substring
+#+BEGIN_SRC cpp
+string& replace (
+  size_t pos
+, size_t len
+, const string& str
+, size_t subpos
+, size_t sublen
+);
+#+END_SRC
+
+*** =substr()=
+<<std_string_substr>>
+
+Returns a newly constructed string object with its value initialized to a copy of a substring of this object.
+
+#+BEGIN_SRC cpp
+string substr (
+  size_t pos = 0
+, size_t len = npos
+) const;
+#+END_SRC
+
+** =<utility>=
+
+| =swap()= |   |
+|----------+---|
+|          |   |
+
+* Container
+
+| =<deque>=         | 双端队列     |
+|-------------------+--------------|
+| =<map>=           | 有序映射     |
+|-------------------+--------------|
+| =<queue>=         |              |
+|-------------------+--------------|
+| =<set>=           |              |
+|-------------------+--------------|
+| =<stack>=         |              |
+|-------------------+--------------|
+| =<unordered_map>= | 无序映射     |
+|-------------------+--------------|
+| =<vector>=        | 可变大小序列 |
+
+** =<deque>=
+
+| *Capacity*     |   |
+|----------------+---|
+| =size()=       |   |
+|----------------+---|
+| =empty()=      |   |
+|----------------+---|
+| *Modifier*     |   |
+|----------------+---|
+| =push_back()=  |   |
+|----------------+---|
+| =push_front()= |   |
+|----------------+---|
+| =pop_back()=   |   |
+|----------------+---|
+| =pop_front()=  |   |
+
+** =<map>=
+
+由 BST 实现，读写时间为 $O(\log{n})$ 。
+
+| *Capacity* | =size()=   |   |
+|------------+------------+---|
+| *Modifier* | =insert()= |   |
+|------------+------------+---|
+|            | =erase()=  |   |
+|------------+------------+---|
+| *Search*   | =find()=   |   |
+
+*** =[]=
+
+#+BEGIN_SRC cpp
+map<string, int> m;
+map<string, int>::iterator i;
+
+// 写入
+m['a'] = 1;
+// 等价于
+m.insert(make_pair('a', 1));
+
+// 读取
+cout << m['a'] << endl; // Key 不存在时值为 0
+// 等价于
+i = m.find('a');
+cout << (i == m.end() ? 0 : i->second) << endl;
+#+END_SRC
+
+*** =find()=
+
+#+BEGIN_SRC cpp
+iterator find (const key_type& k);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC cpp
+map<string, int> m;
+map<string, int>::iterator i;
+
+i = m.find('a');
+cout << (i == m.end() ? 'Not found' : i->second) << endl;
+#+END_SRC
+
+** =<queue>=
+
+| *Iterator* |   |
+|------------+---|
+| =front()=  |   |
+|------------+---|
+| *Modifier* |   |
+|------------+---|
+| =push()=   |   |
+|------------+---|
+| =pop()=    |   |
+
+** =<set>=
+
+| *Capacity* |   |
+|------------+---|
+| =size()=   |   |
+|------------+---|
+| *Iterator* |   |
+|------------+---|
+| =begin()=  |   |
+|------------+---|
+| =end()=    |   |
+|------------+---|
+| *Modifier* |   |
+|------------+---|
+| =insert()= |   |
+|------------+---|
+| =erase()=  |   |
+|------------+---|
+| *Search*   |   |
+|------------+---|
+| =find()=   |   |
+
+** =<stack>=
+
+| *Access*   |   |
+|------------+---|
+| =top()=    |   |
+|------------+---|
+| *Modifier* |   |
+|------------+---|
+| =push()=   |   |
+|------------+---|
+| =pop()=    |   |
+
+** =<unordered_map>=
+
+由哈希表实现，读写时间（平均）为 $O(1)$ 。
+
+** =<vector>=
+
+| *Capacity* | =size()=      |   |
+|------------+---------------+---|
+|            | =empty()=     |   |
+|------------+---------------+---|
+| *Iterator* | =begin()=     |   |
+|------------+---------------+---|
+|            | =end()=       |   |
+|------------+---------------+---|
+| *Accessor* | =front()=     |   |
+|------------+---------------+---|
+|            | =back()=      |   |
+|------------+---------------+---|
+| *Modifier* | =push_back()= |   |
+|------------+---------------+---|
+|            | =pop_back()=  |   |
+|------------+---------------+---|
+|            | =erase()=     |   |
+
+*** Constructor
+
+#+BEGIN_SRC cpp
+// 定义
+int n[] = {1,2,3};
+vector<int> foo1;                                  // 空
+vector<int> foo2 (10);                             // 指定大小
+vector<int> foo3 (4, 100);                         // 指定大小和初始值
+vector<int> foo4 (foo2.begin(), foo2.end());       // 迭代
+vector<int> foo5 (foo3);                           // 复制
+vector<int> foo6 (n, n + sizeof(n) / sizeof(int)); // 从数组生成
+vector<vector<int>> foo7 (n, vector<int> (m));     // 二维
+// 初始化
+vector<int> foo8 = {1, 2, 3};
+vector<int> foo() { return vector<int> {1, 2, 3}; }
+#+END_SRC
+
+*** =push_back()=
+
+#+BEGIN_SRC cpp
+void push_back (const value_type& val);
+#+END_SRC
+
+*** =erase()=
+
+#+BEGIN_SRC cpp
+iterator erase (iterator position);
+iterator erase (iterator first, iterator last);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC cpp
+v.erase(v.begin() + 4);                // 移除第 5 个元素
+v.erase(v.begin() + 1, v.begin() + 3); // 移除第 2 至第 3 个元素
+#+END_SRC
+
+* IO
+
+#+CAPTION: IO class hierarchy
+file:../images/c++_library/01.png
+
+** =<ios>=
+
+| *=basefield=*     |              |
+|-------------------+--------------|
+| =dec=             | 十进制       |
+|-------------------+--------------|
+| =hex=             | 十六进制     |
+|-------------------+--------------|
+| =oct=             | 八进制       |
+|-------------------+--------------|
+| *=floatfield=*    |              |
+|-------------------+--------------|
+| =fixed=           | 普通计数法   |
+|-------------------+--------------|
+| =scientific=      | 科学计数法   |
+|-------------------+--------------|
+| *=adjustfield=*   |              |
+|-------------------+--------------|
+| =left=            | 左对齐       |
+|-------------------+--------------|
+| =right=           | 右对齐       |
+|-------------------+--------------|
+| *Switch on flag*  |              |
+|-------------------+--------------|
+| =showbase=        | 显示进制标志 |
+|-------------------+--------------|
+| =showpos=         | 显示正数标志 |
+|-------------------+--------------|
+| =uppercase=       | 大写字母     |
+|-------------------+--------------|
+| *Switch off flag* |              |
+|-------------------+--------------|
+| =noshowpos=       | 隐藏正数标志 |
+|-------------------+--------------|
+| =nouppercase=     | 小写字母     |
+
+*** Flag 示例
+
+#+BEGIN_SRC cpp
+double a = 100.345;
+double b = 2006.008;
+double c = 2331.41592653498;
+
+cout << setw(0) << hex << showbase << nouppercase << (long long)a << endl;
+cout << setw(15) << right << setfill('_') << fixed << setprecision(2) << showpos << B << endl;
+cout << setw(15) << scientific << setprecision(9) << uppercase << noshowpos << C << endl;
+
+// 0x64
+// _______+2006.01
+// 2.331415927E+03
+#+END_SRC
+
+** =<istream>=
+
+#+CAPTION: =std::istream::=
+| [[std_istream_ignore][=ignore()=]] | Extract and discard characters |
+
+*** =ignore()=
+<<std_istream_ignore>>
+
+Extracts characters from the input sequence and discards them. \\
+Until either =n= characters have been extracted, or one compares equal to =delim=.
+
+#+BEGIN_SRC cpp
+istream& ignore (
+  streamsize n = 1,
+  int delim = EOF
+);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC cpp
+#include <iostream> // std::cin, std::cout
+
+int main () {
+  char first, last;
+
+  std::cout << "Please, enter your first name followed by your surname: ";
+
+  first = std::cin.get();   // get one character
+  std::cin.ignore(256,' '); // ignore until space
+  last = std::cin.get();    // get one character
+
+  std::cout << "Your initials are " << first << last << '\n';
+
+  return 0;
+}
+#+END_SRC
+
+#+CAPTION: 示例输出
+#+BEGIN_SRC text
+Please, enter your first name followed by your surname: John Smith
+Your initials are JS
+#+END_SRC
+
+** =<ostream>=
+
+#+CAPTION: =std::=
+| [[std_endl][=endl=]] | Insert newline and flush |
+
+*** =endl=
+<<std_endl>>
+
+Inserts a new-line character and flushes the stream.
+
+=endl= not only terminates lines, but also directs the computer to complete the delivery to screen of all the characters that have accumulated in an output buffer. Thus, =<<= is said to flush the output buffer.
+
+#+CAPTION: 示例
+#+BEGIN_SRC cpp
+#include <iostream> // std::cout, std::end
+
+int main () {
+  int a=100;
+  double b=3.14;
+
+  std::cout << a;
+  std::cout << std::endl;              // manipulator inserted alone
+  std::cout << b << std::endl << a*b;  // manipulator in concatenated insertion
+  std::endl (std::cout);               // endl called as a regular function
+
+  return 0;
+}
+#+END_SRC
+
+#+CAPTION: 示例输出
+#+BEGIN_SRC text
+100
+3.14
+314
+#+END_SRC
+
+** =<ifstream>=
+
+#+CAPTION: =std::ifstream::=
+| =ifstream()= | Construct object and optionally open file |
+|--------------+-------------------------------------------|
+| =close()=    |                                           |
+
+*** =ifstream()=
+<<std_ifstream_ifstream>>
+
+#+BEGIN_SRC cpp
+explicit ifstream (
+  const char* filename
+, ios_base::openmode mode = ios_base::in
+);
+
+explicit ifstream (
+  const string& filename
+, ios_base::openmode mode = ios_base::in
+);
+#+END_SRC
+
+#+CAPTION: 使用
+#+BEGIN_SRC cpp
+// 创建
+ifstream <stream>(<path>, ios::in);
+// 读取
+<stream> >> <var> >> ... ; 
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC cpp
+#include <fstream>
+#include <iostream>
+using namespace std;
+
+int main() {
+  ifstream ifs(file_name);
+
+  if (!ifs) {
+    cerror << "No such file." << endl;
+    return 0;
+  }
+
+  // File has three lines
+  ifs >> first_name >> last_name >> age;
+
+  cout << endl << "First Name: " << first_name;
+  cout << endl << "Last Name:  " << last_name;
+  cout << endl << "Enter Age:  " << age;
+  cout << endl;
+
+  ifs.close();
+
+  return 0;
+}
+#+END_SRC
+
+*** =close()=
+
+#+CAPTION: 使用
+#+BEGIN_SRC cpp
+<stream>.close();
+#+END_SRC
+
+** =<ofstream>=
+
+#+CAPTION: =std::ofstream::=
+| [[std_ofstream_ofstream][=ofstream()=]] | Construct object |
+|--------------+------------------|
+| [[std_ofstream_open][=open()=]]     | Open file        |
+|--------------+------------------|
+| =close()=    |                  |
+
+*** =ofstream()=
+<<std_ofstream_ofstream>>
+
+#+CAPTION: Initialization
+#+BEGIN_SRC cpp
+explicit ofstream (
+  const char* filename
+, ios_base::openmode mode = ios_base::out
+);
+
+explicit ofstream (
+  const string& filename
+, ios_base::openmode mode = ios_base::out
+);
+#+END_SRC
+
+#+CAPTION: 使用
+#+BEGIN_SRC cpp
+ofstream <stream>(<path>, ios::out);
+<stream> << <expr> << ... << endl;
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC cpp
+#include <fstream> // std::ofstream
+
+int main () {
+  std::ofstream ofs("test.txt", std::ofstream::out);
+  ofs << "lorem ipsum";
+  ofs.close();
+  return 0;
+}
+#+END_SRC
+
+*** =open()=
+<<std_ofstream_open>>
+
+- Opens the file identified by =filename=
+- Associating it with the stream object, so that i/o operations are performed on its content
+
+#+BEGIN_SRC cpp
+void open (
+  const char* filename
+, ios_base::openmode mode = ios_base::out
+);
+
+void open (
+  const string& filename
+, ios_base::openmode mode = ios_base::out
+);
+#+END_SRC
+
+=mode=
+- Specifies the opening mode
+- Can be combined with the bitwise OR operator =|=
+
+| =in=     | input    | File open for reading: the internal stream buffer supports input operations             |
+|----------+----------+-----------------------------------------------------------------------------------------|
+| =out=    | output   | File open for writing: the internal stream buffer supports output operations            |
+|----------+----------+-----------------------------------------------------------------------------------------|
+| =binary= | binary   | Operations are performed in binary mode rather than text                                |
+|----------+----------+-----------------------------------------------------------------------------------------|
+| =ate=    | at end   | The output position starts at the end of the file                                       |
+|----------+----------+-----------------------------------------------------------------------------------------|
+| =app=    | append   | All output operations happen at the end of the file, appending to its existing contents |
+|----------+----------+-----------------------------------------------------------------------------------------|
+| =trunc=  | truncate | Any contents that existed in the file before it is open are discarded                   |
+
+#+CAPTION: 示例
+#+BEGIN_SRC cpp
+#include <fstream> // std::ofstream
+
+int main () {
+  std::ofstream ofs;
+  ofs.open("test.txt", std::ofstream::out | std::ofstream::app);
+  ofs << " more lorem ipsum";
+  ofs.close();
+  return 0;
+}
+#+END_SRC
+
+*** =close()=
+
+#+CAPTION: 使用
+#+BEGIN_SRC cpp
+<stream>.close();
+#+END_SRC
+
+** =<iomanip>=
+
+#+CAPTION: =std::=
+| [[std_setiosflags][=setiosflags()=]]  | Set format flags |
+|------------------+------------------|
+| =setbase()=      | 进制             |
+|------------------+------------------|
+| =setprecision()= | 保留位数         |
+|------------------+------------------|
+| =setw()=         | 宽度             |
+|------------------+------------------|
+| =setfill()=      | 填充字符         |
+
+*** =setiosflags()=
+<<std_setiosflags>>
+
+Sets the format flags specified by =mask=.
+
+#+BEGIN_SRC cpp
+setiosflags ( ios_base::fmtflags mask );
+#+END_SRC
+
+#+CAPTION: =mask= (=ios::=)
+| Numerical base | =dec=        |
+| (basefield)    | =hex=        |
+|                | =oct=        |
+|----------------+--------------|
+| Float format   | =fixed=      |
+| (floatfield)   | =scientific= |
+|----------------+--------------|
+| Adjustment     | =left=       |
+|                | =right=      |
+|                | =internal=   |
+|----------------+--------------|
+| Independent    | =showbase=   |
+|                | =uppercase=  |
+
+#+CAPTION: 示例
+#+BEGIN_SRC cpp
+#include <iostream> // std::cout, std::hex, std::endl
+#include <iomanip>  // std::setiosflags
+using namespace std;
+
+int main () {
+  cout << hex;
+  cout << setiosflags (ios::showbase | ios::uppercase);
+  cout << 100 << endl;
+  return 0;
+}
+#+END_SRC
+
+#+CAPTION: 示例输出
+#+BEGIN_SRC text
+0X64
+#+END_SRC
+
+** =cout=
+
+=cout= is objects of =<istream>=.
+
+=cout= is a variable, and like all variables, it is the name of a chunk of memory. \\
+The value of =cout= is meaningful to only the output operator.
+
+-----
+
+Each output expression refers to the same chunk of memory that is referred to by the output expression's left-side operand.\\
+
+#+BEGIN_SRC text
+              +-------------+ 
+              |             | 
+--------------+---------    |   
+cout << "Text to output"    |   
+-+--                        |   
+ |                          |   
+ +------------------------+ | 
+                          | | 
+                          v v 
+                         +-----+-----+-----+-----+-- 
+                         |     |     |     |     | 
+                         +-----+-----+-----+-----+-- 
+#+END_SRC
+
+As a result =cout= expression can be chained like =cout << "..." << "..." << ...=.
+
+** =cin=
+
+=cin= 是 =<istream>= 对象。使用 =cin= 时，输入先写入缓冲，在输入回车时才传递给程序。
+
+*** 语法
+
+- 空格、tab、回车都可以分隔多个输入。
+- 表达式的值表示读取是否成功，可用于验证输入格式。
+
+#+BEGIN_SRC cpp
+int height, width, length;
+string s;
+
+// 连续读取
+cin >> height;
+cin >> width;
+cin >> length;
+
+// 串联读取
+cin >> height >> width >> length;
+
+// 读取字符串（忽略空格）
+getling(cin, s);
+#+END_SRC
+
+#+BEGIN_SRC cpp
+int var;
+if (!(cin >> var))
+  cout << "Non-numeric value entered." << endl;
+#+END_SRC
+
+*** 循环
+
+=cin= 可以循环读取输入直到表达式返回 =0= （如通过 =Ctrl+D= ）。
+
+#+CAPTION: =while= 循环
+#+BEGIN_SRC cpp
+#include <iostream>
+double box_volume(double h, double w, double l) { return h * w * l; }
+main() {
+  double height, width, depth;
+  while (cin >> height >> width >> depth)
+    cout << "The volume of a "
+         << height << " by " << width << " by " << depth
+         << " box car is " << box_volume (height, width, depth)
+         << endl;
+  cout << "You appear to have finished." << endl;
+}
+#+END_SRC
+
+#+CAPTION: =for= 循环
+#+BEGIN_SRC cpp
+#include <iostream>
+double box_volume(double h, double w, double l) { return h * w * l; }
+main() {
+  double height, width, depth;
+  int count;
+  for (count = 0; cin >> height >> width >> depth; ++count)
+    cout << "The volume of a "
+         << height << " by " << width << " by " << depth
+         << " box car is " << box_volume (height, width, depth)
+         << endl;
+  cout << "You have computed the volumes of " 
+       << count << " box cars." << endl;
+}
+#+END_SRC
+
+*** 文件
+
+#+CAPTION: 通过 Unix 管道， =cin= 可以直接从文件获取输入
+#+BEGIN_SRC sh
+./<program> < <file>
+#+END_SRC
+
+*** 示例
+
+#+BEGIN_SRC cpp
+char first_name[30], last_name[30]; int age;
+cout << "Enter First Name: "; cin >> first_name;
+cout << "Enter Last Name: "; cin >> last_name;
+cout << "Enter Age: "; cin >> age;
+#+END_SRC
+
+** =cerr=
+
+=cerr= 是 =ostream= 对象。
+
+#+CAPTION: 示例
+#+BEGIN_SRC cpp
+include <iostream>;
+
+cerr << "Error message" << endl;
+#+END_SRC
+
+** =stringstream=
+
+| =str()= | 返回字符串形式 |
+
+*** 示例
+
+#+CAPTION: 从分隔开的数字组成的字符串中读取出数字
+#+BEGIN_SRC cpp
+vector<int> parseInts(string str) {
+    int num;
+    char delim;
+    vector<int> nums;
+    stringstream ss(str);
+    
+    while (ss >> num) {
+        nums.push_back(num);
+        ss >> delim;
+    }
+    
+    return nums;
+}
+
+vector<int> nums = parstInts("1,3,5");
+#+END_SRC
+
+* 链接
+
+1. [[http://www.cplusplus.com/reference/][Standard C++ Library reference]]
+1. [[http://www.boost.org/][C++ Boost Library]]

@@ -1,0 +1,2079 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-04-13 Sat 18:11 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>构建高性能 Web 站点</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">构建高性能 Web 站点</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgc894beb">1 绪论</a>
+<ul>
+<li><a href="#org2ae7102">1.1 等待的真相</a></li>
+<li><a href="#org424e116">1.2 瓶颈在哪里</a></li>
+<li><a href="#org878d878">1.3 脚本计算速度</a></li>
+<li><a href="#orgbb9d7fb">1.4 数据缓存</a></li>
+<li><a href="#orgc92de55">1.5 静态化</a></li>
+<li><a href="#orgbacf9fe">1.6 页面组件分离</a></li>
+<li><a href="#org5cba43b">1.7 优化数据库</a></li>
+</ul>
+</li>
+<li><a href="#org7ca86f5">2 数据的网络传输</a>
+<ul>
+<li><a href="#orgcf49709">2.1 分层网络模型</a>
+<ul>
+<li><a href="#orgc20c2d5">2.1.1 铺设铁路</a></li>
+<li><a href="#orgc1501db">2.1.2 预约线路</a></li>
+<li><a href="#orgabe130c">2.1.3 车流控制</a></li>
+<li><a href="#org9151b6f">2.1.4 货物重发</a></li>
+</ul>
+</li>
+<li><a href="#orgd0394ef">2.2 带宽</a>
+<ul>
+<li><a href="#org0cd4e54">2.2.1 数据发送</a></li>
+<li><a href="#org1f4e313">2.2.2 数据传播速度</a></li>
+<li><a href="#orge248246">2.2.3 数据发送速度</a></li>
+<li><a href="#org31a38ec">2.2.4 信号衰减</a></li>
+<li><a href="#orgb67a466">2.2.5 限制带宽</a></li>
+</ul>
+</li>
+<li><a href="#org1667aca">2.3 响应时间</a>
+<ul>
+<li><a href="#org62333a6">2.3.1 下载速度</a></li>
+<li><a href="#org6b91ffa">2.3.2 响应时间</a></li>
+<li><a href="#org1bf1edb">2.3.3 其他因素</a></li>
+</ul>
+</li>
+<li><a href="#org78989d7">2.4 互联互通</a></li>
+</ul>
+</li>
+<li><a href="#org24c2051">3 服务器并发处理能力</a>
+<ul>
+<li><a href="#org97fd1c5">3.1 吞吐率</a>
+<ul>
+<li><a href="#org307da3f">3.1.1 并发用户数</a></li>
+<li><a href="#orgffa6d15">3.1.2 请求等待时间</a></li>
+<li><a href="#org564613e">3.1.3 压力测试</a></li>
+</ul>
+</li>
+<li><a href="#org4568818">3.2 CPU 并发计算</a>
+<ul>
+<li><a href="#orgee0c100">3.2.1 进程</a></li>
+<li><a href="#org53d6b01">3.2.2 轻量级进程</a></li>
+<li><a href="#orgfb7223b">3.2.3 线程</a></li>
+<li><a href="#org68fa2b6">3.2.4 进程调度器</a></li>
+<li><a href="#org8f9d115">3.2.5 系统负载</a></li>
+<li><a href="#orgc86290c">3.2.6 进程切换</a></li>
+<li><a href="#org81b18d0">3.2.7 IOWait</a></li>
+<li><a href="#orgc47c3bf">3.2.8 锁竞争</a></li>
+</ul>
+</li>
+<li><a href="#orgac6aa81">3.3 系统调用</a></li>
+<li><a href="#org2bdb1d3">3.4 内存分配</a></li>
+<li><a href="#org5d0a95c">3.5 持久连接</a></li>
+<li><a href="#orgee64df9">3.6 I/O 模型</a>
+<ul>
+<li><a href="#orgfbba972">3.6.1 PIO 与 DMA</a></li>
+<li><a href="#org5dc7d9b">3.6.2 同步阻塞 I/O</a></li>
+<li><a href="#org4d9543b">3.6.3 同步非阻塞 I/O</a></li>
+<li><a href="#org79bbbfe">3.6.4 多路 I/O 就绪通知</a></li>
+<li><a href="#org65ae01f">3.6.5 内存映射</a></li>
+<li><a href="#orge5aaf58">3.6.6 直接 I/O</a></li>
+<li><a href="#org6a42584">3.6.7 sendfile</a></li>
+<li><a href="#org562f9ed">3.6.8 异步 I/O</a></li>
+</ul>
+</li>
+<li><a href="#orgcc0c579">3.7 服务器并发策略</a>
+<ul>
+<li><a href="#org9926612">3.7.1 一个进程处理一个连接</a></li>
+<li><a href="#org3702a2f">3.7.2 一个线程处理一个连接</a></li>
+<li><a href="#org92e5a49">3.7.3 一个进程处理多个连接</a></li>
+<li><a href="#orgec30341">3.7.4 一个线程处理多个连接，异步 I/O</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgc960634">4 动态内容缓存</a>
+<ul>
+<li><a href="#orga6e0f6b">4.1 缓存与缓冲</a></li>
+<li><a href="#org5707221">4.2 页面缓存</a>
+<ul>
+<li><a href="#org8f4e8d2">4.2.1 Smarty 缓存</a></li>
+<li><a href="#org6f4eee9">4.2.2 目录分级</a></li>
+<li><a href="#orgf0317ca">4.2.3 过期检查</a></li>
+<li><a href="#orgbf82e8b">4.2.4 减少缓存开销</a></li>
+<li><a href="#orgdf940eb">4.2.5 内存缓存</a></li>
+</ul>
+</li>
+<li><a href="#orgf8e1fb9">4.3 局部无缓存</a></li>
+<li><a href="#org70d5463">4.4 静态化内容</a>
+<ul>
+<li><a href="#org9417ca2">4.4.1 直接访问缓存</a></li>
+<li><a href="#org5682e6d">4.4.2 更新策略</a></li>
+<li><a href="#org4b73d22">4.4.3 局部静态化</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org09e1bb6">5 动态脚本加速</a>
+<ul>
+<li><a href="#orgb1dece3">5.1 opcode 缓存</a>
+<ul>
+<li><a href="#org295dfa2">5.1.1 什么是 opcode</a></li>
+<li><a href="#orgd250614">5.1.2 生成 opcode</a></li>
+<li><a href="#org4b707f0">5.1.3 避免重复编译</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgb9bcc0d">6 性能监控</a>
+<ul>
+<li><a href="#orgf1270a2">6.1 实时监控</a></li>
+<li><a href="#orgd6834ed">6.2 监控代理</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc894beb" class="outline-2">
+<h2 id="orgc894beb"><span class="section-number-2">1</span> 绪论</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-org2ae7102" class="outline-3">
+<h3 id="org2ae7102"><span class="section-number-3">1.1</span> 等待的真相</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+客户端的响应时间主要消耗在浏览器本地计算和渲染上，依赖的因素包括：浏览器的并发策略、渲染方式、脚本解释器的性能、页面大小、页面组件的数量、缓存状况和域名分布、域名 DNS 解析等。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org424e116" class="outline-3">
+<h3 id="org424e116"><span class="section-number-3">1.2</span> 瓶颈在哪里</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+系统性能的瓶颈会随着系统的运行而不断变化和迁移，不同时段、不同用户组成和习惯、数据存储量和浏览量的级别等，都会使得性能瓶颈发生变化。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org878d878" class="outline-3">
+<h3 id="org878d878"><span class="section-number-3">1.3</span> 脚本计算速度</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+<span class="underline">脚本语言编写的程序需要经过脚本解释器生成中间代码，然后在解释器的运行环境中运行。</span> 减少生成中间代码的时间可以获得性能的提升，有较强商业支持的脚本语言（ASP.NET、JSP）均有内置的优化方案，开源脚本语言（PHP、Ruby、Python）可以使用第三方插件，如 PHP 的 APC。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbb9d7fb" class="outline-3">
+<h3 id="orgbb9d7fb"><span class="section-number-3">1.4</span> 数据缓存</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+动态内容缓存是将数据和表现整体打包，而动态内容的计算其实主要消耗在数据的读写和等待上。很多动态内容都包含公用数据，使用细粒度的数据缓存，可以避免缓存过期时大量动态内容的整体更新。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc92de55" class="outline-3">
+<h3 id="orgc92de55"><span class="section-number-3">1.5</span> 静态化</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+动态内容缓存虽然避免了重复计算，但是还需要调用脚本解释器判断缓存是否过期及读取缓存。将页面静态化，直接缓存 HTML 页面，可以绕过脚本解释器。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbacf9fe" class="outline-3">
+<h3 id="orgbacf9fe"><span class="section-number-3">1.6</span> 页面组件分离</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+不同组件的下载量和对服务器的资源使用不同，都使用同一台物理服务器或同一种并发策略来提供服务，会造成资源浪费和并发策略的低效，应该根据不同组件的特点，使用不同的物理资源和并发策略。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5cba43b" class="outline-3">
+<h3 id="org5cba43b"><span class="section-number-3">1.7</span> 优化数据库</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+<span class="underline">Web 服务器与数据库服务器的通信一般基于标准的 TCP</span> ，即使位于同一台物理主机中。通信连接的建立和释放涉及代表一段内核高速缓冲区的文件描述符（<a href="https://en.wikipedia.org/wiki/File_descriptor">file descriptor</a>）的创建和销毁，其时间开销包括系统调用导致的内核态切换、某些异步阻塞 I/O 模型采用的文件描述符队列扫描机制， <span class="underline">频繁的数据库连接和释放将增加时间开销</span> 。数据库持久连接（persistent connection）可以解决这一问题，根据持久连接的应用范围和声明周期，分为：
+</p>
+
+<ul class="org-ul">
+<li>进程内部的全局数据库连接，供进程内的计算任务共享，进程终止后释放。</li>
+<li>动态内容的执行周期内，代码层面的持久连接对象，动态内容计算结束后释放。</li>
+<li>跨进程的数据库连接池，保持多个持久连接供不同程序重复使用。</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org7ca86f5" class="outline-2">
+<h2 id="org7ca86f5"><span class="section-number-2">2</span> 数据的网络传输</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-orgcf49709" class="outline-3">
+<h3 id="orgcf49709"><span class="section-number-3">2.1</span> 分层网络模型</h3>
+<div class="outline-text-3" id="text-2-1">
+</div><div id="outline-container-orgc20c2d5" class="outline-4">
+<h4 id="orgc20c2d5"><span class="section-number-4">2.1.1</span> 铺设铁路</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+铺设铁路连接多个火车站，有两种方式：
+</p>
+
+<ul class="org-ul">
+<li>用一条铁路将所有火车站串联起来。相当于总线网络拓扑，数据传输采用广播方式，所有主机共享带宽。</li>
+<li>在城市中心修建一座调度站，每个火车站与调度站之间铺设铁路相连。相当于星形网络拓扑，调度站为集线器（广播）或交换机（存储转发）。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc1501db" class="outline-4">
+<h4 id="orgc1501db"><span class="section-number-4">2.1.2</span> 预约线路</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<p>
+在两个站点之间运输货物时，需要和铁路公司预约，在规定时间内，涉及的路线只用于运输此货物。
+</p>
+
+<p>
+相当于电路交换（<a href="https://en.wikipedia.org/wiki/Circuit_switching">circuit switchich</a>）方式，主要用于电话网络。由于没有一条线路同时接通多个电话的需求，且预约线路的等待时间可以接受，同时传输的数据量恒定，电路交换可以满足电话的需求。计算机通信的需求非常复杂，数据传输突发性强，需要并发和低延迟，数据量变化频繁，数据可靠性和传输速度要求高，电路交换无法满足，于是出现了分组交换（<a href="https://en.wikipedia.org/wiki/Packet_switching">packet switching</a>）方式，将数据分块，称为数据帧，分时发送。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgabe130c" class="outline-4">
+<h4 id="orgabe130c"><span class="section-number-4">2.1.3</span> 车流控制</h4>
+<div class="outline-text-4" id="text-2-1-3">
+<p>
+如果目的地的卸货速度比出发地的装货速度慢，目的地的库房满了，便容易发生货物丢失。需要通过某种反馈机制，让出发地实时了解目的地的卸货速度，从而不断调整发车速度。
+</p>
+
+<p>
+相当于数据链路层的流量控制。数据链路层控制数据帧的传输，必须保证到达网卡的数据帧可以交付给上层应用，即：网卡把接收到的二进制信号转换为字节，写入操作系统内核在内存拥有的一块高速缓存区，然后通过中断，切换到相应的应用程序进程，并取走数据。如果缓存区被写满，而发送端不减慢发送速率，更多的数据帧到达时会被网卡丢弃。因此需要在数据链路层进行流量控制，一般采用滑动窗口（<a href="https://en.wikipedia.org/wiki/Sliding_window_protocol">sliding window</a>）技术。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9151b6f" class="outline-4">
+<h4 id="org9151b6f"><span class="section-number-4">2.1.4</span> 货物重发</h4>
+<div class="outline-text-4" id="text-2-1-4">
+<p>
+货物在运输过程中有可能被损坏，因此发货时应详细清点，并附上清单，在目的地卸货时要根据清单检查货物，如果发现损坏，可以通知出发地重发。
+</p>
+
+<p>
+以太网由于线路质量好，数据链路层已经不进行差错校验和自动重发，而是将校验和重发控制交给上层的协议，如 TCP。对于 802.11x 等无线网络和卫星通信，数据链路层还是需要进行可靠性校验。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd0394ef" class="outline-3">
+<h3 id="orgd0394ef"><span class="section-number-3">2.2</span> 带宽</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+带宽的单位是 bit/s，即单位时间的比特数。为了将数据的发送和传播过程抽象化，而将带宽解释为数据的传输速度，更容易理解，但并不准确。带宽实际上超出了通信的范畴，它发源于计算机系统总线（<a href="https://en.wikipedia.org/wiki/Bus_(computing)">bus</a>）。提高计算机总线宽度，可以通过提高总线频率（使用主频更高的处理器）或提高总线宽度（使用 64 位总线系统）。
+</p>
+</div>
+
+<div id="outline-container-org0cd4e54" class="outline-4">
+<h4 id="org0cd4e54"><span class="section-number-4">2.2.1</span> 数据发送</h4>
+<div class="outline-text-4" id="text-2-2-1">
+<ol class="org-ol">
+<li>程序将要发送的数据写入该进程的内存地址空间，通常只需要一般的运行时变量赋值。</li>
+<li>程序通过系统函数库接口（如 <code>send</code> 函数）向内核发起系统调用，将数据从用户态内存区复制到由内核维护的称为内核缓冲区的内存地址空间，根据网络数据包的大小和内核缓冲区的承载能力，可能需要进行多次系统调用。内核缓冲区大小通常有限，来自不同进程的数据以队列形式进入。</li>
+<li>内核通知网卡控制器，从内核缓冲区读取数据，控制器根据网卡驱动信息，获得内核缓冲区的地址，将数据复制到网卡的缓冲区。</li>
+<li>网卡对数据进行字节到位的转换，并发送到线路中，释放缓冲区，继续读取要发送的数据。</li>
+<li>网卡使用物理装置产生可以传播的信号，比如在铜线线路中产生电信号，在光纤线路中产生光信号。</li>
+</ol>
+
+<p>
+所有的数据复制按照两端设备的内部总线宽度进行，通常是字节的整数倍，如 32 位总线的系统中，任何时刻只能复制 32 位即 4 字节数据。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1f4e313" class="outline-4">
+<h4 id="org1f4e313"><span class="section-number-4">2.2.2</span> 数据传播速度</h4>
+<div class="outline-text-4" id="text-2-2-2">
+<p>
+信号的传播速度只与传播介质有关，铜线中电信号的速度大约为 \(2.3 \times 10^8 m/s\) ，光纤中光信号的速度大约为 \(2.0 \times 10^s m/s\) ，小于光速，因为光纤利用光的全反射原理，光信号的实际传播距离大于光纤的长度。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge248246" class="outline-4">
+<h4 id="orge248246"><span class="section-number-4">2.2.3</span> 数据发送速度</h4>
+<div class="outline-text-4" id="text-2-2-3">
+<p>
+<span class="underline">带宽就是数据的发送速度，</span> 如百兆网卡的最大发送速度是 100 Mbps，发送速度取决于：
+</p>
+
+<ul class="org-ul">
+<li>数据发送装置将二进制信号传送至线路的能力（信号传输频率），另一端接收装置的接收能力， <span class="underline">如果信号的接收能力低，发送能力不可能提高，因为数据链路层根据接收方的能力来确定发送的速度。</span></li>
+<li>数据传播介质对传输频率的支持程度和并行度。并行度类似于计算机总线带宽，比如将多条光纤并行组成光缆，可以在一个横截面上同时传输多个信号。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org31a38ec" class="outline-4">
+<h4 id="org31a38ec"><span class="section-number-4">2.2.4</span> 信号衰减</h4>
+<div class="outline-text-4" id="text-2-2-4">
+<p>
+一般双绞线的传输距离只能达到 100 米，更长的距离需要中继器，而且只能进行有限次中继，而每次中继器转发信号也会消耗时间。光纤的传导损耗比电线低得多，传输距离一般在数千米以上，所以一般用于长距离数据传输。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb67a466" class="outline-4">
+<h4 id="orgb67a466"><span class="section-number-4">2.2.5</span> 限制带宽</h4>
+<div class="outline-text-4" id="text-2-2-5">
+<p>
+Web 站点服务器通常托管在 IDC，通过交换机连接到互联网。数据从服务器经过交换机到达路由器，需要经过交换机的存储转发。如果只有一台服务器和一个用户之间传输数据，各节点转发的速度可以达到理论最大值（即出口带宽），但实际中， <span class="underline">每个交换节点都要转发来自多个主机的数据，节点按照（内部缓冲区）转发队列中的顺序交错地转发，因此对于单个主机来说，它的数据发送速度必然小于交换节点的出口带宽。</span> 同时运营商会在基础交换节点设限，限制其接收数据的速度，就等于限制了主机发送数据的速度，即出口带宽。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1667aca" class="outline-3">
+<h3 id="org1667aca"><span class="section-number-3">2.3</span> 响应时间</h3>
+<div class="outline-text-3" id="text-2-3">
+</div><div id="outline-container-org62333a6" class="outline-4">
+<h4 id="org62333a6"><span class="section-number-4">2.3.1</span> 下载速度</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<p>
+下载速度是指单位时间内从服务器到达用户主机的数据量，一般用字节数来表示，即 B/s。这段时间是从数据从服务器网卡进入线路开始，到数据进入用户主机网卡为止，也称为响应时间。
+</p>
+
+<p>
+下载速度 = 数据量 / 响应时间
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6b91ffa" class="outline-4">
+<h4 id="org6b91ffa"><span class="section-number-4">2.3.2</span> 响应时间</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<p>
+响应时间 = 发送时间 + 传播时间 + 处理时间
+</p>
+
+<ul class="org-ul">
+<li>发送时间即「数据量 / 带宽」，两台主机之间交换节点的每次数据转发，也产生发送时间。 <span class="underline">总的发送时间取决于带宽最小的节点，</span> 并且通过 TCP 的流量控制机制，其他交换节点会将发送速度与其保持一致。</li>
+<li>传播时间只取决于传播距离和传播速度。</li>
+<li>处理时间是数据在交换节点中存储转发时，进行必要处理花费的时间，主要是缓冲区队列中排队的时间，这取决于各个节点所在网络的通信量，是不可预测的。</li>
+</ul>
+
+<p>
+综上所述，响应时间 = (数据量 / 带宽) + (传播距离 / 传播速度) + 处理时间
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1bf1edb" class="outline-4">
+<h4 id="org1bf1edb"><span class="section-number-4">2.3.3</span> 其他因素</h4>
+<div class="outline-text-4" id="text-2-3-3">
+<p>
+HTTP 协议基于 TCP/IP 协议，IP 数据包中除了数据部分，还有网络协议附加信息，所以实际传输的数据小于数据包的大小，即小于网络流量。
+</p>
+
+<p>
+网卡接收到的数据写入内存后，下载进程还需要将数据写入磁盘，此过程需要内核态内存中磁盘高速缓冲区的转发。有些下载进程为了减少写磁盘的压力，会在接收数据的系统调用之间休眠，因此单线程下载数据的过程不连贯，通过多线程下载工具加速，可以使下载进程在单位时间内进行更多次系统调用，充分占用带宽。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org78989d7" class="outline-3">
+<h3 id="org78989d7"><span class="section-number-3">2.4</span> 互联互通</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+互联网的带宽瓶颈往往出现在 ISP 之间的网络互联（称为「互联互通」）上。互联网是由不同 ISP 搭建的网络节点组成，这些网络之间通过骨干网（<a href="https://en.wikipedia.org/wiki/Backbone_network">backbone network</a>）相互连接。如果位于不同 ISP 网络中的主机进行通信，数据经过多次存储转发（store and forward），必须流经两个 ISP 的顶级交换节点（<a href="https://en.wikipedia.org/wiki/Internet_exchange_point">IXP, Internet Exchange Point</a>）和骨干线路，而交换节点之间存在出口带宽限制，如果数据通信量大，出口带宽将成为瓶颈。
+</p>
+
+<p>
+由中国电信运营的互联网（ChinaNet），骨干网核心节点位于北京上地电信数据中心，直接接入 8 个重要城市（北京、沈阳、西安、成都、上海、南京、广州、武汉）节点，进而连接到二级网络并层层延伸。中国网通运营的互联网，骨干网核心节点位于北京亦庄网通数据中心，网络也几乎覆盖所有经济发达城市。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org24c2051" class="outline-2">
+<h2 id="org24c2051"><span class="section-number-2">3</span> 服务器并发处理能力</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-org97fd1c5" class="outline-3">
+<h3 id="org97fd1c5"><span class="section-number-3">3.1</span> 吞吐率</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+服务器的并发处理能力一般用「单位时间内处理的请求数」来描述，即 <del>吞吐率</del> （throughput），单位是 reqs/s，即「每秒处理请求数」。影响服务器吞吐率的因素包括：服务器的并发策略、I/O 模型、I/O 性能、CPU 核数、程序的逻辑复杂度。Web 服务器通常提供了服务器运行状况及吞吐率的查看方法：
+</p>
+
+<ul class="org-ul">
+<li>Apache 的 <code>mod_status</code></li>
+<li>Nginx 的 <code>http_stud_status</code></li>
+<li>Lighttpd 的 <code>mod_status</code></li>
+</ul>
+
+<p>
+Web 服务器提高吞吐率的本质在于：
+</p>
+
+<ul class="org-ul">
+<li>以最快的速度读取用于接收数据的内核缓冲区中的用户请求。</li>
+<li>以最快的速度同时处理完这些请求。</li>
+<li>以最快的速度将响应数据写到另一块用于发送数据的内核缓冲区。</li>
+</ul>
+</div>
+
+<div id="outline-container-org307da3f" class="outline-4">
+<h4 id="org307da3f"><span class="section-number-4">3.1.1</span> 并发用户数</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<p>
+并发用户数是「同一时刻向服务器发送请求的用户总数」。
+</p>
+
+<p>
+进行压力测试时，使用工具模拟并发用户进行连续请求，即在每次请求收到响应后，再进行下一次请求。如果 1 个用户连续进行 1000 次请求，则任何时刻，服务器接收网卡数据的缓冲区中只有 1 个等待处理的请求。如果 100 个用户并发连续进行 10 次请求，则缓冲区最多有 100 个等待处理。显然第二种情况服务器压力更大。
+</p>
+
+<p>
+<span class="underline">服务器希望支持高并发数、拥有高吞吐率，而用户希望等待较少的时间、获得更高的下载速度。在双方能够忍受的最低尺度以内，找到利益的平衡点，就是理想的「最大并发数」。</span> 测试得出「最大并发数」的意义在于了解服务器的承载能力，结合实际的用户规模，决定服务器的规模和扩展方案。
+</p>
+
+<p>
+浏览器通常采用多线程并发的方式下载网页和组件，因此 1 个真实用户可能会带来 &gt;1 的并发用户数，具体由浏览器的设置、同一域名下并发下载数的限制决定。
+</p>
+
+<p>
+在高并发的情况下，Web 服务器使用的并发策略是影响最大并发数的关键因素。
+</p>
+
+<p>
+并发用户数也可以理解为 Web 服务器维护的代表不同用户（连接）的文件描述符总数，Web 服务器一般会限制这个数字（如 Apache 通过 <code>MaxClients</code> 参数）， <span class="underline">当实际并发用户数大于最大并发连接数时，多出的请求在服务器内核的数据接收缓冲区中等待处理，从用户的角度，这些连接处于阻塞状态。</span>
+</p>
+
+<p>
+但最大并发用户数和最大并发连接数不一定相等。如果处理每个请求的时间很少，即每个请求可以被快速处理并释放文件描述符，则最大并发用户数可以大于最大并发连接数。如果处理请求的时间较长，即使服务器支持很大的并发连接数（如使用异步 I/O 理论上可以支持 20,000 并发连接），但无法为用户提供快速响应的服务（如带宽瓜分导致下载速度慢，或 CPU 时间瓜分导致动态内容处理时间长），则最大并发用户数应小于支持的最大并发连接数。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgffa6d15" class="outline-4">
+<h4 id="orgffa6d15"><span class="section-number-4">3.1.2</span> 请求等待时间</h4>
+<div class="outline-text-4" id="text-3-1-2">
+<ul class="org-ul">
+<li>用户平均请求等待时间</li>
+<li>服务器平均请求处理时间</li>
+</ul>
+
+<p>
+<span class="underline">Web 服务器一般采用多进程或多线程的并发模型，通过多个执行流，轮流交错使用 CPU 时间片，处理并发请求，因此每个执行流花费的时间被拉长（相对于独占 CPU 处理的时间），对于用户，平均等待时间增加，对于服务器，如果并发策略得当，平均处理时间可能减少。</span>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org564613e" class="outline-4">
+<h4 id="org564613e"><span class="section-number-4">3.1.3</span> 压力测试</h4>
+<div class="outline-text-4" id="text-3-1-3">
+<p>
+ab 测试的本质是基于 HTTP 的，可以说是对 Web 服务器的黑盒性能测试。LoadRunner、Jmeter 等则是不同程度包含了服务器处理以外的时间，或者运行在客户端，测试的结果侧重于用户的角度。
+</p>
+
+<p>
+根据测试结果，可以得到吞吐率、平均请求等待时间、平均请求处理时间随并发量变化的曲线图。吞吐率随着并发量增加而增加，达到一个峰值后开始下降，平均请求处理时间是吞吐率的倒数，变化正好相反。平均请求等待时间始终随并发量增加而增加。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4568818" class="outline-3">
+<h3 id="org4568818"><span class="section-number-3">3.2</span> CPU 并发计算</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+服务器能够处理并发请求，源于操作系统通过多执行流体系，使多个任务可以轮流使用 CPU、内存、I/O 设备等资源。
+</p>
+
+<p>
+<span class="underline">磁盘和网络 I/O 的速度与 CPU 相比十分缓慢，大多数进程的时间主要消耗在 I/O 操作上，而 DMA（<a href="https://en.wikipedia.org/wiki/Direct_memory_access">Direct Memory Access</a>）技术使 CPU 不用参与 I/O 操作的全过程，进程通过系统调用，使 CPU 向 I/O 设备（如网卡、磁盘）发出指令，然后进程挂起，释放出 CPU 资源，I/O 设备完成操作后，通过中断通知进程重新就绪。</span>
+</p>
+</div>
+
+<div id="outline-container-orgee0c100" class="outline-4">
+<h4 id="orgee0c100"><span class="section-number-4">3.2.1</span> 进程</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<p>
+进程是多执行流的一般实现。对于单任务，由于 I/O 比 CPU 速度慢很多，导致 CPU 大部分时间空闲，通过多进程轮流使用 CPU 时间（任何时刻只有一个进程处于运行状态），以及重叠利用 CPU 计算和 I/O 操作，可以提高并发处理能力。
+</p>
+
+<p>
+进程是分配系统资源的实体，也可以理解为记录程序实例运行程度的一组数据，进程通过进程描述符与数据进行关联。
+</p>
+
+<p>
+<span class="underline">每个进程有独立的内存地址空间和生命周期，其优越性体现在独立带来的稳定性和健壮性。</span> 但是进程各自维护地址空间和上下文信息，无法低成本共享数据， <span class="underline">采用大量进程的 Web 服务器，如 Apache 的 prefork 模型，在处理并发请求时，内存的消耗会影响性能。</span>
+</p>
+
+<p>
+进程的调度由内核进行。进程通过 <code>fork</code> 系统调用创建， <span class="underline">频繁的创建进程会增加系统开销，影响性能。</span> 子进程在创建时复制父进程地址空间的数据到自己的地址空间，继承所有上下文信息，父进程和子进程可以通信，但是不能相互依赖或干涉地址空间。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org53d6b01" class="outline-4">
+<h4 id="org53d6b01"><span class="section-number-4">3.2.2</span> 轻量级进程</h4>
+<div class="outline-text-4" id="text-3-2-2">
+<p>
+Linux 2.0 开始支持，轻量级进程由 <code>clone</code> 系统调用创建，并由内核直接管理。轻量级进程和普通进程一样独立，拥有进程描述符，但 <span class="underline">减少了内存开销，并直接支持多进程之间的数据共享，</span> 如地址空间、打开的文件。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfb7223b" class="outline-4">
+<h4 id="orgfb7223b"><span class="section-number-4">3.2.3</span> 线程</h4>
+<div class="outline-text-4" id="text-3-2-3">
+<p>
+POSIX 1003.1c 为 Linux 定义了线程接口 <code>pthread</code> ，有多种具体实现。
+</p>
+
+<p>
+有些实现不是由内核直接支持，从内核角度看，这种多线程是普通的进程，由用户态通过库函数模拟实现出多执行流，多线程的管理完全在用户态完成。这种实现中，线程切换的开销少于进程和轻量级进程，但在对称多处理（<a href="https://en.wikipedia.org/wiki/Symmetric_multiprocessing">SMP，Symmetric Multiprocessing</a>）系统中表现较差，因为只有内核进程调度器才有权力分配多个 CPU 的时间。
+</p>
+
+<p>
+另一种实现是 LinuxThreads，或内核级线程（kernel-level threads），它通过 <code>clone</code> 创建线程，每个线程实际上是一个轻量级进程，就可以由内核进程调度器管理，因此对 SMP 支持较好，但线程切换的开销高于用户态线程。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org68fa2b6" class="outline-4">
+<h4 id="org68fa2b6"><span class="section-number-4">3.2.4</span> 进程调度器</h4>
+<div class="outline-text-4" id="text-3-2-4">
+<p>
+内核中的进程调度器（scheduler）维护着进程队列，包括一个可运行进程的队列，称为运行队列（run queue），和一个所有休眠和僵尸进程的队列。进程调度器的主要工作是决定下一个运行的进程。
+</p>
+
+<p>
+每个进程告知调度器自己的紧急程度，即进程优先级（进程的 <code>priority</code> 属性），调度器也会对优先级进行动态调整（调整值为进程的 <code>nice</code> 属性），目的是为了让所有进程更好地重叠利用资源。
+</p>
+
+<p>
+<code>top</code> 命令输出的 <code>PR</code> 和 <code>NI</code> 代表进程的优先级和调整值。 <span class="underline"><code>PR</code> 值是进程调度器分配给进程的时间片长度，单位是时钟个数，</span> 而每个时钟的长度与 CPU 主频和操作系统有关，比如 Linux 上一般为 10ms，则 <code>PR</code> 值为 15 就表示进程的时间片为 150ms。如果时间片过短，浪费在进程切换上的 CPU 时间就增加，如果过长，多任务的实时性就受到影响。
+</p>
+
+<p>
+Linux 2.6 的进程调度器更偏爱 I/O 操作密集型的进程，因为它们在发起 I/O 操作后会阻塞（除非使用异步 I/O），不会占用大量 CPU 时间，使其他进程可以更好地交错运行。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8f9d115" class="outline-4">
+<h4 id="org8f9d115"><span class="section-number-4">3.2.5</span> 系统负载</h4>
+<div class="outline-text-4" id="text-3-2-5">
+<p>
+系统负载是单位时间内运行队列中就绪等待的进程数平均值，就绪进程不需要等待就可以马上获得 CPU 时，系统负载就很低，比如 0.00。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 1: </span><code>/proc/loadavg</code> 可以用于查看进程调度器维护的运行队列的情况，和系统负载</label><pre class="src src-sh">$ cat /proc/loadavg 
+1.63 0.48 0.21 10/200 17145
+<span class="org-comment-delimiter"># </span><span class="org-comment">|            |  |   |</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">|            |  |   +-- &#26368;&#21518;&#21019;&#24314;&#30340;&#36827;&#31243; ID</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">|            |  +------ &#36827;&#31243;&#24635;&#25968;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">|            +--------- &#36816;&#34892;&#38431;&#21015;&#20013;&#30340;&#36827;&#31243;&#25968;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">+---------------------- &#26368;&#36817; 1&#12289;5&#12289;15 &#20998;&#38047;&#20869;&#30340;&#31995;&#32479;&#36127;&#36733;</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 2: </span><code>top</code> 和 <code>w</code> 也可以用于查看系统负载，其数据都来源于 <code>/proc/loadavg</code></label><pre class="src src-sh">$ top
+top - 14:13:17 up 2 min, 1 user, load average: 0.15, 0.11, 0.04
+...
+
+$ w
+14:13:25 up 2 min, 1 user, load average: 0.20, 0.13, 0.05
+...
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 3: </span>要模拟提高系统负载，可以使用没有 I/O 操作并且长时间占用 CPU 的代码，如循环累加器</label><pre class="src src-cpp"><span class="org-type">int</span> <span class="org-function-name">main</span>() {
+    <span class="org-type">unsigned</span> <span class="org-type">long</span> <span class="org-type">long</span> <span class="org-variable-name">sum</span> = 0;
+    <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 0; i &lt; 100000; i++)
+        sum += i;
+    <span class="org-keyword">return</span> 0;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc86290c" class="outline-4">
+<h4 id="orgc86290c"><span class="section-number-4">3.2.6</span> 进程切换</h4>
+<div class="outline-text-4" id="text-3-2-6">
+<p>
+进程的内存空间各自独立，但是共享 CPU 的寄存器。进程被挂起的本质就是将它在 CPU 寄存器中的数据取出，暂存在内核态堆栈中，而进程恢复工作的本质就是将数据重新装入 CPU 寄存器，这段装入和移出的数据称为硬件上下文，除此之外，进程上下文中还包含进程运行时需要的状态信息。
+</p>
+
+<p>
+为了让进程轮流使用系统资源， <span class="underline">进程调度器会挂起正在运行的进程，同时恢复之前挂起的某个进程，这种行为称为进程切换，或 <del>上下文切换</del> （<a href="https://en.wikipedia.org/wiki/Context_switch">context switch</a>）。当硬件上下文频繁地装入和移出时，所消耗的时间是非常可观的。</span>
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 4: </span>使用 <code>nmon</code> 监视上下文切换</label><pre class="src src-sh">$ nmon
+k <span class="org-comment-delimiter"># </span><span class="org-comment">&#20999;&#25442; kernel &#27169;&#24335;</span>
+RunQueue              1
+ContextSwitch     138.4 <span class="org-comment-delimiter"># </span><span class="org-comment">&#27599;&#31186;&#19978;&#19979;&#25991;&#20999;&#25442;&#27425;&#25968;</span>
+Forks               0.0
+Interrupts         79.4
+</pre>
+</div>
+
+<blockquote>
+<p>
+<b>测试</b> ：Apache 使用 prefork 模式，lighttpd 使用单进程单线程模式，处理并发请求。<br />
+<b>结果</b> ：Apache 因为使用多进程，上下文切换次数远高于 lighttpd，导致每秒处理请求数低于 lighttpd。<br />
+<b>结论</b> ：要支持较大的并发数，需要 <span class="underline">减少上下文切换次数，最简单的做法是减少进程数，使用线程并配合其他 I/O 模型来设计并发策略。</span>
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org81b18d0" class="outline-4">
+<h4 id="org81b18d0"><span class="section-number-4">3.2.7</span> IOWait</h4>
+<div class="outline-text-4" id="text-3-2-7">
+<p>
+IOWait 是 <span class="underline">CPU 空闲并且等待 I/O 操作完成的时间比例</span> 。它的出发点是衡量 CPU 的性能，并不能代表 I/O 的性能或者工作量（了解当前 I/O 的性能可以进行磁盘 I/O 测试或者查看网络 I/O 流量）：IOWait 为 100% 不一定代表 I/O 出现性能问题或瓶颈，IOWait 为 0 时 I/O 操作也可能很繁忙，但是 <span class="underline">高 IOWait 至少说明当前任务的 CPU 时间开销相对于 I/O 操作时间来说比较少</span> ，对于依赖磁盘 I/O 的应用来说这比较正常，因为 CPU 的速度比磁盘 I/O 快，而且在随机的磁盘 I/O 操作中，大量的寻址时间无法避免。
+</p>
+
+<blockquote>
+<p>
+<b>测试</b> ：使用 Nginx 提供文件下载服务，开启 128 个进程。<br />
+<b>结果</b> ：Nmon 显示 IOWait 平均在 50% 以上。<br />
+<b>分析</b> ：下载服务使用 <code>sendfile</code> 系统调用传送数据，几乎不需要用户空间的 CPU 时间。
+</p>
+
+<p>
+<b>测试</b> ：将进程数降到 8，重复以上测试。<br />
+<b>结果</b> ：发现 IOWait 大幅下降，网络 I/O 大幅提升。<br />
+<b>分析</b> ：Nginx 进程减少后，花费在进程上下文切换的 CPU 时间也减少，更多的 CPU 时间可以发起 <code>sendfile</code> 系统调用，CPU 使用率提高，网络 I/O 流量也大幅度提高，而磁盘由于存在高速缓存，所以实际 I/O 时间并没有明显提高，所以 IOWait 减少。
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orgc47c3bf" class="outline-4">
+<h4 id="orgc47c3bf"><span class="section-number-4">3.2.8</span> 锁竞争</h4>
+<div class="outline-text-4" id="text-3-2-8">
+<p>
+服务器处理并发请求的时候，多个请求处理任务之间可能存在资源抢占竞争，需要一种机制控制顺序，也就是要保证线程安全。一般采用「锁」机制来控制资源的占用，这部分工作可以直接交给 Web 服务器的锁机制，但是考虑到锁竞争的本质，应该尽量减少并发请求对于共享资源的竞争，比如关闭 Web 服务器访问日志，可以减少锁等待时的延迟。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgac6aa81" class="outline-3">
+<h3 id="orgac6aa81"><span class="section-number-3">3.3</span> 系统调用</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+用户态和内核态是进程的两种运行级别。进程通常运行在用户态，使用 CPU 和内存来完成一些任务（如数学计算），而当进程需要对硬件外设进行操作时（如读取磁盘文件、发送网络数据），就必须切换到内核态。进程在两种模式之间切换会导致内存空间交换，也是一定程度的上下文切换，产生的开销通常认为比较昂贵，因此应该 <span class="underline">减少不必要的系统调用</span> 。
+</p>
+
+<blockquote>
+<p>
+<b>测试</b> ：在 Apache 中将网站根目录设置为 <code>AllowOverride all</code> ，并启用 <code>mod_status</code> ，使用 <code>strace</code> 跟踪子进程处理请求的过程。<br />
+<b>结果</b> ：请求处理过程涉及多次 <code>open</code> 、 <code>times</code> 、 <code>gettimeofday</code> 系统调用，吞吐量下降。<br />
+<b>分析</b> ： <code>open</code> 用于查找各级目录下的 <code>.htaccess</code> 文件（局部参数设置）是否存在， <code>mode_status</code> 使用 <code>times</code> 和 <code>gettimeofday</code> 获取系统时间，以监控请求处理时间。<br />
+<b>结论</b> ：尽量减少不必要的系统调用，可以降低请求处理时间。
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org2bdb1d3" class="outline-3">
+<h3 id="org2bdb1d3"><span class="section-number-3">3.4</span> 内存分配</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+对于传统应用，各类表达式的最大开销在于中间变量的内存分配及数据复制，而对于 Web 服务器处理并发请求，内存堆栈的分配和复制次数变得更加频繁，内存是否足够是阻碍并发链接数的关键因素。对于数据复制，可以通过改善数据结构和算法复杂度来适当减少，而对于内存分配，Web 服务器使用了各自的策略来提高效率。
+</p>
+
+<p>
+Apache 多进程模型的内存使用量很大，Apache 使用了基于内存池策略的内存管理方案，在运行开始时一次性申请大片的内存作为内存池，随后只要在内存池中直接获取需要的空间，而不用再次分配，因为频繁的内存分配、释放会引发内存整理，影响性能。另外内存池使 Apache 的内存管理更加安全，内存使用后忘记释放也没有关系，内存池在 Apache 关闭时会彻底释放。
+</p>
+
+<p>
+使用单进程模型的 Nginx 和 lighttpd 内存使用量小得多。Nginx 的设计初衷便在于支持较大的并发连接数，所以在内存管理方面进行了专门设计，可以使用多线程模型， <span class="underline">线程之间共享内存资源，从而大大减少内存总使用量，</span> 另外使用分阶段的内存分配策略，按需分配，及时释放，使得内存使用量保持在很小的数量范围。Nginx 声称维持 10000 个非活跃 HTTP 持久连接只需要 2.5MB 内存。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5d0a95c" class="outline-3">
+<h3 id="org5d0a95c"><span class="section-number-3">3.5</span> 持久连接</h3>
+<div class="outline-text-3" id="text-3-5">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>短连接</b></th>
+<th scope="col" class="org-left">TCP 连接建立后只发送一份数据就断开连接</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>长连接</b></td>
+<td class="org-left">持久（keep-alive）连接</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">一次 TCP 连接中持续发送多份数据而不断开连接</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+在 Web 应用层，由于 HTTP 的无状态性，短连接完全可以满足需求。但在 TCP 传输层，长连接对于密集图片等小数据请求有明显的加速作用，因为 <span class="underline">建立 TCP 连接的操作会产生一定开销，减少建立连接的次数有利于提高性能。</span>
+</p>
+
+<p>
+HTTP 长连接的实现需要浏览器和 Web 服务器共同协作：浏览器需要保持一个 TCP 连接并重复利用，以发送多个请求；服务器不能过早地主动关闭连接。HTTP/1.1 对长连接有了完整的定义，基于标准化的协议，很多浏览器和 Web 服务器都开始支持长连接，如 Apache 通过 <code>KeepAlive</code> 指令开闭长连接的支持。
+</p>
+
+<p>
+关于超时的设置，对于多进程模型，如果超时时间过长，在没有任何后续请求时，Web 服务器仍然需要为当前连接维持空闲的子进程，影响性能。对于多线程模型，超时时间过长同样会导致资源无效占有，开销甚至会超过重复连接。长连接超时时间取决于浏览器和 Web 服务器的设置，双方都可以主动关闭长连接，如 Apache 通过 <code>KeepAliveTimeout</code> 指令设置超时时间。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 5: </span>长连接示例</label><pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">&#27983;&#35272;&#22120;&#21457;&#36215;&#38271;&#36830;&#25509;&#35831;&#27714;</span>
+GET /index.html HTTP/1.1
+Connection: Keep-Alive
+...
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#26381;&#21153;&#22120;&#21709;&#24212;</span>
+HTTP/1.1 200 OK
+Connection: Keep-Alive
+Keep-Alive: <span class="org-variable-name">timeout</span>=5, <span class="org-variable-name">max</span>=100
+</pre>
+</div>
+
+<blockquote>
+<p>
+<b>测试</b> ：Nginx 开启和关闭长连接，接收并发请求，使用 <code>strace</code> 统计系统调用。<br />
+<b>结果</b> ：使用长连接时，总系统调用数减少一半， <code>accept</code> 和 <code>close</code> 数量大幅减少。
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orgee64df9" class="outline-3">
+<h3 id="orgee64df9"><span class="section-number-3">3.6</span> I/O 模型</h3>
+<div class="outline-text-3" id="text-3-6">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>内存 I/O</b></th>
+<th scope="col" class="org-left">速度最快</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>网络 I/O</b></td>
+<td class="org-left">瓶颈往往在于带宽最低的交换节点</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">通过购买独享带宽、使用高带宽网络适配器提高</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>磁盘 I/O</b></td>
+<td class="org-left">使用 RAID 磁盘阵列、并行磁盘访问提高</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+I/O 操作由内核系统调用完成，而系统调用需要由 CPU 调度，如何让高速的 CPU 和低速的 I/O 设备更好地协调工作，是从现代计算机诞生到现在一直在探讨的话题，很多技术和策略都围绕它们展开，比如通过多进程来充分利用空闲的 CPU 资源。
+</p>
+
+<p>
+网络和磁盘 I/O 可以归纳为多种模型，本质区别在于 CPU 的参与方式。 <span class="underline">CPU 花费在单次 I/O 操作调度上的时间越少，可以同时完成的 I/O 操作就越多。</span>
+</p>
+</div>
+
+<div id="outline-container-orgfbba972" class="outline-4">
+<h4 id="orgfbba972"><span class="section-number-4">3.6.1</span> PIO 与 DMA</h4>
+<div class="outline-text-4" id="text-3-6-1">
+<p>
+很早以前，磁盘和内存之间的数据传输需要 CPU 控制，称为 PIO。读取磁盘文件到内存，数据需要经过 CPU 存储转发，这种方式访问文件需要占用大量的 CPU 时间，系统几乎停止响应。
+</p>
+
+<p>
+后来 DMA（Direct Memory Access）取代了 PIO，它可以不经过 CPU 而直接进行磁盘和内存的数据交换。CPU 向 DMA 控制器下达处理数据传送的指令，后者通过系统总线传送数据，完毕后通知 CPU。这种方式降低了 CPU 占有率，节省了系统资源，它的传输速度主要取决于慢速设备的速度。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5dc7d9b" class="outline-4">
+<h4 id="org5dc7d9b"><span class="section-number-4">3.6.2</span> 同步阻塞 I/O</h4>
+<div class="outline-text-4" id="text-3-6-2">
+<p>
+造成 I/O 等待的原因很多：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>网络 I/O 等待</b></th>
+<th scope="col" class="org-left">等待用户请求。</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">用户发出请求，服务器与浏览器建立 TCP 连接后，等待 HTTP 请求数据。</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">等待请求数据在网络传输。</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">等待请求数据进入服务器接收缓冲区队列。</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">等待请求数据被复制到进程地址空间。</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">如果使用长连接，在超时关闭连接之前，还要等待其他的请求。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>磁盘 I/O 等待</b></td>
+<td class="org-left">排队等待其他磁盘操作完成。</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">等待从磁盘读取数据。</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+有等待，就会有阻塞，阻塞是指发起 I/O 操作的进程被阻塞，而不是 CPU 被阻塞。
+</p>
+
+<p>
+通常「同步」的概念适用于网络 I/O，而对于磁盘 I/O，也有一个「同步」的选项。在规范情况下，对磁盘文件调用 <code>read()</code> 将阻塞进程，直到数据被复制到进程用户态内存空间，而对磁盘文件调用 <code>write()</code> 则会在数据被复制到内核缓冲区后立即返回。而如果使用 <code>O_SYNC</code> 标志打开文件，则写操作 <code>write()</code> 必须等待数据真正写入磁盘后才返回。
+</p>
+
+<p>
+<span class="underline">同步阻塞 I/O 是指当进程调用涉及 I/O 操作的系统调用或库函数时，</span> 如 <code>accept()</code> 、 <code>send()</code> 、 <code>recv()</code> ， <span class="underline">进程便暂停，等待 I/O 操作完成后再继续运行。</span> 比如 Apache prefork 模型，某个子进程在等待请求时，会阻塞在 <code>accept()</code> 调用。同步阻塞 I/O 简单有效， <span class="underline">可以结合多进程，有效地利用 CPU 资源，但是代价是多进程的大量内存开销。</span>
+</p>
+
+<blockquote>
+<p>
+类比：逛街途中去餐馆点菜，由于不知道什么时候能做好，只能暂停逛街，在餐馆等待（阻塞），吃完（I/O 操作）之后再继续逛街。
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org4d9543b" class="outline-4">
+<h4 id="org4d9543b"><span class="section-number-4">3.6.3</span> 同步非阻塞 I/O</h4>
+<div class="outline-text-4" id="text-3-6-3">
+<p>
+在同步阻塞 I/O 中，进程的等待可能包括两部分：等待数据的就绪，和等待数据的复制。对于网络 I/O，前者的时间可能要更长一些。
+</p>
+
+<p>
+<span class="underline">同步非阻塞 I/O 不等待数据的就绪，如果数据不可读或者不可写，它会立即告知进程。</span> 比如使用非阻塞 <code>recv()</code> 接收网络数据，如果网卡缓冲区中没有可接收的数据，函数就及时返回。 <span class="underline">非阻塞 I/O 结合反复轮询来尝试数据是否就绪，防止进程被阻塞，优点在于一个进程可以同时处理多个 I/O 操作。但缺点是轮询会花费大量的 CPU 时间，使得进程处于忙碌等待状态。</span>
+</p>
+
+<p>
+非阻塞 I/O 一般只针对网络 I/O，比如在使用 socket 时加上 <code>O_NONBLOCK</code> flag，该 socket 的 <code>send()</code> 或 <code>recv()</code> 便采用非阻塞方式。对于磁盘 I/O，非阻塞 I/O 并不产生效果（补充：因为磁盘文件通常始终是就绪的，不需要等待）。
+</p>
+
+<blockquote>
+<p>
+类比：逛街途中去餐馆点菜，但不在餐馆等待，而是继续逛街，同时频繁地回餐馆查看是否做好，这样可以不耽误逛街和吃饭，但是耗费大量体力往返查看。
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org79bbbfe" class="outline-4">
+<h4 id="org79bbbfe"><span class="section-number-4">3.6.4</span> 多路 I/O 就绪通知</h4>
+<div class="outline-text-4" id="text-3-6-4">
+<p>
+Web 服务器经常需要同时处理大量的文件描述符，比如同时接收多个 TCP 连接的数据，如果使用同步非阻塞 I/O，不管 socket 有没有可以接收的数据，都必须轮流对每个 socket 调用 <code>recv()</code> 接收数据，花费大量 CPU 时间。
+</p>
+
+<p>
+<span class="underline">多路 I/O 就绪通知提供了对大量文件描述符就绪检查的方案，它允许进程同时监视所有文件描述符，并可以快速获得就绪的文件描述符，然后只针对这些文件描述符进行数据访问。</span> I/O 就绪通知只是允许快速获得就绪的文件描述符，得知数据就绪后，访问数据本身仍然需要选择阻塞或非阻塞，一般选择非阻塞方式，以防止任何意外的等待阻塞整个进程。
+</p>
+
+<blockquote>
+<p>
+类比：逛街途中去几个不同餐馆点了菜，通过电子屏幕可以快速获知已经做好的菜，同时可以继续逛街，而不需要轮流到每家店询问。select 和 poll 显示所有菜的状态，包括正在制作的和已经做好的，不方便阅读。 <code>/dev/poll</code> 只显示已经做好的菜。使用电子屏幕只能在附近才能看到通知，epoll 提供了短信通知。
+</p>
+</blockquote>
+
+<p>
+多路 I/O 就绪通知有很多不同的实现，在检查大量文件描述符时的性能也存在一定的差异。
+</p>
+</div>
+
+<ol class="org-ol"><li><a id="org5822856"></a>select<br /><div class="outline-text-5" id="text-3-6-4-1">
+<p>
+通过 <code>select()</code> 系统调用，监视包含多个文件描述符的数组， <code>select()</code> 返回后，数组中就绪的文件描述符会被内核修改标志位，使进程可以获得这些文件描述符，从而进行后续的读写操作。
+</p>
+
+<p>
+select 的优点在于良好跨平台支持，缺点在于 <span class="underline">单个进程能够监视的文件描述符存在最大限制，Linux 一般为 1024，假如使用 select 的服务器已经维持了 1024 个连接，请求会被拒绝。</span> 另外，文件描述符数组的被整体复制于用户态和内核的地址空间之间，开销随文件描述符数量线性增长。由于网络延迟，使大量 TCP 连接处于非活跃状态，但调用 <code>select()</code> 会对所有 socket 进行线性扫描，也产生一定的开销。
+</p>
+</div></li>
+
+<li><a id="org0e99613"></a>poll<br /><div class="outline-text-5" id="text-3-6-4-2">
+<p>
+poll 和 select 在本质上没有差别，但是没有最大文件描述符数量的限制。
+</p>
+
+<p>
+调用 <code>select()</code> 和 <code>poll()</code> 返回就绪的文件描述符后，如果进程没有对其进行 I/O 操作，下次调用时将再次返回这些文件描述符，所以不会丢失就绪的消息，这种方式称为 <del>水平触发</del> （Level Triggered）。
+</p>
+</div></li>
+
+<li><a id="orgabc4c1d"></a>SIGIO<br /><div class="outline-text-5" id="text-3-6-4-3">
+<p>
+SIGIO 通过实时信号（Real Time Signal）实现通知，与 select 和 poll 的不同之处在于，SIGIO 只在文件描述符变为就绪状态时通知一次，即使没有进行 I/O 操作，也不会再次告知，这种方式称为 <del>边缘触发</del> （Edge Triggered）。SIGIO 是 Linux 2.4 下性能最好的多路 I/O 就绪通知方法。
+</p>
+
+<p>
+SIGIO 的缺点在于，代表事件的信号由内核的事件队列来维护，信号按照顺序进行通知，这可能导致信号到达时，事件已经过期，文件描述符已经被关闭。另一方面，事件队列有长度限制，容易发生事件丢失。
+</p>
+</div></li>
+
+<li><a id="orge63921b"></a><code>/dev/poll</code><br /><div class="outline-text-5" id="text-3-6-4-4">
+<p>
+Sun 在 Solaris 中提供的实现方法，使用虚拟的 <code>/dev/poll</code> 设备，将要监视的文件描述符数组写入这个设备，然后通过 <code>ioctl()</code> 等待事件通知。当 <code>ioctl()</code> 返回就绪的文件描述符后，可以从 <code>/dev/poll</code> 读取所有就绪的文件描述符数组。
+</p>
+</div></li>
+
+<li><a id="org813b62a"></a><code>/dev/epoll</code><br /><div class="outline-text-5" id="text-3-6-4-5">
+<p>
+<code>/dev/epoll</code> 设备以补丁的形式出现在 Linux 2.4，它提供了类似 <code>/dev/poll</code> 的功能，而且增加了内存映射（mmap）技术，在一定程度上提高了性能。
+</p>
+</div></li>
+
+<li><a id="org09b0558"></a>epoll<br /><div class="outline-text-5" id="text-3-6-4-6">
+<p>
+epoll 是 Linux 2.6 下性能最好的多路 I/O 就绪通知方法。
+</p>
+
+<p>
+epoll 同样只告知那些就绪的文件描述符，调用 <code>epoll_wait()</code> 获得就绪文件描述符时，返回的并不是实际的描述符，而是一个代表就绪描述符数量的值，需要去 epoll 指定的数组中取得相应数量的文件描述符，这里也使用了内存映射（mmap），省掉了文件描述符在内核态和用户态之间复制的开销。
+</p>
+
+<p>
+epoll 本质的改进在于采用基于事件的就绪通知方式。在 select 和 poll 中，进程需要调用一定的方法，使内核对所有监视的文件描述符进行扫描，而 epoll 事先通过 <code>epoll_ctl()</code> 注册每个文件描述符，一旦某个文件描述符就绪，内核会采用回调机制，迅速激活这个文件描述符，当进程调用 <code>epoll_wait()</code> 时便得到通知。
+</p>
+
+<p>
+epoll 同时支持水平触发和边缘触发，理论上边缘触发的性能更高，但是代码实现复杂，因为任何意外的丢失事件都会造成请求处理错误。epoll 默认采用水平触发，使用边缘触发需要在事件注册时增加 <code>EPOLLET</code> 选项。
+</p>
+</div></li>
+
+<li><a id="org7b302dd"></a>kqueue<br /><div class="outline-text-5" id="text-3-6-4-7">
+<p>
+FreeBSD 提供的实现，性能和 epoll 非常接近，可以设置水平触发或边缘触发，同时可以用来监视磁盘文件和目录。
+</p>
+</div></li></ol>
+</div>
+
+<div id="outline-container-org65ae01f" class="outline-4">
+<h4 id="org65ae01f"><span class="section-number-4">3.6.5</span> 内存映射</h4>
+<div class="outline-text-4" id="text-3-6-5">
+<p>
+Linux 内核提供一种访问磁盘文件的特殊方式，使用 <code>mmap()</code> 系统调用， <span class="underline">将内存中的地址空间和指定的磁盘文件相关联，从而把对内存的访问转换为对磁盘文件的访问，这种技术称为内存映射（memory mapping），可以提高磁盘 I/O 的性能</span> （Wiki：访问内存映射文件比直接文件读写要快几个数量级）。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 6: </span>向 Apache 请求较小的静态文件时的系统调用</label><pre class="src src-sh"><span class="org-function-name">open</span>(<span class="org-string">"/data/www/site/htdocs/test.htm"</span>, O_RDONLY|O_LARGEFILE) = 20      <span class="org-comment-delimiter"># </span><span class="org-comment">&#25171;&#24320;&#25991;&#20214;&#65292;&#33719;&#24471;&#25991;&#20214;&#25551;&#36848;&#31526;</span>
+<span class="org-function-name">mmap2</span>(NULL, 151, PROT_READ, MAP_SHARED, 20, 0) = 0xb7f8f000            <span class="org-comment-delimiter"># </span><span class="org-comment">&#36827;&#34892;&#20869;&#23384;&#26144;&#23556;&#20851;&#32852;</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#35835;&#21462;&#25991;&#20214;&#20869;&#23481;&#65288;&#20869;&#23384;&#22320;&#22336;&#31354;&#38388;&#65289;&#65292;&#22240;&#20026;&#23646;&#20110;&#29992;&#25143;&#24577;&#34892;&#20026;&#65292;&#19981;&#22312;&#27492;&#36755;&#20986;</span>
+<span class="org-function-name">writev</span>(19, [{<span class="org-string">"HTTP/1.1 200 OK"</span>..., 278}, {<span class="org-string">"&lt;html&gt;"</span>..., 151}], 2) = 429 <span class="org-comment-delimiter"># </span><span class="org-comment">&#21457;&#36865; HTTP header &#21644;&#27491;&#25991;&#25968;&#25454;</span>
+<span class="org-function-name">munmap</span>(0xb7f8f000, 151) = 0                                            <span class="org-comment-delimiter"># </span><span class="org-comment">&#25764;&#38144;&#20869;&#23384;&#26144;&#23556;&#20851;&#32852;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge5aaf58" class="outline-4">
+<h4 id="orge5aaf58"><span class="section-number-4">3.6.6</span> 直接 I/O</h4>
+<div class="outline-text-4" id="text-3-6-6">
+<p>
+内核缓冲区可以提高磁盘文件的访问性能：
+</p>
+
+<ul class="org-ul">
+<li>当进程读取磁盘文件时，如果文件内容已经在内核缓冲区中，就不需要再次访问磁盘。</li>
+<li>当进程向磁盘文件中写入数据时，实际上写到内核缓冲区便成功返回，而真正写入磁盘是通过策略进行延迟的。</li>
+</ul>
+
+<p>
+然而，对于一些应用，比如数据库服务器，为了提高性能，希望 <span class="underline">绕过内核缓冲区，自己在用户态空间实现并管理 I/O 缓冲区，</span> 包括读缓存机制和写延迟机制等，以支持独特的查询机制，比如数据库可以使用更合理的策略来提高缓存命中率。另一方面，绕过内核缓冲区可以减少系统内存的开销，因为内核缓冲区使用系统内存。
+</p>
+
+<ul class="org-ul">
+<li>Linux 支持在 <code>open()</code> 系统调用中增加参数选项 <code>O_DIRECT</code> ，便可以绕过内核缓冲区，直接访问文件。</li>
+<li>MySQL 的 Innodb 存储引擎自身可以进行数据和索引的缓存管理，所以对内核缓冲区的依赖不重。MySQL 通过在 <code>my.cnf</code> 配置中分配 Innodb 数据空间文件时，使用 raw 分区跳过内核缓冲区，实现直接 I/O。</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-variable-name">innodb_data_file_path</span> = /dev/sda5:100Gnewraw
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#21478;&#19968;&#31181;&#23454;&#29616;&#30452;&#25509; I/O &#30340;&#26041;&#24335;</span>
+<span class="org-variable-name">innodb_flush_method</span> = O_DIRECT
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6a42584" class="outline-4">
+<h4 id="org6a42584"><span class="section-number-4">3.6.7</span> sendfile</h4>
+<div class="outline-text-4" id="text-3-6-7">
+<p>
+Web 服务器处理静态文件请求的过程中，磁盘文件的数据先要经过内核缓冲区，到达用户内存空间，然后被送到网卡对应的内核缓冲区，接着再被送入网卡进行发送。数据从内核缓冲区出去，又回到内核缓冲区，因为是静态数据，所以没有任何变化，产生了无意义的开销。
+</p>
+
+<p>
+Linux 2.4 引入了称为 khttpd 的内核级 Web 服务器，只处理静态文件的请求，使 <span class="underline">请求的处理尽量在内核完成，减少内核态的切换以及用户态数据复制的开销。</span> Linux通过 <code>sendfile()</code> 系统调用将这种机制提供给开发者，它可以 <span class="underline">将磁盘文件的特定部分直接传送到代表客户端的 socket 描述符，加快静态文件的请求速度，减少 CPU 和内存的开销。</span>
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 7: </span>Apache 可以配置是否使用 sendfile</label><pre class="src src-sh">EnableSendfile off
+</pre>
+</div>
+
+<blockquote>
+<p>
+<b>测试</b> ：不使用 sendfile，通过 <code>strace</code> 跟踪 Apache 处理较大的静态文件的过程，并进行压力测试。
+<b>结果</b> ：使用 <code>read()</code> 和 <code>write()</code> 系统调用读取和发送数据，每次 8192 字节，吞吐量 ~300/s。
+</p>
+
+<p>
+<b>测试</b> ：使用 sendfile，进行同样的测试。
+<b>结果</b> ：使用 <code>poll()</code> 和 <code>sendfile64()</code> 系统调用读取和发送数据，每次 49152 字节，吞吐量 ~600/s。
+<b>结论</b> ：使用 sendfile 处理较大文件的请求，需要较少的系统调用和发送次数。
+</p>
+</blockquote>
+
+<p>
+但请求较小的静态文件， sendfile 的作用便不那么重要，因为在处理小文件请求时，发送数据的环节在整个过程中所占时间的比例，相比于大文件请求时要小很多，所以 sendfile 的优化效果自然不十分明显。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org562f9ed" class="outline-4">
+<h4 id="org562f9ed"><span class="section-number-4">3.6.8</span> 异步 I/O</h4>
+<div class="outline-text-4" id="text-3-6-8">
+<p>
+<span class="underline">阻塞和非阻塞是指进程访问的数据尚未就绪时，进程是否需要等待，即函数直接返回还是等待；同步和异步是指数据就绪后访问数据的机制，同步指请求数据并等待 I/O 操作完毕，数据读写时必须阻塞，异步指请求数据后继续处理其他任务，等待 I/O 操作完毕的通知，数据读写时不发生阻塞。</span>
+</p>
+
+<p>
+POSIX 1003.1 为定义了以异步 I/O（AIO）访问文件的库函数，当用户态进程调用库函数访问文件时，进行快速注册，比如进入读写操作队列，然后函数立刻返回。这种 <span class="underline">异步 I/O 机制是非阻塞的，进程在发起 I/O 操作后继续运行，可以使 CPU 和 I/O 操作达到更好的重叠。</span>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcc0c579" class="outline-3">
+<h3 id="orgcc0c579"><span class="section-number-3">3.7</span> 服务器并发策略</h3>
+<div class="outline-text-3" id="text-3-7">
+<p>
+到达服务器的请求都封装在 IP 包中，位于网卡的接收缓冲区中，Web 服务器的工作就是不断地读取请求，进行处理，并将结果写到发送缓冲区，这其中包含了一系列的 I/O 操作和 CPU 计算。 <span class="underline">并发策略的目的，是在服务器并发量较高时，合理协调并充分利用 CPU 计算能力和 I/O 操作，使 CPU 计算和 I/O 操作尽量重叠进行，一方面要让 CPU 在 I/O 等待时不要空闲，另一方面让 CPU 在 I/O 调度上尽量花费最少的时间，提供较高的吞吐率。</span>
+</p>
+
+<p>
+不存在对所有性质的请求都高效的并发策略，必须根据具体情况进行选择。
+</p>
+</div>
+
+<div id="outline-container-org9926612" class="outline-4">
+<h4 id="org9926612"><span class="section-number-4">3.7.1</span> 一个进程处理一个连接</h4>
+<div class="outline-text-4" id="text-3-7-1">
+<p>
+早期采用 fork 模式，主进程 <code>accept()</code> 来自客户端的连接，为每个连接 <code>fork()</code> 新的 worker 进程，处理结束后，进程被销毁。 <code>fork()</code> 的开销是影响性能的关键。
+</p>
+
+<p>
+prefork 模式由主进程预先创建一定数量的子进程，每个请求由一个子进程处理，每个子进程可以处理多个请求。父进程负责管理子进程，根据站点负载调整子进程数量，相当于动态维护一个进程池。 <code>accept()</code> 有两种策略：
+</p>
+
+<ul class="org-ul">
+<li>主进程使用非阻塞 <code>accept()</code> ，建立连接后，主进程将任务分配给空闲的子进程。</li>
+<li>所有子进程使用阻塞 <code>accept()</code> 竞争接收连接。大多数 TCP 栈的实现方法是，当一个请求连接到达时，内核激活所有阻塞在 <code>accept()</code> 的子进程，但只有一个能够成功获得连接并返回到用户空间，其余的子进程继续回到休眠状态，这种「抖动」造成一定的额外开销。</li>
+</ul>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 8: </span>Apache 接收 HTTP 请求数据的系统调用</label><pre class="src src-sh"><span class="org-function-name">accept</span>(3, ...) = 19 &lt;0.004843&gt;                      <span class="org-comment-delimiter"># </span><span class="org-comment">&#33719;&#24471; socket &#25991;&#20214;&#25551;&#36848;&#31526;</span>
+<span class="org-function-name">fcntl64</span>(19, ..., O_RDWR|O_NONBLOCK) = 0 &lt;0.000005&gt;  <span class="org-comment-delimiter"># </span><span class="org-comment">&#23558;&#25991;&#20214;&#25551;&#36848;&#31526;&#35774;&#32622;&#20026;&#38750;&#38459;&#22622;</span>
+<span class="org-builtin">read</span>(19, <span class="org-string">"GET /test.htm ..."</span>, 8000) = 85 &lt;0.000008&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#35835;&#21462;&#35831;&#27714;&#25968;&#25454;</span>
+...
+<span class="org-function-name">poll</span>([{<span class="org-variable-name">fd</span>=19, ..., <span class="org-variable-name">revents</span>=POLLIN|POLLHUP}], 1, 2000) = 1 &lt;0.013797&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#26377;&#26032;&#25968;&#25454;&#25110;&#36830;&#25509;&#20851;&#38381;&#26102;&#36820;&#22238;</span>
+<span class="org-builtin">read</span>(19, <span class="org-string">""</span>, 512) = 0 &lt;0.000008&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#25509;&#25910;&#25968;&#25454;&#65292;&#32467;&#26524;&#20026;&#31354;&#65292;&#35270;&#20026;&#23458;&#25143;&#31471;&#20851;&#38381;&#20102;&#36830;&#25509;</span>
+<span class="org-function-name">close</span>(19) = 0 &lt;0.000009&gt;         <span class="org-comment-delimiter"># </span><span class="org-comment">&#20851;&#38381;&#36830;&#25509;</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 9: </span>系统调用汇总</label><pre class="src src-sh">% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 74.55    0.016449           4      3846           poll   <span class="org-comment-delimiter"># </span><span class="org-comment">&#31561;&#24453;&#25968;&#25454;&#23601;&#32490;</span>
+ 12.07    0.002664           1      3846           accept <span class="org-comment-delimiter"># </span><span class="org-comment">&#25509;&#25910;&#36830;&#25509;</span>
+  4.39    0.000969           0      3846           writev <span class="org-comment-delimiter"># </span><span class="org-comment">&#21457;&#36865;&#21709;&#24212;&#25968;&#25454;</span>
+  2.79    0.000616           0     26922     23076 open   <span class="org-comment-delimiter"># </span><span class="org-comment">&#25171;&#24320;&#30913;&#30424;&#25991;&#20214;</span>
+  0.49    0.000109           0     11538      3846 read   <span class="org-comment-delimiter"># </span><span class="org-comment">&#35835;&#21462;&#35831;&#27714;&#25968;&#25454;</span>
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.022064                126919     26922 total
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 10: </span>使用长连接，Apache 接收 HTTP 请求数据的系统调用</label><pre class="src src-sh"><span class="org-function-name">poll</span>([{<span class="org-variable-name">fd</span>=19, ..., <span class="org-variable-name">revents</span>=POLLIN}], 1, 30000) = 1 &lt;0.000040&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#26377;&#26032;&#25968;&#25454;&#26102;&#36820;&#22238;&#65292;&#31561;&#24453;&#26102;&#38388;&#27604;&#30701;&#36830;&#25509;&#22823;&#22823;&#32553;&#30701;</span>
+<span class="org-builtin">read</span>(19, <span class="org-string">"GET /test.htm ..."</span>, 8000) = 109 &lt;0.000007&gt;          <span class="org-comment-delimiter"># </span><span class="org-comment">&#25509;&#25910;&#25968;&#25454;</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 11: </span>系统调用汇总</label><pre class="src src-sh">% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 64.30    0.001052           0     10332      8856 open   <span class="org-comment-delimiter"># </span><span class="org-comment">&#25171;&#24320;&#30913;&#30424;&#25991;&#20214;</span>
+ 17.60    0.000288           0      1476           writev <span class="org-comment-delimiter"># </span><span class="org-comment">&#21457;&#36865;&#21709;&#24212;&#25968;&#25454;</span>
+  0.55    0.000009           0      2968      1478 read   <span class="org-comment-delimiter"># </span><span class="org-comment">&#35835;&#21462;&#35831;&#27714;&#25968;&#25454;</span>
+  0.00    0.000000           0      1476           poll   <span class="org-comment-delimiter"># </span><span class="org-comment">&#31561;&#24453;&#25968;&#25454;&#23601;&#32490;</span>
+  0.00    0.000000           0        15           accept <span class="org-comment-delimiter"># </span><span class="org-comment">&#25509;&#25910;&#36830;&#25509;</span>
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.001636                 34101     10335 total
+</pre>
+</div>
+
+<p>
+使用长连接时， <code>accept()</code> 和 <code>poll()</code> 的阻塞时间和开销基本为 0，时间主要消耗在 <code>open()</code> 和 <code>writev()</code> 。
+</p>
+
+<p>
+<span class="underline">多进程模型的开销限制了并发连接数，但是优势是稳定性，进程相互独立，任何子进程的崩溃都不会影响 Aapche 本身，</span> 另外 Apache 非常成熟，功能模块丰富，比如动态脚本的支持、虚拟主机管理、URL Rewrite、SSL 加密、SSI（服务器端静态网页包含）、目录浏览和管理等，安装和配置简单， <span class="underline">对于并发数要求不高（如 150 以内）的站点，如果同时对其他功能有所依赖，Apache 是首选。</span>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3702a2f" class="outline-4">
+<h4 id="org3702a2f"><span class="section-number-4">3.7.2</span> 一个线程处理一个连接</h4>
+<div class="outline-text-4" id="text-3-7-2">
+<p>
+Apache 的 worker 多路处理模块采用一个进程包含多个线程、每个线程处理一个连接的方式，可以减少 prefork 模式的进程开销，支持更多的并发连接。Worker 的 <span class="underline">线程实际上是由内核进程调度器管理的轻量级进程，其上下文切换开销依然存在，表现并不比 prefork 有太大优势，</span> 优点并不明显，因此 worker 模型的处境尴尬，通常在服务器并发量达到瓶颈时，会改用其他的轻量级服务器。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 12: </span>Prefork 模式下压力测试</label><pre class="src src-sh">Requests per second: 5861.53 [/sec] (mean) <span class="org-comment-delimiter"># </span><span class="org-comment">&#21534;&#21520;&#37327;</span>
+ContextSwitch 15919.8                      <span class="org-comment-delimiter"># </span><span class="org-comment">&#19978;&#19979;&#25991;&#20999;&#25442;</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 13: </span>Worker 模式下压力测试</label><pre class="src src-sh">Requests per second: 6886.08 [/sec] (mean) <span class="org-comment-delimiter"># </span><span class="org-comment">&#21534;&#21520;&#37327;</span>
+ContextSwitch 43237.6                      <span class="org-comment-delimiter"># </span><span class="org-comment">&#19978;&#19979;&#25991;&#20999;&#25442;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org92e5a49" class="outline-4">
+<h4 id="org92e5a49"><span class="section-number-4">3.7.3</span> 一个进程处理多个连接</h4>
+<div class="outline-text-4" id="text-3-7-3">
+<p>
+一个进程处理多个连接的前提是多路 I/O 就绪通知的应用，在这种并发策略下，多路 I/O 就绪通知的性能是关键。
+</p>
+
+<p>
+处理多个连接的进程通常称为 worker 进程，有些 Web 服务器使用 worker 线程来代替 worker 进程，但这种线程通常是内核级线程，在处理多路 I/O 的方式上基本相同，可以看成是迷你的 worker 进程。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 14: </span>lighttpd 支持的多路 I/O 就需通知方法</label><pre class="src src-sh">OS           Method      Config Value
+============ =========== ===============
+all          select      select
+Unix         poll        poll
+Linux 2.4+   rt-signals  linux-rtsig
+Linux 2.6+   epoll       linux-sysepoll
+Solaris      /dev/poll   solaris-devpoll
+FreeBSD      kqueue      freebsd-kqueue
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 15: </span>使用 select 时检查数据就绪到接收请求的系统调用</label><pre class="src src-sh"><span class="org-keyword">select</span>(4, [3], [], [3], {1, 0}) = 0 (Timeout)
+<span class="org-keyword">select</span>(4, [3], [], [3], {1, 0}) = 1 (<span class="org-keyword">in</span> [3], left {0, 164000})
+<span class="org-comment-delimiter">#                        </span><span class="org-comment">|               |</span>
+<span class="org-comment-delimiter">#                        </span><span class="org-comment">|               +-- socket</span>
+<span class="org-comment-delimiter">#                        </span><span class="org-comment">+------------------ &#36229;&#26102;&#26102;&#38388;</span>
+<span class="org-function-name">accept</span>(3, {<span class="org-variable-name">sa_family</span>=AF_INET, <span class="org-variable-name">sin_port</span>=htons(46160), <span class="org-variable-name">sin_addr</span>=inet_ addr(<span class="org-string">"127.0.0.1"</span>)}, [16]) = 6
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 16: </span>使用 poll 时检查数据就绪到接收请求的系统调用</label><pre class="src src-sh"><span class="org-function-name">poll</span>([{<span class="org-variable-name">fd</span>=3, <span class="org-variable-name">events</span>=POLLIN}], 1, 1000) = 0
+<span class="org-function-name">poll</span>([{<span class="org-variable-name">fd</span>=3, <span class="org-variable-name">events</span>=POLLIN, <span class="org-variable-name">revents</span>=POLLIN}], 1, 1000) = 1
+<span class="org-comment-delimiter">#         </span><span class="org-comment">|                                      |</span>
+<span class="org-comment-delimiter">#         </span><span class="org-comment">|                                      +-- &#36229;&#26102;&#26102;&#38388;</span>
+<span class="org-comment-delimiter">#         </span><span class="org-comment">+----------------------------------------- socket</span>
+<span class="org-function-name">accept</span>(3, {<span class="org-variable-name">sa_family</span>=AF_INET, <span class="org-variable-name">sin_port</span>=htons(35332), <span class="org-variable-name">sin_addr</span>=inet_ addr(<span class="org-string">"127.0.0.1"</span>)}, [16]) = 6
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 17: </span>使用 epoll 时检查数据就绪到接收请求的系统调用</label><pre class="src src-sh"><span class="org-function-name">epoll_wait</span>(6, {}, 2049, 1000) = 0
+<span class="org-function-name">epoll_wait</span>(6, {{EPOLLIN, {<span class="org-variable-name">u32</span>=3, <span class="org-variable-name">u64</span>=3}}}, 2049, 1000) = 1
+<span class="org-comment-delimiter">#                                                </span><span class="org-comment">|</span>
+<span class="org-comment-delimiter">#                                                </span><span class="org-comment">+-- &#36229;&#26102;&#26102;&#38388;</span>
+<span class="org-function-name">accept</span>(3, {<span class="org-variable-name">sa_family</span>=AF_INET, <span class="org-variable-name">sin_port</span>=htons(35333), <span class="org-variable-name">sin_addr</span>=inet_ addr(<span class="org-string">"127.0.0.1"</span>)}, [16]) = 7
+</pre>
+</div>
+
+<p>
+从内核的角度看，这三种方式非常相似，都是通过各自的系统调用不断地轮询，获得就绪的 socket，然后使用 <code>accept()</code> 接收请求。
+</p>
+
+<blockquote>
+<p>
+<b>测试</b> ：用 <code>ab</code> 模拟 100 至 20,000 个并发用户（需要通过 <code>ulimit -n</code> 修改进程的最大文件描述符限制），使用 151 字节静态文件，分别对 select、poll、epoll 进行压力测试。<br />
+<b>结果</b> ：三种方式的结果基本相同，epoll 没有体现出优势，反而略低于 select 和 poll，select 没有因为并发连接数拒绝服务。<br />
+<b>分析 1</b> ：151 字节的静态文件请求的处理时间在 0.1ms 左右，远小于进程的时间片，所以进程可以连续处理多个连接。另外由于 lighttpd 对于连接队列的良好控制，并不需要打开 20,000 个并发连接，通过 server-status 监视发现，它的连接数保持在 300 以内，因此没有超过 select 的并发连接数上限。<br />
+<b>分析 2</b> ： <span class="underline">Web 服务器通常维护着大量空闲连接，</span> 包括在等待超时的长连接，或者网络传输的延时，或者是黑客制造的死连接。 <span class="underline">epoll 只关注活跃连接，而 select 和 poll 会扫描所有文件描述符。</span> <br />
+<b>结论</b> ： <span class="underline">在请求处理时间很短，且不存在空闲连接的情况下，体现不出 epoll 和另外两种方式的区别。</span>
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+<b>测试</b> ：使用 15KB 和 224KB 静态文件，对 select 重复以上测试。<br />
+<b>结果</b> ：15KB 文件在 20,000 并发时，224KB 文件在 1,000 并发时，lighttpd 就拒绝访问。<br />
+<b>分析</b> ：请求的处理时间增加，达到了 select 的并发连接数上限（1,024 个文件描述符）。
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+<b>测试</b> ：使用脚本模拟 5,000 个空闲连接（建立连接后每 10 秒发送一个字符串，避免连接超时关闭），再对 select、poll、epoll 进行以上测试，并观察系统调用。<br />
+<b>结果</b> ：select 无法建立 5,000 空闲连接，而 poll 的吞吐率低于 epoll 三分之一，poll 的系统调用 <code>poll()</code> 花费的时间是 <code>epoll_wait()</code> 的 30 倍。<br />
+<b>分析</b> ：由于只关注活跃连接，空闲连接不对 epoll 造成干扰。<br />
+<b>结论</b> ： <span class="underline">当服务器存在大量非活跃长连接的时（如图片连续下载），epoll 具有优势。</span>
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+<b>测试</b> ：使用 Nginx 提供文件下载服务，将 worker 进程数量设为 8，监视并发连接数。<br />
+<b>结果</b> ：并发连接数为 2600，网络 I/O 流量高。
+</p>
+
+<p>
+<b>测试</b> ：将进程数设为 128，重复以上测试。<br />
+<b>结果</b> ：并发连接数为 7900，网络 I/O 流量低。<br />
+<b>分析</b> ： <span class="underline">大量的 worker 进程可以维持更多的活跃连接数，但每个连接的下载速度变小，worker 进程数取决于服务的类型，是为更多的用户同时提供慢速下载，还是为有限的用户提供快速的下载。</span>
+</p>
+</blockquote>
+
+<p>
+对于动态内容（如 PHP 脚本），worker 进程通常只负责转发请求给独立的 fastcgi 进程，或者作为反向代理服务器将请求转发给后端服务器，并不依赖太多的本地资源，可以提高 worker 进程数以增加并发连接。但 <span class="underline">一般动态内容本身的吞吐率是相当有限的，由于存在脚本解释器的开销，通常不会超过 2000reqs/s 的吞吐率，所以 worker 进程的压力不大。如果作为基于反向代理的负载均衡调度器，多台后端服务器扩展了动态内容计算能力，worker 进程数会逐渐成为整体性能的瓶颈。</span> 太多 worker 进程又会带来更多的上下文切换开销和内存开销，从而整体上使所有连接的响应时间变长。所以，没有一个绝对的公式，必须根据站点的实际情况来进行分析和调整。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgec30341" class="outline-4">
+<h4 id="orgec30341"><span class="section-number-4">3.7.4</span> 一个线程处理多个连接，异步 I/O</h4>
+<div class="outline-text-4" id="text-3-7-4">
+<p>
+使用同步 I/O，对磁盘文件调用 <code>read()</code> ，或通过 <code>sendfile()</code> 直接发送数据时，设置文件描述符为非阻塞并没有意义，如果需要读取的数据不在磁盘缓冲区，磁盘便开始动用物理设备来读取数据，这时进程的其他工作必须等待（阻塞）。因此更加高效的方法是对磁盘文件操作使用异步 I/O。
+</p>
+
+<p>
+但目前很少有 Web 服务器支持真正意义上的异步 I/O，而且理论上，只在某些特定的场景中它的性能要比 <code>sendfile()</code> 更好，而对于大量小文件的并发请求，文件传送可能不是关键，多路 I/O 就绪通知方法的性能更加重要。
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc960634" class="outline-2">
+<h2 id="orgc960634"><span class="section-number-2">4</span> 动态内容缓存</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Web 站点提供的动态内容，通常在服务器端进行计算，不可避免涉及更多的 CPU 计算和 I/O 操作，比如访问数据库，或调用 API，通常这些操作都不是异步的，必须等待。
+</p>
+</div>
+
+<div id="outline-container-orga6e0f6b" class="outline-3">
+<h3 id="orga6e0f6b"><span class="section-number-3">4.1</span> 缓存与缓冲</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+<span class="underline">缓存的目的是把计算结果保存起来，需要时直接取出，而避免重复计算。</span> 它的前提是 <span class="underline">计算速度低于读取缓存速度，</span> 否则缓存就失去意义。比如 CPU 缓存是位于 CPU 和内存之间的临时存储器，它的容量不大，但是交换速度要高于内存，CPU 将频繁交换的数据放在缓存中，避免访问速度较慢的内存。 <span class="underline">缓存注重命中率，如果找不到需要的数据，缓存就毫无价值，还由于缓存的管理逻辑增加了开销。</span>
+</p>
+
+<p>
+<span class="underline">缓冲的目的在于协调各部件之间不同的速度，将快速设备和慢速设备平滑衔接。</span> 比如将用户态地址空间的数据写入磁盘时，由于内存的速度比磁盘速度要快得多，可以先将数据写入磁盘缓冲区，再由缓冲区负责写入磁盘，使内存不必随着磁盘的慢节奏来工作。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5707221" class="outline-3">
+<h3 id="org5707221"><span class="section-number-3">4.2</span> 页面缓存</h3>
+<div class="outline-text-3" id="text-4-2">
+</div><div id="outline-container-org8f4e8d2" class="outline-4">
+<h4 id="org8f4e8d2"><span class="section-number-4">4.2.1</span> Smarty 缓存</h4>
+<div class="outline-text-4" id="text-4-2-1">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 18: </span>示例</label><pre class="src src-php"><span class="org-comment-delimiter">// </span><span class="org-comment">&#21021;&#22987;&#21270;</span>
+<span class="org-keyword">require</span> '<span class="org-warning">Smarty</span>.<span class="org-warning">class</span>.<span class="org-warning">php</span>';
+$<span class="org-variable-name">smarty</span> = <span class="org-keyword">new</span> <span class="org-type">Smarty</span>();
+$<span class="org-variable-name">smarty</span>-&gt;<span class="org-variable-name">caching</span> = <span class="org-constant">true</span>;
+
+$<span class="org-variable-name">template</span> = '<span class="org-warning">example</span>.<span class="org-warning">html</span>';
+$<span class="org-variable-name">cachekey</span> = <span class="org-default">1</span>;
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#32531;&#23384;&#26159;&#21542;&#21629;&#20013;</span>
+<span class="org-keyword">if</span> ($<span class="org-variable-name">smarty</span>-&gt;<span class="org-function-name">is_cached</span>($<span class="org-variable-name">template</span>, $<span class="org-variable-name">cachekey</span>)) {
+    $<span class="org-variable-name">smarty</span>-&gt;<span class="org-function-name">display</span>($<span class="org-variable-name">template</span>, $<span class="org-variable-name">cachekey</span>);
+    <span class="org-keyword">exit</span>(<span class="org-default">0</span>);
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#32531;&#23384;&#26410;&#21629;&#20013;&#65292;&#36827;&#34892; DB &#26597;&#35810;&#31561;</span>
+$<span class="org-variable-name">smarty</span>-&gt;<span class="org-function-name">display</span>($<span class="org-variable-name">template</span>, $<span class="org-variable-name">cachekey</span>);
+</pre>
+</div>
+
+<blockquote>
+<p>
+<b>测试</b> ：使用 <code>strace</code> 跟踪 Smarty 使用和不使用缓存时的系统调用。<br />
+<b>结果</b> ：未使用缓存时， <code>read()</code> 占用 90% 以上时间，使用缓存时接近 0。<br />
+<b>分析</b> ： <code>read()</code> 调用的途径包括与数据库通信时接收数据、读取 PHP 文件、页面模板等，使用缓存可以避免这些操作。
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org6f4eee9" class="outline-4">
+<h4 id="org6f4eee9"><span class="section-number-4">4.2.2</span> 目录分级</h4>
+<div class="outline-text-4" id="text-4-2-2">
+<p>
+Smarty 缓存文件存储在磁盘指定目录下，如果单一目录下的缓存文件数量很大，CPU 花在遍历目录上的时间便不可忽视，可以通过缓存目录分级来解决，少量次数的目录切换的开销可以忽略。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-php">$<span class="org-variable-name">smarty</span>-&gt;<span class="org-variable-name">use_sub_dirs</span> = <span class="org-constant">true</span>;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-sh">cache/12882^%%E6^E6C^E6C210ED%%place_posts.htm <span class="org-comment-delimiter"># </span><span class="org-comment">&#30446;&#24405;&#20998;&#32423;&#21069;</span>
+cache/12882/%%E6/E6C/E6C210ED%%place_posts.htm <span class="org-comment-delimiter"># </span><span class="org-comment">&#30446;&#24405;&#20998;&#32423;&#21518;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf0317ca" class="outline-4">
+<h4 id="orgf0317ca"><span class="section-number-4">4.2.3</span> 过期检查</h4>
+<div class="outline-text-4" id="text-4-2-3">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 19: </span>Smarty 缓存文件中的过期时间信息</label><pre class="src src-js">{
+    <span class="org-string">'timestamp'</span> =&gt; <span class="org-type">int</span>(1236035506), <span class="org-comment-delimiter">// </span><span class="org-comment">&#32531;&#23384;&#21019;&#24314;&#26102;&#38388;</span>
+    <span class="org-string">'expires'</span>   =&gt; <span class="org-type">int</span>(1236039106), <span class="org-comment-delimiter">// </span><span class="org-comment">&#32531;&#23384;&#36807;&#26399;&#26102;&#38388;</span>
+    ...
+}
+</pre>
+</div>
+
+<p>
+两种过期检查方法：
+</p>
+
+<ul class="org-ul">
+<li>相对过期时间，通过缓存创建时间、缓存有效期、当前时间，判断是否过期。</li>
+<li>绝对过期时间，通过缓存过期时间和当前时间，判断是否过期。</li>
+</ul>
+
+<p>
+如果缓存有效期长度不变，两种方法没有区别。对于绝对过期时间，修改缓存有效期长度不会影响之前缓存的过期，而对于相对过期时间，修改缓存有效期长度会影响每一次过期检查，方便调试缓存过期时间。
+</p>
+
+<p>
+缓存过期检查方法也存在一定的开销，因为即使缓存命中，Smarty 仍然要调用 <code>is_cached()</code> 和 <code>display()</code> 对缓存文件的内容进行两次分析，包括提取缓存标志信息和 HTML 等，涉及大量的字符串操作。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbf82e8b" class="outline-4">
+<h4 id="orgbf82e8b"><span class="section-number-4">4.2.4</span> 减少缓存开销</h4>
+<div class="outline-text-4" id="text-4-2-4">
+<p>
+在缓存命中、读取缓存文件、终止程序之前，不要加载直接输出缓存时不需要的 PHP 库文件（如数据库访问相关的库），只加载必要的文件，可以减少磁盘 I/O 开销。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 20: </span>更进一步，如果使用最简化的页面缓存替代 Smarty</label><pre class="src src-php">$<span class="org-variable-name">path</span> = '../<span class="org-warning">cache</span>/' . $<span class="org-variable-name">template</span> . <span class="org-string">'/'</span> . $<span class="org-variable-name">id</span>;
+<span class="org-keyword">if</span> (<span class="org-function-name">file_exists</span>($<span class="org-variable-name">path</span>)) {
+    $<span class="org-variable-name">stats</span> = <span class="org-function-name">stat</span>($<span class="org-variable-name">path</span>);                       <span class="org-comment-delimiter">// </span><span class="org-comment">&#33719;&#24471;&#25991;&#20214;&#20462;&#25913;&#26102;&#38388;</span>
+    <span class="org-keyword">if</span> (<span class="org-function-name">time</span>() - $<span class="org-variable-name">stats</span>['<span class="org-warning">mtime</span>'] &lt; $<span class="org-variable-name">lifetime</span>) { <span class="org-comment-delimiter">// </span><span class="org-comment">&#21028;&#26029;&#26159;&#21542;&#36807;&#26399;</span>
+        <span class="org-keyword">echo</span> <span class="org-function-name">file_get_contents</span>($<span class="org-variable-name">path</span>);
+        <span class="org-keyword">exit</span>(<span class="org-default">1</span>);
+    }
+}
+$<span class="org-variable-name">html</span> = '...'; <span class="org-comment-delimiter">// </span><span class="org-comment">&#29983;&#25104;&#21160;&#24577;&#20869;&#23481;</span>
+<span class="org-function-name">file_put_contents</span>($<span class="org-variable-name">path</span>, $<span class="org-variable-name">html</span>);
+<span class="org-keyword">echo</span> $<span class="org-variable-name">html</span>;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 21: </span>可以消除加载和实例化 Smarty 的开销</label><pre class="src src-php"><span class="org-keyword">require</span> '<span class="org-warning">Smarty</span>.<span class="org-warning">class</span>.<span class="org-warning">php</span>'; <span class="org-comment-delimiter">// </span><span class="org-comment">&#30913;&#30424; I/O &#24320;&#38144;</span>
+$<span class="org-variable-name">smarty</span> = <span class="org-keyword">new</span> <span class="org-type">Smarty</span>();     <span class="org-comment-delimiter">// </span><span class="org-comment">&#33050;&#26412;&#35299;&#37322;&#22120;&#24320;&#38144;&#65288;CPU &#35745;&#31639;&#12289;&#20869;&#23384;&#20132;&#25442;&#31561;&#65289;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdf940eb" class="outline-4">
+<h4 id="orgdf940eb"><span class="section-number-4">4.2.5</span> 内存缓存</h4>
+<div class="outline-text-4" id="text-4-2-5">
+<p>
+当缓存数据存储在磁盘文件，缓存加载和过期检查都存在磁盘 I/O 开销，同时缓存性能也受到磁盘负载和其他磁盘 I/O 密集型应用（如数据库）的影响。使用内存型缓存，可以提升性能。
+</p>
+
+<blockquote>
+<p>
+<b>测试</b> ：使用 APC、XCache、memcache 作为缓存，进行压力测试。<br />
+<b>结果</b> ：各种缓存的性能比较：APC = XCache = 最简磁盘缓存 &gt; memcache &gt; Smarty &gt; 无缓存。<br />
+<b>分析</b> ：虽然页面进行了缓存，但是动态网页的处理仍然需要加载大量磁盘文件，缓存的部分对整体性能影响不大，相比磁盘缓存性能提升很小。与 memcache 进程需要 TCP socket 开销，如果运行在其他主机还有网络通信的延迟，因此性能略差。
+</p>
+</blockquote>
+
+<p>
+本地内存缓存虽然速度最快，但是 Web 服务器本身的内存相当宝贵，它要满足 HTTP 进程和脚本解释器的开销，没有大量的内存空间用于缓存。实际中，动态网页缓存会消耗大量内存空间，如果 <span class="underline">内存空间不足，缓存命中率会大幅下降，吞吐率随之降低。而单机的内存很容易达到上限，无法继续扩展，使用 memcached 实现分布式缓存使得扩展成为可能。</span>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf8e1fb9" class="outline-3">
+<h3 id="orgf8e1fb9"><span class="section-number-3">4.3</span> 局部无缓存</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+有些页面的某一区域需要及时更新，比如阅读量和评论，为了这一区域的更新，将整个页面重新创建缓存的话，又会浪费资源。为此，模板框架一般支持局部无缓存，允许在页面中指定一块包含动态数据的代码，每次请求时，这段代码都会实时计算，然后和其余部分的缓存合成为最终的网页。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 22: </span>Smarty 局部无缓存示例</label><pre class="src src-php">$<span class="org-variable-name">smarty</span>-&gt;<span class="org-function-name">register_block</span>('<span class="org-warning">dynamic</span>', '<span class="org-warning">block_dynamic</span>', <span class="org-constant">false</span>);
+<span class="org-keyword">function</span> <span class="org-function-name">block_dynamic</span>($<span class="org-variable-name">param</span>, $<span class="org-variable-name">content</span>, &amp;$<span class="org-variable-name">smarty</span>) {
+    <span class="org-keyword">return</span> $<span class="org-variable-name">content</span>;
+}
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#27169;&#26495;&#26631;&#31614;</span>
+{<span class="org-warning">dynamic</span>}
+$<span class="org-variable-name">user</span>-&gt;<span class="org-variable-name">user_nick</span>
+{/<span class="org-warning">dynamic</span>}
+</pre>
+</div>
+
+<p>
+引入局部无缓存机制后，控制器也要进行修改，把无缓存区域对应的动态数据计算提到缓存检查之前，这样势必会影响性能。使用局部无缓存之前，要评估局部动态数据的影响力，如果将网页中占主要开销的数据计算置于无缓存状态，缓存就失去了意义，可以考虑选择其他的缓存方式或者页面组织结构，比如使用数据层缓存。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org70d5463" class="outline-3">
+<h3 id="org70d5463"><span class="section-number-3">4.4</span> 静态化内容</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+普通的页面缓存，由 <span class="underline">动态程序作为缓存的代理，用户请求需要被动态程序处理，由后者根据缓存有效期决定是否输出缓存。这种方法使得动态程序对缓存数据有较强的控制权，但代价比较昂贵，影响性能。</span>
+</p>
+</div>
+
+<div id="outline-container-org9417ca2" class="outline-4">
+<h4 id="org9417ca2"><span class="section-number-4">4.4.1</span> 直接访问缓存</h4>
+<div class="outline-text-4" id="text-4-4-1">
+<blockquote>
+<p>
+<b>测试</b> ：将 Smarty 生成的页面缓存 <code>.htm</code> 复制到 <code>.php</code> 文件目录下，作为静态页面文件，进行压力测试。<br />
+<b>结果</b> ：吞吐率为 11,700/s，比使用 Smarty 页面缓存快 100 倍，需要带宽为 1.2Gbps。<br />
+<b>分析</b> ： <span class="underline">服务器直接用静态文件响应请求，可以省去执行脚本生成动态页面或读取缓存的开销。</span>
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+<b>测试</b> ：从另一台通过局域网连接的服务器上重复以上测试。<br />
+<b>结果</b> ：吞吐率为 860/s，需要带宽为 90Mbps。<br />
+<b>分析</b> ：之前的测试在同一台服务器上进行，不存在出口带宽限制的问题，而 <span class="underline">实际中，吞吐率往往受限于服务器的出口带宽，</span> 比如 100Mbps 独享带宽，以 13KB 的网页来计算（只考虑正文），理论上最大的吞吐率为：100 Mbps / 8 / 13KB = 961.53/s，而加上 IP 包正文以外的数据，和网络 I/O 的开销，达到 860/s 的吞吐率属于正常现象。<br />
+<b>结论</b> ：购买更多的独享带宽，为服务器安装千兆网卡，为服务器所在网络安装千兆交换机，这样静态化页面的性能才可以发挥到极限。
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org5682e6d" class="outline-4">
+<h4 id="org5682e6d"><span class="section-number-4">4.4.2</span> 更新策略</h4>
+<div class="outline-text-4" id="text-4-4-2">
+<p>
+静态化页面在请求时不涉及内容计算，但不代表它不需要计算， <span class="underline">静态文件仍然需要由动态程序来创建和更新，缓存更新、过期检查，以及缓存持久化等，</span> 都需要作出修改。一般会使用 CMS（内容管理系统）来管理静态化内容。更新策略一般有两种：
+</p>
+
+<p>
+在数据更新时重新生成静态化内容。一般由用户动作触发，这种方式在数据更新频繁时，会产生大量重新计算静态内容的开销，如果静态内容需要分发到多台服务器，也会给文件同步带来较大的压力。一个常用的办法是引入延迟更新机制，将更新任务放入队列，在队列写满或者达到超时时间时，一次性更新到磁盘，可以理解为静态化缓冲区。
+</p>
+
+<p>
+定时重新生成静态化内容。一般通过定时任务执行，由于静态内容的性质和实时性需求不同，通常需要维护一定的对应关系，特定范围的静态化内容按照不同的频度进行重建。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4b73d22" class="outline-4">
+<h4 id="org4b73d22"><span class="section-number-4">4.4.3</span> 局部静态化</h4>
+<div class="outline-text-4" id="text-4-4-3">
+<p>
+（略）
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org09e1bb6" class="outline-2">
+<h2 id="org09e1bb6"><span class="section-number-2">5</span> 动态脚本加速</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-orgb1dece3" class="outline-3">
+<h3 id="orgb1dece3"><span class="section-number-3">5.1</span> opcode 缓存</h3>
+<div class="outline-text-3" id="text-5-1">
+</div><div id="outline-container-org295dfa2" class="outline-4">
+<h4 id="org295dfa2"><span class="section-number-4">5.1.1</span> 什么是 opcode</h4>
+<div class="outline-text-4" id="text-5-1-1">
+<p>
+对于解释型语言，当解释器完成对脚本代码的分析后，便生成可以直接运行的中间代码，称为操作码（operate code），即 opcode，这个过程称为解释（parse）。相对地，编译型语言的编译器，也要将程序代码生成中间代码，这个过程称为编译（compile）。
+</p>
+
+<p>
+解释和编译的原理是相似的，都包括词法分析、语法分析、语义分析等。但编译器和解释器的不同在于，解释器在生成中间代码后，便直接执行，即运行时的控制权在解释器。而编译器则将中间代码进一步优化，生成可以直接运行的目标程序，但不执行，而由用户在随后的任意时间执行，运行时控制权在目标程序。
+</p>
+
+<hr />
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 23: </span>PHP 的 Parsekit 扩展提供的运行时 API 支持查看任何 PHP 文件或者代码段的 opcode。</label><pre class="src src-php"><span class="org-function-name">var_dump</span>(<span class="org-function-name">parsekit_compile_string</span>('<span class="org-keyword">print</span> <span class="org-default">1</span>+<span class="org-default">1</span>;'));
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> opcode 操作列表</caption>
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right"><code>opcode</code></th>
+<th scope="col" class="org-left"><code>opcode_name</code></th>
+<th scope="col" class="org-left"><code>op1</code></th>
+<th scope="col" class="org-left"><code>op2</code></th>
+<th scope="col" class="org-left"><code>result</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">1</td>
+<td class="org-left"><code>ZEND_ADD</code></td>
+<td class="org-left"><code>IS_CONST(1)</code></td>
+<td class="org-left"><code>IS_CONST(1)</code></td>
+<td class="org-left"><code>IS_TMP_VAR</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-right">41</td>
+<td class="org-left"><code>ZEND_PRINT</code></td>
+<td class="org-left"><code>IS_TMP_VAR</code></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>IS_TMP_VAR</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-right">70</td>
+<td class="org-left"><code>ZEND_FREE</code></td>
+<td class="org-left"><code>IS_TMP_VAR</code></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-right">62</td>
+<td class="org-left"><code>ZEND_RETURN</code></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-right">129</td>
+<td class="org-left"><code>ZEND_HANDLE_EXCEPTION</code></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+解释器核心引擎将所有的操作抽象为类似汇编语言的操作码形式，这种操作码称为三地址码，因为每一个运算由不超过三个地址组成： <code>op1</code> 、 <code>op2</code> 、 <code>result</code> ，它们可以表示三种运算形式：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-variable-name">result</span> = op1 op op2
+<span class="org-variable-name">result</span> = op op1
+op op1
+</pre>
+</div>
+
+<p>
+三地址码与汇编指令在结构上非常接近，所以从三地址码生成目标文件非常容易，只需要将抽象的操作指令（如 <code>ZEND_ADD</code> ），结合机器硬件以及操作系统平台等实际环境，翻译成底层的操作指令即可。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 24: </span>opcode 在 PHP 源代码中的宏定义：</label><pre class="src src-c"><span class="org-comment-delimiter">// </span><span class="org-comment">Zend/zend_vm_opcodes.h</span>
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">ZEND_ADD</span>                       1
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">ZEND_PRINT</span>                    41
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">ZEND_RETURN</span>                   62
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">ZEND_FREE</span>                     70
+<span class="org-preprocessor">#define</span> <span class="org-variable-name">ZEND_HANDLE_EXCEPTION</span>        149
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd250614" class="outline-4">
+<h4 id="orgd250614"><span class="section-number-4">5.1.2</span> 生成 opcode</h4>
+<div class="outline-text-4" id="text-5-1-2">
+<p>
+PHP 代码可以看成是一系列单词的集合，包括关键字、标识符、运算符等。解析器首先对所有单词进行分类，并打上记号（token），这个过程称为词法分析。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 25: </span>PHP 源代码中的解释器的词法规则文件：</label><pre class="src src-c"><span class="org-comment-delimiter">// </span><span class="org-comment">Zend/zend_language_scanner.l</span>
+&lt;ST_IN_SCRIPTING&gt;<span class="org-string">"print"</span> {
+    <span class="org-keyword">return</span> T_PRINT; <span class="org-comment-delimiter">// </span><span class="org-comment">&#21363; print &#23545;&#24212;&#30340;&#35760;&#21495;&#20026; T_PRINT</span>
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 26: </span>代码通过词法分析后，解释器要对记号进行语法分析：</label><pre class="src src-c"><span class="org-comment-delimiter">// </span><span class="org-comment">Zend/zend_language_parser.y</span>
+<span class="org-type">T_PRINT</span> <span class="org-variable-name">expr</span> { zend_do_print(&amp;$$, &amp;$2 TSRMLS_CC); } <span class="org-comment-delimiter">// </span><span class="org-comment">&#23558; T_PRINT &#26631;&#35760;&#21450;&#19978;&#19979;&#25991;&#26367;&#25442;&#20026; zend_do_print()</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 27: </span>Zend 函数的实现代码：</label><pre class="src src-c"><span class="org-comment-delimiter">// </span><span class="org-comment">Zend/zend_compile.c</span>
+<span class="org-type">void</span> <span class="org-function-name">zend_do_print</span>(<span class="org-type">znode</span> *<span class="org-variable-name">result</span>, <span class="org-type">znode</span> *<span class="org-variable-name">arg</span> TSRMLS_DC)
+{
+    <span class="org-type">zend_op</span> *<span class="org-variable-name">opline</span> = get_next_op(CG(active_op_array) TSRMLS_CC);
+    opline-&gt;result.op_type = IS_TMP_VAR;
+    opline-&gt;result.u.var = get_temporary_variable(CG(active_op_array));
+    opline-&gt;opcode = ZEND_PRINT; <span class="org-comment-delimiter">// </span><span class="org-comment">&#36716;&#25442;&#20026; opcode</span>
+    opline-&gt;op1 = *arg;          <span class="org-comment-delimiter">// </span><span class="org-comment">&#25805;&#20316;&#25968;&#36171;&#20540;</span>
+    SET_UNUSED(opline-&gt;op2);
+    *result = opline-&gt;result;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4b707f0" class="outline-4">
+<h4 id="org4b707f0"><span class="section-number-4">5.1.3</span> 避免重复编译</h4>
+<div class="outline-text-4" id="text-5-1-3">
+<p>
+因为生成 opcode 的过程存在开销，通过 opcode 缓存来避免重复编译，就可以提高性能。要缓存 opcode，在应用层是无能为力的，需要使用扩展，比如 PHP 的 APC、eAccelerator、XCache 等，可以将 opcode 缓存在共享内存中，而几乎不需要修改任何代码。
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb9bcc0d" class="outline-2">
+<h2 id="orgb9bcc0d"><span class="section-number-2">6</span> 性能监控</h2>
+<div class="outline-text-2" id="text-6">
+</div><div id="outline-container-orgf1270a2" class="outline-3">
+<h3 id="orgf1270a2"><span class="section-number-3">6.1</span> 实时监控</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+nmon 可以提供时间间隔为秒的系统监控，如内核状态、系统负载、虚拟内存、NFS 等。nmon 可以监控底层的系统状态，比如内核切换、进程队列、中断次数等，通常无法通过其他监控系统获得。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd6834ed" class="outline-3">
+<h3 id="orgd6834ed"><span class="section-number-3">6.2</span> 监控代理</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+Linux 系统内一切都是文件，包括各种系统状态，比如：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">&#20869;&#23384;&#20351;&#29992;&#24773;&#20917;</span>
+$ cat /proc/meminfo
+MemTotal:     4142240 kB
+MemFree:       344428 kB
+...
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#31995;&#32479;&#36127;&#36733;&#21644;&#36827;&#31243;&#38431;&#21015;&#29366;&#24577;</span>
+$ cat /proc/loadavg 
+0.02 0.03 0.00 1/894 21407
+</pre>
+</div>
+
+<p>
+SNMP 作为监控代理程序已经逐渐成为标准，并且支持很多异构平台。比如通过 SNMP 来获取另一台服务器的所有设备状态：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ snmpwalk -c public  -v 2c 10.0.1.201
+SNMPv2-MIB::sysDescr.0 = STRING: Linux s-mat 2.6.16.21-0.8-bigsmp <span class="org-comment-delimiter">#</span><span class="org-comment">1 SMP Mon Jul 3 18:25:39 UTC 2006 i686</span>
+...
+</pre>
+</div>
+
+<p>
+SNMP 结果集非常庞大，一般要限定需要获取状态的设备名称，可以通过 MIB 来描述它，比如获取服务器的运行时间：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ snmpwalk -c public  -v 2c 10.0.1.210 hrSystemUptime
+HOST-RESOURCES-MIB::hrSystemUptime.0 = Timeticks: (630851406) 73 days, 0:21:54.06
+</pre>
+</div>
+
+<p>
+MRTG、Cacti、Nagios 在内的很多监控工具都利用 SNMP 来监控远程服务器，只需要在被监控的服务器上开启 SNMP 服务，同时对监控来源进行授权配置即可。
+</p>
+
+<p>
+一些希望监控的服务并没有提供相应的 SNMP 支持，比如 Nginx 服务器当前的 HTTP 并发连接数，Nginx 提供了必要的监控接口，如访问 <code>http://10.0.1.200/status</code> 查看当前的运行状态：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">Active connections: 3020 
+server accepts handled requests
+5440803 5440803 7336362
+Reading: 471 Writing: 2340 Waiting: 209 
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2019-04-13 Sat 18:11</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

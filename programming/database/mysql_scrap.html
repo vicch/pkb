@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>MySQL Scrap</title>
+<!-- 2016-10-30 周日 17:19 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">MySQL Scrap</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. MySQL 开发规范</a>
+<ul>
+<li><a href="#sec-1-1">1.1. 建表</a></li>
+<li><a href="#sec-1-2">1.2. 数据类型</a>
+<ul>
+<li><a href="#sec-1-2-1">1.2.1. 数字</a></li>
+<li><a href="#sec-1-2-2">1.2.2. 字符串</a></li>
+<li><a href="#sec-1-2-3">1.2.3. <code>NULL</code></a></li>
+<li><a href="#sec-1-2-4">1.2.4. 其他</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-3">1.3. 索引</a></li>
+<li><a href="#sec-1-4">1.4. 查询</a></li>
+<li><a href="#sec-1-5">1.5. 分页</a></li>
+<li><a href="#sec-1-6">1.6. 特性</a></li>
+<li><a href="#sec-1-7">1.7. 安全</a></li>
+<li><a href="#sec-1-8">1.8. 实践</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> MySQL 开发规范</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<a href="http://www.2cto.com/database/201403/285170.html">Source</a>
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> 建表</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+<b>库名、表名、字段名使用小写字母，并采用下划线分割。</b> 如果大小写混合使用，可能存在 <code>abc</code> ， <code>Abc</code> ， <code>ABC</code> 等多个表共存，容易导致混乱。字段名显式区分大小写，但实际使用不区分，即不可以建立两个名字一样但大小写不一样的字段。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> 配置参数 <code>lower_case_table_names</code></caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>0</code></th>
+<th scope="col" class="left">（Linux 默认）以实际情况存储，大小写敏感</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>1</code></td>
+<td class="left">以小写存储，大小写不敏感</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>2</code></td>
+<td class="left">以实际情况存储，但以小写比较</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<b>库名、表名、字段名不超过 32 个字符。</b> 库名、表名、字段名支持最多 64 个字符，但为了统一规范、易于辨识以及减少传输量，禁止超过 32 个字符。
+</p>
+
+<p>
+<b>库名、表名、字段名禁止使用 MySQL 保留字。</b> 当库名、表名、字段名等属性含有保留字时，SQL 语句必须用反引号引用属性名称，这将使得 SQL 语句书写、Shell 脚本中变量的转义等变得非常复杂。
+</p>
+
+<hr  />
+
+<p>
+<b>使用 InnoDB 存储引擎。</b> InnoDB 引擎是 MySQL 5.5 版本以后的默认引擘， <span class="underline">支持事务、行级锁，有更好的数据恢复能力、并发性能，同时对多核、大内存、SSD 等硬件支持更好，支持数据热备份等，</span> 因此 InnoDB 相比 MyISAM 有明显优势。
+</p>
+
+<p>
+<b>表字符集使用 UTF8，必要时可申请使用 UTF8MB4 字符集。</b> UTF8 字符集存储汉字占用 3 个字节，存储英文字符占用一个字节。UTF8 统一而且通用，不会出现转码乱码风险。如果遇到 emoji 等表情符号的存储需求，可申请使用 UTF8MB4 字符集。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> 数据类型</h3>
+<div class="outline-text-3" id="text-1-2">
+</div><div id="outline-container-sec-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> 数字</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<p>
+<b>使用 <code>UNSIGNED</code> 存储非负数值。</b> 同样的字节数，非负存储的数值范围更大。如 <code>TINYINT</code> 有符号为 -128 ~ 127，无符号为 0 ~ 255。
+</p>
+
+<p>
+<b>使用 <code>INT UNSIGNED</code> 存储 IPv4。</b> <code>UNSINGED INT</code> 存储 IP 地址占用 4 字节， <code>CHAR(15)</code> 则占用 15 字节。另外，计算机处理整数类型比字符串类型快。使用 <code>INT UNSIGNED</code> 而不是 <code>CHAR(15)</code> 来存储IPV4地址，通过 MySQL 函数 <code>inet_ntoa</code> 和 <code>inet_aton</code> 来进行转化。IPv6 地址目前没有转化函数，需要使用 <code>DECIMAL</code> 或两个 <code>BIGINT</code> 来存储。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sql"><span class="org-keyword">SELECT</span> INET_ATON(<span class="org-string">'209.207.224.40'</span>); <span class="org-comment"># 3520061480</span>
+<span class="org-keyword">SELECT</span> INET_NTOA(3520061480);       <span class="org-comment"># 209.207.224.40</span>
+</pre>
+</div>
+
+<p>
+<b>使用 <code>TINYINT</code> 来代替 <code>ENUM</code> 类型。</b> <code>ENUM</code> 类型在需要修改或增加枚举值时，需要在线 <code>DDL</code> ，成本较大。 <code>ENUM</code> 列值如果含有数字类型，可能会引起默认值混淆。
+</p>
+
+<p>
+<b>数值类型括号后面的数字只表示宽度，跟存储范围没有关系。</b> <code>INT</code> 类型固定占用 4 字节存储， <code>INT(4)</code> 代表显示字符宽度为 4 位，不代表存储长度。 <code>INT(3)</code> 默认显示 3 位，空格补齐，超出时正常显示。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2-2" class="outline-4">
+<h4 id="sec-1-2-2"><span class="section-number-4">1.2.2</span> 字符串</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<p>
+<b>使用 <code>VARBINARY</code> 存储大小写敏感的变长字符串或二进制内容。</b> <code>VARBINARY</code> 默认区分大小写，没有字符集概念，速度快。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2-3" class="outline-4">
+<h4 id="sec-1-2-3"><span class="section-number-4">1.2.3</span> <code>NULL</code></h4>
+<div class="outline-text-4" id="text-1-2-3">
+<p>
+<b>所有字段均定义为 <code>NOT NULL</code> ，用 0、特殊值或空串代替 <code>NULL</code> 值。</b> 对表的每一行，每个为 <code>NULL</code> 的列都需要额外的空间来标识。B 树索引时不会存储 <code>NULL</code> 值，所以如果索引字段可以为 <code>NULL</code> ，索引效率会下降。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2-4" class="outline-4">
+<h4 id="sec-1-2-4"><span class="section-number-4">1.2.4</span> 其他</h4>
+<div class="outline-text-4" id="text-1-2-4">
+<p>
+<b>存储年使用 <code>YEAR</code> 类型。存储日期使用 <code>DATE</code> 类型。 存储时间（精确到秒）使用 <code>TIMESTAMP</code> 类型。</b> <code>DATETIME</code> 和 <code>TIMESTAMP</code> 都是精确到秒，但优先选择 <code>TIMESTAMP</code> ，因为 <code>TIMESTAMP</code> 只有 4 字节，而 <code>DATETIME</code> 8 字节。同时 <code>TIMESTAMP</code> 具有自动赋值以及自动更新的特性。注意：在 5.5 和之前的版本中，如果一个表中有多个 <code>TIMESTAMP</code> 列，那么最多只能有一列能具有自动更新功能。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><code>TIMESTAMP</code> 初始化与自动更新</label>
+<pre class="src src-sql"><span class="org-keyword">COLUMN</span> foo <span class="org-type">TIMESTAMP</span> <span class="org-keyword">DEFAULT</span> 0;
+<span class="org-keyword">COLUMN</span> foo <span class="org-type">TIMESTAMP</span> <span class="org-keyword">DEFAULT</span> <span class="org-builtin">CURRENT_TIMESTAMP</span>;
+<span class="org-keyword">COLUMN</span> foo <span class="org-type">TIMESTAMP</span> <span class="org-keyword">DEFAULT</span> 0 <span class="org-keyword">ON</span> <span class="org-keyword">UPDATE</span> <span class="org-builtin">CURRENT_TIMESTAMP</span>;
+<span class="org-keyword">COLUMN</span> foo <span class="org-type">TIMESTAMP</span> <span class="org-keyword">DEFAULT</span> <span class="org-builtin">CURRENT_TIMESTAMP</span> <span class="org-keyword">ON</span> <span class="org-keyword">UPDATE</span> <span class="org-builtin">CURRENT_TIMESTAMP</span>;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> 索引</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+<b>表必须有主键，推荐使用 <code>UNSIGNED</code> 自增列作为主键。</b> 表没有主键，InnoDB 会默认设置隐藏的主键列。没有主键的表在定位数据行的时候非常困难，也会降低基于行复制的效率。
+</p>
+
+<p>
+<b>禁止冗余索引。</b> 索引是双刃剑，会增加维护负担，增大 IO 压力。 <code>(a,b,c)</code> 和 <code>(a,b)</code> ，后者为冗余索引。可以利用 <del>前缀索引</del> 来达到加速目的，减轻维护负担。
+</p>
+
+<p>
+<b>禁止重复索引。</b> 如 <code>PRIMARY KEY foo; UNIQ INDEX foo</code> ，重复索引增加维护负担、占用磁盘空间，同时没有任何益处。
+</p>
+
+<p>
+<b>不在低基数列上建立索引。</b> 如「性别」，大部分场景下，低基数列上建立索引的精确查找，相对于不建立索引的全表扫描没有任何优势，而且增大了 IO 负担。
+</p>
+
+<p>
+<b>合理使用覆盖索引减少 IO，避免排序。</b> <del>覆盖索引</del> 能从索引中获取需要的所有字段，从而避免回表进行二次查找，节省 IO。InnoDB 存储引擎中， secondary index（非主键索引，又称辅助索引、二级索引）没有直接存储行地址，而是存储主键值。如果用户需要查询 secondary index 中所不包含的数据列，则需要先通过 secondary index 查找到主键值，然后再通过主键查询到其他数据列，因此需要查询两次。覆盖索引则可以在一个索引中获取所有需要的数据，因此效率较高。主键查询是天然的覆盖索引。例如 <code>SELECT email，uid FROM user_email WHERE uid = 1;</code> ，如果 <code>uid</code> 不是主键，适当时候可以将索引添加为 <code>index(uid，email)</code> ，以获得性能提升。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> 查询</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+<b>只获取必要的字段，禁止使用 <code>SELECT *</code> 。</b> 减少网络带宽消耗，能有效利用覆盖索引，表结构变更对程序基本无影响。
+</p>
+
+<p>
+<b>用 <code>IN</code> 代替 <code>OR</code> ， <code>IN</code> 包含的值应少于 1000 个。</b> <code>IN</code> 是范围查找，MySQL 内部会对 <code>IN</code> 的列表值进行排序后查找，比 <code>OR</code> 效率更高。
+</p>
+
+<p>
+<b>用 <code>UNION ALL</code> 代替 <code>UNION</code> 。</b> <code>UNION ALL</code> 不需要对结果集再进行排序。
+</p>
+
+<p>
+<b>减少与数据库交互次数，尽量采用批量 SQL 语句。</b>
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">减少交互次数示例</label>
+<pre class="src src-sql"><span class="org-keyword">INSERT</span> <span class="org-keyword">ON</span> <span class="org-keyword">DUPLICATE</span> <span class="org-keyword">KEY</span> <span class="org-keyword">UPDATE</span> <span class="org-comment"># UNIQUE &#32034;&#24341;&#21015;&#25110;&#20027;&#38190;&#20540;&#37325;&#22797;&#26102;&#65292;&#25913;&#20026; UPDATE &#29616;&#26377;&#34892;</span>
+<span class="org-builtin">REPLACE</span> <span class="org-keyword">INTO</span>                   <span class="org-comment"># &#31561;&#20215;&#20110; INSERT&#65292;&#20294; UNIQUE &#32034;&#24341;&#21015;&#25110;&#20027;&#38190;&#20540;&#37325;&#22797;&#26102;&#65292;&#20808; DELETE &#29616;&#26377;&#34892;&#20877;&#25554;&#20837;&#26032;&#34892;</span>
+<span class="org-keyword">INSERT</span> <span class="org-keyword">IGNORE</span>                  <span class="org-comment"># &#24573;&#30053; INSERT &#26102;&#30340;&#38169;&#35823;&#65292;&#22914; UNIQUE &#32034;&#24341;&#21015;&#25110;&#20027;&#38190;&#20540;&#37325;&#22797;&#26102;&#65292;&#20002;&#24323;&#25554;&#20837;&#34892;&#65292;&#20063;&#19981;&#25253;&#38169;</span>
+<span class="org-keyword">INSERT</span> <span class="org-keyword">INTO</span> <span class="org-keyword">VALUES</span> (...)       <span class="org-comment"># &#19968;&#27425;&#25554;&#20837;&#22810;&#34892;</span>
+</pre>
+</div>
+
+<p>
+<b>拆分复杂 SQL，避免大事务。</b> 简单的 SQL 容易使用到 MySQL 的 query cache，减少锁表时间特别是 MyISAM，可以使用多核 CPU。
+</p>
+
+<hr  />
+
+<p>
+<b>避免使用 <code>now()</code> 、 <code>rand()</code> 、 <code>sysdate()</code> 、 <code>current_user()</code> 等不确定结果的函数。</b> 语句级复制场景下，引起主从数据不一致。不确定值的函数产生的 SQL 语句无法利用 query cache。
+</p>
+
+<p>
+<b>禁止使用 <code>ORDER BY rand()</code> 。</b> <code>ORDER BY rand()</code> 会为表增加一个伪列，然后用 <code>rand()</code> 函数为每一行数据计算出 <code>rand()</code> 值，然后基于该行排序，通常会生成磁盘上的临时表，因此效率非常低。建议先使用 <code>rand()</code> 函数获得随机的主键值，然后通过主键获取数据。
+</p>
+
+<hr  />
+
+<p>
+<b>对同一个表的多次 <code>ALTER</code> 操作合并为一次操作。</b> MySQL 对表的修改绝大部分操作都需要锁表并重建表，而锁表则会对线上业务造成影响。为减少这种影响，必须把对表的多次 <code>ALTER</code> 操作合并为一次操作。例如，要给表增加一个字段，同时给已有的字段建立索引：
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sql"><span class="org-comment"># &#20998;&#20004;&#27493;</span>
+<span class="org-keyword">ALTER</span> <span class="org-keyword">TABLE</span> <span class="org-function-name">foo</span> <span class="org-keyword">ADD</span> <span class="org-keyword">COLUMN</span> bar <span class="org-type">VARCHAR</span>(10);
+<span class="org-keyword">ALTER</span> <span class="org-keyword">TABLE</span> <span class="org-function-name">foo</span> <span class="org-keyword">ADD</span> <span class="org-keyword">INDEX</span> idx_baz(baz);
+<span class="org-comment"># &#21512;&#24182;&#20026;&#19968;&#27493;</span>
+<span class="org-keyword">ALTER</span> <span class="org-keyword">TABLE</span> <span class="org-function-name">foo</span> <span class="org-keyword">ADD</span> <span class="org-keyword">COLUMN</span> bar <span class="org-type">VARCHAR</span>(10), <span class="org-keyword">ADD</span> <span class="org-keyword">INDEX</span> idx_baz(baz);
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> 分页</h3>
+<div class="outline-text-3" id="text-1-5">
+<div class="org-src-container">
+<label class="org-src-name">分页方式一</label>
+<pre class="src src-sql"><span class="org-keyword">SELECT</span> * <span class="org-builtin">FROM</span> thread
+<span class="org-keyword">WHERE</span> thread_id = 771025 <span class="org-keyword">AND</span> deleted = 0
+<span class="org-keyword">ORDER</span> <span class="org-keyword">BY</span> gmt_create <span class="org-keyword">ASC</span> <span class="org-keyword">LIMIT</span> 0, 15;
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border dense">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>原理</b></th>
+<th scope="col" class="left">一次性根据过滤条件取出所有字段进行排序返回。</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">数据访问开销 = 索引 IO + 索引全部记录结果对应的表数据 IO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>缺点</b></td>
+<td class="left">越翻到后面执行效率越差，时间越长，尤其表数据量很大的时候。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>适用</b></td>
+<td class="left">中间结果集很小（10000 行以下），或者查询条件复杂（涉及多个不同查询字段，或者多表连接）时。</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<label class="org-src-name">分页方式二</label>
+<pre class="src src-sql"><span class="org-keyword">SELECT</span> thread.* <span class="org-builtin">FROM</span> (
+    <span class="org-keyword">SELECT</span> id <span class="org-builtin">FROM</span> thread
+    <span class="org-keyword">WHERE</span> thread_id = 771025 <span class="org-keyword">AND</span> deleted = 0
+    <span class="org-keyword">ORDER</span> <span class="org-keyword">BY</span> gmt_create <span class="org-keyword">ASC</span> <span class="org-keyword">LIMIT</span> 0, 15
+) a, thread
+<span class="org-keyword">WHERE</span> a.id = thread.id;
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border dense">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>前提</b></th>
+<th scope="col" class="left">假设 <code>thread</code> 表主键是 <code>id</code> 列，且有覆盖索引 <code>secondary key:(thread_id, deleted, gmt_create)</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>原理</b></td>
+<td class="left">先根据过滤条件，利用覆盖索引取出主键 <code>id</code> 进行排序，再进行 <code>JOIN</code> 操作取出其他字段。</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">数据访问开销 = 索引 IO + 索引分页后结果对应的表数据 IO</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>优点</b></td>
+<td class="left">每次翻页消耗的资源和时间都基本相同。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>适用</b></td>
+<td class="left">当查询和排序字段（即 <code>WHERE</code> 子句和 <code>ORDER BY</code> 子句涉及的字段）有对应覆盖索引时，且中间结果集很大时。</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> 特性</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+<b>避免使用存储过程、触发器、视图、自定义函数等。</b> 这些高级特性有性能问题，以及未知 bug 较多。业务逻辑放到数据库会造成数据库的 DDL、scale out、sharding 等变得更加困难。
+</p>
+
+<p>
+<b>禁止使用分区表。</b> 分区表对分区键有严格要求，分区表在表变大后，执行 DDL、sharding、单表恢复等都变得更加困难。因此禁止使用分区表，并建议业务端手动 sharding。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> 安全</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+<b>禁止在数据库中存储明文密码。</b> 采用加密字符串存储密码，并保证密码不可解密，同时采用随机字符串加盐保证密码安全。防止数据库数据被公司内部人员或黑客获取后，采用字典攻击等方式暴力破解用户密码。
+</p>
+
+<p>
+<b>禁止有 super 权限的应用程序账号存在。</b> super 权限会导致 read only 失效，导致较多诡异问题而且很难追踪。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-8" class="outline-3">
+<h3 id="sec-1-8"><span class="section-number-3">1.8</span> 实践</h3>
+<div class="outline-text-3" id="text-1-8">
+<p>
+<b>将大字段、访问频率低的字段拆分到单独的表中存储，分离冷热数据。</b> 有利于有效利用缓存，防止读入无用的冷数据，较少磁盘 IO，同时保证热数据常驻内存，提高缓存命中率。
+</p>
+
+<p>
+<b>采用合适的分库分表策略。</b> 如千库十表、十库百表。采用合适的分库分表策略，有利于业务发展后期快速对数据库进行水平拆分，同时分库可以有效利用 MySQL 的 <del>多线程复制</del> 特性。
+</p>
+
+<p>
+<b>不要在 MySQL 数据库中存放业务逻辑。</b> 数据库是有状态的服务，变更复杂而且速度慢，如果把业务逻辑放到数据库中，将会限制业务的快速发展。建议把业务逻辑提前，放到前端或中间逻辑层，而把数据库作为存储层，实现逻辑与存储的分离。
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2016-10-30 周日 17:19</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

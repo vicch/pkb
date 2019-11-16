@@ -1,0 +1,96 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Vagrant
+
+* Vagrantfile
+** =config.vm=
+*** =config.vm.box=
+
+#+BEGIN_SRC sh
+config.vm.box = "<box>"
+#+END_SRC
+
+*** =config.vm.define=
+
+#+CAPTION: 配置多个虚拟机
+#+BEGIN_SRC sh
+Vagrant.configure("2") do |config|
+  config.vm.define "vm1" do |vm1|
+    vm1.vm.box = ""
+  end
+  config.vm.define "vm2" do |vm2|
+    vm2.vm.box = ""
+  end
+end
+#+END_SRC
+
+*** =config.vm.network=
+
+虚拟机地址默认为端口转发。
+
+#+CAPTION: 设置私有网络
+#+BEGIN_SRC sh
+config.vm.network "private_network", ip: "192.168.0.1"
+#+END_SRC
+
+#+CAPTION: 设置端口映射（用于将虚拟机作为 Web 服务器）
+#+BEGIN_SRC sh
+config.vm.network "forwarded_port", guest: 80, host: 8080
+#+END_SRC
+
+*** =config.vm.synced_folderr=
+
+#+CAPTION: 默认共享虚拟机 =/vagrant= 目录和宿主机 =Vagrantfile= 所在目录
+#+BEGIN_SRC sh
+config.vm.synced_folder ".", "/vagrant"
+#+END_SRC
+
+* =vagrant=
+
+| *管理* | =init=       | 创建         |
+|        | =destroy=    | 删除         |
+|--------+--------------+--------------|
+| *操作* | =up=         | 启动、重启   |
+|        | =reload=     | 重启         |
+|        | =suspend=    | 中断         |
+|        | =halt=       | 强制关闭     |
+|--------+--------------+--------------|
+| *信息* | =status=     | 查看运行状态 |
+|--------+--------------+--------------|
+| *SSH*  | =ssh=        | SSH 登录     |
+|        | =ssh-config= | SSH 配置     |
+|--------+--------------+--------------|
+| *其他* | =box=        |              |
+
+** =box=
+
+#+BEGIN_SRC sh
+vagrant box <command>
+    list
+    add <box>
+    remove <box>
+#+END_SRC
+
+** =init=
+
+创建虚拟机，生成 =Vagrantfile= 。
+
+#+BEGIN_SRC sh
+vagrant init <box>
+#+END_SRC
+
+* Debug
+
+#+CAPTION: CentOS 启动时加载共享目录报错，找不到 =rsync= ，修改配置
+#+BEGIN_SRC sh
+config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+#+END_SRC
+
+#+CAPTION: CentOS 启动时加载共享目录报错，找不到 =vboxsf= ，运行命令
+#+BEGIN_SRC sh
+vagrant plugin install vagrant-vbguest
+#+END_SRC
+
+* 链接
+
+1. [[https://www.vagrantup.com/docs/index.html][Vagrant Documentation]]
+1. [[https://app.vagrantup.com/boxes/search][Discover Vagrant Boxes]]

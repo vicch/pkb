@@ -1,0 +1,1150 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: C Library
+
+* =assert.h=
+** =assert()=
+
+#+BEGIN_SRC c
+void assert(int expression);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+int i;
+
+for (i = 0; i < 9; i++) {
+    printf("%d\n", i);
+    assert(i < 2);
+}
+
+// 0
+// 1
+// 2
+// main: main.c:10: main: Assertion `i < 2' failed.
+// Aborted
+#+END_SRC
+
+#+CAPTION: 示例：输入参数验证
+#+BEGIN_SRC c
+int foo(int a)
+{
+    assert(a > 0);
+    ...
+}
+#+END_SRC
+
+* =ctype.h=
+
+| *判断*       |                   |                                                                                                |
+|--------------+-------------------+------------------------------------------------------------------------------------------------|
+| =isdigit()=  | 数字字符          | 数字                                                                                           |
+|--------------+-------------------+------------------------------------------------------------------------------------------------|
+| =isalpha()=  | Alphebetic 字符   | 大小写字母                                                                                     |
+|--------------+-------------------+------------------------------------------------------------------------------------------------|
+| =islower()=  | 小写字母          | 小写字母                                                                                       |
+|--------------+-------------------+------------------------------------------------------------------------------------------------|
+| =isupper()=  | 大写字母          | 大写字母                                                                                       |
+|--------------+-------------------+------------------------------------------------------------------------------------------------|
+| =isalnum()=  | Alphanumeric 字符 | 大小写字母，数字                                                                               |
+|--------------+-------------------+------------------------------------------------------------------------------------------------|
+| =ispunct()=  | 标点字符          | @@html:<code>,</code>@@ =;= =.= =:= =?= =!= =+= =-= =*= =/= =\= ~=~ =>= =<=                    |
+|              |                   | @@html:<code>'</code>@@ @@html:<code>"</code>@@ =()= =[]= ={}= =@= =#= =$= =%= =^= =&= =_= =`= |
+|              |                   | =~= @@html:<code>&#124;</code>@@                                                               |
+|--------------+-------------------+------------------------------------------------------------------------------------------------|
+| =isgraph()=  | 有图形表示字符    | 大小写字母，数字，标点                                                                         |
+|--------------+-------------------+------------------------------------------------------------------------------------------------|
+| =isblank()=  | 空白字符          | 空格，tab                                                                                         |
+|--------------+-------------------+------------------------------------------------------------------------------------------------|
+| =isspace()=  | 空白字符          | 空格，tab，换行等                                                                              |
+|--------------+-------------------+------------------------------------------------------------------------------------------------|
+| =inprint()=  | 可打印字符        | 大小写字母，数字，标点，空白字符                                                               |
+|--------------+-------------------+------------------------------------------------------------------------------------------------|
+| =iscntrl()=  | 控制字符          | ASCII 八进制 =000= 到 =037= 字符，以及 =177=                                                   |
+|--------------+-------------------+------------------------------------------------------------------------------------------------|
+| =isxdigit()= | 十六进制字符      | 大小写 =A= 到 =F= ，数字                                                                       |
+|--------------+-------------------+------------------------------------------------------------------------------------------------|
+| *转换*       |                   |                                                                                                |
+|--------------+-------------------+------------------------------------------------------------------------------------------------|
+| =tolower()=  |                   |                                                                                                |
+|--------------+-------------------+------------------------------------------------------------------------------------------------|
+| =toupper()=  |                   |                                                                                                |
+
+** 判断
+
+#+CAPTION: 所有判断函数签名一致
+#+BEGIN_SRC c
+int is*(int c);
+#+END_SRC
+
+返回 =0= 表示判断不成立，非 =0= 表示判断成立。
+
+** 转换
+
+#+CAPTION: 转换函数签名一致
+#+BEGIN_SRC c
+int to*(int c);
+#+END_SRC
+
+* =float.h=
+
+#+CAPTION: Macro
+| =FLT_MAX=  |   |
+| =FLT_MIN=  |   |
+|------------+---|
+| =DBL_MAX=  |   |
+| =DBL_MIN=  |   |
+|------------+---|
+| =LDBL_MAX= |   |
+| =LDBL_MIN= |   |
+
+* =limits.h=
+
+#+CAPTION: Macro
+| =CHAR_BIT=   |                          8 | 字符位数           |
+|--------------+----------------------------+--------------------|
+| =MB_LEN_MAX= |                         16 | 多字节字符最大位数 |
+|--------------+----------------------------+--------------------|
+| =CHAR_MIN=   |                       -128 |                    |
+| =CHAR_MAX=   |                        127 |                    |
+|--------------+----------------------------+--------------------|
+| =SCHAR_MIN=  |                       -128 |                    |
+| =SCHAR_MAX=  |                        127 |                    |
+|--------------+----------------------------+--------------------|
+| =UCHAR_MAX=  |                        255 |                    |
+|--------------+----------------------------+--------------------|
+| =SHORT_MIN=  |                     -32768 |                    |
+| =SHORT_MAX=  |                      32767 |                    |
+|--------------+----------------------------+--------------------|
+| =USHRT_MAX=  |                      65535 |                    |
+|--------------+----------------------------+--------------------|
+| =INT_MIN=    |             -2,147,483,648 |                    |
+| =INT_MAX=    |              2,147,483,647 |                    |
+|--------------+----------------------------+--------------------|
+| =UINT_MAX=   |              4,294,967,295 |                    |
+|--------------+----------------------------+--------------------|
+| =LONG_MIN=   | -9,223,372,036,854,775,808 |                    |
+| =LONG_MAX=   |  9,223,372,036,854,775,807 |                    |
+|--------------+----------------------------+--------------------|
+| =ULONG_MAX=  | 18,446,744,073,709,551,615 |                    |
+
+* =math.h=
+* =stdio.h=
+
+#+CAPTION: 变量
+|          | *类型*         |                     |
+|----------+----------------+---------------------|
+| =size_t= | =unsigned int= | =sizeof()= 的返回值 |
+|----------+----------------+---------------------|
+| =fpos_t= | =object=       | 文件中的位置        |
+|----------+----------------+---------------------|
+| =FILE=   | =object=       | 文件流信息          |
+
+#+CAPTION: Macro
+| =NULL= | 空（null）指针常量的值 |
+|--------+------------------------|
+| =EOF=  | 文件结束符             |
+|--------+------------------------|
+|        |                        |
+
+#+CAPTION: 函数
+| *格式化*     |                                      |
+|--------------+--------------------------------------|
+| [[stdio_printf][=printf()=]]   |                                      |
+|--------------+--------------------------------------|
+| =scanf()=    |                                      |
+|--------------+--------------------------------------|
+| =sprintf()=  |                                      |
+|--------------+--------------------------------------|
+| =sscanf()=   |                                      |
+|--------------+--------------------------------------|
+| =fprintf()=  |                                      |
+|--------------+--------------------------------------|
+| =fscanf()=   |                                      |
+|--------------+--------------------------------------|
+| =vprintf()=  |                                      |
+|--------------+--------------------------------------|
+| =vsprintf()= |                                      |
+|--------------+--------------------------------------|
+| =vfprintf()= |                                      |
+|--------------+--------------------------------------|
+| *字符*       |                                      |
+|--------------+--------------------------------------|
+| =putchar()=  | 输出一个字符                         |
+|--------------+--------------------------------------|
+| =getchar()=  | 获取一个输入字符                     |
+|--------------+--------------------------------------|
+| =putc()=     |                                      |
+|--------------+--------------------------------------|
+| =getc()=     |                                      |
+|--------------+--------------------------------------|
+| =ungetc()=   |                                      |
+|--------------+--------------------------------------|
+| =fputc()=    |                                      |
+|--------------+--------------------------------------|
+| =fgetc()=    |                                      |
+|--------------+--------------------------------------|
+| *字符串*     |                                      |
+|--------------+--------------------------------------|
+| [[stdio_puts][=puts()=]]     | 输出字符串到 =stdout= ，结尾换行     |
+|--------------+--------------------------------------|
+| =gets()=     |                                      |
+|--------------+--------------------------------------|
+| =fputs()=    |                                      |
+|--------------+--------------------------------------|
+| =fgets()=    |                                      |
+|--------------+--------------------------------------|
+| *文件（流）* |                                      |
+|--------------+--------------------------------------|
+| =fopen()=    |                                      |
+|--------------+--------------------------------------|
+| =freopen()=  |                                      |
+|--------------+--------------------------------------|
+| =fclose()=   | 关闭流，清空（flush）缓冲区          |
+|--------------+--------------------------------------|
+| [[stdio_fread][=fread()=]]    | 从流读取数据，通过传入的指针写入数组 |
+|--------------+--------------------------------------|
+| =fwrite()=   |                                      |
+|--------------+--------------------------------------|
+| [[stdio_fflush][=fflush()=]]   | 清空流的输出缓冲区                   |
+|--------------+--------------------------------------|
+| =fseek()=    |                                      |
+|--------------+--------------------------------------|
+| =feof()=     |                                      |
+|--------------+--------------------------------------|
+| =ftell()=    |                                      |
+|--------------+--------------------------------------|
+| [[stdio_rewind][=rewind()=]]   | 将文件位置设置到文件（流）开头       |
+|--------------+--------------------------------------|
+| =fgetpos()=  |                                      |
+|--------------+--------------------------------------|
+| =fsetpos()=  |                                      |
+|--------------+--------------------------------------|
+| *文件*       |                                      |
+|--------------+--------------------------------------|
+| =remove()=   |                                      |
+|--------------+--------------------------------------|
+| =rename()=   |                                      |
+|--------------+--------------------------------------|
+| =tmpfile()=  |                                      |
+|--------------+--------------------------------------|
+| =tmpnam()=   |                                      |
+|--------------+--------------------------------------|
+| *缓冲*       |                                      |
+|--------------+--------------------------------------|
+| =setbuff()=  |                                      |
+|--------------+--------------------------------------|
+| =setvbuff()= |                                      |
+|--------------+--------------------------------------|
+| *错误*       |                                      |
+|--------------+--------------------------------------|
+| =ferror()=   |                                      |
+|--------------+--------------------------------------|
+| [[stdio_perror][=perror()=]]   | 输出错误信息到 =stderr=              |
+|--------------+--------------------------------------|
+| =clearerr()= |                                      |
+
+** 格式化
+
+#+CAPTION: 格式字符串
+#+BEGIN_SRC text
+%<sign><width>.<precision><type>
+#+END_SRC
+
+#+CAPTION: 占位符
+| *数字*    |                  |
+|-----------+------------------|
+| =%d= =%i= | =int= 有符号     |
+| =%u=      | =int= 无符号     |
+|-----------+------------------|
+| =%ld=     | =long= 有符号    |
+| =%lu=     | =long= 无符号    |
+|-----------+------------------|
+| =%f=      | =float= =double= |
+|-----------+------------------|
+| =%o=      | 八进制数         |
+|-----------+------------------|
+| =%x=      | 十六进制数       |
+|-----------+------------------|
+| *字符*    |                  |
+|-----------+------------------|
+| =%c=      | 字符             |
+|-----------+------------------|
+| =%s=      | 字符串           |
+|-----------+------------------|
+| *其他*    |                  |
+|-----------+------------------|
+| =%p=      | 内存地址         |
+|-----------+------------------|
+| =%%=      | =%=              |
+
+** =fflush()=
+<<stdio_fflush>>
+
+#+BEGIN_SRC c
+int fflush(FILE *stream);
+#+END_SRC
+
+** =fread()=
+<<stdio_fread>>
+
+#+BEGIN_SRC c
+size_t fread(
+    void   *ptr    // 读取的数据写入此指针指向的数组
+,   size_t size    // 读取的元素的单位长度
+,   size_t nmemb   // 读取的元素个数
+,   FILE   *stream // 输入流（文件）
+)
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+FILE *fp;
+char buffer[100];
+
+fp = fopen("file.txt", "w+");
+fread(buffer, 10, 1, fp);
+fclose(fp);
+#+END_SRC
+
+** =getchar()=
+
+结束符 =EOF= 不在 =char= 类型可表示的范围内，所以接收 =getchar()= 返回值的变量需要是 =int= 类型。
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+int c;
+while ((c = getchar()) != EOF)
+    putchar(c);
+#+END_SRC
+
+** =perror()=
+<<stdio_perror>>
+
+#+BEGIN_SRC c
+void perror(const char *str);
+#+END_SRC
+
+** =printf()=
+<<stdio_printf>>
+
+#+BEGIN_SRC c
+void printf (
+    const char *format
+,   ...
+);
+#+END_SRC
+
+#+CAPTION: 格式化字符串可以是表达式
+#+BEGIN_SRC c
+printf((n > 1) ? "%d > 1" : "%d < 1", n);
+// 等价于
+printf("%d %c 1", n, (n > 1) ? '>' : '<');
+#+END_SRC
+
+** =puts()=
+<<stdio_puts>>
+
+#+BEGIN_SRC c
+int puts(const char *str);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+puts("Hello, world!");
+#+END_SRC
+
+** =rewind=
+<<stdio_rewind>>
+
+#+BEGIN_SRC c
+void rewind(FILE *stream);
+#+END_SRC
+
+* =stdlib.h=
+
+#+CAPTION: 变量
+|           | *类型*         |                     |
+|-----------+----------------+---------------------|
+| =size_t=  | =unsigned int= | =sizeof()= 的返回值 |
+|-----------+----------------+---------------------|
+| =wchar_t= | =int=          | 宽字符常量的长度    |
+|-----------+----------------+---------------------|
+| =div_t=   | =struct=       | =div()= 的返回值    |
+|-----------+----------------+---------------------|
+| =ldiv_t=  | =struct=       | =ldiv()= 的返回值   |
+
+#+CAPTION: Macro
+| =NULL=         | 空（null）指针常量的值   |
+|----------------+--------------------------|
+| =EXIT_FAILURE= | 失败时 =exit()= 的返回值 |
+|----------------+--------------------------|
+| =EXIT_SUCCESS= | 成功时 =exit()= 的返回值 |
+|----------------+--------------------------|
+| =RAND_MAX=     | =rand()= 返回的最大值    |
+|----------------+--------------------------|
+| =MB_CUR_MAX=   | 多字节字符的最大字节数   |
+
+#+CAPTION: 函数
+| *内存分配*   |                                    |
+|--------------+------------------------------------|
+| [[stdlib_calloc][=calloc()=]]   |                                    |
+|--------------+------------------------------------|
+| [[stdlib_malloc][=malloc()=]]   |                                    |
+|--------------+------------------------------------|
+| [[stdlib_realloc][=realloc()=]]  | 调整已分配内存的大小               |
+|--------------+------------------------------------|
+| [[stdlib_free][=free()=]]     |                                    |
+|--------------+------------------------------------|
+| *类型转换*   |                                    |
+|--------------+------------------------------------|
+| [[stdlib_atoi][=atoi()=]]     | 字符串 \to 整数                    |
+|--------------+------------------------------------|
+| [[stdlib_atol][=atol()=]]     | 字符串 \to 长整数                  |
+|--------------+------------------------------------|
+| [[stdlib_atof][=atof()=]]     | 字符串 \to 浮点数                  |
+|--------------+------------------------------------|
+| [[stdlib_strtol][=strtol()=]]   | 字符串 \to 长整数                  |
+|--------------+------------------------------------|
+| [[stdlib_strtoul][=strtoul()=]]  | 字符串 \to 无符号长整数            |
+|--------------+------------------------------------|
+| [[stdlib_strtod][=strtod()=]]   | 字符串 \to 双精度浮点数            |
+|--------------+------------------------------------|
+| *计算*       |                                    |
+|--------------+------------------------------------|
+| [[stdlib_abs][=abs()=]]      | 求绝对值                           |
+|--------------+------------------------------------|
+| [[stdlib_labs][=labs()=]]     | 求绝对值（长整形）                 |
+|--------------+------------------------------------|
+| [[stdlib_div][=div()=]]      | 求商和余数                         |
+|--------------+------------------------------------|
+| [[stdlib_ldiv][=ldiv()=]]     | 求商和余数（长整形）               |
+|--------------+------------------------------------|
+| *随机*       |                                    |
+|--------------+------------------------------------|
+| [[stdlib_rand][=rand()=]]     | 生成伪随机数                       |
+|--------------+------------------------------------|
+| [[stdlib_srand][=srand()=]]    | 为 =rand()= 的随机数生成器设置种子 |
+|--------------+------------------------------------|
+| *算法*       |                                    |
+|--------------+------------------------------------|
+| [[stdlib_bsearch][=bsearch()=]]  | 二分查找                           |
+|--------------+------------------------------------|
+| [[stdlib_qsort][=qsort()=]]    | 快速排序                           |
+|--------------+------------------------------------|
+| *中断退出*   |                                    |
+|--------------+------------------------------------|
+| [[stdlib_abort][=abort()=]]    | 非正常退出                         |
+|--------------+------------------------------------|
+| [[stdlib_exit][=exit()=]]     | 正常退出                           |
+|--------------+------------------------------------|
+| [[stdlib_atexit][=atexit()=]]   | 正常退出时调用回调函数             |
+|--------------+------------------------------------|
+| *系统*       |                                    |
+|--------------+------------------------------------|
+| [[stdlib_getenv][=getenv()=]]   | 获取环境值                         |
+|--------------+------------------------------------|
+| [[stdlib_system][=system()=]]   | 执行系统命令                       |
+|--------------+------------------------------------|
+| *多字节*     |                                    |
+|--------------+------------------------------------|
+| [[stdlib_mblen][=mblen()=]]    | 获取多字节字符的长度               |
+|--------------+------------------------------------|
+| =wctomb()=   |                                    |
+|--------------+------------------------------------|
+| =mbtowc()=   |                                    |
+|--------------+------------------------------------|
+| =wcstombs()= |                                    |
+|--------------+------------------------------------|
+| =mbstowcs()= |                                    |
+
+** =abort()=
+<<stdlib_abort>>
+
+#+BEGIN_SRC c
+void abort(void);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+FILE *fp;
+
+fp = fopen("nofile.txt", "r");
+if (fp == NULL) {
+    printf("Error opening file.\n");
+    abort();
+}
+
+// Error opening file.
+// Aborted (core dump)
+#+END_SRC
+
+** =abs()=
+<<stdlib_abs>>
+
+#+BEGIN_SRC c
+int abs(int x);
+#+END_SRC
+
+** =atexit()=
+<<stdlib_atexit>>
+
+#+BEGIN_SRC c
+int atexit(void (*func)(void));
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+void callback_exit()
+{
+    printf("Run before exit.\n");
+}
+
+int main()
+{
+    atexit(callback_exit);
+    printf("Exiting main program...\n");
+    
+    return 0;
+}
+
+// Exiting main program...
+// Run before exit.
+#+END_SRC
+
+** =atof()=
+<<stdlib_atof>>
+
+#+BEGIN_SRC c
+double atof(const char *str)
+#+END_SRC
+
+** =atoi()=
+<<stdlib_atoi>>
+
+#+BEGIN_SRC c
+int atoi(const char *str);
+#+END_SRC
+
+** =atol()=
+<<stdlib_atol>>
+
+#+BEGIN_SRC c
+long int atol(const char *str);
+#+END_SRC
+
+** =bsearch()=
+<<stdlib_bsearch>>
+
+#+BEGIN_SRC c
+void *bsearch(
+    const void *key   // 查找值的指针
+,   const void *base  // 查找范围第一个元素的指针
+,   size_t     nitems // 查找范围元素个数
+,   size_t     size   // 查找范围元素长度
+,   int (*compar)(    // 元素比较函数
+        const void *
+      , const void *
+    )
+)
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+int cmpfunc(const void * a, const void * b)
+{
+    return (*(int*)a - *(int*)b);
+}
+
+int *item;
+int key = 32;
+int values[] = {5, 20, 29, 32, 63};
+
+item = (int*)bsearch(&key, values, 5, sizeof(int), cmpfunc);
+// *item -> 32
+#+END_SRC
+
+** =calloc()=
+<<stdlib_calloc>>
+
+#+BEGIN_SRC c
+void *calloc(size_t nitems, size_t size);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+int i, *a;
+
+a = (int*)calloc(10, sizeof(int));
+for (i = 0; i < 10; i++) {
+    a[i] = i * 2;
+}
+// a -> {0,2,4,6,...}
+#+END_SRC
+
+** =div()=
+<<stdlib_div>>
+
+#+BEGIN_SRC c
+div_t div(int numer, int denom);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+div_t output = div(27, 4);
+
+// output.quot -> 6
+// output.rem  -> 3
+#+END_SRC
+
+** =exit()=
+<<stdlib_exit>>
+
+#+BEGIN_SRC c
+void exit(int status);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+exit(0);
+#+END_SRC
+
+** =free()=
+<<stdlib_free>>
+
+#+BEGIN_SRC c
+void free(void *ptr);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+char *str; 
+
+str = (char *) malloc(20);
+strcpy(str, "https://example.com");
+free(str);
+#+END_SRC
+
+** =getenv()=
+<<stdlib_getenv>>
+
+#+BEGIN_SRC c
+char *getenv(const char *name);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+printf("PATH : %s\n", getenv("PATH"));
+// PATH : /sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin
+#+END_SRC
+
+** =labs()=
+<<stdlib_labs>>
+
+#+BEGIN_SRC c
+long int labs(long int x);
+#+END_SRC
+
+** =ldiv()=
+<<stdlib_ldiv>>
+
+#+BEGIN_SRC c
+ldiv_t ldiv(long int numer, long int denom);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+ldiv_t output = ldiv(100000L, 30000L);
+// output.quot -> 3
+// output.rem  -> 10000
+#+END_SRC
+
+** =malloc()=
+<<stdlib_malloc>>
+
+#+BEGIN_SRC c
+void *malloc(size_t size);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+int i;
+char *a;
+
+a = (char*)malloc(10);
+for (i = 0; i < 9; i++) {
+    a[i] = i + 'A';
+}
+a[10] = '\0';
+
+// ABCDEFGHI
+#+END_SRC
+
+** =mblen()=
+<<stdlib_mblen>>
+
+#+BEGIN_SRC c
+int mblen(
+    const char *str
+,   size_t     n    // 查看的最大字节数 
+);
+#+END_SRC
+
+#+BEGIN_SRC c
+
+#+END_SRC
+
+** =qsort()=
+<<stdlib_qsort>>
+
+#+BEGIN_SRC c
+void qsort(
+    void   *base
+,   size_t nitems
+,   size_t size
+,   int (*compar)(
+        const void *
+    ,   const void *
+    )
+)
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+int cmpfunc(const void * a, const void * b)
+{
+    return (*(int*)a - *(int*)b);
+}
+
+int values[] = {88, 56, 100, 2, 25};
+qsort(values, 5, sizeof(int), cmpfunc);
+#+END_SRC
+
+** =rand()=
+<<stdlib_rand>>
+
+#+BEGIN_SRC c
+int rand(void);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+int i, n;
+time_t t;
+
+/* Intializes random number generator */
+srand((unsigned) time(&t));
+
+/* Print 5 random numbers from 0 to 49 */
+for(i = 0 ; i < 5; i++) {
+    printf("%d\n", rand() % 50);
+}
+#+END_SRC
+
+** =realloc()=
+<<stdlib_realloc>>
+
+#+BEGIN_SRC c
+void *realloc(void *ptr, size_t size);
+#+END_SRC
+
+#+BEGIN_SRC c
+char *str;
+
+/* Initial memory allocation */
+str = (char*)malloc(15);
+strcpy(str, "https://example");
+
+/* Reallocating memory */
+str = (char*)realloc(str, 25);
+strcat(str, ".com");
+#+END_SRC
+
+** =srand()=
+<<stdlib_srand>>
+
+#+BEGIN_SRC c
+void srand(unsigned int seed);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+srand(time(NULL));
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+int i, n;
+time_t t;
+
+/* Intializes random number generator */
+srand((unsigned)time(&t));
+
+/* Print 5 random numbers from 0 to 49 */
+for(i = 0 ; i < 5; i++) {
+    printf("%d\n", rand() % 50);
+}
+#+END_SRC
+
+** =strtod()=
+<<stdlib_strtod>>
+
+#+BEGIN_SRC c
+double strtod(
+    const char *str
+,   char       **endptr // 将剩余字符串赋值给传入的指针
+);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+char str[30] = "20.30300_This is test.";
+char *ptr;
+double ret;
+
+ret = strtod(str, &ptr);
+printf("%lf\n", ret);
+printf("%s\n", ptr);
+
+// 20.30300
+// _This is test.
+#+END_SRC
+
+** =strtol()=
+<<stdlib_strtol>>
+
+#+BEGIN_SRC c
+long int strtol(
+    const char *str
+,   char       **endptr
+,   int        base
+);
+#+END_SRC
+
+** =strtoul()=
+<<stdlib_strtoul>>
+
+#+BEGIN_SRC c
+unsigned long int strtoul(const char *str, char **endptr, int base);
+#+END_SRC
+
+** =system()=
+<<stdlib_system>>
+
+#+BEGIN_SRC c
+int system(const char *string);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+system("ls -l");
+// drwxr-xr-x ...
+#+END_SRC
+
+* =string.h=
+
+#+CAPTION: 变量
+|           | *类型*         |                     |
+|-----------+----------------+---------------------|
+| =size_t=  | =unsigned int= | =sizeof()= 的返回值 |
+
+#+CAPTION: Macro
+| =NULL= | 空（null）指针常量的值 |
+
+#+CAPTION: 函数
+| *字符串读*  |                              |
+|-------------+------------------------------|
+| [[string_strlen][=strlen()=]]  |                              |
+|-------------+------------------------------|
+| [[string_strchr][=strchr()=]]  | 查找字符出现的第一个位置     |
+|-------------+------------------------------|
+| [[string_strstr][=strstr()=]]  | 查找子字符串出现的第一个位置 |
+|-------------+------------------------------|
+| [[string_strcmp][=strcmp()=]]  | 比较字符串                   |
+|-------------+------------------------------|
+| [[string_strncmp][=strncmp()=]] | 比较字符串（指定范围）       |
+|-------------+------------------------------|
+| [[string_strcoll][=strcoll()=]] | 比较字符串（根据地区设置）   |
+|-------------+------------------------------|
+| *字符串写*  |                              |
+|-------------+------------------------------|
+| [[string_strcat][=strcat()=]]  | 连接字符串                   |
+|-------------+------------------------------|
+| [[string_strncat][=strncat()=]] | 连接字符串（指定范围）       |
+|-------------+------------------------------|
+| [[string_strcpy][=strcpy()=]]  | 复制字符串                   |
+|-------------+------------------------------|
+| [[string_strncpy][=strncpy()=]] | 复制字符串（指定范围）       |
+|-------------+------------------------------|
+| *数组读*    |                              |
+|-------------+------------------------------|
+| [[string_memchr][=memchr()=]]  | 查找数值出现的第一个位置     |
+|-------------+------------------------------|
+| [[string_memcmp][=memcmp()=]]  | 比较数组                     |
+|-------------+------------------------------|
+| *数组写*    |                              |
+|-------------+------------------------------|
+| [[string_memcpy][=memcpy()=]]  | 复制数组                     |
+|-------------+------------------------------|
+| [[string_memmove][=memmove()=]] | 复制数组（指定范围）         |
+|-------------+------------------------------|
+| [[string_memset][=memset()=]]  | 用数值填充数组               |
+
+** =memchr()=
+<<string_memchr>>
+
+#+BEGIN_SRC c
+void *memchr(
+    const void *str // 数组
+,   int        c    // 查找的数值
+,   size_t     n    // 查找范围（前 n 字节）
+);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+const char *s = "http://www.sample.com";
+char *r = memchr(s, '.', strlen(s));
+
+printf("%s\n", r); // .sample.com
+#+END_SRC
+
+** =memcmp()=
+<<string_memcmp>>
+
+#+BEGIN_SRC c	
+int memcmp(
+    const void *str1
+,   const void *str2
+,   size_t     n     // 比较范围（前 n 字节）
+);
+#+END_SRC
+
+| 返回值 | =int= | =< 0= ： =str1= 小于 =str2= |
+|        |       | => 0= ： =str1= 大于 =str2= |
+|        |       | ~= 0~ ： 相等               |
+
+** =memcpy()=
+<<string_memcpy>>
+
+#+BEGIN_SRC c
+void *memcpy(
+    void       *dest
+,   const void *src
+,   size_t     n     // 复制范围（前 n 字节）
+);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+const char *f = "Sample string";
+char *t;
+
+memcpy(t, f, strlen(f));
+#+END_SRC
+
+** =memmove()=
+<<string_memmove>>
+
+对于重叠的内存（overlapping memory blocks），比如将已有字符串覆盖， =memmove()= 比 =memcpy()= 更安全。
+
+#+BEGIN_SRC c
+void *memmove(
+    void       *str1
+,   const void *str2
+,   size_t     n     // 复制范围（前 n 字符）
+);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+const char *f = "New string etc.";
+char t[] = "Old string";
+
+memmove(t, f, strlen(f));
+#+END_SRC
+
+** =memset()=
+<<string_memset>>
+
+#+BEGIN_SRC c
+void *memset(
+    void   *str // 被填充数组
+,   int    c    // 填充数值
+,   size_t n    // 填充范围（前 n 字节）
+);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+char str[] = "Test string";
+memset(str, '$', 4);
+// $$$$ string
+#+END_SRC
+
+#+CAPTION: 示例：用于整数数组
+#+BEGIN_SRC c
+int seq[10];
+memset(seq, 0, sizeof(seq)); // 因为整数占用多字节，而 memset() 是按字节设置值，
+                             // 所以只有值为 0（所有位为 0）或 -1（所有位为 1）时有效
+#+END_SRC
+
+** =strcat()=
+<<string_strcat>>
+
+#+BEGIN_SRC c
+char *strcat(char *dest, const char *src);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+char str1[] = "Some string";
+char str2[] = " and more";
+strcat(str1, str2);
+// str1 -> Some string and more
+#+END_SRC
+
+** =strchr()=
+<<string_strchr>>
+
+#+BEGIN_SRC c
+char *strchr(const char *str, int c);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+char str[] = "foo bar baz";
+char *sub = strchr(str, 'b');
+// sub -> bar baz
+#+END_SRC
+
+** =strcmp()=
+<<string_strcmp>>
+
+#+BEGIN_SRC c
+int strcmp(const char *str1, const char *str2);
+#+END_SRC
+
+| 返回值 | =int= | =< 0= ： =str1= 小于 =str2= |
+|        |       | => 0= ： =str1= 大于 =str2= |
+|        |       | ~= 0~ ： 相等               |
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+char *str1 = "foo bar baz";
+char *str2 = "foo bar caz";
+int i = strcmp(str1, str2);
+// i -> -2
+#+END_SRC
+
+** =strcoll()=
+<<string_strcoll>>
+
+#+BEGIN_SRC c
+int strcoll(const char *str1, const char *str2);
+#+END_SRC
+
+根据 =LC_COLLATE= 地区设置。
+
+** =strcpy()=
+<<string_strcpy>>
+
+#+BEGIN_SRC c
+char *strcpy(char *dest, const char *src);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+char *str1 = "Sample string";
+char *str2;
+strcpy(str2, str1);
+// str2 -> Sample string
+#+END_SRC
+
+** =strlen()=
+<<string_strlen>>
+
+#+BEGIN_SRC c
+size_t strlen(const char *str);
+#+END_SRC
+
+** =strncat()=
+<<string_strncat>>
+
+#+BEGIN_SRC c
+char *strncat(
+    char       *dest
+,   const char *src
+,   size_t     n    // 连接范围，源字符串的前 n 个字符
+);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+char str1[] = "Some string";
+char str2[] = " and more";
+strncat(str1, str2, 4);
+// str1 -> Some string and
+#+END_SRC
+
+** =strncmp()=
+<<string_strncmp>>
+
+#+BEGIN_SRC c
+int strncmp(
+    const char *str1
+,   const char *str2
+,   size_t     n
+)
+#+END_SRC
+
+| 返回值 | =int= | =< 0= ： =str1= 小于 =str2= |
+|        |       | => 0= ： =str1= 大于 =str2= |
+|        |       | ~= 0~ ： 相等               |
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+char *str1 = "foo bar baz";
+char *str2 = "foo bar faz";
+int i = strncmp(str1, str2, 7);
+// i -> 0
+#+END_SRC
+
+** =strncpy()=
+<<string_strncpy>>
+
+#+BEGIN_SRC c
+char *strncpy(
+    char       *dest
+,   const char *src
+,   size_t     n     // 复制范围（前 n 个字符）
+);
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC c
+char *str1 = "Sample string";
+char str2[] = "Other string";
+strncpy(str2, str1, 6);
+// str2 -> Samplestring
+#+END_SRC
+
+** =strstr()=
+<<string_strstr>>
+
+#+BEGIN_SRC c
+char *strstr(
+    const char *haystack
+,   const char *needle
+)
+#+END_SRC
+
+* 链接
+
+1. [[http://www.tutorialspoint.com/c_standard_library/index.htm][C Standard Library Reference Tutorial]]
+1. [[https://en.wikibooks.org/wiki/C_Programming/C_Reference][WikiBooks C Programming/C Reference]]
+1. [[http://www.gnu.org/software/libc/manual/html_node/index.html][The GNU C Library]]
+1. [[https://developer.gnome.org/glib/stable/][Glib Reference Manual]]
+
+-----
+
+1. [[http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/contents.html][The Open Group Base Specifications Issue 7]]

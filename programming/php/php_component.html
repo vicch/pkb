@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>PHP Component</title>
+<!-- 2017-03-20 Mon 13:35 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">PHP Component</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. 概念</a>
+<ul>
+<li><a href="#sec-1-1">1.1. Interoperability</a></li>
+<li><a href="#sec-1-2">1.2. Sematic Versioning</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. Composer</a>
+<ul>
+<li><a href="#sec-2-1">2.1. 安装</a></li>
+<li><a href="#sec-2-2">2.2. 文件</a></li>
+<li><a href="#sec-2-3">2.3. 命令行</a></li>
+<li><a href="#sec-2-4">2.4. 使用</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. Monolog</a></li>
+<li><a href="#sec-4">4. 链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 概念</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Interoperability</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+PHP community has evolved from a centralized framework model to a distributed ecosystem of efficient, interoperable, and specialized components.
+</p>
+
+<dl class="org-dl">
+<dt> Interface </dt><dd>allow frameworks to assume what methods are provided by third-party dependencies
+<ul class="org-ul">
+<li>without worrying about how the dependencies implement the interface
+</li>
+</ul>
+</dd>
+
+<dt> Autoloading </dt><dd>the process by which a class is automatically located and loaded on-demand by the interpreter during runtime
+<ul class="org-ul">
+<li>before standards, components and frameworks implement their own unique autoloaders using <code>\__autoload()</code> or <code>spl_autoload_register()</code>
+</li>
+<li>modern components and frameworks are compatible with a common autoloader standard
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Sematic Versioning</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li>3 numbers separated with a period <code>.</code> character
+</li>
+</ul>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="right" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="right">1</th>
+<th scope="col" class="left">major release number</th>
+<th scope="col" class="left">changes that break backward compatibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="right">2</td>
+<td class="left">minor release number</td>
+<td class="left">minor features that do not break backward compatibility</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="right">3</td>
+<td class="left">patch release number</td>
+<td class="left">backward-compatible bug fixes</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Composer</h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li>dependency manager for PHP components
+</li>
+<li>runs on the command line
+</li>
+<li>downloads and autoloads components into project
+</li>
+<li>simplifies integrating and using third-party PHP components
+</li>
+<li>works with Packagist
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 安装</h3>
+<div class="outline-text-3" id="text-2-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">curl -sS https://getcomposer.org/installer | php
+sudo mv composer.phar /usr/local/bin/composer
+sudo chmod +x /usr/local/bin/composer
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">~/.bash_profile, add:</span>
+<span class="org-variable-name">PATH</span>=/usr/local/bin:$<span class="org-variable-name">PATH</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> 文件</h3>
+<div class="outline-text-3" id="text-2-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">src/
+tests/
+composer.json
+README.md       <span class="org-comment-delimiter"># </span><span class="org-comment">Name, description, author, contributor guidelines, software license, etc.</span>
+CONTRIBUTING.md <span class="org-comment-delimiter"># </span><span class="org-comment">How others can contribute to this component</span>
+LICENSE
+CHANGELOG.md
+</pre>
+</div>
+
+<dl class="org-dl">
+<dt> <code>composer.lock</code> </dt><dd>lists all PHP components (and version numbers) used by the project
+<ul class="org-ul">
+<li>Composer downloads the specific versions listed in <code>composer.lock</code> regardless of the latest available versions on Packagist
+</li>
+</ul>
+</dd>
+
+<dt> <code>composer.json</code> </dt><dd>describes the component
+<ul class="org-ul">
+<li>contains information used by Composer to find, install, and autoload the component
+</li>
+<li>contains information for the component's Packagist directory listing
+</li>
+</ul>
+</dd>
+</dl>
+
+<div class="org-src-container">
+<label class="org-src-name"><code>composer.json</code> 示例</label>
+<pre class="src src-js">{
+    <span class="org-string">"name"</span>: <span class="org-string">"&lt;vendor&gt;/&lt;package&gt;"</span>,
+    <span class="org-string">"description"</span>: <span class="org-string">"..."</span>,
+    <span class="org-string">"keywords"</span>: [<span class="org-string">"&lt;keyword&gt;"</span>, ...],
+    <span class="org-string">"homepage"</span>: <span class="org-string">"http://example.com"</span>,
+    <span class="org-string">"license"</span>: <span class="org-string">"MIT"</span>,
+    <span class="org-string">"authors"</span>: [
+        {
+            <span class="org-string">"name"</span>: <span class="org-string">"&lt;name&gt;"</span>,
+            <span class="org-string">"homepage"</span>: <span class="org-string">"&lt;url&gt;"</span>,
+            <span class="org-string">"role"</span>: <span class="org-string">"Developer"</span>
+        }
+    ],
+    <span class="org-string">"support"</span>: {
+        <span class="org-string">"email"</span>: <span class="org-string">"help@example.com"</span>
+    },
+    <span class="org-string">"require"</span>: {
+        <span class="org-string">"php"</span>: <span class="org-string">"&gt;=5.4.0"</span>,
+        <span class="org-string">"&lt;vendor&gt;/&lt;package&gt;"</span>: <span class="org-string">"~5.0"</span>,
+        ...
+    },
+    <span class="org-string">"require-dev"</span>: {
+        <span class="org-string">"phpunit/phpunit"</span>: <span class="org-string">"~4.3"</span>
+    },
+    <span class="org-string">"suggest"</span>: {
+        <span class="org-string">"&lt;vendor&gt;/&lt;package&gt;"</span>: <span class="org-string">"~6.0"</span>,
+        ...
+    },
+    <span class="org-string">"autoload"</span>: {
+        <span class="org-string">"psr-4"</span>: {
+            <span class="org-string">"&lt;Prefix&gt;\\&lt;Prefix&gt;\\"</span>: <span class="org-string">"src/"</span> <span class="org-comment-delimiter">// </span><span class="org-comment">map namespace prefix to a relative path</span>
+        }
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> 命令行</h3>
+<div class="outline-text-3" id="text-2-3">
+<div class="org-src-container">
+
+<pre class="src src-sh">composer &lt;options&gt; &lt;arguments&gt;
+    -h, --help
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">增加 component</label>
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">At project's root directory</span>
+composer require &lt;vendor&gt;/&lt;package&gt;
+<span class="org-comment-delimiter"># </span><span class="org-comment">composer.json and composer.lock are created/updated</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Components are downloaded into vendor/ directory</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Autoloader is created at vendor/autoload.php</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">更新 component</label>
+<pre class="src src-sh">composer update
+<span class="org-comment-delimiter"># </span><span class="org-comment">Newer versions are installed</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">composer.lock is updated</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> 使用</h3>
+<div class="outline-text-3" id="text-2-4">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-preprocessor">&lt;?php</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">Usually in bootstrap</span>
+<span class="org-keyword">require</span> <span class="org-string">'vendor/autoload.php'</span>;
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Monolog</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<a href="https://github.com/Seldaek/monolog">monolog/monolog</a>
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-php"><span class="org-preprocessor">&lt;?php</span>
+<span class="org-keyword">use</span> <span class="org-type">Monolog\Logger</span>;
+<span class="org-keyword">use</span> <span class="org-type">Monolog\Handler\StreamHandler</span>;
+
+$<span class="org-variable-name">log</span> = <span class="org-keyword">new</span> <span class="org-type">Logger</span>(<span class="org-string">'myApp'</span>);
+$<span class="org-variable-name">log</span>-<span class="org-constant">&gt;</span><span class="org-function-name">pushHandler</span>(<span class="org-keyword">new</span> <span class="org-type">StreamHandler</span>(<span class="org-string">'logs/development.log'</span>, <span class="org-type">Logger</span>::<span class="org-constant">DEBUG</span>));
+$<span class="org-variable-name">log</span>-&gt;<span class="org-function-name">pushHandler</span>(<span class="org-keyword">new</span> <span class="org-type">StreamHandler</span>(<span class="org-string">'logs/production.log'</span>, <span class="org-type">Logger</span>::<span class="org-constant">WARNING</span>));
+
+$<span class="org-variable-name">log</span>-&gt;<span class="org-function-name">debug</span>(<span class="org-string">'This is a debug message'</span>);
+$<span class="org-variable-name">log</span>-&gt;<span class="org-function-name">warning</span>(<span class="org-string">'This is a warning message'</span>);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 链接</h2>
+<div class="outline-text-2" id="text-4">
+<ol class="org-ol">
+<li><a href="https://packagist.org/">Packagist</a>
+</li>
+<li><a href="http://semver.org/">Sematic Versioning</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2017-03-20 Mon 13:35</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,574 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: C Scrap
+
+* 编译器的工作过程
+
+[[http://www.ruanyifeng.com/blog/2014/11/compiler.html][Source]]
+
+源码要运行，必须先转成二进制的机器码，这是编译器的任务。
+
+#+CAPTION: 源码：
+#+BEGIN_SRC c
+// test.c
+#include <stdio.h>
+
+int main(void)
+{
+    fputs("Hello, world!\n", stdout);
+    return 0;
+}
+#+END_SRC
+
+#+CAPTION: 编译和运行：
+#+BEGIN_SRC sh
+$ gcc test.c
+$ ./a.out
+Hello, world!
+#+END_SRC
+
+#+CAPTION: 对于复杂的项目，编译过程分成三步：
+#+BEGIN_SRC sh
+$ ./configure
+$ make  
+$ make install
+#+END_SRC
+
+这些命令到底在干什么？大多数的书籍和资料，都语焉不详。本文介绍编译器的工作过程，也就是上面三个命令各自的任务。主要参考了 Alex Smith 的 [[http://nethack4.org/blog/building-c.html][Building C Projects]]。需要声明的是，本文主要针对 gcc 编译器，也就是针对 C 和 C++，不一定适用于其他语言的编译。
+
+file:../images/c_scrap/01.png
+
+** 第一步：配置（configure）
+
+编译器在开始工作之前，需要知道当前的系统环境，比如标准库的路径、软件的安装路径、需要安装哪些组件等。这是因为不同计算机的系统环境不一样，通过指定编译参数，编译器就可以适应环境，编译出各种环境都能运行的机器码。这个 _确定编译参数_ 的步骤，就叫做「配置」（configure）。
+
+这些 _配置信息保存在一个配置文件之中，通常是 =configure= 脚本文件，由 +autoconf+ 工具生成。_ 编译器通过运行这个脚本，获知编译参数。 _=configure= 脚本已经尽量考虑到不同系统的差异，对各种编译参数给出了默认值。_ 如果用户的系统环境比较特别，或者有一些特定的需求，就需要手动向 =configure= 脚本提供编译参数。
+
+#+CAPTION: PHP 的一种编译配置，指定安装后的文件保存在 =www= 目录，并且编译时加入 mysql 模块的支持：
+#+BEGIN_SRC sh
+$ ./configure --prefix=/www --with-mysql
+#+END_SRC
+
+** 第二步：确定标准库和头文件位置
+
+源码肯定会用到标准库函数（standard library）和头文件（header）。它们可以存放在系统的任意目录中，编译器实际上没办法自动检测它们的位置，只有通过配置文件才能知道。
+
+编译的第二步，就是 _从配置文件中获得标准库和头文件的位置，配置文件会列出几个目录，编译器按顺序在目录下寻找目标。_
+
+** 第三步：确定依赖关系
+
+大型项目的源码文件之间往往存在依赖关系，编译器需要确定编译的先后顺序。假定 A 文件依赖于 B 文件，编译器应该保证做到：
+
+- 在 B 文件编译完成后，才开始编译 A 文件。
+- 当 B 文件发生变化时，A 文件会被重新编译。
+
+编译顺序保存在 =makefile= 文件中，里面列出文件编译的先后顺序。而 _=makefile= 文件由 =configure= 脚本运行生成，所以 =configure= 必须首先运行。_
+
+** 第四步：预编译（precompilation）
+
+在确定依赖关系的同时，编译器也确定了编译时会用到哪些头文件。不同的源码文件，可能引用同一个头文件（比如 =stdio.h= ）。编译时，头文件也必须一起编译。 _为节省时间，编译器会在编译源码之前，先编译头文件。这保证了头文件只需编译一次，_ 不必每次用到的时候，都重新编译了。
+
+不是头文件的所有内容都会被预编译，用来声明宏的 =#define= 命令，就不会被预编译。
+
+** 第五步：预处理（preprocessing）
+
+预编译完成后，编译器就开始 _替换源码中的头文件和宏，插入头文件预编译后的结果，_ 编译器在这一步还会移除注释。以头文件 =stdio.h= 为例，替换后的源码：
+
+#+BEGIN_SRC c
+extern int fputs(const char *, FILE *);
+extern FILE *stdout;
+...
+
+int main(void)
+{
+    fputs("Hello, world!\n", stdout);
+    return 0;
+}
+#+END_SRC
+
+这一步称为「预处理」（preprocessing）。
+
+** 第六步：编译（compilation）
+
+预处理之后，编译器就开始生成机器码。对于某些编译器来说，还存在一个中间步骤，会先把源码转为汇编码（assembly），再把汇编码转为机器码。转码后的文件称为 _对象文件（object file）_ 。
+
+#+CAPTION: 示例源码转换成的汇编码：
+#+BEGIN_SRC c
+    .file   "test.c"
+    .section    .rodata
+.LC0:
+    .string "Hello, world!\n"
+    .text
+    .globl  main
+    .type   main, @function
+main:
+.LFB0:
+    .cfi_startproc
+    pushq   %rbp
+    .cfi_def_cfa_offset 16
+    .cfi_offset 6, -16
+    movq    %rsp, %rbp
+    .cfi_def_cfa_register 6
+    movq    stdout(%rip), %rax
+    movq    %rax, %rcx
+    movl    $14, %edx
+    movl    $1, %esi
+    movl    $.LC0, %edi
+    call    fwrite
+    movl    $0, %eax
+    popq    %rbp
+    .cfi_def_cfa 7, 8
+    ret
+    .cfi_endproc
+.LFE0:
+    .size   main, .-main
+    .ident  "GCC: (Debian 4.9.1-19) 4.9.1"
+    .section    .note.GNU-stack,"",@progbits
+#+END_SRC
+** 第七步：链接（linking）
+
+对象文件还不能运行，必须进一步转成可执行文件。仔细看上一步的转码结果，会发现其中引用了 =stdout= 函数和 =fwrite= 函，也就是说，程序要正常运行，还必须有 =stdout= 和 =fwrite= 这两个函数的代码，它们是由 C 语言的标准库提供的。
+
+编译器的下一步工作，就是 _把外部函数的代码（通常是后缀名为 =.lib= 和 =.a= 的文件），添加到可执行文件中，这一步操作叫做链接（linking）。_ 这种 _通过拷贝，将外部函数库添加到可执行文件的方式，叫做静态链接（static linking），_ 后文会提到还有动态链接（dynamic linking）。
+
+_=make= 命令的作用是从预编译开始，一直到完成链接。_
+
+** 第八步：安装（installation）
+
+_链接是在内存中进行的，编译器在内存中生成了可执行文件。下一步是将可执行文件保存到用户事先指定的安装目录，还必须完成创建目录、保存文件、设置权限等步骤。_ 整个的保存过程称为「安装」（installation）。
+
+** 第九步：操作系统连接
+
+可执行文件安装后，必须以某种方式通知操作系统，让其知道可以使用这个程序了。比如，安装了文本阅读程序，往往希望双击 =.txt= 文件，该程序就会自动运行。这要求在操作系统中登记这个程序的元数据：文件名、文件描述、关联后缀名等等。
+
+Linux 系统中，这些信息通常保存在 =/usr/share/applications= 目录下的 =.desktop= 文件中。在 Windows 操作系统中，还需要在 Start 启动菜单中建立一个快捷方式。这些操作就叫做「操作系统连接」。
+
+_=make install= 命令完成「安装」和「操作系统连接」这两步。_
+
+** 第十步：生成安装包
+
+源码编译的整个过程已经基本完成了。但是只有很少一部分用户，愿意从头到尾进行一遍这个过程，大部分用户要的是一个二进制的可执行程序，立刻就能运行。这就要求开发者， _将上一步生成的可执行文件，做成可以分发的安装包。_ 所以，编译器还必须有生成安装包的功能。 _通常是将可执行文件（连带相关的数据文件），以某种目录结构，保存成压缩文件包，交给用户使用。_
+
+** 第十一步：动态链接（dynamic linking）
+
+正常情况下，到这一步，程序已经可以运行了。至于运行期间（runtime）发生的事情，与编译器无关。但是，开发者可以 _在编译阶段选择可执行文件链接外部函数库的方式，静态链接（编译时链接），或动态链接（运行时链接）。_
+
+_静态链接是把外部函数库拷贝到可执行文件中，_ 这样做的好处是， _适用范围广，不用担心用户机器缺少某个库文件；缺点是安装包会比较大，而且多个应用程序之间无法共享库文件。_
+
+_动态链接是指外部函数库不进入安装包，只在运行时动态引用。_ 好处是 _安装包会比较小，多个应用程序可以共享库文件；缺点是用户必须事先安装好库文件，而且版本和安装位置都必须符合要求，否则就不能正常运行。_
+
+现实中，大部分软件采用动态链接，共享库文件。这种 _动态共享的库文件，Linux 平台是后缀名为 =.so= 的文件，Windows 平台是 =.dll= 文件，_ Mac 平台是 =.dylib= 文件。
+* Make 命令
+
+[[http://www.ruanyifeng.com/blog/2015/02/make.html][Source]]
+
+由代码生成可执行文件的过程，叫做编译（compile）；编译的具体顺序和步骤，叫做构建（build）。[[https://en.wikipedia.org/wiki/Make_%28software%29][Make]] 是最常用的构建工具，诞生于 1977 年，主要用于 C 语言的项目，但实际上 _任何「某个文件有变化，就需要重新构建」的项目，都可以用 Make 构建。_
+
+** 概念
+
+Make 的意思是「做出」某个文件。
+
+#+BEGIN_SRC sh
+$ make a.txt
+#+END_SRC
+
+但是 Make 命令本身并不知道如何「做出」 =a.txt= ，需要有人告诉它，如何调用其他命令完成这个目标。Make 只是一个根据指定的 Shell 命令进行构建的工具，它的规则很简单： _需要构建的文件，依赖的源文件，当源文件改变时，如何重新构建。_
+
+** 规则
+
+#+CAPTION: 假设文件 =a.txt= 依赖于 =b.txt= 和 =c.txt= ，是两个文件连接的产物，Make 规则：
+#+BEGIN_SRC sh
+a.txt: b.txt c.txt
+    cat b.txt c.txt > a.txt
+#+END_SRC
+
+这条规则分为两步：
+
+1. 确认 =b.txt= 和 =c.txt= 已经存在。
+2. 使用 =cat= 将这两个文件合并，输出为新文件。
+
+** Makefile
+
+Make 命令的规则都写在 Makefile（ 默认为 =makefile= ）中，Make 命令依赖 Makefile 进行构建。
+
+#+CAPTION: Makefile 可以用命令行参数指定为其他文件名：
+#+BEGIN_SRC sh
+$ make -f rules.txt
+$ make --file=rules.txt
+#+END_SRC
+
+** Makefile 规则
+
+Makefile 文件由一系列规则构成，每条规则的形式如下：
+
+#+BEGIN_SRC code
+<target>: <prerequisites>
+    <commands>
+#+END_SRC
+
+每条规则明确两件事：构建目标的前置条件是什么，以及如何构建。目标是必需的，不可省略，前置条件和命令可选，但是两者之中必须至少存在一个。
+
+-----
+
+如果 Make 命令没有指定目标，默认会执行 Makefile 的第一个目标。
+
+*** 目标
+
+目标通常是文件名，表示 Make 命令所要构建的对象。目标可以是一个或多个文件名，之间用空格分隔。
+
+*** 伪目标
+
+#+CAPTION: 目标还可以是某个操作的名字，这称为「伪目标」（phony target）：
+#+BEGIN_SRC sh
+clean:
+    rm *.o
+#+END_SRC
+
+如果当前目录正好有一个文件 =clean= ，那么这个命令不会执行，因为 Make 发现 =clean= 已经存在，认为没有必要重新构建。
+
+#+CAPTION: 为避免这种情况，可以显式声明 =clean= 是伪目标：
+#+BEGIN_SRC sh
+.PHONY: clean
+clean:
+    rm *.o
+#+END_SRC
+
+其他的内置目标名：[[https://www.gnu.org/software/make/manual/html_node/Special-Targets.html#Special-Targets][Special Built-in Target Names]]
+
+*** 前置条件
+
+前置条件通常是一组文件名，之间用空格分隔。它指定了 _目标需要重新构建的判断标准：当一个前置文件不存在，或者有过修改（比较前置条件与目标的修改时间戳）时，_ 目标就需要重新构建，否则， Make 命令不执行任何操作，目标也不会重新生成。
+
+#+CAPTION: 如果前置条件不存在，通常需要另一条规则来生成前置条件：
+#+BEGIN_SRC sh
+result.txt: source.txt
+    cp source.txt result.txt
+
+source.txt:
+    echo "Hello world" > source.txt
+#+END_SRC
+
+#+CAPTION: 使用命令为空的伪目标一次生成多个文件：
+#+BEGIN_SRC code
+source: file_1 file_2 file_3
+#+END_SRC
+
+*** 命令
+
+命令表示如何更新目标文件，由一行或多行 Shell 命令组成，运行结果通常是生成目标文件。
+
+#+CAPTION: 命令之前必须有一个 tab 字符，可以通过内置变量进行修改：
+#+BEGIN_SRC sh
+.RECIPEPREFIX = >
+all:
+> echo Hello, world
+#+END_SRC
+
+-----
+
+#+CAPTION: 每行命令默认在一个单独的 Shell 中执行，这些 Shell 之间没有继承关系：
+#+BEGIN_SRC sh
+var-lost:
+    export foo=bar
+    echo "foo=[$$foo]" # 取不到 foo 的值
+#+END_SRC
+
+#+CAPTION: 解决办法一：将两行命令写在一行，中间用分号分隔：
+#+BEGIN_SRC sh
+var-kept:
+    export foo=bar; echo "foo=[$$foo]"
+#+END_SRC
+
+#+CAPTION: 解决办法二：换行符前加反斜杠：
+#+BEGIN_SRC sh
+var-kept:
+    export foo=bar; \
+    echo "foo=[$$foo]"
+#+END_SRC
+
+#+CAPTION: 解决办法三：使用 =.ONESHELL:= 命令：
+#+BEGIN_SRC sh
+.ONESHELL:
+var-kept:
+    export foo=bar; 
+    echo "foo=[$$foo]"
+#+END_SRC
+
+** Makefile 语法
+*** 注释
+
+#+BEGIN_SRC sh
+# Comment
+result.txt: source.txt
+    cp source.txt result.txt # Comment
+#+END_SRC
+
+*** 输出
+
+#+CAPTION: Make 命令默认会在执行前打印每条命令，称为回声（echoing）：
+#+BEGIN_SRC sh
+target:
+    # Comment
+
+$ make target
+# Comment
+#+END_SRC
+
+#+CAPTION: 使用 =@= 关闭回声：
+#+BEGIN_SRC sh
+target:
+    @# Comment
+#+END_SRC
+
+#+CAPTION: 由于在构建过程中，需要了解当前执行的命令，所以通常只在注释和 =echo= 命令前面加 =@= ：
+#+BEGIN_SRC sh
+target:
+    @# Comment
+    @echo TODO
+#+END_SRC
+
+*** 模式匹配
+
+Make 命令允许对文件名进行匹配，使用匹配符 =%= 可以使大量同类型的文件只用一条规则就完成构建。
+
+#+CAPTION: 假设需要将 =f1.c= 和 =f2.c= 两个源文件编译为对象文件：
+#+BEGIN_SRC sh
+%.o: %.c
+# 等同于
+f1.o: f1.c
+f2.o: f2.c
+#+END_SRC
+
+*** 变量
+
+Makefile 允许使用自定义变量，语法为 =$(<var>)= 。
+
+#+CAPTION: 示例：
+#+BEGIN_SRC sh
+txt = Hello World
+target:
+    @echo $(txt)
+#+END_SRC
+
+#+CAPTION: 使用 Shell 变量名需要两个 =$= ，因为 Make 命令会对 =$= 转义：
+#+BEGIN_SRC sh
+target:
+    @echo $$HOME
+#+END_SRC
+
+#+CAPTION: 变量的值可能指向另一个变量：
+#+BEGIN_SRC sh
+v1 = $(v2)
+#+END_SRC
+
+这会产生一个问题， =v1= 的值是在定义时扩展（静态扩展），还是在运行时扩展（动态扩展）？如果 =v2= 的值是动态的，这两种扩展方式的结果不同。为了解决类似问题，Makefile 提供了 4 个赋值运算符，它们的区别：[[http://stackoverflow.com/questions/448910/makefile-variable-assignment][Makefile variable assignment]]
+
+#+BEGIN_SRC sh
+VARIABLE = value  # 执行时扩展，允许递归扩展
+VARIABLE := value # 定义时扩展
+VARIABLE ?= value # 只有变量为空时才赋值
+VARIABLE += value # 将值追加到变量的末尾
+#+END_SRC
+
+*** 内置变量
+
+Make 命令提供一系列内置变量，比如， =$(CC)= 指向当前使用的编译器， =$(MAKE)= 指向当前使用的 Make 工具。这主要是为了跨平台的兼容性，详细的内置变量清单：[[https://www.gnu.org/software/make/manual/html_node/Implicit-Variables.html][Variables Used by Implicit Rules]] 。
+
+#+BEGIN_SRC sh
+output:
+    $(CC) -o output input.c
+#+END_SRC
+
+*** 自动变量
+
+Make 命令还提供一些自动变量，它们的值与当前规则有关。所有的自动变量清单：[[https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html][Automatic Variables]] 。
+
+| =$@=    | 目标                   |
+|---------+------------------------|
+| =$(@D)= | 目标的目录名           |
+|---------+------------------------|
+| =$(@F)= | 目标的文件名           |
+|---------+------------------------|
+| =$^=    | 所有前置条件           |
+|---------+------------------------|
+| =$<=    | 第一个前置条件         |
+|---------+------------------------|
+| =$(<D)= | 第一个前置条件的目录名 |
+|---------+------------------------|
+| =$(<F)= | 第一个前置条件的文件名 |
+|---------+------------------------|
+| =$?=    | 比目标更新的前置条件   |
+|---------+------------------------|
+| =$*=    | =%= 匹配的部分         |
+
+#+BEGIN_SRC sh
+dest/%.txt: src/%.txt
+    @[ -d dest ] || mkdir dest # 如果 dest 目录不存在则新建
+    cp $< $@                   # 将 src 目录下的 .txt 文件拷贝到 dest 目录
+#+END_SRC
+
+**** =$@=
+
+#+BEGIN_SRC sh
+a.txt:
+    touch $@ # 等价于 touch a.txt
+#+END_SRC
+
+**** =$(@D)= =$(@F)=
+
+#+BEGIN_SRC sh
+src/input.c: # $(@D) = src
+             # $(@F) = input.c
+#+END_SRC
+
+**** =$<=
+
+#+BEGIN_SRC sh
+a.txt: b.txt c.txt
+    cp $< $@ # 等价于 cp b.txt a.txt
+#+END_SRC
+
+**** =$*=
+
+#+BEGIN_SRC sh
+%.o: %.c
+    cp $*.c $*.o # 对于 f1.o，$* 表示 f1
+#+END_SRC
+
+*** 判断
+
+#+CAPTION: 根据编译器指定不同的库文件
+#+BEGIN_SRC sh
+ifeq ($(CC), gcc)
+  libs = $(libs_for_gcc)
+else
+  libs = $(normal_libs)
+endif
+#+END_SRC
+
+*** 循环
+
+#+BEGIN_SRC sh
+LIST = one two three
+all:
+    for i in $(LIST); do \
+        echo $$i; \
+    done
+#+END_SRC
+
+*** 函数
+
+#+CAPTION: Makefile 可以使用函数：
+#+BEGIN_SRC sh
+$(<func> <args>)
+${<func> <args>}
+#+END_SRC
+
+内置函数列表：[[https://www.gnu.org/software/make/manual/html_node/Functions.html][Functions for Transforming Text]]
+
+| =shell=    | 执行 Shell 命令  |
+|------------+------------------|
+| =wildcard= | 替换 Bash 通配符 |
+|------------+------------------|
+| =subst=    | 文本替换         |
+|------------+------------------|
+| =patsubst= | 模式匹配替换     |
+
+**** =shell=
+
+#+BEGIN_SRC sh
+srcfiles := $(shell echo src/{00..99}.txt)
+#+END_SRC
+
+**** =wildcard=
+
+#+BEGIN_SRC sh
+srcfiles := $(wildcard src/*.txt)
+#+END_SRC
+
+**** =subst=
+
+#+BEGIN_SRC sh
+$(subst <from>,<to>,<text>)
+#+END_SRC
+
+#+CAPTION: 示例 1
+#+BEGIN_SRC sh
+$(subst ee,EE,feet on the street) # fEEt on the strEEt
+#+END_SRC
+
+#+CAPTION: 示例 2
+#+BEGIN_SRC sh
+comma := ,
+empty :=                   # 空变量
+space := $(empty) $(empty) # 用两个空变量作为标识符，中间是一个空格
+foo := a b c
+bar := $(subst $(space),$(comma),$(foo)) # bar = a,b,c
+#+END_SRC
+
+**** =patsubst=
+
+#+BEGIN_SRC sh
+$(patsubst <pattern>,<replace>,<text>)
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC sh
+$(patsubst %.c,%.o,f1.c f2.c) # f1.o f2.o
+#+END_SRC
+
+**** 替换后缀名
+
+实际上是 =patsubst= 的简写形式。
+
+#+BEGIN_SRC sh
+<var>:<from>=<to>
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC sh
+min: $(OUTPUT:.js=.min.js) # 将变量 OUTPUT 中的后缀名 .js 替换为 .min.js
+#+END_SRC
+
+** Makefile 实例
+
+#+CAPTION: 执行多个目标
+#+BEGIN_SRC sh
+.PHONY: cleanall cleanobj cleandiff
+
+cleanall: cleanobj cleandiff
+    rm program
+
+cleanobj:
+    rm *.o
+
+cleandiff:
+    rm *.diff
+#+END_SRC
+
+#+CAPTION: 编译 C 项目
+#+BEGIN_SRC sh
+edit: main.o kbd.o command.o display.o 
+    cc -o edit main.o kbd.o command.o display.o
+
+main.o: main.c defs.h
+    cc -c main.c
+
+kbd.o: kbd.c defs.h command.h
+    cc -c kbd.c
+
+command.o: command.c defs.h command.h
+    cc -c command.c
+
+display.o: display.c defs.h
+    cc -c display.c
+
+clean:
+    rm edit main.o kbd.o command.o display.o
+
+.PHONY: edit clean
+#+END_SRC
+
+** 链接
+
+1. [[https://gist.github.com/isaacs/62a2d1825d04437c6f08][Makefile]]
+1. [[https://www.gnu.org/software/make/manual/make.html][GNU make]]

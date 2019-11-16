@@ -1,0 +1,1459 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Data Structure and Algorithm Analysis C++</title>
+<!-- 2016-06-30 周四 09:50 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ['$', '$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
+
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Data Structure and Algorithm Analysis C++</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Preface</a></li>
+<li><a href="#sec-2">2. Chapter 1: Data Structures and Algorithms</a>
+<ul>
+<li><a href="#sec-2-1">2.1. A Philosophy of Data Structures</a>
+<ul>
+<li><a href="#sec-2-1-1">2.1.1. The Need for Data Structures</a></li>
+<li><a href="#sec-2-1-2">2.1.2. Costs and Benefits</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-2">2.2. Abstract Data Types and Data Structures</a></li>
+<li><a href="#sec-2-3">2.3. Design Patterns</a>
+<ul>
+<li><a href="#sec-2-3-1">2.3.1. Flyweight</a></li>
+<li><a href="#sec-2-3-2">2.3.2. Visitor</a></li>
+<li><a href="#sec-2-3-3">2.3.3. Composite</a></li>
+<li><a href="#sec-2-3-4">2.3.4. Strategy</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-4">2.4. Problems, Algorithms, and Programs</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. Chapter 2: Mathematical Preliminaries</a>
+<ul>
+<li><a href="#sec-3-1">3.1. Sets and Relations</a></li>
+<li><a href="#sec-3-2">3.2. Miscellaneous Notation</a></li>
+<li><a href="#sec-3-3">3.3. Logarithms</a></li>
+<li><a href="#sec-3-4">3.4. Summations and Recurrences</a></li>
+<li><a href="#sec-3-5">3.5. Recursion</a></li>
+<li><a href="#sec-3-6">3.6. Mathematical Proof Techniques</a>
+<ul>
+<li><a href="#sec-3-6-1">3.6.1. Direct Proof</a></li>
+<li><a href="#sec-3-6-2">3.6.2. Proof by Contradiction</a></li>
+<li><a href="#sec-3-6-3">3.6.3. Proof by Mathematical Induction</a></li>
+</ul>
+</li>
+<li><a href="#sec-3-7">3.7. Estimation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Preface</h2>
+<div class="outline-text-2" id="text-1">
+<blockquote>
+<p>
+Why must programs be efficient when new computers are faster every year? The reason is that our ambitions grow with our capabilities. &#x2026; the modern revolution in computing power and storage capability merely raises the efficiency stakes as we attempt more complex tasks.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The quest for program efficiency need not and should not conflict with sound design and clear coding. Creating efficient programs &#x2026; is based on good organization of information and good algorithms. &#x2026; Generality in design can and should be achieved without sacrificing performance.
+</p>
+</blockquote>
+
+<hr  />
+
+<p>
+<b>Principle 1</b>: Each data structure and each algorithm has costs and benefits.
+</p>
+
+<p>
+To assess costs and benefits requires:
+</p>
+<ul class="org-ul">
+<li>understanding of the principles of algorithm analysis
+</li>
+<li>appreciation for the significant effects of the physical medium employed, e.g. disk versus main memoryh
+</li>
+</ul>
+
+<p>
+<b>Principle 2</b>: Programmers face tradeoff issues regularly in all phases of software design and implementation.
+</p>
+
+<p>
+<b>Principle 3</b>: Programmers should know enough about common practice to avoid reinventing the wheel.
+</p>
+
+<p>
+Common practice:
+</p>
+<ul class="org-ul">
+<li>commonly used data structures
+</li>
+<li>related algorithms
+</li>
+<li>frequently encountered design patterns
+</li>
+</ul>
+
+<p>
+<b>Principle 4</b>: Data structures follow needs. Programmers must learn to assess application needs first, then find a data structure with matching capabilities.
+</p>
+
+<hr  />
+
+<blockquote>
+<p>
+&#x2026; features such as classes, private class members, constructors, and destructors &#x2026; support the crucial concept of separating logical design, as embodied in the abstract data type, from physical implementation as embodied in the data structure.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Chapter 1: Data Structures and Algorithms</h2>
+<div class="outline-text-2" id="text-2">
+<blockquote>
+<p>
+(To solve problems,) it is not enough to have the necessary information. We must organize that information in a way that allows us to find the answers in time to satisfy our needs. &#x2026; The primarypurpose of most computer programs is not to perform calculations, but to store and retrieve information — usually as fast as possible.
+</p>
+</blockquote>
+
+<p>
+2 goals of computer program design: to design an algorithm that
+</p>
+<ul class="org-ul">
+<li>is easy to understand, code, and debug
+</li>
+<li>makes efficient use of the computer's resources
+</li>
+</ul>
+
+<p>
+Asymptotic analysis（渐进分析）
+</p>
+<ul class="org-ul">
+<li>to evaluate the efficiency of an algorithm or computer program
+</li>
+<li>to measure the inherent difficulty of a problem
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> A Philosophy of Data Structures</h3>
+<div class="outline-text-3" id="text-2-1">
+</div><div id="outline-container-sec-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1"><span class="section-number-4">2.1.1</span> The Need for Data Structures</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<blockquote>
+<p>
+As we develop more powerful computers, our history so far has always been to use that additional computing power to tackle more complex problems, be it in the form of more sophisticated user interfaces, bigger problem sizes, or new problems previously deemed computationally infeasible.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+As tasks become more complex, they become less like our everyday experience.
+</p>
+</blockquote>
+
+<p>
+In the most general sense, a data structure is:
+</p>
+<ul class="org-ul">
+<li>data representation
+</li>
+<li>its associated operations
+</li>
+</ul>
+
+<blockquote>
+<p>
+A solution is said to be <b>efficient</b> if it solves the problem within the required <b>resource constraints</b>. &#x2026; Most often, cost is measured in terms of one key resource such as <b>time</b>, with the implied assumption that the solution meets the other resource constraints.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Only by first analyzing the problem to determine the performance goals that must be achieved can there be any hope of selecting the right data structure for the job.
+</p>
+</blockquote>
+
+<p>
+Steps to select a data structure:
+</p>
+<ol class="org-ol">
+<li>Analyze the problem to determine the basic operations. <br  />
+   Resource constraints on certain key operations, such as search, inserting data records, and deleting data records, normally drive the data structure selection process.
+</li>
+<li>Quantify the resource constraints for each operation.
+</li>
+<li>Select the data structure that best meets these requirements.
+</li>
+</ol>
+
+<p>
+Issues relating to the relative importance of the basic operations are addressed by:
+</p>
+
+<ol class="org-ol">
+<li>Are all data items inserted at the beginning, or are insertions interspersed with other operations? <br  />
+   Static applications (where the data are loaded at the beginning and never change) typically require only simpler data structures to get an efficient implementation than do dynamic applications.
+</li>
+
+<li>Can data items be deleted? <br  />
+   If so, this will probably make the implementation more complicated.
+</li>
+
+<li>Are all data items processed in some well-defined order, or is search for specific data items allowed? <br  />
+   "Random access" search generally requires more complex data structures.
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-sec-2-1-2" class="outline-4">
+<h4 id="sec-2-1-2"><span class="section-number-4">2.1.2</span> Costs and Benefits</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<p>
+A data structure requires a certain amount of:
+</p>
+<ul class="org-ul">
+<li>space for each data item it stores
+</li>
+<li>time to perform a single basic operation
+</li>
+<li>programming effort
+</li>
+</ul>
+
+<blockquote>
+<p>
+The typical customer opens and closes accounts far less often than he or she accesses the account. Customers are willing to wait many minutes while accounts are created or deleted but are typically not willing to wait more than a brief time for individual account transactions such as a deposit or withdrawal. 
+</p>
+
+<p>
+Considering the choice of data structure &#x2026; little concern for the cost of deletion, but is highly efficient for search and moderately efficient for insertion. Records are accessible by unique account number (<b>exact-match query</b>). One data structure that meets these requirements is the <b>hash table</b>.
+</p>
+
+<p>
+The hash table can be reorganized periodically to restore the system to peak efficiency. Such reorganization can occur offline.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Hash table cannot perform efficient <b>range queries</b>. <b>B<sup>+</sup>-tree</b> supports large databases, insertion and deletion of data records, and range queries. However, a simple <b>linear index</b> would be more appropriate if the database is created once, and then never changed.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Abstract Data Types and Data Structures</h3>
+<div class="outline-text-3" id="text-2-2">
+<dl class="org-dl">
+<dt> Type </dt><dd>A collection of values.
+</dd>
+
+<dt> Data item </dt><dd>A piece of information or record whose value is drawn from a type. <br  />
+               A data item is a member of a type.
+</dd>
+
+<dt> Data member </dt><dd>A variable that defines the space required by a data item.
+</dd>
+
+<dt> Data type </dt><dd>A type together with a collection of operations to manipulate the type.
+</dd>
+</dl>
+
+<p>
+Data types have both a logical and a physical form.
+</p>
+<ul class="org-ul">
+<li>The definition of the data type in terms of an ADT is its logical form.
+</li>
+<li>The implementation of the data type as a data structure is its physical form. 
+</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="../images/data_structure_and_algorithm_analysis_c++/01.png" alt="01.png" />
+</p>
+<p><span class="figure-number">Figure 1:</span> The relationship between data items, abstract data types, and data structures.</p>
+</div>
+
+<hr  />
+
+<dl class="org-dl">
+<dt> Abstract data type (ADT) </dt><dd>Realization of a data type as a software component. <br  />
+                              The interface of the ADT is defined in terms of a type and a set of operations on that type.
+</dd>
+</dl>
+
+<p>
+An ADT does not specify how the data type is implemented. <br  />
+An ADT might be supported by more than one implementation.
+</p>
+
+<dl class="org-dl">
+<dt> Encapsulation </dt><dd>Hiding ADT implementation details from the user and protect it from outside access.
+</dd>
+
+<dt> Data structure </dt><dd>Implementation for ADT. <br  />
+                    Often refers to data stored in a computer's main memory.
+</dd>
+
+<dt> File structure </dt><dd>Often refers to the organization of data on peripheral storage.
+</dd>
+</dl>
+
+<blockquote>
+<p>
+Most drivers can operate many different cars because the ADT presents a uniform method of operation that does not require the driver to understand the specifics of any particular engine or drive design.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+The concept of an ADT is one instance of an important principle: managing complexity through abstraction.
+</p>
+
+<p>
+Humans deal with complexity by assigning a label to an assembly of objects or concepts and then manipulating the label in place of the assembly. Cognitive psychologists call such a label a <b>metaphor</b>. Labels allows us to focus on important issues while ignoring unnecessary details.
+</p>
+</blockquote>
+
+<hr  />
+
+<dl class="org-dl">
+<dt> Class </dt><dd>An ADT and its implementation.
+</dd>
+
+<dt> Object </dt><dd>An instance of a class. <br  />
+            Created and takes up storage during the execution of a computer program.
+</dd>
+</dl>
+
+<hr  />
+
+<p>
+List implementations
+</p>
+<ul class="org-ul">
+<li>linked list
+</li>
+<li>array-based list
+</li>
+</ul>
+
+
+<dl class="org-dl">
+<dt> Array </dt><dd>A contiguous block of memory locations, where each memory location stores one fixed-length data item. <br  />
+           A logical data type composed of a collection of data items, with each data item identified by an index number.
+</dd>
+</dl>
+
+<hr  />
+
+<p>
+Large disk-based database implementations
+</p>
+<ul class="org-ul">
+<li>hashing
+<ul class="org-ul">
+<li>more efficient for exact-match queries
+</li>
+</ul>
+</li>
+<li>B<sup>+</sup>-tree
+<ul class="org-ul">
+<li>more efficient for range queries
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Design Patterns</h3>
+<div class="outline-text-3" id="text-2-3">
+<dl class="org-dl">
+<dt> Design pattern </dt><dd>Abstractions describing the design of programs, i.e. the interactions of objects and classes. <br  />
+                    Higher level abstractions than ADTs.
+</dd>
+</dl>
+
+<blockquote>
+<p>
+A design pattern embodies and generalizes important design concepts for a recurring problem.
+</p>
+
+<p>
+A primary goal of design patterns is to quickly transfer the knowledge gained by expert designers to newer programmers. Another goal is to allow for efficient communication between programmers. 
+</p>
+</blockquote>
+</div>
+
+<div id="outline-container-sec-2-3-1" class="outline-4">
+<h4 id="sec-2-3-1"><span class="section-number-4">2.3.1</span> Flyweight</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<p>
+When there is duplication of the same information, to reduce memory cost by sharing space.
+</p>
+
+<blockquote>
+<p>
+We do not want to create a separate "C" object everywhere in the document that a "C" appears. The solution is to allocate a single copy of the shared representation for "C" objects. The various instances of references to a specific form of "C" are called <b>flyweights</b>.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-2-3-2" class="outline-4">
+<h4 id="sec-2-3-2"><span class="section-number-4">2.3.2</span> Visitor</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<p>
+A generic traversal function, and pass in the activity to be performed at each node.
+</p>
+
+<blockquote>
+<p>
+The visitor design pattern is focused on encapsulating an activity that will be performed on all members of a collection so that completely different activities can be substituted within a generic method that accesses all of the collection members.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-2-3-3" class="outline-4">
+<h4 id="sec-2-3-3"><span class="section-number-4">2.3.3</span> Composite</h4>
+<div class="outline-text-4" id="text-2-3-3">
+<p>
+To deal with the relationship between a collection of actions and a hierarchy of object types.
+</p>
+
+<p>
+The procedural design approach
+</p>
+<ul class="org-ul">
+<li>each action method traverses through the collection of objects
+</li>
+<li>adding a new object type requires that we modify each activity
+</li>
+</ul>
+
+<p>
+Composite design pattern
+</p>
+<ul class="org-ul">
+<li>bury the functional activity in the subclasses
+</li>
+<li>each object subclass in the hierarchy embody the action for each of the various activities that might be performed
+</li>
+<li>adding a new activity requires that we modify each subclass
+</li>
+</ul>
+
+<blockquote>
+<p>
+The composite design pattern is about whether to give control of the traversal process to the nodes of the tree or to the tree itself.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-sec-2-3-4" class="outline-4">
+<h4 id="sec-2-3-4"><span class="section-number-4">2.3.4</span> Strategy</h4>
+<div class="outline-text-4" id="text-2-3-4">
+<p>
+To encapsulate and make interchangeable a set of alternative actions.
+</p>
+
+<blockquote>
+<p>
+The strategy design pattern is focused on encapsulating an activity that is part of a larger process, so that different ways of performing that activity can be substituted.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Problems, Algorithms, and Programs</h3>
+<div class="outline-text-3" id="text-2-4">
+<dl class="org-dl">
+<dt> Problem </dt><dd>A task to be performed. <br  />
+             A function or a mapping of inputs to outputs.
+</dd>
+</dl>
+
+<blockquote>
+<p>
+The solution method should be developed only after the problem is precisely defined and thoroughly understood.
+</p>
+
+<p>
+A problem definition should include constraints, whether stated or implied, on the resources that may be consumed by any acceptable solution.
+</p>
+</blockquote>
+
+<dl class="org-dl">
+<dt> Function (in the mathematical sense) </dt><dd>A matching between inputs (the domain) and outputs (the range).
+</dd>
+
+<dt> Parameter (of the function) </dt><dd>The values making up an input.
+</dd>
+
+<dt> Instance (of the problem) </dt><dd>A specific selection of values for the parameters.
+</dd>
+</dl>
+
+<blockquote>
+<p>
+For all computer programs, the output is completely determined by the program's full set of inputs. Even a "random number generator" is completely determined by its inputs ( some random number generating systems appear to get around this by accepting a random input from a physical process beyond the user's control).
+</p>
+</blockquote>
+
+<hr  />
+
+<dl class="org-dl">
+<dt> Algorithm </dt><dd>A method or a process followed to solve a problem.
+</dd>
+</dl>
+
+<blockquote>
+<p>
+A problem can be solved by many different algorithms. A given algorithm solves only one problem.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+One solution might be more efficient than another solution for a specific variation of the problem, or for a specific class of inputs to the problem.
+</p>
+</blockquote>
+
+<p>
+Properties of an algorithm
+</p>
+<ul class="org-ul">
+<li>It is composed of a series of concrete steps.
+<ul class="org-ul">
+<li>Each step must be understood and doable (in a finite amount of time).
+</li>
+</ul>
+</li>
+<li>There can be no ambiguity as to which step will be performed next.
+</li>
+<li>It must be composed of a finite number of steps.
+</li>
+<li>It must terminate.
+</li>
+</ul>
+
+<blockquote>
+<p>
+An algorithm must provide sufficient detail that it can be converted into a program when needed.
+</p>
+</blockquote>
+
+<hr  />
+
+<dl class="org-dl">
+<dt> Program </dt><dd>An instance, or instantiation of an algorithm in a programming language.
+</dd>
+</dl>
+
+<blockquote>
+<p>
+The requirement that an algorithm must terminate means that not all computer programs meet the technical definition of an algorithm. Your operating system is one such program.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Chapter 2: Mathematical Preliminaries</h2>
+<div class="outline-text-2" id="text-3">
+<blockquote>
+<p>
+Estimation is not a mathematical technique, but rather a general engineering skill.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Any proposed solution whose estimated resource requirements fall well outside the problem's resource constraints can be discarded immediately, allowing time for greater analysis of more promising solutions.
+</p>
+</blockquote>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Sets and Relations</h3>
+<div class="outline-text-3" id="text-3-1">
+<dl class="org-dl">
+<dt> Set </dt><dd>A collection of distinguishable members or elements. <br  />
+         The members are typically drawn from some larger population known as the <b>base type</b>. <br  />
+         There is no concept of duplication in a set. Each value from the base type is either in the set or not in the set.
+</dd>
+
+<dt> Power set </dt><dd>The powerset of a set \(S\) is the set of all possible subsets for \(S\). <br  />
+               Consider $S = \{a, b, c\}$. The powerset of \(S\) is $\{\varnothing, \{a\}, \{b\}, \{c\}, \{a, b\}, \{a, c\}, \{b, c\}, \{a, b, c\}\}$.
+</dd>
+
+<dt> Bag </dt><dd>A collection of elements with no order (like a set), but with duplicate-valued elements. <br  />
+         e.g., bag $[3, 4, 5, 4]$ is distinct from bag $[3, 4, 5]$, while set $\{3, 4, 5, 4\}$ is indistinguishable from set $\{3, 4, 5\}$.
+</dd>
+
+<dt> Sequence (or tuple, vector) </dt><dd>A collection of elements with an order, and which may contain duplicate-valued elements. <br  />
+                                 e.g., sequence $\langle 3, 5, 4, 4 \rangle$ is distinct from sequence $\langle 3, 4, 5, 4 \rangle$
+</dd>
+</dl>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">Duplication</th>
+<th scope="col" class="left">Order</th>
+<th scope="col" class="left">Presentation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">Set</td>
+<td class="left">No</td>
+<td class="left">No</td>
+<td class="left">$\{3, 4, 5\}$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Bag</td>
+<td class="left">Yes</td>
+<td class="left">No</td>
+<td class="left">$[3, 4, 5, 4]$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Sequence</td>
+<td class="left">Yes</td>
+<td class="left">Yes</td>
+<td class="left">$\langle 3, 4, 5, 4 \rangle$</td>
+</tr>
+</tbody>
+</table>
+
+<hr  />
+
+<dl class="org-dl">
+<dt> Relation </dt><dd>A relation \(R\) over set \(S\) is a set of ordered pairs from \(S\). <br  />
+              e.g., $S = \{a, b, c\}$, then $\{ \langle a, c \rangle, \langle b, c \rangle, \langle c, b \rangle \}$ is a relation. <br  />
+              If tuple $\langle x, y \rangle$ is in relation \(R\), we may use the infix notation $xRy$.
+</dd>
+</dl>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> Relation types</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">Reflexive</td>
+<td class="left">if $aRa$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Symmetric</td>
+<td class="left">if $aRb$, then $bRa$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Antisymmetric</td>
+<td class="left">if $aRb$ and $bRa$, then $a = b$</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">if $a \neq b$, then either $aRb$ or $bRa$</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">Transitive</td>
+<td class="left">if $aRb$ and $bRc$, then $aRc$</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> Relation examples</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">Reflexive</th>
+<th scope="col" class="left">Symmetric</th>
+<th scope="col" class="left">Antisymmetric</th>
+<th scope="col" class="left">Transitive</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">\(<\)</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">Yes</td>
+<td class="left">Yes</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">$\leqslant$</td>
+<td class="left">Yes</td>
+<td class="left">&#xa0;</td>
+<td class="left">Yes</td>
+<td class="left">Yes</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">$\equiv$ (同余)</td>
+<td class="left">Yes</td>
+<td class="left">Yes</td>
+<td class="left">&#xa0;</td>
+<td class="left">Yes</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">"is sibling of"</td>
+<td class="left">&#xa0;</td>
+<td class="left">Yes</td>
+<td class="left">&#xa0;</td>
+<td class="left">Yes</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">$\subseteq$</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">Yes</td>
+<td class="left">Yes</td>
+</tr>
+</tbody>
+</table>
+
+<dl class="org-dl">
+<dt> Equivalence relation </dt><dd>A reflexive, symmetric, and transitive relation. e.g., $\equiv$ (同余). <br  />
+                          An equivalence relation can be used to partition a set into equivalence classes.
+</dd>
+
+<dt> Partition </dt><dd>A partition of a set \(S\) is a collection of subsets that are disjoint from each other and whose union is \(S\). 
+</dd>
+
+<dt> Partial order </dt><dd>A binary relation is called a partial order if it is antisymmetric and transitive.
+</dd>
+
+<dt> Partially ordered set (or poset) </dt><dd>The set on which the partial order is defined.
+</dd>
+
+<dt> Comparable </dt><dd>Elements \(x\) and \(y\) are comparable under a given relation if either $xRy$ or $yRx$.
+</dd>
+
+<dt> Total order (or linear order) </dt><dd>If every pair of distinct elements in a partial order are comparable. <br  />
+                                   e.g., \(<\) is a total order because, for every pair of integers \(x\) and \(y\) such that $x \neq y$, either $x < y$ or $y < x$.
+e.g., $\subseteq$ is a partial order but not a total order because, sets $\{1, 2\}$ and $\{1, 3\}$ are not comparable.
+</dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Miscellaneous Notation</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Spaces are not placed between the number and the unit abbreviation when a power of two is intended. <br  />
+Spaces are used when a decimal value is intended. <br  />
+e.g., 2000 bits would therefore be written "2 Kb", while "2Kb" represents 2048 bits.
+</p>
+
+<hr  />
+
+<dl class="org-dl">
+<dt> Factorial function </dt><dd>$n!$
+</dd>
+</dl>
+
+<p>
+Computing the factorial function directly is a time-consuming process. <br  />
+Stirling's approximation states that $n! \approx \sqrt{2 \pi n}(\frac{n}{e})^{n}$. <br  />
+Thus $n!$ grows slower than $n^{n}$, but faster than $c^{n}$ for any positive integer constant \(c\).
+</p>
+
+<hr  />
+
+<dl class="org-dl">
+<dt> Permutation </dt><dd>A permutation of a sequence \(S\) is the members of \(S\) arranged in some order.
+</dd>
+</dl>
+
+<div class="org-src-container">
+<label class="org-src-name">A simple C++ function for generating a random permutation</label>
+<pre class="src src-cpp"><span class="org-comment-delimiter">// </span><span class="org-comment">Randomly permute the "n" values of array "A"</span>
+<span class="org-keyword">template</span>&lt;<span class="org-keyword">typename</span> <span class="org-type">E</span>&gt;
+<span class="org-type">void</span> <span class="org-function-name">permute</span>(<span class="org-type">E</span> <span class="org-variable-name">A</span>[], <span class="org-type">int</span> <span class="org-variable-name">n</span>) {
+    <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span>=n; i&gt;0; i--)
+        swap(A, i-1, Random(i));
+}
+</pre>
+</div>
+
+<hr  />
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 3:</span> Logic notations</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">$A \Rightarrow B$</th>
+<th scope="col" class="left">A implies B</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">if A then B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">$A \Leftrightarrow B$</td>
+<td class="left">A if and only if B</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">A is equivalent to B</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">$A \lor B$</td>
+<td class="left">A or B</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">$A \land B$</td>
+<td class="left">A and B</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">$\sim A$ or $\overline{A}$</td>
+<td class="left">not A</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">negation of A</td>
+</tr>
+</tbody>
+</table>
+
+<hr  />
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 4:</span> Floor and ceiling</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">$\lfloor x \rfloor$</th>
+<th scope="col" class="left">floor of \(x\)</th>
+<th scope="col" class="left">$\lfloor -3.4 \rfloor = -4$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">$\lceil x \rceil$</td>
+<td class="left">ceiling of \(x\)</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<hr  />
+
+<dl class="org-dl">
+<dt> Modulus function </dt><dd>$n\ mod\ m$  
+</dd>
+</dl>
+
+<p>
+The most common mathematical definition computes the mod function as $n\ mod\ m = n - m \lfloor n / m \rfloor$, so $-3\ mod\ 5 = 2$.
+</p>
+
+<p>
+On many computers this is done by truncating the resulting fraction, meaning $n\ mod\ m = n − m(trunc(n/m))$, and $-3\ mod\ 5 = -3$.
+</p>
+
+<blockquote>
+<p>
+Many hash systems will perform some computation on a record's key value and then take the result modulo the hash table size. The expectation here would be that the result is a legal index into the hash table, not a negative number.
+</p>
+
+<p>
+Implementers of hash functions must either
+</p>
+<ul class="org-ul">
+<li>insure that the result of the computation is always positive
+</li>
+<li>add the hash table size to the result of the modulo function when that result is negative
+</li>
+</ul>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Logarithms</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+The minimum number of bits needed to represent \(n\) distinct code values is $\lceil \log_2 n \rceil$ bits.
+</p>
+
+<p>
+Logarithms with a base of 2 are most often used because
+</p>
+<ul class="org-ul">
+<li>algorithms most often divide things in half
+</li>
+<li>data structures store codes with binary bits
+</li>
+</ul>
+
+<p>
+For \(n\) and any two constants \(a\) and \(b\), $\log_a n$ and $\log_b n$ differ by the constant factor $\log_b a$, regardless of the value of \(n\).
+$$ \log_b a = \log_b n / \log_a n $$
+So runtime analyses need not be concerned with the base of the logarithm, because this can change the total cost only by a constant factor.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Summations and Recurrences</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+$$\sum\limits_{i=1}^n f(i) = f(1)+f(2)+ \dotsb +f(n)$$
+</p>
+
+<dl class="org-dl">
+<dt> Closed-form solution </dt><dd>To replace it with an algebraic equation with the same value as the summation. <br  />
+                          The process of replacing the summation with its closed-form solution is known as <b>solving</b> the summation.
+</dd>
+</dl>
+
+<p>
+$$\begin{align}
+& \sum\limits_{i=1}^n i = \dfrac{n(n+1)}{2} \\
+& \sum\limits_{i=1}^n i^2 = \dfrac{2n^3 + 3n^2 + n}{6} = \dfrac{n(2n+1)(n+1)}{6} \\
+& \sum\limits_{i=1}^{\log n} n = n \log n \\
+& \sum\limits_{i=0}^\infty a^i = \dfrac{1}{1-a} \ \text{for} \ 0 < a < 1 , \text{special case} \sum\limits_{i=1}^n \frac{1}{2^i} = 1 - \frac{1}{2^n} \\
+& \sum\limits_{i=0}^n a^i = \dfrac{a^{n+1}-1}{a-1} \ \text{for} \ a \neq 1 , \text{special case} \sum\limits_{i=0}^n 2^i = 2^{n+1} - 1 \\
+\text{so} & \sum\limits_{i=0}^{\log n} 2^i = 2^{\log n + 1} - 1 = 2n - 1 \\
+& \sum\limits_{i=1}^n \frac{i}{2^i} = 2 - \dfrac{n+2}{2^n}
+\end{align}$$
+</p>
+
+<dl class="org-dl">
+<dt> Harmonic series (调和级数) </dt><dd>The sum of reciprocals from \(1\) to \(n\), written as $H_n$. <br  />
+                                $H_n$ has a value between $log_e n$ and $log_e n + 1$.
+</dd>
+</dl>
+
+<p>
+$$ H_n = \sum\limits_{i=1}^n \frac{1}{i} \approx \log_e n + \gamma + \frac{1}{2n} $$
+</p>
+
+<p>
+$\gamma$ is Euler's constant and has the value 0.5772&#x2026;
+</p>
+
+<dl class="org-dl">
+<dt> Recurrence relation (递推关系式) </dt><dd>A recurrence relation defines a function by means of an expression that includes one or more instances of itself. <br  />
+                                      The definition contains two parts: the general definition and the base cases.
+</dd>
+</dl>
+
+<p>
+Examples of recurrence relations
+</p>
+<ul class="org-ul">
+<li>Factorial function: $n! = (n - 1)! · n \ \text{for} \ n > 1; \quad 1! = 0! = 1$
+</li>
+<li>Fibonacci sequence: $\text{Fib}(n) = \text{Fib}(n - 1) + \text{Fib}(n - 2) \ \text{for} \ n > 2; \quad \text{Fib}(1) = \text{Fib}(2) = 1$
+</li>
+</ul>
+
+<p>
+We can expand the recurrence to detect some pattern that will permit us to rewrite the recurrence in terms of a summation:
+</p>
+
+<p>
+$$\begin{align}
+\text{T}(n) & = \text{T}(n - 1) + n; \quad \text{T}(1) = 1 \\
+            & = \text{T}(n - 2) + (n - 1) + n \\
+            & = \text{T}(n - (n - 1)) + (n - (n - 2)) + \dotsb + (n - 1) + n \\
+            & = 1 + 2 + \dotsb + (n - 1) + n
+\end{align}$$
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-5" class="outline-3">
+<h3 id="sec-3-5"><span class="section-number-3">3.5</span> Recursion</h3>
+<div class="outline-text-3" id="text-3-5">
+<dl class="org-dl">
+<dt> Recursion </dt><dd>An algorithm is <b>recursive</b> if it calls itself to do part of its work. <br  />
+               The "call to itself" must be on a smaller problem.
+</dd>
+</dl>
+
+<p>
+A recursive algorithm must have two parts:
+</p>
+<ul class="org-ul">
+<li>the <b>base case</b>, which handles a simple input that can be solved without resorting to a recursive call
+</li>
+<li>the recursive part which contains one or more recursive calls to the algorithm where the parameters are in some sense "closer" to the base case
+</li>
+</ul>
+
+<div class="org-src-container">
+<label class="org-src-name">A recursive C++ function to compute the factorial of \(n\)</label>
+<pre class="src src-cpp"><span class="org-type">long</span> <span class="org-function-name">fact</span>(<span class="org-type">int</span> <span class="org-variable-name">n</span>) {        <span class="org-comment-delimiter">// </span><span class="org-comment">Compute n! recursively</span>
+    Assert((n &gt;= 0) &amp;&amp; (n &lt;= 12), <span class="org-string">"Input out of range"</span>); <span class="org-comment-delimiter">// </span><span class="org-comment">Require n &lt;= 12</span>
+    <span class="org-keyword">if</span> (n &lt;= 1) <span class="org-keyword">return</span> 1; <span class="org-comment-delimiter">// </span><span class="org-comment">Base case: return base solution</span>
+    <span class="org-keyword">return</span> n * fact(n-1); <span class="org-comment-delimiter">// </span><span class="org-comment">Recursive call for n &gt; 1</span>
+}
+</pre>
+</div>
+
+<p>
+Recursion solves problems by combining the results of one or more smaller — but similar — subproblems.
+</p>
+
+<blockquote>
+<p>
+Recursion has no counterpart in everyday, physical-world problem solving.
+</p>
+
+<p>
+To use recursion effectively, it is necessary to train yourself to stop analyzing the recursive process beyond the recursive call. The subproblems will take care of themselves. You just worry about the base cases and how to recombine the subproblems.
+</p>
+</blockquote>
+
+
+<div class="figure">
+<p><img src="../images/data_structure_and_algorithm_analysis_c++/02.png" alt="02.png" />
+</p>
+<p><span class="figure-number">Figure 2:</span> Towers of Hanoi example. (a) The initial conditions for a problem with six rings. (b) A necessary intermediate step on the road to a solution.</p>
+</div>
+
+<blockquote>
+<p>
+Assume that a function \(X\) is available to solve the problem of moving the top $n - 1$ rings from Pole 1 to Pole 2. <br  />
+Then move the bottom ring from Pole 1 to Pole 3. <br  />
+Finally, again use function \(X\) to move the remaining $n - 1$ rings from Pole 2 to Pole 3.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="org-type">void</span> <span class="org-function-name">TOH</span>(<span class="org-type">int</span> <span class="org-variable-name">n</span>, <span class="org-type">Pole</span> <span class="org-variable-name">start</span>, <span class="org-type">Pole</span> <span class="org-variable-name">goal</span>, <span class="org-type">Pole</span> <span class="org-variable-name">temp</span>) {
+    <span class="org-keyword">if</span> (n == 0) <span class="org-keyword">return</span>;          <span class="org-comment-delimiter">// </span><span class="org-comment">Base case</span>
+    TOH(n-1, start, temp, goal); <span class="org-comment-delimiter">// </span><span class="org-comment">Recursive call: n-1 rings</span>
+    move(start, goal);           <span class="org-comment-delimiter">// </span><span class="org-comment">Move bottom disk to goal</span>
+    TOH(n-1, temp, goal, start); <span class="org-comment-delimiter">// </span><span class="org-comment">Recursive call: n-1 rings</span>
+}
+</pre>
+</div>
+
+<blockquote>
+<p>
+A recursive algorithm usually does not yield the most efficient computer program for solving the problem because recursion involves function calls, which are typically more expensive than other alternatives such as a <code>while</code> loop.
+</p>
+
+<p>
+If necessary, the clear, recursive solution can later be modified to yield a faster implementation.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Many data structures are naturally recursive, in that they can be defined as being made up of self-similar parts. Tree structures are an example of this. Thus, the algorithms to manipulate such data structures are often presented recursively.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Many searching and sorting algorithms are based on a strategy of <b>divide and conquer</b>. That is, a solution is found by breaking the problem into smaller (similar) subproblems, solving the subproblems, then combining the subproblem solutions to form the solution to the original problem. This process is often implemented using recursion. 
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-sec-3-6" class="outline-3">
+<h3 id="sec-3-6"><span class="section-number-3">3.6</span> Mathematical Proof Techniques</h3>
+<div class="outline-text-3" id="text-3-6">
+<p>
+Solving any problem has two distinct parts:
+</p>
+<ul class="org-ul">
+<li>the investigation
+</li>
+<li>the argument
+</li>
+</ul>
+
+<p>
+To solve the problem, you must investigate successfully. That means engaging the problem, and working through until you find a solution.
+</p>
+
+<p>
+To give the answer to your client, you need to be able to make the argument in a way that gets the solution across clearly and succinctly.
+</p>
+
+<p>
+Standard proof techniques are helpful for the argument. <br  />
+3 commonly used proof techniques:
+</p>
+<ul class="org-ul">
+<li>deduction, or direct proof
+</li>
+<li>proof by contradiction
+</li>
+<li>proof by mathematical induction
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-3-6-1" class="outline-4">
+<h4 id="sec-3-6-1"><span class="section-number-4">3.6.1</span> Direct Proof</h4>
+<div class="outline-text-4" id="text-3-6-1">
+<p>
+A direct proof is a logical explanation, written in English with words such as "if &#x2026; then".
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-6-2" class="outline-4">
+<h4 id="sec-3-6-2"><span class="section-number-4">3.6.2</span> Proof by Contradiction</h4>
+<div class="outline-text-4" id="text-3-6-2">
+<p>
+The simplest way to disprove a theorem or statement is to find a counterexample to the theorem. <br  />
+However, no number of examples supporting a theorem is sufficient to prove that the theorem is correct.
+</p>
+
+<p>
+To prove a theorem by contradiction:
+</p>
+<ol class="org-ol">
+<li>First assume that the theorem is false.
+</li>
+<li>Then find a logical contradiction stemming from this assumption.
+</li>
+</ol>
+
+<p>
+A related proof technique is proving the contrapositive: prove that $P \Rightarrow Q$ by proving $(\text{not} Q) \Rightarrow (\text{not} P)$.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-6-3" class="outline-4">
+<h4 id="sec-3-6-3"><span class="section-number-4">3.6.3</span> Proof by Mathematical Induction</h4>
+<div class="outline-text-4" id="text-3-6-3">
+<p>
+// TODO:
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-7" class="outline-3">
+<h3 id="sec-3-7"><span class="section-number-3">3.7</span> Estimation</h3>
+<div class="outline-text-3" id="text-3-7">
+<blockquote>
+<p>
+One of the most useful life skills that you can gain from your computer science training is the ability to perform quick estimates. 
+</p>
+</blockquote>
+
+<p>
+Estimation is no substitute for rigorous, detailed analysis of a problem, but it can serve to indicate when a rigorous analysis is warranted: If the initial estimate indicates that the solution is unworkable, then further analysis is probably unnecessary.
+</p>
+
+<p>
+Estimation can be formalized by in 3 steps:
+</p>
+<ol class="org-ol">
+<li>Determine the major parameters that affect the problem.
+</li>
+<li>Derive an equation that relates the parameters to the problem.
+</li>
+<li>Select values for the parameters, and apply the equation to yield an estimated solution.
+</li>
+</ol>
+
+<p>
+A good way to reassure yourself that the estimate is reasonable is to do it in 2 different ways.
+</p>
+
+<p>
+The output of a calculation is only as good as its input. The more uncertain your valuation for the input parameters, the more uncertain the output value.
+</p>
+
+<p>
+Back of the envelope calculations are often meant only to get an answer within an order of magnitude, or perhaps within a factor of 2. 
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2016-06-30 周四 09:50</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

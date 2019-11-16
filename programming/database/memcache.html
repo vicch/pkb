@@ -1,0 +1,643 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Memcache</title>
+<!-- 2016-11-01 周二 21:03 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Memcache</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. 原理</a>
+<ul>
+<li><a href="#sec-1-1">1.1. 数据结构</a></li>
+<li><a href="#sec-1-2">1.2. 过期</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. 命令行</a>
+<ul>
+<li><a href="#sec-2-1">2.1. CRUD</a>
+<ul>
+<li><a href="#sec-2-1-1">2.1.1. <code>set</code></a></li>
+<li><a href="#sec-2-1-2">2.1.2. <code>get</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-2-2">2.2. 状态</a>
+<ul>
+<li><a href="#sec-2-2-1">2.2.1. <code>stats items</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-3">3. PHP</a>
+<ul>
+<li><a href="#sec-3-1">3.1. 客户端</a></li>
+<li><a href="#sec-3-2">3.2. Session</a></li>
+<li><a href="#sec-3-3">3.3. 示例</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 原理</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> 数据结构</h3>
+<div class="outline-text-3" id="text-1-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>Item</b></th>
+<th scope="col" class="left">即一个键值对（= key + value + flags）。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>Chunk</b></td>
+<td class="left">保存数据的最小单位。</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">大小固定，数据放入之后的剩余空间无法利用。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>Slab</b></td>
+<td class="left">由同样大小的 chunk 组成的集合。</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">不同 slab 之间的 chunk 的比例关系由增长因子决定。</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>Page</b></td>
+<td class="left">内存分页，固定大小为 1M，是申请内存的最小单位。</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">分页大小 = chunk 大小 x chunk 数量</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">分配给某个 slab 的内存页，不能再重新分配给其他 slab。</td>
+</tr>
+</tbody>
+</table>
+
+<dl class="org-dl">
+<dt> 增长因子 </dt><dd>growth factor
+<ul class="org-ul">
+<li>默认值 = 1.25
+</li>
+</ul>
+</dd>
+</dl>
+
+
+<div class="figure">
+<p><img src="../images/memcache/02.jpg" alt="02.jpg" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> 过期</h3>
+<div class="outline-text-3" id="text-1-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> 过期时间</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">0</th>
+<th scope="col" class="left">永远不过期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">&lt;= 30 * 24 * 3600</td>
+<td class="left">解读为秒数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&gt; 30 * 24 * 3600</td>
+<td class="left">解读为 UNIX 时间戳</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> 过期机制</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left"><b>Lazy expiration</b></td>
+<td class="left">不主动将数据标为过期，只有查询到这个数据时，才会检查是否过期。</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 命令行</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">memcached &lt;options&gt;
+
+&lt;options&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#20869;&#23384;&#21442;&#25968;</span>
+    -m &lt;num&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#26368;&#22823;&#20869;&#23384;&#31354;&#38388;&#65288;MB&#65289;&#65292;&#40664;&#35748; 64</span>
+    -n &lt;num&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">item &#26368;&#23567;&#21344;&#29992;&#23383;&#33410;&#25968;&#65292;&#40664;&#35748; 48</span>
+    -f &lt;num&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#22686;&#38271;&#22240;&#23376;&#65292;&#40664;&#35748; 1.25</span>
+
+&lt;options&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#36816;&#34892;&#21442;&#25968;</span>
+    -p &lt;port&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#30417;&#21548; TCP &#31471;&#21475;&#21495;&#65292;&#40664;&#35748; 11211</span>
+    -U &lt;port&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#30417;&#21548; UDP &#31471;&#21475;&#21495;&#65292;&#40664;&#35748; 11211&#65292;0 &#34920;&#31034;&#20851;&#38381;</span>
+    -c &lt;num&gt;  <span class="org-comment-delimiter"># </span><span class="org-comment">&#26368;&#22823;&#21516;&#26102;&#36830;&#25509;&#25968;&#65292;&#40664;&#35748; 1024</span>
+
+&lt;options&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#36816;&#34892;&#35774;&#32622;</span>
+    -d   <span class="org-comment-delimiter"># </span><span class="org-comment">&#20316;&#20026;&#23432;&#25252;&#36827;&#31243;</span>
+    -v   <span class="org-comment-delimiter"># </span><span class="org-comment">&#25171;&#21360;&#38169;&#35823;&#12289;&#35686;&#21578;</span>
+    -vv  <span class="org-comment-delimiter"># </span><span class="org-comment">&#25171;&#21360;&#23458;&#25143;&#31471;&#21629;&#20196;&#12289;&#21709;&#24212;</span>
+    -vvv <span class="org-comment-delimiter"># </span><span class="org-comment">&#25171;&#21360;&#20869;&#37096;&#29366;&#24577;&#36716;&#25442;&#65288;transition&#65289;</span>
+
+&lt;options&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#19968;&#33324;</span>
+    -h <span class="org-comment-delimiter"># </span><span class="org-comment">&#24110;&#21161;</span>
+    -V <span class="org-comment-delimiter"># </span><span class="org-comment">&#29256;&#26412;&#20449;&#24687;</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> CRUD</h3>
+<div class="outline-text-3" id="text-2-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>读</b></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>get</code></td>
+<td class="left">单条</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>get_multi</code></td>
+<td class="left">多条</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>写</b></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>set</code></td>
+<td class="left">插入，如果 key 已存在则替换</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>add</code></td>
+<td class="left">插入，如果 key 已存在则返回 <code>STORED</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>replace</code></td>
+<td class="left">替换，如果 key 不存在则返回 <code>NOT_STORED</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>cas</code></td>
+<td class="left">改变一个存在的 key 值 ，带有检查功能（？）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>append</code></td>
+<td class="left">添加，在给定 key 之后</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>prepend</code></td>
+<td class="left">添加，在给定 key 之前</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>delete</code></td>
+<td class="left">删除</td>
+</tr>
+</tbody>
+</table>
+
+<ul class="org-ul">
+<li><code>&lt;flag&gt;</code> ：16 位无符号整数，作为标志位，意义取决于客户端的定义。
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1"><span class="section-number-4">2.1.1</span> <code>set</code></h4>
+<div class="outline-text-4" id="text-2-1-1">
+<div class="org-src-container">
+
+<pre class="src src-code">set &lt;key&gt; &lt;flag&gt; &lt;expire_seconds&gt; &lt;value_bytes&gt;
+&lt;value&gt;
+&gt; STORED
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-1-2" class="outline-4">
+<h4 id="sec-2-1-2"><span class="section-number-4">2.1.2</span> <code>get</code></h4>
+<div class="outline-text-4" id="text-2-1-2">
+<div class="org-src-container">
+
+<pre class="src src-code">get &lt;key&gt;
+&gt; VALUE &lt;key&gt; &lt;flag&gt; &lt;value_bytes&gt;
+&gt; &lt;value&gt;
+&gt; END
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> 状态</h3>
+<div class="outline-text-3" id="text-2-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>stats</code></th>
+<th scope="col" class="left">全局状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>stats curr_connections</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>stats items</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>stats slabs</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-2-2-1" class="outline-4">
+<h4 id="sec-2-2-1"><span class="section-number-4">2.2.1</span> <code>stats items</code></h4>
+<div class="outline-text-4" id="text-2-2-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>evicted</code></th>
+<th scope="col" class="left">「踢出」次数，如果过大，证明分配的内存不够</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>reclaimed</code></td>
+<td class="left">超时回收次数，如果过大，证明过期时间设置太短</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> PHP</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> 客户端</h3>
+<div class="outline-text-3" id="text-3-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>pecl/memcache</b></th>
+<th scope="col" class="left">直接使用 memcache daemon。</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">只支持基本功能。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>pecl/memcached</b></td>
+<td class="left">封装了 libMemcached 库，使用 igbinary PHP 扩展。</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">支持附加功能。</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<a href="http://blackbe.lt/php-memcache-vs-memcached/">http://blackbe.lt/php-memcache-vs-memcached/</a>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Session</h3>
+<div class="outline-text-3" id="text-3-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 3:</span> <code>php.ini</code></caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>session.save_handler</code></th>
+<th scope="col" class="left">设为 <code>memcached</code> 以用于存储会话数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>session.save_path</code></td>
+<td class="left">存储路径，eg. <code>tcp://host1:11211, tcp://host2:11211</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+不推荐用于存储 session 数据：
+</p>
+<ul class="org-ul">
+<li>如果用户登出，session 应当结束，没有必要继续保存数据。
+</li>
+<li>如果因为故障，部分缓存数据丢失，session 不应该受到影响。
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> 示例</h3>
+<div class="outline-text-3" id="text-3-3">
+<div class="org-src-container">
+<label class="org-src-name">缓存数据库查询结果</label>
+<pre class="src src-php">$<span class="org-variable-name">servers</span> = <span class="org-function-name">array</span>(
+    <span class="org-string">"10.1.1.1"</span>, <span class="org-comment-delimiter">// </span><span class="org-comment">web1</span>
+    <span class="org-string">"10.1.1.2"</span>, <span class="org-comment-delimiter">// </span><span class="org-comment">web2</span>
+    <span class="org-string">"10.1.1.3"</span>, <span class="org-comment-delimiter">// </span><span class="org-comment">web3</span>
+);
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#21021;&#22987;&#21270;&#23458;&#25143;&#31471;&#65292;&#20026;&#36991;&#20813;&#20869;&#23384;&#27844;&#38706;&#65292;&#23613;&#37327;&#21482;&#21021;&#22987;&#21270;&#19968;&#27425;</span>
+$<span class="org-variable-name">memcache</span> = <span class="org-keyword">new</span> <span class="org-type">Memcache</span>();
+<span class="org-keyword">foreach</span> ($<span class="org-variable-name">servers</span> <span class="org-keyword">as</span> $<span class="org-variable-name">server</span>) {
+    $<span class="org-variable-name">memcache</span>-&gt;<span class="org-function-name">addServer</span>($<span class="org-variable-name">server</span>);
+}
+
+$<span class="org-variable-name">sql</span> = <span class="org-string">"SELECT * ... WHERE id = $id"</span>;
+$<span class="org-variable-name">key</span> = <span class="org-string">'SQL:'</span> . $<span class="org-variable-name">id</span> . <span class="org-string">':'</span> . <span class="org-function-name">md5</span>($<span class="org-variable-name">sql</span>);
+
+$<span class="org-variable-name">data</span> = $<span class="org-variable-name">memcache</span>-&gt;<span class="org-function-name">get</span>($<span class="org-variable-name">key</span>);
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#32531;&#23384;&#26410;&#21629;&#20013;</span>
+<span class="org-keyword">if</span> ($<span class="org-variable-name">data</span> === <span class="org-constant">false</span>) {
+    $<span class="org-variable-name">data</span> = <span class="org-function-name">array</span>();
+    $<span class="org-variable-name">res</span> = <span class="org-function-name">mysql_query</span>($<span class="org-variable-name">sql</span>, $<span class="org-variable-name">mysql_connection</span>);
+    <span class="org-keyword">while</span> ($<span class="org-variable-name">rec</span> = <span class="org-function-name">mysql_fetch_assoc</span>($<span class="org-variable-name">res</span>)) {
+        $<span class="org-variable-name">data</span>[] = $<span class="org-variable-name">rec</span>;
+    }
+    <span class="org-comment-delimiter">// </span><span class="org-comment">&#25968;&#25454;&#24211;&#26597;&#35810;&#32467;&#26524;&#25918;&#20837;&#32531;&#23384;&#65292;&#26377;&#25928;&#26399; 10 &#20998;&#38047;</span>
+    $<span class="org-variable-name">memcache</span>-&gt;<span class="org-function-name">set</span>($<span class="org-variable-name">key</span>, $<span class="org-variable-name">data</span>, <span class="org-default">0</span>, <span class="org-default">600</span>);
+}
+
+<span class="org-keyword">return</span> $<span class="org-variable-name">data</span>;
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2016-11-01 周二 21:03</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

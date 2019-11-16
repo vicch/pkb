@@ -1,0 +1,20 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: The Docker Book
+
+* Chapter 1: Introduction
+
+Hypervisor virtualization is independent machines run virtually on physical hardware via an intermediation layer.
+
+-----
+
+Containers run in user space on top of an operating system's kernel. Container technology allows multiple isolated user space instances to be run on a single host. As guests of the operating system, containers are less fexible: they can generally only run the same or a similar guest operating system as the underlying host.
+
+Containers do not require an emulation layer or a hypervisor layer, as in traditional virtualization or paravirtualization, but instead use the operating system's normal system call interface. This reduces the overhead.
+
+Containers lack the larger attack surface of the full operating system needed by a virtual machine, combined with the potential exposures of the hypervisor layer itself.
+
+-----
+
+An old example of a container is a chroot jail, which creates an isolated directory environment for running processes. If attackers breach the running process in the jail, they will find themselves trapped in this environment and unable to further compromise a host.
+
+More recent container technologies have included OpenVZ, Solaris Zones, and Linux containers like lxc, which make containers look like full-blown hosts rather than just execution environments.

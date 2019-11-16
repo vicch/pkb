@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>How Linux Works</title>
+<!-- 2018-02-19 Mon 19:22 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">How Linux Works</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Chapter 1: The Big Picture</a>
+<ul>
+<li><a href="#sec-1-1">1.1. Levels and Layers of Abstraction in a Linux System</a></li>
+<li><a href="#sec-1-2">1.2. Hardware: Understanding Main Memory</a></li>
+<li><a href="#sec-1-3">1.3. The Kernel</a>
+<ul>
+<li><a href="#sec-1-3-1">1.3.1. Process Management</a></li>
+<li><a href="#sec-1-3-2">1.3.2. Memory Management</a></li>
+<li><a href="#sec-1-3-3">1.3.3. Device Drivers</a></li>
+<li><a href="#sec-1-3-4">1.3.4. System Calls and Support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Chapter 1: The Big Picture</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+The most effective way to understand how an operating system works is through abstraction - a fancy way of saying that you can ignore most of the details. There are many terms for an abstracted subdivision in computer software, including subsystem, module, package, and component.
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Levels and Layers of Abstraction in a Linux System</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+A Linux system has three main levels:
+</p>
+
+
+<div class="figure">
+<p><img src="../images/how_linux_works/01.png" alt="01.png" />
+</p>
+</div>
+
+<p>
+The kernel is a software residing in memory. The kernel manages the hardware and acts primarily as an interface between the hardware and any running program. The kernel runs in kernel mode, where code has unrestricted access to the processor and main memory, which allows <span class="underline">a kernel process to easily crash the entire system.</span> The area that only the kernel can access is called <b>kernel space</b>.
+</p>
+
+<p>
+User processes run in user mode, which restricts access to a subset of memory and safe CPU operations. <b>User space</b> refers to the parts of main memory that the user processes can access. <span class="underline">If a user process crashes, the consequences are limited and can be cleaned up by the kernel.</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Hardware: Understanding Main Memory</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+A <b>state</b> is a particular arrangement of bits, but it's common to refer to the state in abstract terms rather than to the actual bits, for example, "the process is performing Stage 2 of its startup". The term <b>image</b> refers to a particular physical arrangement of bits.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> The Kernel</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Kernel manages:
+</p>
+
+<ul class="org-ul">
+<li>Processes 
+</li>
+<li>Memory
+</li>
+<li>Device drivers
+</li>
+<li>System calls and support
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-3-1" class="outline-4">
+<h4 id="sec-1-3-1"><span class="section-number-4">1.3.1</span> Process Management</h4>
+<div class="outline-text-4" id="text-1-3-1">
+<p>
+Kernel is responsible for determining which processes are allowed to use the CPU. The system appears to be running multiple processes at the same time (a capability known as multitasking), but only one process may actually use the CPU at any given time.
+</p>
+
+<p>
+Each piece of time is called a <b>time slice</b>. The act of one process giving up control of the CPU to another process is called a <b>context switch</b>. The kernel is responsible for context switching. Context switch answers the important question of <span class="underline">when the kernel runs: it runs between process time slices during a context switch.</span>
+</p>
+
+<p>
+For example, a situation in which a process is running in user mode but its time slice is up:
+</p>
+
+<ol class="org-ol">
+<li>CPU interrupts the current process based on an internal timer, switches into kernel mode, and hands control back to kernel.
+</li>
+<li>Kernel records the current state of CPU and memory, which will be essential to resuming the process.
+</li>
+<li>Kernel performs any tasks that might have come up during the preceding time slice, such as collecting data from input and output, or I/O, operations.
+</li>
+<li>Kernel analyzes the list of processes that are ready to run and chooses one.
+</li>
+<li>Kernel prepares the memory and CPU for this new process.
+</li>
+<li>Kernel tells CPU how long the time slice for the new process will last.
+</li>
+<li>Kernel switches CPU into user mode and hands control of CPU to the process.
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-sec-1-3-2" class="outline-4">
+<h4 id="sec-1-3-2"><span class="section-number-4">1.3.2</span> Memory Management</h4>
+<div class="outline-text-4" id="text-1-3-2">
+<p>
+Kernel splits memory into subdivisions and maintains state information of the subdivisions. It keeps track of what is currently allocated to a particular process, what might be shared between processes, and what is free:
+</p>
+
+<ul class="org-ul">
+<li>Each user process needs its own section of memory.
+</li>
+<li>One user process may not access the private memory of another process.
+</li>
+<li>User processes can share memory.
+</li>
+<li>Some memory in user processes can be read-only.
+</li>
+<li>Kernel must have its own private area in memory that user processes can't access.
+</li>
+<li>The system can use more memory than is physically present by using disk space as auxiliary.
+</li>
+</ul>
+
+<p>
+Modern CPUs include a <b>memory management unit (MMU)</b> that enables a memory access scheme called virtual memory. A process does not directly access the memory by its physical location in the hardware. Instead, the kernel sets up each process to act as if it had an entire machine to itself. <span class="underline">When the process accesses some of its memory, the MMU intercepts the access and uses a memory address map to translate the memory location from the process into an actual physical memory location on the machine.</span> The implementation of a memory address map is called a page table.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-3-3" class="outline-4">
+<h4 id="sec-1-3-3"><span class="section-number-4">1.3.3</span> Device Drivers</h4>
+<div class="outline-text-4" id="text-1-3-3">
+<p>
+Kernel acts as an interface between hardware and processes.It's usually the kernel's job to operate the hardware. A device is typically accessible only in kernel mode because improper access could crash the machine. 
+</p>
+
+<p>
+Different devices rarely have the same programming interface, even if the devices do the same thing. Therefore, device drivers have traditionally been part of the kernel, and they strive to present a uniform interface to user processes in order to simplify the software developer's job.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-3-4" class="outline-4">
+<h4 id="sec-1-3-4"><span class="section-number-4">1.3.4</span> System Calls and Support</h4>
+<div class="outline-text-4" id="text-1-3-4">
+<p>
+Processes normally use system calls to communicate with the kernel. System calls perform specifc tasks that a user process alone cannot do, for example, the acts of opening, reading, and writing files.
+</p>
+
+<p>
+2 system calls, <code>fork()</code> and <code>exec()</code>, are important to understanding how processes start up:
+</p>
+
+<ul class="org-ul">
+<li><code>fork()</code>: Kernel creates a nearly identical copy of the process. All user processes except <code>init</code> start as a result of <code>fork()</code>.
+</li>
+<li><code>exec(program)</code>: Kernel starts <code>program</code>, replacing the current process. <code>exec()</code> is used to start a new program instead of running a copy of an existing process.
+</li>
+</ul>
+
+<p>
+For example, for any program that you run at the command line, the shell that's running inside the terminal window calls <code>fork()</code> to create a copy of the shell, and then the new copy of the shell calls <code>exec(program)</code> to run it.
+</p>
+
+
+<div class="figure">
+<p><img src="../images/how_linux_works/02.png" alt="02.png" />
+</p>
+</div>
+
+<p>
+Kernel also supports pseudodevices, which look like devices to user processes, but implemented purely in software. For example, the kernel random number generator device <code>/dev/random</code>.
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2018-02-19 Mon 19:22</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

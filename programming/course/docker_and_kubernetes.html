@@ -1,0 +1,1621 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-05-18 Sat 19:44 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Docker and Kubernetes</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Docker and Kubernetes</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org3c9a5ec">1 Dive into Docker</a>
+<ul>
+<li><a href="#org24b2c93">1.1 Namespacing and Control Group</a></li>
+<li><a href="#orge4b9714">1.2 Image</a></li>
+<li><a href="#org6661daf">1.3 Container</a></li>
+<li><a href="#orge39a90d">1.4 Docker</a></li>
+</ul>
+</li>
+<li><a href="#orgde87fdd">2 Manipulating Containers with the Docker Client</a></li>
+<li><a href="#orgdc8086a">3 Building Custom Images Through Docker Server</a></li>
+<li><a href="#org3281c86">4 Docker Compose with Multiple Local Containers</a></li>
+<li><a href="#org6a09c21">5 Creating Production-Grade Workflow</a></li>
+<li><a href="#orgfc6ab0a">6 Continuous Integration and Deployment with AWS</a>
+<ul>
+<li><a href="#orga77e784">6.1 AWS Elastic Beanstalk</a></li>
+</ul>
+</li>
+<li><a href="#orgfccea8b">7 Continuous Integration Flow for Multiple Images</a>
+<ul>
+<li><a href="#org35453ea">7.1 Production Multi-Container Deployments</a></li>
+<li><a href="#org2d33e06">7.2 Multiple Nginx Instances</a></li>
+</ul>
+</li>
+<li><a href="#orge582627">8 Multi-Container Deployments to AWS</a>
+<ul>
+<li><a href="#orga635390">8.1 Multi-Container Definition Files</a></li>
+<li><a href="#orgb61f3ae">8.2 Managed Data Service Providers</a></li>
+<li><a href="#org9ed93d2">8.3 AWS VPC and Security Groups</a></li>
+</ul>
+</li>
+<li><a href="#orgd4cedb9">9 Onwards to Kubernetes</a>
+<ul>
+<li><a href="#org112b06e">9.1 The Why's and What's of Kubernetes</a></li>
+<li><a href="#orgfc9daf5">9.2 Kubernetes in Development and Production</a></li>
+<li><a href="#orgccf76d2">9.3 Setup on MacOS</a></li>
+<li><a href="#orgb9f6906">9.4 Mapping Existing Knowledge</a></li>
+<li><a href="#orgf200283">9.5 Object Types and API Versions</a></li>
+<li><a href="#org2eb55d5">9.6 Service Config Files in Depth</a></li>
+</ul>
+</li>
+<li><a href="#org641149f">10 Maintaining Sets of Containers with Deployments</a>
+<ul>
+<li><a href="#orgf6ebf23">10.1 Multiple Docker installations</a></li>
+</ul>
+</li>
+<li><a href="#orgf3827fa">11 Multi-Container App with Kubernetes</a>
+<ul>
+<li><a href="#org333d6d4">11.1 The Path to Production</a></li>
+<li><a href="#orgec8bd90">11.2 Kubernetes Volumes</a></li>
+</ul>
+</li>
+<li><a href="#org7e96c1a">12 Handle Traffic with Ingress Controllers</a>
+<ul>
+<li><a href="#orgfe28958">12.1 One Other Quick Note</a></li>
+<li><a href="#orgf4a3401">12.2 Behind the Scenes of Ingress</a></li>
+<li><a href="#orgb528100">12.3 More Behind the Scenes of Ingress</a></li>
+<li><a href="#orgd2f9bf6">12.4 Optional Reading on Ingress Nginx</a></li>
+<li><a href="#orgf310bc7">12.5 Setting Up Ingress Locally</a></li>
+<li><a href="#orgbcd4383">12.6 Create Ingress Configuration</a></li>
+<li><a href="#orga54a582">12.7 Test Ingress Locally</a></li>
+<li><a href="#org0352dc4">12.8 The Minikube Dashboard</a></li>
+</ul>
+</li>
+<li><a href="#org39a9064">13 Kubernetes Production Deployment</a>
+<ul>
+<li><a href="#org66c0c63">13.1 The Deployment Process</a></li>
+<li><a href="#orgafbf2f1">13.2 Google Cloud vs AWS for Kubernetes</a></li>
+<li><a href="#org2ba0a1a">13.3 Create GitHub Repo</a></li>
+<li><a href="#org4fd94c6">13.4 Link GitHub Repo to Travis CI</a></li>
+<li><a href="#org103f31e">13.5 Create Google Cloud Project</a></li>
+<li><a href="#org6b0c839">13.6 Link Billing Account</a></li>
+<li><a href="#org9ffbfd0">13.7 Create Cluster with Google Cloud</a></li>
+<li><a href="#orga57bf53">13.8 Kubernetes Dashboard on Google Cloud</a></li>
+<li><a href="#org2c7ebd4">13.9 Travis Deployment Overview</a></li>
+<li><a href="#orgc2d0b54">13.10 Install Google Cloud SDK</a></li>
+<li><a href="#org6803c8a">13.11 Generate Service Account</a></li>
+<li><a href="#org27130cd">13.12 Run Travis CI CLI in Container</a></li>
+<li><a href="#org24c0004">13.13 Encrypt Service Account File</a></li>
+<li><a href="#orgdba999b">13.14 More Google Cloud CLI Config</a></li>
+<li><a href="#org51aae57">13.15 Run Tests with Travis</a></li>
+<li><a href="#orgc3707c8">13.16 Custom Deployment Providers</a></li>
+<li><a href="#orgcea94e7">13.17 Unique Deployment Images</a></li>
+<li><a href="#orgd3c680d">13.18 Unique Tags for Built Images</a></li>
+<li><a href="#orgf4d5405">13.19 Updating Deployment Script</a></li>
+<li><a href="#orgfb8f207">13.20 Configure Google Cloud CLI on Cloud Console</a></li>
+<li><a href="#orgb4caa06">13.21 Create Secret on Google Cloud</a></li>
+<li><a href="#org22735e8">13.22 Helm Setup</a></li>
+<li><a href="#orgdf7edef">13.23 Kubernetes Security with RBAC</a></li>
+<li><a href="#org7d1dd61">13.24 Assign Tiller a Service Account</a></li>
+<li><a href="#org09a745b">13.25 ingress-nginx with Helm</a></li>
+<li><a href="#org5048d0b">13.26 The Result of ingress-nginx</a></li>
+<li><a href="#orgf8d4058">13.27 Finally Deployment</a></li>
+<li><a href="#org7c23ecf">13.28 Workflow for Changing in Prod</a></li>
+</ul>
+</li>
+<li><a href="#orgbab8d4e">14 HTTPS Setup with Kubernetes</a>
+<ul>
+<li><a href="#orgb2a648c">14.1 HTTPS Setup Overview</a></li>
+<li><a href="#org89e6be3">14.2 Domain Name Setup</a></li>
+<li><a href="#orgd58d163">14.3 cert-manager Install</a></li>
+<li><a href="#org9421b75">14.4 How to Wire Up cert-manager</a></li>
+<li><a href="#org3fccbcf">14.5 Issuer Config File</a></li>
+<li><a href="#orga97ed1e">14.6 Certificate Config File</a></li>
+<li><a href="#org67b3267">14.7 Deploy Changes</a></li>
+<li><a href="#org20a5d44">14.8 Confirm the Certificate</a></li>
+<li><a href="#orgbb4f6be">14.9 Ingress Config for HTTPS</a></li>
+<li><a href="#org470870e">14.10 It Worked</a></li>
+</ul>
+</li>
+<li><a href="#org817bd31">15 Links</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org3c9a5ec" class="outline-2">
+<h2 id="org3c9a5ec"><span class="section-number-2">1</span> Dive into Docker</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-org24b2c93" class="outline-3">
+<h3 id="org24b2c93"><span class="section-number-3">1.1</span> Namespacing and Control Group</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Most OS has a kernel - a process that governs access between the running programs and the physical hardware. Programs interact with the kernel through function invocations called system calls.
+</p>
+
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/01.png" alt="01.png" />
+</p>
+</div>
+
+<p>
+Think of an imaginary situation: on the same machine, Chrome need Python 2 to run, while NodeJS needs Python 3. But only Python 2 can be installed on the machine.
+</p>
+
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/02.png" alt="02.png" />
+</p>
+</div>
+
+<p>
+One way to solve this issue is to use the OS feature called <b>namespacing</b>, which is used to segment out portions of hardware or software resources dedicated to a process. When the process issues a system call to access the hard drive, the kernel will direct the call to the dedicated segment.
+</p>
+
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/03.png" alt="03.png" />
+</p>
+</div>
+
+<p>
+Namespacing allows isolating resources per process or group of processes. Another feature closely related to namespacing is <b>control group</b>, which can be used to limit the amount of resources a process and use. 
+</p>
+
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/04.png" alt="04.png" />
+</p>
+</div>
+
+<p>
+Namespacing and control groups are specific to Linux. When installing Docker on Windows or MacOS, a Linux virtual machine is installed, which will host the containers.
+</p>
+
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/07.png" alt="07.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge4b9714" class="outline-3">
+<h3 id="orge4b9714"><span class="section-number-3">1.2</span> Image</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+An image is a single file containing all the dependencies and configuration required to run a specific program.
+</p>
+
+<p>
+An image contains a file system snapshot and a startup command. A file system snapshot is essentially a specific set of directories and files.
+</p>
+
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/06.png" alt="06.png" />
+</p>
+</div>
+
+<p>
+To start up a new container with a specific image, Docker server first chekcs the local image cache. If the image is not found there, Docker server will reach out to Docker Hub, which is the respository of free public images. Docker server will download the image and save it into the local image cache.
+</p>
+
+<p>
+The kernel then isolates a segement of the hard drive and grants access to the container being created. the file system snapshot of the image is placed into this segment of hard drive. Then the startup command is executed and a new process is created.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6661daf" class="outline-3">
+<h3 id="org6661daf"><span class="section-number-3">1.3</span> Container</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+A container is an instance of an image. A container can be seen as a running process and the segment of resources assigned to it.
+</p>
+
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/05.png" alt="05.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge39a90d" class="outline-3">
+<h3 id="orge39a90d"><span class="section-number-3">1.4</span> Docker</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+Docker client itself doesn't do anything with containers or images. It's a portal for users to issue commands. It interacts with the Docker server behind the scenes.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgde87fdd" class="outline-2">
+<h2 id="orgde87fdd"><span class="section-number-2">2</span> Manipulating Containers with the Docker Client</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<code>docker run = docker create + docker start</code>
+</p>
+
+<p>
+<code>docker create</code> takes the image file system to setup the file system snapshot to create the container, and <code>docker start</code> runs the image startup command.
+</p>
+
+<p>
+An already stopped container can be run again by <code>docker start</code>, but it cannot override the startup command, it will only run the startup command that was set when the container was created.
+</p>
+
+<hr />
+
+<p>
+<code>-i, --interactive</code> option is used to attach the terminal to the <code>STDIN</code> of the container. <code>-t, --tty</code> option is used to allocate a pseudo-TTY to the container, essentially formatting the <code>STDOUT</code> and <code>STDERR</code> output from the container.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdc8086a" class="outline-2">
+<h2 id="orgdc8086a"><span class="section-number-2">3</span> Building Custom Images Through Docker Server</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+When building an image, for each directive in the <code>Dockerfile</code>, Docker Server will:
+</p>
+
+<ul class="org-ul">
+<li>Use the result image from last step to create a temporary container.</li>
+<li>Execute the command of this directive, e.g. <code>RUN</code>.</li>
+<li>Take a snapshot of the container's file system.</li>
+<li>Create a tempoaray image.</li>
+<li>Stop the temporary container.</li>
+</ul>
+
+<hr />
+
+<p>
+When rebuilding an image, Docker Server will check if any step is changed, including changes to files being copied via <code>COPY</code>. If there is a change, for steps before this one, Docker Server will reuse cached temporary images created in previous building. And for this step and following steps, Docker Server will rebuild the temporary images.
+</p>
+
+<hr />
+
+<p>
+As container is created from an image, image can also be created from a container, by using <code>docker commit</code>. But the recommended way to create an image is through <code>Dockerfile</code>.
+</p>
+</div>
+</div>
+<div id="outline-container-org3281c86" class="outline-2">
+<h2 id="org3281c86"><span class="section-number-2">4</span> Docker Compose with Multiple Local Containers</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+By placing multiple containers under <code>services</code> in Docker Compose file, the containers will automatically share the same network and can connect to each other, by using the service names as host names.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6a09c21" class="outline-2">
+<h2 id="org6a09c21"><span class="section-number-2">5</span> Creating Production-Grade Workflow</h2>
+<div class="outline-text-2" id="text-5">
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/08.png" alt="08.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfc6ab0a" class="outline-2">
+<h2 id="orgfc6ab0a"><span class="section-number-2">6</span> Continuous Integration and Deployment with AWS</h2>
+<div class="outline-text-2" id="text-6">
+</div><div id="outline-container-orga77e784" class="outline-3">
+<h3 id="orga77e784"><span class="section-number-3">6.1</span> AWS Elastic Beanstalk</h3>
+<div class="outline-text-3" id="text-6-1">
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/09.png" alt="09.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfccea8b" class="outline-2">
+<h2 id="orgfccea8b"><span class="section-number-2">7</span> Continuous Integration Flow for Multiple Images</h2>
+<div class="outline-text-2" id="text-7">
+</div><div id="outline-container-org35453ea" class="outline-3">
+<h3 id="org35453ea"><span class="section-number-3">7.1</span> Production Multi-Container Deployments</h3>
+<div class="outline-text-3" id="text-7-1">
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/10.png" alt="10.png" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/11.png" alt="11.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2d33e06" class="outline-3">
+<h3 id="org2d33e06"><span class="section-number-3">7.2</span> Multiple Nginx Instances</h3>
+<div class="outline-text-3" id="text-7-2">
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/12.png" alt="12.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge582627" class="outline-2">
+<h2 id="orge582627"><span class="section-number-2">8</span> Multi-Container Deployments to AWS</h2>
+<div class="outline-text-2" id="text-8">
+</div><div id="outline-container-orga635390" class="outline-3">
+<h3 id="orga635390"><span class="section-number-3">8.1</span> Multi-Container Definition Files</h3>
+<div class="outline-text-3" id="text-8-1">
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/13.png" alt="13.png" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/14.png" alt="14.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb61f3ae" class="outline-3">
+<h3 id="orgb61f3ae"><span class="section-number-3">8.2</span> Managed Data Service Providers</h3>
+<div class="outline-text-3" id="text-8-2">
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/15.png" alt="15.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9ed93d2" class="outline-3">
+<h3 id="org9ed93d2"><span class="section-number-3">8.3</span> AWS VPC and Security Groups</h3>
+<div class="outline-text-3" id="text-8-3">
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/16.png" alt="16.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd4cedb9" class="outline-2">
+<h2 id="orgd4cedb9"><span class="section-number-2">9</span> Onwards to Kubernetes</h2>
+<div class="outline-text-2" id="text-9">
+</div><div id="outline-container-org112b06e" class="outline-3">
+<h3 id="org112b06e"><span class="section-number-3">9.1</span> The Why's and What's of Kubernetes</h3>
+<div class="outline-text-3" id="text-9-1">
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/17.png" alt="17.png" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/18.png" alt="18.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfc9daf5" class="outline-3">
+<h3 id="orgfc9daf5"><span class="section-number-3">9.2</span> Kubernetes in Development and Production</h3>
+<div class="outline-text-3" id="text-9-2">
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/19.png" alt="19.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgccf76d2" class="outline-3">
+<h3 id="orgccf76d2"><span class="section-number-3">9.3</span> Setup on MacOS</h3>
+<div class="outline-text-3" id="text-9-3">
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/20.png" alt="20.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb9f6906" class="outline-3">
+<h3 id="orgb9f6906"><span class="section-number-3">9.4</span> Mapping Existing Knowledge</h3>
+<div class="outline-text-3" id="text-9-4">
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/21.png" alt="21.png" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/22.png" alt="22.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf200283" class="outline-3">
+<h3 id="orgf200283"><span class="section-number-3">9.5</span> Object Types and API Versions</h3>
+<div class="outline-text-3" id="text-9-5">
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/23.png" alt="23.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2eb55d5" class="outline-3">
+<h3 id="org2eb55d5"><span class="section-number-3">9.6</span> Service Config Files in Depth</h3>
+<div class="outline-text-3" id="text-9-6">
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/24.png" alt="24.png" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/25.png" alt="25.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org641149f" class="outline-2">
+<h2 id="org641149f"><span class="section-number-2">10</span> Maintaining Sets of Containers with Deployments</h2>
+<div class="outline-text-2" id="text-10">
+</div><div id="outline-container-orgf6ebf23" class="outline-3">
+<h3 id="orgf6ebf23"><span class="section-number-3">10.1</span> Multiple Docker installations</h3>
+<div class="outline-text-3" id="text-10-1">
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/26.png" alt="26.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf3827fa" class="outline-2">
+<h2 id="orgf3827fa"><span class="section-number-2">11</span> Multi-Container App with Kubernetes</h2>
+<div class="outline-text-2" id="text-11">
+</div><div id="outline-container-org333d6d4" class="outline-3">
+<h3 id="org333d6d4"><span class="section-number-3">11.1</span> The Path to Production</h3>
+<div class="outline-text-3" id="text-11-1">
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/27.png" alt="27.png" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/28.png" alt="28.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgec8bd90" class="outline-3">
+<h3 id="orgec8bd90"><span class="section-number-3">11.2</span> Kubernetes Volumes</h3>
+<div class="outline-text-3" id="text-11-2">
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/29.png" alt="29.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org7e96c1a" class="outline-2">
+<h2 id="org7e96c1a"><span class="section-number-2">12</span> Handle Traffic with Ingress Controllers</h2>
+<div class="outline-text-2" id="text-12">
+</div><div id="outline-container-orgfe28958" class="outline-3">
+<h3 id="orgfe28958"><span class="section-number-3">12.1</span> One Other Quick Note</h3>
+<div class="outline-text-3" id="text-12-1">
+<p>
+There are two projects called "Nginx Ingress Controller": <code>ingress-nginx</code> and <code>kubernetes-ingress</code>. <code>ingress-nginx</code> should be used.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf4a3401" class="outline-3">
+<h3 id="orgf4a3401"><span class="section-number-3">12.2</span> Behind the Scenes of Ingress</h3>
+<div class="outline-text-3" id="text-12-2">
+<p>
+<code>Ingress</code> config defines the desired state (routing rules etc.), and <code>Ingress</code> controller updates the environment to achieve the desired state.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb528100" class="outline-3">
+<h3 id="orgb528100"><span class="section-number-3">12.3</span> More Behind the Scenes of Ingress</h3>
+<div class="outline-text-3" id="text-12-3">
+<p>
+Using <code>ingress-nginx</code> on Google Cloud involves these components:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Google Cloud load balancer</th>
+<th scope="col" class="org-left">Provided by Google Cloud, directs traffic to Kubernetes cluster's <code>LoadBalancer</code> <code>Service</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>LoadBalander</code> <code>Service</code></td>
+<td class="org-left">Directs traffic to Nginx <code>Deployment</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Nginx <code>Deployment</code></td>
+<td class="org-left">Runs Nginx container, performs load balancing and routing to other <code>Deployment</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>Ingress</code> config</td>
+<td class="org-left">Defines the desired state (routing rules etc.)</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Default backend</td>
+<td class="org-left">A <code>Deployment</code> used for health check</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+The reason of using <code>ingress-nginx</code> instead of a simple Nginx <code>Pod</code> for load balancing is because <code>ingress-nginx</code> provides more advanced features such as sticky sessions.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd2f9bf6" class="outline-3">
+<h3 id="orgd2f9bf6"><span class="section-number-3">12.4</span> Optional Reading on Ingress Nginx</h3>
+<div class="outline-text-3" id="text-12-4">
+<p>
+<a href="https://www.joyfulbikeshedding.com/blog/2018-03-26-studying-the-kubernetes-ingress-system.html">Studying the Kubernetes Ingress system</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf310bc7" class="outline-3">
+<h3 id="orgf310bc7"><span class="section-number-3">12.5</span> Setting Up Ingress Locally</h3>
+<div class="outline-text-3" id="text-12-5">
+<p>
+Follow <code>ingress-nginx</code> <a href="https://kubernetes.github.io/ingress-nginx/deploy/">Installation Guide</a>:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 1: </span>Run generic deployment command to applies a yaml config to create the <code>Ingress</code> controller and other objects</label><pre class="src src-sh">kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 2: </span>Run setup commands for minikube.</label><pre class="src src-sh">minikube addons enable ingress
+</pre>
+</div>
+
+<p>
+The deployment command for Google Cloud applies a yaml config to create a <code>LoadBalancer</code> <code>Service</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbcd4383" class="outline-3">
+<h3 id="orgbcd4383"><span class="section-number-3">12.6</span> Create Ingress Configuration</h3>
+<div class="outline-text-3" id="text-12-6">
+<p>
+Create and apply <code>Ingress</code> config file.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga54a582" class="outline-3">
+<h3 id="orga54a582"><span class="section-number-3">12.7</span> Test Ingress Locally</h3>
+<div class="outline-text-3" id="text-12-7">
+<p>
+Obtain the minikube IP address and open in browser to confirm <code>Ingress</code> config works. Kubernetes <code>Ingress</code> controller uses a fake certificate so there is a browser security warning.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0352dc4" class="outline-3">
+<h3 id="org0352dc4"><span class="section-number-3">12.8</span> The Minikube Dashboard</h3>
+<div class="outline-text-3" id="text-12-8">
+<p>
+Minikube provides a dashboard web UI which can be enabled by <code>minikube dashboard</code>. The dashboard shows all info of the Kubernetes cluster.
+</p>
+
+<p>
+It is not recommended to do imperative changes through the dashboard, because Kubernetes config is supposed to be declarative, and the changes made in the dashboard won't be persisted to the config files.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org39a9064" class="outline-2">
+<h2 id="org39a9064"><span class="section-number-2">13</span> Kubernetes Production Deployment</h2>
+<div class="outline-text-2" id="text-13">
+</div><div id="outline-container-org66c0c63" class="outline-3">
+<h3 id="org66c0c63"><span class="section-number-3">13.1</span> The Deployment Process</h3>
+<div class="outline-text-3" id="text-13-1">
+<ol class="org-ol">
+<li>Create a GitHub repo.</li>
+<li>Tie the repo to Travis CI.</li>
+<li>Create a Google Cloud project.
+<ul class="org-ul">
+<li>Billing needs to be enabled. Cost can be estimated by using <a href="https://cloud.google.com/products/calculator/">Google Cloud Platform Pricing Calculator</a>.</li>
+</ul></li>
+<li>Add deployment scripts to the repo.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgafbf2f1" class="outline-3">
+<h3 id="orgafbf2f1"><span class="section-number-3">13.2</span> Google Cloud vs AWS for Kubernetes</h3>
+<div class="outline-text-3" id="text-13-2">
+<p>
+Reasons to use Google Cloud over AWS for Kubernetes:
+</p>
+
+<ul class="org-ul">
+<li>Kubernetes was created by Google. The documentation is better.</li>
+<li>Google Cloud's console is easier to use and supports <code>kubectl</code> commands.</li>
+<li>AWS's support for Kubernetes was more recent.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2ba0a1a" class="outline-3">
+<h3 id="org2ba0a1a"><span class="section-number-3">13.3</span> Create GitHub Repo</h3>
+<div class="outline-text-3" id="text-13-3">
+<p>
+Create a repo on GitHub and set it as the "origin" remote for the local repo. Remove the existing remote first if there is any.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4fd94c6" class="outline-3">
+<h3 id="org4fd94c6"><span class="section-number-3">13.4</span> Link GitHub Repo to Travis CI</h3>
+<div class="outline-text-3" id="text-13-4">
+<p>
+Enable the repo in Travis CI settings.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org103f31e" class="outline-3">
+<h3 id="org103f31e"><span class="section-number-3">13.5</span> Create Google Cloud Project</h3>
+<div class="outline-text-3" id="text-13-5">
+<p>
+Create a project on <a href="https://console.cloud.google.com">Google Cloud Platform</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6b0c839" class="outline-3">
+<h3 id="org6b0c839"><span class="section-number-3">13.6</span> Link Billing Account</h3>
+<div class="outline-text-3" id="text-13-6">
+<p>
+Confirm the created project has billing linked to it on <a href="https://console.cloud.google.com/home/dashboard">Google Cloud Platform</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9ffbfd0" class="outline-3">
+<h3 id="org9ffbfd0"><span class="section-number-3">13.7</span> Create Cluster with Google Cloud</h3>
+<div class="outline-text-3" id="text-13-7">
+<ol class="org-ol">
+<li>On <a href="https://console.cloud.google.com/kubernetes/list">Kubernetes Engine</a>, under Clusters, click "Create a Cluster".</li>
+<li>Specify a name, and leave other options as default.</li>
+</ol>
+
+<p>
+Billing will start once the cluster is created.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga57bf53" class="outline-3">
+<h3 id="orga57bf53"><span class="section-number-3">13.8</span> Kubernetes Dashboard on Google Cloud</h3>
+<div class="outline-text-3" id="text-13-8">
+<p>
+The <a href="https://console.cloud.google.com/kubernetes/list">Kubernetes Engine</a> dashboard:
+</p>
+
+<ul class="org-ul">
+<li>Clusters: manage cluster and nodes.</li>
+<li>Workloads: manage pods and deployments.</li>
+<li>Services: manage services such as load balancing.</li>
+<li>Applications: manage plug-ins.</li>
+<li>Configuration: manage environment variables and secrets.</li>
+<li>Storage: manage persistent volumes.</li>
+</ul>
+
+<p>
+The default storage class is <a href="https://cloud.google.com/persistent-disk/">Google Persistent Disk</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2c7ebd4" class="outline-3">
+<h3 id="org2c7ebd4"><span class="section-number-3">13.9</span> Travis Deployment Overview</h3>
+<div class="outline-text-3" id="text-13-9">
+<p>
+The Travis config file will:
+</p>
+
+<ol class="org-ol">
+<li>Install Google Cloud SDK</li>
+<li>Configure Google Cloud auth</li>
+<li>Login to Docker</li>
+<li>Build the test version of the client module</li>
+<li>Run tests of client module</li>
+<li>Deploy latest images (if tests are successful)</li>
+<li>Build Docker images, and push to Docker Hub</li>
+<li>Apply Kubernetes config files</li>
+<li>Set latest images on Kubernetes deployments</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgc2d0b54" class="outline-3">
+<h3 id="orgc2d0b54"><span class="section-number-3">13.10</span> Install Google Cloud SDK</h3>
+<div class="outline-text-3" id="text-13-10">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 3: </span><code>.travis.yml</code></label><pre class="src src-yaml"><span class="org-variable-name">env</span>:
+  <span class="org-variable-name">global</span>:
+<span class="org-yaml-tab">    </span><span class="org-comment-delimiter"># </span><span class="org-comment">Disable prompts during SDK installation</span>
+<span class="org-yaml-tab">    </span>- CLOUDSDK_CORE_DISABLE_PROMPTS=1
+<span class="org-variable-name">before_install</span>:
+  <span class="org-comment-delimiter"># </span><span class="org-comment">Install Google Cloud SDK</span>
+  - curl https://sdk.cloud.google.com | bash &gt; /dev/null;
+  - source $HOME/google-cloud-sdk/path.bash.inc
+  <span class="org-comment-delimiter"># </span><span class="org-comment">Setup kubectl</span>
+  - gcloud components update kubectl
+  <span class="org-comment-delimiter"># </span><span class="org-comment">Configure auth</span>
+  - gcloud auth activate-service-account --key-file service-account.json
+<span class="org-comment-delimiter"># </span><span class="org-comment">service-account.json contains credentials</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6803c8a" class="outline-3">
+<h3 id="org6803c8a"><span class="section-number-3">13.11</span> Generate Service Account</h3>
+<div class="outline-text-3" id="text-13-11">
+<p>
+Create a service account at <a href="https://console.cloud.google.com/iam-admin/serviceaccounts">Google Cloud Platform IAM Service Accounts</a>. Set role to "Kubernetes Engine Admin", and create a JSON key. The JSON key file will be downloaded. This file should never be exposed externally.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org27130cd" class="outline-3">
+<h3 id="org27130cd"><span class="section-number-3">13.12</span> Run Travis CI CLI in Container</h3>
+<div class="outline-text-3" id="text-13-12">
+<p>
+Travis CI CLI needs Ruby. It's more convenient to use a Docker image with Ruby installed.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">docker run -it -v $(<span class="org-builtin">pwd</span>):/app ruby:2.3 sh
+gem install travis
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org24c0004" class="outline-3">
+<h3 id="org24c0004"><span class="section-number-3">13.13</span> Encrypt Service Account File</h3>
+<div class="outline-text-3" id="text-13-13">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 4: </span>(Following last section inside Docker)</label><pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Go to the mounted dir where the service account JSON file is</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Assuming the file is named as service-account.json</span>
+<span class="org-builtin">cd</span> /app
+travis login
+<span class="org-comment-delimiter"># </span><span class="org-comment">Specify the Git repo to tie the encrypted file to</span>
+travis encrypt-file service-account.json -r vicch/multi-k8s
+<span class="org-comment-delimiter"># </span><span class="org-comment">Copy the given openssl command to .travis.yml under before_install</span>
+</pre>
+</div>
+
+<p>
+The encrypted keys will be added as environment variables to the repo on Travis CI. The variables are referenced in the generated <code>openssl</code> command.
+</p>
+
+<p>
+Commit the generated <code>service-account.json.enc</code> into Git repo, but DO NOT commit <code>service-account.json</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdba999b" class="outline-3">
+<h3 id="orgdba999b"><span class="section-number-3">13.14</span> More Google Cloud CLI Config</h3>
+<div class="outline-text-3" id="text-13-14">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 5: </span><code>.travis.yml</code></label><pre class="src src-yaml"><span class="org-variable-name">before_install</span>:
+  - ...
+  <span class="org-comment-delimiter"># </span><span class="org-comment">Configure Google Cloud project and cluster</span>
+  - gcloud config set project &lt;project_id&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">Project ID is not project name</span>
+  - gcloud config set compute/zone &lt;location&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">E.g. us-central1-a</span>
+  - gcloud container clusters get-credentials &lt;cluster_name&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org51aae57" class="outline-3">
+<h3 id="org51aae57"><span class="section-number-3">13.15</span> Run Tests with Travis</h3>
+<div class="outline-text-3" id="text-13-15">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 6: </span><code>.travis.yml</code></label><pre class="src src-yaml"><span class="org-variable-name">before_install</span>:
+  - ...
+  <span class="org-comment-delimiter"># </span><span class="org-comment">Login to Docker, username and password are added as environment variables</span>
+  - echo <span class="org-string">"$DOCKER_PASSWORD"</span> | docker login -u <span class="org-string">"$DOCKER_USERNAME"</span> --password-stdin
+  <span class="org-comment-delimiter"># </span><span class="org-comment">Build the test image</span>
+  - docker build ...
+<span class="org-variable-name">script</span>:
+  <span class="org-comment-delimiter"># </span><span class="org-comment">Run the tests</span>
+  - docker run ...
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc3707c8" class="outline-3">
+<h3 id="orgc3707c8"><span class="section-number-3">13.16</span> Custom Deployment Providers</h3>
+<div class="outline-text-3" id="text-13-16">
+<p>
+Travis CI doesn's support Kubernetes as deployment provider, so a custom script is needed to perform the deployment.
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 7: </span><code>.travis.yml</code></label><pre class="src src-yaml"><span class="org-variable-name">deploy</span>:
+  <span class="org-variable-name">provider</span>: script
+  <span class="org-variable-name">script</span>: bash ./deploy.sh <span class="org-comment-delimiter"># </span><span class="org-comment">The custom script to do deployment</span>
+  <span class="org-variable-name">on</span>:
+<span class="org-yaml-tab">    </span><span class="org-variable-name">branch</span>: master
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcea94e7" class="outline-3">
+<h3 id="orgcea94e7"><span class="section-number-3">13.17</span> Unique Deployment Images</h3>
+<div class="outline-text-3" id="text-13-17">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 8: </span><code>deploy.sh</code></label><pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Build images and push to Docker Hub</span>
+docker build ...
+docker push ...
+<span class="org-comment-delimiter"># </span><span class="org-comment">Apply Kubernetes config</span>
+kubectl apply -f k8s
+<span class="org-comment-delimiter"># </span><span class="org-comment">Imperatively set the latest image</span>
+kubectl set image ...
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd3c680d" class="outline-3">
+<h3 id="orgd3c680d"><span class="section-number-3">13.18</span> Unique Tags for Built Images</h3>
+<div class="outline-text-3" id="text-13-18">
+<p>
+To force Kubernetes deployments to use the latest Docker images built in the deployment process, we need to use the <code>kubectl set image</code> command by passing in the tag indicating the latest version of the image. This tag needs to be different from the tag of the current running image, otherwise Kubernetes thinks it's already running what is required and won't update to the latest version.
+</p>
+
+<p>
+The Git commit's SHA hash can be used as the tag:
+</p>
+
+<ul class="org-ul">
+<li>It's guaranteed to be unique.</li>
+<li>It's automatic, by using an environment variable there is no need to manually specify a tag.</li>
+<li>It can be used for debugging purposes because it indicates the repo commit on which the cluster is running.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgf4d5405" class="outline-3">
+<h3 id="orgf4d5405"><span class="section-number-3">13.19</span> Updating Deployment Script</h3>
+<div class="outline-text-3" id="text-13-19">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 9: </span><code>.travis.yml</code></label><pre class="src src-yaml"><span class="org-variable-name">env</span>:
+  <span class="org-variable-name">global</span>:
+<span class="org-yaml-tab">    </span><span class="org-comment-delimiter"># </span><span class="org-comment">Define the environment variable for Git SHA</span>
+<span class="org-yaml-tab">    </span>- SHA=$(git rev-parse HEAD)
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 10: </span><code>deploy.sh</code></label><pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Set Git SHA as image tag</span>
+docker build ... -t ...:$<span class="org-variable-name">SHA</span> ...
+docker push ...:$<span class="org-variable-name">SHA</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">Reference Git SHA when setting image</span>
+kubectl set image ...:$<span class="org-variable-name">SHA</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfb8f207" class="outline-3">
+<h3 id="orgfb8f207"><span class="section-number-3">13.20</span> Configure Google Cloud CLI on Cloud Console</h3>
+<div class="outline-text-3" id="text-13-20">
+<p>
+The Postgres <code>Deployment</code> of the cluster needs a Kubernetes <code>Secret</code> object to hold the password. This needs to be done on the provider's side.
+</p>
+
+<p>
+To do this on Google Cloud, on <a href="https://console.cloud.google.com/kubernetes/list">Google Cloud Platform | Kubernetes Engine</a> click "Activate Cloud Shell" to open a console, where <code>kubectl</code> commands can be executed to configure the cluster.
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 11: </span>Environment setup for using <code>kubectl</code></label><pre class="src src-sh">gcloud config set project &lt;project_id&gt;
+gcloud config set compute/zone &lt;location&gt;
+gcloud container clusters get-credentials &lt;cluster_name&gt;
+<span class="org-comment-delimiter"># </span><span class="org-comment">Confirm setup is successful</span>
+kubectl get all
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb4caa06" class="outline-3">
+<h3 id="orgb4caa06"><span class="section-number-3">13.21</span> Create Secret on Google Cloud</h3>
+<div class="outline-text-3" id="text-13-21">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 12: </span>Create <code>Secret</code> in Cloud Shell</label><pre class="src src-sh">kubectl create secret generic pg-password --from-literal <span class="org-variable-name">PG_PASSWORD</span>=123456
+</pre>
+</div>
+
+<p>
+Confirm the <code>Secret</code> is created under <a href="https://console.cloud.google.com/kubernetes/config">Google Cloud Platform | Kubernetes Engine | Configuration</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org22735e8" class="outline-3">
+<h3 id="org22735e8"><span class="section-number-3">13.22</span> Helm Setup</h3>
+<div class="outline-text-3" id="text-13-22">
+<p>
+<code>ingress-unix</code> is needed to handle ingress. Helm can be used to manage <code>ingress-unix</code> on Google Cloud cluster. Go to <a href="https://helm.sh/docs/using_helm/#from-script">Helm Documentation | Installing Helm | Using Script</a>, run the commands in Cloud Shell to install Helm.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">curl -LO https://git.io/get_helm.sh
+chmod 700 get_helm.sh
+./get_helm.sh
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdf7edef" class="outline-3">
+<h3 id="orgdf7edef"><span class="section-number-3">13.23</span> Kubernetes Security with RBAC</h3>
+<div class="outline-text-3" id="text-13-23">
+<p>
+Tiller (server part of Helm) needs proper Kubernetes RBAC (Role-Based Access Control) permissions to modify the cluster. See <a href="https://helm.sh/docs/using_helm/#tiller-and-role-based-access-control">Helm Documentation | Role-Based Access Control</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7d1dd61" class="outline-3">
+<h3 id="org7d1dd61"><span class="section-number-3">13.24</span> Assign Tiller a Service Account</h3>
+<div class="outline-text-3" id="text-13-24">
+<p>
+A service account and a <code>ClusterRoleBinding</code> need to be created to grant Tiller the permissions.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">kubectl create serviceaccount --namespace kube-system tiller
+kubectl create clusterrolebinding tiller-cluster-role --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+</pre>
+</div>
+
+<p>
+Initialize Helm with the service account just created.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">helm init --service-account tiller --upgrade
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org09a745b" class="outline-3">
+<h3 id="org09a745b"><span class="section-number-3">13.25</span> ingress-nginx with Helm</h3>
+<div class="outline-text-3" id="text-13-25">
+<p>
+Install <code>ingress-nginx</code> with Helm by following <a href="https://kubernetes.github.io/ingress-nginx/deploy/#using-helm">ingress-nginx | Installation Guide | Using Helm</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">helm install stable/nginx-ingress --name my-nginx --set rbac.create=true
+</pre>
+</div>
+
+<p>
+The ingress-related objects will be created behind the scene.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5048d0b" class="outline-3">
+<h3 id="org5048d0b"><span class="section-number-3">13.26</span> The Result of ingress-nginx</h3>
+<div class="outline-text-3" id="text-13-26">
+<p>
+Go to <a href="https://console.cloud.google.com/kubernetes/workload">Google Cloud Platform | Kubernetes Engine | Workloads</a> and confirm the <code>ingress-controller</code> and <code>ingress-default-backend</code> are created.
+</p>
+
+<p>
+Go to <a href="https://console.cloud.google.com/kubernetes/discovery">Google Cloud Platform | Kubernetes Engine | Services</a> and confirm the endpoints of <code>ingress-controller</code> are created and they respond with a "default backend 404" message.
+</p>
+
+<p>
+Go to <a href="https://console.cloud.google.com/net-services/loadbalancing/loadBalancers/list">Google Cloud Platform | Network Services | Load Balancing</a> and confirm the Google Cloud load balancer is created.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf8d4058" class="outline-3">
+<h3 id="orgf8d4058"><span class="section-number-3">13.27</span> Finally Deployment</h3>
+<div class="outline-text-3" id="text-13-27">
+<p>
+Commit and push the Kubernetes repo. Wait for Travis CI build to finish. Go to <a href="https://console.cloud.google.com/kubernetes/workload">Google Cloud Platform | Kubernetes Engine | Workloads</a> and confirm the deployments are created.
+</p>
+
+<p>
+Go to <a href="https://console.cloud.google.com/kubernetes/discovery">Google Cloud Platform | Kubernetes Engine | Services</a> and click on the load balancer endpoint and confirm the app works.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7c23ecf" class="outline-3">
+<h3 id="org7c23ecf"><span class="section-number-3">13.28</span> Workflow for Changing in Prod</h3>
+<div class="outline-text-3" id="text-13-28">
+<ol class="org-ol">
+<li>Checkout a new branch and make the changes.</li>
+<li>Make a PR to master branch.</li>
+<li>Travis CI runs test on the PR.</li>
+<li>Merge the PR into master branch.</li>
+<li>Travis CI runs deployment.</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbab8d4e" class="outline-2">
+<h2 id="orgbab8d4e"><span class="section-number-2">14</span> HTTPS Setup with Kubernetes</h2>
+<div class="outline-text-2" id="text-14">
+</div><div id="outline-container-orgb2a648c" class="outline-3">
+<h3 id="orgb2a648c"><span class="section-number-3">14.1</span> HTTPS Setup Overview</h3>
+<div class="outline-text-3" id="text-14-1">
+<p>
+HTTPS certificate for Kubernetes cluster can be provided for free by Let's Encrypt. General flow of issuing a certificate:
+</p>
+
+<ol class="org-ol">
+<li>Kubernetes cluster sends request to Let's Encrypt, claiming the ownership of a certain domain name and requests a certificate.</li>
+<li>Let's Encrypt sends request to a random path under the domain name and expects a response containing certain info.</li>
+<li>If Let's Encrypt gets the expected response, a certificate will be issued valid for 90 days.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org89e6be3" class="outline-3">
+<h3 id="org89e6be3"><span class="section-number-3">14.2</span> Domain Name Setup</h3>
+<div class="outline-text-3" id="text-14-2">
+<ol class="org-ol">
+<li>Register a domain name at <a href="https://domains.google.com">Google Domains</a>.</li>
+<li>Get the public IP of the cluster at <a href="https://console.cloud.google.com/kubernetes/discovery">Google Cloud Platform | Kubernetes Engine | Services</a>.</li>
+<li>Under DNS tab of the domain name settings, add 2 records:</li>
+</ol>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>Name</b></th>
+<th scope="col" class="org-left"><b>Type</b></th>
+<th scope="col" class="org-left"><b>TTL</b></th>
+<th scope="col" class="org-left"><b>Data</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">@</td>
+<td class="org-left">A</td>
+<td class="org-left">1H</td>
+<td class="org-left">&lt;cluster_ip&gt;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">www</td>
+<td class="org-left">CNAME</td>
+<td class="org-left">1H</td>
+<td class="org-left">&lt;domain_name&gt;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgd58d163" class="outline-3">
+<h3 id="orgd58d163"><span class="section-number-3">14.3</span> cert-manager Install</h3>
+<div class="outline-text-3" id="text-14-3">
+<p>
+<a href="https://github.com/jetstack/cert-manager">cert-manager</a> can be used to manage certificates on Kubernetes cluster. Go to <a href="https://docs.cert-manager.io/en/latest/getting-started/install.html#installing-with-helm">cert-manager Documentation | Installing with Helm</a> and run the command in Google Cloud Console.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.7/deploy/manifests/00-crds.yaml
+
+kubectl create namespace cert-manager
+kubectl label namespace cert-manager certmanager.k8s.io/disable-validation=true
+
+helm repo add jetstack https://charts.jetstack.io
+helm repo update
+
+helm install --name cert-manager --namespace cert-manager --version v0.7.2 --set webhook.enabled=false jetstack/cert-manager
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9421b75" class="outline-3">
+<h3 id="org9421b75"><span class="section-number-3">14.4</span> How to Wire Up cert-manager</h3>
+<div class="outline-text-3" id="text-14-4">
+
+<div class="figure">
+<p><img src="../images/docker_and_kubernetes/31.png" alt="31.png" />
+</p>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>Cert Manager</b></th>
+<th scope="col" class="org-left">Objects (deployment, role) that manipulate the cluster to manage certificates</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>Issuer</b></td>
+<td class="org-left">Object describing how to obtain a certificate from an authority, e.g. Let's Encrypt</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>Certificate</b></td>
+<td class="org-left">Object describing the certificate to be obtained, e.g. issuer, valid period</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+The Issuer and Certificate objects need to be setup by yaml config files and deployed in the cluster. When they are ready, the cert manager will communicate with the authority to obtain the certificate.   
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3fccbcf" class="outline-3">
+<h3 id="org3fccbcf"><span class="section-number-3">14.5</span> Issuer Config File</h3>
+<div class="outline-text-3" id="text-14-5">
+<p>
+<a href="https://docs.cert-manager.io/en/latest/reference/issuers.html">cert-manager Documentation | Issuers</a>
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 13: </span><code>issuer.yaml</code></label><pre class="src src-yaml"><span class="org-variable-name">apiVersion</span>: certmanager.k8s.io/v1alpha1
+<span class="org-variable-name">kind</span>: ClusterIssuer
+<span class="org-variable-name">metadata</span>:
+  <span class="org-variable-name">name</span>: letsencrypt-prod
+<span class="org-variable-name">spec</span>:
+  <span class="org-variable-name">acme</span>: <span class="org-comment-delimiter"># </span><span class="org-comment">Automatic Certificate Management Environment</span>
+<span class="org-yaml-tab">    </span><span class="org-variable-name">server</span>: https://acme-v02.api.letsencrypt.org/directory
+<span class="org-yaml-tab">    </span><span class="org-variable-name">email</span>: &lt;email&gt;
+<span class="org-yaml-tab">    </span><span class="org-variable-name">privateKeySecretRef</span>: <span class="org-comment-delimiter"># </span><span class="org-comment">Used for comm between cluster and Let's Encrypt</span>
+<span class="org-yaml-tab">    </span><span class="org-variable-name">  name</span>: letsencrypt-prod
+<span class="org-yaml-tab">    </span><span class="org-variable-name">http01</span>: {} <span class="org-comment-delimiter"># </span><span class="org-comment">Use HTTP-01 challenge mechanism</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga97ed1e" class="outline-3">
+<h3 id="orga97ed1e"><span class="section-number-3">14.6</span> Certificate Config File</h3>
+<div class="outline-text-3" id="text-14-6">
+<p>
+<a href="https://docs.cert-manager.io/en/latest/reference/certificates.html">cert-manager Documentation | Certificates</a>
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 14: </span><code>certificate.yaml</code></label><pre class="src src-yaml"><span class="org-variable-name">apiVersion</span>: certmanager.k8s.io/v1alpha1
+<span class="org-variable-name">kind</span>: Certificate
+<span class="org-variable-name">metadata</span>:
+  <span class="org-variable-name">name</span>: &lt;name&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">e.g. example-com-tls</span>
+<span class="org-variable-name">spec</span>:
+  <span class="org-variable-name">secretName</span>: &lt;name&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">The Secret to store the certificate after obtain, e.g. example-com-tls-secret</span>
+  <span class="org-variable-name">issuerRef</span>:
+<span class="org-yaml-tab">    </span><span class="org-variable-name">name</span>: letsencrypt-prod
+<span class="org-yaml-tab">    </span><span class="org-variable-name">kind</span>: ClusterIssuer
+  <span class="org-variable-name">commonName</span>: &lt;domain&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">e.g. example.com</span>
+  <span class="org-variable-name">dnsNames</span>: <span class="org-comment-delimiter"># </span><span class="org-comment">All domains to be associated with the certificate</span>
+<span class="org-yaml-tab">    </span>- &lt;domain&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">e.g. example.com, www.example.com</span>
+  <span class="org-variable-name">acme</span>:
+<span class="org-yaml-tab">    </span><span class="org-variable-name">config</span>:
+<span class="org-yaml-tab">    </span><span class="org-variable-name">  - http01</span>:
+<span class="org-yaml-tab">        </span><span class="org-variable-name">  ingressClass</span>: nginx
+<span class="org-yaml-tab">        </span><span class="org-variable-name">domains</span>: <span class="org-comment-delimiter"># </span><span class="org-comment">Domains to be used for the HTTP-01 challenge</span>
+<span class="org-yaml-tab">        </span>  - &lt;domain&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">e.g. example.com, www.example.com</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org67b3267" class="outline-3">
+<h3 id="org67b3267"><span class="section-number-3">14.7</span> Deploy Changes</h3>
+<div class="outline-text-3" id="text-14-7">
+<p>
+Commit the repo and wait for Travis CI to deploy the changes to Google Cloud.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org20a5d44" class="outline-3">
+<h3 id="org20a5d44"><span class="section-number-3">14.8</span> Confirm the Certificate</h3>
+<div class="outline-text-3" id="text-14-8">
+<p>
+Confirm the Certificate and Secret object being created in Google Cloud Console:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">kubectl get certificates
+kubectl describe certificates
+<span class="org-comment-delimiter"># </span><span class="org-comment">There should be one message of "Certificate issued successfully" at the end</span>
+kubectl get secrets
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbb4f6be" class="outline-3">
+<h3 id="orgbb4f6be"><span class="section-number-3">14.9</span> Ingress Config for HTTPS</h3>
+<div class="outline-text-3" id="text-14-9">
+<p>
+The Ingress Service needs to be updated to serve HTTPS.
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 15: </span><code>ingress-service.yaml</code></label><pre class="src src-sh">...
+metadata:
+  annotations:
+    ...
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod <span class="org-comment-delimiter"># </span><span class="org-comment">Name of the ClusterIssuer object</span>
+    nginx.ingress.kubernetes.io/ssl-redirect: <span class="org-string">'true'</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Always redirect users to HTTPS</span>
+spec:
+  tls:
+    - hosts:
+        - &lt;domain&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">e.g. example.com, www.example.com</span>
+      secretName: &lt;name&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">Name of the Secret object storing the certificate</span>
+  rules:
+    - host: &lt;domain&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">e.g. example.com</span>
+      ... <span class="org-comment-delimiter"># </span><span class="org-comment">Don't change the rest, just add "host" to the existing rule</span>
+    - host: &lt;domain&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">e.g. www.example.com</span>
+      ... <span class="org-comment-delimiter"># </span><span class="org-comment">Copy the same config as the rule above</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org470870e" class="outline-3">
+<h3 id="org470870e"><span class="section-number-3">14.10</span> It Worked</h3>
+<div class="outline-text-3" id="text-14-10">
+<p>
+Go to <a href="https://console.cloud.google.com/kubernetes/discovery">Google Cloud Platform | Kubernetes Engine | Services</a> and confirm the ingress service has endpoints of the domain name. Go to the domain name and confirm it's directed to HTTPS automatically.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org817bd31" class="outline-2">
+<h2 id="org817bd31"><span class="section-number-2">15</span> Links</h2>
+<div class="outline-text-2" id="text-15">
+<ol class="org-ol">
+<li><a href="https://github.com/kubernetes/ingress-nginx">ingress-nginx</a></li>
+<li><a href="https://letsencrypt.org/">Let's Encrypt</a></li>
+<li><a href="https://github.com/jetstack/cert-manager">cert-manager</a></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2019-05-18 Sat 19:44</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

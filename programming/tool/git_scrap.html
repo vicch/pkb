@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-12-26 Wed 16:15 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Git Scrap</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Git Scrap</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orga661d21">1. Oh shit, git!</a></li>
+<li><a href="#org01f4c3c">2. How to revert multiple git commits?</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orga661d21" class="outline-2">
+<h2 id="orga661d21"><span class="section-number-2">1</span> Oh shit, git!</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<a href="http://ohshitgit.com/">Source</a>
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 1: </span>I did something terribly wrong, please tell me git has a magic time machine.</label><pre class="src src-sh">git reflog
+<span class="org-comment-delimiter"># </span><span class="org-comment">a list of everything done in git across all branches, each one has an index HEAD@{index}</span>
+git reset HEAD@{index}
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>To recover accidentally deleted files.</li>
+<li>To remove testing files that broke the repo.</li>
+<li>To recover after a bad merge.</li>
+</ul>
+
+<hr />
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 2: </span>I committed and immediately realized I need to make one small change.</label><pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">make the changes</span>
+git add .
+<span class="org-comment-delimiter"># </span><span class="org-comment">or add individual files</span>
+git commit --amend
+<span class="org-comment-delimiter"># </span><span class="org-comment">follow prompts to change or keep the commit message</span>
+</pre>
+</div>
+
+<p>
+You can also make the change as a new commit and then <code>rebase -i</code> to squash them together, but this is much faster.
+</p>
+
+<hr />
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 3: </span>I need to change the message on my last commit.</label><pre class="src src-sh">git commit --amend
+</pre>
+</div>
+
+<hr />
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 4: </span>I accidentally committed something to master that should have been on a brand new branch.</label><pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">create a new branch from the current state of master</span>
+git branch new-branch
+<span class="org-comment-delimiter"># </span><span class="org-comment">remove the commit from the master branch</span>
+git reset HEAD~ --hard
+git checkout new-branch
+<span class="org-comment-delimiter"># </span><span class="org-comment">continue to work on new branch</span>
+</pre>
+</div>
+
+<p>
+This doesn't work if it's already pushed to origin. And if you tried other things first, you might need to <code>git reset HEAD@{index}</code> instead of <code>HEAD~</code>.
+</p>
+
+<hr />
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 5: </span>I accidentally committed to the wrong branch.</label><pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">undo the last commit, but leave the changes available</span>
+git reset HEAD~ --soft
+git stash
+<span class="org-comment-delimiter"># </span><span class="org-comment">move to the correct branch</span>
+git checkout correct-branch
+git stash pop
+git add .
+git commit -m <span class="org-string">"message"</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">continue to work on correct branch</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 6: </span>Another way is to use cherry-pick.</label><pre class="src src-sh">git checkout correct-branch
+<span class="org-comment-delimiter"># </span><span class="org-comment">grab the last commit to master</span>
+git cherry-pick master
+<span class="org-comment-delimiter"># </span><span class="org-comment">delete the commit from master</span>
+git checkout master
+git reset HEAD~ --hard
+</pre>
+</div>
+
+<hr />
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 7: </span>I tried to run a diff but nothing happened.</label><pre class="src src-sh">git diff --staged
+</pre>
+</div>
+
+<p>
+Git won't do a diff of files that have been <code>add</code>-ed to staging area without this flag.
+</p>
+
+<hr />
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 8: </span>I give up.</label><pre class="src src-sh"><span class="org-builtin">cd</span> ..
+sudo rm -r git-repo
+git clone https://some.github.url/git-repo.git
+<span class="org-builtin">cd</span> git-repo
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org01f4c3c" class="outline-2">
+<h2 id="org01f4c3c"><span class="section-number-2">2</span> How to revert multiple git commits?</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<a href="https://stackoverflow.com/questions/1463340/how-to-revert-multiple-git-commits">Source</a>
+</p>
+
+<p>
+I have a git repository that looks like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text">A &lt;- B &lt;- C &lt;- D
+</pre>
+</div>
+
+<p>
+I want the head of the branch to point to <code>A</code>, i.e. I want <code>B</code>, <code>C</code>, <code>D</code>, and <code>HEAD</code> to disappear and I want <code>HEAD</code> to be synonymous with <code>A</code>. How do I revert multiple commits?
+</p>
+
+<hr />
+
+<p>
+The general rule is that you should not rewrite (change) git history that you have published, because somebody might have based their work on it. If you rewrite (change) history, you would make problems with merging their changes and with updating for them.
+</p>
+
+<p>
+So the solution is to create a new commit which reverts changes that you want to get rid of:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text">A &lt;- B &lt;- C &lt;- D &lt;- [(BCD)^-1]
+</pre>
+</div>
+
+<p>
+You can get the required situation using the following commands:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ git revert --no-commit D
+$ git revert --no-commit C
+$ git revert --no-commit B
+$ git commit -m <span class="org-string">"Revert B, C, D"</span>
+</pre>
+</div>
+
+<p>
+Alternate solution would be to checkout contents of commit <code>A</code>, and commit this state:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ git checkout -f A -- .
+$ git commit -a
+</pre>
+</div>
+
+<p>
+Then you would have the following situation:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text">A &lt;- B &lt;- C &lt;- D &lt;- A'
+</pre>
+</div>
+
+<p>
+The commit <code>A'</code> has the same contents as commit <code>A</code>, but is a different commit (commit message, parents, commit date).
+</p>
+
+<p>
+Another solution builds upon the same idea:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ git reset --hard A
+$ git reset --soft @{1}  <span class="org-comment-delimiter"># </span><span class="org-comment">Or ORIG_HEAD, which is D</span>
+$ git commit -m <span class="org-string">"Revert B, C, D"</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2018-12-26 Wed 16:15</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

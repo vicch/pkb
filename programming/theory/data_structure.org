@@ -1,0 +1,1370 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Data Structure
+
+* 数据结构
+** 比较
+
+|          | 优点                                 | 缺点                         |
+|----------+--------------------------------------+------------------------------|
+| 无序数组 | 插入快；如果知道下标，可以快速存取   | 查找、删除慢；大小固定       |
+|----------+--------------------------------------+------------------------------|
+| 有序数组 | 查找快                               | 插入、删除慢；大小固定       |
+|----------+--------------------------------------+------------------------------|
+| 链表     | 插入、删除快                         | 查找慢                       |
+|----------+--------------------------------------+------------------------------|
+| 二叉树   | 插入、删除、查找快（如果树保持平衡） | 删除算法复杂                 |
+|----------+--------------------------------------+------------------------------|
+| 红黑树   | 插入、删除、查找快；树总是平衡的     | 算法复杂                     |
+|----------+--------------------------------------+------------------------------|
+| 2-3-4 树 | 插入、删除、查找快；树总是平衡的     | 算法复杂                     |
+|----------+--------------------------------------+------------------------------|
+| 哈希表   | 插入、查找快（通过键查值）           | 删除慢；对存储空间使用不充分 |
+|----------+--------------------------------------+------------------------------|
+| 栈       | 先进后出的方式                       | 除了栈顶，存取其他元素慢     |
+|----------+--------------------------------------+------------------------------|
+| 队列     | 先进先出的方式                       | 除了队列首尾，存取其他元素慢 |
+|----------+--------------------------------------+------------------------------|
+| 堆       | 插入、删除快；查找最大（小）元素快   | 查找其他元素慢               |
+|----------+--------------------------------------+------------------------------|
+| 图       | 对现实世界建模                       | 某些算法慢且复杂             |
+
+|                    | *平均访问*   | *最差访问* | *平均搜索*   | *最差搜索* | *平均插入删除* | *最差插入删除* | *空间*        |
+|--------------------+--------------+------------+--------------+------------+----------------+----------------+---------------|
+| [[http://en.wikipedia.org/wiki/Array_data_structure][Array]]              | $O(1)$       | 同         | $O(n)$       | 同         | $O(n)$         | 同             | $O(n)$        |
+|--------------------+--------------+------------+--------------+------------+----------------+----------------+---------------|
+| [[http://en.wikipedia.org/wiki/Stack_(abstract_data_type)][Stack]]              | $O(n)$       | 同         | $O(n)$       | 同         | $O(1)$         | 同             | $O(n)$        |
+|--------------------+--------------+------------+--------------+------------+----------------+----------------+---------------|
+| [[http://en.wikipedia.org/wiki/Singly_linked_list#Singly_linked_lists][Single-Linked List]] | $O(n)$       | 同         | $O(n)$       | 同         | $O(1)$         | 同             | $O(n)$        |
+|--------------------+--------------+------------+--------------+------------+----------------+----------------+---------------|
+| [[http://en.wikipedia.org/wiki/Doubly_linked_list][Double-Linked List]] | $O(n)$       | 同         | $O(n)$       | 同         | $O(1)$         | 同             | $O(n)$        |
+|--------------------+--------------+------------+--------------+------------+----------------+----------------+---------------|
+| [[http://en.wikipedia.org/wiki/Skip_list][Skip List]]          | $O(\log{n})$ | $O(n)$     | $O(\log{n})$ | $O(n)$     | $O(\log{n})$   | $O(n)$         | $O(n\log{n})$ |
+|--------------------+--------------+------------+--------------+------------+----------------+----------------+---------------|
+| [[http://en.wikipedia.org/wiki/Binary_search_tree][Binary Search Tree]] | $O(\log{n})$ | $O(n)$     | $O(\log{n})$ | $O(n)$     | $O(\log{n})$   | $O(n)$         | $O(n)$        |
+|--------------------+--------------+------------+--------------+------------+----------------+----------------+---------------|
+| [[http://en.wikipedia.org/wiki/B_tree][B Tree]]             | $O(\log{n})$ | 同         | $O(\log{n})$ | 同         | $O(\log{n})$   | 同             | $O(n)$        |
+|--------------------+--------------+------------+--------------+------------+----------------+----------------+---------------|
+| [[http://en.wikipedia.org/wiki/Red-black_tree][Red-Black Tree]]     | $O(\log{n})$ | 同         | $O(\log{n})$ | 同         | $O(\log{n})$   | 同             | $O(n)$        |
+|--------------------+--------------+------------+--------------+------------+----------------+----------------+---------------|
+| [[http://en.wikipedia.org/wiki/AVL_tree][AVL Tree]]           | $O(\log{n})$ | 同         | $O(\log{n})$ | 同         | $O(\log{n})$   | 同             | $O(n)$        |
+|--------------------+--------------+------------+--------------+------------+----------------+----------------+---------------|
+| [[https://en.wikipedia.org/wiki/Splay_tree][Splay Tree]]         | -            | -          | $O(\log{n})$ | 同         | $O(\log{n})$   | 同             | $O(n)$        |
+|--------------------+--------------+------------+--------------+------------+----------------+----------------+---------------|
+| [[https://en.wikipedia.org/wiki/Cartesian_tree][Cartesian Tree]]     | -            | -          | $O(\log{n})$ | $O(n)$     | $O(\log{n})$   | $O(n)$         | $O(n)$        |
+|--------------------+--------------+------------+--------------+------------+----------------+----------------+---------------|
+| [[http://en.wikipedia.org/wiki/Hash_table][Hash Table]]         | -            | -          | $O(1)$       | $O(n)$     | $O(1)$         | $O(n)$         | $O(n)$        |
+  
+** 选择
+
+file:../images/data_structure/01.png
+
+只有简单数据结构（数组、链表）的性能太差时，才需要使用复杂的数据结构。
+
+* 数据类型
+
+从结构上看，所有的数据最终都可以分解成三种类型：
+
+#+ATTR_HTML: :class no-border
+| *标量（scalar）*   | 一个单独的字符串（string）或数字（number）。              |
+|--------------------+-----------------------------------------------------------|
+| *序列（sequence）* | 若干相关的数据按照一定顺序并列在一起。                    |
+|                    | 又称数组（array）或列表（list）。                         |
+|--------------------+-----------------------------------------------------------|
+| *映射（mapping）*  | 一组键值对（key/value），即每个数据有名称和与之对应的值。 |
+|                    | 又称散列（hash）或字典（dictionary）。                    |
+
+#+ATTR_HTML: :class no-border
+| *Primitive types* | Boolean               |
+|                   | Character             |
+|                   | Integer               |
+|                   | Floating-point        |
+|                   | Enumerated            |
+|-------------------+-----------------------|
+| *Composite types* | Array                 |
+|                   | Record, tuple, struct |
+|                   | Union, tagged union   |
+|                   | Variant               |
+|-------------------+-----------------------|
+| *Abstract types*  | List                  |
+|                   | Associative array     |
+|                   | Stack, queue          |
+|                   | Tree, graph           |
+|                   | Set, multiset         |
+|                   | Container             |
+
+* 数组
+
+一组相同类型数据的集合，存储空间相邻，可通过索引访问。
+
+-----
+*空间*
+
+适合数据量较小的场合，且大小事先可预测（存储空间足够大的情况下不重要）。
+
+数组和计算机的存储器系统有直接的对应关系。 @@html:<br />@@ 
+可以把整个计算机存储器想象成一个数组，存储器的地址和数组的索引相对应。
+
+-----
+*时间*
+
+可以假设，数组访问可以用仅仅几条机器指令完成。
+
+-----
+*使用*
+
+在引用数组元素时，需要确保：
+- 索引非负数且小于数组实际大小，
+- 在元素的空间里存储了有效的内容。
+
+指向数组的指针意义重大，当作为参数传递给一个函数时，无需为整个数组创造一份拷贝，就可以访问其中的对象。 @@html:<br />@@ 
+在使用大型数组时这种能力尤其重要。
+* 链表
+
+一组数据项的集合，每个元素都含有访问下一个元素所需的信息。
+
+适合频繁地插入、删除元素的场合。
+
+相对于数组：
+- 可以迅速重新安排元素次序，
+- 不能迅速访问任意一个指定元素。
+
+当今的计算机硬件对内存是否连续更为敏感，而链表恰恰会破坏这种顺序读取。
+
+** 单向链表 C 实现
+*** =list.h=
+
+#+BEGIN_SRC c
+#ifndef LIST_H
+
+#define LIST_H
+
+#include <stdlib.h>
+
+/* 链表元素 */
+typedef struct ListElmt_ {
+    void             *data;
+    struct ListElmt_ *next;
+} ListElmt;
+
+/* 链表 */
+typedef struct List_ {
+    int      size;
+    int      (*match)(const void *key1, const void *key2);
+    void     (*destroy)(void *data);
+    ListElmt *head;
+    ListElmt *tail;
+} List;
+
+void list_init(List *list, void (*destroy)(void *data));
+void list_destroy(List *list);
+int list_ins_next(List *list, ListElmt *element, const void *data);
+int list_rem_next(List *list, ListElmt *element, void **data);
+
+#define list_size(list) ((list)->size)
+#define list_head(list) ((list)->head)
+#define list_tail(list) ((list)->tail)
+#define list_is_head(list, element) ((element) == (list)->head ? 1 : 0)
+#define list_is_tail(element) ((element)->next == NULL ? 1 : 0)
+#define list_data(element) ((element)->data)
+#define list_next(element) ((element)->next)
+
+#endif
+#+END_SRC
+
+*** =list.c=
+
+#+BEGIN_SRC c
+#include <stdlib.h>
+#include <string.h>
+#include "list.h"
+#+END_SRC
+
+**** 初始化
+
+#+BEGIN_SRC c
+void list_init(List *list, void (*destroy)(void *data))
+{
+    list->size = 0;
+    list->destroy = destroy;
+    list->head = NULL;
+    list->tail = NULL;
+
+    return;
+}
+#+END_SRC
+
+**** 销毁
+
+#+BEGIN_SRC c
+void list_destroy(List *list)
+{
+    void *data;
+
+    /* 遍历元素并销毁 */
+    while (list_size(list) > 0) {
+        if (list_rem_next(list, NULL, (void **)&data) == 0 && list->destroy != NULL) {
+            /* 调用自定义函数释放动态分配数据 */
+            list->destroy(data);
+        }
+    }
+
+    /* 清空结构 */
+    memset(list, 0, sizeof(List));
+
+    return;
+}
+#+END_SRC
+
+**** 插入元素
+
+#+BEGIN_SRC c
+/* 在指定元素后插入元素 */
+int list_ins_next(List *list, ListElmt *element, const void *data)
+{
+    ListElmt *new_element;
+
+    /* 分配空间 */
+    if ((new_element = (ListElmt *)malloc(sizeof(ListElmt))) == NULL)
+        return -1;
+
+    /* 插入元素 */
+    new_element->data = (void *)data;
+
+    if (element == NULL) {
+        /* 头部插入 */
+        if (list_size(list) == 0)
+            list->tail = new_element;
+        new_element->next = list->head;
+        list->head = new_element;
+    } else {
+        /* 非头部插入 */
+        if (element->next == NULL)
+            list->tail = new_element;
+        new_element->next = element->next;
+        element->next = new_element;
+    }
+
+    /* 元素个数增加 */
+    list->size++;
+
+    return 0;
+}
+#+END_SRC
+
+**** 删除元素
+
+#+BEGIN_SRC c
+/* 删除指定元素后的元素 */
+int list_rem_next(List *list, ListElmt *element, void **data)
+{
+    ListElmt *old_element;
+
+    /* 检查链表是否为空 */
+    if (list_size(list) == 0)
+        return -1;
+
+    /* 移除元素 */
+    if (element == NULL) {
+        /* 头部移除 */
+        *data = list->head->data;
+        old_element = list->head;
+        list->head = list->head->next;
+        if (list_size(list) == 1)
+            list->tail = NULL;
+
+    } else {
+        /* 非头部移除 */
+        if (element->next == NULL)
+            return -1;
+        *data = element->next->data;
+        old_element = element->next;
+        element->next = element->next->next;
+        if (element->next == NULL)
+            list->tail = element;
+    }
+
+    /* 释放空间 */
+    free(old_element);
+
+    /* 元素个数减少 */
+    list->size--;
+
+    return 0;
+}
+#+END_SRC
+
+** 双向链表 C 实现
+*** =dlist.h=
+
+#+BEGIN_SRC c
+#ifndef DLIST_H
+
+#define DLIST_H
+
+#include <stdlib.h>
+
+typedef struct DListElmt_ {
+    void              *data;
+    struct DListElmt_ *prev;
+    struct DListElmt_ *next;
+} DListElmt;
+
+typedef struct DList_ {
+    int       size;
+    int       (*match)(const void *key1, const void *key2);
+    void      (*destroy)(void *data);
+    DListElmt *head;
+    DListElmt *tail;
+} DList;
+
+void dlist_init(DList *list, void (*destroy)(void *data));
+void dlist_destroy(DList *list);
+int dlist_ins_next(DList *list, DListElmt *element, const void *data);
+int dlist_ins_prev(DList *list, DListElmt *element, const void *data);
+int dlist_remove(DList *list, DListElmt *element, void **data);
+
+#define dlist_size(list) ((list)->size)
+#define dlist_head(list) ((list)->head)
+#define dlist_tail(list) ((list)->tail)
+#define dlist_is_head(element) ((element)->prev == NULL ? 1 : 0)
+#define dlist_is_tail(element) ((element)->next == NULL ? 1 : 0)
+#define dlist_data(element) ((element)->data)
+#define dlist_next(element) ((element)->next)
+#define dlist_prev(element) ((element)->prev)
+
+#endif
+#+END_SRC
+
+*** =dlist.c=
+
+#+BEGIN_SRC c
+#include <stdlib.h>
+#include <string.h>
+#include "dlist.h"
+#+END_SRC
+
+**** 初始化
+
+#+BEGIN_SRC c
+void dlist_init(DList *list, void (*destroy)(void *data))
+{
+    list->size = 0;
+    list->destroy = destroy;
+    list->head = NULL;
+    list->tail = NULL;
+
+    return;
+}
+#+END_SRC
+
+**** 销毁
+
+#+BEGIN_SRC c
+void dlist_destroy(DList *list)
+{
+    void *data;
+
+    /* 遍历元素并移除 */
+    while (dlist_size(list) > 0) {
+        if (dlist_remove(list, dlist_tail(list), (void **)&data) == 0 && list->destroy != NULL) {
+            /* 调用自定义函数释放动态分配数据 */
+            list->destroy(data);
+        }
+    }
+
+    /* 清空结构 */
+    memset(list, 0, sizeof(DList));
+
+    return;
+}
+#+END_SRC
+
+**** 插入元素 1
+
+#+BEGIN_SRC c
+/* 在指定元素后插入元素 */
+int dlist_ins_next(DList *list, DListElmt *element, const void *data)
+{
+    DListElmt *new_element;
+
+    /* 除非链表为空，否则不允许指定元素为 NULL */
+    if (element == NULL && dlist_size(list) != 0)
+        return -1;
+
+    /* 分配空间 */
+    if ((new_element = (DListElmt *)malloc(sizeof(DListElmt))) == NULL)
+        return -1;
+
+    /* 插入元素 */
+    new_element->data = (void *)data;
+
+    if (dlist_size(list) == 0) {
+        /* 插入到空链表 */
+        list->head = new_element;
+        list->head->prev = NULL;
+        list->head->next = NULL;
+        list->tail = new_element;
+
+    } else {
+        /* 插入到非空链表 */
+        new_element->next = element->next;
+        new_element->prev = element;
+        if (element->next == NULL)
+           list->tail = new_element;
+        else
+           element->next->prev = new_element;
+        element->next = new_element;
+    }
+
+    /* 元素个数增加 */
+    list->size++;
+
+    return 0;
+}
+#+END_SRC
+
+**** 插入元素 2
+
+#+BEGIN_SRC c
+/* 在指定元素前插入元素 */
+int dlist_ins_prev(DList *list, DListElmt *element, const void *data)
+{
+    DListElmt *new_element;
+
+    /* 除非链表为空，否则不允许指定元素为 NULL */
+    if (element == NULL && dlist_size(list) != 0)
+        return -1;
+
+    /* 分配空间 */
+    if ((new_element = (DListElmt *)malloc(sizeof(DListElmt))) == NULL)
+        return -1;
+
+    /* 插入元素 */
+    new_element->data = (void *)data;
+
+    if (dlist_size(list) == 0) {
+        /* 插入到空链表 */
+        list->head = new_element;
+        list->head->prev = NULL;
+        list->head->next = NULL;
+        list->tail = new_element;
+
+    } else {
+        /* 插入到非空链表 */
+        new_element->next = element; 
+        new_element->prev = element->prev;
+        if (element->prev == NULL)
+            list->head = new_element;
+        else
+            element->prev->next = new_element;
+        element->prev = new_element;
+    }
+
+    /* 元素个数增加 */
+    list->size++;
+
+    return 0;
+}
+#+END_SRC
+
+**** 移除元素
+
+#+BEGIN_SRC c
+int dlist_remove(DList *list, DListElmt *element, void **data)
+{
+    /* 不允许指定元素为 NULL，或从空链表移除 */
+    if (element == NULL || dlist_size(list) == 0)
+        return -1;
+
+    /* 移除元素 */
+    *data = element->data;
+
+    if (element == list->head) {
+        /* 头部移除 */
+        list->head = element->next;
+        if (list->head == NULL)
+            list->tail = NULL;
+        else
+            element->next->prev = NULL;
+
+    } else {
+        /* 非头部移除 */
+        element->prev->next = element->next;
+        if (element->next == NULL)
+            list->tail = element->prev;
+        else
+            element->next->prev = element->prev;
+    }
+
+    /* 释放空间 */
+    free(element);
+
+    /* 元素个数减少 */
+    list->size--;
+
+    return 0;
+}
+#+END_SRC
+
+**** 初始化
+
+#+BEGIN_SRC c
+void list_init(List *list, void (*destroy)(void *data))
+{
+    list->size = 0;
+    list->destroy = destroy;
+    list->head = NULL;
+    list->tail = NULL;
+
+    return;
+}
+#+END_SRC
+
+**** 销毁
+
+#+BEGIN_SRC c
+void list_destroy(List *list)
+{
+    void *data;
+
+    /* 遍历元素并销毁 */
+    while (list_size(list) > 0) {
+        if (list_rem_next(list, NULL, (void **)&data) == 0 && list->destroy != NULL) {
+            /* 调用自定义函数释放动态分配数据 */
+            list->destroy(data);
+        }
+    }
+
+    /* 清空结构 */
+    memset(list, 0, sizeof(List));
+
+    return;
+}
+#+END_SRC
+
+**** 插入元素
+
+#+BEGIN_SRC c
+/* 在指定元素后插入元素 */
+int list_ins_next(List *list, ListElmt *element, const void *data)
+{
+    ListElmt *new_element;
+
+    /* 分配空间 */
+    if ((new_element = (ListElmt *)malloc(sizeof(ListElmt))) == NULL)
+        return -1;
+
+    /* 插入元素 */
+    new_element->data = (void *)data;
+
+    if (element == NULL) {
+        /* 头部插入 */
+        if (list_size(list) == 0)
+            list->tail = new_element;
+        new_element->next = list->head;
+        list->head = new_element;
+    } else {
+        /* 非头部插入 */
+        if (element->next == NULL)
+            list->tail = new_element;
+        new_element->next = element->next;
+        element->next = new_element;
+    }
+
+    /* 元素个数增加 */
+    list->size++;
+
+    return 0;
+}
+#+END_SRC
+
+**** 删除元素
+
+#+BEGIN_SRC c
+/* 删除指定元素后的元素 */
+int list_rem_next(List *list, ListElmt *element, void **data)
+{
+    ListElmt *old_element;
+
+    /* 检查链表是否为空 */
+    if (list_size(list) == 0)
+        return -1;
+
+    /* 移除元素 */
+    if (element == NULL) {
+        /* 头部移除 */
+        *data = list->head->data;
+        old_element = list->head;
+        list->head = list->head->next;
+        if (list_size(list) == 1)
+            list->tail = NULL;
+
+    } else {
+        /* 非头部移除 */
+        if (element->next == NULL)
+            return -1;
+        *data = element->next->data;
+        old_element = element->next;
+        element->next = element->next->next;
+        if (element->next == NULL)
+            list->tail = element;
+    }
+
+    /* 释放空间 */
+    free(old_element);
+
+    /* 元素个数减少 */
+    list->size--;
+
+    return 0;
+}
+#+END_SRC
+
+** 循环链表 C 实现
+*** =clist.h=
+
+#+BEGIN_SRC c
+#ifndef CLIST_H
+
+#define CLIST_H
+
+#include <stdlib.h>
+
+typedef struct CListElmt_ {
+    void              *data;
+    struct CListElmt_ *next;
+} CListElmt;
+
+typedef struct CList_ {
+    int       size;
+    int       (*match)(const void *key1, const void *key2);
+    void      (*destroy)(void *data);
+    CListElmt *head;
+} CList;
+
+void clist_init(CList *list, void (*destroy)(void *data));
+void clist_destroy(CList *list);
+int clist_ins_next(CList *list, CListElmt *element, const void *data);
+int clist_rem_next(CList *list, CListElmt *element, void **data);
+
+#define clist_size(list) ((list)->size)
+#define clist_head(list) ((list)->head)
+#define clist_data(element) ((element)->data)
+#define clist_next(element) ((element)->next)
+
+#endif
+#+END_SRC
+
+*** =clist.c=
+
+#+BEGIN_SRC c
+#include <stdlib.h>
+#include <string.h>
+#include "clist.h"
+#+END_SRC
+
+**** 初始化
+
+#+BEGIN_SRC c
+void clist_init(CList *list, void (*destroy)(void *data))
+{
+    list->size = 0;
+    list->destroy = destroy;
+    list->head = NULL;
+
+    return;
+}
+#+END_SRC
+
+**** 销毁
+
+#+BEGIN_SRC c
+void clist_destroy(CList *list)
+{
+    void *data;
+
+    /* 遍历元素并移除 */
+    while (clist_size(list) > 0) {
+        if (clist_rem_next(list, list->head, (void **)&data) == 0 && list->destroy != NULL) {
+            /* 调用自定义函数释放动态分配数据 */
+            list->destroy(data);
+        }
+    }
+
+    /* 清空结构 */
+    memset(list, 0, sizeof(CList));
+
+    return;
+}
+#+END_SRC
+
+**** 插入元素
+
+#+BEGIN_SRC c
+int clist_ins_next(CList *list, CListElmt *element, const void *data)
+{
+    CListElmt *new_element;
+
+    /* 分配空间 */
+    if ((new_element = (CListElmt *)malloc(sizeof(CListElmt))) == NULL)
+        return -1;
+
+    /* 插入元素 */
+    new_element->data = (void *)data;
+
+    if (clist_size(list) == 0) {
+        /* 插入到空链表 */
+        new_element->next = new_element;
+        list->head = new_element;
+
+    } else {
+        /* 插入到非空链表 */
+        new_element->next = element->next;
+        element->next = new_element;
+    }
+
+    /* 元素个数增加 */
+    list->size++;
+
+    return 0;
+}
+#+END_SRC
+
+**** 移除元素
+
+#+BEGIN_SRC c
+int clist_rem_next(CList *list, CListElmt *element, void **data)
+{
+    CListElmt *old_element;
+
+    /* 检查链表是否为空 */
+    if (clist_size(list) == 0)
+        return -1;
+
+    /* 移除元素 */
+    *data = element->next->data;
+
+    if (element->next == element) {
+        /* 移除最后一个元素 */
+        old_element = element->next;
+        list->head = NULL;
+
+    } else {
+        /* 移除非最后一个元素 */
+        old_element = element->next;
+        element->next = element->next->next;
+    }
+
+    /* 释放空间 */
+    free(old_element);
+
+    /* 元素个数减少 */
+    list->size--;
+
+    return 0;
+}
+#+END_SRC
+
+** 栈 C 实现（单向链表）
+*** =stack.h=
+
+#+BEGIN_SRC c
+#ifndef STACK_H
+
+#define STACK_H
+
+#include <stdlib.h>
+#include "list.h"
+
+/* 基于链表 */
+typedef List Stack;
+
+#define stack_init list_init
+#define stack_destroy list_destroy
+
+int stack_push(Stack *stack, const void *data);
+int stack_pop(Stack *stack, void **data);
+
+#define stack_peek(stack) ((stack)->head == NULL ? NULL : (stack)->head->data)
+#define stack_size list_size
+
+#endif
+#+END_SRC
+
+*** =stack.c=
+
+#+BEGIN_SRC c
+#include <stdlib.h>
+#include "list.h"
+#include "stack.h"
+#+END_SRC
+
+**** 入栈
+
+#+BEGIN_SRC c
+int stack_push(Stack *stack, const void *data)
+{
+    return list_ins_next(stack, NULL, data);
+}
+#+END_SRC
+
+**** 出栈
+
+#+BEGIN_SRC c
+int stack_pop(Stack *stack, void **data)
+{
+    return list_rem_next(stack, NULL, data);
+}
+#+END_SRC
+
+** 队列 C 实现（单向链表）
+*** =queue.h=
+
+#+BEGIN_SRC c
+#ifndef QUEUE_H
+
+#define QUEUE_H
+
+#include <stdlib.h>
+#include "list.h"
+
+/* 基于链表 */
+typedef List Queue;
+
+#define queue_init list_init
+#define queue_destroy list_destroy
+
+int queue_enqueue(Queue *queue, const void *data);
+int queue_dequeue(Queue *queue, void **data);
+
+#define queue_peek(queue) ((queue)->head == NULL ? NULL : (queue)->head->data)
+#define queue_size list_size
+
+#endif
+#+END_SRC
+
+*** =queue.c=
+
+#+BEGIN_SRC c
+#include <stdlib.h>
+#include "list.h"
+#include "queue.h"
+#+END_SRC
+
+**** 入队
+
+#+BEGIN_SRC c
+int queue_enqueue(Queue *queue, const void *data)
+{
+    return list_ins_next(queue, list_tail(queue), data);
+}
+#+END_SRC
+
+**** 出队
+
+#+BEGIN_SRC c
+int queue_dequeue(Queue *queue, void **data)
+{
+    return list_rem_next(queue, NULL, data);
+}
+#+END_SRC
+* 集合
+** 集合 C 实现
+*** =set.h=
+
+#+BEGIN_SRC c
+#ifndef SET_H
+
+#define SET_H
+
+#include <stdlib.h>
+#include "list.h"
+
+typedef List Set;
+
+void set_init(Set *set, int (*match)(const void *key1, const void *key2), void (*destroy)(void *data));
+#define set_destroy list_destroy
+int set_insert(Set *set, const void *data);
+int set_remove(Set *set, void **data);
+int set_union(Set *setu, const Set *set1, const Set *set2);
+int set_intersection(Set *seti, const Set *set1, const Set *set2);
+int set_difference(Set *setd, const Set *set1, const Set *set2);
+int set_is_member(const Set *set, const void *data);
+int set_is_subset(const Set *set1, const Set *set2);
+int set_is_equal(const Set *set1, const Set *set2);
+
+#define set_size(set) ((set)->size)
+
+#endif
+#+END_SRC
+
+*** =set.c=
+
+#+BEGIN_SRC c
+#include <stdlib.h>
+#include <string.h>
+#include "list.h"
+#include "set.h"
+#+END_SRC
+
+**** 初始化
+
+#+BEGIN_SRC c
+void set_init(
+    Set *set,
+    int (*match)(const void *key1, const void *key2),
+    void (*destroy)(void *data))
+{
+    list_init(set, destroy);
+    set->match = match;
+
+    return;
+}
+#+END_SRC
+
+**** 插入元素
+
+#+BEGIN_SRC c
+int set_insert(Set *set, const void *data)
+{
+    /* 不允许重复元素 */
+    if (set_is_member(set, data))
+        return 1;
+
+    return list_ins_next(set, list_tail(set), data);
+}
+#+END_SRC
+
+**** 移除元素
+
+#+BEGIN_SRC c
+int set_remove(Set *set, void **data)
+{
+    ListElmt *member, *prev;
+
+    /* 查找要移除的元素 */
+    prev = NULL;
+    for (member = list_head(set); member != NULL; member = list_next(member)) {
+        if (set->match(*data, list_data(member)))
+            break;
+        prev = member;
+    }
+
+    /* 未找到元素 */
+    if (member == NULL)
+        return -1;
+
+    return list_rem_next(set, prev, data);
+}
+#+END_SRC
+
+**** 并集
+
+#+BEGIN_SRC c
+int set_union(Set *setu, const Set *set1, const Set *set2)
+{
+    ListElmt *member;
+    void     *data;
+
+    /* 初始化结果集合 */
+    set_init(setu, set1->match, NULL);
+
+    /* 插入第一个集合的元素 */
+    for (member = list_head(set1); member != NULL; member = list_next(member)) {
+        data = list_data(member);
+        if (list_ins_next(setu, list_tail(setu), data) != 0) {
+            set_destroy(setu);
+            return -1;
+        }
+    }
+
+    /* 插入第二个集合的元素 */
+    for (member = list_head(set2); member != NULL; member = list_next(member)) {
+        if (set_is_member(set1, list_data(member))) {
+            /* 跳过重复元素 */
+            continue;
+
+        } else {
+            data = list_data(member);
+            if (list_ins_next(setu, list_tail(setu), data) != 0) {
+                set_destroy(setu);
+                return -1;
+            }
+        }
+    }
+
+    return 0;
+}
+#+END_SRC
+
+**** 交集
+
+#+BEGIN_SRC c
+int set_intersection(Set *seti, const Set *set1, const Set *set2)
+{
+    ListElmt *member;
+    void     *data;
+
+    /* 初始化结果集合 */
+    set_init(seti, set1->match, NULL);
+
+    /* 插入两个集合中共有的元素 */
+    for (member = list_head(set1); member != NULL; member = list_next(member)) {
+        if (set_is_member(set2, list_data(member))) {
+            data = list_data(member);
+            if (list_ins_next(seti, list_tail(seti), data) != 0) {
+                set_destroy(seti);
+                return -1;
+            }
+        }
+    }
+
+    return 0;
+}
+#+END_SRC
+
+**** 差集
+
+#+BEGIN_SRC c
+int set_difference(Set *setd, const Set *set1, const Set *set2)
+{
+    ListElmt *member;
+    void     *data;
+
+    /* 初始化结果集合 */
+    set_init(setd, set1->match, NULL);
+
+    /* 插入第一个集合中，不属于第二个集合的元素 */
+    for (member = list_head(set1); member != NULL; member = list_next(member)) {
+        if (!set_is_member(set2, list_data(member))) {
+            data = list_data(member);
+            if (list_ins_next(setd, list_tail(setd), data) != 0) {
+                set_destroy(setd);
+                return -1;
+            }
+        }
+    }
+
+    return 0;
+}
+#+END_SRC
+
+**** 成员判断
+
+#+BEGIN_SRC c
+int set_is_member(const Set *set, const void *data)
+{
+    ListElmt *member;
+
+    for (member = list_head(set); member != NULL; member = list_next(member)) {
+        if (set->match(data, list_data(member)))
+            return 1;
+    }
+
+    return 0;
+}
+#+END_SRC
+
+**** 子集判断
+
+#+BEGIN_SRC c
+int set_is_subset(const Set *set1, const Set *set2)
+{
+    ListElmt *member;
+
+    /* 先通过集合大小进行判断 */
+    if (set_size(set1) > set_size(set2))
+        return 0;
+
+    /* 遍历第一个集合的元素，判断是否属于第二个集合 */
+    for (member = list_head(set1); member != NULL; member = list_next(member)) {
+        if (!set_is_member(set2, list_data(member)))
+            return 0;
+    }
+
+    return 1;
+}
+#+END_SRC
+
+**** 等集判断
+
+#+BEGIN_SRC c
+int set_is_equal(const Set *set1, const Set *set2)
+{
+    /* 先通过集合大小进行判断 */
+    if (set_size(set1) != set_size(set2))
+        return 0;
+
+    /* 大小相等且第一个集合为第二个集合的子集，则集合相等 */
+    return set_is_subset(set1, set2);
+}
+#+END_SRC
+
+* 哈希表
+
+#+ATTR_HTML: :class no-border
+| *优点* | 插入、查找操作接近常量时间         |
+|--------+------------------------------------|
+| *缺点* | 基于数组，创建后大小固定，难以扩展 |
+|        | 难以对数据进行有序遍历             |
+|        | 一些哈希表被基本填满时，性能下降   |
+
+** 哈希方法
+
+从关键字获得哈希地址的方法。
+
+| 直接定址法   | 以每行唯一的数字值作为关键字，如 ID            |
+|--------------+------------------------------------------------|
+| 数字分析法   | 以某列数字值的一部分作为关键字，如手机号后四位 |
+|--------------+------------------------------------------------|
+| 平方取中法   | 取关键字平方后的中间几位                       |
+|--------------+------------------------------------------------|
+| 折叠法       | 将关键字分段，取这几部分的叠加和               |
+|--------------+------------------------------------------------|
+| 除留余数法   | 取关键字被某个不大于哈希表表长的数除后所得余数 |
+|--------------+------------------------------------------------|
+| 随机数法     | 选择一个随机函数，取关键字的随机函数值         |
+
+** 冲突
+
+不同的关键字可能得到同一哈希地址。
+
+| 开放地址法 | 产生冲突时，在目标地址之后寻找空位存放数据                         |
+|------------+--------------------------------------------------------------------|
+| 链地址法   | 数组不存放数据，而是存放数据链表，产生冲突时，在链表尾部加入新数据 |
+
+** 链式哈希表 C 实现
+*** =chtbl.h=
+
+#+BEGIN_SRC c
+#ifndef CHTBL_H
+
+#define CHTBL_H
+
+#include <stdlib.h>
+#include "list.h"
+
+typedef struct CHTbl_ {
+    int  buckets;                // 桶的个数
+    int  (*h)(const void *key);  // 哈希函数
+    int  (*match)(const void *key1, const void *key2); // 判断键是否匹配的函数
+    void (*destroy)(void *data); // 销毁桶的函数
+    int  size;                   // 表中元素数
+    List *table;                 // 桶链表
+} CHTbl;
+
+int chtbl_init(
+    CHTbl *htbl,
+    int buckets,
+    int (*h)(const void *key),
+    int (*match)(const void *key1, const void *key2),
+    void (*destroy)(void *data));
+void chtbl_destroy(CHTbl *htbl);
+int chtbl_insert(CHTbl *htbl, const void *data);
+int chtbl_remove(CHTbl *htbl, void **data);
+int chtbl_lookup(const CHTbl *htbl, void **data);
+
+#define chtbl_size(htbl) ((htbl)->size)
+
+#endif
+#+END_SRC
+
+*** =chtbl.c=
+
+#+BEGIN_SRC c
+#include <stdlib.h>
+#include <string.h>
+#include "list.h"
+#include "chtbl.h"
+#+END_SRC
+
+**** 初始化
+
+#+BEGIN_SRC c
+int chtbl_init(
+    CHTbl *htbl,
+    int buckets,
+    int (*h)(const void *key),
+    int (*match)(const void *key1, const void *key2),
+    void (*destroy)(void*data))
+{
+    int i;
+
+    /* 为桶分配空间 */
+    if ((htbl->table = (List *)malloc(buckets * sizeof(List))) == NULL)
+        return -1;
+
+    /* 初始化桶 */
+    htbl->buckets = buckets;
+    for (i = 0; i < htbl->buckets; i++)
+        list_init(&htbl->table[i], destroy);
+
+    /* 封装函数 */
+    htbl->h = h;
+    htbl->match = match;
+    htbl->destroy = destroy;
+
+    /* 初始化元素个数 */
+    htbl->size = 0;
+
+    return 0;
+}
+#+END_SRC
+**** 销毁
+
+#+BEGIN_SRC c
+void chtbl_destroy(CHTbl *htbl)
+{
+    int i;
+     
+    /* 销毁桶 */
+    for (i = 0; i < htbl->buckets; i++) {
+        list_destroy(&htbl->table[i]);
+    }
+
+    /* 释放内存 */
+    free(htbl->table);
+
+    /* 清空结构 */
+    memset(htbl, 0, sizeof(CHTbl));
+
+    return;
+}
+#+END_SRC
+**** 插入元素
+
+#+BEGIN_SRC c
+int chtbl_insert(CHTbl *htbl, const void *data)
+{
+    void *temp;
+    int bucket, retval;
+ 
+    /* 检查元素是否重复 */
+    temp = (void *)data;
+    if (chtbl_lookup(htbl, &temp) == 0)
+        return 1;
+
+    /* 将键散列化 */
+    bucket = htbl->h(data) % htbl->buckets;
+
+    /* 将元素插入相应的桶 */
+    if ((retval = list_ins_next(&htbl->table[bucket], NULL, data)) == 0)
+        htbl->size++;
+
+    return retval;
+}
+#+END_SRC
+**** 删除元素
+
+#+BEGIN_SRC c
+int chtbl_remove(CHTbl *htbl, void **data)
+{
+    ListElmt *element, *prev;
+    int bucket;
+
+    /* 将键散列化 */
+    bucket = htbl->h(*data) % htbl->buckets;
+
+    /* 维护一个指向待删除元素的指针 */
+    prev = NULL;
+
+    /* 遍历桶中元素 */
+    for (element = list_head(&htbl->table[bucket]); element != NULL; element = list_next(element)) {
+        if (htbl->match(*data, list_data(element))) {
+            /* 删除元素 */
+            if (list_rem_next(&htbl->table[bucket], prev, data) == 0) {
+                htbl->size--;
+                return 0;
+            } else {
+                return -1;
+            }
+        }
+        prev = element;
+    }
+
+    return -1;
+}
+#+END_SRC
+**** 查找元素
+
+#+BEGIN_SRC c
+int chtbl_lookup(const CHTbl *htbl, void **data)
+{
+    ListElmt *element;
+    int bucket;
+
+    /* 将键散列化 */
+    bucket = htbl->h(*data) % htbl->buckets;
+
+    /* 遍历桶中元素 */
+    for (element = list_head(&htbl->table[bucket]); element != NULL; element = list_next(element)) {
+        if (htbl->match(*data, list_data(element))) {
+            /* 返回表中数据 */
+            *data = list_data(element);
+            return 0;
+        }
+    }
+
+    return -1;
+}
+#+END_SRC
+* 树
+
+| 二叉查找树           |   |
+|----------------------+---|
+| 平衡二叉树（AVL 树） |   |
+|----------------------+---|
+| 红黑树               |   |
+|----------------------+---|
+| B- 树                |   |
+|----------------------+---|
+| B+ 树                |   |
+|----------------------+---|
+| 字典树（trie）       |   |
+
+** 遍历
+
+#+CAPTION: 深度优先遍历
+| 先序（pre-order）  | 根 → 左 → 右 |
+|--------------------+----------------|
+| 中序（in-order）   | 左 → 根 → 右 |
+|--------------------+----------------|
+| 后序（post-order） | 左 → 右 → 根 |
+
+** B- 树
+
+- 常用于磁盘等存储设备的一种平衡查找树；
+- 每个叶子节点到达根节点的距离都一样；
+
+* 堆
+
+又称优先队列（priority queue）。通常是可以被看做「树」的数组，表示为二叉树时，每个节点的值都大于或小于它的子节点的值。
+
+|                        | *Heapify* | *查找极值* | *分离极值*   | *提升键*     | *插入*       | *删除*       | *合并*       |
+|------------------------+-----------+------------+--------------+--------------+--------------+--------------+--------------|
+| [[http://en.wikipedia.org/wiki/Linked_list][Linked list (sorted)]]   | -         | $O(1)$     | $O(1)$       | $O(n)$       | $O(n)$       | $O(1)$       | $O(m+n)$     |
+|------------------------+-----------+------------+--------------+--------------+--------------+--------------+--------------|
+| [[http://en.wikipedia.org/wiki/Linked_list][Linked list (unsorted)]] | -         | $O(n)$     | $O(n)$       | $O(1)$       | $O(1)$       | $O(1)$       | $O(1)$       |
+|------------------------+-----------+------------+--------------+--------------+--------------+--------------+--------------|
+| [[http://en.wikipedia.org/wiki/Binary_heap][Binary heap]]            | $O(n)$    | $O(1)$     | $O(\log{n})$ | $O(\log{n})$ | $O(\log{n})$ | $O(\log{n})$ | $O(m+n)$     |
+|------------------------+-----------+------------+--------------+--------------+--------------+--------------+--------------|
+| [[http://en.wikipedia.org/wiki/Binomial_heap][Binomial Heap]]          | -         | $O(1)$     | $O(\log{n})$ | $O(\log{n})$ | $O(1)$       | $O(\log{n})$ | $O(\log{n})$ |
+|------------------------+-----------+------------+--------------+--------------+--------------+--------------+--------------|
+| [[http://en.wikipedia.org/wiki/Fibonacci_heap][Fibonacci heap]]         | -         | $O(1)$     | $O(\log{n})$ | $O(1)$       | $O(1)$       | $O(\log{n})$ | $O(1)$       |
+
+* 图
+
+|                        | *存储*   | *增加顶点* | *移除顶点* | *增加边界* | *移除边界* | *查询* |
+|------------------------+----------+------------+------------+------------+------------+--------|
+| [[http://en.wikipedia.org/wiki/Adjacency_list][Adjacency list]]（无向） | $O(V+E)$ | $O(1)$     | $O(V+E)$   | $O(1)$     | $O(E)$     | $O(V)$ |
+|------------------------+----------+------------+------------+------------+------------+--------|
+| [[http://en.wikipedia.org/wiki/Incidence_list][Incidence list]]（有向） | $O(V+E)$ | $O(1)$     | $O(E)$     | $O(1)$     | $O(E)$     | $O(E)$ |
+|------------------------+----------+------------+------------+------------+------------+--------|
+| [[http://en.wikipedia.org/wiki/Adjacency_matrix][Adjacency matrix]]       | $O(V^2)$ | $O(V^2)$   | $O(V^2)$   | $O(1)$     | $O(1)$     | $O(1)$ |
+|------------------------+----------+------------+------------+------------+------------+--------|
+| [[http://en.wikipedia.org/wiki/Incidence_matrix][Incidence matrix]]       | $O(VE)$  | $O(VE)$    | $O(VE)$    | $O(VE)$    | $O(VE)$    | $O(E)$ |
+
+* 链接
+
+1. [[http://opendatastructures.org/ods-cpp/][Open Data Structures (in C++)]]
+1. [[http://www.techug.com/post/bigo-cheatsheet.html][算法复杂度速查表]]

@@ -1,0 +1,679 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: 97 Things Every Programmer Should Know
+
+* API
+** Convenience Is Not an -ility
+
+APIs are supposed to hide underlying complexity.
+
+A good API follows a consistent level of abstraction, exhibits consistency and symmetry, and forms the vocabulary for an expressive language, which enables the next layer above to ask and answer useful questions.
+
+A diverse vocabulary allows us to express subtleties in meaning. For example, we prefer to say =run()= instead of =walk(true)=.
+
+** The Golden Rule of API Design
+
+When designing and API, you have to think about how you might change it in the future and whether the changes might break client code. The easiest way is to lock down the API, present the API through a singleton or use =static= factory methods to guard it from people who might override behavior.
+
+It's not enough to write tests for an API you develop; you have to write unit tests for code that uses your API. 
+
+* Architecture
+** Better Scalability in Parallel Systems
+
+Concurrency, and especially parallelism, a special subset of concurrency is hard. Almost all the _problems of concurrency relate to the use of shared mutable memory_: race conditions, deadlock, livelock, etc.
+
+Harnessing true parallelism becomes more important, because computers have more cores, and we can no longer rely on increasing processor clock speeds to improve application performance.
+
+Instead of using threads and shared memory as programming model, we can use processes and message passing. Such systems do not have all the synchronization stresses that shared-memory, multithreaded systems have. Use — or, if they don't exist, create — libraries and frameworks that provide process models and message passing, avoiding all use of shared mutable memory.
+
+A formal model, Communicating Sequential Processes (CSP), can be applied as part of the engineering of such systems.
+
+Alternatively we can adopt dataflow systems as a way of computing. In a dataflow system, there is no explicitly programmed control flow. Instead, a directed graph of operators, connected by data paths, is set up and then data is fed into the system. Evaluation is controlled by the readiness of data within the system. There is no synchronization problem.
+
+** Large, Interconnected Data Belongs to a Database
+
++Embedded database systems+ can be linked as libraries directly into the application, requiring almost no setup or management. Two notable open source ones are SQLite and HSQLDB.
+
+If the application's data is larger than the system's RAM, an indexed RDBMS table will perform orders of magnitude faster than the library's map collection type, which will thrash virtual memory pages.
+
+Another advantage of basing code around an RDBMS involves the handling of relationships between data elements. You can describe consistency constraints on data in a declarative way, avoiding the risk of the dangling pointers if you forget to update data in an edge case.
+
+You can also create efficient links between the entities stored in the database at any time, simply by creating an index.
+
+Coding around a database allows multiple applications to access data in a safe way. This makes it easy to upgrade the application for concurrent use and also to code each part of the application using the most appropriate language and platform.
+
+RDBMS will optimize SQL commands, allowing you to concentrate on the application's functionality rather than on algorithmic tuning.
+
+* Basics
+** Floating-Point Numbers
+
+Floating-point numbers have limited precision. They are approximations of real numbers. Floating-point numbers are intended for efficient scientific computation.
+
+#+CAPTION: Floating-point numbers are not evenly spaced throughout their range:
+#+BEGIN_SRC c
+float a = 2147483647;   // Largest 32-bit signed integer
+printf("%f\n", a);      // 2147483648.000000
+printf("%f\n", a - 64); // 2147483648.000000
+printf("%f\n", a - 65); // 2147483520.000000
+#+END_SRC
+
+Because the spacing between adjacent floats in that range is 128, and floating-point operations round to the nearest floating-point number.
+
+Don't use floating-point numbers for financial applications — that's what =decimal= classes in languages like Python and C# are for.
+
+* Build
+** Keep the Build Clean
+
+Ignoring things is mental work. Get rid of all the unnecessary mental work. When something appears that it is unnecessary to see, deal with it right away, (instead of deciding if it is irrelevant every time it is encountered).
+
+Keeping the build clean is not just about keeping it free of compilation errors or test failures: warnings are also an important and critical part of code hygiene.
+
+** The Linker
+
+A linker does:
+
+- concatenate together the code and data sections of the object files
+- connect the references to symbols with their definitions
+- pull unresolved symbols out of the library
+- write out an executable
+
+#+CAPTION: Declarations (normally in header files) generate external references to the symbols:
+#+BEGIN_SRC c
+extern int foo; // Generates an external reference to the symbol "foo"
+#+END_SRC
+
+#+CAPTION: Definitions (usually in implementation files) set aside storage for the symbols:
+#+BEGIN_SRC c
+int foo = 3;
+#+END_SRC
+
+- Linker reports "multiply defined" when more than 1 definition is found for a symbol.
+- Linker reports "unresolved symbol" when no definition is found for a symbol.
+
+Linker generates a map file, which is a list of all the symbols in the executable, along with their addresses. This tells what modules were linked in from the library, and the sizes of each module. 
+
+** Own and Refactor the Build
+
+_The build is an essential part of the development process._ It _creates executable artifacts_ for developers and end users to test and run. It _defines the component architecture_ of the application. Build scripts are often written in a different language than source code.
+
+Testing as we code is necessary to being able to deliver value predictably. In much the same way, the build process needs to be owned by the development team.
+
+Automating configuration in the build can enable you to get consistent results when multiple people are working on a project, avoiding an "it works for me" conversation.
+
+* Code Analysis
+** Automate Coding Standard
+
+One reason to format the code in a uniform way is so that nobody can "own" a piece of code by formatting it in his private way. 
+
+- Make code formatting part of the build process.
+- Use static code analysis tools to scan the code for antipatterns.
+- Do not only measure test coverage, but automatically check the results. Break the build if test coverage is too low.
+
+** Code Analysis Tools
+
+Most languages, particularly ones branded dynamic, expose their abstract syntax tree and compiler tools as part of their standard library. These often contain hidden gems that are useful for static analysis and dynamic testing.
+
+** Dirty Code Bombs
+
+Measure and control the degree and depth of coupling and complexity of code. Software metrics can be used to count the occurrences of specific features in code.
+
+- Fan-out: the number of classes referenced either directly or indirectly from a class of interest, or the count of all the classes that must be compiled before this class can be compiled.
+- Fan-in: the count of all classes that depend upon the class of interest.
+
+Instability factor: $I = \text{fo} / (\text{fi} + \text{fo})$. As $I$ approaches 0, the package becomes more stable. The goal in refactoring is to move $I$ closer to 0.
+
+** Let Your Project Speak for Itself
+
+Include static code analysis in continuous integration server to gather code metrics. Delegate this task to the project itself and rely on it to report when things get worse.
+
+Give your project a voice by email or instant messaging, informing the developers about the latest decline or improvement in numbers. Use extreme feedback device (XFD) to drive a physical device such as a lamp, a toy robot, or even a USB rocket launcher, based on the results of the automatic analysis.
+
+** Write Small Functions Using Examples
+
+_Tests can demonstrate the presence of features, but tests cannot prove the absence of bugs._ To write code that is correct, and have evidence on hand that it is correct, we need to think about the "size" of a function — the size of the mathematical function that the code manifests.
+
+A mathematical function can be understood as a set, some subset of the Cartesian product of the sets that are its domain (all possible arguments) and range (all possible results).
+
+#+CAPTION: In the game of Go there is a condition called atari in which a player's stones may be captured by opponent: a stone with 2 or more free spaces adjacent to it (called liberties) is not in atari.
+#+BEGIN_SRC c
+boolean atari(int libertyCount)
+    libertyCount < 2
+#+END_SRC
+
+If argument =int= can have 2^32 = 4,294,976,296 different values, and result =boolean= can have 2 values, then there are 8,589,934,592 members in the Cartesian product of the sets, and half of these belong to the subset which is the function. To provide complete evidence that the function is correct, it will need to check around 4.3E9 examples.
+
+#+CAPTION: The nature of Go means that the number of liberties of a stone is not any =int=, but exactly one of ={1,2,3,4}=. So it can be alternatively wrote:
+#+BEGIN_SRC c
+LibertyCount = {1,2,3,4}
+boolean atari(LibertyCount libertyCount)
+    libertyCount == 1
+#+END_SRC
+
+This is one reason why it's a good idea to _use types closely related to the problem domain to write programs, rather than native types_. Using domain-inspired types can often make the functions much smaller.
+
+* Coding
+** Before You Refactor
+
+- Avoid the temptation to rewrite everything. It is best to reuse as much code as possible.
+- Many incremental changes are better than one massive change.
+
+Throwing away the old code means throwing away months (or years) of tested, battle-hardened code that may have had certain workarounds and bug fixes you aren't aware of.
+
+That the style or the structure of the code does not meet your personal preference is not a valid reason for restructuring. Thinking you could do a better job than the previous programmer is not a valid reason, either.
+
+New technology is an insufficient reason to refactor. Unless a cost-benefit analysis shows that a new language or framework will result in significant improvements in functionality, maintainability, or productivity, it is best to leave it as it is.
+
+** Beware the Share
+
+The fact that wildly different parts of the system performed some logic in the same way meant less than you thought. Similar code were accidental, a temporal anomaly, a coincidence. They could evolve independently. Each could change its logic to suit the needs of the system's changing business environment.
+
+While the absolute number of lines of code is decreased, the number of dependencies could be increased.
+
+** Code Layout Matters
+
+A research suggests that we spend much more of programming time navigating and reading code — finding where to make the change — than actually typing.
+
+People are good at visual pattern matching. If _code that behaves the same looks the same_, then perceptual system will help pick out the differences.
+
+Line breaks and groupings reflect the intention of the code.
+
+** Coding with Reason
+
+Divide the code into short sections, at each endpoint, the state of the program (namely, the program counter and the values of all objects) satisfies an easily described property, and so that the functionality of that section (state transformation) is easy to describe as a single task.
+
+- Avoid using modifiable global variables.
+- Each variable should have the smallest possible scope.
+- If you need a nested section, make it a function.
+- Grouping related parameters into a single object.
+- Each unit of code, from a block to a library, should have a narrow interface.
+  + Getters that return internal state are a liability. _Don't ask an object for information to work with. Instead, ask the object to do the work with the information it already has._
+  + In order to preserve class invariants, usage of setters should be discouraged.
+
+** Improve Code by Removing It
+
+- Write code because it adds value, not because it amuses you.
+- If you don't need it right now, don't write it right now.
+- It always takes longer to write and to maintain extra code. A small, extra bit of code snowballs over time into a large piece of work that needs maintenance.
+
+** Know Your Next Commit
+
+Know your next commit. If you cannot finish, throw away your changes, then define a new task you believe in with the insights you have gained. Do speculative experimentation whenever needed, but do not let yourself slip into speculative mode without noticing. Do not commit guesswork into repository.
+
+** Only the Code Tells the Truth
+
+To make code tell the truth as clearly as possible:
+
+- Strive for good names.
+- Structure code with respect to cohesive functionality.
+- Decouple code to achieve orthogonality.
+- Write automated tests explaining the intended behavior and check the interfaces.
+
+** Read Code
+
+Reading other people's code is particularly hard. Not necessarily because other people's code is bad, but because they probably think and solve problems in a different way than you.
+
+Dependency-breaking techniques may be good for low coupling, but they can sometimes also make code harder to read.
+
+* Commenting
+** A Comment on Comments
+
+Header comments should give any programmer enough information to use the code without having to read it, while inline comments should assist the next developer in fixing or extending it.
+
+** Comment Only What the Code Cannot Say
+
+Comments that parrot the code offer nothing extra to the reader. _Comments should be treated as though they were code._ Each comment should add some value for the reader.
+
+Any shortfall _between what you can express in code and what you would like to express_ in total becomes a plausible candidate for a useful comment.
+
+Version-related comments and commented-out code try to address questions of versioning and history. These questions have already been answered (far more effectively) by version control tools.
+
+A prevalence of noisy comments and incorrect comments in a codebase encourages programmers to ignore all comments.
+
+_Instead of compensating for poor method or class names, rename them. Instead of commenting sections in long functions, extract smaller functions whose names capture the former sections' intent._
+
+* Debugging
+** Check Your Code First
+
+Usual debugging advices:
+
+- Isolate the problem, stub out calls, and surround it with tests.
+- Check calling conventions, shared libraries, and version numbers.
+- Explain it to someone else.
+- Look out for stack corruption and variable type mismatches.
+- Try the code on different machines and build configurations.
+
+All the recommendations to favor simple code are multiplied when a system is multithreaded. Debugging and unit tests cannot be relied on to find such bugs with any consistency, so simplicity of design is paramount.
+
+** How to Use a Bug Tracker
+
+A good bug report needs to convey:
+
+- How to reproduce the bug.
+- What should have happened.
+- What actually happened.
+
+** Two Wrongs Can Make a Right
+
+Code never lies, but it can contradict itself.
+
+Consider a function that returns a completion status. Imagine that it returns =false= when it should return =true=. Now imagine that the calling function neglects to check the return value. Everything works fine until one day someone notices the missing check and inserts it.
+
+Consider an application that stores state as an XML document. Imagine that one of the nodes is incorrectly written as =TimeToLive= instead of =TimeToDie=, as the documentation says it should. Everything appears fine while the writer code and the reader code both contain the same error. But fix one, or add a new application reading the same document, and the symmetry is broken.
+
+_When two defects in the code create one visible fault, the methodical approach to fixing faults can itself break down._ When the first defect is fixed, the second defect is at work. So the first fix is removed. The second underlying defect is found, and a fix applied for that. But the first defect has returned. The process repeats.
+
+The problem also exists in written requirements documents. An error in the code compensates for an error in the written description.
+
+Single wrongs can be easy to spot and easy to fix. It is the problems with multiple causes, needing multiple changes, that are harder to resolve. In part, this is because _easy problems are so easily fixed that people tend to fix them relatively quickly and store up the more difficult problems for a later date_.
+
+* Deployment
+** Deploy Early and Often
+
+The installation/deployment process is the first thing that the customer sees, and a simple one is the first step to having a reliable (or, at least, easy to debug) production environment.
+
+Starting your project with an installation process. Running and testing the installation process on a clean environment periodically, to check for assumptions in the code that rely on the development or test environments.
+
+** Don't Touch That Code!
+
+In most web-based development environments, the architecture can be broken down:
+
+| *Environment*                           | *Tests*                                  |
+|-----------------------------------------+------------------------------------------|
+| Local development (developer's machine) | Unit testing                             |
+|-----------------------------------------+------------------------------------------|
+| Development server                      | Manual or automated integration testings |
+|-----------------------------------------+------------------------------------------|
+| Staging server                          | Acceptance testings by QA team and users |
+|-----------------------------------------+------------------------------------------|
+| Production server                       |                                          |
+
+A developer should never have access beyond the development server.
+
+** One Binary
+
+Don't use build to rewrite the code to generate custom settings for each target environment. Hold environment-specific details in the environment (in the component container, in a known file, or in the path).
+
+Keep the environment information versioned. The environmental information should be versioned separately from the code, since they'll change at different rates and for different reasons.
+
+Separate core features with platform-specific features.
+
+* Design Principles
+** Don't Repeat Yourself
+
+_Every line of code that goes into an application must be maintained, and is a potential source of future bugs._ Duplication needlessly bloats the codebase, resulting in more opportunities for bugs and adding accidental complexity to the system. DRY requires that _every piece of knowledge must have a single, unambiguous, authoritative representation within a system_.
+
+Wherever painful manual processes exist that can be automated, they should be automated and standardized. The goal is to _ensure that there is only one way of accomplishing the task, and it is as painless as possible_.
+
+Many design patterns have the explicit goal of reducing or eliminating duplication in logic within an application.
+
+- If an object typically requires several things to happen before it can be used, this can be accomplished with an Abstract Factory or a Factory Method pattern.
+- If an object has many possible variations in its behavior, these behaviors can be injected using the Strategy pattern rather than large if-then structures.
+
+** The Single Responsibility Principle
+
+One foundational principle of good design, known as the _Single Responsibility Principle, or SRP: Gather together those things that change for the same reason, and separate those things that change for different reasons._ A subsystem, module, class, or even a function, should not have more than one reason to change.
+
+#+BEGIN_SRC java
+public class Employee { // Any class depending on Employee will be affected by changes below
+    public Money calculatePay() {} // Changes when rules for calculating pay change
+    public String reportHours() {} // Changes when a different format of report is needed
+    public void save() {}          // Changes when database schema changes
+}
+#+END_SRC
+
+Good system design means _separating the system into components that can be independently deployed_. Component design (or +SOA+, if you prefer the trendier name) means when one component is changed, we do not have to redeploy any of the others.
+
+#+BEGIN_SRC java
+public class Employee {
+    public Money calculatePay() {}
+}
+public class EmployeeReporter {
+    public String reportHours(Employee e) {}
+}
+public class EmployeeRepository {
+    public void save(Employee e) {}
+}
+#+END_SRC
+
+** Thinking in States
+
++Design by Contract (DbC)+: ensure a valid state by validating incoming data and the object itself on entry and exit of each public method.
+
+* Design Patterns
+** The Singleton Pattern
+
+The single-instance requirement is often imagined. In many cases, it's pure speculation that no additional instances will be needed in the future. _Requirements will change. Good design embraces this._ Singletons don't.
+
+Singletons cause implicit dependencies between conceptually independent units of code.
+
+Singletons also carry implicit persistent state, which hinders unit testing. Unit testing depends on tests being independent of one another, so the tests can be run in any order and the program can be set to a known state before the execution of every unit test. Once singletons with mutable state are introduced, this may be hard to achieve. Such globally accessible persistent state makes it harder to reason about the code, especially in a multithreaded environment.
+
+The cleanup of singletons may present a final challenge. There is no support for explicitly killing singletons. There is no order to the implicit cleanup of singletons at program exit. This can be troublesome for applications that contain singletons with interdependencies.
+
+- Restrict use of the Singleton pattern to the classes that truly must never be instantiated more than once.
+- Don't use a singleton's global access point from arbitrary code. Instead, direct access to the singleton should come from only a few well-defined places, from where it can be passed around via an interface. User code of the interface does not depend on whether a singleton or any other kind of class implements the interface.
+
+* Domains
+** Code in the Language of the Domain
+
+#+BEGIN_SRC java
+// Algorithmic approach
+if (portfolioIdsByTraderId.get(trader.getId()).containsKey(portfolio.getId())) { ... }
+// Business concept approach
+if (trader.canView(portfolio)) { ... }
+#+END_SRC
+
+"Computer science" was about spending effort mapping the real world into the restrictive data structures.
+
+Making domain concepts explicit in the code means other programmers can gather the intent of the code much more easily than by trying to retrofit an algorithm into what they understand about a domain.
+
+Coupled with good encapsulation, the chances are good that the rule will exist in only one place. When the domain model evolves, you are in a good position to evolve the code.
+
+** Prefer Domain-Specific Types
+
+On September 23, 1999, the $327.6 million Mars Climate Orbiter was lost while entering orbit around Mars due to a software error back on Earth. The error was later called the metric mix-up. The ground-station software was working in pounds, while the spacecraft expected newtons, leading the ground station to underestimate the power of the spacecraft’s thrusters by a factor of 4.45.
+
+One of Ada language's primary design goals was to implement embedded safety-critical software. Ada has strong typing with static checking for both primitive types and user-defined types.
+
+In other languages, domain-specific typing can be applied by using classes instead primitive types:
+
+- The code becomes more readable, as it expresses concepts of a domain.
+- The code becomes more testable, as the code encapsulates behavior.
+- The code facilitates reuse.
+
+Developers using statically typed languages get some help from the compiler, while those embracing dynamically typed languages are more likely to rely on their unit tests.
+
+* Errors
+** Business Exceptions
+
+There are basically two reasons that things go wrong at runtime:
+
+- Technical problems that prevent us from using the application.
+- Business logic that prevents us from misusing the application.
+
+It is a potential source of confusion to represent them both using the same exception hierarchy. Separating the cases gives clarity and increases the chances that technical exceptions will be handled by some application framework, while the business domain exceptions actually are considered and handled by the client code.
+
+An unresolvable technical problem can occur when there is a programming error. Let the exception bubble up to the highest architectural level and let some general exception-handling mechanism do what it can to ensure that the system is in a safe state, such as rolling back a transaction, logging and alerting administration, and reporting back (politely) to the user.
+
+An exception: the situation where you cannot complete the call for a domain-logical reason. Unusual and undesirable, but not bizarre or programmatically in error. Throwing an exception is just an alternative return path that is part of the model and that the client should be aware of and be prepared to handle. It is appropriate to create a specific exception or a separate exception hierarchy so that the client can handle the situation on its own terms.
+
+** Don't Ignore That Error!
+
+- Return codes can be used as the resulting value of a function to mean "it didn't work".
+- Exceptions are a more structured language-supported way of signaling and handling errors.
+- Deal with problems at the earliest opportunity.
+- Check all potential errors in the code, and expose all potentially erroneous conditions in the interfaces.
+
+** Prevent Errors
+
+Cues are different from instructions: cues tend to be hints; instructions are verbose. Cues occur at the point of interaction; instructions appear before the point of interaction.
+
+_Instructions are ineffective at preventing error. Users tend to assume that interfaces will work in line with their past experience._
+
+** Verbose Logging
+
+Too much logging can be as useless as none at all. Make sure from day one that if something is logged in the error log, you're willing to have someone call and wake you in the middle of the night about it.
+
+Simulate load on the system during system testing, looking at a noise-free error log is also a good first indication that the system is reasonably robust.
+
+* Learning
+** Continuous Learning
+
+- A good way to learn something is to teach or speak about it.
+- Join or start a study group or a local user group for a language, technology.
+- Learn a new language every year. At least learn a new technology or tool.
+- Learn how to be more productive.
+
+** Deliberate Practice
+
+Do deliberate practice to improve your ability. Perform the task with the aim of increasing your mastery. Challeng yourself with a task that is just beyond your current ability, trying it, analyzing your performance while and after doing it, and correcting any mistakes.
+
+Greatness is largely a matter of conscious choice. You have to have a minimum amount of natural ability to get started in a sport or profession. After that, the people who excel are the ones who work the hardest.
+
+** Hard Work Does Not Pay Off
+
+Programming and software development as a whole involve a continuous learning process. You always need to learn more about software development in general and programming techniques in particular. Keep yourself updated in your field of expertise.
+
+_Most software projects are more like a long orienteering marathon. In the dark. With only a sketchy map as guidance._ You need to keep a sustainable pace, and you need to adjust the course when you learn more about where you are and where you are heading.
+
+Act like a professional: prepare, effect, observe, reflect, and change.
+
+** Know More Programming Languages
+
+Programming expertise is related directly to the number of different programming paradigms that a programmer is comfortable with, that he can genuinely program with.
+
+It generally takes a good few months of use, even if part-time, to gain a proper working knowledge of a language. It is the idioms of use, not just the syntax and computational model, that are the important factors.
+
+** Reinvent the Wheel Often
+
+More often than not, existing code is working code. It has already gone through some sort of quality control and rigorous testing, and is being used successfully.
+
+The same way that watching a movie about sailing is very different from going sailing, so too is using existing code versus designing your own software from the ground up, testing it, breaking it, repairing it, and improving it along the way.
+
+There are lessons learned from trial and error that have an emotional component to them that reading a technical book alone just cannot deliver. Becoming a great programmer is as much about acquiring experience as it is about collecting facts.
+
+* OOP
+** Encapsulate Behavior and State
+
+_An object encapsulates both state and behavior, where the behavior is defined by the actual state._
+
+Less experienced object-oriented developers might decide to wrap all the business rules into an object very often referred to as =OrderManager= or =OrderService=. In these designs, =Order=, =Customer=, and =Item= are treated as little more than record types. All logic is factored out of the classes and tied together in one large, procedural method with a lot of internal =if-then-else= constructs. These methods are easily broken and are almost impossible to maintain. The reason? The encapsulation is broken.
+
+** Polymorphism
+
+Polymorphism, taken from Greek, means many (poly) forms (morph).
+
+Used carefully, _polymorphism creates tiny localized execution contexts that eliminate the need for verbose =if-then-else= blocks._ While there are cases where it's much more practical to use =if-then-else= instead of polymorphism, it is more often the case that a more _polymorphic coding style will yield a smaller, more readable and less fragile codebase_.
+
+* Performance
+** Interprocess Communication
+
+Much performance management literature still focuses on data structures and algorithms, issues that can make a difference in some cases but are far less likely to dominate performance in modern multitier enterprise applications. In such applications, response time depends most strongly on the number of remote interprocess communications (IPCs) conducted in response to a stimulus.
+
+Strategies for reducing the number of remote IPCs:
+
+- Optimize the interface between processes so that exactly the right data is exchanged with the minimum amount of interaction.
+- Parallelize the IPCs, so that the overall response time becomes driven mainly by the longest-latency IPC.
+- Cache the results of previous IPCs.
+
+** Know Your Limits
+
+Know the space and time complexity of data structures and algorithms, and the architecture and performance characteristics of the systems. Your job is to create an optimal marriage of software and systems.
+
+For achievable $n$, all complexity classes amount to near-constant, near-linear, or near-infinite.
+
+Modern computer systems are organized as hierarchies of physical and virtual machines, including language runtimes, operating systems, CPUs, cache memory, random-access memory, disk drives, and networks.
+
+#+CAPTION: _Random access time and storage capacity for a typical networked server:_
+|          | *Access time* | *Capacity* |
+|----------+---------------+------------|
+| Register | < 1 ns        | 64 b       |
+|----------+---------------+------------|
+| L1 cache | 1 ns          | 64 KB      |
+|----------+---------------+------------|
+| L2 cache | 4 ns          | 8 MB       |
+|----------+---------------+------------|
+| RAM      | 20 ns         | 32 GB      |
+|----------+---------------+------------|
+| Disk     | 10 ms         | 10 TB      |
+|----------+---------------+------------|
+| LAN      | 20 ms         | > 1 PB     |
+|----------+---------------+------------|
+| Internet | 100 ms        | > 1 ZB     |
+
+Caching and lookahead are used heavily at every level of the systems to hide this variation, but they only work when access is predictable. When cache misses are frequent, the system will be thrashing. Reaccessing recently used items and accessing items sequentially are usually a win.
+
+Random access is not predictable. To randomly inspect every byte on a hard drive could take 32 years. Even to randomly inspect every byte in RAM could take 11 minutes.
+
+Algorithms and data structures vary in how effectively they use caches:
+
+- Linear search makes good use of lookahead, but requires $O(n)$ comparisons. Linear search is competitive for small arrays, but loses exponentially for larger arrays.
+- Binary search of a sorted array requires only $O(\log{n})$ comparisons.
+- Search of a van Emde Boas tree is $O(\log{n})$ and cache-oblivious. van Emde Boas tree is fastest for searching, thanks to its predictable access pattern.
+
+#+CAPTION: Time (ns) required to search arrays of 64-bit integers:
+|       | *Linear* | *Binary* | *vEB* |
+|-------+----------+----------+-------|
+|     8 | 50       | 90       | 40    |
+|-------+----------+----------+-------|
+|    64 | 180      | 150      | 70    |
+|-------+----------+----------+-------|
+|   512 | 1,200    | 230      | 100   |
+|-------+----------+----------+-------|
+| 4,096 | 17,000   | 320      | 160   |
+
+* Practice
+** Don't Rely on "Magic Happens Here"
+
+If you look at any activity, process, or discipline from far enough away, it looks simple. When you aren't actively involved in things, there is an unconscious tendency to assume that they are simple and happen "by magic". You don't have to understand all the magic that makes the project work, but make sure that when the magic stops, it can be started again.
+
+** Learn to Estimate
+
+- An estimate is a factual measure based on hard data and previous experience. An estimate cannot be precise.
+- A target is a statement of a desirable business objective.
+- A commitment is a promise to deliver specified functionality at a certain level of quality by a certain date or event.
+
+Estimates, targets, and commitments are independent from one another, but targets and commitments should be based on sound estimates. The primary purpose of software estimation is not to predict a project's outcome; it is to determine whether a project's targets are realistic enough to allow the project to be controlled to meet them.
+
+** Make the Invisible More Visible
+
+Lack of visible progress is synonymous with lack of progress. Invisibility can be dangerous. You think more clearly when you have something concrete to tie your thinking to. You manage things better when you can see them and see them constantly changing.
+
+- Unit tests help reveal the presence (or absence) of developmental qualities you'd like the code to exhibit, such as low coupling and high cohesion.
+- Using bulletin boards and cards makes progress visible and concrete.
+
+It's best to develop software with plenty of regular visible evidence. Visibility gives confidence that progress is genuine and not an illusion, deliberate and not unintentional, repeatable and not accidental.
+
+** The Boy Scout Rule
+
+Try and leave this world a little better than you found it.
+
+* Quality
+** Code Is Design
+
+Some life-or-death projects will be more diligent, but in many cases, companies can always patch the broken buildings and vehicles they sell. And it points to a startlingly counterintuitive conclusion: our sole premise was a dramatic reduction in construction costs, with the result that quality got worse. If we accept that code is design — a creative process rather than a mechanical one — the software crisis is explained.
+
+* Teamwork
+** Code Reviews
+
+Instead of simply correcting mistakes in code, _the purpose of code reviews should be to share knowledge and establish common coding guidelines_. Sharing code with other programmers _enables collective code ownership_.
+
+Introduce different roles for the review meeting, having one reviewer focus on documentation, another on exceptions, and a third to look at the functionality.
+
+Code reviews will flow more easily if the team has coding conventions that are checked by tools.
+
+** Pair Program
+
+As a team, introduce pair programming to promote distribution of skills and knowledge.
+
+Truck factor: how many team members would have to be hit by a truck before the team became unable to complete the final deliverable? In other words, how dependent is the delivery on certain team members? Is knowledge privileged or shared?
+
+** Start from Yes
+
+Starting from yes means working with your colleagues, not against them.
+
+** Two Heads Are Better Than One
+
+Lottery risk: one of your expert developers wins the lottery and
+quits the next day.
+
+* Testing
+** Test for Required Behavior
+
+Tests need to state contractual obligations rather than parrot implementations. They need to take a blackbox view of the units under test.
+
+** Testing Is the Engineering Rigor of Software Development
+
+Over the past few thousand years, engineers have developed mathematics and physics they can use for a structural solution without having to build it to see what it does. We don't have anything like that in software, and perhaps never will because software is in fact very different. the
+building process in software is ridiculously cheap. We’ve developed an entire ecosystem of tools that make it easy to do just that: unit testing, mock objects, test harnesses.
+
+** Test Precisely and Concretely
+
+There are two ways of constructing a software design: one way is to make it so simple that there are obviously no deficiencies and the other is to make it so complicated that there are no obvious deficiencies.
+
+** Test While You Sleep
+
+More often than not, the test servers are idling overnight and over the weekend. You can use this to your advantage. Break down large test suite into two or more profiles:
+
+- A smaller, mandatory test profile that is quick to run will help to ensure that tests are run before each commit.
+- Other test profiles can be automated to run overnight, ready to report their results in the morning.
+
+Longer-running tests, or soak tests, are vital for identifying memory leaks and other stability issues.
+
+** When Programmers and Testers Collaborate
+
+- Less time spent sending bugs back and forth through the defect tracking system.
+- Less time wasted trying to figure out whether something is a bug or a new feature.
+
+Acceptance Test-Driven Development (ATDD): Testers write and automate acceptance tests using the language of their domain with tools such as Fit (Framework for Integrated Test), and give to the programmers before the coding begins. Programmers write the fixtures to run the tests, and then code to make the tests pass. Defects are prevented because the tests clarify many of the initial ideas. These tests then become part of the regression suite.
+
+When testers stop thinking that their only job is to break the software and find bugs in the programmers' code, programmers stop thinking that testers are "out to get them", and are more open to collaboration.
+
+** Write Tests for People
+
+Good tests act as documentation for the code they are testing. They describe how the code works.
+
+- Describe the context, starting point, or preconditions.
+- Illustrate how the software is invoked.
+- Describe the expected results or postconditions.
+
+* Tools
+** Command-Line Tools
+
+Typically, when a tool is easy to use, it's because the tool is making decisions for you and doing a lot of things automatically, behind the scenes.
+
+Command-line tools inherently support scripting, which allows for the automation of tasks such as producing scheduled daily builds, creating multiple versions of a project, and running test suites.
+
+** Step Back and Automate
+
+- Automate repetitive tasks: version control, compiling, building JAR files, documentation generation, deployment, and reporting.
+- Modern IDEs have thousands of potential settings, and it is essentially impossible to ensure that all team members have identical configurations. Build automation systems such as Ant or Autotools give control and repeatability.
+- Do it early in a project when time is usually easier to find.
+
+** Unix Tools
+
+Unix tools were developed in an age when a multiuser computer had 128KB
+of RAM. The ingenuity that went into their design means that nowadays they can handle huge data sets extremely efficiently.
+
+Most tools work like filters, processing just a single line at the time, meaning that there is no upper limit in the amount of data they can handle.
+
+Unix commands executing as pipelines, which naturally distribute their load among the many processing units of modern multicore CPUs.
+
+** Version Control
+
+Put everything in your project under version control.
+
+- Tag release with a symbolic name to easily revisit in the future the exact version of the software the customer runs.
+- In addition to the source code, include the documentation, tools, build scripts, test cases, artwork, and even libraries.
+- Commit each logical change in a separate operation.
+
+* Users
+** Customers Do Not Mean What They Say
+
+Customers generally don't lie, but they speak in customer speak, not developer speak. They use their terms and their contexts. They leave out significant details.
+
+- Challenge your customers early, and challenge them often.
+- Try restating the problem 2 or 3 times.
+- Have multiple people tell the same topic in separate conversations to uncover separate yet related facts.
+- Using visual aids helps lengthen our attention span and increases the retention rate of the information.
+
+#+BEGIN_QUOTE
+When she saw the product, her exact words about the background color were, "When I said black, I meant white."
+#+END_QUOTE
+
+** Read the Humanities
+
+Our ability to understand one another does not arise from shared definitions, it arises from a shared experience. Language is largely metaphorical, and that these metaphors offer an insight into how we understand the world.
+
+For users, tools only become objects of interest when they don't work.
+
+When programmers ask users about their desires for a system, they tend to ask for definitions built out of predicates. This is very convenient for programmers. The terms in the predicates can very easily become attributes on a class or columns in a table. But that just isn't how people in general understand the world. They understand it in ways that are based on examples. 
+** What Would the User Do?
+
+We all tend to assume that other people think like us. Psychologists call this the false consensus bias.
+
+The best way to find out how a user thinks is to watch one. _The best way to capture requirements is to watch users._
+
+If you must have instructions or help text, make sure to locate it right next to problem areas.
+
+Users tend to muddle through. They'll find a way that works and stick with it.
+

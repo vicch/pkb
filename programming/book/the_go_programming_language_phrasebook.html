@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>The Go Programming Language Phrasebook</title>
+<!-- 2018-05-12 Sat 22:19 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">The Go Programming Language Phrasebook</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Chapter 1. Introducing Go</a>
+<ul>
+<li><a href="#sec-1-1">1.1. Go and C</a></li>
+<li><a href="#sec-1-2">1.2. Why Go?</a></li>
+<li><a href="#sec-1-3">1.3. Goroutines and Channels</a></li>
+<li><a href="#sec-1-4">1.4. Selecting a Compiler</a></li>
+<li><a href="#sec-1-5">1.5. The Go Type System</a></li>
+<li><a href="#sec-1-6">1.6. Understanding the Memory Model</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. Chapter 2. A Go Primer</a>
+<ul>
+<li><a href="#sec-2-1">2.1. The Structure of a Go Source File</a></li>
+<li><a href="#sec-2-2">2.2. Declaring Variables</a></li>
+<li><a href="#sec-2-3">2.3. Declaring Functions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Chapter 1. Introducing Go</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+When learning a new language, there are 3 things to understand:
+</p>
+
+<ol class="org-ol">
+<li>The abstract model the language presents.
+</li>
+<li>The concrete syntax.
+</li>
+<li>The standard libraries and common idioms of the language.
+</li>
+</ol>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Go and C</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+The point of a low-level language is to provide an abstract machine model to the programmer that closely reflects the architecture of the concrete machines that it will target. There is no such thing as a universal low-level language: one language that closely represents the architecture of a certain machine model will not accurately reflect some other machine model.
+</p>
+
+<p>
+The attraction of C has been that, in providing an abstract model similar to most cheap consumer CPUs. However, over the last decade, this abstraction has become less like the real hardware. Therefore it is increasingly hard for a compiler to generate machine code from C sources that efficiently uses the resources of the target system.
+</p>
+
+<p>
+The aim of Go was to fill the same niche today that C fit into in the '80s. <span class="underline">The C abstract model represents a single processor and a single block of memory, and Go is a low-level language for multiprocessor development.</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Why Go?</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+In recent years, scalability has become a lot more important than raw speed. Moore's law, for a long time, roughly corresponded to a doubling in performance for a single thread of execution. Now, it generally means that you get twice as many cores.
+</p>
+
+<p>
+It used to be that you just had to wait six months, and your C code would run twice as fast on a new machine. This is no longer true. Now, for code to be faster on new machines, it must be parallel.
+</p>
+
+<p>
+<span class="underline">C is inherently a serial language. C code that uses more than a handful of threads is very rare. Go, in contrast, was designed with concurrency in mind.</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Goroutines and Channels</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+The fundamental concurrency primitive in Go is the goroutine. A goroutine is a like function call that completes asynchronously. Conceptually, goroutines run in parallel, but the language does not define how they work in terms of real parallelism, or make hard guarantees on their concurrency. The exact implementation mechanism for goroutines is not specified by the language.
+</p>
+
+<p>
+Goroutines are not intended to be implemented as kernel threads. A Go compiler may spawn a new operating system thread for every goroutine, or it may use a single thread and use timer signals to switch between them, which means large number of goroutines can be multiplexed onto a small number of kernel threads. This means that context switches between goroutines is often cheaper than between POSIX threads.
+</p>
+
+<p>
+Creating a goroutine is intended to be much cheaper than creating a thread using a typical C threading library, because of the use of segmented stacks in Go implementations.
+</p>
+
+<p>
+The traditional C stack was expected to be a contiguous block of memory. When creating a new thread, it needs to allocate a chunk of memory big enough for the maximum stack size (typically about 1MB of RAM), even if the thread is only ever going to use a few KB of stack space. Operating systems usually mark the page below the bottom of the stack as no-access, so small stack overflows will cause a segmentation fault.
+</p>
+
+<p>
+Go functions are more clever by treating the stack as a linked list of memory allocations. A short-lived goroutine will not use more than the 4KB initial stack allocation, so they can be created in large numbers without exhausting address space.
+</p>
+
+<hr  />
+
+<p>
+Creating concurrent subprograms (threads, child processes, or goroutines) is the easy part of the problem. The difficult part is communicating between them.
+</p>
+
+<p>
+Go uses a form of C. A. R. Hoare's Communicating Sequential Processes (CSP) formalism to facilitate communication between goroutines. CSP defines communication channels that events can be sent down. Go programs can create channels and use them to communicate between threads.
+</p>
+
+<hr  />
+
+<p>
+A good rule of thumb for concurrent code is that <span class="underline">the complexity of debugging it is proportional to the number of concurrent tasks multiplied by the number of possible ways in which they can interact.</span>
+</p>
+
+<p>
+Go programs use garbage collection, making dangling pointers impossible, and disallows pointer arithmetic, making most other categories of pointer-related errors impossible.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Selecting a Compiler</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+(skip)
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> The Go Type System</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+Go is a language with static typing and tight coupling between components. Go is also a language with dynamic typing and loose coupling between components. The language allows to select which of these is more appropriate for each use case.
+</p>
+
+<p>
+Go type system is visible via interfaces. Go interfaces support duck typing and don't have to be explicitly adopted. Any type that implements the methods that an interface lists implicitly implements that interface. Interface types can be used as variable types. When calling a method on an interface-typed variable, it uses dynamic dispatch to find the correct method implementation.
+</p>
+
+<p>
+Go supports introspection on types. You can query any variable to find out whether it is an instance of a specified type, or whether it implements a specified interface. This makes it easy to write generic data structures in Go. You can either define an interface specifying the methods that required, or use the empty interface, which can be used to represent any type (including primitive types) if just storing values and don't need to call any methods.
+</p>
+
+<p>
+Go compiler does type inference, which allows to avoid explicit type annotations on most variable declarations. If combining initialization with declaration, then the compiler will infer the variable's type from the type of the expression assigned to it.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> Understanding the Memory Model</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+Go uses garbage collection. You explicitly allocate values, but there is no need to think about when to deallocate memory, they are automatically reclaimed when they are no longer required. But it is still possible to leak objects if you accidentally keep references to them after stop using them.
+</p>
+
+<p>
+Go does not explicitly differentiate between stack and heap allocations.
+</p>
+
+<p>
+For multithreaded code, sharing pointers to an object between multiple
+threads and working out exactly when the object can be destroyed is incredibly hard. For example, acquiring a reference in a thread requires an atomic increment operation, and it has to be very careful that objects aren't prematurely deallocated by race conditions.
+</p>
+
+<p>
+There are no guarantees what to expect when two goroutines touch the same memory. Go does not enforce any constraints on the order that memory accesses occur. The compiler is free to reorder any memory accesses within a goroutine, as long as that reordering does not alter the semantics of the goroutine running in isolation.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-go"><span class="org-comment-delimiter">// </span><span class="org-comment">For example</span>
+a = b;
+<span class="org-function-name">use</span>(b)
+<span class="org-function-name">use</span>(a);
+b = 12;
+<span class="org-comment-delimiter">// </span><span class="org-comment">A valid reordering</span>
+<span class="org-function-name">use</span>(b)
+a = b;
+b = 12;
+<span class="org-function-name">use</span>(a);
+</pre>
+</div>
+
+<p>
+It is not possible for the user to distinguish the difference, unless either variable in this example is shared, then this kind of optimization would have confusing consequences. In general, it's a good idea to only share readonly strutures.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Chapter 2. A Go Primer</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Go adopts JavaScript's idea of semicolon insertion. Any line that can be interpreted as a complete statement has a semicolon implicitly inserted at the end by the parser. This adds some constraints, for example enforcing a brace style where open braces are at the end of the line at the start of flow-control statements, rather than on their own.
+</p>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> The Structure of a Go Source File</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Go code is arranged in packages, which fill the rôles of both libraries and header files in C.
+</p>
+
+<p>
+Although Go uses static compilation, <code>import</code> statements do not include source code in the current compilation unit. Go packages are imported when the code is linked, rather than when it is run. This ensures that a Go application will not fail because of a missing package on the deployment system, at the cost of increasing the size of the executable.
+</p>
+
+<p>
+When compiling a package, an object code file is generated, which includes a metadata section that describes the types and functions that the package exports, and a list of the packages that this package imports.
+</p>
+
+<p>
+Go only provides access control at the package level.
+</p>
+
+<p>
+Renaming a package when importing it is usually a bad idea, because it makes code harder to read. Only rename an imported package when it is needed to explicitly disambiguate two packages with the same name.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Declaring Variables</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Clices, maps, and channels are reference types, meaning:
+</p>
+
+<ul class="org-ul">
+<li>They are always accessed via reference.
+</li>
+<li>When assigning one such typed variable to another, they reference to the same underlying object.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Declaring Functions</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+In Go, there is no distinction between heap and stack allocated variables, except at the implementation level.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2018-05-12 Sat 22:19</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

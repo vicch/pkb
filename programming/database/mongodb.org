@@ -1,0 +1,235 @@
+#+SETUPFILE: ../styles/bigblow-normal.setup
+#+TITLE: MongoDB
+
+* 数据结构
+
+- 灵活，不需要事先定义数据表结构；
+
+| 数据库 | Database   |
+|--------+------------|
+| 数据表 | Collection |
+|--------+------------|
+| 记录   | Document   |
+
+** Collection
+
+- 一组相关的 document，共享索引；
+
+file:../images/mongodb/03.png
+
+** Document
+
+- 键值对，BSON 格式；
+
+file:../images/mongodb/04.png
+
+** 关联
+
+Reference
+- 类似 RDBMS 的外链；
+- 用于复杂的多对多关系，或者复杂层级数据；
+- 更灵活，可以减少冗余数据
+
+file:../images/mongodb/01.png
+
+-----
+
+Embedded document
+- 用于一对一、一对多的「包含」关系；
+- 「读」性能更好，可以用一次操作读取、更新相关数据；
+
+file:../images/mongodb/02.png
+
+* 数据类型
+
+| 字符串     | @@html:<code>'&lt;string&gt;'</code>@@ |
+|------------+----------------------------------------|
+| 整数       | =<int>=                                |
+|------------+----------------------------------------|
+| 双精度数   |                                        |
+|------------+----------------------------------------|
+| Boolean    |                                        |
+|------------+----------------------------------------|
+| 数组       | =[<value>, ...]=                       |
+|------------+----------------------------------------|
+| 对象       |                                        |
+| 对象 ID    | =ObjectId(<hex>)=                      |
+|------------+----------------------------------------|
+| 时间戳     |                                        |
+| 日期       |                                        |
+|------------+----------------------------------------|
+| Null       |                                        |
+|------------+----------------------------------------|
+| 二进制数据 |                                        |
+|------------+----------------------------------------|
+| 代码       |                                        |
+|------------+----------------------------------------|
+| 正则表达式 |                                        |
+|------------+----------------------------------------|
+| =Min keys= |                                        |
+| =Max keys= |                                        |
+
+* 目录
+
+| 数据目录 | =/var/lib/mongodb= |
+|----------+--------------------|
+| 日志目录 | =/var/log/mongodb= |
+
+| 配置文件 | =/etc/mongod.conf= |
+
+* 操作
+** 数据库
+
+| =show dbs=          |                          |
+|---------------------+--------------------------|
+| =use <db>=          | 切换到数据库，创建数据库 |
+|---------------------+--------------------------|
+| =db=                | 查看当前操作的数据库     |
+|---------------------+--------------------------|
+| =db.dropDatabase()= | 删除数据库               |
+
+** 数据表
+
+| =show collections=                             |      |
+|------------------------------------------------+------|
+| =db.createCollection(<collection>, <options>)= | 创建 |
+|------------------------------------------------+------|
+| =db.<collection>.drop()=                       | 删除 |
+|------------------------------------------------+------|
+| =db.<collection>.count()=                      |      |
+
+** =find()=
+
+#+BEGIN_SRC code
+db.<collection>.find(
+    <condition>,
+    <projection>
+).<modifier>()
+#+END_SRC
+
+file:../images/mongodb/05.png
+
+file:../images/mongodb/06.png
+
+-----
+
+=<condition>=
+|                                 | 类比 =WHERE=          |
+|---------------------------------+-----------------------|
+| ={<key>:<value>}=               | =<key> = <value>=     |
+|---------------------------------+-----------------------|
+| ={<key>:{$lt:<value>}}=         | =<key> < <value>=     |
+| ={<key>:{$lte:<value>}}=        | ~<key> <= <value>~    |
+| ={<key>:{$gt:<value>}}=         | =<key> > <value>=     |
+| ={<key>:{$ge:<value>}}=         | ~<key> >= <value>~    |
+| ={<key>:{$ne:<value>}}=         | ~<key> != <value>~    |
+|---------------------------------+-----------------------|
+| ={<cond1>, <cond2>}=            | =<cond1> AND <cond2>= |
+|---------------------------------+-----------------------|
+| ={$or: [{<cond1>}, {<cond2>}]}= | =<cond1> OR <cond2>=  |
+
+-----
+
+=<projection>=
+- 指定查询返回的列，相当于 =SELECT <key>, ...= ；
+  + 查询默认返回所有列；
+  + ={<key1>: 1, <key2>: 0}= 表示包含 =<key1>= 列，排除 =<key2>= 列；
+  + =_id= 除非指定排除，否则默认始终包含；
+
+-----
+
+=<modifier>=
+| =limit()=  |                      |
+|------------+----------------------|
+| =sort()=   |                      |
+|------------+----------------------|
+| =pretty()= | 输出格式化的查询结果 |
+
+** 记录
+
+=db.<collection>.=
+| =insert(<document>)=                                    |                      |
+|---------------------------------------------------------+----------------------|
+| =update(<cond>, {$set: {<key>:<value>}})=               | 更新                 |
+| =update(<cond>, {$set: {<key>:<value>}}, {multi:true})= | 更新多条             |
+|---------------------------------------------------------+----------------------|
+| =save({_id:ObjectId(...), <key>:<value>, ...})=         | 替换现有记录         |
+|---------------------------------------------------------+----------------------|
+| =remove(<cond>)=                                        | 移除                 |
+| =remove(<cond>, <max>)=                                 | 最多移除几条         |
+
+=<document>=
+#+BEGIN_SRC code
+{
+    _id: ObjectId(...),
+    <key>: <value>,
+    ...
+}
+#+END_SRC
+
+* 命令行
+
+服务
+#+BEGIN_SRC sh
+sudo service mongod start
+sudo service mongod stop
+sudo service mongod restart
+#+END_SRC
+
+启动
+#+BEGIN_SRC sh
+sudo mongod --config=/etc/mongod.conf
+#+END_SRC
+
+连接
+#+BEGIN_SRC sh
+mongo
+#+END_SRC
+
+导出
+#+BEGIN_SRC sh
+mongoexport <options>
+    --host <>
+    --port <>
+    --username <>
+    --password <>
+
+    --db <>
+    --collection <>
+    --query <>
+
+    --out <file>
+
+## eg.
+mongoexport --db vdict --collection word --out word.json
+#+END_SRC
+
+导入
+#+BEGIN_SRC sh
+mongoimport <options>
+    --db <>
+    --collection <>
+
+    --file <>
+
+## eg.
+mongoimport --db vdict --collection word --file word.json
+#+END_SRC
+
+* 安装
+
+#+BEGIN_SRC sh
+## 导入公共 GPG key
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+
+## 创建列表文件
+echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
+
+## 重新加载本地包数据库
+sudo apt-get update
+
+## 安装 MongoDB 包（最新）
+sudo apt-get install -y mongodb-org
+#+END_SRC
+
+http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/

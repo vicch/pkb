@@ -1,0 +1,1181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Apache</title>
+<!-- 2017-07-14 Fri 17:14 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Apache</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. 概念</a>
+<ul>
+<li><a href="#sec-1-1">1.1. 虚拟主机</a>
+<ul>
+<li><a href="#sec-1-1-1">1.1.1. 基于 IP 地址</a></li>
+<li><a href="#sec-1-1-2">1.1.2. 基于主机名</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-2">1.2. MPM</a>
+<ul>
+<li><a href="#sec-1-2-1">1.2.1. Prefork</a></li>
+<li><a href="#sec-1-2-2">1.2.2. Worker</a></li>
+<li><a href="#sec-1-2-3">1.2.3. Event</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-2">2. 配置</a>
+<ul>
+<li><a href="#sec-2-1">2.1. 文件</a>
+<ul>
+<li><a href="#sec-2-1-1">2.1.1. <code>envvars</code></a></li>
+<li><a href="#sec-2-1-2">2.1.2. Red Hat</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-2">2.2. 标签</a>
+<ul>
+<li><a href="#sec-2-2-1">2.2.1. <code>&lt;Directory&gt;</code></a></li>
+<li><a href="#sec-2-2-2">2.2.2. <code>&lt;DirectoryMatch&gt;</code></a></li>
+<li><a href="#sec-2-2-3">2.2.3. <code>&lt;Location&gt;</code></a></li>
+<li><a href="#sec-2-2-4">2.2.4. <code>&lt;VirtualHost&gt;</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-2-3">2.3. 指令</a>
+<ul>
+<li><a href="#sec-2-3-1">2.3.1. <code>AllowOverride</code></a></li>
+<li><a href="#sec-2-3-2">2.3.2. <code>Listen</code></a></li>
+<li><a href="#sec-2-3-3">2.3.3. <code>LogLevel</code></a></li>
+<li><a href="#sec-2-3-4">2.3.4. <code>Options</code></a></li>
+<li><a href="#sec-2-3-5">2.3.5. <code>ServerAlias</code></a></li>
+<li><a href="#sec-2-3-6">2.3.6. <code>ServerSignature</code></a></li>
+<li><a href="#sec-2-3-7">2.3.7. <code>ServerTokens</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-3">3. 模块</a>
+<ul>
+<li><a href="#sec-3-1">3.1. <code>mod_authz_core</code></a>
+<ul>
+<li><a href="#sec-3-1-1">3.1.1. <code>Require</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-3-2">3.2. <code>mod_log_config</code></a>
+<ul>
+<li><a href="#sec-3-2-1">3.2.1. <code>CustomLog</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-3-3">3.3. <code>mod_negotiation</code></a></li>
+<li><a href="#sec-3-4">3.4. <code>mod_proxy</code></a></li>
+<li><a href="#sec-3-5">3.5. <code>mod_proxy_balancer</code></a>
+<ul>
+<li><a href="#sec-3-5-1">3.5.1. 示例</a></li>
+</ul>
+</li>
+<li><a href="#sec-3-6">3.6. <code>mod_status</code></a>
+<ul>
+<li><a href="#sec-3-6-1">3.6.1. 配置</a></li>
+<li><a href="#sec-3-6-2">3.6.2. 输出</a></li>
+</ul>
+</li>
+<li><a href="#sec-3-7">3.7. <code>mpm_common</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. 日志</a></li>
+<li><a href="#sec-5">5. 命令</a>
+<ul>
+<li><a href="#sec-5-1">5.1. 安装</a></li>
+<li><a href="#sec-5-2">5.2. <code>apache2</code> <code>httpd</code></a></li>
+<li><a href="#sec-5-3">5.3. <code>service</code></a></li>
+<li><a href="#sec-5-4">5.4. <code>a2enmod</code> <code>a2dismod</code></a></li>
+<li><a href="#sec-5-5">5.5. <code>a2ensite</code> <code>a2dissite</code></a></li>
+<li><a href="#sec-5-6">5.6. <code>a2enconf</code> <code>a2disconf</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6. 链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 概念</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> 虚拟主机</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>Apache 通过虚拟主机配置多个网站。
+</li>
+<li>虚拟主机的匹配可以基于 IP 地址或主机名。
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> 基于 IP 地址</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+基于 IP 地址的虚拟主机很少见，服务器通常只有一个公网地址，特殊情况是使用 SSL 证书要求每个域名有独立的 IP 地址。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">每一个 IP 地址和端口组合能且只能对应一个 <code>&lt;VirtualHost&gt;</code></label>
+<pre class="src src-sh">&lt;VirtualHost 0.0.0.0:80&gt;
+&lt;/VirtualHost&gt;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-1-2" class="outline-4">
+<h4 id="sec-1-1-2"><span class="section-number-4">1.1.2</span> 基于主机名</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<p>
+Apache 按照虚拟主机在配置文件中的顺序，将被 HTTP header 的 <code>Host</code> 值与 <code>ServerName</code> 或 <code>ServerAlias</code> 进行匹配，第一个匹配的虚拟主机接收请求。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> MPM</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li>Multi-Processing Modules
+</li>
+<li>控制 Apache 的运行模式和并发策略。
+</li>
+</ul>
+
+<div class="org-src-container">
+<label class="org-src-name">查看 MPM 模式</label>
+<pre class="src src-sh">$ apachectl status | grep <span class="org-string">"MPM"</span>
+Server MPM: event
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> Prefork</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<p>
+父进程创建一定数量的单线程的子进程，根据负载和配置对子进程数进行增减。所有子进程竞争 accept 用户请求，由 accept 成功的子进程处理请求。
+</p>
+
+<ul class="org-ul">
+<li>比 worker 和 event 模式消耗更多（内存）资源。
+</li>
+<li>需要使用非线程安全（non-thread safe）的库，如 <code>mod_php</code> 时，或需要进程隔离时，选用此模式。
+</li>
+</ul>
+
+<div class="org-src-container">
+<label class="org-src-name">配置</label>
+<pre class="src src-sh">&lt;IfModule mpm_prefork_module&gt;
+    StartServers            5
+    MinSpareServers         5
+    MaxSpareServers         10
+    MaxRequestWorkers       150
+    MaxConnectionsPerChild  0
+&lt;/IfModule&gt;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-2-2" class="outline-4">
+<h4 id="sec-1-2-2"><span class="section-number-4">1.2.2</span> Worker</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<p>
+每个子进程有多个线程，可以使用更少的资源处理更多请求。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2-3" class="outline-4">
+<h4 id="sec-1-2-3"><span class="section-number-4">1.2.3</span> Event</h4>
+<div class="outline-text-4" id="text-1-2-3">
+<ul class="org-ul">
+<li>Apache &gt;= 2.4
+</li>
+<li>每个线程可以处理多个请求。
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 配置</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 文件</h3>
+<div class="outline-text-3" id="text-2-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> <code>/etc/apache2/</code></caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left"><code>apache2.conf</code></th>
+<th scope="col" class="left">主配置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>envvars</code></td>
+<td class="left">环境变量</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>ports.conf</code></td>
+<td class="left">监听端口配置</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>conf-*/</code></td>
+<td class="left"><code>security.conf</code></td>
+<td class="left">安全配置</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>mods-*/</code></td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>sites*-/</code></td>
+<td class="left"><code>*.conf</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<ul class="org-ul">
+<li>通过在 <code>*-enabled</code> 目录下创建、删除 symbolic link 指向 <code>*-available</code> 目录下的文件，可以启用、禁用配置。
+</li>
+<li>配置文件按照文件名顺序加载，通常使用数字前缀确保加载顺序，如 <code>001-default.conf</code> 。
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1"><span class="section-number-4">2.1.1</span> <code>envvars</code></h4>
+<div class="outline-text-4" id="text-2-1-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>APACHE_RUN_USER</code></th>
+<th scope="col" class="left">子进程和线程所属的账户</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>APACHE_RUN_GROUP</code></td>
+<td class="left">子进程和线程所属的组</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>APACHE_LOG_DIR</code></td>
+<td class="left">日志目录</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>APACHE_ULIMIT_MAX_FILES</code></td>
+<td class="left">最大文件（进程数）</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+为 Apache 进程所属的组（通常为 <code>www-data</code> ）设置程序目录的写权限，可以避免权限问题，适用于直接由 Apache 加载代码的情况，如 PHP 通过 <code>mod_php</code> 。大部分应用作为独立的进程运行，如 PHP 应用通过 PHP-FPM 运行，不受 Apache 所属的用户和组影响。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-1-2" class="outline-4">
+<h4 id="sec-2-1-2"><span class="section-number-4">2.1.2</span> Red Hat</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<p>
+Red Hat 下主配置文件为 <code>/etc/httpd/conf/httpd.conf</code> 。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> 标签</h3>
+<div class="outline-text-3" id="text-2-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>&lt;VirtualHost&gt;</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>&lt;Directory&gt;</code></td>
+<td class="left">应用配置于指定目录和子目录</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>&lt;DirectoryMatch&gt;</code></td>
+<td class="left">应用配置于指定目录和子目录，使用正则匹配</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>&lt;Location&gt;</code></td>
+<td class="left">应用配置于指定 URL 路径</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>&lt;IfModule&gt;</code></td>
+<td class="left">如果模块存在</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-2-2-1" class="outline-4">
+<h4 id="sec-2-2-1"><span class="section-number-4">2.2.1</span> <code>&lt;Directory&gt;</code></h4>
+<div class="outline-text-4" id="text-2-2-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">&lt;Directory &lt;path&gt;&gt;    <span class="org-comment-delimiter"># </span><span class="org-comment">&#20351;&#29992;&#36335;&#24452;</span>
+&lt;Directory ~ &lt;regex&gt;&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#20351;&#29992;&#27491;&#21017;</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-2-2" class="outline-4">
+<h4 id="sec-2-2-2"><span class="section-number-4">2.2.2</span> <code>&lt;DirectoryMatch&gt;</code></h4>
+<div class="outline-text-4" id="text-2-2-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">&lt;DirectoryMatch &lt;regex&gt;&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-sh">&lt;DirectoryMatch <span class="org-string">"/\.git"</span>&gt;
+    Require all denied
+&lt;/Directory&gt;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-2-3" class="outline-4">
+<h4 id="sec-2-2-3"><span class="section-number-4">2.2.3</span> <code>&lt;Location&gt;</code></h4>
+<div class="outline-text-4" id="text-2-2-3">
+<div class="org-src-container">
+
+<pre class="src src-sh">&lt;Location &lt;url&gt;&gt;
+    <span class="org-comment-delimiter"># </span><span class="org-comment">/  &#20219;&#24847; URL</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-2-4" class="outline-4">
+<h4 id="sec-2-2-4"><span class="section-number-4">2.2.4</span> <code>&lt;VirtualHost&gt;</code></h4>
+<div class="outline-text-4" id="text-2-2-4">
+<div class="org-src-container">
+
+<pre class="src src-sh">&lt;VirtualHost &lt;addr&gt;[:&lt;port&gt;]&gt;
+    <span class="org-comment-delimiter"># </span><span class="org-comment">&lt;addr&gt; &#20026; * &#34920;&#31034;&#21305;&#37197;&#25152;&#26377; IP &#22320;&#22336;</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">/etc/apache2/sites-available/foo.com.conf</span>
+&lt;VirtualHost *:80&gt;
+    ServerName foo.com
+    ServerAlias www.foo.com
+    DocumentRoot /var/www/foo.com
+
+    ServerAdmin webmaster@localhost
+
+    ErrorLog ${<span class="org-variable-name">APACHE_LOG_DIR</span>}/error.log
+    CustomLog ${<span class="org-variable-name">APACHE_LOG_DIR</span>}/access.log combined
+&lt;/VirtualHost&gt;
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> 指令</h3>
+<div class="outline-text-3" id="text-2-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>虚拟主机</b></th>
+<th scope="col" class="left"><code>DocumentRoot</code></th>
+<th scope="col" class="left">根目录</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>Listen</code></td>
+<td class="left">监听地址和端口</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>ServerName</code></td>
+<td class="left">服务器名</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>ServerAlias</code></td>
+<td class="left">服务器别名</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>选项</b></td>
+<td class="left"><code>AllowOverride</code></td>
+<td class="left">是否使用 <code>.htaccess</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>Options</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>日志</b></td>
+<td class="left"><code>ErrorLog</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>LogLevel</code></td>
+<td class="left">错误日志级别</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>安全</b></td>
+<td class="left"><code>Require</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>ServerSignature</code></td>
+<td class="left">页面底部服务器和操作系统信息</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>ServerTokens</code></td>
+<td class="left">响应 header 中的服务器和操作系统信息</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><b>其他</b></td>
+<td class="left"><code>Include</code></td>
+<td class="left">加载配置文件，失败时报错</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>IncludeOptional</code></td>
+<td class="left">加载配置文件，失败时忽略</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-2-3-1" class="outline-4">
+<h4 id="sec-2-3-1"><span class="section-number-4">2.3.1</span> <code>AllowOverride</code></h4>
+<div class="outline-text-4" id="text-2-3-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">AllowOverride &lt;option&gt;
+    <span class="org-comment-delimiter"># </span><span class="org-comment">All</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">None</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Options=</span>
+</pre>
+</div>
+
+<p>
+使用 <code>AllowOverride All</code> 会查找各级目录下的 <code>.htaccess</code> 文件，增加系统调用。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-3-2" class="outline-4">
+<h4 id="sec-2-3-2"><span class="section-number-4">2.3.2</span> <code>Listen</code></h4>
+<div class="outline-text-4" id="text-2-3-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">Listen [&lt;ip&gt;:]&lt;port&gt;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-3-3" class="outline-4">
+<h4 id="sec-2-3-3"><span class="section-number-4">2.3.3</span> <code>LogLevel</code></h4>
+<div class="outline-text-4" id="text-2-3-3">
+<div class="org-src-container">
+
+<pre class="src src-sh">LogLevel [&lt;module&gt;:]&lt;level&gt; ...
+    <span class="org-comment-delimiter"># </span><span class="org-comment">warn  &#40664;&#35748;&#32423;&#21035;</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-3-4" class="outline-4">
+<h4 id="sec-2-3-4"><span class="section-number-4">2.3.4</span> <code>Options</code></h4>
+<div class="outline-text-4" id="text-2-3-4">
+<div class="org-src-container">
+
+<pre class="src src-sh">Options [+|-]&lt;option&gt; ...
+    <span class="org-comment-delimiter"># </span><span class="org-comment">+ enables option, - disables option</span>
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> 选项</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>All</code></th>
+<th scope="col" class="left">除 <code>MultiViews</code> 外所有选项</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>FollowSymLinks</code></td>
+<td class="left">是否跟踪软链接</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>Indexes</code></td>
+<td class="left">在没有索引文件时是否显示目录文件列表</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>MultiViews</code></td>
+<td class="left">是否使用 <code>mod_negotiation</code> 的 <code>MultiViews</code> 内容协商</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-2-3-5" class="outline-4">
+<h4 id="sec-2-3-5"><span class="section-number-4">2.3.5</span> <code>ServerAlias</code></h4>
+<div class="outline-text-4" id="text-2-3-5">
+<div class="org-src-container">
+
+<pre class="src src-sh">ServerAlias &lt;hostname&gt; ...
+    <span class="org-comment-delimiter"># </span><span class="org-comment">&#21487;&#20197;&#21253;&#21547; * &#36890;&#37197;&#31526;</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-3-6" class="outline-4">
+<h4 id="sec-2-3-6"><span class="section-number-4">2.3.6</span> <code>ServerSignature</code></h4>
+<div class="outline-text-4" id="text-2-3-6">
+<div class="org-src-container">
+
+<pre class="src src-sh">ServerSignature &lt;option&gt;
+    <span class="org-comment-delimiter"># </span><span class="org-comment">On</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Off</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Email &#26174;&#31034;&#31649;&#29702;&#21592;&#37038;&#31665;</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-3-7" class="outline-4">
+<h4 id="sec-2-3-7"><span class="section-number-4">2.3.7</span> <code>ServerTokens</code></h4>
+<div class="outline-text-4" id="text-2-3-7">
+<div class="org-src-container">
+
+<pre class="src src-sh">ServerTokens &lt;option&gt;
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Full    Apache/2.4.18 (Ubuntu)</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">OS      Apache/2.4.18 (Ubuntu)</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Minimal Apache/2.4.18</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Minor   Apache/2.4</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Major   Apache/2</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">Prod    Apache</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 模块</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> <code>mod_authz_core</code></h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+访问控制模块，控制文件读取权限。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>Require</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-3-1-1" class="outline-4">
+<h4 id="sec-3-1-1"><span class="section-number-4">3.1.1</span> <code>Require</code></h4>
+<div class="outline-text-4" id="text-3-1-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">Require all granted|denied
+Require ip &lt;ip&gt; ...
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> <code>mod_log_config</code></h3>
+<div class="outline-text-3" id="text-3-2">
+</div><div id="outline-container-sec-3-2-1" class="outline-4">
+<h4 id="sec-3-2-1"><span class="section-number-4">3.2.1</span> <code>CustomLog</code></h4>
+<div class="outline-text-4" id="text-3-2-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">CustomLog &lt;file&gt; &lt;nickname&gt;|&lt;format&gt;
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&lt;nickname&gt;</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">combined</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">common</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&lt;format&gt;</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> <code>mod_negotiation</code></h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+内容协商，或内容选择，从多个符合条件（如文件名匹配）的文件中选择最符合客户端需求、能力的文件。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> <code>mod_proxy</code></h3>
+<div class="outline-text-3" id="text-3-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>ProxyPass</code></th>
+<th scope="col" class="left">将本地服务器（反向代理或 gateway）URL 映射到远程服务器 URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>ProxyPassMatch</code></td>
+<td class="left">同上，使用正则匹配</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-3-5" class="outline-3">
+<h3 id="sec-3-5"><span class="section-number-3">3.5</span> <code>mod_proxy_balancer</code></h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+负载均衡模块，需要开启 <code>mod_proxy</code> 和以下任一调度算法。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>mod_lbmethod_byrequests</code></th>
+<th scope="col" class="left">平均分配请求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>mod_lbmethod_bytraffic</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>mod_lbmethod_bybusyness</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>mod_lbmethod_heartbeat</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-3-5-1" class="outline-4">
+<h4 id="sec-3-5-1"><span class="section-number-4">3.5.1</span> 示例</h4>
+<div class="outline-text-4" id="text-3-5-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">&lt;VirtualHost *:80&gt;
+    &lt;Directory /var/www/example.com/public&gt;
+        &lt;Proxy balancer://cluster&gt;                <span class="org-comment-delimiter"># </span><span class="org-comment">Define balancer cluster</span>
+            BalancerMember http://localhost:9000/ <span class="org-comment-delimiter"># </span><span class="org-comment">Define multiple backends</span>
+            BalancerMember http://localhost:9001/
+            BalancerMember http://localhost:9002/
+        &lt;/Proxy&gt;
+        &lt;Location /&gt;
+            ProxyPass balancer://cluster/ <span class="org-comment-delimiter"># </span><span class="org-comment">Proxy requests to balancer cluster</span>
+            ProxyPassReverse balancer://cluster/
+        &lt;/Location&gt;
+        &lt;Location /static&gt;
+            ProxyPass !
+        &lt;Location&gt;
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-6" class="outline-3">
+<h3 id="sec-3-6"><span class="section-number-3">3.6</span> <code>mod_status</code></h3>
+<div class="outline-text-3" id="text-3-6">
+</div><div id="outline-container-sec-3-6-1" class="outline-4">
+<h4 id="sec-3-6-1"><span class="section-number-4">3.6.1</span> 配置</h4>
+<div class="outline-text-4" id="text-3-6-1">
+<div class="org-src-container">
+<label class="org-src-name">设置状态页面</label>
+<pre class="src src-sh">&lt;Location <span class="org-string">"/server-status"</span>&gt;
+    SetHandler server-status
+    <span class="org-comment-delimiter"># </span><span class="org-comment">&#20801;&#35768;&#25351;&#23450;&#22495;&#21517;&#30340;&#20027;&#26426;&#35775;&#38382;</span>
+    Require host &lt;domain&gt;
+    <span class="org-comment-delimiter"># </span><span class="org-comment">&#20801;&#35768;&#25351;&#23450; IP &#30340;&#20027;&#26426;&#35775;&#38382;&#65288;&#20801;&#35768;&#23487;&#20027;&#26426;&#35775;&#38382;&#34394;&#25311;&#26426;&#65289;</span>
+    Require ip &lt;addr&gt;
+&lt;/Location&gt;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-6-2" class="outline-4">
+<h4 id="sec-3-6-2"><span class="section-number-4">3.6.2</span> 输出</h4>
+<div class="outline-text-4" id="text-3-6-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">Server uptime: 3 minutes 4 seconds
+Server load: 5.68 2.19 0.78
+Total accesses: 12025 - Total Traffic: 133.8 MB
+CPU Usage: u1 s8.32 cu0 cs0 - 5.07% CPU load
+65.4 requests/sec - 0.7 MB/second - 11.4 kB/request   <span class="org-comment-delimiter"># </span><span class="org-comment">&#21534;&#21520;&#29575;</span>
+1 requests currently being processed, 74 idle workers <span class="org-comment-delimiter"># </span><span class="org-comment">&#24403;&#21069;&#24182;&#21457;&#29992;&#25143;&#25968;</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-7" class="outline-3">
+<h3 id="sec-3-7"><span class="section-number-3">3.7</span> <code>mpm_common</code></h3>
+<div class="outline-text-3" id="text-3-7">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>MaxConnectionsPerChild</code></th>
+<th scope="col" class="left">每个子进程最大连接数，超过时销毁并重建新进程</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>MaxRequestWorkers</code></td>
+<td class="left">最大并发连接数，超过时进入等待队列</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>prefork</code> 最大子进程数</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left"><code>worker</code> 和 <code>event</code> 最大线程数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 日志</h2>
+<div class="outline-text-2" id="text-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 3:</span> <code>/var/log/apache2/</code></caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>access.log</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>error.log</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> 命令</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> 安装</h3>
+<div class="outline-text-3" id="text-5-1">
+<div class="org-src-container">
+<label class="org-src-name">Add repository for latest stable release</label>
+<pre class="src src-sh">add-apt-repository -y ppa:ondrej/apache2
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> <code>apache2</code> <code>httpd</code></h3>
+<div class="outline-text-3" id="text-5-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Debian, Ubuntu</th>
+<th scope="col" class="left"><code>apache2</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">RedHat, CentOS, Fedora</td>
+<td class="left"><code>httpd</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> <code>service</code></h3>
+<div class="outline-text-3" id="text-5-3">
+<div class="org-src-container">
+
+<pre class="src src-sh">/etc/init.d/apache2 &lt;command&gt;
+service apache2 &lt;command&gt;
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&lt;command&gt;</span>
+    start
+    stop
+    restart
+    reload  <span class="org-comment-delimiter"># </span><span class="org-comment">&#37325;&#26032;&#21152;&#36733;&#37197;&#32622;</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-4" class="outline-3">
+<h3 id="sec-5-4"><span class="section-number-3">5.4</span> <code>a2enmod</code> <code>a2dismod</code></h3>
+<div class="outline-text-3" id="text-5-4">
+<div class="org-src-container">
+
+<pre class="src src-sh">a2enmod &lt;module&gt;
+a2dismod &lt;module&gt;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-5" class="outline-3">
+<h3 id="sec-5-5"><span class="section-number-3">5.5</span> <code>a2ensite</code> <code>a2dissite</code></h3>
+<div class="outline-text-3" id="text-5-5">
+<div class="org-src-container">
+
+<pre class="src src-sh">a2ensite &lt;domain&gt;.conf
+a2dissite &lt;domain&gt;.conf
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-6" class="outline-3">
+<h3 id="sec-5-6"><span class="section-number-3">5.6</span> <code>a2enconf</code> <code>a2disconf</code></h3>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> 链接</h2>
+<div class="outline-text-2" id="text-6">
+<ol class="org-ol">
+<li><a href="http://httpd.apache.org/docs/current/mod/core.html">Apache Core Features</a>
+</li>
+<li><a href="https://httpd.apache.org/docs/2.4/mod/directives.html">Apache Directive Index</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2017-07-14 Fri 17:14</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

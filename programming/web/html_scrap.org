@@ -1,0 +1,101 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: HTML Scrap
+
+* HTML Email 编写指南
+
+[[http://www.ruanyifeng.com/blog/2013/06/html_email.html][Source]]
+
+带格式的邮件，其实就是一张网页，正式名称叫做 [[https://en.wikipedia.org/wiki/HTML_email][HTML Email]]。它能否正常显示，完全取决于邮件客户端。大多数的邮件客户端会过滤 HTML 设置，让邮件面目全非。 _编写 HTML Email 的窍门，就是使用 15 年前的网页制作方法。_
+
+** =DOCTYPE=
+
+目前兼容性最好的 =DOCTYPE= 是 =XHTML 1.0 Strict=，事实上 Gmail 和 Hotmail 会删掉原本的 =DOCTYPE= ，换上这个。使用这个 =DOCTYPE= 也就意味着不能使用 HTML5 语法。
+
+** MIME
+
+#+CAPTION: MIME 类型不能使用：
+#+BEGIN_SRC code
+Content-Type: text/plain;
+#+END_SRC
+
+#+CAPTION: 而要使用
+#+BEGIN_SRC code
+Content-Type: Multipart/Alternative;
+#+END_SRC
+
+** 布局
+
+网页的布局必须使用 =<table>= 。
+
+#+CAPTION: 首先，放置一个最外层的表格，用来设置背景：
+#+BEGIN_SRC html
+<body style="margin: 0; padding: 0;">
+    <table border="1" cellpadding="0" cellspacing="0" width="100%">
+    </table>
+</body>
+#+END_SRC
+
+=border= 属性等于 1 是为了方便开发，正式发布的时候再把这个属性设为 0。
+
+#+CAPTION: 在内层放置第二个表格，用来展示内容，邮件内容有几个部分，就设置几行：
+#+BEGIN_SRC html
+<table align="center" border="1" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse;">
+    <tr></tr>
+    <tr></tr>
+    <tr></tr>
+</table>
+#+END_SRC
+
+宽度定为 600 像素，防止超过客户端的显示宽度。
+
+** 图片
+
+图片是唯一可以引用的外部资源，其他的外部资源，比如 CSS 文件、字体文件、视频文件等，一概不能引用。
+
+#+CAPTION: 有些客户端会给图片链接加上边框，要去除边框：
+#+BEGIN_SRC html
+img { outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; }
+a img { border: none; }
+
+<img border="0" style="display:block;"/>
+#+END_SRC
+
+不少客户端默认不显示图片，所以要确保即使没有图片，主要内容也能被阅读。
+
+** 行内样式
+
+所有的 CSS 规则最好都采用行内样式，因为放置在网页头部的样式，很可能会被客户端删除。客户端对 CSS 规则的支持情况：[[https://www.campaignmonitor.com/css/][CSS Support Guide for Email Clients]]
+
+#+CAPTION: 不要采用 CSS 的简写形式，有些客户端不支持：
+#+BEGIN_SRC html
+<p style="margin: 1em 0;">
+<p style="margin-top: 1em; margin-bottom: 1em; margin-left: 0; margin-right: 0;">
+#+END_SRC
+
+** W3C 校验和测试工具
+
+要保证最终的代码，能够通过 [[https://validator.w3.org/][W3C Markup Validation Service]] 的校验，因为某些客户端会把不合格属性剥离。还要使用测试工具，查看在不同客户端的显示结果：
+
+- [[https://mailchimp.com/features/inbox-preview/][MailChimp Inbox Preview]]
+- [[https://litmus.com/][Litmus]]
+- [[https://www.emailonacid.com/][Email on Acid]]
+
+发送工具可以考虑使用 [[https://mailchimp.com/][MailChimp]] 和 [[https://www.campaignmonitor.com/][Campaign Monitor]]。
+
+** 模板
+
+使用已经做好的模板，是一个不错的选择：
+
+- [[https://mailchimp.com/features/email-templates/][MailChimp Email Templates]]
+- [[https://www.campaignmonitor.com/email-templates/][Campaign Monitor Email Templates]]
+
+自己开发的话可以参考：
+
+- [[http://htmlemailboilerplate.com/][HTML Email Boilerplate]]
+- [[http://www.emailology.org/#1][Emailology]]
+
+** 链接
+
+1. [[https://webdesign.tutsplus.com/articles/say-hello-to-the-html-email-boilerplate--webdesign-5143][Say Hello to the HTML Email Boilerplate]]
+1. [[https://webdesign.tutsplus.com/articles/build-an-html-email-template-from-scratch--webdesign-12770][Build an HTML Email Template From Scratch]]
+1. [[https://webdesign.tutsplus.com/tutorials/what-you-should-know-about-html-email--webdesign-12908][What You Should Know About HTML Email]]

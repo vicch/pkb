@@ -1,0 +1,886 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-07-31 Wed 16:44 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Programming Scrap</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Programming Scrap</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org2955ec7">1 代码的抽象三原则</a>
+<ul>
+<li><a href="#orgb07a93f">1.1 DRY 原则</a></li>
+<li><a href="#org476db58">1.2 YAGNI 原则</a></li>
+<li><a href="#orgda10d31">1.3 Rule of Three 原则</a></li>
+</ul>
+</li>
+<li><a href="#org5f35ae5">2 持续集成</a>
+<ul>
+<li><a href="#orgdace9e0">2.1 概念</a></li>
+<li><a href="#orgde86f87">2.2 持续交付</a></li>
+<li><a href="#org1e8c267">2.3 持续部署</a></li>
+<li><a href="#orgc03955c">2.4 流程</a>
+<ul>
+<li><a href="#org58e8a0d">2.4.1 提交</a></li>
+<li><a href="#org5becb0e">2.4.2 第一轮测试</a></li>
+<li><a href="#orgb2c35da">2.4.3 构建</a></li>
+<li><a href="#orgc53b683">2.4.4 第二轮测试</a></li>
+<li><a href="#org6097a93">2.4.5 部署</a></li>
+<li><a href="#org1fbeced">2.4.6 回滚</a></li>
+</ul>
+</li>
+<li><a href="#orgd8a9ee5">2.5 链接</a></li>
+</ul>
+</li>
+<li><a href="#org82f17e7">3 各种流行的编程风格</a>
+<ul>
+<li><a href="#orgc0e5cb0">3.1 散弹枪编程</a></li>
+<li><a href="#org1f51070">3.2 撞大运编程</a></li>
+<li><a href="#org6416adf">3.3 Cargo-Cult 编程</a></li>
+<li><a href="#org63ee451">3.4 刻舟求剑编程</a></li>
+<li><a href="#org53ac847">3.5 设计模式驱动型编程</a></li>
+<li><a href="#org46738f5">3.6 侦探型编程</a></li>
+<li><a href="#orgedbcb19">3.7 屠宰式编程</a></li>
+</ul>
+</li>
+<li><a href="#orgb8ff01f">4 Stack 的三种含义</a>
+<ul>
+<li><a href="#org8e4d4e2">4.1 含义一：数据结构</a></li>
+<li><a href="#orgf478084">4.2 含义二：代码运行方式</a></li>
+<li><a href="#org06e1f33">4.3 含义三：内存区域</a></li>
+</ul>
+</li>
+<li><a href="#org0a743b7">5 Norris Numbers</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2955ec7" class="outline-2">
+<h2 id="org2955ec7"><span class="section-number-2">1</span> 代码的抽象三原则</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2013/01/abstraction_principles.html">Source</a>
+</p>
+
+<p>
+软件开发是「<a href="http://en.wikipedia.org/wiki/Abstraction_principle_(computer_programming)">抽象化原则</a>」的一种体现。所谓「抽象化」，就是指从具体问题中，提取出具有共性的模式，再使用通用的解决方法加以处理。
+</p>
+
+<p>
+开发软件的时候，一方面，我们总是希望使用别人已经写好的代码，另一方面，又希望自己写的代码尽可能重用，以求减少工作量。要做到这两个目标，这需要「抽象化」。
+</p>
+</div>
+
+<div id="outline-container-orgb07a93f" class="outline-3">
+<h3 id="orgb07a93f"><span class="section-number-3">1.1</span> DRY 原则</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+DRY 是 Don't Repeat Yourself 的缩写。软件工程名著《The Pragmatic Programmer》首先提出了这个原则。它的涵义是，系统的每一个功能都应该有唯一的实现。也就是说，如果多次遇到同样的问题，就应该抽象出一个共同的解决方法，不要重复开发同样的功能。这个原则有时也称为「一次且仅一次」原则（Once and Only Once）。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org476db58" class="outline-3">
+<h3 id="org476db58"><span class="section-number-3">1.2</span> YAGNI 原则</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+YAGNI 是 You Aren't Gonna Need It 的缩写。这是「极限编程」提倡的原则，指的是你自以为有用的功能，实际上都是用不到的。因此， <span class="underline">除了最核心的功能，其他功能一概不要部署，这样可以大大加快开发。</span> 它背后的指导思想，就是尽可能快、尽可能简单地让软件运行起来（do the simplest thing that could possibly work）。
+</p>
+
+<p>
+但是，这里出现了一个问题。仔细推敲的话，你会发现 DRY 原则和 YAGNI 原则并非完全兼容。前者追求「抽象化」，要求找到通用的解决方法；后者追求「快和省」，意味着不要把精力放在抽象化上面，因为很可能「你不会需要它」。所以，就有了第三个原则。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgda10d31" class="outline-3">
+<h3 id="orgda10d31"><span class="section-number-3">1.3</span> Rule of Three 原则</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Rule of Three 原则指的是当某个功能第三次出现时，才进行「抽象化」。这是软件开发大家 Martin Fowler 在《Refactoring》一书中提出的。它的涵义是， <span class="underline">第一次用到某个功能时，写一个特定的解决方法；第二次又用到的时候，拷贝上一次的代码；第三次出现的时候，你才着手「抽象化」，写出通用的解决方法。</span>
+</p>
+
+<p>
+这样做有几个理由：
+</p>
+
+<ul class="org-ul">
+<li>省事。如果一种功能只有一到两个地方会用到，就不需要在「抽象化」上面耗费时间了。</li>
+<li>容易发现模式。「抽象化」需要找到问题的模式，问题出现的场合越多，就越容易看出模式，从而可以更准确地「抽象化」。</li>
+<li>防止冗余。如果一种功能同时有多个实现，管理起来非常麻烦，修改的时候需要修改多处。在实际工作中，重复实现最多可以容忍出现一次，再多就无法接受了。</li>
+</ul>
+
+<p>
+综上所述， <span class="underline">Rule of Three 是 DRY 原则和 YAGNI 原则的折衷，是代码冗余和开发成本的平衡点，</span> 值得在「抽象化」时遵循。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5f35ae5" class="outline-2">
+<h2 id="org5f35ae5"><span class="section-number-2">2</span> 持续集成</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2015/09/continuous-integration.html">Source</a>
+</p>
+</div>
+
+<div id="outline-container-orgdace9e0" class="outline-3">
+<h3 id="orgdace9e0"><span class="section-number-3">2.1</span> 概念</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+持续集成（Continuous Integration，简称 CI）指的是 <span class="underline">频繁地将代码集成到主干。</span> 它的好处主要有两个：
+</p>
+
+<ul class="org-ul">
+<li>快速发现错误：每进行一点更新，就集成到主干，可以快速发现和定位错误。</li>
+<li>防止分支大幅偏离主干：如果不是经常集成，主干又在不断更新，会导致之后集成的难度变大。</li>
+</ul>
+
+<p>
+持续集成的目的，就是让产品快速迭代，同时保持高质量。它的核心措施是， <span class="underline">代码集成到主干之前，必须通过自动化测试，</span> 只要有一个测试用例失败，就不能集成。Martin Fowler 说过，「持续集成并不能消除 bug，而是让它们非常容易发现和改正。」
+</p>
+
+<p>
+与持续集成相关的，还有两个概念，分别是持续交付和持续部署。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgde86f87" class="outline-3">
+<h3 id="orgde86f87"><span class="section-number-3">2.2</span> 持续交付</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+持续交付（Continuous Delivery）指的是 <span class="underline">频繁地将软件的新版本交付给质量团队或者用户，以供评审。</span> 如果评审通过，代码就进入生产阶段。持续交付可以看作持续集成的下一步。它强调的是， <span class="underline">软件是随时随地可以交付的。</span>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1e8c267" class="outline-3">
+<h3 id="org1e8c267"><span class="section-number-3">2.3</span> 持续部署</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+持续部署（Continuous Deployment）是持续交付的下一步，指的是 <span class="underline">代码通过评审以后，自动部署到生产环境。</span> 持续部署的目标是， <span class="underline">代码在任何时刻都是可部署的，可以进入生产阶段。</span>
+</p>
+
+<p>
+持续部署的前提是能自动化完成测试、构建、部署等步骤，它与持续交付的区别：
+</p>
+
+
+<div class="figure">
+<p><img src="../images/programming_scrap/01.gif" alt="01.gif" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc03955c" class="outline-3">
+<h3 id="orgc03955c"><span class="section-number-3">2.4</span> 流程</h3>
+<div class="outline-text-3" id="text-2-4">
+</div><div id="outline-container-org58e8a0d" class="outline-4">
+<h4 id="org58e8a0d"><span class="section-number-4">2.4.1</span> 提交</h4>
+<div class="outline-text-4" id="text-2-4-1">
+<p>
+开发者向代码仓库提交代码，所有后面的步骤都始于本地代码的一次提交（commit）。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5becb0e" class="outline-4">
+<h4 id="org5becb0e"><span class="section-number-4">2.4.2</span> 第一轮测试</h4>
+<div class="outline-text-4" id="text-2-4-2">
+<p>
+代码仓库对 commit 操作配置了 <span class="underline">钩子（hook），提交代码或者合并主干时，会运行自动化测试。</span>
+</p>
+
+<ul class="org-ul">
+<li>单元测试：针对函数或模块的测试。</li>
+<li>集成测试：针对整体产品的某个功能的测试，又称功能测试。</li>
+<li>端对端测试：从用户界面直达数据库的全链路测试。</li>
+</ul>
+
+<p>
+第一轮测试至少需要进行单元测试。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb2c35da" class="outline-4">
+<h4 id="orgb2c35da"><span class="section-number-4">2.4.3</span> 构建</h4>
+<div class="outline-text-4" id="text-2-4-3">
+<p>
+通过第一轮测试，代码就可以合并进主干，可以交付了。交付后，就先进行构建（build），再进入第二轮测试。所谓 <span class="underline">构建，指的是将源码转换为可以运行的实际代码，比如安装依赖、配置资源（CSS、JS、图片）等。</span>
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> 常用的构建工具</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><a href="https://jenkins.io/index.html">Jenkins</a></th>
+<th scope="col" class="org-left">开源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><a href="https://travis-ci.com/">Travis CI</a></td>
+<td class="org-left">收费</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="https://codeship.com/">Codeship</a></td>
+<td class="org-left">收费</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="http://strider-cd.github.io/">Strider CD</a></td>
+<td class="org-left">开源</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgc53b683" class="outline-4">
+<h4 id="orgc53b683"><span class="section-number-4">2.4.4</span> 第二轮测试</h4>
+<div class="outline-text-4" id="text-2-4-4">
+<p>
+如果第一轮测试已经涵盖了所有测试内容，第二轮测试可以省略，前提是构建已经移到第一轮测试之前。
+</p>
+
+<p>
+第二轮测试是 <span class="underline">全面测试，包括单元测试、集成测试、（有条件的话）端对端测试。所有测试以自动化为主，</span> 少数无法自动化的测试用例，需要人工进行。
+</p>
+
+<p>
+需要强调的是，新版本的每一个更新点都必须测试到。如果测试的覆盖率不高，进入后面的部署阶段后，很可能会出现严重的问题。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6097a93" class="outline-4">
+<h4 id="org6097a93"><span class="section-number-4">2.4.5</span> 部署</h4>
+<div class="outline-text-4" id="text-2-4-5">
+<p>
+通过第二轮测试，当前代码就是一个 <span class="underline">可以直接部署的版本（artifact），将这个版本的文件打包存档，发到生产服务器。生产服务器将文件解包成一个目录，再将运行路径的符号链接（symlink）指向这个目录，然后重新启动应用。</span>
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> 部署工具</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><a href="https://www.ansible.com/">Ansible</a></th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><a href="https://www.chef.io/chef/">Chef</a></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><a href="https://puppet.com/">Puppet</a></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org1fbeced" class="outline-4">
+<h4 id="org1fbeced"><span class="section-number-4">2.4.6</span> 回滚</h4>
+<div class="outline-text-4" id="text-2-4-6">
+<p>
+一旦当前版本发生问题，就要回滚到上一个版本的构建结果。最简单的做法就是 <span class="underline">修改符号链接，指向上一个版本的目录。</span>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd8a9ee5" class="outline-3">
+<h3 id="orgd8a9ee5"><span class="section-number-3">2.5</span> 链接</h3>
+<div class="outline-text-3" id="text-2-5">
+<ol class="org-ol">
+<li><a href="https://blog.risingstack.com/continuous-deployment-of-node-js-applications/">Continuous Deployment of Node.js Applications</a></li>
+<li><a href="https://codeship.com/continuous-integration-essentials">Continuous Integration Essentials</a></li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org82f17e7" class="outline-2">
+<h2 id="org82f17e7"><span class="section-number-2">3</span> 各种流行的编程风格</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<a href="http://coolshell.cn/articles/2058.html">Source</a>
+</p>
+</div>
+
+<div id="outline-container-orgc0e5cb0" class="outline-3">
+<h3 id="orgc0e5cb0"><span class="section-number-3">3.1</span> 散弹枪编程</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+这种编程风格是一种开发者使用非常随意的方式对待代码。「嗯，这个方法调用出错了……那么我会试着把传出的参数从 <code>false</code> 变成 <code>true</code> 」，当然依然出错，于是我们的程序员会这样：「好吧，那我就注释掉整个方法吧」，或是其它更为随意的处理方式，直到最后让这个调用成功。或是被旁边的某个程序员指出一个正确的方法。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1f51070" class="outline-3">
+<h3 id="org1f51070"><span class="section-number-3">3.2</span> 撞大运编程</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+这是一种比散弹枪编程要温和一些的编程方式，我相信这种方式可能会是大多数程序员都会使用的方式。这种编程方式经常出现于程序员并不确切知道他们在干什么，也不知道所写的程序的本质和实际，但是可以让程序工作起来。他们以一种撞大运的方式在写程序，某些时候，他们根本就不知道某个错误的原因，就开始稀里糊涂地修改代码。一旦出现问题，他们会用两条路：1）停下来，理解一下程序，找到出错的原因。2）使用散弹枪编程方式开始解决问题。
+</p>
+
+<p>
+测试驱动开发（Test Driven Development）是一种可以用来拯救上百万的撞大运编程的程序员。于是，他们有了一个更为 NB 的借口：只要我的程序通过测试了，你还有什么话好说？别骂我，测试驱动开发是一个不错的事物，其主要是用来控制撞大运开发所带来的问题。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6416adf" class="outline-3">
+<h3 id="org6416adf"><span class="section-number-3">3.3</span> Cargo-Cult 编程</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+Cargo Cults 这个词来自二战期间的某些太平洋上小岛里的土著人。在战争期间，美国利用这些小岛作为太平洋战场上的补给站。他们在这些小岛上修建自己的飞机跑道以用来运输战争物资。而那些小岛上的土著人从来没有见过飞机，当他们看到飞机的时候，觉得相当的牛，可以为那些白人带来各种各样的物品和食物。当二战结束后，那些土著人仿照着修建了飞机跑道，并用竹子修建了塔台。然后就在那期望着有飞机为他们送来物品和食物。
+</p>
+
+<p>
+Cargo Cult 编程是一种非常流行的编程方法，使用这种方法的程序员会学习其它编程高手的编程方法，虽然他们并不知道为什么高手们要那样做，但是他们觉得那样做可以让程序工作起来。举个例子，当时有大量的程序员在 J2EE 出现的第一年中过度地使用了 EJBs 和 Entity Beans。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org63ee451" class="outline-3">
+<h3 id="org63ee451"><span class="section-number-3">3.4</span> 刻舟求剑编程</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+这种风格的编程在程序员的圈子里是非常常见的。比如，有一天，你发现了一个空指针的异常，于是你到了产生空指针异常的地方，简单地放上一个判断 <code>if (p != NULL)</code> 。是的，这样的 fix 可以让你的程序工作起来，但你并没有真正地解决问题。你只不过是在你的船边记下了剑掉下去的位置，这样做只不过把问题隐藏起来，最终只会让你的程序的行为变得神出鬼没。你应该找到为什么指针会为空的原因，然后再解决这个问题。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org53ac847" class="outline-3">
+<h3 id="org53ac847"><span class="section-number-3">3.5</span> 设计模式驱动型编程</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+这种编程风格使用大量的设计模式，代码中到处都是 Facade，Observer ，Strategy，Adapter，等等。于是，程序要处理的业务逻辑被这些设计模式打乱得无法阅读，最后，也不知道是业务需求重来，还是设计模式重要，总之，实际业务需求的程序逻辑被各种设计模式混乱得不堪入目。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org46738f5" class="outline-3">
+<h3 id="org46738f5"><span class="section-number-3">3.6</span> 侦探型编程</h3>
+<div class="outline-text-3" id="text-3-6">
+<p>
+在解决一个 bug 的时候，侦探型程序员会调查这个 bug 的原因。然后，则调查引发这个 bug 的原因的原因。再然后，会分析修正代码后是否会导致其它代码失败的因果关系。再然后然后，他会使用文本搜索查找所有使用这个改动的代码，并继续查找更上一级的调用代码。最后，这个程序员会写下 30 个不同的情形的测试案例，就算这些测试案例和那个 bug 没有什么关系，最最后，这个程序员有了足够多的信心，并且精确地修正了一个拼写错误。
+</p>
+
+<p>
+与此同时，一个正常的程序员修正了其它 5 个 bug。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgedbcb19" class="outline-3">
+<h3 id="orgedbcb19"><span class="section-number-3">3.7</span> 屠宰式编程</h3>
+<div class="outline-text-3" id="text-3-7">
+<p>
+使用这种风格的程序员，对重构代码有着一种难以控制的极端冲动。他们几乎会重构所有经手的代码。就算是在产品在 Release 的前夜，当他在修正几个拼写错误的 bug 同时，其会修改 10 个类，以及重构与这 10 个类有联系的另 20 个类，并且修改了代码的 build 脚本，以及 5 个部署描述符。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb8ff01f" class="outline-2">
+<h2 id="orgb8ff01f"><span class="section-number-2">4</span> Stack 的三种含义</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2013/11/stack.html">Source</a>
+</p>
+</div>
+
+<div id="outline-container-org8e4d4e2" class="outline-3">
+<h3 id="org8e4d4e2"><span class="section-number-3">4.1</span> 含义一：数据结构</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+Stack 的第一种含义是一组数据的存放方式，特点为 LIFO（Last In, First Out）。与这种结构配套的，是一些特定的方法：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>push</code></th>
+<th scope="col" class="org-left">在顶层加入数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>pop</code></td>
+<td class="org-left">返回并移除顶层的数据</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>top</code></td>
+<td class="org-left">返回顶层数据，但不移除</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>isempty</code></td>
+<td class="org-left">Stack 是否为空</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgf478084" class="outline-3">
+<h3 id="orgf478084"><span class="section-number-3">4.2</span> 含义二：代码运行方式</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+Stack 的第二种含义是 <del>调用栈（call stack）</del> ，表示函数或子例程层层调用。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">class</span> <span class="org-type">Student</span> {
+    <span class="org-type">int</span> <span class="org-variable-name">age</span>;              
+    <span class="org-type">String</span> <span class="org-variable-name">name</span>;      
+
+    <span class="org-keyword">public</span> <span class="org-function-name">Student</span>(<span class="org-type">int</span> <span class="org-variable-name">Age</span>, <span class="org-type">String</span> <span class="org-variable-name">Name</span>)
+    {
+        <span class="org-keyword">this</span>.age = Age;
+        setName(Name);
+    }
+
+    <span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">setName</span>(<span class="org-type">String</span> <span class="org-variable-name">Name</span>)
+    {
+        <span class="org-keyword">this</span>.name = Name;
+    }
+}
+
+<span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">Main</span> {
+    <span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">main</span>(<span class="org-type">String</span>[] <span class="org-variable-name">args</span>)
+    {
+        <span class="org-type">Student</span> <span class="org-variable-name">s</span>;           
+        s = <span class="org-keyword">new</span> <span class="org-type">Student</span>(23, <span class="org-string">"Jonh"</span>);
+    }
+}
+</pre>
+</div>
+
+<p>
+首先调用 <code>main()</code> 方法，里面需要生成一个 <code>Student</code> 实例，于是又调用 <code>Student</code> 构造函数。在构造函数中，又调用到 <code>setName()</code> 方法。这三次调用就叫做「调用栈」。程序运行的时候，总是 <span class="underline">先完成最上层的调用，然后将它的值返回到下一层调用，直至完成整个调用栈，返回最后的结果。</span>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org06e1f33" class="outline-3">
+<h3 id="org06e1f33"><span class="section-number-3">4.3</span> 含义三：内存区域</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+Stack 的第三种含义是存放数据的一种内存区域（<a href="https://en.wikipedia.org/wiki/Stack-based_memory_allocation">Stack-based memory allocation</a>）。程序运行的时候，需要内存空间存放数据。一般来说，系统会划分出 <span class="underline">两种不同的内存空间：一种叫做 stack（栈），另一种叫做 heap（堆）。</span> 它们的主要区别是：
+</p>
+
+<ul class="org-ul">
+<li>Stack 是有结构的，每个区块按照一定次序存放，可以明确知道每个区块的大小；heap 是没有结构的，数据可以任意存放。因此，stack 的寻址速度要快于 heap。</li>
+<li>一般来说，每个线程分配一个 stack，每个进程分配一个 heap，也就是说， stack 是线程独占的，heap 是线程共用的。</li>
+<li>Stack 大小是确定的，数据超过这个大小，就发生 stack overflow 错误；而 heap 的大小是不确定的，需要的话可以不断增加。</li>
+</ul>
+
+<p>
+数据存放的规则是：只要是 <span class="underline">局部的、占用空间确定的数据，一般都存放在 stack 里面，否则就放在 heap 里面。</span>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">Method1</span>()
+{
+    <span class="org-type">int</span> <span class="org-variable-name">i</span> = 4;
+    <span class="org-type">int</span> <span class="org-variable-name">y</span> = 2;
+    <span class="org-type">Class1</span> <span class="org-variable-name">cls1</span> = <span class="org-keyword">new</span> <span class="org-type">Class1</span>();
+}
+</pre>
+</div>
+
+<ul class="org-ul">
+<li><code>i</code> 和 <code>y</code> 是整数，内存占用空间是确定的，而且是本地变量，只用在 <code>Method1()</code> 之内。</li>
+<li><code>cls1</code> 也是局部变量，类型为指针，指向一个对象的实例。指针变量占用的大小是确定的，但是对象实例以目前的信息无法确知所占用的内存空间大小，所以对象实例存放在 heap。作为一条规则， <span class="underline">所有的对象都存放在 heap。</span></li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-type">void</span> <span class="org-function-name">Method1</span>()
+{                               <span class="org-comment-delimiter">// </span><span class="org-comment">| Stack       | Heap        |</span>
+                                <span class="org-comment-delimiter">// </span><span class="org-comment">|-------------|-------------|</span>
+    <span class="org-type">int</span> <span class="org-variable-name">i</span> = 4;                  <span class="org-comment-delimiter">// </span><span class="org-comment">| i = 4       | (empty)     |</span>
+                                <span class="org-comment-delimiter">// </span><span class="org-comment">|-------------|-------------|</span>
+    <span class="org-type">int</span> <span class="org-variable-name">y</span> = 2;                  <span class="org-comment-delimiter">// </span><span class="org-comment">| y = 2       | (empty)     |</span>
+                                <span class="org-comment-delimiter">// </span><span class="org-comment">| i = 4       |             |</span>
+                                <span class="org-comment-delimiter">// </span><span class="org-comment">|-------------|-------------|</span>
+    <span class="org-type">Class1</span> <span class="org-variable-name">cls1</span> = <span class="org-keyword">new</span> <span class="org-type">Class1</span>(); <span class="org-comment-delimiter">// </span><span class="org-comment">| cls1 ref    | cls1 object |</span>
+                                <span class="org-comment-delimiter">// </span><span class="org-comment">| y = 2       |             |</span>
+                                <span class="org-comment-delimiter">// </span><span class="org-comment">| i = 4       |             |</span>
+                                <span class="org-comment-delimiter">// </span><span class="org-comment">|-------------|-------------|</span>
+}                               <span class="org-comment-delimiter">// </span><span class="org-comment">| (empty)     | cls1 object |</span>
+</pre>
+</div>
+
+<p>
+当 <code>Method1()</code> 运行结束，整个 stack 被清空，3 个本地变量消失。而 <span class="underline">heap 中的对象实例继续存在，直到系统的垃圾清理机制（garbage collector）将这块内存回收。</span> 因此， _一般内存泄漏发生在 heap，即某些内存空间不再被使用了，却因为种种原因，没有被系统回收。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0a743b7" class="outline-2">
+<h2 id="org0a743b7"><span class="section-number-2">5</span> Norris Numbers</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<a href="https://www.teamten.com/lawrence/writings/norris-numbers.html">Source</a>
+</p>
+
+<p>
+In 2011 John D. Cook wrote the following <a href="http://www.johndcook.com/blog/2011/11/22/norris-number/">blog post</a>:
+</p>
+
+<blockquote>
+<p>
+My friend Clift Norris has identified a fundamental constant that I call Norris's number, the average amount of code an untrained programmer can write before he or she hits a wall. Clift estimates this as 1,500 lines. Beyond that the code becomes so tangled that the author cannot debug or modify it without herculean effort.
+</p>
+</blockquote>
+
+<p>
+I don't know enough novice programmers to confirm this effect, but I had independently noticed the next wall in the programmer's journey, which happens at 20,000 lines. I'll change Norris's number to 2,000 to get a nice power of ten jump.
+</p>
+
+<p>
+I ran into the 20,000-line wall repeatedly in my first job out of college, as did my co-workers (who were all as young as I). At DreamWorks we had 950 programs for animators to use, and a line count showed that the larger ones all hovered around 20,000 to 25,000 lines. Beyond that it was just too much effort to add features.
+</p>
+
+<p>
+In mid-1996 I was tasked with writing the <a href="https://www.teamten.com/lawrence/oscar/">DreamWorks lighting tool</a> (with two other programmers) and knew that this would be far larger than 20,000 lines of code. I changed my approach to programming and the tool was successfully delivered a year later at around 200,000 lines. (It's scheduled to be retired in 2013, having been used daily over 16 years to make 32 movies.) I've since written several more programs in the 100,000 to 200,000 line range. I'm sure I'm hitting the next wall; I can feel it.
+</p>
+
+<p>
+What's particularly hard is having technical discussions with someone who hasn't broken through as many walls as you have. Breaking through these walls means making different trade-offs, and specifically it means making a decision that seems to make less sense in the short term but will help later. This is a hard argument to make — the short term advantages are immediately demonstrable, but I can't convince anyone that a year from now someone may make an innocent change that breaks this code.
+</p>
+
+<p>
+Edsger Dijkstra <a href="http://www.cs.utexas.edu/users/EWD/ewd02xx/EWD249.PDF">wrote in 1969</a>:
+</p>
+
+<blockquote>
+<p>
+A one-year old child will crawl on all fours with a speed of, say, one mile per hour. But a speed of a thousand miles per hour is that of a supersonic jet. Considered as objects with moving ability the child and the jet are incomparable, for whatever one can do the other cannot and vice versa.
+</p>
+</blockquote>
+
+<p>
+A novice programmer, the kind Clift Norris is referring to, learns to crawl, then toddle, then walk, then jog, then run, then sprint, and he thinks, "At this rate of acceleration I can reach the speed of a supersonic jet!" But he runs into the 2,000 line limit because his skills don't scale up. He must move differently, using a car, to go faster. Then he learns to drive, first slowly, then faster, but runs into the 20,000 line limit. Driving skills don't transfer to flying a jet plane.
+</p>
+
+<p>
+My friend <a href="http://www.plunk.org/~grantham/">Brad Grantham</a> explains this by saying that the novice programmer "brute-forces" the problem. I think this is right: <span class="underline">When the code is under 2,000 lines you can write any tangled garbage and rely on your memory to save you. Thoughtful class and package decomposition will let you scale up to 20,000 lines.</span>
+</p>
+
+<p>
+What's the key to breaking past that? For me, it was keeping things simple. Absolutely refuse to add any feature or line of code unless you need it right now, and need it badly. I already touched on this in <a href="https://www.teamten.com/lawrence/writings/every_line_is_a_potential_bug.html">Every Line Is a Potential Bug</a> (and sophomorically before that in <a href="https://www.teamten.com/lawrence/writings/plan03.html">Simple is Good</a>). The chief architect of effects at DreamWorks phrased it this way:
+</p>
+
+<blockquote>
+<p>
+To me, the genius of [the lighting tool] was in selecting a small set of features which were tractable to write and maintain and strong enough to make a great lighting tool.
+</p>
+</blockquote>
+
+<p>
+As a tech lead I see my primary contribution as saying "no" to features that co-workers think are important but can't justify. <span class="underline">The real trick is knowing when a new feature adds linear complexity (its own weight only) or geometric complexity (interacts with other features).</span> Both should be avoided, but the latter requires extra-convincing justification.
+</p>
+
+<p>
+For example, as of 2012, the Linux kernel had <a href="http://www.h-online.com/open/news/item/Linux-kernel-exceeds-15-million-lines-of-code-1409952.html">15 million lines of code</a>. Of that, 75% had linear complexity (drivers, filesystems, and architecture-specific code); you might have dozens of video drivers and they don't interact (much) with each other. The rest is more geometric.
+</p>
+
+<p>
+Dijkstra's point is that <span class="underline">it's difficult to teach these advanced techniques, because they only make sense on 20,000-line or 200,000-line programs. Any class or textbook must limit its examples to a few hundred lines, and the brute-force method works just fine there.</span> You really need the textbook to show you the 30,000-line program and then show you the new feature that was added easily because the program wasn't too complex to start with. But that's effectively impossible.
+</p>
+
+<p>
+I don't know what I'll have to change to get past the 200,000 line wall. I've been switching to a more purely functional style recently and shedding mutable state, and perhaps these might help me break through.
+</p>
+
+<p>
+And I'm really curious to see what the 2-million line barrier is all about.
+</p>
+
+<blockquote>
+<p>
+It seems like there's a wall at around 3-4M LOC, and really, after 3M LOC, the growth rate seems to slow down significantly no matter how many people (hundreds) or years are involved (decades). – <a href="https://plus.google.com/u/0/107919048662113456495/posts/AyGGqF9mLdB">Dan Wexler</a>
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2019-07-31 Wed 16:44</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

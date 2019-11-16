@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2017-08-15 Tue 18:44 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PHP Scrap</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">PHP Scrap</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org8ab9093">1. 在 2016 年做 PHP 开发</a></li>
+<li><a href="#orgef21bbf">2. Restart PHP Service Command</a>
+<ul>
+<li><a href="#org755cc56">2.1. Restarting web server</a></li>
+<li><a href="#org6c65874">2.2. Restart PHP-FAM Fastcgi</a></li>
+<li><a href="#org92f73ce">2.3. Links</a></li>
+</ul>
+</li>
+<li><a href="#orgd11366f">3. CGI, FastCGI, PHP-CGI, PHP-FPM, Spawn-FCGI（未完成）</a>
+<ul>
+<li><a href="#org5ccad16">3.1. CGI</a></li>
+<li><a href="#org9ca8477">3.2. FastCGI</a></li>
+<li><a href="#org153ada9">3.3. FastCGI 工作原理</a></li>
+<li><a href="#org67ee9ce">3.4. 链接</a></li>
+</ul>
+</li>
+<li><a href="#org9a76422">4. 提高 PHP 代码质量 36 计</a>
+<ul>
+<li><a href="#orga5a7d15">4.1. 不要使用相对路径</a></li>
+<li><a href="#orgb4636d5">4.2. 不要直接使用 <code>require</code> ， <code>include</code></a></li>
+<li><a href="#orgd674d22">4.3. 保留调试代码</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org8ab9093" class="outline-2">
+<h2 id="org8ab9093"><span class="section-number-2">1</span> 在 2016 年做 PHP 开发</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<a href="https://www.v2ex.com/t/312651">Source</a>
+</p>
+
+<p>
+现在比较流行的 PHP 框架有 Symfony 、 Laravel 、 Yii 、 Codeigniter，如果对性能要求比较高或者想开发一些 Socket 相关的功能的话，可以试试看 <del>Phalcon</del> 、 Yaf 、 <del>Swoole</del> 、 <del>Workerman</del> 、 <del>ReactPHP</del> 、 <del>Kraken</del> 。
+</p>
+
+<p>
+<del>Ladybug</del> 类似 <code>var_dump</code> + <code>die</code> ，能够把 dump 对象的内容展示地清清楚楚，配合 <del>Xdebug</del> 甚至可以在 IDE 里进行断点调试、临时更改变量的值等等。Xdebug 是一个 PHP 调试工具，安装之后可以像调试 Java 、 C 那样调试 PHP 。
+</p>
+
+<p>
+现在没有人直接用客户端连上数据库去建表了，大家都在用 <del>ORM</del> 工具管理数据库。ORM 可以像操作类一样去操作一个数据库，知名的 ORM 工具有： <del>Doctrine</del> 、 <del>Propel</del> 、 <del>Eloquent</del> 。如果直接写 SQL，安全性怎么办？如果字段做了变更怎么更新所有现存的 SQL ？代码的部署回滚怎么和数据库绑定？用了 ORM 之后可以很简单地创建出一个表的 CRUD 表单，甚至可以很简单的写几行代码就实现对这个表的各种 API 操作。
+</p>
+
+<p>
+Doctrine 只要用 PHP 类定义一个表的实体结构（ Entity ），就可以自动生成这个表的 DDL ，即使表结构有变更， Doctrine 也会生成所对应的 update 表结构的 DDL 。 Entity 在每个字段上都可以进行设置，可以生成对这个表进行操作的 CRUD 表单，假设某个字段设置的是日期类型，这个字段在 HTML 里就会被自动生成并映射成为一个包含三个下拉框的组件，而这三个下拉框分别是年月日。使用 Doctrine 配合一些工具，只要写几行代码就可以生成基于表的后台管理界面，实现一个基本可用的网站后台。但需要注意 Doctrine 一般是以 Service 的方式被用在项目中的，直接用 Doctrine 并不会很方便。
+</p>
+
+<p>
+<del>Service</del> 可以理解为一系列可能会用到的第三方应用，他们都通过 Service 的方式被注册到程序中，在用到某个功能的时候，只需要对他们进行调用即可，就像调用一个函数那么简单。 Service 一般都会支持 <del>IoC</del> 和 <del>DI</del> ，所以对将来程序的升级也会很有帮助。PHP 项目中现在也大量使用 IoC 和 DI ，比如 Symfony 和 Laravel 中就都有非常强大的一套 Service 系统，实现了 IoC 和 DI 。
+</p>
+
+<p>
+现在没人还在用 XAMPP 了。至少得用 <del>Vagrant</del> 或者 <del>Docker</del> 吧？不然代码准备怎么部署？开发环境和生成环境怎么保证统一？没人还在用 FTP 直接传代码了，最差也得用 rsync 吧？可能没有 Vagrant 或者 Docker ，但至少应该尝试用一个部署工具并配置一套部署脚本，比如 <del>Deployer</del> 、 <del>Capistrano</del> 、 <del>Ansible</del> 、 <del>Fabric</del> 等等，如果配合 CI ，自动检查代码、部署那就更完美了。
+</p>
+
+<p>
+Continuous Integration 指的是自动化处理分支的合并、运行测试用例、代码检查、部署等操作，可以用 <del>Jenkins</del> 自己搭一个，也可以用 <del>Bamboo</del> 或者 <del>circleci.com</del> 。为了及时知道代码的 CI 结果，你可以把你的 CI 系统和 <del>Slack</del> 、零信等 IM 工具做整合，这样的话你就可以灵活的在团队里分享并自动化处理各种信息。比如代码如果在线上出错，系统可以自动定位到某一次提交，并且发送邮件给改动人。比如服务器负载高了可以自动水平扩展服务器架构。
+</p>
+
+<p>
+<del>水平扩展</del> 就是服务器配置不变，但是数量增多，相对应的 <del>垂直扩展</del> 就是服务器的性能变高，但是数量不变。首先程序架构要支持水平扩展，比如 session 和数据库不能存放在单机上。其次是服务器架构要支持水平扩展，如果用的是云服务，一般都会有水平扩展的 API ，直接调用就是了。
+</p>
+
+<p>
+如果程序出现问题怎么办，有什么办法能及时通知吗？一般的做法是搭建一套 <del>ELK</del> （Elasticsearch, Logstash and Kibana ）系统进行日志的存储、搜索、展示。如果不想那么麻烦，可以用 <del>Sentry</del> ，或者再简单点自己搭建一个 <del>log.io</del> 。
+</p>
+
+<p>
+HipHop 是 Facebook 开发的一款用来加速 PHP 运行的软件，核心原理是把 PHP 代码编译成为一个可以直接执行的程序。现在没人再用 HipHop 了，至少得用 HHVM ，或者 PHP7。因为 HipHop 需要编译才能用，每次 PHP 代码改动都需要重新编译，非常麻烦，所以 Facebook 转而开发了 <del>HHVM</del> 。核心原理差不多，但 HHVM 不再需要编译过程，可以直接执行 PHP 文件了，基本上你可以理解为 HHVM 是一个超级加速版的 PHP 。
+</p>
+</div>
+</div>
+<div id="outline-container-orgef21bbf" class="outline-2">
+<h2 id="orgef21bbf"><span class="section-number-2">2</span> Restart PHP Service Command</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<a href="https://www.cyberciti.biz/faq/unix-linux-restart-php-service-command/">Source</a>
+</p>
+
+<p>
+<span class="underline">PHP is associated with either web server or external FastCGI process manager.</span> In most cases you just need to restart web server such as Apache / Nginx / Lighttpd depending on system and software.
+</p>
+</div>
+
+<div id="outline-container-org755cc56" class="outline-3">
+<h3 id="org755cc56"><span class="section-number-3">2.1</span> Restarting web server</h3>
+<div class="outline-text-3" id="text-2-1">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 1: </span>Restart Apache</label><pre class="src src-sh">$ /etc/init.d/apache2 restart
+<span class="org-comment-delimiter"># </span><span class="org-comment">Or</span>
+$ apache2ctl restart
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 2: </span>Restart Nginx</label><pre class="src src-sh">$ /etc/init.d/nginx restart
+<span class="org-comment-delimiter"># </span><span class="org-comment">Or</span>
+$ service nginx restart
+<span class="org-comment-delimiter"># </span><span class="org-comment">Or</span>
+$ nginx -s reload
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 3: </span>Restart Lighttpd</label><pre class="src src-sh">$ /etc/init.d/lighttpd restart
+<span class="org-comment-delimiter"># </span><span class="org-comment">Or</span>
+$ service lighttpd restart
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6c65874" class="outline-3">
+<h3 id="org6c65874"><span class="section-number-3">2.2</span> Restart PHP-FAM Fastcgi</h3>
+<div class="outline-text-3" id="text-2-2">
+<div class="org-src-container">
+<pre class="src src-sh">$ /etc/init.d/php-fpm restart
+$ /etc/init.d/php5-fpm restart
+<span class="org-comment-delimiter"># </span><span class="org-comment">Or</span>
+$ service php-fpm restart
+$ service php5-fpm restart
+<span class="org-comment-delimiter"># </span><span class="org-comment">Or</span>
+$ restart php-fpm
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org92f73ce" class="outline-3">
+<h3 id="org92f73ce"><span class="section-number-3">2.3</span> Links</h3>
+<div class="outline-text-3" id="text-2-3">
+<ol class="org-ol">
+<li><a href="https://www.cyberciti.biz/faq/star-stop-restart-apache2-webserver/">Start / Stop and Restart Apache 2 Web Server Command</a></li>
+<li><a href="https://www.cyberciti.biz/faq/ubuntu-linux-start-restart-stop-apache-web-server/">Ubuntu Linux: Start / Restart / Stop Apache Web Server</a></li>
+<li><a href="https://www.cyberciti.biz/faq/nginx-linux-restart/">Linux: Restart Nginx WebServer</a></li>
+<li><a href="https://www.cyberciti.biz/faq/stop-lighttpd-server/">Start / Stop / Restart Lighttpd Web Server on Linux / Unix</a></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd11366f" class="outline-2">
+<h2 id="orgd11366f"><span class="section-number-2">3</span> CGI, FastCGI, PHP-CGI, PHP-FPM, Spawn-FCGI（未完成）</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<a href="http://www.open-open.com/lib/view/open1464181505908.html">Source</a>
+</p>
+</div>
+
+<div id="outline-container-org5ccad16" class="outline-3">
+<h3 id="org5ccad16"><span class="section-number-3">3.1</span> CGI</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+CGI 全称是「公共网关接口」(Common Gateway Interface)，是 <span class="underline">Web 服务器与其他程序之间传递信息的一种工具。CGI 规范允许 Web 服务器执行外部程序，并将它们的输出发送给客户端。</span>
+</p>
+
+<p>
+<span class="underline">CGI 可以用任何一种语言编写，只要这种语言具有标准输入、输出和环境变量，</span> 如 php、perl、tcl 等。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9ca8477" class="outline-3">
+<h3 id="org9ca8477"><span class="section-number-3">3.2</span> FastCGI</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+FastCGI 像是一个常驻（long-live）型的 CGI，它可以一直运行着，不用每次调用都花费时间 fork （这是 CGI 最为人诟病的 fork-and-execute 模式)。它还支持分布式计算, 即 FastCGI 程序可以在 Web 服务器以外的主机上执行并且接受来自其它 Web 服务器的请求。
+</p>
+
+<p>
+FastCGI 是语言无关的、可伸缩架构的 CGI 开放扩展，其主要行为是将 CGI 解释器进程保持在内存中，并因此获得较高的性能。 <span class="underline">CGI 解释器的反复加载是 CGI 性能低下的主要原因，如果 CGI 解释器保持在内存中并接受 FastCGI 进程管理器调度，则可以提供良好的性能、伸缩性、fail-over 特性等。</span>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org153ada9" class="outline-3">
+<h3 id="org153ada9"><span class="section-number-3">3.3</span> FastCGI 工作原理</h3>
+<div class="outline-text-3" id="text-3-3">
+<ol class="org-ol">
+<li>Web 服务器启动时载入 FastCGI 进程管理器（如 IIS ISAPI 或 Apache Module)。</li>
+<li>FastCGI 进程管理器初始化，启动多个 <span class="underline">CGI 解释器子进程</span> （如 php-cgi）并等待来自 Web 服务器的连接。</li>
+<li>当客户端请求到达 Web 服务器时，FastCGI 进程管理器选择并连接到一个 CGI 解释器。Web 服务器将 CGI 环境变量和标准输入发送到 FastCGI 子进程。</li>
+<li>FastCGI 子进程完成处理后将标准输出和错误信息从同一连接返回 Web 服务器。当 FastCGI 子进程关闭连接时，请求便告处理完成。</li>
+<li>FastCGI 子进程继续等待并处理来自 FastCGI 进程管理器（运行在 Web 服务器中）的下一个连接。</li>
+</ol>
+
+<p>
+上述过程如果使用普通 CGI，每一个 Web 请求 PHP 都必须 <span class="underline">解析 <code>php.ini</code> ，载入全部扩展，初始化全部数据结构。使用 FastCGI，所有这些都只在进程启动时发生一次。</span> 另外，还可以使用持续数据库连接（persistent database connection）。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org67ee9ce" class="outline-3">
+<h3 id="org67ee9ce"><span class="section-number-3">3.4</span> 链接</h3>
+<div class="outline-text-3" id="text-3-4">
+<ol class="org-ol">
+<li><a href="https://aleen42.gitbooks.io/personalwiki/content/qa/cgi_difference.html">Differences between CGI, FastCGI, PHP-CGI, PHP-FPM, Spawn-FCGI</a></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-org9a76422" class="outline-2">
+<h2 id="org9a76422"><span class="section-number-2">4</span> 提高 PHP 代码质量 36 计</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<a href="http://www.oschina.net/question/1579_47231">Source</a>
+</p>
+</div>
+
+<div id="outline-container-orga5a7d15" class="outline-3">
+<h3 id="orga5a7d15"><span class="section-number-3">4.1</span> 不要使用相对路径</h3>
+<div class="outline-text-3" id="text-4-1">
+<div class="org-src-container">
+<pre class="src src-php"><span class="org-keyword">require_once</span>(<span class="org-string">'../../lib/some_class.php'</span>);
+</pre>
+</div>
+
+<p>
+该写法的缺点：
+</p>
+
+<ul class="org-ul">
+<li>首先查找指定的 PHP 包含路径，然后查找当前目录，因此会检查过多路径。</li>
+<li>如果该脚本被另一目录的脚本包含，它的基本目录变成了另一脚本所在的目录。</li>
+<li>当定时任务运行该脚本，它的上级目录可能就不是工作目录了。</li>
+</ul>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 4: </span>使用绝对路径</label><pre class="src src-php"><span class="org-function-name">define</span>(<span class="org-string">'ROOT'</span>, <span class="org-string">'/var/www/project/'</span>);
+<span class="org-keyword">require_once</span>(<span class="org-warning">ROOT</span> . <span class="org-string">'../../lib/some_class.php'</span>);
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 5: </span>绝对路径也可能会改变，继续改进</label><pre class="src src-php"><span class="org-function-name">define</span>(<span class="org-string">'ROOT'</span>, <span class="org-function-name">pathinfo</span>(<span class="org-constant">__FILE__</span>, <span class="org-constant">PATHINFO_DIRNAME</span>));
+<span class="org-keyword">require_once</span>(<span class="org-warning">ROOT</span> . <span class="org-string">'../../lib/some_class.php'</span>);
+</pre>
+</div>
+
+<p>
+无论移到哪个目录，甚至外网的服务器上，代码都无须更改便可正确运行。
+</p>
+</div>
+</div>
+<div id="outline-container-orgb4636d5" class="outline-3">
+<h3 id="orgb4636d5"><span class="section-number-3">4.2</span> 不要直接使用 <code>require</code> ， <code>include</code></h3>
+<div class="outline-text-3" id="text-4-2">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 6: </span>在脚本头部引入文件、库、工具文件和助手函数等</label><pre class="src src-php"><span class="org-keyword">require_once</span>(<span class="org-string">'lib/Database.php'</span>);
+<span class="org-keyword">require_once</span>(<span class="org-string">'lib/Mail.php'</span>);
+<span class="org-keyword">require_once</span>(<span class="org-string">'helpers/utitlity_functions.php'</span>);
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 7: </span>使用助手函数包含文件，可以更灵活地改变文件路径，且代码更具可读性</label><pre class="src src-php"><span class="org-keyword">function</span> <span class="org-function-name">load_class</span>($<span class="org-variable-name">class_name</span>) {
+    $<span class="org-variable-name">path</span> = <span class="org-constant">ROOT</span> . <span class="org-string">'/lib/'</span> . $<span class="org-variable-name">class_name</span> . <span class="org-string">'.php'</span>;
+    <span class="org-keyword">if</span> (<span class="org-function-name">file_exists</span>($<span class="org-variable-name">path</span>)) {
+        <span class="org-keyword">require_once</span>($<span class="org-variable-name">path</span>);
+    }
+}
+<span class="org-function-name">load_class</span>(<span class="org-string">'Database'</span>);
+<span class="org-function-name">load_class</span>(<span class="org-string">'Mail'</span>);
+</pre>
+</div>
+
+<p>
+更多扩展：
+</p>
+
+<ul class="org-ul">
+<li>在多个目录查找文件，可以覆盖。</li>
+<li>可使用类似的函数加载 HTML 文件等。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd674d22" class="outline-3">
+<h3 id="orgd674d22"><span class="section-number-3">4.3</span> 保留调试代码</h3>
+<div class="outline-text-3" id="text-4-3">
+<div class="org-src-container">
+<pre class="src src-php"><span class="org-function-name">define</span>(<span class="org-string">'ENVIRONMENT'</span> , <span class="org-string">'development'</span>); <span class="org-comment-delimiter">// </span><span class="org-comment">&#24320;&#21457;&#29615;&#22659;</span>
+<span class="org-function-name">define</span>(<span class="org-string">'ENVIRONMENT'</span> , <span class="org-string">'production'</span>);  <span class="org-comment-delimiter">// </span><span class="org-comment">&#29983;&#20135;&#29615;&#22659;</span>
+
+<span class="org-keyword">if</span> (!$<span class="org-variable-name">db</span>-&gt;<span class="org-function-name">query</span>($<span class="org-variable-name">query</span>) {
+    <span class="org-keyword">if</span> (<span class="org-warning">ENVIRONMENT</span> == <span class="org-string">'development'</span>) {
+        <span class="org-keyword">echo</span> <span class="org-string">"$query failed"</span>;
+    } <span class="org-keyword">else</span> {
+        <span class="org-keyword">echo</span> <span class="org-string">"Database error. Please contact administrator"</span>;
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2017-08-15 Tue 18:44</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

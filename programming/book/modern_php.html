@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Modern PHP</title>
+<!-- 2016-10-22 周六 17:54 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Modern PHP</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Chapter 1: The New PHP</a>
+<ul>
+<li><a href="#sec-1-1">1.1. Past</a></li>
+<li><a href="#sec-1-2">1.2. Present</a></li>
+<li><a href="#sec-1-3">1.3. Future</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. Chapter 2: Features</a>
+<ul>
+<li><a href="#sec-2-1">2.1. Namespaces</a>
+<ul>
+<li><a href="#sec-2-1-1">2.1.1. Why We Use Namespaces</a></li>
+<li><a href="#sec-2-1-2">2.1.2. Helpful Tips</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-3">3. Chapter 4: Components</a>
+<ul>
+<li><a href="#sec-3-1">3.1. Components Versus Frameworks</a>
+<ul>
+<li><a href="#sec-3-1-1">3.1.1. Not All Frameworks Are Bad</a></li>
+<li><a href="#sec-3-1-2">3.1.2. Use the Right Tool for the Job</a></li>
+</ul>
+</li>
+<li><a href="#sec-3-2">3.2. Use PHP Components</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Chapter 1: The New PHP</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+The PHP language is experiencing a renaissance. PHP is transforming into a modern scripting language with helpful features like <span class="underline">namespaces, traits, closures, and a builtin opcode cache</span>. The modern PHP ecosystem is evolving, too. PHP developers rely less on monolithic frameworks and more on <span class="underline">smaller specialized components</span>. The <del>Composer</del> dependency manager is revolutionizing how we build PHP applications; it emancipates us from a framewor's walled garden and lets us <span class="underline">mix and match interoperable PHP components best suited for our custom PHP applications</span>. Component interoperability would not be possible without <span class="underline">community standards</span> proposed and curated by the <span class="underline">PHP Framework Interop Group</span>.
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Past</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+PHP is an interpreted server-side scripting language. PHP is typically used with a web server like Apache or nginx to serve dynamic content. However, <span class="underline">PHP can also be used to build powerful command-line applications</span> (just like bash, Ruby, Python, and so on). 
+</p>
+
+<p>
+PHP began as a collection of CGI scripts written by Rasmus Lerdorf to track visits to his online resume. Lerdorf named his set of CGI scripts "Personal Home Page Tools."
+</p>
+
+<p>
+Between 1994 and 1998, PHP underwent numerous revisions and even received a few ground-up rewrites. Andi Gutmans and Zeev Suraski, two developers from Tel Aviv, joined forces with Rasmus Lerdorf to transform PHP from a small collection of CGI tools into a full-fledged programming language with a more consistent syntax and basic support for object-oriented programming. They named their final product PHP 3 and released it in late 1998. The new PHP moniker was a departure from earlier names, and it is a recursive acronym for PHP: Hypertext Preprocessor.
+</p>
+
+<p>
+PHP 3 was the first version that most resembled the PHP we know today. It provided superior extensibility to various databases, protocols, and APIs. PHP 3's extensibility attracted many new developers to the project. By late 1998, PHP 3 was already installed on a staggering 10% of the world's web servers.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Present</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Local development environments are identical to production servers thanks to <span class="underline">virtualization tools</span> like <del>Vagrant</del> and <span class="underline">provisioning tools</span> like <del>Ansible</del>, <del>Chef</del>, and <del>Puppet</del>. We deploy our applications with PHP's <del>FastCGI</del> process manager behind a web server like nginx. And we increase application performance with an <del>opcode</del> cache. 
+</p>
+
+<p>
+PHP now has an official draft specification — something it lacked until 2014. Most mature programming languages have a specification. In layman's terms, <span class="underline">a specification is a canonical blueprint that defines what it means to be PHP</span>. This blueprint is <span class="underline">used by developers who create programs that parse, interpret, and execute PHP code</span>. It is not for developers who create applications and websites with PHP.
+</p>
+
+<p>
+An official PHP language specification is becoming more important given the introduction of multiple competing PHP engines. The original PHP engine is the <del>Zend Engine</del>, a PHP interpreter written in C and introduced in PHP 4. The Zend Engine was created by Rasmus Lerdorf, Andi Gutmans, and Zeev Suraski. Today the Zend Engine is the Zend company's main contribution to the PHP community. However, there is now a second major PHP engine — the <del>HipHop Virtual Machine</del> from Facebook. <span class="underline">A language specification ensures that both engines maintain a baseline compatibility.</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Future</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+<del>Hack</del> is a new programming language built on top of PHP. It introduces <span class="underline">static typing, new data structures, and additional interfaces while maintaining backward compatibility</span> with existing dynamically typed PHP code. Hack is targeted at developers who appreciate <span class="underline">PHP's rapid development characteristics but need the predictability and stability from static typing</span>.
+</p>
+
+<p>
+The HipHop Virtual Machine (<del>HHVM</del>) is a PHP and Hack interpreter that uses a just in time (<del>JIT</del>) compiler to improve application performance and reduce memory usage.
+</p>
+
+<p>
+Increasing competition has prompted the Zend Engine core team to announce <del>PHP 7</del>, an optimized Zend Engine said to be on par with HHVM.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Chapter 2: Features</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<del>Namespaces</del>, are a cornerstone of modern PHP standards and enable development practices that modern PHP developers take for granted (e.g., autoloading).
+</p>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Namespaces</h3>
+<div class="outline-text-3" id="text-2-1">
+</div><div id="outline-container-sec-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1"><span class="section-number-4">2.1.1</span> Why We Use Namespaces</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+Namespaces are important because they let us <span class="underline">create sandboxed code that works alongside other developers' code</span>. This is the cornerstone concept of the modern PHP component ecosystem. This problem applies to your own in-house projects, too. If you write <span class="underline">custom PHP components or classes for a project</span>, that code <span class="underline">must work alongside</span> your project's <span class="underline">third-party dependencies</span>.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-1-2" class="outline-4">
+<h4 id="sec-2-1-2"><span class="section-number-4">2.1.2</span> Helpful Tips</h4>
+<div class="outline-text-4" id="text-2-1-2">
+</div><ol class="org-ol"><li>Multiple imports<br  /><div class="outline-text-5" id="text-2-1-2-1">
+<p>
+PHP accepts a shorthand import syntax that combines multiple use statements on a single line like this:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-preprocessor">&lt;?php</span>
+<span class="org-keyword">use</span> <span class="org-type">Symfony\Component\HttpFoundation\Request,</span>
+    <span class="org-warning">Symfony</span>\<span class="org-warning">Component</span>\<span class="org-warning">HttpFoundation</span>\<span class="org-warning">Response</span>,
+    <span class="org-warning">Symfony</span>\<span class="org-warning">Component</span>\<span class="org-warning">HttpFoundation</span>\<span class="org-warning">Cookie</span>;
+</pre>
+</div>
+
+<p>
+Don't do this. It's confusing and easy to mess up. I recommend you <span class="underline">keep each use statement on its own line</span> like this:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-preprocessor">&lt;?php</span>
+<span class="org-keyword">use</span> <span class="org-type">Symfony\Component\HttpFoundation\Request</span>;
+<span class="org-keyword">use</span> <span class="org-type">Symfony\Component\HttpFoundation\Response</span>;
+<span class="org-keyword">use</span> <span class="org-type">Symfony\Component\HttpFoundation\Cookie</span>;
+</pre>
+</div>
+
+<p>
+You'll type a few extra characters, but your code is easier to read and troubleshoot.
+</p>
+</div>
+</li>
+<li>Multiple namespaces in one file<br  /><div class="outline-text-5" id="text-2-1-2-2">
+<p>
+PHP lets you define multiple namespaces in a single PHP file like this:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-preprocessor">&lt;?php</span>
+<span class="org-keyword">namespace</span> <span class="org-type">Foo</span> {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Declare classes, interfaces, functions, and constants here</span>
+}
+<span class="org-keyword">namespace</span> <span class="org-type">Bar</span> {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Declare classes, interfaces, functions, and constants here</span>
+}
+</pre>
+</div>
+
+<p>
+This is confusing and violates the recommended <span class="underline">one class per file</span> good practice. <span class="underline">Use only one namespace per file</span> to make your code simpler and easier to troubleshoot.
+</p>
+</div>
+</li></ol>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Chapter 4: Components</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Components Versus Frameworks</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+Before I knew better, I instinctually started PHP applications with a massive framework like Symfony or CodeIgniter. <span class="underline">The problem with frameworks is that they are an expensive investment.</span>
+</p>
+
+<p>
+<span class="underline">When we choose a framework, we invest in that framework's future.</span> We put our faith behind the framework's core development team. We assume the framework's developers will continue investing their own time into developing the framework and ensuring that its code remains up-to-date with modern standards.
+</p>
+
+<p>
+<span class="underline">When we choose a framework, we invest in that framework's tools.</span> Sometimes we need a specific something that the framework does not provide, and it becomes our burden to find and integrate a custom PHP library. <span class="underline">Integrating third-party code into a framework is difficult because the third-party code and the PHP framework probably don't share common interfaces.</span>
+</p>
+
+<p>
+Times have changed, and we are no longer beholden to monolithic frameworks and their walled gardens. Today, we choose from a vast and continually growing collection of <span class="underline">specialized components to create custom applications</span>.
+</p>
+</div>
+
+<div id="outline-container-sec-3-1-1" class="outline-4">
+<h4 id="sec-3-1-1"><span class="section-number-4">3.1.1</span> Not All Frameworks Are Bad</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<p>
+<del>Symfony</del> is an excellent example of a modern PHP framework. Fabien Potencier and Sensio Labs built the Symfony Framework as an amalgam of <span class="underline">smaller and decoupled Symfony components</span>. These components <span class="underline">can be used together as a framework or piecemeal in custom applications</span>.
+</p>
+
+<p>
+<del>Drupal 8</del> is a ginormous and commendable leap into modern PHP. Drupal 8 leverages the comparative advantages of many different PHP components to build a modern content management platform.
+</p>
+
+<p>
+Like Symfony, <del>Laravel</del> is built atop its own Illuminate component library. However (at time of publishing), Laravel's components are not easily decoupled for use in non-Laravel applications.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-1-2" class="outline-4">
+<h4 id="sec-3-1-2"><span class="section-number-4">3.1.2</span> Use the Right Tool for the Job</h4>
+<div class="outline-text-4" id="text-3-1-2">
+<p>
+Components also help our code remain <span class="underline">lightweight and nimble</span>. We <span class="underline">use only the code we need</span>, and it's super-easy to <span class="underline">swap one component with another that may be better suited</span> for our project.
+</p>
+
+<p>
+<span class="underline">Frameworks make many decisions for us and require us to adhere to its set of conventions.</span> Frameworks are <span class="underline">less flexible</span>, but we do get far <span class="underline">more out-of-the-box</span> than we do with a collection of PHP components. 
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Use PHP Components</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Autoloading is the process of automatically loading PHP classes on-demand without <span class="underline">explicitly loading them with the <code>require()</code>, <code>require_once()</code>, <code>include()</code>, or <code>include_once()</code> functions</span>.
+</p>
+
+<p>
+Older PHP versions let us <span class="underline">write custom autoloaders with the <code>\__autoload()</code> function</span>; this function is automatically invoked by the PHP interpreter when we instantiate a class that has not already been loaded.
+</p>
+
+<p>
+PHP later introduced the <span class="underline">more flexible <code>spl_autoload_register()</code> function in its SPL library</span>. Exactly how a PHP class is autoloaded is entirely up to the developer. Unfortunately, <span class="underline">the lack of a common autoloader standard often necessitates a unique autoloader implementation for every project</span>. This makes it difficult to use code created and shared by other developers if each developer provides a unique autoloader.
+</p>
+
+<p>
+The PHP Framework Interop Group recognized this problem and created the PSR-4 standard. <span class="underline">The PSR-4 standard suggests how to organize code into namespaces and filesystem directories so it is compatible with one standard autoloader implementation.</span>
+</p>
+
+<p>
+We don't have to write a PSR-4 autoloader on our own. Instead, <span class="underline">Composer automatically generates a PSR-compatible autoloader for all of our project's PHP components. Composer effectively abstracts away dependency management and autoloading.</span>
+</p>
+
+<hr  />
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2016-10-22 周六 17:54</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

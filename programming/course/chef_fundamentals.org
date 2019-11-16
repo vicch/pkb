@@ -1,0 +1,1138 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Chef Fundamentals
+
+* Welcome to Chef Fundamentals
+** Install ChefDK
+
+Download ChefDK at [[https://downloads.chef.io/chefdk][Chef Downloads]] and install on local machine. Confirm installation by:
+
+#+BEGIN_SRC sh
+chef --version
+#+END_SRC
+
+** Configure Lab Environment with Vagrant and Virtualbox
+
+Confirm Vagrant and Virtualbox are installed:
+
+#+BEGIN_SRC sh
+vboxmanage --version
+vagrant --version
+#+END_SRC
+
+Create a Vagrant box and SSH into it:
+
+#+BEGIN_SRC sh
+vagrant box add bento/centos-7.2 --provider=virtualbox
+vagrant init bento/centos-7.2 # Vagrantfile is created
+vagrant up
+vagrant ssh
+#+END_SRC
+
+Install ChefDK in Vagrant box:
+
+#+BEGIN_SRC sh
+curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P chefdk -c stable -v 3.10.1
+chef --version
+#+END_SRC
+** Configure Lab Environment with AWS
+
+Launch an EC2 instance:
+
+- AMI: CentOS 7
+- Security groups: Enable HTTP/HTTPS ports
+- Key pairs: Create key pair =centos7= and download the private key file =centos7.pem=
+
+Connect to the instance via SSH:
+
+#+BEGIN_SRC sh
+chmod 400 centos7.pem
+ssh -i centos7.pem centos@ec2-3-84-192-46.compute-1.amazonaws.com
+#+END_SRC
+
+Install ChefDK on the instance:
+
+#+BEGIN_SRC sh
+curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P chefdk -c stable -v 3.10.1
+chef --version
+#+END_SRC
+
+** Configure Lab Environment with GCP
+
+1. Create a project on GCP.
+2. Go to [[https://console.cloud.google.com/compute/instances][GCP | Compute Engine | VM Instances]] and create an instance:
+   - Boot disk: CentOS 7
+   - Firewall: Allow HTTP/HTTPS traffic
+   - SSH keys: Paste the public key of the key pair to use for SSH connection (=ssh-gen= a new key pair if necessary)
+
+Connect to the instance via GCP browser SSH or SSH client:
+
+#+BEGIN_SRC sh
+ssh -i <private_key> <user>@<external_ip>
+#+END_SRC
+
+Install ChefDK on the instance:
+
+#+BEGIN_SRC sh
+curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P chefdk -c stable -v 3.10.1
+chef --version
+#+END_SRC
+* Chef and Configuration Management
+** First Chef Recipe
+
+Create a simple recipe:
+
+#+CAPTION: =hello.rb=
+#+BEGIN_SRC ruby
+file '/hello.txt' do # Create a file
+  content 'Hello, world!' # Specify content of the file
+end
+#+END_SRC
+
+Apply the recipe to current node:
+
+#+BEGIN_SRC sh
+sudo chef-client --local-mode hello.rb
+#+END_SRC
+
+* Resources
+** Create a Workstation Setup Recipe
+
+Create a recipe to install 2 services and 1 file:
+
+#+CAPTION: =setup.rb=
+#+BEGIN_SRC ruby
+package 'tree' do
+  action :install
+end
+
+package 'ntp' do
+  action :install
+end
+
+service 'ntpd' do
+  action [ :enable, :start ]
+end
+
+file '/etc/motd' do
+  action :create
+  content 'This is the property of ...'
+  owner 'root'
+  group 'root'
+end
+#+END_SRC
+
+* Cookbooks
+** Deploy an Apache Web Server
+
+Generate a cookbook and a recipe:
+
+#+BEGIN_SRC sh
+chef generate cookbook cookbooks/apache
+chef generate recipe cookbooks/apache server
+#+END_SRC
+
+Edit the recipe:
+
+#+CAPTION: =cookbooks/apache/recipes/server.rb=
+#+BEGIN_SRC ruby
+package 'httpd' do
+  action :install
+end
+
+file '/var/www/html/index.html' do
+  action :create
+  content 'Apache is working.'
+  owner 'apache'
+  group 'apache'
+end
+
+service 'httpd' do
+  action [ :enable, :start ]
+end
+#+END_SRC
+
+Check syntax of the recipe and execute it:
+
+#+BEGIN_SRC sh
+chef exec ruby -c cookbooks/apache/recipes/server.rb
+sudo chef-client -z cookbooks/apache/recipes/server.rb
+#+END_SRC
+
+* Chef Client
+** Apply Recipes and Cookbooks
+
+Run =chef-client= by providing a runlist:
+
+#+BEGIN_SRC sh
+sudo chef-client -z --runlist "apache::server"
+sudo chef-client -z --runlist "recipe[apache::server],recipe[workstation::setup]"
+#+END_SRC
+
+** The include_recipe Method
+
+Include a recipe from the default recipe:
+
+#+CAPTION: =cookbooks/apache/recipes/default.rb=
+#+BEGIN_SRC ruby
+include_recipe 'apache::server'
+#+END_SRC
+
+Run the default recipe and confirm that the included recipe is run as well:
+
+#+BEGIN_SRC sh
+sudo chef-client -z --runlist "recipe[apache]"
+#+END_SRC
+
+* Ohai
+** An Object Called "Node"
+
+Chef provides the Ohai tool which is used to collect the node's info to be used in recipes. Ohai runs every time Chef Client runs, and it creates a =node= object containing the node's info.
+
+The command =ohai= returns the same info.
+
+** Access Node Attributes
+
+#+CAPTION: =cookbooks/workstation/recipes/setup.rb=
+#+BEGIN_SRC ruby
+file '/etc/motd' do
+  content "
+This is the property of ...
+Hostname: #{node['hostname']}
+IP: #{node['ipaddress']}
+CPU: #{node['cpu']['0']['mhz']}
+Memory: #{node['memory']['total']}
+"
+end
+#+END_SRC
+
+* Templates
+** Understand Embedded Ruby
+
+Generate a Chef template:
+
+#+BEGIN_SRC sh
+chef generate template cookbooks/workstation motd
+#+END_SRC
+
+Edit the template file:
+
+#+CAPTION: =cookbooks/workstation/templates/motd.erb=
+#+BEGIN_SRC erb
+This is the property of ...
+Hostname: <%= node['hostname'] %>
+IP: <%= node['ipaddress'] %>
+CPU: <%= node['cpu']['0']['mhz'] %>
+Memory: <%= node['memory']['total'] %>
+Name: <%= @name %>
+#+END_SRC
+
+Add a =template= resource to use the template in the recipe:
+
+#+CAPTION: =cookbooks/workstation/recipes/setup.rb=
+#+BEGIN_SRC ruby
+template '/etc/motd' do
+  action :create
+  source 'motd.erb'
+  variables(
+    :name => 'Victor'
+  )
+end
+#+END_SRC
+
+* Other Common Resources
+** cookbook_file
+
+Generate a Chef file:
+
+#+BEGIN_SRC 
+chef generate file cookbooks/apache index.html
+#+END_SRC
+
+Add a =cookbook_file= resource in the recipe:
+
+#+CAPTION: =cookbooks/apache/recipes/server.rb=
+#+BEGIN_SRC ruby
+cookbook_file '/var/www/html/index.html' do
+  action :create
+  source 'index.html'
+end
+#+END_SRC
+
+** remote_file
+
+Add a =remote_file= resource in the recipe, and pass the file path as variable to the template file:
+
+#+CAPTION: =cookbooks/apache/recipes/server.rb=
+#+BEGIN_SRC ruby
+remote_file '/var/www/html/image.jpg' do
+  action :create
+  source 'https://picsum.photos/200.jpg'
+end
+
+template '/var/www/html/index.html' do
+  action :create
+  source 'index.html.erb'
+  variables(
+    :image => 'image.jpg'
+  )
+end
+#+END_SRC
+
+Edit the template:
+
+#+CAPTION: =cookbooks/apache/templates/index.html.erb=
+#+BEGIN_SRC html
+<h1>Here is an image.</h1>
+<img src="<%= @image %>" />
+#+END_SRC
+** execute
+
+3 different ways to create a directory and set the owner as =apache=:
+
+#+CAPTION: =cookbooks/apache/recipes/server.rb=
+#+BEGIN_SRC ruby
+bash 'mysites' do
+  user 'root'
+  code 'mkdir -p /var/www/mysites/ && chown -R apache /var/www/mysites/'
+  not_if '[ -d /var/www/mysites/ ]'
+end
+
+execute 'mysites' do
+  user 'root'
+  command <<-EOH
+    mkdir -p /var/www/mysites/
+    chown -R apache /var/www/mysites/
+  EOH
+  not_if '[ -d /var/www/mysites/ ]'
+end
+
+directory '/var/www/mysites/' do
+  owner 'apache'
+  recursive true
+end
+#+END_SRC
+
+** user and group
+
+Create a user and a group, and assign the user to the group:
+
+#+CAPTION: =cookbooks/workstation/recipes/setup.rb=
+#+BEGIN_SRC ruby
+user 'user1' do
+  home '/home/user1'
+  shell '/bin/bash'
+end
+
+group 'admins' do
+  members ['user1']
+  append true
+end
+#+END_SRC
+
+** Send and Receive Notifications
+
+2 ways to restart =httpd= when a =template= resource is updated:
+
+#+CAPTION: =cookbooks/apache/recipes/server.rb=
+#+BEGIN_SRC ruby
+template '/var/www/html/index.html' do
+  source 'index.html.erb'
+  notifies :restart, 'service[httpd]', :immediately
+end
+
+service 'httpd' do
+  action [:enable, :start]
+end
+#+END_SRC
+
+#+CAPTION: =cookbooks/apache/recipes/server.rb=
+#+BEGIN_SRC ruby
+template '/var/www/html/index.html' do
+  source 'index.html.erb'
+end
+
+service 'httpd' do
+  action [:enable, :start]
+  subscribes :restart, 'template[/var/www/html/index.html]', :immediately
+end
+#+END_SRC
+* Troubleshooting and Bonus Content
+** Explore the ChefDK
+
+When Chef is installed, an embedded Ruby is installed with it, which is separate from the local globally installed Ruby:
+
+#+BEGIN_SRC sh
+$ ruby -v
+-bash: ruby: command not found # Ruby is not installed globally
+$ chef exec ruby -v
+ruby 2.5.5p157 ... # Ruby is installed in embedded context
+#+END_SRC
+
+Check Ruby syntax of Chef recipes:
+
+#+BEGIN_SRC sh
+chef exec ruby -c cookbooks/*/recipes/*.rb
+#+END_SRC
+
+** Chef Toolkit
+
+If a Chef tool is not available directly (because the include path is not configured), try using it with the embedded context:
+
+#+BEGIN_SRC sh
+$ rspec -v
+-bash: rspec: command not found
+$ chef exec rspec -v
+RSpec 3.8
+#+END_SRC
+
+** Intro to Test Kitchen
+
+Update the Test Kitchen config file:
+
+#+CAPTION: =cookbooks/apache/.kitchen.yml=
+#+BEGIN_SRC yaml
+provisioner:
+  name: chef_zero
+  always_update_cookbooks: true
+  # Add these 2 lines:
+  client_rb:
+    chef_license: accept
+#+END_SRC
+
+Write integration tests by following [[https://www.inspec.io/docs/reference/resources/][InSpec Resources Reference]]:
+
+#+CAPTION: =cookbooks/apache/test/integration/default/server_test.rd=
+#+BEGIN_SRC ruby
+describe port(80) do
+  it { should be_listening }
+end
+
+describe command('curl localhost') do
+  its(:stdout) { should match(/Hello, world!/) }
+end
+#+END_SRC
+
+Run tests with Test Kitchen from local environment (not from within the Vagrant):
+
+#+BEGIN_SRC sh
+$ cd cookbooks/apache
+$ kitchen create
+$ kitchen list # Confirm instance is created
+Instance             Driver   Provisioner  Verifier  Transport  Last Action  Last Error
+default-ubuntu-1604  Vagrant  ChefZero     Inspec    Ssh        Created      <None>
+$ kitchen login # Connect to instance
+> curl localhost # Confirm httpd is not running
+curl: (7) Failed connect to localhost:80; Connection refused
+> exit
+$ kitchen converge # Install Chef on the instance and converge (apply the recipes)
+$ kitchen login
+> curl localhost # Confirm httpd is running
+<html>...
+> exit
+$ kitchen verify # Run integration tests
+Test Summary: 2 successful, 0 failures, 0 skipped
+#+END_SRC
+
+** Intro to ChefSpec
+
+Running integration tests with InSpec needs external dependencies (driver etc.) and is slow. Running unit tests with ChefSpec is simpler and faster.
+
+Write unit test:
+
+#+CAPTION: =cookbooks/apache/spec/unit/recipes/server_spec.rb=
+#+BEGIN_SRC ruby
+require 'spec_helper'
+
+describe 'apache::server' do
+  context 'When all attributes are default, on an unspecified platform' do
+    let(:chef_run) do
+      runner = ChefSpec::ServerRunner.new
+      runner.converge(described_recipe)
+    end
+
+    it 'installs the correct package' do
+      expect(chef_run).to install_package('httpd')
+    end
+
+    it 'creates an default html file' do
+      expect(chef_run).to create_template('/var/www/html/index.html')
+    end
+
+    it 'enables the service' do
+      expect(chef_run).to enable_service('httpd')
+    end
+
+    it 'starts the service' do
+      expect(chef_run).to start_service('httpd')
+    end
+  end
+end
+#+END_SRC
+
+Add unit test coverage:
+
+#+CAPTION: =cookbooks/apache/spec/spec_helper.rb=
+#+BEGIN_SRC ruby
+ChefSpec::Coverage.start!
+#+END_SRC
+
+Run unit test:
+
+#+BEGIN_SRC sh
+$ cd cookbooks/apache
+$ chef exec rspec spec/unit/recipes/server_spec.rb
+4 examples, 0 failures
+#+END_SRC
+* Chef Server
+** Why Use A Chef Server?
+
+Without using Chef Server, provisioning multiple nodes will be:
+
+1. Install Chef tools on each node.
+2. Pull cookbooks onto the node, via Git or SCP.
+3. Run Chef Client in local mode to apply the recipes.
+
+** Get Started with Hosted Chef
+
+[[https://manage.chef.io][Chef Manage]] is free manager Chef Server provided by Chef.
+
+1. Sign up to Chef Manage.
+2. Create an organization.
+3. Select the organization, go to Starter Kit, and click Download Starter Kit.
+4. Move the =chef-repo= directory to a proper location.
+5. Replace the =chef-repo/cookbooks= directory with the =cookbooks= directory to use.
+
+NOTE: There is a special recipe to include into the =workstation= cookbook:
+
+#+CAPTION: =chef-repo/cookbooks/workstation/recipes/vagrant.rb=
+#+BEGIN_SRC ruby
+# if you found this recipe you're probably wondering what it's for!
+# we do not cover ohai plugins in this class, but it's the process of modifying
+# the information added to the node object at the beginning of a chef-client run.
+
+# the vagrant-ohai plugin modifes the node['ipaddress'] attribute gathered by ohai
+# to match what we define in the Vagrant file. Otherwise ohai will detect the internal
+# ipaddress assigned by vagrant. This allows our load balancer to work with the
+# virtual instances we manage later in the class.
+#
+# @see https://github.com/avishai-ish-shalom/vagrant-ohai
+# @see https://docs.chef.io/ohai_custom.html
+
+# execute sudo /etc/init.d/network restart to reload the networking interfaces
+# this problem seems confined to Vagrant 1.9.1
+# see vagrant issue https://github.com/mitchellh/vagrant/issues/8115
+execute 'reload network interfaces' do
+  command 'sudo /etc/init.d/network restart'
+  not_if "ifconfig | grep 'eth0'"
+end
+
+# set plugin path for ohai if not already defined in /etc/chef/client.rb
+# this is always set on a subsequent chef-client run because of ruby_block[configure ohai plugin path]
+if ::Ohai::Config.ohai.nil?
+  ::Ohai::Config['plugin_path'] << '/etc/chef/ohai_plugins' # old format
+else
+  ::Ohai::Config.ohai['plugin_path'] << '/etc/chef/ohai_plugins' # new format
+end
+
+# add vagrant-ohai plugin to the resource collection
+#
+# @see https://docs.chef.io/resource_ohai.html
+ohai 'vagrant-ipaddress' do
+  plugin 'ipaddress'
+  action :nothing
+end
+
+# modify the client.rb file to include the plugin path for the vagrant-ohai plugin
+# At the beginning of every chef-client run, the client.rb file is loaded. 
+#
+# @see https://docs.chef.io/config_rb_client.html
+#
+# This ruby_block resource modifies the client.rb to include the '/etc/chef/ohai_plugins'
+# directory, with a guard to check if the file has already been modified.
+#
+# @see https://docs.chef.io/resource_common.html#guards
+#
+# When the client.rb file is modified, the notification adds 'ohai[vagrant-ohai]' to the
+# resource collection, re-running ohai with the new plugin loaded. This ensures we have
+# access to the node['ipaddress'] attribute during this chef-client run.
+ruby_block "configure ohai plugin path" do
+  block do
+    file = Chef::Util::FileEdit.new("/etc/chef/client.rb")
+    file.insert_line_if_no_match("ohai.plugin_path << '/etc/chef/ohai_plugins'","ohai.plugin_path << '/etc/chef/ohai_plugins'")
+    file.write_file
+  end
+  notifies :reload, 'ohai[vagrant-ipaddress]', :immediately
+end
+#+END_SRC
+
+** Upload Cookbooks
+
+=chef-repo/.chef/= directory contains the info needed to communicate with Chef Manage:
+
+#+BEGIN_SRC sh
+chef-repo/.chef/
+  knife.rb   # Server URL, cookbook path etc.
+  <user>.pem # Auth credential
+#+END_SRC
+
+Confirm the local repo can communicate with Chef Manager:
+
+#+BEGIN_SRC sh
+$ cd chef-repo
+$ knife client list
+<org>-validator
+#+END_SRC
+
+Upload cookbooks to Chef Server and confirm the result:
+
+#+BEGIN_SRC sh
+$ cd chef-repo
+$ knife cookbook upload workstation apache # Don't need to specify the "cookbooks/" directory
+Uploaded 2 cookbooks.
+$ knife cookbook list
+apache        0.1.0
+workstation   0.1.0
+#+END_SRC
+
+Go to [[https://api.chef.io][Chef Manage]] and confirm the cookbooks show up under Policy tab.
+
+** Reconfigure Vagrant Environment
+
+Start 3 Vagrant nodes of 2 web servers and 1 load balancer with config:
+
+#+CAPTION: =chef-repo/Vagrantfile=
+#+BEGIN_SRC ruby
+unless Vagrant.has_plugin?("vagrant-ohai")
+  raise "vagrant-ohai plugin is not installed! Install with 'vagrant plugin install vagrant-ohai'"
+end
+
+NODE_SCRIPT = <<EOF.freeze
+  echo "Preparing node..."
+  # ensure the time is up to date
+  yum -y install ntp
+  systemctl start ntpd
+  systemctl enable ntpd
+  curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- -v 14
+EOF
+
+def set_hostname(server)
+  server.vm.provision 'shell', inline: "hostname #{server.vm.hostname}"
+end
+
+Vagrant.configure(2) do |config|
+
+  config.vm.define 'web1' do |n|
+    n.vm.box = 'bento/centos-7.2'
+    n.vm.box_version = '2.2.9'
+    n.vm.hostname = 'web1'
+    n.vm.network :private_network, ip: '192.168.10.43', nic_type: "virtio"
+    n.vm.provision :shell, inline: NODE_SCRIPT.dup
+    set_hostname(n)
+  end
+
+  config.vm.define 'web2' do |n|
+    n.vm.box = 'bento/centos-7.2'
+    n.vm.box_version = '2.2.9'
+    n.vm.hostname = 'web2'
+    n.vm.network :private_network, ip: '192.168.10.44', nic_type: "virtio"
+    n.vm.provision :shell, inline: NODE_SCRIPT.dup
+    set_hostname(n)
+  end
+
+  config.vm.define 'load-balancer' do |n|
+    n.vm.box = 'bento/centos-7.2'
+    n.vm.box_version = '2.2.9'
+    n.vm.hostname = 'load-balancer'
+    n.vm.network "forwarded_port", guest: 80, host: 9000
+    n.vm.provision :shell, inline: NODE_SCRIPT.dup
+    set_hostname(n)
+  end
+
+end
+#+END_SRC
+
+** Bootstrap Web Server
+
+The bootstraping process of a node includes:
+
+- Installs Chef Client, if not already installed.
+- Provides credentials and details of how to communicate with Chef Server.
+- Runs Ohai.
+- Converges the node.
+- Saves the node object to Chef Server.
+
+Get SSH config of the Vagrant nodes:
+
+#+BEGIN_SRC sh
+$ vagrant ssh-config
+Host web1
+  User vagrant
+  Port <port> # To be used in "knife bootstrap" command
+  IdentityFile <path_to_id_file> # To be used in "knife bootstrap" command
+#+END_SRC
+
+Bootstrap the node with SSH config and confirm the result:
+
+#+BEGIN_SRC sh
+$ knife bootstrap localhost \ # Because the Vagrant nodes are local
+                              # Will be FQDN or public IP if using cloud provider
+-N web1 -p <port> -x vagrant -i <path_to_id_file> --sudo
+127.0.0.1 -----> Existing Chef installation detected # Will install Chef Client if not installed
+127.0.0.1 Starting Chef Client, version 14.12.9
+127.0.0.1 resolving cookbooks for run list: [] # There is empty run list
+127.0.0.1 Converging 0 resources
+$ knife node list
+$ knife node show web1
+#+END_SRC
+
+Add to the node's run list and confirm the result:
+
+#+BEGIN_SRC sh
+$ knife node run_list add web1 "recipe[workstation],recipe[apache]"
+$ knife node show web1
+Run List: recipe[workstation], recipe[apache]
+#+END_SRC
+
+Login to the Vagrant node and run Chef Client:
+
+#+BEGIN_SRC sh
+$ vagrant ssh web1
+> sudo chef-client # Don't need additional info, will connect to Chef Server, pull and run recipes
+#+END_SRC
+
+* Community Cookbooks
+** Explore the Supermarket
+
+[[https://supermarket.chef.io][Chef Supermarket]] is where the community share Chef cookbooks. There are basically 2 kinds of cookbooks:
+
+- Cookbooks of recipes.
+- Cookbooks of custom resources, e.g. [[https://supermarket.chef.io/cookbooks/haproxy][haproxy]]
+
+Cookbooks that provide custom resources can be used as libraries by other cookbooks.
+
+** Create a Wrapper Cookbook
+
+A "wrapper cookbook" references other cookbooks as libraries, and use them with custom attributes.
+
+Generate a new cookbook:
+
+#+BEGIN_SRC sh
+cd chef-repo/cookbooks
+chef generate cookbook myhaproxy
+#+END_SRC
+
+Add =haproxy= cookbook as dependency:
+
+#+CAPTION: =chef-repo/cookbooks/myhaproxy/metadata.rb=
+#+BEGIN_SRC ruby
+depends 'haproxy', '~> 7.1.0'
+#+END_SRC
+
+=haproxy= provides [[https://github.com/sous-chefs/haproxy/tree/master/test/fixtures/cookbooks/test/recipes][example recipes]] to get started with. Copy the recipe =config_array.rb= to the cookbook (but remove the unneeded parts):
+
+#+CAPTION: =chef-repo/cookbooks/myhaproxy/recipes/default.rb=
+#+BEGIN_SRC ruby
+haproxy_install 'package'
+
+haproxy_frontend 'http-in' do
+  bind '*:80'
+  default_backend 'servers'
+end
+
+haproxy_backend 'servers' do
+  server [
+    'server1 127.0.0.1:8000 maxconn 32' # IP and port will be updated later
+  ]
+end
+
+haproxy_service 'haproxy' do
+  # Whenever haproxy_backend is updated, e.g. adding a new node, we need to
+  # reload haproxy service. Subscribe to the template resouce that
+  # haproxy_backend uses and reload whenever it's updated.
+  subscribes :reload, 'template[/etc/haproxy/haproxy.cfg]', :immediately
+end
+#+END_SRC
+
+** Add Web Server Members
+
+Confirm node =web1= IP address:
+
+#+BEGIN_SRC sh
+$ knife node show web1
+IP: 192.168.10.43 # As defined in Vagrantfile
+#+END_SRC 
+
+Update IP address in the =haproxy= recipe:
+
+#+CAPTION: =chef-repo/cookbooks/myhaproxy/recipes/default.rb=
+#+BEGIN_SRC ruby
+haproxy_backend 'servers' do
+  server [
+    'server1 192.168.10.43:80 maxconn 32'
+  ]
+end
+#+END_SRC
+
+** Manage Cookbooks with Berkshelf
+
+While a cookbook depends on a community cookbook, the community cookbook may also depends on other cookbooks, in which situation it would be difficult to manage the dependencies. Berkshelf is a dependency manager for Chef cookbooks.
+
+Install the dependencies and confirm the result:
+
+#+BEGIN_SRC sh
+$ cd chef-repo/cookbooks/myhaproxy
+$ berks install
+$ ls ~/.berkshelf/cookbooks
+haproxy-7.1.0 ...
+#+END_SRC
+
+Upload the dependencies to Chef Server and confirm the result:
+
+#+BEGIN_SRC sh
+$ berks upload
+$ knife cookbook list
+haproxy   7.1.0
+...
+#+END_SRC
+
+** Bootstrap Load Balancer
+
+Similar steps as bootstraping a web server, but the run list can be specified with =knife bootstrop= command, instead of adding the run list manually and run Chef Client to converge the resources.
+
+Get SSH config of the Vagrant nodes:
+
+#+BEGIN_SRC sh
+$ vagrant ssh-config
+Host load-balancer
+  User vagrant
+  Port <port> # To be used in "knife bootstrap" command
+  IdentityFile <path_to_id_file> # To be used in "knife bootstrap" command
+#+END_SRC
+
+Bootstrap the node with SSH config and run list, and confirm the result:
+
+#+BEGIN_SRC sh
+$ knife bootstrap localhost -N load-balancer -p <port> -x vagrant -i <path_to_id_file> -r 'recipe[myhaproxy]' --sudo
+Chef Client finished, 16/29 resources updated ...
+$ knife node list
+$ knife node show load-balancer
+Run List: recipe[myhaproxy]
+#+END_SRC
+
+Login to the Vagrant node and confirm the load balancer is working:
+
+#+BEGIN_SRC sh
+$ vagrant ssh load-balancer
+> curl localhost
+... # The HTML output from web server nodes
+> sudo service haproxy restart # Somehow it didn't work in the beginning but restarting the service fixed it
+#+END_SRC
+
+Confirm the result by browsing to the load balancer's forwarded port https://http://localhost:9000/ from the host machine.
+
+* Manage Nodes
+** Run chef-client on a Schedule
+
+The community cookbook [[https://supermarket.chef.io/cookbooks/chef-client][chef-client]] can be used to configure the node to run Chef Client periodically.
+
+Generate a wrapper cookbook:
+
+#+BEGIN_SRC sh
+cd chef-repo
+chef generate cookbook cookbooks/mychefclient
+#+END_SRC
+
+Add =chef-client= as dependency:
+
+#+CAPTION: =chef-repo/cookbooks/mychefclient/metadata.rb=
+#+BEGIN_SRC ruby
+depends 'chef-client', '~> 11.2.0'
+#+END_SRC
+
+Update default recipe to run Chef Client periodically:
+
+#+CAPTION: =chef-repo/cookbooks/mychefclient/recipes/default.rb=
+#+BEGIN_SRC ruby
+node.default['chef_client']['interval'] = '300' # Run every 300 seconds
+node.default['chef_client']['splay'] = '60'     # Random delay of 0-60 seconds before running Chef Client
+                                                # To avoid updating all nodes at the same time
+
+include_recipe 'chef-client::default'
+#+END_SRC
+
+Install and upload the dependency:
+
+#+BEGIN_SRC sh
+cd chef-repo/cookbooks/mychefclient
+berks install
+berks upload
+#+END_SRC
+
+Add the recipe to the run list of the load balancer node, and run Chef Client on it:
+
+#+BEGIN_SRC sh
+cd chef-reop
+knife node run_list add load-balancer 'recipe[mychefclient]'
+vagrant ssh load-balancer
+sudo chef-client
+#+END_SRC
+* Roles
+** Create and Assign Roles
+
+Create a role file:
+
+#+CAPTION: =chef-repo/roles/web.rb=
+#+BEGIN_SRC ruby
+name 'web'
+description 'web server'
+run_list 'recipe[workstation]','recipe[apache]'
+default_attributes 'apache-test' => {
+  'attribute_1' => 'this is attribute 1',
+  'attribute_2' => 'this is attribute 2'
+}
+#+END_SRC
+
+Upload the role to Chef Server:
+
+#+BEGIN_SRC sh
+$ knife role from file roles/web.rb
+#+END_SRC
+
+Set the role to node's run list and apply the role:
+
+#+BEGIN_SRC sh
+$ knife node run_list set web1 "role[web]"
+$ knife node show web1
+Run Lists: role[web] # Role is set to the run list
+Roles:               # No role yet, the role will be converged when Chef Client runs on the node
+$ vagrant ssh web1
+> sudo chef-client
+$ knife node show web1
+Run Lists: role[web]
+Roles:     web       # Role is applied
+#+END_SRC
+
+** Converge Using the =knife ssh= Command
+
+=knife ssh= command can be used to SSH connect to the nodes and run commands:
+
+#+BEGIN_SRC sh
+$ vagrant ssh-config # Get the SSH params
+User vagrant
+Port <port>
+IdentityFile <path>
+$ knife ssh localhost "sudo chef-client" --manual-list -p <port> -x vagrant -i <path>
+#+END_SRC
+
+* Search
+** Explore Chef Server Indices
+
+Chef Server maintains (in a PostgreSQL database) a searchable index of all nodes with the infrastructure. =knife search= command can be used to search through these indices.
+
+** Run Searches with Knife
+
+#+BEGIN_SRC sh
+$ knife search node "*:*"         # All nodes
+$ knife search node "name:*"      # Nodes with any name
+$ knife search node "name:web?"   # Nodes with names of "web" followed by a character
+$ knife search node "*:*" -a name # Names of all nodes
+$ knife search node "role:web AND recipes:apache" # Nodes with role "web" and recipe "apache"
+#+END_SRC
+
+** Refactor for Dynamic Load Balancing
+
+Previously the =haproxy= load balancer was configures with hard-coded web nodes. By using Chef Server's search indices, the load balancer can be configures to query and update the web nodes automatically.
+
+#+CAPTION: =chef-repo/cookbooks/myhaproxy/recipes/default.rb=
+#+BEGIN_SRC ruby
+# The hard-coded server list
+# haproxy_backend 'servers' do
+#   server [
+#     'server1 192.168.10.43:80 maxconn 32',
+#     'server2 192.168.10.44:80 maxconn 32',
+#   ]
+# end
+
+web_nodes = search('node', 'role:web') # Returns the same result as "knife search" command
+servers = []
+
+web_nodes.each do |web_node|
+  server = "#{web_node['hostname']} #{web_node['ipaddress']}:80 maxconn 32"
+  servers.push(server)
+end
+
+haproxy_backend 'servers' do
+  server servers
+end
+#+END_SRC
+
+If the infrastructure is hosted on a cloud provider, the host name and IP attributes to use will be different, namely =node['cloud']['public_hostname']= and =node['cloud']['public_ipv4']=.
+
+* Environments
+** Create and Manage a Production Environment
+
+All nodes belong to the =_default= environment by default:
+
+#+BEGIN_SRC sh
+$ knife search node '*:*'
+Environment: _default
+#+END_SRC
+
+Create a new environment file:
+
+#+CAPTION: =chef-repo/environments/production.rb=
+#+BEGIN_SRC ruby
+name 'production'
+description 'Production environment'
+cookbook 'apache', '= 0.1.1' # To match the actual current version of the cookbook
+cookbook 'myhaproxy', '= 0.2.0' # To match the actual current version of the cookbook
+#+END_SRC
+
+Upload the environment to Chef Server, and confirm the result:
+
+#+BEGIN_SRC sh
+$ knife environment from file environments/production.rb
+$ knife environment list
+$ knife environment show production
+#+END_SRC
+
+Set one node to production environment, and confirm the result:
+
+#+BEGIN_SRC sh
+$ knife node environment set web1 production
+$ knife node show web1
+#+END_SRC
+
+By setting the node to the environment, only Chef Server knows about it, the node itself won't be aware of the change until Chef Client runs on the node. 
+
+** Refine the Load Balancer
+
+The load balancer cookbook needs to be updated to avoid routing traffic to web nodes of different environments:
+
+#+CAPTION: =chef-repo/cookbooks/myhaproxy/recipes/default.rb=
+#+BEGIN_SRC ruby
+web_nodes = search('node', 'role:web')
+# Update to:
+web_nodes = search('node', "role:web AND chef_environment:#{node.chef_environment}")
+#+END_SRC
+
+Note that after incrementing =myhaproxy= cookbook's version following the above change, the cookbook version restrictions of the load balancer node's environment need to be updated too, otherwise this latest version of cookbook won't be used on the node.
+
+* Data Bags
+** What's in the Bag?
+
+A data bag is a collection of data that is relevant to and can be accessed by multiple nodes, such as user accounts and passwords, to avoid duplicating these info for each node.
+
+** Create and Manage Data Bags
+
+Create data bags for users and groups data, and confirm the result:
+
+#+BEGIN_SRC sh
+$ knife data bag create users
+$ knife data bag create groups
+$ knife data bag list
+#+END_SRC
+
+Create JSON files for data bag items:
+
+#+CAPTION: =chef-repo/databags/users/user1.json=
+#+BEGIN_SRC js
+{
+  "id": "user1",
+  "comment": "This is user 1",
+  "uid": "100",
+  "gid": "1",
+  "home": "/home/user1",
+  "shell": "/bin/bash",
+  "platform": "centos"
+}
+#+END_SRC
+
+#+CAPTION: =chef-repo/databags/groups/group1.json=
+#+BEGIN_SRC js
+{
+  "id": "group1",
+  "gid": "1",
+  "members": ["user1"]
+}
+#+END_SRC
+
+Add the items to the data bag, and confirm the result:
+
+#+BEGIN_SRC sh
+$ knife data bag from file users databags/users/user1.json
+$ knife data bag from file groups databags/groups/group1.json
+$ knife data bag show users
+$ knife data bag show groups
+#+END_SRC
+
+Data bags are indexed by Chef, so it's available for search:
+
+#+BEGIN_SRC sh
+$ knife search users "*:*"
+$ knife search users "platform:centos"
+$ knife search users "platform:centos" -a comment
+#+END_SRC
+
+** Dynamic Search and Find
+
+Create a cookbook to use the data bag to create users:
+
+#+BEGIN_SRC sh
+$ chef generate cookbook cookbooks/users
+#+END_SRC
+
+#+CAPTION: =chef-repo/cookbooks/users/recipes/default.rb=
+#+BEGIN_SRC ruby
+search('users', 'platform:centos').each do |user_data|
+  user user_data['id'] do
+    comment user_data['comment']
+    uid user_data['uid']
+    gid user_data['gid']
+    home user_data['home']
+    shell user_data['shell']
+  end
+end
+#+END_SRC
+
+Update the role file:
+
+#+CAPTION: =chef-repo/roles/web.rb=
+#+BEGIN_SRC ruby
+run_list 'recipe[users]','recipe[workstation]','recipe[apache]'
+#+END_SRC
+
+Upload the cookbook and update the role on Chef Server:
+
+#+BEGIN_SRC sh
+$ knife cookbook upload users
+$ knife role from file roles/web.rb
+#+END_SRC
+
+Converge the web node and confirm the user is created by Chef:
+
+#+BEGIN_SRC sh
+$ vagrant ssh web1
+> sudo chef-client
+> grep "user1" /etc/passwd
+user1:x:1001:1001::/home/user1:/bin/bash
+#+END_SRC
+
+** Encrypt Secrets
+
+Data bags can be encrypted to protected sensitive information such as passwords. Create a secret key and an encrypted data bag, and upload an encrypted data bag item to it:
+
+#+BEGIN_SRC sh
+$ openssl rand -base64 512 > secret_key
+$ knife data bag create secret_users --secret-file secret_key
+$ knife data bag from file secret_users databags/users/user1.json --secret-file secret_key
+#+END_SRC
+
+Confirm the data bag item is encrypted, and can be decrypted by using the secret key:
+
+#+BEGIN_SRC sh
+$ knife data bag show secret_users user1
+# Encrypted data
+$ knife data bag show secret_users user1 --secret-file secret_key
+# Decrypted data
+#+END_SRC

@@ -1,0 +1,1054 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-11-25 Sun 17:30 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Machine Learning</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Machine Learning</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orge87f3ca">1. Introduction</a>
+<ul>
+<li><a href="#orga6c9825">1.1. Definition</a></li>
+<li><a href="#org209ffab">1.2. Supervised Learning</a></li>
+<li><a href="#org01cefda">1.3. Unsupervised Learning</a></li>
+</ul>
+</li>
+<li><a href="#orgb1d02fa">2. Model and Cost Function</a>
+<ul>
+<li><a href="#org5053edc">2.1. Model Representation</a></li>
+<li><a href="#org37475bc">2.2. Cost Function</a></li>
+</ul>
+</li>
+<li><a href="#org4bd8a7b">3. Parameter Learning</a>
+<ul>
+<li><a href="#orged5dff1">3.1. Gradient Descent</a></li>
+<li><a href="#org02cea5b">3.2. Gradient Descent for Linear Regression</a></li>
+</ul>
+</li>
+<li><a href="#org1a97efc">4. Linear Algebra Review</a>
+<ul>
+<li><a href="#orgc1db0b4">4.1. Matrices and Vectors</a></li>
+<li><a href="#org8646af3">4.2. Matrix Calculations</a>
+<ul>
+<li><a href="#org8130ec2">4.2.1. Addition and Substraction</a></li>
+<li><a href="#orgcb106b1">4.2.2. Scalar Multiplication and Division</a></li>
+<li><a href="#org2b1e77d">4.2.3. Vector Multiplication</a></li>
+<li><a href="#orgbcfef45">4.2.4. Matrix Multiplication</a></li>
+</ul>
+</li>
+<li><a href="#orgfd8db5f">4.3. Identity Matrix</a></li>
+<li><a href="#orgad0b85f">4.4. Inverse Matrix</a></li>
+<li><a href="#orge02aa0e">4.5. Transpose Matrix</a></li>
+</ul>
+</li>
+<li><a href="#org00a983a">5. Multivariate Linear Regression</a>
+<ul>
+<li><a href="#orgdc32c03">5.1. Multiple Features</a></li>
+<li><a href="#org9dbea4d">5.2. Gradient Descent for Multiple Features</a></li>
+<li><a href="#orgcd43c4c">5.3. Feature Improvement</a></li>
+<li><a href="#orgf647ad0">5.4. Polynomial Regression</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge87f3ca" class="outline-2">
+<h2 id="orge87f3ca"><span class="section-number-2">1</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-orga6c9825" class="outline-3">
+<h3 id="orga6c9825"><span class="section-number-3">1.1</span> Definition</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Arthur Samuel described Machine Learning as: 
+</p>
+
+<blockquote>
+<p>
+The field of study that gives computers the ability to learn without being explicitly programmed.
+</p>
+</blockquote>
+
+<p>
+Tom Mitchell provides a more modern definition:
+</p>
+
+<blockquote>
+<p>
+A computer program is said to learn from experience E with respect to some class of tasks T and performance measure P, if its performance at tasks in T, as measured by P, improves with experience E.
+</p>
+</blockquote>
+
+<p>
+Examples of Machine Learning applications:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>Database mining</b></th>
+<th scope="col" class="org-left">web click data, medical records, biology, engineering</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>Applications can't program by hand</b></td>
+<td class="org-left">autonomous helicopter, handwriting recognition</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Natural Language Processing (NLP), computer vision</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>Self-customizing programs</b></td>
+<td class="org-left">Amazon, Netflix product recommendations</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>Understanding human learning</b></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org209ffab" class="outline-3">
+<h3 id="org209ffab"><span class="section-number-3">1.2</span> Supervised Learning</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+In <b>supervised learning</b>, we are given a data set and already know what the corresponding output should be, having the idea that there is a relationship between the input and the output. Supervised learning problems are categorized into regression and classification problems.
+</p>
+
+<ul class="org-ul">
+<li>A <b>regression problem</b> is to predict results within a continuous output, meaning to map input variables to some continuous function. For example, given data about the size of houses on the real estate market, try to predict their price.</li>
+<li>A <b>classification problem</b> is to predict results in a discrete output, meaning to map input variables into discrete categories. For example, given a patient with a tumor, to predict whether the tumor is malignant or benign.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org01cefda" class="outline-3">
+<h3 id="org01cefda"><span class="section-number-3">1.3</span> Unsupervised Learning</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+<b>Unsupervised learning</b> approaches problems with little or no idea what the results should look like. Structure is derived by clustering the data based on relationships among the variables in the data. There is no feedback based on the prediction results.
+</p>
+
+<ul class="org-ul">
+<li>A <b>clustering problem</b>: take a collection of 1,000,000 different genes, and find a way to automatically group these genes into groups that are somehow similar or related by different variables, such as lifespan, location, roles, and so on.</li>
+<li>A <b>non-clustering problem</b>: find structure in a chaotic environment, for example, identifying individual voices and music from a mesh of sounds at a cocktail party, by using the "Cocktail Party Algorithm".</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb1d02fa" class="outline-2">
+<h2 id="orgb1d02fa"><span class="section-number-2">2</span> Model and Cost Function</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-org5053edc" class="outline-3">
+<h3 id="org5053edc"><span class="section-number-3">2.1</span> Model Representation</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+To establish notation for future use:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">\(x\)</th>
+<th scope="col" class="org-left">An input variable, also called input feature</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">\(y\)</td>
+<td class="org-left">An output or target variable to predict</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">\((x, y)\)</td>
+<td class="org-left">A training example</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">A list of training examples is called a training set</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">\(m\)</td>
+<td class="org-left">Number of training examples</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">\(\theta\)</td>
+<td class="org-left">A parameter in the function</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">\(h_\theta(x)\)</td>
+<td class="org-left">A function to predict \(y\) for a given \(x\)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">For linear regression, \(h_\theta(x) = \theta_0 + \theta_1 x\)</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+The goal of supervised learning is, given a training set, to learn a function \(h_\theta(x)\). For historical reasons, this function is called a <b>hypothesis</b>.
+</p>
+
+
+<div class="figure">
+<p><img src="../images/machine_learning/01.png" alt="01.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org37475bc" class="outline-3">
+<h3 id="org37475bc"><span class="section-number-3">2.2</span> Cost Function</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+<b>Cost function</b> is used to measure the accuracy of hypothesis function. It takes an average difference of all the results of the hypothesis with inputs from \(x\) and the actual output \(y\).
+</p>
+
+<p>
+\[ J(\theta) = \frac{1}{2m} \sum_{i=1}^{m} {(h_\theta(x^{(i)}) - y^{(i)})}^2 \]
+</p>
+
+<p>
+This function is otherwise called "squared error function", or "mean squared error". The goal of supervised learning is more accurately defined as finding the \(\theta\) (parameters of the hypothesis function) to minimize the value of \(J(\theta)\).
+</p>
+
+<p>
+For linear regression, the value of the cost function \(J(\theta_0,\theta_1)\), while \(\theta_0\) and \(\theta_1\) changes, will form a three-dimensional surface. We can use a contour plot to represent this surface in two dimensions.
+</p>
+
+
+<div class="figure">
+<p><img src="../images/machine_learning/02.png" alt="02.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4bd8a7b" class="outline-2">
+<h2 id="org4bd8a7b"><span class="section-number-2">3</span> Parameter Learning</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-orged5dff1" class="outline-3">
+<h3 id="orged5dff1"><span class="section-number-3">3.1</span> Gradient Descent</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+To graph the cost function \(J(\theta_0,\theta_1)\), We put \(\theta_0\) on \(x\) axis and \(\theta_1\) on the \(y\) axis, with the cost function on the \(z\) axis.
+</p>
+
+
+<div class="figure">
+<p><img src="../images/machine_learning/03.png" alt="03.png" />
+</p>
+</div>
+
+<p>
+The goal is to reach the point at the very bottom of the pits in the graph. The way to do this is to keep making steps down the cost function in the direction with the steepest descent.
+</p>
+
+<ul class="org-ul">
+<li>The direction for each step is determined by the <b>partial derivative</b> of the cost function at each point.</li>
+<li>The size of each step is determined by the parameter \(\alpha\), called the <b>learning rate</b>.</li>
+</ul>
+
+<p>
+This algorithm is called <b>gradient descent</b>:
+</p>
+
+<p>
+\[ \begin{align*}
+& \text{repeat until convergence}\ \{\\
+& \quad \theta_j := \theta_j - \alpha \frac{\partial}{\partial \theta_j} J(\theta_0,\theta_1) \quad \text{(for j = 0 and j = 1)} \\
+& \}
+\end{align*} \]
+</p>
+
+<p>
+At each iteration, the parameters should be updated simultaneously.
+</p>
+
+<p>
+\[ \begin{array}{l|l}
+\mathbf{\text{Correct}} & \mathbf{\text{Incorrect}} \\
+\text{temp}_0 := \theta_0 - \alpha \frac{\partial}{\partial \theta_0} J(\theta_0,\theta_1) & \text{temp}_0 := \theta_0 - \alpha \frac{\partial}{\partial \theta_0} J(\theta_0,\theta_1) \\
+\text{temp}_1 := \theta_1 - \alpha \frac{\partial}{\partial \theta_1} J(\theta_0,\theta_1) & \theta_0 := \text{temp}_0 \\
+\theta_0 := \text{temp}_0 & \text{temp}_1 := \theta_1 - \alpha \frac{\partial}{\partial \theta_1} J(\theta_0,\theta_1) \\
+\theta_1 := \text{temp}_1 & \theta_1 := \text{temp}_1
+\end{array} \]
+</p>
+
+<p>
+Consider a cost function \(J(\theta_1)\) with only one parameter \(\theta_1\), its gradient descent needs to converge \(\theta_1 := \theta_1 - \alpha \frac{d}{d\theta_1} J(\theta_1)\), then we can see that:
+</p>
+
+<ul class="org-ul">
+<li>Regardless of the partial derivative's sign, \(\theta_1\) will eventually converge to its minimum value, because when partial derivative is positive, \(\theta_1\) decreases, and when partial derivative is negative, \(\theta_1\) increases.</li>
+<li>Learning rate \(\alpha\) should be adjusted to ensure that the gradient descent algorithm converges in a reasonable time. If \(\alpha\) is too small, gradient descent can be slow. If \(\alpha\) is too large, gradient descent may fail to converge.</li>
+<li>As \(\theta_1\) approaches a local minimum, gradient descent will automatically take smaller steps because \(\frac{d}{d\theta_1} J(\theta_1)\) will approach 0, so there is no need to decrease \(\alpha\), it can be a fixed value.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org02cea5b" class="outline-3">
+<h3 id="org02cea5b"><span class="section-number-3">3.2</span> Gradient Descent for Linear Regression</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+When applied to the case of linear regression, a new form of the gradient descent equation can be derived (skipping the  deriving process), by substituting the partial derivative with the definition of the cost function:
+</p>
+
+<p>
+\[ \begin{array}{l|l}
+\mathbf{\text{Before}} & \mathbf{\text{After}} \\
+\text{repeat until convergence}\ \{ & \text{repeat until convergence}\ \{ \\
+\quad \theta_j := \theta_j - \alpha \frac{\partial}{\partial \theta_j} J(\theta_0,\theta_1) & \quad \theta_0 := \theta_0 - \alpha \frac{1}{m} \sum_{i=1}^{m} (h_\theta(x^{(i)}) - y^{(i)}) \\
+\} & \quad \theta_1 := \theta_1 - \alpha \frac{1}{m} \sum_{i=1}^{m} (h_\theta(x^{(i)}) - y^{(i)})x^{(i)} \\
+& \}
+\end{array} \]
+</p>
+
+<p>
+Because his method looks at every example (the \(\sum_{i=1}^{m}\) part) in the entire training set on every step, it is called <b>batch gradient descent</b>.
+</p>
+
+<p>
+Note that, while gradient descent can be susceptible to local minima in general (as shown in the above 3D graph), the optimization problem for linear regression has only one global optima, because \(J(\theta_0,\theta_1)\) is a convex quadratic function; thus gradient descent always converges (assuming the learning rate is not too large) to the global minimum.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1a97efc" class="outline-2">
+<h2 id="org1a97efc"><span class="section-number-2">4</span> Linear Algebra Review</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-orgc1db0b4" class="outline-3">
+<h3 id="orgc1db0b4"><span class="section-number-3">4.1</span> Matrices and Vectors</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+Matrices are 2-dimensional arrays, for example, a 4 x 3 matrix:
+</p>
+
+<p>
+\[ \begin{bmatrix}
+1 & 2 & 3 \\
+4 & 5 & 6 \\
+7 & 8 & 9 \\
+10 & 11 & 12
+\end{bmatrix} \]
+</p>
+
+<p>
+Vectors are matrices with only one column, a vector with n rows is called n-dimensional vector, for example, a 4-dimensional vector:
+</p>
+
+<p>
+\[ \begin{bmatrix}
+1 \\
+2 \\
+3 \\
+4
+\end{bmatrix} \]
+</p>
+
+<p>
+Common notations:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">\(A_{ij}\)</th>
+<th scope="col" class="org-left">Element in the \(i^{th}\) row and \(j^{th}\) column of matrix \(A\)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">\(v_i\)</td>
+<td class="org-left">Element in the \(i^{th}\) row of vector \(v\)</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">scalar</td>
+<td class="org-left">A single value, in constrast of a matrix or vector</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">\(\mathbb{R}\)</td>
+<td class="org-left">The set of scalar real numbers</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">\(\mathbb{R}^{n}\)</td>
+<td class="org-left">The set of n-dimensional vectors of real numbers</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org8646af3" class="outline-3">
+<h3 id="org8646af3"><span class="section-number-3">4.2</span> Matrix Calculations</h3>
+<div class="outline-text-3" id="text-4-2">
+</div><div id="outline-container-org8130ec2" class="outline-4">
+<h4 id="org8130ec2"><span class="section-number-4">4.2.1</span> Addition and Substraction</h4>
+<div class="outline-text-4" id="text-4-2-1">
+<p>
+Matrix addition and subtraction are element-wise, therefore the dimensions must be the same.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcb106b1" class="outline-4">
+<h4 id="orgcb106b1"><span class="section-number-4">4.2.2</span> Scalar Multiplication and Division</h4>
+<div class="outline-text-4" id="text-4-2-2">
+<p>
+In scalar multiplication and division, we simply multiply and divide every element by the scalar value.
+</p>
+
+<p>
+\[ \begin{bmatrix} a & b \\ c & d \end{bmatrix} \times x = \begin{bmatrix} a \times x & b \times x \\ c \times x & d \times x \end{bmatrix} \]
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2b1e77d" class="outline-4">
+<h4 id="org2b1e77d"><span class="section-number-4">4.2.3</span> Vector Multiplication</h4>
+<div class="outline-text-4" id="text-4-2-3">
+<p>
+When a matrix is multiplied by a vector, we map the column of the vector onto each row of the matrix, multiplying each element and summing the result.
+</p>
+
+<p>
+\[ \begin{bmatrix} a & b \\ c & d \\ e & f \end{bmatrix} \times \begin{bmatrix} x & y \end{bmatrix} = \begin{bmatrix} a \times x + b \times y \\ c \times x + d \times y \\ e \times x + f \times y \end{bmatrix} \]
+</p>
+
+<ul class="org-ul">
+<li>An \(m \times n\) matrix multiplied by an \(n \times 1\) vector results in an \(m \times 1\) vector.</li>
+<li>The number of columns of the matrix must equal the number of rows of the vector.</li>
+</ul>
+
+<p>
+Vector multiplication can be used to simplify the calculation of applying a (linear) hypothesis function on a data set, for example:
+</p>
+
+<ul class="org-ul">
+<li>The data set is 1, 2, 3, 4.</li>
+<li>The hypothesis is \(h_\theta(x) = -5 + 2x\).</li>
+</ul>
+
+<p>
+The calculation can be simplied as:
+</p>
+
+<p>
+\[ \begin{bmatrix} 1 & 1 \\ 1 & 2 \\ 1 & 3 \\ 1 & 4 \end{bmatrix} \times \begin{bmatrix} -5 \\ 2 \end{bmatrix} = \begin{bmatrix} -3 \\ -1 \\ 1 \\ 3 \end{bmatrix} \]
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbcfef45" class="outline-4">
+<h4 id="orgbcfef45"><span class="section-number-4">4.2.4</span> Matrix Multiplication</h4>
+<div class="outline-text-4" id="text-4-2-4">
+<p>
+The multiplication of two matrices can be broken down into several matrix-vector multiplications, and concatenating the results together.
+</p>
+
+<p>
+\[ \begin{bmatrix} a & b \\ c & d \\ e & f \end{bmatrix} \times \begin{bmatrix} w & x \\ y & z \end{bmatrix} = \begin{bmatrix} a \times w + b \times y & a \times x + b \times z \\ c \times w + d \times y & c \times x + d \times z \\ e \times w + f \times y & e \times x + f \times z \end{bmatrix} \]
+</p>
+
+<ul class="org-ul">
+<li>An \(m \times n\) matrix multiplied by an \(n \times p\) matrix results in an \(m \times p\) vector.</li>
+<li>The number of columns of the first matrix must equal the number of rows of the second matrix.</li>
+</ul>
+
+<p>
+Matrix multiplication can be used to simply the calculcation of applying several (linear) hypothesis functions on a data set, for example:
+</p>
+
+<ul class="org-ul">
+<li>The data set is 1, 2, 3, 4.</li>
+<li>The hypothesis functions are:
+<ul class="org-ul">
+<li>\(h_\theta(x) = -5 + 2x\)</li>
+<li>\(h_\theta(x) = -8 + 0.5x\)</li>
+<li>\(h_\theta(x) = 10 - x\)</li>
+</ul></li>
+</ul>
+
+<p>
+The calculation can be simplified as:
+</p>
+
+<p>
+\[ \begin{bmatrix} 1 & 1 \\ 1 & 2 \\ 1 & 3 \\ 1 & 4 \end{bmatrix} \times \begin{bmatrix} -5 & -8 & 10 \\ 2 & 0.5 & -1 \end{bmatrix} = \begin{bmatrix} -3 & -7.5 & 9 \\ -1 & -7 & 8 \\ 1 & -6.5 & 7 \\ 3 & -6 & 6 \end{bmatrix} \]
+</p>
+
+<p>
+Some properties of matrix multiplications:
+</p>
+
+<ul class="org-ul">
+<li>Matrix multiplication is not commutative, \(A \times B \ne B \times A\)</li>
+<li>Matrix multiplication is associative, \((A \times B) \times C = A \times (B \times C)\)</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfd8db5f" class="outline-3">
+<h3 id="orgfd8db5f"><span class="section-number-3">4.3</span> Identity Matrix</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+The <b>identity matrix</b>, when multiplied by any matrix of the same dimensions, results in the original matrix, just like multiplying the matrix by scalar value 1. Identity matrix is noted as \(I\), therefore \(A \times I = I \times A = A\). But note that the dimensions of the identity matrix has to match the matrix being multiplied.
+</p>
+
+<p>
+Identity matrices have the form:
+</p>
+
+<p>
+\[ \begin{bmatrix} 1 \end{bmatrix} \quad \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} \quad \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} ... \]
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgad0b85f" class="outline-3">
+<h3 id="orgad0b85f"><span class="section-number-3">4.4</span> Inverse Matrix</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+The <b>inverse</b> of a matrix, when multiplied with the original matrix, results in an identity matrix. Inverse of matrix \(A\) is noted as \(A^{-1}\), therefore \(A \times A^{-1} = A^{-1} \times A = I\).
+</p>
+
+<p>
+Matrix that has the same number of rows and columns is called <b>square matrix</b>. Only square matrices have inverse matrix. Matrices that don't have an inverse are singular or degenerate.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge02aa0e" class="outline-3">
+<h3 id="orge02aa0e"><span class="section-number-3">4.5</span> Transpose Matrix</h3>
+<div class="outline-text-3" id="text-4-5">
+<p>
+To <b>transpose</b> a matrix is to switch the rows and columns of a matrix. The transposition of matrix \(A\) is noted as \(A^T\). The elements in \(A\) and \(A^T\) follow the pattern \(A_{ij} = A^T_{ji}\).
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org00a983a" class="outline-2">
+<h2 id="org00a983a"><span class="section-number-2">5</span> Multivariate Linear Regression</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Linear regression with multiple variables is called <b>multivariate linear regression</b>.
+</p>
+</div>
+
+<div id="outline-container-orgdc32c03" class="outline-3">
+<h3 id="orgdc32c03"><span class="section-number-3">5.1</span> Multiple Features</h3>
+<div class="outline-text-3" id="text-5-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Single feature hypothesis</th>
+<th scope="col" class="org-left">\(h_\theta(x) = \theta_0 + \theta_1 x\)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Multiple features hypothesis</td>
+<td class="org-left">\(h_\theta(x) = \theta_0 + \theta_1 x_1 + ... + \theta_n x_n\)</td>
+</tr>
+</tbody>
+</table>
+
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">\(x^{(i)}\)</th>
+<th scope="col" class="org-left">Input features of the \(i^{th}\) training example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">\(x_j^{(i)}\)</td>
+<td class="org-left">\(j^{th}\) input feature of the \(i^{th}\) training example</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">\(n\)</td>
+<td class="org-left">Number of features</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+For the convenience of representation, if we consider \(x_0^{(i)} = 1\), then multiple feature hypothesis can be written as \(h_\theta(x) = \theta_0 x_0 + \theta_1 x_1 + \dots + \theta_n x_n\). And if we define the features and parameters as vectors:
+</p>
+
+<p>
+\[ \theta = \begin{bmatrix} \theta_0 \\ \theta_1 \\ \vdots \\ \theta_n \end{bmatrix} \quad
+x = \begin{bmatrix} x_0 \\ x_1 \\ \vdots \\ x_n \end{bmatrix} \quad \quad \]
+</p>
+
+<p>
+Then we have:
+</p>
+
+<p>
+\[ h_\theta(x) = \theta_0 x_0 + \theta_1 x_1 + ... + \theta_n x_n =
+\begin{bmatrix} \theta_0 & \theta_1 & \dots & \theta_n \end{bmatrix} \times
+\begin{bmatrix} x_0 \\ x_1 \\ \vdots \\ x_n \end{bmatrix} =
+\theta^T x \]
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9dbea4d" class="outline-3">
+<h3 id="org9dbea4d"><span class="section-number-3">5.2</span> Gradient Descent for Multiple Features</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+We can generalize the gradient descent for one feature to gradient descent for multiple features:
+</p>
+
+<p>
+\[ \begin{array}{l|l}
+\mathbf{n = 1} & \mathbf{n \geqslant 1} \\
+\text{repeat until convergence}\ \{ & \text{repeat until convergence}\ \{ \\
+\quad \theta_0 := \theta_0 - \alpha \frac{1}{m} \sum_{i=1}^{m} (h_\theta(x^{(i)}) - y^{(i)}) x_0^{(i)} & \quad \theta_j := \theta_j - \alpha \frac{1}{m} \sum_{i=1}^{m} (h_\theta(x^{(i)}) - y^{(i)}) x_j^{(i)} \quad (\text{for}\ j := 0 \dots n) \\
+\quad \theta_1 := \theta_1 - \alpha \frac{1}{m} \sum_{i=1}^{m} (h_\theta(x^{(i)}) - y^{(i)}) x_1^{(i)} & \} \\
+\} &
+\end{array} \]
+</p>
+
+<p>
+For example, for a hypothesis with two features:
+</p>
+
+<p>
+\[ \begin{align*}
+& \text{repeat until convergence}\ \{ \\
+& \quad \theta_0 := \theta_0 - \alpha \frac{1}{m} \sum_{i=1}^{m} (h_\theta(x^{(i)}) - y^{(i)}) x_0^{(i)} \\
+& \quad \theta_1 := \theta_1 - \alpha \frac{1}{m} \sum_{i=1}^{m} (h_\theta(x^{(i)}) - y^{(i)}) x_1^{(i)} \\
+& \quad \theta_2 := \theta_2 - \alpha \frac{1}{m} \sum_{i=1}^{m} (h_\theta(x^{(i)}) - y^{(i)}) x_2^{(i)} \\
+& \} \end{align*} \]
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcd43c4c" class="outline-3">
+<h3 id="orgcd43c4c"><span class="section-number-3">5.3</span> Feature Improvement</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+Gradient descent can speed up by having the input values in roughly the same range, ideally \(-1 \leqslant x \leqslant 1\). This is because \(\theta\) will descend quickly on small ranges. There are two techniques to achieve this:
+</p>
+
+<ul class="org-ul">
+<li><b>Feature scaling</b> is dividing the input values by the range of the input variable, resulting in a new range of just 1. Define \(s\) as the range of value, so \(s = x_{max} - x_{min}\), \(s\) is also called standard deviation.</li>
+<li><b>Mean normalization</b> is subtracting the average value for an input variable from the values for that input variable, resulting in a new average value for the input variable of just 0. Define \(\mu\) as the average of all input values.</li>
+</ul>
+
+<p>
+Then to modify the range of input values: \[ x := \frac{x - \mu}{s} \]
+</p>
+
+<p>
+For example, if \(x\) represents housing prices with a range of 100 to 2000 and a mean value of 1000, then \(x := \frac{x - 1000}{1900}\)
+</p>
+
+<p>
+Also, the number of features can be reduced by combining multiple features can be combined into one. For example, if we have features which are the length and width of an area, we can combine them into the surface of the area.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf647ad0" class="outline-3">
+<h3 id="orgf647ad0"><span class="section-number-3">5.4</span> Polynomial Regression</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+The hypothesis function may not be linear, but polynomial, for example:
+</p>
+
+
+<div class="figure">
+<p><img src="../images/machine_learning/04.png" alt="04.png" />
+</p>
+</div>
+
+<p>
+We can change the behavior of the curve by making the hypothesis function into different forms:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Linear function</th>
+<th scope="col" class="org-left">\(h_\theta(x) = \theta_0 + \theta_1 x\)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Quadratic function</td>
+<td class="org-left">\(h_\theta(x) = \theta_0 + \theta_1 x + \theta_2 x^2\)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">\(x_1 = x,\quad x_2 = x^2\)</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Cubic function</td>
+<td class="org-left">\(h_\theta(x) = \theta_0 + \theta_1 x + \theta_2 x^2 + \theta_3 x^3\)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">\(x_1 = x,\quad x_2 = x^2,\quad x_3 = x^3\)</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Square root function</td>
+<td class="org-left">\(h_\theta(x) = \theta_0 + \theta_1 x + \theta_2 \sqrt{x}\)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">\(x_1 = x,\quad x_2 = \sqrt{x}\)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2018-11-25 Sun 17:30</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

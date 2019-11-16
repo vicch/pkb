@@ -1,0 +1,876 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Web</title>
+<!-- 2017-03-28 Tue 12:22 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Web</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. HTTP</a>
+<ul>
+<li><a href="#sec-1-1">1.1. Header</a>
+<ul>
+<li><a href="#sec-1-1-1">1.1.1. 请求</a></li>
+<li><a href="#sec-1-1-2">1.1.2. 响应</a></li>
+<li><a href="#sec-1-1-3">1.1.3. Etag</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-2">1.2. 响应码</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. RPC</a>
+<ul>
+<li><a href="#sec-2-1">2.1. XML-RPC</a></li>
+<li><a href="#sec-2-2">2.2. SOAP</a></li>
+<li><a href="#sec-2-3">2.3. REST</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. 链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> HTTP</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Header</h3>
+<div class="outline-text-3" id="text-1-1">
+</div><div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> 请求</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> 请求方法</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>GET</code></td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>GET /pub/WWW/ HTTP/1.1</code></td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> 请求</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>Host</code></td>
+<td class="left">服务器域名（for virtual hosting）和服务器监听的 TCP 端口号</td>
+<td class="left"><code>Host: www.w3.org:80</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>Referer</code></td>
+<td class="left">包含当前请求的页面的链接的前一个页面的地址</td>
+<td class="left"><code>Referer: http://www.w3.org/index.html</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>Connection</code></td>
+<td class="left">当前连接的选项（and list of hop-by-hop request fields）</td>
+<td class="left"><code>Connection: keep-alive</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>Date</code></td>
+<td class="left">消息发起（originate）的日期和时间</td>
+<td class="left"><code>Date: Tue, 15 Nov 1994 08:12:31 GMT</code></td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 3:</span> 客户端</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>Cookie</code></td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>Cookie: $Version=1; Skin=new;</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>User-Agent</code></td>
+<td class="left">User agent 字符串</td>
+<td class="left"><code>User-Agent: CERN-LineMode/2.15 libwww/2.17b3</code></td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 4:</span> 内容</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>Accept</code></td>
+<td class="left">可接收的媒体类型</td>
+<td class="left"><code>Accept: text/*, text/html, text/html</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>Accept-Charset</code></td>
+<td class="left">可接收的字符集</td>
+<td class="left"><code>Accept-Charset: iso-8859-5, unicode-1-1</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>Accept-Encoding</code></td>
+<td class="left">可接收的编码类型</td>
+<td class="left"><code>Accept-Encoding: compress, gzip</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>Accept-Language</code></td>
+<td class="left">可接收的语言</td>
+<td class="left"><code>Accept-Language: da, en-gb</code></td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 5:</span> 缓存</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>Cache-Control</code></td>
+<td class="left">请求-响应链（request-response chain）的缓存机制指令</td>
+<td class="left"><code>Cache-Control: no-cache, must-revalidate</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>If-Modified-Since</code></td>
+<td class="left">只有资源在执行时间之后被修改过时，才重新请求，否则使用缓存</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">资源未被修改时返回 <code>304 Not Modified</code> 响应码</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 6:</span> 安全</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>Authorization</code></td>
+<td class="left">HTTP 身份验证凭据（credential）</td>
+<td class="left"><code>Authorization: Basic am910jRmdW4=</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-1-1-2" class="outline-4">
+<h4 id="sec-1-1-2"><span class="section-number-4">1.1.2</span> 响应</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 7:</span> 响应</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">状态</td>
+<td class="left"><code>HTTP/1.1 200 OK</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>Allow</code></td>
+<td class="left">允许的请求方法</td>
+<td class="left"><code>Allow: GET, HEAD, PUT</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>Location</code></td>
+<td class="left">跳转到其他 URL</td>
+<td class="left"><code>Location: http://www.w3.org/pub/WWW/People.html</code></td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 8:</span> 服务器端</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>Server</code></td>
+<td class="left">服务器名（服务器端软件及版本）</td>
+<td class="left"><code>nginx/1.2.6</code></td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 9:</span> 客户端</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>Set-Cookie</code></td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>Set-Cookie: UserID=JohnDoe; Max-Age=3600; Version=1</code></td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 10:</span> 内容</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>Content-Length</code></td>
+<td class="left">内容长度</td>
+<td class="left"><code>Content-Length: 6044</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>Content-Type</code></td>
+<td class="left">内容类型及字符集</td>
+<td class="left"><code>Content-Type: text/html;charset=utf-8</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>Content-Encoding</code></td>
+<td class="left">内容编码</td>
+<td class="left"><code>Content-Encoding: gzip</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>Content-Language</code></td>
+<td class="left">内容语言</td>
+<td class="left"><code>Content-Language: en</code></td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 11:</span> 缓存</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>Expires</code></td>
+<td class="left">响应失效（stale）的日期时间</td>
+<td class="left"><code>Expires: Thu, 01 Dec 1994 16:00:00 GMT</code></td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">需要重新从服务器获取</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>Last-Modified</code></td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>Last-Modified: Tue, 15 Nov 1994 12:45:26 GMT</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>Vary</code></td>
+<td class="left">辨别不同的请求的方式，以决定是否使用缓存</td>
+<td class="left"><code>Vary: Cookie, Accept-Encoding</code></td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 12:</span> 安全</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>WWW-Authenticate</code></td>
+<td class="left">请求的资源需要 HTTP 身份验证</td>
+<td class="left"><code>WWW-Authenticate: Basic</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-1-1-3" class="outline-4">
+<h4 id="sec-1-1-3"><span class="section-number-4">1.1.3</span> Etag</h4>
+<div class="outline-text-4" id="text-1-1-3">
+<p>
+Etag header 是一个资源的唯一标识符，类似于文件的校验和，缓存机制（客户端在使用本地的缓存前，询问服务器某个资源是否过期）通过比较 Etag 确定一个资源是否过期。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> 响应码</h3>
+<div class="outline-text-3" id="text-1-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">100 ~ 199</th>
+<th scope="col" class="left">信息状态码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">200 ~ 299</td>
+<td class="left">成功状态码</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">300 ~ 399</td>
+<td class="left">跳转状态码</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">400 ~ 499</td>
+<td class="left">客户端错误状态码</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">500 ~ 599</td>
+<td class="left">服务器端错误状态码</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 13:</span> 信息状态码</caption>
+
+<colgroup>
+<col  class="right" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="right">200</th>
+<th scope="col" class="left">OK</th>
+<th scope="col" class="left">正常返回</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="right">202</td>
+<td class="left">Accepted</td>
+<td class="left">请求被接受，等待服务器动作</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 14:</span> 跳转状态码</caption>
+
+<colgroup>
+<col  class="right" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="right">301</th>
+<th scope="col" class="left">Moved Permanently</th>
+<th scope="col" class="left">永久跳转</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="right">302</td>
+<td class="left">Found</td>
+<td class="left">暂时跳转</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 15:</span> 客户端错误状态码</caption>
+
+<colgroup>
+<col  class="right" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="right">401</th>
+<th scope="col" class="left">Unauthorized</th>
+<th scope="col" class="left">需要验证身份</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="right">403</td>
+<td class="left">Forbidden</td>
+<td class="left">请求被拒绝</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="right">404</td>
+<td class="left">Not Found</td>
+<td class="left">找不到请求的 URL</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 16:</span> 服务器端错误状态码</caption>
+
+<colgroup>
+<col  class="right" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="right">500</th>
+<th scope="col" class="left">Internal Server Error</th>
+<th scope="col" class="left">服务器内部错误，无法满足请求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="right">502</td>
+<td class="left">Bad Gateway</td>
+<td class="left">gateway 或代理服务器与相关服务器连接失败</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="right">503</td>
+<td class="left">Service Unavailable</td>
+<td class="left">服务器暂时无法满足请求</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> RPC</h2>
+<div class="outline-text-2" id="text-2">
+<dl class="org-dl">
+<dt> RPC (Remote Procedure Call) </dt><dd>远程方法调用。<br  />
+                                 采用「客户端-服务器」模式。<br  />
+                                 通过网络从远程计算机程序上请求服务，而不需要了解底层网络技术的协议。<br  />
+                                 在不同操作系统、环境的程序之间，基于 Internet 的过程调用的规范和一系列的实现。
+</dd>
+
+<dt> WSDL (Web Services Description Language) </dt><dd>API 定义的规格，规定了请求的种类、包含的参数、回复的内容等。
+</dd>
+</dl>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> XML-RPC</h3>
+<div class="outline-text-3" id="text-2-1">
+<dl class="org-dl">
+<dt> XML-RPC </dt><dd>请求体为 XML 的 HTTP POST 请求，使用 HTTP 作为传输协议，XML 作为传送信息的编码格式。<br  />
+             被调用的方法在服务器端执行后，将执行结果以 XML 格式编码后返回。
+</dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> SOAP</h3>
+<div class="outline-text-3" id="text-2-2">
+<dl class="org-dl">
+<dt> SOAP (Simple Object Access Protocol) </dt><dd>一种用来交换基于 XML 的信息的协议。<br  />
+                                          有严格的格式要求，回复的 XML 需要被解析。<br  />
+                                          可以用于单向的通信，但更常用于 RPC 风格的会话。
+</dd>
+</dl>
+
+<p>
+SOAP+XML 的问题在于严格的格式要求，不适合松耦合的分布式系统。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> REST</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+<a href="https://en.wikipedia.org/wiki/Representational_state_transfer">Representational state transfer</a>
+</p>
+
+<dl class="org-dl">
+<dt> REST (Representational State Transfer) </dt><dd>一种软件架构风格，用于分布式媒体系统（万维网本身就是一个 REST 风格的系统）。<br  />
+                                          不限定信息的格式，可以使用 XML 或 JSON。<br  />
+                                          使用标准 URI 和方法调用 web service。<br  />
+                                          请求的对象被称为资源，可以对其进行 GET 和 POST 等操作。
+</dd>
+</dl>
+
+<p>
+REST+JSON 的适应性更强，后端对返回格式的轻微改变不会影响到客户端的功能。因此 SOAP+XML 已经被 REST+JSON 所取代。
+</p>
+
+<dl class="org-dl">
+<dt> RESTful web service </dt><dd>使用 HTTP 并遵循 REST 原则的 web service。
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 链接</h2>
+<div class="outline-text-2" id="text-3">
+<ol class="org-ol">
+<li><a href="https://www.w3.org/Protocols/rfc2616/rfc2616.html">Hypertext Transfer Protocol &#x2013; HTTP/1.1</a>
+</li>
+<li><a href="https://en.wikipedia.org/wiki/List_of_HTTP_header_fields">List of HTTP header fields</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2017-03-28 Tue 12:22</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Computer Scrap</title>
+<!-- 2016-12-09 Fri 08:54 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Computer Scrap</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. 计算机是如何启动的？</a>
+<ul>
+<li><a href="#sec-1-1">1.1. Boot 的含义</a></li>
+<li><a href="#sec-1-2">1.2. 第一阶段：BIOS</a>
+<ul>
+<li><a href="#sec-1-2-1">1.2.1. 上电自检</a></li>
+<li><a href="#sec-1-2-2">1.2.2. 启动顺序</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-3">1.3. 第二阶段：主引导记录</a>
+<ul>
+<li><a href="#sec-1-3-1">1.3.1. 分区表</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-4">1.4. 第三阶段：硬盘启动</a>
+<ul>
+<li><a href="#sec-1-4-1">1.4.1. 卷引导记录</a></li>
+<li><a href="#sec-1-4-2">1.4.2. 扩展分区和逻辑分区</a></li>
+<li><a href="#sec-1-4-3">1.4.3. 启动管理器</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-5">1.5. 第四阶段：操作系统</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. 为什么主引导记录的内存地址是 <code>0x7C00</code> ？</a></li>
+<li><a href="#sec-3">3. 为什么寄存器比内存快？</a>
+<ul>
+<li><a href="#sec-3-1">3.1. 原因一：距离不同</a></li>
+<li><a href="#sec-3-2">3.2. 原因二：硬件设计不同</a></li>
+<li><a href="#sec-3-3">3.3. 原因三：工作方式不同</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 计算机是如何启动的？</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Boot 的含义</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Boot 原来的意思是靴子，「启动」与靴子有什么关系呢？ 原来，这里的 boot 是 bootstrap（鞋带）的缩写，它来自一句谚语「pull oneself up by one's bootstraps」，字面意思是「拽着鞋带把自己拉起来」，这当然是不可能的事情。最早的时候，工程师们用它来比喻， <span class="underline">计算机启动是一个很矛盾的过程：必须先运行程序，然后计算机才能启动，但是计算机不启动就无法运行程序！</span> 必须想尽各种办法，把一小段程序装进内存，然后计算机才能正常运行。所以，工程师们把这个过程叫做「拉鞋带」，久而久之就简称为 boot 了。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> 第一阶段：BIOS</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+上个世纪 70 年代初，只读内存（read-only memory，缩写为 ROM）发明， <span class="underline">开机程序被刷入 ROM 芯片，计算机通电后，第一件事就是读取它。</span> 这块芯片里的程序叫做「基本输入输出系统」（Basic Input/Output System），简称为 BIOS。
+</p>
+</div>
+
+<div id="outline-container-sec-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> 上电自检</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<p>
+<span class="underline">BIOS 程序首先检查计算机硬件能否满足运行的基本条件，这叫做「上电自检」（Power-On Self-Test），</span> 缩写为 POST。如果硬件出现问题，主板会发出不同含义的<a href="http://en.wikipedia.org/wiki/Power-on_self-test#Original_IBM_POST_beep_codes">蜂鸣</a> ，启动中止。如果没有问题，屏幕就会显示出 CPU、内存、硬盘等信息。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2-2" class="outline-4">
+<h4 id="sec-1-2-2"><span class="section-number-4">1.2.2</span> 启动顺序</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<p>
+硬件自检完成后， <span class="underline">BIOS 把控制权转交给下一阶段的启动程序。</span> 这时，BIOS 需要知道，「下一阶段的启动程序」具体存放在哪一个设备。也就是说，BIOS <span class="underline">需要有一个外部储存设备的排序，</span> 排在前面的设备就是优先转交控制权的设备。这种排序叫做「启动顺序」（boot sequence）。打开 BIOS 的操作界面，里面有一项就是「设定启动顺序」。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> 第二阶段：主引导记录</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+BIOS 按照「启动顺序」，把控制权转交给排在第一位的储存设备。这时， <span class="underline">计算机读取该设备的第一个扇区（512 个字节），如果最后两个字节是 <code>0x55</code> 和 <code>0xAA</code> ，表明这个设备可以用于启动；</span> 如果不是，表明设备不能用于启动，控制权于是被转交给「启动顺序」中的下一个设备。 <span class="underline">最前面的 512 个字节，就叫做「主引导记录」（Master Boot Record，缩写为 MBR）。</span>
+</p>
+
+<p>
+「主引导记录」的主要作用是告诉计算机在硬盘的哪一个位置去找操作系统。主引导记录由三个部分组成：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">1 ~ 446 字节</th>
+<th scope="col" class="left">调用操作系统的机器码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">447 ~ 510 字节</td>
+<td class="left">分区表（partition table）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">511 ~ 512 字节</td>
+<td class="left">主引导记录签名（ <code>0x55</code> 和 <code>0xAA</code> ）</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-1-3-1" class="outline-4">
+<h4 id="sec-1-3-1"><span class="section-number-4">1.3.1</span> 分区表</h4>
+<div class="outline-text-4" id="text-1-3-1">
+<p>
+考虑到每个区可以安装不同的操作系统，「主引导记录」因此必须知道将控制权转交给哪个区。分区表的长度只有 64 字节，里面又分成 4 项，每项 16 字节。所以， <span class="underline">一个硬盘最多只能分 4 个一级分区，又叫做「主分区」。</span>
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> 每个主分区由 6 个部分组成：</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">1 字节</th>
+<th scope="col" class="left">如果为 <code>0x80</code> ，表示该主分区是激活分区，控制权要转交给这个分区</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">4 个主分区只能有一个是激活的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">2 ~ 4 字节</td>
+<td class="left">主分区第一个扇区的物理位置（柱面、磁头、扇区号等）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">5 字节</td>
+<td class="left"><a href="https://en.wikipedia.org/wiki/Partition_type">主分区类型</a></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">6 ~ 8 字节</td>
+<td class="left">主分区最后一个扇区的物理位置</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">9 ~ 12 字节</td>
+<td class="left">主分区第一个扇区的逻辑地址</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">13 ~ 16 字节</td>
+<td class="left">主分区的扇区总数</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+「主分区的扇区总数」决定了这个主分区的长度，也就是说， <span class="underline">一个主分区的扇区总数最多不超过 2 的 32 次方。如果每个扇区为 512 个字节，就意味着单个分区最大不超过 2TB。再考虑到扇区的逻辑地址也是 32 位，所以单个硬盘可利用的空间最大也不超过 2TB。</span> 如果想使用更大的硬盘，只有 2 个方法：一是提高每个扇区的字节数，二是<a href="http://en.wikipedia.org/wiki/GUID_Partition_Table">增加扇区总数</a>。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> 第三阶段：硬盘启动</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+这时，计算机的控制权就要转交给硬盘的某个分区了，又分成三种情况。
+</p>
+</div>
+
+<div id="outline-container-sec-1-4-1" class="outline-4">
+<h4 id="sec-1-4-1"><span class="section-number-4">1.4.1</span> 卷引导记录</h4>
+<div class="outline-text-4" id="text-1-4-1">
+<p>
+4 个主分区里面，只有一个是激活的。计算机会读取激活分区的第一个扇区，叫做「卷引导记录」（Volume Boot Record，缩写为 VBR）。「卷引导记录」的主要作用是告诉计算机，操作系统在这个分区里的位置。然后，计算机就会加载操作系统。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-4-2" class="outline-4">
+<h4 id="sec-1-4-2"><span class="section-number-4">1.4.2</span> 扩展分区和逻辑分区</h4>
+<div class="outline-text-4" id="text-1-4-2">
+<p>
+随着硬盘越来越大，4 个主分区已经不够了，需要更多的分区。但是，分区表只有 4 项，因此规定 <span class="underline">有且仅有一个区可以被定义成「扩展分区」（extended partition），这个区里面又分成多个区，叫做「逻辑分区」（logical partition）。</span>
+</p>
+
+<p>
+计算机先读取扩展分区的第一个扇区，叫做「扩展引导记录」（Extended Boot Record，缩写为 EBR）。里面也包含一张 64 字节的分区表，但是最多只有两项（也就是两个逻辑分区）。
+</p>
+
+<p>
+计算机接着读取第二个逻辑分区的第一个扇区，再从里面的分区表中找到第三个逻辑分区的位置，以此类推，直到某个逻辑分区的分区表只包含它自身为止（即只有一个分区项）。因此，扩展分区可以包含无数个逻辑分区。但是，似乎很少通过这种方式启动操作系统。如果操作系统确实安装在扩展分区，一般采用下一种方式启动。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-4-3" class="outline-4">
+<h4 id="sec-1-4-3"><span class="section-number-4">1.4.3</span> 启动管理器</h4>
+<div class="outline-text-4" id="text-1-4-3">
+<p>
+在这种情况下，计算机读取「主引导记录」前面 446 字节的机器码之后，不再把控制权转交给某一个分区，而是运行事先安装的「启动管理器」（boot loader），由用户选择启动哪一个操作系统。Linux 环境中，目前最流行的启动管理器是 <del>Grub</del> 。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> 第四阶段：操作系统</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+控制权转交给操作系统后，操作系统的内核首先被载入内存。
+</p>
+
+<p>
+以 Linux 系统为例，先载入 <code>/boot</code> 目录下面的 <code>kernel</code> 。内核加载成功后，第一个运行的程序是 <code>/sbin/init</code> 。它根据配置文件（Debian 系统是 <code>/etc/initab</code> ）产生 init 进程。这是 Linux 启动后的第一个进程，pid 进程编号为 1，其他进程都是它的后代。然后，init 线程加载系统的各个模块，比如窗口程序和网络程序，直至执行 <code>/bin/login</code> 程序，跳出登录界面，等待用户输入用户名和密码。
+</p>
+
+<p>
+至此，全部启动过程完成。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 为什么主引导记录的内存地址是 <code>0x7C00</code> ？</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<a href="http://www.ruanyifeng.com/blog/2015/09/0x7c00.html">Source</a>
+</p>
+
+<p>
+《计算机原理》课本说，启动时，主引导记录会存入内存地址 <code>0x7C00</code> 。为什么不存入内存的头部、尾部、或者其他位置，而偏偏存入这个比 32KB 小 1024 字节的地方？我读到一篇 <a href="http://www.glamenv-septzen.net/en/view/6">The mysteries arround "0x7C00" in x86 architecture bios bootloader</a>，终于解开了这个谜。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/computer_scrap/02.png" alt="02.png" />
+</p>
+</div>
+
+<p>
+简单说，计算机启动是这样一个过程：
+</p>
+
+<ul class="org-ul">
+<li>通电
+</li>
+<li>读取 ROM 里面的 BIOS，用来检查硬件
+</li>
+<li>BIOS 根据指定的顺序，检查引导设备的第一个扇区，即主引导记录，加载在内存地址 <code>0x7C00</code>
+</li>
+<li>主引导记录把操作权交给操作系统
+</li>
+</ul>
+
+<p>
+所以， <span class="underline">主引导记录就是引导操作系统进入内存的一段小程序，大小不超过 1 个扇区（512 字节）。</span>
+</p>
+
+<p>
+<code>0x7C00</code> 这个地址 <span class="underline">来自 Intel 的第一代个人电脑芯片 8088，以后的 CPU 为了保持兼容，一直使用这个地址。</span>
+</p>
+
+<p>
+1981 年 8 月，IBM 公司最早的个人电脑 IBM PC 5150 上市，就使用了这个芯片。当时搭配的操作系统是 86-DOS。这个操作系统需要的内存最少是 32KB。我们知道，内存地址从 <code>0x0000</code> 开始编号，32KB 的内存就是 <code>0x0000</code> ～ <code>0x7FFF</code> 。8088 芯片本身需要占用 <code>0x0000</code> ～ <code>0x03FF</code> ，用来保存各种中断处理程序（<a href="https://en.wikipedia.org/wiki/BIOS_interrupt_call">BIOS interrupt call</a>）的储存位置。（主引导记录本身就是中断信号 <code>INT 19h</code> 的处理程序。）所以，内存只剩下 <code>0x0400</code> ～ <code>0x7FFF</code> 可以使用。
+</p>
+
+<p>
+<span class="underline">为了把尽量多的连续内存留给操作系统，主引导记录就被放到了内存地址的尾部。</span> 由于一个扇区是 512 字节，主引导记录本身也会产生数据，需要另外留出 512 字节保存。所以，它的预留位置就变成了 <code>0x7FFF</code> - 1024 + 1 = <code>0x7C00</code> 。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">计算机启动后，32KB 内存的使用情况如下：</label>
+<pre class="src src-code">+--------------------+ 0x0
+| Interrupts vectors |
+|--------------------| 0x400
+| BIOS data area     |
+|--------------------| 0x5??
+| OS load area       |
+|--------------------| 0x7C00
+| Boot sector        |
+|--------------------| 0x7E00
+| Boot data/stack    |
+|--------------------| 0x7FFF
+| (not used)         |
++--------------------+ (...)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 为什么寄存器比内存快？</h2>
+<div class="outline-text-2" id="text-3">
+
+<div class="figure">
+<p><img src="../images/computer_scrap/01.jpg" alt="01.jpg" />
+</p>
+</div>
+
+<p>
+计算机的存储层次（<a href="https://en.wikipedia.org/wiki/Memory_hierarchy">memory hierarchy</a>）之中，寄存器（register）最快，内存其次，最慢的是硬盘。同样都是晶体管存储设备，为什么寄存器比内存快呢？Mike Ash 写了一篇很好的解释 <a href="http://www.mikeash.com/pyblog/friday-qa-2013-10-11-why-registers-are-fast-and-ram-is-slow.html">Why Registers Are Fast and RAM Is Slow</a>，非常通俗地回答了这个问题，有助于加深对硬件的理解。
+</p>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> 原因一：距离不同</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+内存离 CPU 比较远，所以要耗费更长的时间读取。以 3GHz 的 CPU 为例，电流每秒钟可以振荡 30 亿次，每次耗时大约为 0.33 纳秒。光在 1 纳秒的时间内，可以前进 30 厘米。也就是说， <span class="underline">在 CPU 的一个时钟周期内，光可以前进 10 厘米。因此，如果内存距离 CPU 超过 5 厘米，就不可能在一个时钟周期内完成数据的读取，</span> 这还没有考虑硬件的限制和电流实际上达不到光速。相比之下，寄存器在 CPU 内部，当然读起来会快一点。
+</p>
+
+<p>
+距离对于桌面电脑影响很大， <span class="underline">对于手机影响就要小得多。手机 CPU 的时钟频率比较慢（iPhone 5s 为1.3GHz），而且手机的内存紧挨着 CPU。</span>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> 原因二：硬件设计不同</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+苹果公司新推出的 iPhone 5s，CPU 是 A7，寄存器有 6000 多位（31 个 64 位寄存器加 32 个 128 位寄存器）。而 iPhone 5s 的内存是 1GB，约为 80 亿位。这意味着，高性能、高成本、高耗电的设计可以用在寄存器上，反正只有 6000 多位，而不能用在内存上。因为每个位的成本和能耗只要增加一点点，就会被放大 80 亿倍。
+</p>
+
+<p>
+事实上确实如此， <span class="underline">内存的设计相对简单，每个位就是一个电容和一个晶体管，而寄存器的设计则完全不同，多出好几个电子元件。</span> 并且通电以后，寄存器的晶体管一直有电，而内存的晶体管只有用到的才有电，没用到的就没电，这样有利于省电。这些设计上的因素，决定了寄存器比内存读取速度更快。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> 原因三：工作方式不同</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+寄存器的工作方式很简单，只有两步：
+</p>
+
+<ol class="org-ol">
+<li>找到相关的位。
+</li>
+<li>读取这些位。
+</li>
+</ol>
+
+<p>
+内存的工作方式就要复杂得多：
+</p>
+
+<ol class="org-ol">
+<li>找到数据的指针（指针可能存放在寄存器内，所以这一步就已经包括寄存器的全部工作了）。
+</li>
+<li>将指针送往内存管理单元（MMU），由 MMU 将虚拟的内存地址翻译成实际的物理地址。
+</li>
+<li>将物理地址送往内存控制器（memory controller），由内存控制器找出该地址在哪一根内存插槽（bank）上。
+</li>
+<li>确定数据在哪一个内存块（chunk）上，从该块读取数据。
+</li>
+<li>数据先送回内存控制器，再送回 CPU，然后开始使用。
+</li>
+</ol>
+
+<p>
+每一步都会产生延迟，累积起来就使得内存比寄存器慢得多。为了缓解寄存器与内存之间的巨大速度差异，硬件设计师做出了许多努力，包括 <span class="underline">在 CPU 内部设置缓存</span> 、优化 CPU 工作方式，尽量一次性从内存读取指令所要用到的全部数据等等。
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2016-12-09 Fri 08:54</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

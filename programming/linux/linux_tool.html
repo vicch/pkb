@@ -1,0 +1,1160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-11-13 Tue 10:25 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Linux Tool</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Linux Tool</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgad45d16">1. 分类</a></li>
+<li><a href="#org56d6004">2. APT</a>
+<ul>
+<li><a href="#org2f989fe">2.1. 命令</a>
+<ul>
+<li><a href="#org2fabd27">2.1.1. <code>apt-get</code></a></li>
+<li><a href="#org230ae9b">2.1.2. <code>apt-cache</code></a></li>
+<li><a href="#orgcbed85c">2.1.3. <code>add-apt-repository</code></a></li>
+<li><a href="#orge5df8c3">2.1.4. 示例</a></li>
+</ul>
+</li>
+<li><a href="#org59e81f9">2.2. 配置</a>
+<ul>
+<li><a href="#orgefa5478">2.2.1. <code>periodic</code></a></li>
+<li><a href="#org30f9848">2.2.2. <code>unattended-upgrades</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgd6c37af">3. Awk</a>
+<ul>
+<li><a href="#org8404b75">3.1. 选项</a>
+<ul>
+<li><a href="#org1b650ff">3.1.1. 示例</a></li>
+</ul>
+</li>
+<li><a href="#org7b98dbe">3.2. 脚本</a>
+<ul>
+<li><a href="#org539a814">3.2.1. 条件</a></li>
+<li><a href="#org1ff6bbe">3.2.2. 匹配</a></li>
+<li><a href="#orgcf918eb">3.2.3. 遍历</a></li>
+</ul>
+</li>
+<li><a href="#org2d2fb35">3.3. 变量</a></li>
+</ul>
+</li>
+<li><a href="#org252a29b">4. IPTables</a>
+<ul>
+<li><a href="#org1c20287">4.1. 命令</a></li>
+<li><a href="#org74b3bca">4.2. 规则链</a></li>
+<li><a href="#org7e63dd4">4.3. 目标</a>
+<ul>
+<li><a href="#org0e6a145">4.3.1. 默认目标</a></li>
+</ul>
+</li>
+<li><a href="#org7ac3196">4.4. 规则</a>
+<ul>
+<li><a href="#orged4334f">4.4.1. 示例</a></li>
+</ul>
+</li>
+<li><a href="#orgbbcf356">4.5. <code>iptables-save</code></a></li>
+<li><a href="#org5352e4c">4.6. <code>iptables-restore</code></a></li>
+</ul>
+</li>
+<li><a href="#orgb6d210f">5. Sed</a>
+<ul>
+<li><a href="#org85dcb5e">5.1. 打印</a>
+<ul>
+<li><a href="#org2a9a1f5">5.1.1. 示例</a></li>
+</ul>
+</li>
+<li><a href="#org20a2c77">5.2. 替换</a>
+<ul>
+<li><a href="#org35c7f91">5.2.1. 示例</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgbeeb473">6. Systemd</a>
+<ul>
+<li><a href="#org9ddd1b1">6.1. 配置</a></li>
+<li><a href="#org1ff4969">6.2. 命令</a></li>
+</ul>
+</li>
+<li><a href="#orgd216281">7. SysV</a>
+<ul>
+<li><a href="#org4a38468">7.1. 配置</a></li>
+<li><a href="#orgde884a8">7.2. 命令</a></li>
+</ul>
+</li>
+<li><a href="#org77ef159">8. 链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgad45d16" class="outline-2">
+<h2 id="orgad45d16"><span class="section-number-2">1</span> 分类</h2>
+<div class="outline-text-2" id="text-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>包管理</b></th>
+<th scope="col" class="org-left">APT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>服务管理</b></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>网络</b></td>
+<td class="org-left">IPTables</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>文本编辑</b></td>
+<td class="org-left">Awk</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Sed</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org56d6004" class="outline-2">
+<h2 id="org56d6004"><span class="section-number-2">2</span> APT</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+APT = Advanced Packaging Tool
+</p>
+</div>
+
+<div id="outline-container-org2f989fe" class="outline-3">
+<h3 id="org2f989fe"><span class="section-number-3">2.1</span> 命令</h3>
+<div class="outline-text-3" id="text-2-1">
+</div><div id="outline-container-org2fabd27" class="outline-4">
+<h4 id="org2fabd27"><span class="section-number-4">2.1.1</span> <code>apt-get</code></h4>
+<div class="outline-text-4" id="text-2-1-1">
+<div class="org-src-container">
+<pre class="src src-sh">apt-get &lt;options&gt; &lt;command&gt; &lt;package&gt;, ...
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&lt;options&gt;</span>
+    -y, --yes   <span class="org-comment-delimiter"># </span><span class="org-comment">&#25152;&#26377;&#30830;&#35748;&#39033;&#22238;&#31572; Yes</span>
+    --force-yes <span class="org-comment-delimiter"># </span><span class="org-comment">&#24573;&#30053;&#24322;&#24120;&#65292;&#22914;&#19981;&#21487;&#20449;&#30340;&#21253;</span>
+    -qq         <span class="org-comment-delimiter"># </span><span class="org-comment">&#24573;&#30053;&#38500;&#38169;&#35823;&#21644;&#22522;&#26412;&#23433;&#35013;&#20449;&#24687;&#20043;&#22806;&#30340;&#36755;&#20986;</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&lt;command&gt;</span>
+    update            <span class="org-comment-delimiter"># </span><span class="org-comment">&#26356;&#26032;&#21253;&#21015;&#34920;</span>
+    install &lt;package&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#23433;&#35013;&#21253;</span>
+    remove &lt;package&gt;  <span class="org-comment-delimiter"># </span><span class="org-comment">&#31227;&#38500;&#21253;</span>
+    purge &lt;package&gt;   <span class="org-comment-delimiter"># </span><span class="org-comment">&#31227;&#38500;&#21253;&#21644;&#37197;&#32622;&#25991;&#20214;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org230ae9b" class="outline-4">
+<h4 id="org230ae9b"><span class="section-number-4">2.1.2</span> <code>apt-cache</code></h4>
+<div class="outline-text-4" id="text-2-1-2">
+<div class="org-src-container">
+<pre class="src src-sh">apt-cache &lt;options&gt; &lt;command&gt;
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&lt;command&gt;</span>
+    search &lt;options&gt; &lt;pattern&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#25628;&#32034;&#21253;</span>
+        -n <span class="org-comment-delimiter"># </span><span class="org-comment">&#21482;&#25628;&#32034;&#21253;&#21517;</span>
+    show &lt;package&gt;   <span class="org-comment-delimiter"># </span><span class="org-comment">&#26597;&#30475;&#21253;&#20449;&#24687;</span>
+    policy &lt;package&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#26597;&#30475;&#21487;&#23433;&#35013;&#30340;&#29256;&#26412;&#31561;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcbed85c" class="outline-4">
+<h4 id="orgcbed85c"><span class="section-number-4">2.1.3</span> <code>add-apt-repository</code></h4>
+<div class="outline-text-4" id="text-2-1-3">
+<div class="org-src-container">
+<pre class="src src-sh">add-apt-repository &lt;options&gt; &lt;repo&gt;
+    -y, --yes <span class="org-comment-delimiter"># </span><span class="org-comment">&#25152;&#26377;&#30830;&#35748;&#39033;&#22238;&#31572; Yes</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge5df8c3" class="outline-4">
+<h4 id="orge5df8c3"><span class="section-number-4">2.1.4</span> 示例</h4>
+<div class="outline-text-4" id="text-2-1-4">
+<div class="org-src-container">
+<pre class="src src-sh">$ add-apt-repository ppa:chris-lea/redis-server
+$ apt-get updaet
+$ apt-cache policy redis-server
+$ apt-get install -y redis-server
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org59e81f9" class="outline-3">
+<h3 id="org59e81f9"><span class="section-number-3">2.2</span> 配置</h3>
+<div class="outline-text-3" id="text-2-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> <code>/etc/apt/</code></caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>sources.list</code></th>
+<th scope="col" class="org-left">源（source）列表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>sources.list.d/*</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>apt.conf.d/periodic</code></td>
+<td class="org-left">定时运行配置</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>apt.conf.d/unattended-upgrades</code></td>
+<td class="org-left">自动更新配置</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-orgefa5478" class="outline-4">
+<h4 id="orgefa5478"><span class="section-number-4">2.2.1</span> <code>periodic</code></h4>
+<div class="outline-text-4" id="text-2-2-1">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 1: </span>示例</label><pre class="src src-sh">APT::Periodic::Update-Package-Lists <span class="org-string">"1"</span>;
+APT::Periodic::Download-Upgradeable-Packages <span class="org-string">"1"</span>;
+APT::Periodic::AutocleanInterval <span class="org-string">"7"</span>;
+APT::Periodic::Unattended-Upgrade <span class="org-string">"1"</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org30f9848" class="outline-4">
+<h4 id="org30f9848"><span class="section-number-4">2.2.2</span> <code>unattended-upgrades</code></h4>
+<div class="outline-text-4" id="text-2-2-2">
+<ul class="org-ul">
+<li>需要安装包 <code>unattended-upgrades</code> 。</li>
+<li>自动更新信息记录在 <code>/var/log/unattended-upgrades</code> 。</li>
+</ul>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 2: </span>配置示例</label><pre class="src src-sh">Unattended-Upgrade::Allowed-Origins {
+    <span class="org-string">"${distro_id}:${distro_codename}-security"</span>;  <span class="org-comment-delimiter"># </span><span class="org-comment">&#23433;&#20840;&#26356;&#26032;&#65292;&#24314;&#35758;&#25171;&#24320;</span>
+//  <span class="org-string">"${distro_id}:${distro_codename}-updates"</span>;   <span class="org-comment-delimiter"># </span><span class="org-comment">&#20854;&#20182;&#26356;&#26032;&#65292;&#24314;&#35758;&#20851;&#38381;</span>
+//  <span class="org-string">"${distro_id}:${distro_codename}-proposed"</span>;
+//  <span class="org-string">"${distro_id}:${distro_codename}-backports"</span>;
+}
+
+Unattended-Upgrade::Automatic-Reboot <span class="org-string">"false"</span>; <span class="org-comment-delimiter"># </span><span class="org-comment">&#26356;&#26032;&#21518;&#26159;&#21542;&#33258;&#21160;&#37325;&#21551;</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd6c37af" class="outline-2">
+<h2 id="orgd6c37af"><span class="section-number-2">3</span> Awk</h2>
+<div class="outline-text-2" id="text-3">
+<div class="org-src-container">
+<pre class="src src-sh">awk &lt;options&gt; &lt;script&gt; &lt;file&gt;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org8404b75" class="outline-3">
+<h3 id="org8404b75"><span class="section-number-3">3.1</span> 选项</h3>
+<div class="outline-text-3" id="text-3-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>-F, --field-separator=&lt;char&gt;</code></th>
+<th scope="col" class="org-left">指定分割符</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>-f, --file=&lt;file&gt;</code></td>
+<td class="org-left">指定脚本文件</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>-v, --assign &lt;name&gt;=&lt;value&gt;</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-org1b650ff" class="outline-4">
+<h4 id="org1b650ff"><span class="section-number-4">3.1.1</span> 示例</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 3: </span>统计某个字符在每行出现的次数（将其作为分割符，然后统计字段数）</label><pre class="src src-sh">awk -F &lt;char&gt; <span class="org-string">'{print NR, '</span>\t<span class="org-string">', NF-1}'</span> &lt;file&gt;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7b98dbe" class="outline-3">
+<h3 id="org7b98dbe"><span class="section-number-3">3.2</span> 脚本</h3>
+<div class="outline-text-3" id="text-3-2">
+<ul class="org-ul">
+<li>如果包含空格、特殊字符（ <code>$</code> <code>*</code> ），需要用单引号包围。</li>
+<li>多个指令由 <code>;</code> 分隔。</li>
+</ul>
+</div>
+
+<div id="outline-container-org539a814" class="outline-4">
+<h4 id="org539a814"><span class="section-number-4">3.2.1</span> 条件</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><code>if (&lt;cond&gt;) &lt;cmd&gt;; else &lt;cmd&gt;</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org1ff6bbe" class="outline-4">
+<h4 id="org1ff6bbe"><span class="section-number-4">3.2.2</span> 匹配</h4>
+<div class="outline-text-4" id="text-3-2-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>/&lt;pattern&gt;/ {&lt;cmd&gt;}</code></th>
+<th scope="col" class="org-left">简单匹配</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>match(&lt;field&gt;, /&lt;pattern&gt;/, &lt;result&gt;); {&lt;cmd&gt;}</code></td>
+<td class="org-left">字段匹配，提取结果</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 4: </span>打印匹配行</label><pre class="src src-sh">awk <span class="org-string">'/&lt;pattern&gt;/ {print FILENAME, '</span>\t<span class="org-string">', NR, '</span>\t<span class="org-string">', $0}'</span> &lt;file&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 5: </span>打印匹配部分</label><pre class="src src-sh">awk <span class="org-string">'{match($0, /&lt;pattern&gt;/, a); {print a[1]}}'</span> &lt;file&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 6: </span>匹配电话号码 <code>xxx-xxx-xxxx</code> 和 <code>(xxx) xxx-xxxx</code></label><pre class="src src-sh">awk <span class="org-string">'/^([0-9]{3}-|\([0-9]{3}\) )[0-9]{3}-[0-9]{4}$/'</span> &lt;file&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcf918eb" class="outline-4">
+<h4 id="orgcf918eb"><span class="section-number-4">3.2.3</span> 遍历</h4>
+<div class="outline-text-4" id="text-3-2-3">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 7: </span>计算所有行（数值）的平均值</label><pre class="src src-sh">awk <span class="org-string">'{sum += $1} END {print "Average = ", sum / NR}'</span> &lt;file&gt;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2d2fb35" class="outline-3">
+<h3 id="org2d2fb35"><span class="section-number-3">3.3</span> 变量</h3>
+<div class="outline-text-3" id="text-3-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>FILENAME</code></th>
+<th scope="col" class="org-left">文件名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>NR</code></td>
+<td class="org-left">当前行数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>NF</code></td>
+<td class="org-left">当前行列数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>$0</code></td>
+<td class="org-left">整行</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>$&lt;n&gt;</code></td>
+<td class="org-left">第 n 列</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 8: </span><code>NR</code></label><pre class="src src-sh">awk <span class="org-string">'NR == 10'</span> &lt;file&gt;    <span class="org-comment-delimiter"># </span><span class="org-comment">&#36755;&#20986;&#31532; 10 &#34892;</span>
+awk <span class="org-string">'NR % 2 == 0'</span> &lt;file&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#36755;&#20986;&#20598;&#25968;&#34892;</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org252a29b" class="outline-2">
+<h2 id="org252a29b"><span class="section-number-2">4</span> IPTables</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-org1c20287" class="outline-3">
+<h3 id="org1c20287"><span class="section-number-3">4.1</span> 命令</h3>
+<div class="outline-text-3" id="text-4-1">
+<div class="org-src-container">
+<pre class="src src-sh">iptables &lt;options&gt;
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&lt;options&gt; &#36755;&#20986;</span>
+    -L, --list [&lt;chain&gt; &lt;rule&gt;]       <span class="org-comment-delimiter"># </span><span class="org-comment">&#20197;&#34920;&#26684;&#24418;&#24335;</span>
+    -S, --list-rules [&lt;chain&gt; &lt;rule&gt;] <span class="org-comment-delimiter"># </span><span class="org-comment">&#20197;&#21629;&#20196;&#24418;&#24335;</span>
+    -v, --verbose
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&lt;options&gt; &#35268;&#21017;&#38142;</span>
+    -A, --append &lt;chain&gt;          <span class="org-comment-delimiter"># </span><span class="org-comment">&#28155;&#21152;&#21040;&#35268;&#21017;&#38142;</span>
+    -I, --insert &lt;chain&gt; &lt;number&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#25554;&#20837;&#21040;&#35268;&#21017;&#38142;&#65292;&#24207;&#21495;&#20174; 1 &#24320;&#22987;</span>
+    -D, --delete &lt;chain&gt; &lt;number&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#20174;&#35268;&#21017;&#38142;&#21024;&#38500;&#65292;&#25351;&#23450;&#24207;&#21495;</span>
+    -D, --delete &lt;chain&gt; &lt;rule&gt;   <span class="org-comment-delimiter"># </span><span class="org-comment">&#20174;&#35268;&#21017;&#38142;&#21024;&#38500;&#65292;&#25351;&#23450;&#35268;&#21017;&#21442;&#25968;&#65292;&#22914; -i, -j &#31561;</span>
+    -N, --new &lt;chain&gt;             <span class="org-comment-delimiter"># </span><span class="org-comment">&#21019;&#24314;&#35268;&#21017;&#38142;</span>
+    -P, --policy &lt;chain&gt; &lt;target&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#20462;&#25913;&#35268;&#21017;&#38142;&#40664;&#35748;&#30446;&#26631;</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&lt;options&gt; &#35268;&#21017;</span>
+    -i, --in-interface &lt;interface&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#32593;&#32476;&#25509;&#21475;&#65292;&#22914; lo</span>
+    -p, --protocol &lt;protocol&gt;      <span class="org-comment-delimiter"># </span><span class="org-comment">&#21327;&#35758;&#65292;&#22914; tcp</span>
+    -j, --jump &lt;target&gt;            <span class="org-comment-delimiter"># </span><span class="org-comment">&#36339;&#36716;&#21040;&#30446;&#26631;</span>
+    -m, --match &lt;module&gt;           <span class="org-comment-delimiter"># </span><span class="org-comment">&#20351;&#29992;&#27169;&#22359;&#36827;&#34892;&#21305;&#37197;&#65292;&#22914; conntrack</span>
+    --ctstate &lt;state&gt;              <span class="org-comment-delimiter"># </span><span class="org-comment">&#29366;&#24577;&#65292;&#22914; RELATED, ESTABLISHED</span>
+    --dport &lt;port&gt;                 <span class="org-comment-delimiter"># </span><span class="org-comment">&#30446;&#26631;&#31471;&#21475;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org74b3bca" class="outline-3">
+<h3 id="org74b3bca"><span class="section-number-3">4.2</span> 规则链</h3>
+<div class="outline-text-3" id="text-4-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> 默认规则链</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>INPUT</code></th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>OUTPUT</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>FORWARD</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org7e63dd4" class="outline-3">
+<h3 id="org7e63dd4"><span class="section-number-3">4.3</span> 目标</h3>
+<div class="outline-text-3" id="text-4-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 3:</span> 默认目标</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>ACCEPT</code></th>
+<th scope="col" class="org-left">接受数据包</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>REJECT</code></td>
+<td class="org-left">拒绝数据包，并告知客户端</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>DROP</code></td>
+<td class="org-left">丢弃数据包，不告知客户端</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-org0e6a145" class="outline-4">
+<h4 id="org0e6a145"><span class="section-number-4">4.3.1</span> 默认目标</h4>
+<div class="outline-text-4" id="text-4-3-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 4:</span> 一般配置方式</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>规则链</b></th>
+<th scope="col" class="org-left"><b>目标</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>INPUT</code></td>
+<td class="org-left"><code>DROP</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>OUTPUT</code></td>
+<td class="org-left"><code>ACCEPT</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>FORWARD</code></td>
+<td class="org-left"><code>DROP</code></td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 9: </span>查看和修改规则链的默认目标</label><pre class="src src-sh">$ iptables -L -v
+Chain INPUT (policy ACCEPT ...)
+...
+$ iptables -P INPUT DROP
+$ iptables -L -v
+Chain INPUT (policy DROP ...)
+...
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7ac3196" class="outline-3">
+<h3 id="org7ac3196"><span class="section-number-3">4.4</span> 规则</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+规则由上到下按顺序进行匹配，第一条匹配的规则即生效，之后的规则忽略。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>target</code></th>
+<th scope="col" class="org-left">目标</th>
+<th scope="col" class="org-left"><code>ACCEPT</code> <code>REJECT</code> <code>DROP</code> 等</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>prot</code></td>
+<td class="org-left">协议</td>
+<td class="org-left"><code>tcp</code> <code>udp</code> <code>all</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>opt</code></td>
+<td class="org-left">Optional items</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>in</code></td>
+<td class="org-left">接收数据的网络接口</td>
+<td class="org-left"><code>any</code> <code>lo</code> <code>eth0</code> 等</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>out</code></td>
+<td class="org-left">响应数据的网络接口</td>
+<td class="org-left"><code>any</code> <code>lo</code> <code>eth0</code> 等</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>source</code></td>
+<td class="org-left">数据来源</td>
+<td class="org-left"><code>anywhere</code> 或主机名、IP、IP 段</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>destination</code></td>
+<td class="org-left">数据目的地</td>
+<td class="org-left"><code>anywhere</code> 等</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-orged4334f" class="outline-4">
+<h4 id="orged4334f"><span class="section-number-4">4.4.1</span> 示例</h4>
+<div class="outline-text-4" id="text-4-4-1">
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">&#28155;&#21152;&#65306;&#20801;&#35768;&#25152;&#26377;&#20869;&#37096;&#36890;&#20449;</span>
+iptables -A INPUT -i lo -j ACCEPT
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#28155;&#21152;&#65306;&#20801;&#35768;&#25152;&#26377;&#24050;&#32463;&#30830;&#31435;&#30340;&#36830;&#25509;&#65292;&#38450;&#27490;&#24050;&#32463;&#25171;&#24320;&#30340;&#36830;&#25509;&#34987;&#20013;&#26029;</span>
+sudo iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#28155;&#21152;&#65306;&#20801;&#35768; SSH &#36830;&#25509;</span>
+sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#28155;&#21152;&#65306;&#20801;&#35768; HTTP &#36830;&#25509;</span>
+sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#28155;&#21152;&#65306;&#31105;&#27490;&#36830;&#25509;&#65292;&#20002;&#24323;&#25968;&#25454;&#21253;&#65292;&#36890;&#24120;&#20316;&#20026;&#26368;&#21518;&#19968;&#26465;&#35268;&#21017;</span>
+sudo iptables -A INPUT -j DROP
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#25554;&#20837;&#65306;&#20801;&#35768; HTTPS &#36830;&#25509;</span>
+sudo iptables -I INPUT 5 -p tcp --dport 443 -j ACCEPT
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#21024;&#38500;&#65306;&#25351;&#23450;&#24207;&#21495;</span>
+sudo iptables -D INPUT 3
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#21024;&#38500;&#65306;&#25351;&#23450;&#35268;&#21017;</span>
+sudo iptables -D INPUT -p tcp --dport 22 -j ACCEPT
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbbcf356" class="outline-3">
+<h3 id="orgbbcf356"><span class="section-number-3">4.5</span> <code>iptables-save</code></h3>
+<div class="outline-text-3" id="text-4-5">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 10: </span>输出规则，可用于保存或备份：</label><pre class="src src-sh">iptables-save &gt; iptables-backup.rules
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5352e4c" class="outline-3">
+<h3 id="org5352e4c"><span class="section-number-3">4.6</span> <code>iptables-restore</code></h3>
+<div class="outline-text-3" id="text-4-6">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 11: </span>从备份文件恢复规则：</label><pre class="src src-sh">iptables-restore &lt; iptables-backup.rules
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb6d210f" class="outline-2">
+<h2 id="orgb6d210f"><span class="section-number-2">5</span> Sed</h2>
+<div class="outline-text-2" id="text-5">
+<div class="org-src-container">
+<pre class="src src-sh">sed &lt;options&gt; &lt;script&gt; &lt;file&gt;
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&lt;options&gt; </span>
+    -e, --expression=&lt;script&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#25191;&#34892;&#22810;&#20010;&#33050;&#26412;&#26102;&#65292;&#27599;&#20010;&#33050;&#26412;&#21069;&#21152; -e</span>
+    -f, --file=&lt;file&gt;         <span class="org-comment-delimiter"># </span><span class="org-comment">&#25351;&#23450;&#33050;&#26412;&#25991;&#20214;</span>
+    -i, --in-place=&lt;suffix&gt;   <span class="org-comment-delimiter"># </span><span class="org-comment">&#21407;&#22788;&#20462;&#25913;&#65292;&#25351;&#23450;&#21518;&#32512;&#36827;&#34892;&#22791;&#20221;</span>
+    -n, --quiet, --silent     <span class="org-comment-delimiter"># </span><span class="org-comment">&#20851;&#38381;&#33258;&#21160;&#36755;&#20986;&#65288;Sed &#40664;&#35748;&#36755;&#20986;&#25152;&#26377;&#34892;&#65289;</span>
+    -r, --regexp-extended     <span class="org-comment-delimiter"># </span><span class="org-comment">&#20351;&#29992;&#25193;&#23637;&#27491;&#21017;</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&lt;script&gt; &#22914;&#26524;&#21253;&#21547;&#31354;&#26684;&#12289;&#29305;&#27530;&#23383;&#31526; $&#12289;*&#65292;&#38656;&#35201;&#29992;&#21333;&#24341;&#21495;&#21253;&#22260;</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org85dcb5e" class="outline-3">
+<h3 id="org85dcb5e"><span class="section-number-3">5.1</span> 打印</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+<code>&lt;options&gt;</code> 为 <code>-n</code> 时控制输出的行。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">&lt;num&gt;p         <span class="org-comment-delimiter"># </span><span class="org-comment">&#34892;&#25968;</span>
+<span class="org-string">'/&lt;pattern&gt;/p'</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#27169;&#24335;&#21305;&#37197;</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org2a9a1f5" class="outline-4">
+<h4 id="org2a9a1f5"><span class="section-number-4">5.1.1</span> 示例</h4>
+<div class="outline-text-4" id="text-5-1-1">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 12: </span>行数</label><pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">&#36755;&#20986;&#31532; 10 &#34892;</span>
+sed -n 10p &lt;file&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 13: </span>模式匹配</label><pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">&#21305;&#37197;&#30005;&#35805;&#21495;&#30721; xxx-xxx-xxxx &#21644; (xxx) xxx-xxxx</span>
+sed -n -r <span class="org-string">'/^([0-9]{3}-|\([0-9]{3}\) )[0-9]{3}-[0-9]{4}$/p'</span> &lt;file&gt;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org20a2c77" class="outline-3">
+<h3 id="org20a2c77"><span class="section-number-3">5.2</span> 替换</h3>
+<div class="outline-text-3" id="text-5-2">
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-string">'s/&lt;search&gt;/&lt;replace&gt;/&lt;options&gt;'</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&lt;replace&gt;</span>
+    <span class="org-string">'{&amp;}'</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">&#25972;&#20010;&#21305;&#37197;&#37096;&#20998;</span>
+    <span class="org-string">'\&lt;n&gt;'</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#22810;&#20010;&#21305;&#37197;&#37096;&#20998;&#20013;&#19968;&#20010;</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&lt;options&gt;</span>
+    <span class="org-string">'g'</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#20840;&#37096;&#26367;&#25442;&#65288;&#40664;&#35748;&#21482;&#26367;&#25442;&#31532;&#19968;&#22788;&#65289;</span>
+    <span class="org-string">'I'</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#24573;&#30053;&#22823;&#23567;&#20889;</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org35c7f91" class="outline-4">
+<h4 id="org35c7f91"><span class="section-number-4">5.2.1</span> 示例</h4>
+<div class="outline-text-4" id="text-5-2-1">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 14: </span>去除空白字符</label><pre class="src src-sh">sed <span class="org-string">'s/[[:space:]]//g'</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 15: </span>修改 PHP-FPM 配置</label><pre class="src src-sh">sed -i <span class="org-string">"s/listen =.*/listen = 127.0.0.1:9000/"</span> /etc/php5/fpm/pool.d/www.conf
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbeeb473" class="outline-2">
+<h2 id="orgbeeb473"><span class="section-number-2">6</span> Systemd</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Systemd is considered a "polyglot", taking over a lot of services such as logging, CRON and other system management.
+</p>
+</div>
+
+<div id="outline-container-org9ddd1b1" class="outline-3">
+<h3 id="org9ddd1b1"><span class="section-number-3">6.1</span> 配置</h3>
+<div class="outline-text-3" id="text-6-1">
+<div class="org-src-container">
+<pre class="src src-sh">
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1ff4969" class="outline-3">
+<h3 id="org1ff4969"><span class="section-number-3">6.2</span> 命令</h3>
+<div class="outline-text-3" id="text-6-2">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 16: </span>服务控制</label><pre class="src src-sh">systemctl &lt;command&gt; &lt;service&gt;
+    <span class="org-builtin">enable</span>
+    disable
+    start
+    stop
+    restart
+    reload
+    status
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 17: </span></label><pre class="src src-sh">systemctl list-unit-files
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd216281" class="outline-2">
+<h2 id="orgd216281"><span class="section-number-2">7</span> SysV</h2>
+<div class="outline-text-2" id="text-7">
+</div><div id="outline-container-org4a38468" class="outline-3">
+<h3 id="org4a38468"><span class="section-number-3">7.1</span> 配置</h3>
+<div class="outline-text-3" id="text-7-1">
+<div class="org-src-container">
+<pre class="src src-sh">/etc/init.d/&lt;service&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#37197;&#32622;&#25991;&#20214;&#20026; Bash &#33050;&#26412;</span>
+/etc/init.d/skeleton  <span class="org-comment-delimiter"># </span><span class="org-comment">&#37197;&#32622;&#25991;&#20214;&#27169;&#26495;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgde884a8" class="outline-3">
+<h3 id="orgde884a8"><span class="section-number-3">7.2</span> 命令</h3>
+<div class="outline-text-3" id="text-7-2">
+<div class="org-src-container">
+<pre class="src src-sh">/etc/init.d/&lt;service&gt; [start|stop|restart|reload]
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org77ef159" class="outline-2">
+<h2 id="org77ef159"><span class="section-number-2">8</span> 链接</h2>
+<div class="outline-text-2" id="text-8">
+<ol class="org-ol">
+<li><a href="https://www.gnu.org/software/gawk/manual/html_node/index.html">The GNU Awk User's Guide</a></li>
+<li><a href="http://www.grymoire.com/Unix/Awk.html">Awk Tutorial</a></li>
+</ol>
+
+<hr />
+
+<ol class="org-ol">
+<li><a href="http://www.grymoire.com/Unix/Sed.html">Sed Tutorial</a></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2018-11-13 Tue 10:25</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

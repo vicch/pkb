@@ -1,0 +1,1623 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-06-16 Sun 19:38 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chef</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Chef</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org2ea660e">1 Chef</a>
+<ul>
+<li><a href="#org48006e5">1.1 ChefDK</a></li>
+<li><a href="#org3bb54a6">1.2 Chef Server</a></li>
+<li><a href="#org08c466f">1.3 Chef Client</a></li>
+<li><a href="#org2452a25">1.4 Embedded Ruby</a></li>
+</ul>
+</li>
+<li><a href="#org3605111">2 Feature</a>
+<ul>
+<li><a href="#orge32150e">2.1 Search</a>
+<ul>
+<li><a href="#orgae568ad">2.1.1 索引</a></li>
+<li><a href="#orgf55fdd2">2.1.2 函数</a></li>
+</ul>
+</li>
+<li><a href="#orgf311bdb">2.2 Data Bag</a></li>
+</ul>
+</li>
+<li><a href="#org1771cba">3 Syntax</a>
+<ul>
+<li><a href="#orgfdb04a7">3.1 Run-list</a></li>
+<li><a href="#orgbb6ba10">3.2 Versioning</a></li>
+</ul>
+</li>
+<li><a href="#orga59a686">4 Resource</a>
+<ul>
+<li><a href="#org5734e2c">4.1 Guards</a></li>
+<li><a href="#org9a520c8">4.2 Notifications</a>
+<ul>
+<li><a href="#org6a5617b">4.2.1 <code>notifies</code></a></li>
+<li><a href="#org088660e">4.2.2 <code>subscribes</code></a></li>
+</ul>
+</li>
+<li><a href="#org17a6635">4.3 <code>bash</code></a></li>
+<li><a href="#orge69ddac">4.4 <code>cookbook_file</code></a></li>
+<li><a href="#orge02f57d">4.5 <code>directory</code></a></li>
+<li><a href="#org91e57d1">4.6 <code>execute</code></a></li>
+<li><a href="#org87a63ab">4.7 <code>file</code></a></li>
+<li><a href="#orgf4202cd">4.8 <code>group</code></a></li>
+<li><a href="#org3285ea1">4.9 <code>package</code></a></li>
+<li><a href="#org5182fc1">4.10 <code>remote_file</code></a></li>
+<li><a href="#orgfcc7814">4.11 <code>service</code></a></li>
+<li><a href="#org965c71f">4.12 <code>template</code></a></li>
+<li><a href="#org3f8778c">4.13 <code>user</code></a></li>
+</ul>
+</li>
+<li><a href="#orgba61caa">5 Recipe</a>
+<ul>
+<li><a href="#org43da4a4">5.1 <code>include_recipe</code></a></li>
+</ul>
+</li>
+<li><a href="#orge035cd7">6 Template</a></li>
+<li><a href="#orga640d32">7 Cookbook</a>
+<ul>
+<li><a href="#org96e6fb2">7.1 <code>metadata.rb</code></a></li>
+</ul>
+</li>
+<li><a href="#org3cf8bbd">8 Role</a>
+<ul>
+<li><a href="#orgeb9d7cb">8.1 配置</a></li>
+</ul>
+</li>
+<li><a href="#orgda881fb">9 Environment</a>
+<ul>
+<li><a href="#org4cd8cfc">9.1 配置</a></li>
+</ul>
+</li>
+<li><a href="#org9b19179">10 Ohai</a>
+<ul>
+<li><a href="#org8177ec6">10.1 <code>node</code></a></li>
+</ul>
+</li>
+<li><a href="#orgb99ea2a">11 Test Kitchen</a></li>
+<li><a href="#orgdb486aa">12 ChefSpec</a></li>
+<li><a href="#org96756d2">13 Knife</a></li>
+<li><a href="#org30e8fe2">14 Berkshelf</a>
+<ul>
+<li><a href="#org80271c9">14.1 配置</a></li>
+<li><a href="#orgb4f2797">14.2 依赖</a></li>
+</ul>
+</li>
+<li><a href="#org1848e8b">15 <code>chef</code></a>
+<ul>
+<li><a href="#org05c128e">15.1 <code>exec</code></a></li>
+<li><a href="#org63b6cc2">15.2 <code>generate</code></a>
+<ul>
+<li><a href="#org7701fb8">15.2.1 <code>cookbook</code></a></li>
+<li><a href="#org1d93561">15.2.2 <code>file</code></a></li>
+<li><a href="#org703135b">15.2.3 <code>recipe</code></a></li>
+<li><a href="#orgd99a49b">15.2.4 <code>template</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org3a6b5ea">16 <code>chef-client</code></a></li>
+<li><a href="#org4b47f94">17 <code>ohai</code></a></li>
+<li><a href="#org7d15ff6">18 <code>kitchen</code></a></li>
+<li><a href="#orgca6d2bc">19 <code>knife</code></a>
+<ul>
+<li><a href="#org745964b">19.1 <code>bootstrap</code></a></li>
+<li><a href="#orgc4e73ee">19.2 <code>cookbook</code></a></li>
+<li><a href="#org76020e5">19.3 <code>data bag</code></a></li>
+<li><a href="#org34290f4">19.4 <code>environment</code></a></li>
+<li><a href="#org815ba96">19.5 <code>node</code></a></li>
+<li><a href="#org9f421ec">19.6 <code>role</code></a></li>
+<li><a href="#org1b88ffc">19.7 <code>search</code></a></li>
+<li><a href="#org0dcef30">19.8 <code>ssh</code></a></li>
+<li><a href="#orgd701515">19.9 <code>vault</code></a></li>
+</ul>
+</li>
+<li><a href="#org3d0e6cf">20 <code>berks</code></a>
+<ul>
+<li><a href="#org405c53e">20.1 <code>install</code></a></li>
+<li><a href="#orgea7c24b">20.2 <code>upload</code></a></li>
+</ul>
+</li>
+<li><a href="#org91b87d9">21 <code>cookstyle</code></a></li>
+<li><a href="#orge778951">22 链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2ea660e" class="outline-2">
+<h2 id="org2ea660e"><span class="section-number-2">1</span> Chef</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-org48006e5" class="outline-3">
+<h3 id="org48006e5"><span class="section-number-3">1.1</span> ChefDK</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+<a href="https://docs.chef.io/about_chefdk.html">Chef Docs | About ChefDK</a>
+</p>
+
+<p>
+Chef Development Kit 用于在本地环境开发和测试架构代码，然后将代码发送至 Chef Server。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3bb54a6" class="outline-3">
+<h3 id="org3bb54a6"><span class="section-number-3">1.2</span> Chef Server</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Chef Server is the central repo of info and code to provision the nodes.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org08c466f" class="outline-3">
+<h3 id="org08c466f"><span class="section-number-3">1.3</span> Chef Client</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Chef Client 运行在每台需要配置的节点上，执行配置以使节点达到理想状态（此过程称为 convergence）。Chef Client 不实时监控节点的状态，只在运行时才检查节点的状态并进行修改。
+</p>
+
+<p>
+Chef Client 的默认模式为从 Chef Server 获取配置，可以使用本地模式，执行本地的配置。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2452a25" class="outline-3">
+<h3 id="org2452a25"><span class="section-number-3">1.4</span> Embedded Ruby</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+Chef 安装时会同时安装一个嵌入式 Ruby 环境，独立于系统本身的 Ruby 环境。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">chef exec <span class="org-comment-delimiter"># </span><span class="org-comment">&#22312;&#23884;&#20837;&#24335; Ruby &#29615;&#22659;&#20013;&#25191;&#34892;&#21629;&#20196;</span>
+chef gem  <span class="org-comment-delimiter"># </span><span class="org-comment">&#22312;&#23884;&#20837;&#24335; Ruby &#29615;&#22659;&#20013;&#25191;&#34892; gem</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3605111" class="outline-2">
+<h2 id="org3605111"><span class="section-number-2">2</span> Feature</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-orge32150e" class="outline-3">
+<h3 id="orge32150e"><span class="section-number-3">2.1</span> Search</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<a href="https://docs.chef.io/chef_search.html">Chef Docs | About Search</a>
+</p>
+</div>
+
+<div id="outline-container-orgae568ad" class="outline-4">
+<h4 id="orgae568ad"><span class="section-number-4">2.1.1</span> 索引</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>node</code></th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>role</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>environment</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>&lt;data_bag&gt;</code></td>
+<td class="org-left">每个 data bag 使用单独的索引</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgf55fdd2" class="outline-4">
+<h4 id="orgf55fdd2"><span class="section-number-4">2.1.2</span> 函数</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<p>
+可以在 recipe 中调用。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ruby">search(<span class="org-string">'&lt;index&gt;'</span>, <span class="org-string">'&lt;query&gt;'</span>)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ruby">search(<span class="org-string">'node'</span>, <span class="org-string">'role:web'</span>).each <span class="org-keyword">do</span> |web_node|
+  ...
+<span class="org-keyword">end</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf311bdb" class="outline-3">
+<h3 id="orgf311bdb"><span class="section-number-3">2.2</span> Data Bag</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+<a href="https://docs.chef.io/data_bags.html">Chef Docs | About Data Bags</a>
+</p>
+
+<p>
+Data bag 是以 JSON 形式存储的全局变量，用于节点间共享的数据，如用户、组等。Data bag 数据被 Chef Server 索引，可以用于 cookbook 或搜索。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1771cba" class="outline-2">
+<h2 id="org1771cba"><span class="section-number-2">3</span> Syntax</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-orgfdb04a7" class="outline-3">
+<h3 id="orgfdb04a7"><span class="section-number-3">3.1</span> Run-list</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+<a href="https://docs.chef.io/run_lists.html">Chef Docs | About Run-lists</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ruby"><span class="org-string">'recipe[&lt;cookbook&gt;::&lt;recipe&gt;]'</span>
+<span class="org-string">'recipe[&lt;cookbook&gt;]'</span>           <span class="org-comment-delimiter"># </span><span class="org-comment">&#19981;&#25351;&#23450; cookbook &#21017;&#40664;&#35748;&#20026; default cookbook</span>
+<span class="org-string">'role[&lt;role&gt;]'</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbb6ba10" class="outline-3">
+<h3 id="orgbb6ba10"><span class="section-number-3">3.2</span> Versioning</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+<a href="https://docs.chef.io/cookbook_versioning.html">Chef Docs | About Cookbook Versioning</a>
+</p>
+
+<p>
+表示 cookbook 版本的语法，用于各种配置文件和命令行中。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>=</code></th>
+<th scope="col" class="org-left">等于</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>&gt;</code></td>
+<td class="org-left">大于</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>&lt;</code></td>
+<td class="org-left">小于</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>&gt;=</code></td>
+<td class="org-left">大于等于，或 optimistic</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>&lt;=</code></td>
+<td class="org-left">小于等于</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>~&gt;</code></td>
+<td class="org-left">接近大于，或 pessimistic</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<pre class="src src-ruby">~&gt; 2.6   <span class="org-comment-delimiter"># </span><span class="org-comment">2.6 &lt;= version &lt; 3.0</span>
+~&gt; 2.6.5 <span class="org-comment-delimiter"># </span><span class="org-comment">2.6.5 &lt;= version &lt; 2.7.0</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga59a686" class="outline-2">
+<h2 id="orga59a686"><span class="section-number-2">4</span> Resource</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+在 recipe 文件中，一个 resource 描述一个可配置项（如文件、包、服务）的理想状态。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">文件系统</th>
+<th scope="col" class="org-left"><code>file</code></th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><code>remote_file</code></th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><code>cookbook_file</code></th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><code>template</code></th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><code>directory</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">系统</td>
+<td class="org-left"><code>package</code></td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>service</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">脚本</td>
+<td class="org-left"><code>bash</code></td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>execute</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">用户</td>
+<td class="org-left"><code>user</code></td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>group</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-org5734e2c" class="outline-3">
+<h3 id="org5734e2c"><span class="section-number-3">4.1</span> Guards</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+<a href="https://docs.chef.io/resource_common.html#guards">Chef Docs | Guards</a>
+</p>
+
+<p>
+Guard 语句决定是否执行 resource。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ruby">&lt;resource&gt; ... <span class="org-keyword">do</span>
+  not_if|only_if <span class="org-string">'&lt;bash_script&gt;'</span>
+  not_if|only_if <span class="org-keyword">do</span>
+    &lt;ruby_expr&gt;
+  <span class="org-keyword">end</span>
+<span class="org-keyword">end</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 1: </span><code>example.ruby</code></label><pre class="src src-ruby">bash <span class="org-string">'script'</span> <span class="org-keyword">do</span>
+  code <span class="org-string">'mkdir -p /var/www/foo/'</span>
+  not_if <span class="org-string">'[ -d /var/www/foo/ ]'</span>
+  <span class="org-comment-delimiter"># </span><span class="org-comment">Or</span>
+  not_if <span class="org-keyword">do</span>
+    <span class="org-type">File</span>.directory?(<span class="org-string">'/var/www/foo/'</span>)
+  <span class="org-keyword">end</span>
+<span class="org-keyword">end</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9a520c8" class="outline-3">
+<h3 id="org9a520c8"><span class="section-number-3">4.2</span> Notifications</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+<a href="https://docs.chef.io/resource_common.html#notifications">Chef Docs | Notifications</a>
+</p>
+</div>
+
+<div id="outline-container-org6a5617b" class="outline-4">
+<h4 id="org6a5617b"><span class="section-number-4">4.2.1</span> <code>notifies</code></h4>
+<div class="outline-text-4" id="text-4-2-1">
+<p>
+<code>notifies</code> 表示在一个 resource 的状态改变时（如文件被修改），通知另一个 resource 执行某动作。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ruby">notifies <span class="org-constant">:&lt;action</span>&gt;, <span class="org-string">'&lt;resource&gt;[&lt;name&gt;]'</span>, <span class="org-constant">:&lt;timer</span>&gt;
+  &lt;action&gt;   <span class="org-comment-delimiter"># </span><span class="org-comment">&#22312;&#25351;&#23450; resource &#19978;&#25191;&#34892;&#30340;&#21160;&#20316;</span>
+  &lt;resource&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#25351;&#23450; resource &#31867;&#22411;</span>
+  &lt;name&gt;     <span class="org-comment-delimiter"># </span><span class="org-comment">&#25351;&#23450; resource &#21517;</span>
+  &lt;timer&gt;
+    <span class="org-constant">:before</span>    <span class="org-comment-delimiter"># </span><span class="org-comment">&#22312;&#24403;&#21069; resource &#29366;&#24577;&#21457;&#29983;&#21464;&#21270;&#21069;&#25191;&#34892;&#21160;&#20316;</span>
+    <span class="org-constant">:delayed</span>   <span class="org-comment-delimiter"># </span><span class="org-comment">&#22312; Chef Client &#36816;&#34892;&#32467;&#26463;&#21069;&#25191;&#34892;&#21160;&#20316;</span>
+    <span class="org-constant">:immediate</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#31435;&#21363;&#25191;&#34892;&#21160;&#20316;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org088660e" class="outline-4">
+<h4 id="org088660e"><span class="section-number-4">4.2.2</span> <code>subscribes</code></h4>
+<div class="outline-text-4" id="text-4-2-2">
+<p>
+<code>subscribes</code> 表示在另一个 resource 状态发生变化时（如文件被修改），在当前 resource 执行某动作。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ruby">subscribes <span class="org-constant">:&lt;action</span>&gt;, <span class="org-string">'&lt;resource&gt;[&lt;name&gt;]'</span>, <span class="org-constant">:&lt;timer</span>&gt;
+  &lt;action&gt;   <span class="org-comment-delimiter"># </span><span class="org-comment">&#22312;&#24403;&#21069; resource &#25191;&#34892;&#30340;&#21160;&#20316;</span>
+  &lt;resource&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#25351;&#23450; resource &#31867;&#22411;</span>
+  &lt;name&gt;     <span class="org-comment-delimiter"># </span><span class="org-comment">&#25351;&#23450; resource &#21517;</span>
+  &lt;timer&gt;
+    <span class="org-constant">:before</span>    <span class="org-comment-delimiter"># </span><span class="org-comment">&#22312;&#25351;&#23450; resource &#29366;&#24577;&#21457;&#29983;&#21464;&#21270;&#21069;&#25191;&#34892;&#21160;&#20316;</span>
+    <span class="org-constant">:delayed</span>   <span class="org-comment-delimiter"># </span><span class="org-comment">&#22312; Chef Client &#36816;&#34892;&#32467;&#26463;&#21069;&#25191;&#34892;&#21160;&#20316;</span>
+    <span class="org-constant">:immediate</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#31435;&#21363;&#25191;&#34892;&#21160;&#20316;</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org17a6635" class="outline-3">
+<h3 id="org17a6635"><span class="section-number-3">4.3</span> <code>bash</code></h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+执行 Bash 脚本。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ruby">bash <span class="org-string">'&lt;name&gt;'</span> <span class="org-keyword">do</span>
+  action <span class="org-constant">:run</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#40664;&#35748;</span>
+         <span class="org-constant">:nothing</span>
+  user <span class="org-string">'&lt;user&gt;'</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#20351;&#29992;&#27492;&#29992;&#25143;&#36816;&#34892;&#33050;&#26412;</span>
+  code <span class="org-string">'&lt;script&gt;'</span>
+  code <span class="org-string">&lt;&lt;-EOH</span>
+<span class="org-string">    &lt;script&gt;</span>
+<span class="org-string">  EOH</span>
+<span class="org-keyword">end</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge69ddac" class="outline-3">
+<h3 id="orge69ddac"><span class="section-number-3">4.4</span> <code>cookbook_file</code></h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+<a href="https://docs.chef.io/resource_cookbook_file.html">Chef Docs | cookbook_file Resource</a>
+</p>
+
+<p>
+<code>cookbook_file</code> 用于将 cookbook 内的文件复制到指定位置，文件只包含静态内容。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ruby">cookbook_file <span class="org-string">'&lt;path&gt;'</span> <span class="org-keyword">do</span>
+  action <span class="org-constant">:create</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">&#40664;&#35748;</span>
+  source <span class="org-string">'&lt;file&gt;'</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Chef &#22312; files/ &#30446;&#24405;&#19979;&#26597;&#25214;&#25991;&#20214;</span>
+<span class="org-keyword">end</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge02f57d" class="outline-3">
+<h3 id="orge02f57d"><span class="section-number-3">4.5</span> <code>directory</code></h3>
+<div class="outline-text-3" id="text-4-5">
+<p>
+<a href="https://docs.chef.io/resource_directory.html">Chef Docs | directory Resource</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ruby">directory <span class="org-string">'&lt;path&gt;'</span> <span class="org-keyword">do</span>
+  action <span class="org-constant">:create</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#40664;&#35748;</span>
+         <span class="org-constant">:delete</span>
+  mode <span class="org-string">'&lt;string&gt;'</span> <span class="org-comment-delimiter"># </span><span class="org-comment">e.g. '0755'</span>
+  owner <span class="org-string">'&lt;user&gt;'</span>
+  group <span class="org-string">'&lt;group&gt;'</span>
+  recursive &lt;bool&gt;
+<span class="org-keyword">end</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org91e57d1" class="outline-3">
+<h3 id="org91e57d1"><span class="section-number-3">4.6</span> <code>execute</code></h3>
+<div class="outline-text-3" id="text-4-6">
+<p>
+<a href="https://docs.chef.io/resource_execute.html">Chef Docs | execute Resource</a>
+</p>
+
+<p>
+执行脚本，但不指定解析方式，由 Chef 决定如何执行。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ruby">execute <span class="org-string">'&lt;name&gt;'</span> <span class="org-keyword">do</span>
+  action <span class="org-constant">:run</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#40664;&#35748;</span>
+         <span class="org-constant">:nothing</span>
+  user <span class="org-string">'&lt;username&gt;'</span>
+  command <span class="org-string">'&lt;script&gt;'</span>
+  command <span class="org-string">&lt;&lt;-EOH</span>
+<span class="org-string">    &lt;script&gt;</span>
+<span class="org-string">  EOH</span>
+<span class="org-keyword">end</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org87a63ab" class="outline-3">
+<h3 id="org87a63ab"><span class="section-number-3">4.7</span> <code>file</code></h3>
+<div class="outline-text-3" id="text-4-7">
+<p>
+<a href="https://docs.chef.io/resource_file.html">Chef Docs | file Resource</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ruby">file <span class="org-string">'&lt;path&gt;'</span> <span class="org-keyword">do</span>
+  action <span class="org-constant">:create</span>            <span class="org-comment-delimiter"># </span><span class="org-comment">&#40664;&#35748;</span>
+         <span class="org-constant">:create_if_missing</span>
+         <span class="org-constant">:delete</span>
+  content <span class="org-string">'&lt;string&gt;'</span>
+  owner <span class="org-string">'&lt;string&gt;'</span>
+  group <span class="org-string">'&lt;string&gt;'</span>
+<span class="org-keyword">end</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf4202cd" class="outline-3">
+<h3 id="orgf4202cd"><span class="section-number-3">4.8</span> <code>group</code></h3>
+<div class="outline-text-3" id="text-4-8">
+<p>
+<a href="https://docs.chef.io/resource_group.html">Chef Docs | group Resource</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ruby">group <span class="org-string">'&lt;name&gt;'</span> <span class="org-keyword">do</span>
+  action <span class="org-constant">:create</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#40664;&#35748;</span>
+         <span class="org-constant">:remove</span>
+         <span class="org-constant">:modify</span>
+  members [<span class="org-string">'&lt;user&gt;'</span>, ...]
+  append &lt;bool&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">true = &#28155;&#21152;&#25104;&#21592;&#21040;&#32452;&#65292;&#19981;&#24433;&#21709;&#24050;&#26377;&#25104;&#21592;</span>
+                <span class="org-comment-delimiter"># </span><span class="org-comment">false = &#23558;&#32452;&#20013;&#24050;&#26377;&#25104;&#21592;&#31227;&#38500;&#65292;&#20877;&#28155;&#21152;&#25104;&#21592;&#21040;&#32452;&#12290;&#40664;&#35748;</span>
+<span class="org-keyword">end</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3285ea1" class="outline-3">
+<h3 id="org3285ea1"><span class="section-number-3">4.9</span> <code>package</code></h3>
+<div class="outline-text-3" id="text-4-9">
+<div class="org-src-container">
+<pre class="src src-ruby">package <span class="org-string">'&lt;name&gt;'</span> <span class="org-keyword">do</span>
+  action <span class="org-constant">:install</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#40664;&#35748;</span>
+         <span class="org-constant">:remove</span>
+         <span class="org-constant">:upgrade</span>
+         <span class="org-constant">:nothing</span>
+<span class="org-keyword">end</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5182fc1" class="outline-3">
+<h3 id="org5182fc1"><span class="section-number-3">4.10</span> <code>remote_file</code></h3>
+<div class="outline-text-3" id="text-4-10">
+<p>
+<a href="https://docs.chef.io/resource_remote_file.html">Chef Docs | remote_file Resource</a>
+</p>
+
+<p>
+<code>remote_file</code> 用于获取远程文件并复制到指定位置。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ruby">remote_file <span class="org-string">'&lt;path&gt;'</span> <span class="org-keyword">do</span>
+  action <span class="org-constant">:create</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#40664;&#35748;</span>
+  source <span class="org-string">'&lt;string&gt;'</span>
+<span class="org-keyword">end</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfcc7814" class="outline-3">
+<h3 id="orgfcc7814"><span class="section-number-3">4.11</span> <code>service</code></h3>
+<div class="outline-text-3" id="text-4-11">
+<div class="org-src-container">
+<pre class="src src-ruby">service <span class="org-string">'&lt;name&gt;'</span> <span class="org-keyword">do</span>
+  action <span class="org-constant">:enable</span>
+         <span class="org-constant">:disable</span>
+         <span class="org-constant">:start</span>
+         <span class="org-constant">:stop</span>
+         <span class="org-constant">:reload</span>
+         <span class="org-constant">:restart</span>
+         <span class="org-constant">:nothing</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#40664;&#35748;</span>
+  action [<span class="org-constant">:&lt;action</span>&gt;, ...] <span class="org-comment-delimiter"># </span><span class="org-comment">&#22810;&#20010; action&#65292;&#22914; [:enable, :start]</span>
+<span class="org-keyword">end</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org965c71f" class="outline-3">
+<h3 id="org965c71f"><span class="section-number-3">4.12</span> <code>template</code></h3>
+<div class="outline-text-3" id="text-4-12">
+<div class="org-src-container">
+<pre class="src src-ruby">template <span class="org-string">'&lt;path&gt;'</span> <span class="org-keyword">do</span>
+  action <span class="org-constant">:create</span>          <span class="org-comment-delimiter"># </span><span class="org-comment">&#40664;&#35748;</span>
+  source <span class="org-string">'&lt;template&gt;.erb'</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Chef &#22312; templates/ &#30446;&#24405;&#19979;&#26597;&#25214;&#27169;&#29256;&#25991;&#20214;</span>
+  variables(
+    <span class="org-constant">:&lt;name</span>&gt; =&gt; &lt;value&gt;
+  )
+<span class="org-keyword">end</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3f8778c" class="outline-3">
+<h3 id="org3f8778c"><span class="section-number-3">4.13</span> <code>user</code></h3>
+<div class="outline-text-3" id="text-4-13">
+<p>
+<a href="https://docs.chef.io/resource_user.html">Chef Docs | user Resource</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ruby">user <span class="org-string">'&lt;name&gt;'</span> <span class="org-keyword">do</span>
+  action <span class="org-constant">:create</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#40664;&#35748;</span>
+         <span class="org-constant">:remove</span>
+         <span class="org-constant">:modify</span>
+  uid <span class="org-string">'&lt;id&gt;'</span>
+  gid <span class="org-string">'&lt;id&gt;'</span>
+  home <span class="org-string">'&lt;path&gt;'</span>
+  shell <span class="org-string">'&lt;string&gt;'</span> <span class="org-comment-delimiter"># </span><span class="org-comment">e.g. '/bin/bash'</span>
+  comment <span class="org-string">'&lt;string&gt;'</span>
+<span class="org-keyword">end</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgba61caa" class="outline-2">
+<h2 id="orgba61caa"><span class="section-number-2">5</span> Recipe</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Recipe 是 Ruby 文件，包含一组 resource，resource 按照在 recipe 中出现的顺序被执行。Recipe 可以包含任意 Ruby 代码。
+</p>
+</div>
+
+<div id="outline-container-org43da4a4" class="outline-3">
+<h3 id="org43da4a4"><span class="section-number-3">5.1</span> <code>include_recipe</code></h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+引用其他 recipe。如果引用其他 cookbook 的 recipe，需要将引用的 cookbook 配置为依赖。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ruby">include_recipe <span class="org-string">'&lt;cookbook&gt;::&lt;recipe&gt;'</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge035cd7" class="outline-2">
+<h2 id="orge035cd7"><span class="section-number-2">6</span> Template</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+<a href="https://docs.chef.io/templates.html">Chef Docs | About Templates</a> <br />
+<a href="https://docs.chef.io/resource_template.html">Chef Docs | Template Resource</a>
+</p>
+
+<p>
+Embedded Ruby (ERB) 模版是嵌入 Ruby 表达式的文本文件，在 recipe 中通过 <code>template</code> 资源引用模版，可以生成动态内容的文本文件。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-erb">&lt;% ... %&gt;  // Statement, e.g. &lt;% if ... %&gt; 
+&lt;%= ... %&gt; // Expression, e.g. &lt;%= 1 + 2 %&gt;
+
+&lt;%= node[...] %&gt; // 
+&lt;%= <span class="org-web-mode-keyword">@var</span> %&gt;      // Variable
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga640d32" class="outline-2">
+<h2 id="orga640d32"><span class="section-number-2">7</span> Cookbook</h2>
+<div class="outline-text-2" id="text-7">
+<div class="org-src-container">
+<pre class="src src-sh">&lt;cookbook&gt;/    <span class="org-comment-delimiter"># </span><span class="org-comment">The cookbook directory</span>
+  .kitchen.yml <span class="org-comment-delimiter"># </span><span class="org-comment">Kitchen config file</span>
+  Berksfile    <span class="org-comment-delimiter"># </span><span class="org-comment">Cookbook dependencies</span>
+  chefignore   <span class="org-comment-delimiter"># </span><span class="org-comment">Dirs and files to exclude from Chef, similar to gitignore</span>
+  metadata.rb  <span class="org-comment-delimiter"># </span><span class="org-comment">Versions and dependencies</span>
+  README.md
+  recipes/
+    &lt;recipe&gt;.rb
+    ...
+  spec/
+    unit/     <span class="org-comment-delimiter"># </span><span class="org-comment">Unit tests</span>
+  test/       <span class="org-comment-delimiter"># </span><span class="org-comment">Integration tests</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org96e6fb2" class="outline-3">
+<h3 id="org96e6fb2"><span class="section-number-3">7.1</span> <code>metadata.rb</code></h3>
+<div class="outline-text-3" id="text-7-1">
+<div class="org-src-container">
+<pre class="src src-ruby">version <span class="org-string">'&lt;version&gt;'</span>                  <span class="org-comment-delimiter"># </span><span class="org-comment">Cookbook &#30340;&#29256;&#26412;</span>
+depends <span class="org-string">'&lt;cookbook&gt;'</span>, <span class="org-string">'~&gt; &lt;version&gt;'</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#20381;&#36182;&#21450;&#20381;&#36182;&#30340;&#29256;&#26412;</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3cf8bbd" class="outline-2">
+<h2 id="org3cf8bbd"><span class="section-number-2">8</span> Role</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+Role 用于管理节点需要运行的 recipe 列表，相对于手动添加 recipe 到节点的 run list，role 定义一个 recipe 列表，属于此 role 的节点会按顺序运行列表中的 recipe。
+</p>
+</div>
+
+<div id="outline-container-orgeb9d7cb" class="outline-3">
+<h3 id="orgeb9d7cb"><span class="section-number-3">8.1</span> 配置</h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+Role 配置可以为 Ruby 或 JSON。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 2: </span><code>&lt;repo&gt;/roles/&lt;role&gt;.rb</code></label><pre class="src src-ruby">name <span class="org-string">'&lt;name&gt;'</span>
+description <span class="org-string">'&lt;desc&gt;'</span>
+run_list <span class="org-string">'recipe[&lt;cookbook&gt;::&lt;recipe&gt;]'</span>,...
+default_attributes <span class="org-comment-delimiter"># </span><span class="org-comment">&#35774;&#32622; node &#23545;&#35937;&#30340;&#23646;&#24615;</span>
+override_attributes({
+  <span class="org-string">'&lt;name&gt;'</span> =&gt; &lt;value&gt;
+})
+</pre>
+</div>
+
+<p>
+Role 可以通过 run-list 嵌套：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ruby">run_list <span class="org-string">'role[base]'</span>,...
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgda881fb" class="outline-2">
+<h2 id="orgda881fb"><span class="section-number-2">9</span> Environment</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+<a href="https://docs.chef.io/environments.html">Chef Docs | About Environments</a>
+</p>
+
+<p>
+通过区分 Chef 资源所属的环境，可以实现不同的配置和行为，和运行同一 cookbook 的不同版本。Chef 资源默认属于 <code>_default</code> 环境。
+</p>
+</div>
+
+<div id="outline-container-org4cd8cfc" class="outline-3">
+<h3 id="org4cd8cfc"><span class="section-number-3">9.1</span> 配置</h3>
+<div class="outline-text-3" id="text-9-1">
+<p>
+Environment 配置可以为 Ruby 或 JSON。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 3: </span><code>&lt;repo&gt;/environments/&lt;env&gt;.rb</code></label><pre class="src src-ruby">name <span class="org-string">'&lt;name&gt;'</span>
+description <span class="org-string">'&lt;desc&gt;'</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Cookbook &#29256;&#26412;&#38480;&#21046;&#65292;&#22914;&#26524;&#20026;&#31354;&#21017;&#40664;&#35748;&#20351;&#29992;&#26368;&#26032;&#29256;&#26412;</span>
+cookbook <span class="org-string">'&lt;cookbook&gt;'</span>, <span class="org-string">'&lt;version_expr&gt;'</span>
+cookbook ...
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9b19179" class="outline-2">
+<h2 id="org9b19179"><span class="section-number-2">10</span> Ohai</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+<a href="https://docs.chef.io/ohai.html">Chef Docs | About Ohai</a>
+</p>
+
+<p>
+Ohai 在 Chef Client 运行时收集系统信息，如主机名、IP 地址等，并创建一个 <code>node</code> 对象提供给 recipe 使用。
+</p>
+</div>
+
+<div id="outline-container-org8177ec6" class="outline-3">
+<h3 id="org8177ec6"><span class="section-number-3">10.1</span> <code>node</code></h3>
+<div class="outline-text-3" id="text-10-1">
+<div class="org-src-container">
+<pre class="src src-ruby">node[<span class="org-string">'&lt;attribute&gt;'</span>]...
+  ipaddress
+  hostname
+  memory
+    total
+</pre>
+</div>
+
+<p>
+在 recipe 中使用 <code>node</code> 对象：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ruby">file <span class="org-string">'/tmp/...'</span> <span class="org-keyword">do</span>
+  content <span class="org-string">"Hostname is </span><span class="org-variable-name">#{node['hostname']}</span><span class="org-string">"</span>
+<span class="org-keyword">end</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb99ea2a" class="outline-2">
+<h2 id="orgb99ea2a"><span class="section-number-2">11</span> Test Kitchen</h2>
+<div class="outline-text-2" id="text-11">
+<p>
+Test Kithen 用于集成测试，即创建一个实例（如虚拟机），在实例上运行指定 Chef reripe，然后运行测试代码检查实例的状态。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdb486aa" class="outline-2">
+<h2 id="orgdb486aa"><span class="section-number-2">12</span> ChefSpec</h2>
+<div class="outline-text-2" id="text-12">
+<p>
+<a href="https://docs.chef.io/chefspec.html">Chef Docs | ChefSpec</a>
+</p>
+
+<p>
+ChefSpec 用于单元测试，即测试 Chef recipe 的编译结果 resource collection。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org96756d2" class="outline-2">
+<h2 id="org96756d2"><span class="section-number-2">13</span> Knife</h2>
+<div class="outline-text-2" id="text-13">
+<p>
+<a href="https://docs.chef.io/knife.html">Chef Docs | Knife</a>
+</p>
+
+<p>
+Knife 是用于连接 Chef Server 的命令行工具。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org30e8fe2" class="outline-2">
+<h2 id="org30e8fe2"><span class="section-number-2">14</span> Berkshelf</h2>
+<div class="outline-text-2" id="text-14">
+<p>
+<a href="https://docs.chef.io/berkshelf.html">Chef Docs | About Berkshelf</a>
+</p>
+
+<p>
+Berkshelf 是 Chef 的依赖管理器。
+</p>
+</div>
+
+<div id="outline-container-org80271c9" class="outline-3">
+<h3 id="org80271c9"><span class="section-number-3">14.1</span> 配置</h3>
+<div class="outline-text-3" id="text-14-1">
+<p>
+在生成 cookbook 时 Chef 自动生成 Berkshelf 配置文件 <code>Berksfile</code> 。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 4: </span><code>&lt;cookbook&gt;/Berksfile</code></label><pre class="src src-sh"><span class="org-builtin">source</span> <span class="org-string">'&lt;url&gt;'</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#40664;&#35748;&#20026; https://supermarket.chef.io</span>
+metadata <span class="org-comment-delimiter"># </span><span class="org-comment">&#22312; metadata &#25991;&#20214;&#20013;&#26597;&#25214;&#20381;&#36182;&#21644;&#29256;&#26412;&#20449;&#24687;</span>
+</pre>
+</div>
+
+<p>
+安装依赖时 Berkshelf 自动生成 <code>Berkshelf.lock</code> 文件，记录依赖关系和版本信息。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb4f2797" class="outline-3">
+<h3 id="orgb4f2797"><span class="section-number-3">14.2</span> 依赖</h3>
+<div class="outline-text-3" id="text-14-2">
+<p>
+Berkshelf 将依赖的 cookbook 安装在 <code>~/.berkshelf/cookbooks/</code> 目录下。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1848e8b" class="outline-2">
+<h2 id="org1848e8b"><span class="section-number-2">15</span> <code>chef</code></h2>
+<div class="outline-text-2" id="text-15">
+</div><div id="outline-container-org05c128e" class="outline-3">
+<h3 id="org05c128e"><span class="section-number-3">15.1</span> <code>exec</code></h3>
+<div class="outline-text-3" id="text-15-1">
+<p>
+运行 ChefSpec：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">chef exec rspec &lt;path_to_test&gt;/&lt;test&gt;_spec.rb
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org63b6cc2" class="outline-3">
+<h3 id="org63b6cc2"><span class="section-number-3">15.2</span> <code>generate</code></h3>
+<div class="outline-text-3" id="text-15-2">
+<div class="org-src-container">
+<pre class="src src-sh">chef generate &lt;type&gt; &lt;options&gt;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org7701fb8" class="outline-4">
+<h4 id="org7701fb8"><span class="section-number-4">15.2.1</span> <code>cookbook</code></h4>
+<div class="outline-text-4" id="text-15-2-1">
+<div class="org-src-container">
+<pre class="src src-sh">chef generate cookbook &lt;path&gt; &lt;options&gt;
+    &lt;path&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">e.g. cookbooks/mycookbook</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1d93561" class="outline-4">
+<h4 id="org1d93561"><span class="section-number-4">15.2.2</span> <code>file</code></h4>
+<div class="outline-text-4" id="text-15-2-2">
+<div class="org-src-container">
+<pre class="src src-sh">chef generate file &lt;path&gt; &lt;name&gt;
+    &lt;path&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">Cookbook &#30340;&#36335;&#24452;&#65292;&#19981;&#21253;&#21547; files/</span>
+    &lt;name&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org703135b" class="outline-4">
+<h4 id="org703135b"><span class="section-number-4">15.2.3</span> <code>recipe</code></h4>
+<div class="outline-text-4" id="text-15-2-3">
+<div class="org-src-container">
+<pre class="src src-sh">chef generate recipe &lt;path&gt; &lt;name&gt;
+    &lt;path&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">Cookbook &#30340;&#36335;&#24452;&#65292;&#19981;&#21253;&#21547; recipes/</span>
+    &lt;name&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#19981;&#21253;&#21547; .rb</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd99a49b" class="outline-4">
+<h4 id="orgd99a49b"><span class="section-number-4">15.2.4</span> <code>template</code></h4>
+<div class="outline-text-4" id="text-15-2-4">
+<div class="org-src-container">
+<pre class="src src-sh">chef generate template &lt;path&gt; &lt;name&gt; &lt;options&gt;
+    &lt;path&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">Cookbook &#30340;&#36335;&#24452;&#65292;&#19981;&#21253;&#21547; templates/</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3a6b5ea" class="outline-2">
+<h2 id="org3a6b5ea"><span class="section-number-2">16</span> <code>chef-client</code></h2>
+<div class="outline-text-2" id="text-16">
+<div class="org-src-container">
+<pre class="src src-sh">chef-client &lt;options&gt; &lt;recipe&gt;
+    -r, --runlist
+        <span class="org-string">"recipe[&lt;cookbook&gt;]"</span>                      <span class="org-comment-delimiter"># </span><span class="org-comment">&#36816;&#34892; default recipe</span>
+        <span class="org-string">"recipe[&lt;cookbook&gt;::&lt;recipe&gt;]"</span>            <span class="org-comment-delimiter"># </span><span class="org-comment">&#36816;&#34892;&#19968;&#20010; recipe</span>
+        <span class="org-string">"&lt;cookbook&gt;::&lt;recipe&gt;"</span>                    <span class="org-comment-delimiter"># </span><span class="org-comment">&#21482;&#26377;&#19968;&#20010; recipe &#26102;&#21487;&#20197;&#30465;&#30053; recipe[]</span>
+        <span class="org-string">"recipe[&lt;cookbook&gt;::&lt;recipe&gt;],recipe[..."</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#36816;&#34892;&#22810;&#20010; recipe&#65292;&#27880;&#24847; runlist &#19981;&#33021;&#21253;&#21547;&#31354;&#26684;</span>
+    -z, --local-mode <span class="org-comment-delimiter"># </span><span class="org-comment">&#26412;&#22320;&#27169;&#24335;&#65292;&#19981;&#20381;&#36182; Chef Server</span>
+    &lt;recipe&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#25191;&#34892; recipe &#25991;&#20214;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4b47f94" class="outline-2">
+<h2 id="org4b47f94"><span class="section-number-2">17</span> <code>ohai</code></h2>
+<div class="outline-text-2" id="text-17">
+<p>
+查看系统信息。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">ohai &lt;attribute&gt;/...
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7d15ff6" class="outline-2">
+<h2 id="org7d15ff6"><span class="section-number-2">18</span> <code>kitchen</code></h2>
+<div class="outline-text-2" id="text-18">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>测试流程</b></th>
+<th scope="col" class="org-left"><code>create</code></th>
+<th scope="col" class="org-left">创建实例</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><code>converge</code></th>
+<th scope="col" class="org-left">使用 provisioner 配置实例</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><code>verify</code></th>
+<th scope="col" class="org-left">运行测试</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><code>destroy</code></th>
+<th scope="col" class="org-left">销毁实例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>login</code></td>
+<td class="org-left">登录到实例</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgca6d2bc" class="outline-2">
+<h2 id="orgca6d2bc"><span class="section-number-2">19</span> <code>knife</code></h2>
+<div class="outline-text-2" id="text-19">
+</div><div id="outline-container-org745964b" class="outline-3">
+<h3 id="org745964b"><span class="section-number-3">19.1</span> <code>bootstrap</code></h3>
+<div class="outline-text-3" id="text-19-1">
+<div class="org-src-container">
+<pre class="src src-sh">knife bootstrap &lt;fqdn&gt; &lt;options&gt;
+  -N, --node-name &lt;name&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">Node name</span>
+  -r, --run-list &lt;list&gt;  <span class="org-comment-delimiter"># </span><span class="org-comment">Run list</span>
+    <span class="org-string">"recipe[&lt;cookbook&gt;]"</span>
+    <span class="org-string">"role[&lt;name&gt;]"</span>
+  -i &lt;file&gt;              <span class="org-comment-delimiter"># </span><span class="org-comment">Identity file</span>
+  -x, --ssh-user &lt;user&gt;
+  -P, --ssh-password &lt;password&gt;
+  -p, --ssh-port &lt;port&gt;
+  --sudo                 <span class="org-comment-delimiter"># </span><span class="org-comment">Execute bootstrap with sudo</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc4e73ee" class="outline-3">
+<h3 id="orgc4e73ee"><span class="section-number-3">19.2</span> <code>cookbook</code></h3>
+<div class="outline-text-3" id="text-19-2">
+<div class="org-src-container">
+<pre class="src src-sh">knife cookbook
+  list &lt;options&gt;            <span class="org-comment-delimiter"># </span><span class="org-comment">Cookbook &#21015;&#34920;</span>
+  show &lt;cookbook&gt; &lt;version&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">Cookbook &#20449;&#24687;</span>
+  upload &lt;cookbook&gt;         <span class="org-comment-delimiter"># </span><span class="org-comment">&#19978;&#20256; cookbook</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org76020e5" class="outline-3">
+<h3 id="org76020e5"><span class="section-number-3">19.3</span> <code>data bag</code></h3>
+<div class="outline-text-3" id="text-19-3">
+<div class="org-src-container">
+<pre class="src src-sh">knife data bag
+  list                   <span class="org-comment-delimiter"># </span><span class="org-comment">Data bag &#21015;&#34920;</span>
+  show &lt;bag&gt;             <span class="org-comment-delimiter"># </span><span class="org-comment">Data bag &#20449;&#24687;</span>
+  show &lt;bag&gt;/&lt;item&gt;      <span class="org-comment-delimiter"># </span><span class="org-comment">Data bag item &#38190;&#21517;&#21015;&#34920;</span>
+  show &lt;bag&gt; &lt;item&gt;      <span class="org-comment-delimiter"># </span><span class="org-comment">Data bag item &#35814;&#32454;&#20449;&#24687;</span>
+    --secret-file &lt;path&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#23494;&#38053;&#25991;&#20214;&#65292;&#29992;&#20110;&#35299;&#23494;&#21152;&#23494;&#30340; data bag item</span>
+  create &lt;bag&gt;           <span class="org-comment-delimiter"># </span><span class="org-comment">&#21019;&#24314; data bag</span>
+    --secret-file &lt;path&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#23494;&#38053;&#25991;&#20214;&#65292;&#29992;&#20110;&#21019;&#24314;&#21152;&#23494;&#30340; data bag</span>
+  from file &lt;bag&gt; &lt;path&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#20174; JSON &#25991;&#20214;&#21019;&#24314;&#24182;&#19978;&#20256; data bag item</span>
+    --secret-file &lt;path&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#23494;&#38053;&#25991;&#20214;&#65292;&#29992;&#20110;&#19978;&#20256;&#21040;&#21152;&#23494;&#30340; data bag</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org34290f4" class="outline-3">
+<h3 id="org34290f4"><span class="section-number-3">19.4</span> <code>environment</code></h3>
+<div class="outline-text-3" id="text-19-4">
+<div class="org-src-container">
+<pre class="src src-sh">knife environment list             <span class="org-comment-delimiter"># </span><span class="org-comment">&#29615;&#22659;&#21015;&#34920;</span>
+knife environment show &lt;env&gt;       <span class="org-comment-delimiter"># </span><span class="org-comment">&#29615;&#22659;&#20449;&#24687;</span>
+knife environment from file &lt;path&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#20174;&#25991;&#20214;&#21019;&#24314;&#25110;&#26356;&#26032;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org815ba96" class="outline-3">
+<h3 id="org815ba96"><span class="section-number-3">19.5</span> <code>node</code></h3>
+<div class="outline-text-3" id="text-19-5">
+<p>
+显示单个节点信息。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">knife node list &lt;options&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">Node &#21015;&#34920;</span>
+
+knife node show &lt;node&gt; &lt;options&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">Node &#20449;&#24687;</span>
+  -a, --attribute &lt;attr&gt;         <span class="org-comment-delimiter"># </span><span class="org-comment">&#23646;&#24615;&#65292;e.g. -a node</span>
+
+knife node run_list
+  add &lt;node&gt; <span class="org-string">"recipe[&lt;cookbook&gt;],..."</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#22686;&#21152; run list</span>
+  <span class="org-builtin">set</span> &lt;node&gt; <span class="org-string">"recipe[&lt;cookbook&gt;],..."</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#35774;&#32622; run list</span>
+  <span class="org-builtin">set</span> &lt;node&gt; <span class="org-string">"role[&lt;name&gt;]"</span>           <span class="org-comment-delimiter"># </span><span class="org-comment">&#35774;&#32622; role</span>
+
+knife node environment
+  <span class="org-builtin">set</span> &lt;node&gt; &lt;env&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#35774;&#32622;&#29615;&#22659;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9f421ec" class="outline-3">
+<h3 id="org9f421ec"><span class="section-number-3">19.6</span> <code>role</code></h3>
+<div class="outline-text-3" id="text-19-6">
+<div class="org-src-container">
+<pre class="src src-sh">knife role list             <span class="org-comment-delimiter"># </span><span class="org-comment">Role &#21015;&#34920;</span>
+knife role show &lt;name&gt;      <span class="org-comment-delimiter"># </span><span class="org-comment">Role &#20449;&#24687;</span>
+knife role from file &lt;path&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#20174;&#25991;&#20214;&#21019;&#24314;&#25110;&#26356;&#26032;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1b88ffc" class="outline-3">
+<h3 id="org1b88ffc"><span class="section-number-3">19.7</span> <code>search</code></h3>
+<div class="outline-text-3" id="text-19-7">
+<p>
+在 Chef Server 的索引中检索节点等信息。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">knife search &lt;index&gt; &lt;query&gt; &lt;options&gt;
+  &lt;index&gt;
+    client
+    environment
+    node
+    role
+    databag
+  &lt;query&gt;
+    <span class="org-string">"&lt;attr&gt;:&lt;value&gt; ..."</span> <span class="org-comment-delimiter"># </span><span class="org-comment">e.g. "role:web"</span>
+                         <span class="org-comment-delimiter"># </span><span class="org-comment">e.g. "role:web AND recipes:apache"</span>
+    <span class="org-string">"*:*"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">All</span>
+  &lt;options&gt;
+    -a, --attribute &lt;attr&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">e.g. ipaddress</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0dcef30" class="outline-3">
+<h3 id="org0dcef30"><span class="section-number-3">19.8</span> <code>ssh</code></h3>
+<div class="outline-text-3" id="text-19-8">
+<p>
+SSH 连接到节点并运行命令。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">knife ssh &lt;query&gt; &lt;command&gt; &lt;options&gt;
+  &lt;query&gt;
+    &lt;host&gt;        <span class="org-comment-delimiter"># </span><span class="org-comment">e.g. localhost</span>
+    &lt;ip&gt;          <span class="org-comment-delimiter"># </span><span class="org-comment">e.g. 127.0.0.1    </span>
+    <span class="org-string">"*:*"</span>         <span class="org-comment-delimiter"># </span><span class="org-comment">&#25152;&#26377;&#33410;&#28857;</span>
+    <span class="org-string">"role:&lt;role&gt;"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#23646;&#20110; role &#30340;&#33410;&#28857; </span>
+  &lt;options&gt;
+    -m, --manual-list <span class="org-comment-delimiter"># </span><span class="org-comment">&lt;query&gt; &#26159;&#25163;&#21160;&#30340;&#26381;&#21153;&#22120;&#21517;</span>
+    -p, --ssh-port &lt;port&gt;
+    -x, --ssh-user &lt;name&gt;
+    -i, --ssh-identity-file &lt;path&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd701515" class="outline-3">
+<h3 id="orgd701515"><span class="section-number-3">19.9</span> <code>vault</code></h3>
+<div class="outline-text-3" id="text-19-9">
+<p>
+<code>chef-vault</code> 使用公钥加密 data bag item，拥有私钥的节点能够解密。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3d0e6cf" class="outline-2">
+<h2 id="org3d0e6cf"><span class="section-number-2">20</span> <code>berks</code></h2>
+<div class="outline-text-2" id="text-20">
+</div><div id="outline-container-org405c53e" class="outline-3">
+<h3 id="org405c53e"><span class="section-number-3">20.1</span> <code>install</code></h3>
+<div class="outline-text-3" id="text-20-1">
+<div class="org-src-container">
+<pre class="src src-sh">berks install <span class="org-comment-delimiter"># </span><span class="org-comment">&#23433;&#35013;&#20381;&#36182;&#21040;&#26412;&#22320;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgea7c24b" class="outline-3">
+<h3 id="orgea7c24b"><span class="section-number-3">20.2</span> <code>upload</code></h3>
+<div class="outline-text-3" id="text-20-2">
+<p>
+上传依赖到 Chef Server。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">berks upload &lt;options&gt;
+  --force <span class="org-comment-delimiter"># </span><span class="org-comment">&#24378;&#21046;&#19978;&#20256;&#65292;&#40664;&#35748;&#21482;&#19978;&#20256;&#29256;&#26412;&#21464;&#21270;&#30340; cookbook</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org91b87d9" class="outline-2">
+<h2 id="org91b87d9"><span class="section-number-2">21</span> <code>cookstyle</code></h2>
+<div class="outline-text-2" id="text-21">
+<p>
+检查 recipe 语法和样式，基于 Ruby 静态分析器 <a href="https://github.com/rubocop-hq/rubocop">RuboCop</a> 。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">cookstyle &lt;options&gt; &lt;file&gt; ...
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge778951" class="outline-2">
+<h2 id="orge778951"><span class="section-number-2">22</span> 链接</h2>
+<div class="outline-text-2" id="text-22">
+<ol class="org-ol">
+<li><a href="https://docs.chef.io/">Chef Docs</a></li>
+<li><a href="http://www.foodcritic.io/">Foodcritic</a></li>
+<li><a href="https://kitchen.ci/">Test Kitchen</a></li>
+<li><a href="https://www.inspec.io/">InSpec</a></li>
+<li><a href="https://supermarket.chef.io/">Chef Supermarket</a></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2019-06-16 Sun 19:38</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

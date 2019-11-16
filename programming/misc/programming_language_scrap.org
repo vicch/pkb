@@ -1,0 +1,405 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Programming Language Scrap
+
+* 几种计算机语言的评价
+
+[[http://www.ruanyifeng.com/blog/2010/03/programming_language_evaluations_revised.html][Source]]
+
+编程新手都有一个同样的问题：「我应该学习哪一种语言？」。
+
+《Unix 编程艺术》（Eric Raymond 著）第十四章，对各种语言进行了评价，正好可以用来回答这个问题。下面整理了六种主要计算机语言的优缺点。读完就会知道，对于不同的任务，应该选择哪一种语言了。
+
+** C
+
+C 语言的优点是，运行效率高（接近机器语言）。它特别适用于以下几种程序：
+
+- 对运行速度要求很高的程序。
+- 与操作系统内核关系密切的程序。
+- 必须在多个操作系统上移植的程序。
+
+除此之外，学习 C 语言有一个最大的理由，那就是它能帮助我们学会 _在硬件层次上考虑问题_ 。如果你想以编程作为自己的人生事业，C 是一定要学习的。
+
+C 的最大缺点是，在编程过程中，你不得不花很多时间，考虑与你要解决的问题完全无关、且非常复杂的硬件资源管理问题。
+
+** C++
+
+C++ 在 80 年代中期推出，支持 OO，原意是作为 C 语言的取代者。但是它没能做到做一点，原因有以下几个：
+
+- 它也没有解决内存管理问题，虽然比 C 有所改善。
+- _标准化不成功。各个编译器都只支持自己选择的一个子集，导致跨平台性不如 C。_
+- _过分精细和复杂。C++ 的复杂度，超过了 C 和 OO 的复杂度之和。_
+- OO 并没有带来多少优势，反而带来了一些副作用，比如厚重的胶合层和庞大的代码体积。
+
+总的来说，C++ 的优势还是程序效率，以及面向对象编程能力，糟糕之处是它 _鼓励复杂的设计_ 。
+** Shell
+
+Shell 程序写起来很容易，对于简单的任务，开发速度很快。
+
+当程序变大时，它就不太适合了，很难维护，而且将变得非常专用（只能在你自己的机器上使用），因为 Shell 必须调用各种外部程序，无法保证每一台机器都同样安装了这些程序。另外，Shell 只能在 Unix 上使用，无法跨平台。
+
+最常见的 Shell 是 bash，它的一些语法规则很混乱，会产生很难阅读的代码。
+
+Shell 的最佳用途如下：
+
+- 执行简单的系统管理任务。
+- 编写系统启动时的初始化脚本。
+- 作为其他语言开发的程序的包装器。
+
+** Perl
+
+Perl 发布于 1987 年，基本上就是一个增强的 Shell。
+
+它的最大长处是强劲的 _文本处理能力，无与伦比的正则表达式支持，而且有全套 Unix API 的内部支持_ ，显著减少了对 C 的需求。
+
+Perl 的主要缺点是某些部分设计得非常丑陋，且无法补救，某些部分也过于复杂。当程序规模增大时，必须严格遵守约定，才能保证模块化和设计的可控性，难于维护。
+
+** Python
+
+Python 发布于 1991 年，是一种与 C 语言紧密集成的脚本语言。
+
+Python 的优点是非常干净优雅，鼓励清晰易读的代码，易学易用；提供了面向对象编程的可能，但并不把这个选择强加于设计者；具有出色的模块化特性，同 Java 一样，适合用来做需要协同开发的大型复杂项目。在很多方面，它都比 Java 简单。此外，Python 标准中包括了对许多网络协议的支持，因此也很适合网络管理任务。
+
+Python 的缺点主要是效率低下，速度缓慢。在执行速度上，它不仅无法与 C/C++ 竞争，而且也不如其他主要的脚本语言。但是，这其实并不是一个严重的问题，有时网络或磁盘的延迟，会完全抵消 Python 本身消耗的时间。而且 _因为 Python 特别容易和 C 结合起来，因此性能关键的 Python 模块，可以很方便地转化成 C 语言来提高速度_ 。
+
+总的来说，对于小型项目和大量依靠正则表达式的项目，Python 不如 Perl 的表达能力强。至于更小的项目，Python 则是大材小用，Shell 也许更适合。
+
+** Java
+
+Java 发布于 1995 年，设计目标有两个。一个是「write once, run anywhere」（一次编写，到处运行），即不依赖于特定的平台；另一个是在网页中嵌入交互程序（applet），可以在任何一个浏览器中运行。由于它的所有者 Sun 公司的一系列失误，第一个目标并没有完全实现，第二个目标则是彻底失败。但是 Java 依然在系统编程和应用编程方面非常强大，足以挑战 C 和 C++。
+
+Java 的优点是比 C++ 小巧简单，可以自动管理内存，支持类似 C 的语法和 OO 编程，与 C 程序的结合也很好。
+
+Java 的缺点是某些部分过于复杂，比如内部类和匿名类的运用会产生很混乱费解的代码；某些部分功能不完善，也无法利用操作系统提供的功能接口，比如在 Java 中读取和处理文本文件，并不像其他语言那样容易。此外，Java 配置环境和版本的混乱，也让人很头疼。
+
+总的来说，除了系统编程和某些对运行速度要求很高的编程之外，Java 都是比 C++ 更好的选择。如果和 Python 相比，Java 可能在大型项目上有优势，但是也不是绝对的。
+
+* 符号：抽象、语义
+
+[[http://mp.weixin.qq.com/s?__biz=MzIwMDgyNzUzNw==&mid=2247483658&idx=1&sn=2dde89033d2fef0cba307db9b8b5489e&scene=0#wechat_redirect][Source]]
+
+#+BEGIN_QUOTE
+符号常常比发明它们的数学家更能推广。— F·克莱茵
+#+END_QUOTE
+
+** 前言
+
+一个语言系统就是一个符号系统，其中不同符号的组合便是语言表达式。符号的出现增加了人们的思维能力，正是基于符号表达才使得逻辑推演得以达成。
+
+** 抽象
+
+数学在已有符号上抽象出简单接口，以表示不同的形式。比如数学中的求和符号正是由希腊字母演化而来：
+
+$$\Sigma \rightarrow \sum\limits_{i=1}^n X_i = X_1 + X_2 + X_3 + \dotsc$$
+
+软件开发中的接口设计和算法实现时，同样可以类比数学中的抽象，来确保整个系统的可扩展性。
+
+数学中用简单的记号表示复杂的事物，然而一旦符号越来越多，各立山头，而不属于一个统一的形式化系统，数学、物理中的符号抽象和表达经常不知所以，导致语义混乱。
+
+** 语义
+
+数学中令人误解的函数语义。我们经常用：
+
+$$y = x^2 - 2x + 1$$
+
+表示 $y$ 是 $x$ 的函数。但是，如果我们令：
+
+$$\begin{align} & f(x) = x^2 - 2x + 1 \\ & g(x) = x^2 \end{align}$$
+
+那么可能是 $y = f(x)$，也可能是 $y = g(x-1)$，而这时 $y$ 实际上是 $x-1$ 的函数。
+
+为什么会出现这种混淆？
+
+1. 因为 _传统的函数表示方法中没有显式给出函数的自变量_ ，即使是后面两种表达方法，也是把函数体和自变量的说明分开了，这种表达方式依然有问题。
+2. 传统数学中对函数的定义和调用不加严格区分 $x^2 - 2x + 1$ 既可以看成是函数 $f(x)$ 的定义，又可以看成是函数 $g(x)$ 对变量 $x-1$ 的调用。
+
+_定义和调用在概念上有很大区别，传统函数表示方法很难表达清楚这种函数结构层次上的表化_ ，更不用说多变量函数以及泛函了。
+
+** λ 演算：严格的函数运算
+
+丘奇等数学家给出了解决方法：λ 演算。基本定义形式如下：
+
+$$\lambda \langle\text{variable}\rangle. \langle\text{expression}\rangle$$
+
+用这种方法定义的函数叫 +λ 表达式+ 。
+
+比如：$\lambda x. x^2 + 2x + 1$，其中显式地指出了 $x$ 是变量。
+
+当将 λ 表达式定义应用于具体的变量值时，需要用一对括号把表达式括起来：
+
+$$(\lambda \langle\text{variable}\rangle. \langle\text{expression}\rangle)\langle\text{argument}\rangle$$
+
+比如：$(\lambda x. x^2 + 2x + 1)1$
+
+应用过程是把变量值赋值给表达式中的 $x$ ，过程如下：
+
+$$(\lambda x. x^2 - 2*x + 1)1 = 1 - 2*1 + 1 = 0$$
+
+这其实就对应着程序语言中的函数定义、参数传递、函数调用。函数式编程语言 Lisp 表达的也正是这种形式。
+
+如果有多个变量，应该按照固定的顺序排列和传递，比如：
+
+$$\lambda x. \lambda y. x + y$$
+
+调用过程：
+
+$$((\lambda x. \lambda y. 2*x + y)1)2 = (\lambda y. 2 + y)2 = 4$$
+
+计算顺序是固定的，从里层到外层，一层层归约，如果改变变量的次序，会影响返回值，比如：
+
+$$((\lambda y. \lambda x. 2*x + y)1)2 = (\lambda x. 2*x + 1)2 = 5$$
+
+这便是语义。
+
+_函数的返回值也可以是一个函数_ ，这样不同函数的层次问题也解决了，也就是传统数学中高阶函数、泛函的表示。在函数式编程语言中，函数是一等公民与此也是一致的。
+
+λ 演算之所以被程序语言学家如此推崇，正是因为 _λ 演算系统的构建过程就是一个程序语言从无到有的构建过程_ ，整个系统中任何一个复杂的 λ 表达式都是由：λ 抽象、应用和括号，粘合在一起的。
+
+下面给出 Scheme 语言对数学中求和函数的定义和调用形式，来结束吧：
+
+#+BEGIN_SRC scheme
+(define sum
+    (lambda (L)
+        (cond
+            ((eqv? L '())0)
+            (else (+ (car L) (sum (cdr L))))
+        )
+    )
+)
+
+(sum '(1 2 3))
+#+END_SRC
+* 函数式编程初探
+
+[[http://www.ruanyifeng.com/blog/2012/04/functional_programming.html][Source]]
+
+诞生 50 多年之后，函数式编程（functional programming）开始获得越来越多的关注。不仅最古老的函数式语言 Lisp 重获青春，而且 _新的函数式语言层出不穷，比如 Erlang、clojure、Scala、F# 等。目前最当红的 Python、Ruby、Javascript，对函数式编程的支持都很强，就连老牌的面向对象的 Java、面向过程的 PHP，都忙不迭地加入对匿名函数的支持。_ 越来越多的迹象表明，函数式编程已经不再是学术界的最爱，开始大踏步地在业界投入实用。也许继「面向对象编程」之后，「函数式编程」会成为下一个编程的主流范式（paradigm）。未来的程序员恐怕或多或少都必须懂一点。
+
+但是，「函数式编程」看上去比较难，缺乏通俗的入门教程，各种介绍文章都充斥着数学符号和专用术语，让人读了如坠云雾。就连最基本的问题「什么是函数式编程」，网上都搜不到易懂的回答。
+
+下面是我的「函数式编程」学习笔记，内容不涉及数学（我也不懂 Lambda Calculus），也不涉及高级特性（比如 lazy evaluation 和 currying），只求尽量简单通俗地整理和表达我所理解的「函数式编程」以及它的意义。我主要参考了 Slava Akhmechet 的 [[http://www.defmacro.org/ramblings/fp.html][Functional Programming For The Rest of Us]]。
+
+** 定义
+
+简单说，「函数式编程」是一种编程范式"（programming paradigm），也就是如何编写程序的方法论。它 _属于「结构化编程」的一种，主要思想是把运算过程尽量写成一系列嵌套的函数调用。_
+
+#+CAPTION: 举例来说，现在有一个数学表达式：
+#+BEGIN_SRC code
+(1 + 2) * 3 - 4
+#+END_SRC
+
+#+CAPTION: 传统的过程式编程，可能这样写：
+#+BEGIN_SRC js
+var a = 1 + 2;
+var b = a * 3;
+var c = b - 4;
+#+END_SRC
+
+#+CAPTION: 函数式编程要求使用函数，我们可以把运算过程定义（[[https://lostechies.com/derickbailey/2012/01/24/some-thoughts-on-functional-javascript/][Some Thoughts On Functional JavaScript]]）为不同的函数，然后写成这样：
+#+BEGIN_SRC js
+var result = subtract(multiply(add(1, 2), 3), 4);
+#+END_SRC
+
+** 特点
+
+函数式编程具有五个鲜明的特点。
+
+*** 函数是「第一等公民」
+
+所谓「第一等公民」（[[https://en.wikipedia.org/wiki/First-class_function][first-class function]]），指的是 _函数与其他数据类型地位平等，可以赋值给其他变量，也可以作为参数、传入另一个函数，或者作为其他函数的返回值。_
+
+#+CAPTION: 举例来说，下面的 =print= 变量就是一个函数，可以作为另一个函数的参数。
+#+BEGIN_SRC js
+var print = function(i) { console.log(i); };
+[1, 2, 3].forEach(print);
+#+END_SRC
+
+*** 只用「表达式」，不用「语句」
+
+_「表达式」（expression）是一个单纯的运算过程，总是有返回值；「语句」（statement）是执行某种操作，没有返回值。函数式编程要求，只使用表达式，不使用语句。_ 也就是说，每一步都是单纯的运算，而且都有返回值。
+
+原因是，函数式编程的开发动机，一开始就是为了处理运算（computation），不考虑系统的读写（I/O）。 _语句属于对系统的读写操作_ ，所以就被排斥在外。当然，实际应用中，不做 I/O 是不可能的。因此，编程过程中， _函数式编程只要求把 I/O 限制到最小，不要有不必要的读写行为，保持计算过程的单纯性。_
+
+*** 没有「副作用」
+
+所谓「副作用」（[[https://en.wikipedia.org/wiki/Side_effect_(computer_science)][side effect]]），指的是函数内部与外部互动（最典型的情况，就是修改全局变量的值），产生运算以外的其他结果。 _函数式编程强调没有「副作用」，意味着函数要保持独立，所有功能就是返回一个新的值，没有其他行为，尤其是不得修改外部变量的值。_
+
+*** 不修改状态
+
+上一点已经提到，函数式编程只是返回新的值，不修改系统变量。因此，不修改变量，也是它的一个重要特点。 在其他类型的语言中， _变量往往用来保存「状态」（state）。不修改变量，意味着状态不能保存在变量中。函数式编程使用参数保存状态，_ 最好的例子就是递归。下面的代码是一个将字符串逆序排列的函数，它演示了不同的参数如何决定了运算所处的「状态」。
+
+#+BEGIN_SRC js
+function reverse(string) {
+    if (string.length == 0) {
+        return string;
+    } else {
+        return reverse(string.substring(1, string.length)) + string.substring(0, 1);
+    }
+}
+#+END_SRC
+
+_由于使用了递归，函数式语言的运行速度比较慢，_ 这是它长期不能在业界推广的主要原因。
+
+*** 引用透明
+
+_引用透明（referential transparency），指的是函数的运行不依赖于外部变量或「状态」，只依赖于输入的参数，任何时候只要参数相同，引用函数所得到的返回值总是相同的。_ 有了前面的第三点和第四点，这点是很显然的。其他类型的语言，函数的返回值往往与系统状态有关，不同的状态之下，返回值是不一样的。这就叫「引用不透明」，很不利于观察和理解程序的行为。
+
+** 意义
+*** 代码简洁，开发快速
+
+函数式编程大量使用函数，减少了代码的重复，因此程序比较短，开发速度较快。
+
+Paul Graham 在《黑客与画家》一书中写道：同样功能的程序，极端情况下，Lisp 代码的长度可能是 C 代码的二十分之一。如果程序员每天所写的代码行数基本相同，这就意味着，「C 语言需要一年时间完成开发某个功能，Lisp 语言只需要不到3 个星期。反过来说，如果某个新功能，Lisp 语言完成开发需要三个月，C 语言需要写五年。」当然，这样的对比故意夸大了差异，但是「在一个高度竞争的市场中，即使开发速度只相差两三倍，也足以使得你永远处在落后的位置。」
+
+*** 接近自然语言，易于理解
+
+#+CAPTION: 前文将表达式 =(1 + 2) * 3 - 4= 写成函数式语言：
+#+BEGIN_SRC js
+subtract(multiply(add(1, 2), 3), 4)
+#+END_SRC
+
+#+CAPTION: 对它进行变形，基本就是自然语言的表达了：
+#+BEGIN_SRC js
+add(1, 2).multiply(3).subtract(4)
+#+END_SRC
+
+#+CAPTION: 另外的例子：
+#+BEGIN_SRC js
+merge([1, 2], [3, 4]).sort().search("2")
+#+END_SRC
+
+*** 更方便的代码管理
+
+函数式编程不依赖、也不会改变外界的状态，只要给定输入参数，返回的结果必定相同。因此， _每一个函数都可以被看做独立单元，很有利于进行单元测试和 debug，以及模块化组合。_
+
+*** 易于「并发编程」
+
+函数式编程不需要考虑死锁（deadlock），因为 _不修改变量，所以不存在「锁」线程的问题。不必担心一个线程的数据，被另一个线程修改，_ 所以可以很放心地把工作分摊到多个线程，部署并发编程（concurrency）。
+
+#+BEGIN_SRC js
+var s1 = op1();
+var s2 = op2();
+var s3 = concat(s1, s2);
+#+END_SRC
+
+由于 =s1= 和 =s2= 互不干扰，不会修改变量，谁先执行是无所谓的，所以可以放心地增加线程，把它们分配在两个线程上完成。其他类型的语言就做不到这一点，因为 =s1= 可能会修改系统状态，而 =s2= 可能会用到这些状态，所以必须保证 =s2= 在 =s1= 之后运行，自然也就不能部署到其他线程上了。
+
+多核 CPU 是将来的潮流，所以函数式编程的这个特性非常重要。
+
+*** 代码的热升级
+
+函数式编程没有副作用，只要保证接口不变，内部实现是外部无关的。所以， _可以在运行状态下直接升级代码，不需要重启，也不需要停机。_ Erlang 语言早就证明了这一点，它是瑞典爱立信公司为了管理电话系统而开发的，电话系统的升级当然是不能停机的。
+* Functors, Applicatives, And Monads (in progress)
+
+[[http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html][Source]]
+
+#+CAPTION: A simple value:
+#+BEGIN_SRC code
+2
+#+END_SRC
+
+#+CAPTION: To apply a function to this value:
+#+BEGIN_SRC code
+2 -> (+3)2 -> 5
+#+END_SRC
+
+Let's extend this by saying that any _value can be in a context_ .
+
+#+CAPTION: Think of a context as a box that you can put a value in:
+#+BEGIN_SRC code
+[2] = Just 2 <- Value and context
+#+END_SRC
+
+Applying a function to this value will _return different results depending on the context_ . This is the idea that Functors, Applicatives, Monads, Arrows etc are all based on.
+
+** Functor
+
+=Functor= is a [[http://learnyouahaskell.com/types-and-typeclasses][typeclass]]. _A =Functor= is any data type that defines how =fmap= applies to it._
+
+#+BEGIN_SRC haskell
+class Functor f where    // To make data type f a Functor
+    fmap::(a->b)->fa->fb // Data type f needs to define how fmap works with it
+#+END_SRC
+
+*** =fmap=
+
+How =fmap= works:
+
+file:../images/programming_language_scrap/01.png
+
+When a value is wrapped in a context, you can't apply a normal function to it. This is where =fmap= comes in. _=fmap= knows how to apply functions to values that are wrapped in a context._
+
+#+CAPTION: For example, to apply =(+3)= to =Just 2=:
+#+BEGIN_SRC haskell
+> fmap (+3) (Just 2)
+Just 5
+#+END_SRC
+
+file:../images/programming_language_scrap/03.png
+
+#+CAPTION: To apply =(+3)= to =Nothing=:
+#+BEGIN_SRC haskell
+> fmap (+3) Nothing
+Nothing
+#+END_SRC
+
+file:../images/programming_language_scrap/04.png
+
+*** =Maybe=
+
+#+CAPTION: The =Maybe= data type defines two related contexts:
+#+BEGIN_SRC haskell
+data Maybe a = Nothing | Just a
+#+END_SRC
+
+#+CAPTION: =Maybe= specifies how =fmap= applies to =Just= and =Nothing=:
+#+BEGIN_SRC haskell
+instance Functor Maybe where
+    fmap func (Just val) = Just (func val)
+    fmap func Nothing = Nothing
+#+END_SRC
+
+#+CAPTION: How to work with a database record in a language without =Maybe=:
+#+BEGIN_SRC python
+post = Post.find_by_id(1)
+if post:
+    return post.title
+else
+    return nil
+#+END_SRC
+
+#+CAPTION: In Haskell:
+#+BEGIN_SRC haskell
+fmap (getPostTitle) (findPost 1)
+#+END_SRC
+
+#+CAPTION: =<$>= is the infix version of =fmap=:
+#+BEGIN_SRC haskell
+getPostTitle <$> (findPost 1)
+#+END_SRC
+*** List
+
+#+CAPTION: Lists are functors too. The definition:
+#+BEGIN_SRC haskell
+instance Functor [] where
+    fmap = map
+#+END_SRC
+
+file:../images/programming_language_scrap/05.png
+
+*** Function
+
+#+CAPTION: Functions are Functors too:
+#+BEGIN_SRC haskell
+instance Functor ((->) r) where
+    fmap f g = f . g
+#+END_SRC
+
+#+CAPTION: To apply a function to another function:
+#+BEGIN_SRC haskell
+> import Control.Applicative
+> let foo = fmap (+3) (+2)
+> foo 10
+15
+#+END_SRC
+
+file:../images/programming_language_scrap/06.png

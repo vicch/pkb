@@ -1,0 +1,174 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: The C Programming Language
+
+* Preface to the First Edition
+
+C is not a "very high level" language, nor a "big" one, and is not specialized to any particular area of application.
+
+* Chapter 1: A Tutorial Introduction
+** Character Input and Output
+
+A text stream is a sequence of characters divided into lines; each line consists of zero or more characters followed by a newline character.
+
+** Arguments - Call by Value
+
+Call by value is an asset, however, not a liability. It usually leads to more compact programs with fewer extraneous variables, because parameters can be treated as conveniently initialized local variables in the called routine.
+
+* Chapter 2: Types, Operators and Expressions
+** Variable Names
+
+At least the first 31 characters of an internal name are significant. For function names and external variables, the number may be less than 31, because external names may be used by assemblers and loaders over which the language has no control. For external names, the standard guarantees uniqueness only for 6 characters and a single case. 
+
+** Arithmetic Operators
+
+The direction of truncation for =/= and the sign of the result for =%= are machine-dependent for negative operands, as is the action taken on overflow or underflow.
+
+** Type Conversions
+
+Comparisons between signed and unsigned values are machine-dependent, because they
+depend on the sizes of the various integer types.
+
+When a =double= is converted to =float=, whether the value is rounded or truncated is implementation dependent.
+
+** Precedence and Order of Evaluation
+
+_Function calls, nested assignment statements, and increment and decrement operators_ cause "side effects" ¡ª some _variable is changed as a by-product of the evaluation_ of an expression.
+
+One unhappy situation is typified by the statement =a[i] = i++=, compilers can interpret this in different ways.
+
+The moral is that _writing code that depends on order of evaluation is a bad programming practice in any language_. 
+
+* Chapter 3: Control Flow
+** Loops - =while= and =for=
+
+Shell sort: the basic idea of this sorting algorithm is that in early stages, far-apart elements are compared, rather than adjacent ones as in simpler interchange sorts. This tends to eliminate large amounts of disorder quickly, so later stages have less work to do. The interval between compared elements is gradually decreased to one.
+
+#+BEGIN_SRC c
+void shellsort(int v[], int n)
+{
+    int gap, i, j, temp;
+    for (gap = n/2; gap > 0; gap /= 2)
+        for (i = gap; i < n; i++)
+            for (j = i-gap; j >= 0 && v[j] > v[j+gap]; j -= gap) {
+                temp = v[j];
+                v[j] = v[j+gap];
+                v[j+gap] = temp;
+            }
+}
+#+END_SRC
+
+** =goto= and Labels
+
+C provides the infinitely-abusable =goto= statement, and labels to branch to.
+
+* Chapter 4: Functions and Program Structure
+
+A program may reside in one or more source files. Source files may be _compiled separately and loaded together_, along with previously compiled functions from libraries.
+
+The ANSI standard requires that there be only one definition of each external object.
+
+** Basics of Functions
+
+If a function fails to return a value, its "value" is certain to be garbage.
+
+** Functions Returning Non-integers
+
+If =atof= itself and the call to it in =main= have inconsistent types in the same source file, the error will be detected by the compiler. But if =atof= were compiled separately, the mismatch would not be detected, =atof= would return a =double= that =main= would treat as an =int=, and meaningless answers would result.
+
+If a name that has not been previously declared occurs in an expression and is followed by a left parentheses, it is declared by context to be a function name, the function is assumed to return an =int=, and nothing is assumed about its arguments. Furthermore, if a function declaration does not include arguments, that too is taken to mean that nothing is to be assumed about the arguments; all parameter checking is turned off.
+
+** External Variables
+
+Reverse Polish notation: Each operand is pushed onto a stack; when an operator arrives, the proper number of operands (two for binary operators) is popped, the operator is applied to them, and the result is pushed back onto the stack.
+
+#+CAPTION: Reverse Polish calculator
+#+BEGIN_SRC c
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXOP 100  // Max size of operand or operator
+#define NUMBER '0' // signal that a number was found
+
+int getop(char []);
+void push(double);
+double pop(void);
+
+int main()
+{
+    int type;
+    double op2;
+    char s[MAXOP];
+
+    while ((type = getop(s)) != EOF) {
+        switch (type) {
+            case NUMBER:
+                push(atof(s));
+                break;
+            case '+':
+                push(pop() + pop());
+                break;
+            case '*':
+                push(pop() * pop());
+                break;
+            case '-':
+                op2 = pop();
+                push(pop() - op2);
+                break;
+            case '/':
+                op2 = pop();
+                if (op2 != 0.0)
+                    push(pop() / op2);
+                else
+                    printf("error: zero divisor\n");
+                break;
+            case '\n':
+                printf("\t%.8g\n", pop());
+                break;
+            default:
+                printf("error: unknown command %s\n", s);
+                break;
+        }
+    }
+    return 0;
+}
+
+// getop()
+#include <ctype.h>
+
+int getch(void);
+void ungetch(int);
+
+int getop(char s[])
+{
+    int i, c;
+
+    while ((s[0] = c = getch()) == ' ' || c == '\t');
+
+    s[1] = '\0';
+    if (!isdigit(c) && c != '.')
+        return c; // Not a number
+    
+    i = 0;
+    if (isdigit(c)) // Collect integer part
+        while (isdigit(s[++i] = c = getch()));
+    if (c == '.') // Collect fraction
+        while (isdigit(s[++i] = c = getch()));
+
+    s[i] = '\0';
+    if (c != EOF)
+        ungetch(c);
+    
+    return NUMBER;
+}
+#+END_SRC
+
+* Chapter 5
+** Pointers to Functions
+
+A sort often consists of three parts:
+
+- a comparison that determines the ordering of any pair of objects
+- an exchange that reverses their order
+- a sorting algorithm that makes comparisons and exchanges until the objects are in order
+
+The sorting algorithm is independent of the comparison and exchange operations, so by passing different comparison and exchange functions to it, we can arrange to sort by different criteria.

@@ -1,0 +1,2281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Shell Scripting</title>
+<!-- 2017-06-03 Sat 20:17 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Shell Scripting</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. 脚本</a>
+<ul>
+<li><a href="#sec-1-1">1.1. 执行</a></li>
+<li><a href="#sec-1-2">1.2. 头部</a></li>
+<li><a href="#sec-1-3">1.3. 退出状态码</a></li>
+<li><a href="#sec-1-4">1.4. IFS</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. 变量</a>
+<ul>
+<li><a href="#sec-2-1">2.1. 环境变量</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. 类型</a>
+<ul>
+<li><a href="#sec-3-1">3.1. 数组</a></li>
+<li><a href="#sec-3-2">3.2. 字符串</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. 表达式</a>
+<ul>
+<li><a href="#sec-4-1">4.1. <code>[]</code> 条件判断</a>
+<ul>
+<li><a href="#sec-4-1-1">4.1.1. 数值比较</a></li>
+<li><a href="#sec-4-1-2">4.1.2. 字符串比较</a></li>
+<li><a href="#sec-4-1-3">4.1.3. 文件比较</a></li>
+</ul>
+</li>
+<li><a href="#sec-4-2">4.2. <code>$()</code> 命令输出</a></li>
+<li><a href="#sec-4-3">4.3. <code>$[]</code> 数学运算</a></li>
+<li><a href="#sec-4-4">4.4. <code>${}</code> 数组</a></li>
+<li><a href="#sec-4-5">4.5. <code>(())</code> 高级数学运算</a></li>
+<li><a href="#sec-4-6">4.6. <code>[[]]</code> 字符串</a></li>
+<li><a href="#sec-4-7">4.7. Glob 表达式</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5. 语句</a>
+<ul>
+<li><a href="#sec-5-1">5.1. <code>if</code></a></li>
+<li><a href="#sec-5-2">5.2. <code>case</code></a></li>
+<li><a href="#sec-5-3">5.3. <code>for</code></a>
+<ul>
+<li><a href="#sec-5-3-1">5.3.1. 列表</a></li>
+<li><a href="#sec-5-3-2">5.3.2. C 风格 <code>for</code></a></li>
+<li><a href="#sec-5-3-3">5.3.3. 重定向输出</a></li>
+<li><a href="#sec-5-3-4">5.3.4. 示例</a></li>
+</ul>
+</li>
+<li><a href="#sec-5-4">5.4. <code>while</code></a></li>
+<li><a href="#sec-5-5">5.5. <code>until</code></a></li>
+<li><a href="#sec-5-6">5.6. <code>break</code> <code>continue</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6. 函数</a></li>
+<li><a href="#sec-7">7. 参数</a>
+<ul>
+<li><a href="#sec-7-1">7.1. 无选项参数</a>
+<ul>
+<li><a href="#sec-7-1-1">7.1.1. <code>$0</code></a></li>
+<li><a href="#sec-7-1-2">7.1.2. <code>$n</code> , <code>${n}</code></a></li>
+<li><a href="#sec-7-1-3">7.1.3. <code>$#</code></a></li>
+<li><a href="#sec-7-1-4">7.1.4. <code>$*</code> , <code>$@</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-7-2">7.2. <code>shift</code></a></li>
+<li><a href="#sec-7-3">7.3. 简单选项</a></li>
+<li><a href="#sec-7-4">7.4. 额外参数</a></li>
+<li><a href="#sec-7-5">7.5. <code>getopt</code></a></li>
+<li><a href="#sec-7-6">7.6. <code>getopts</code></a></li>
+<li><a href="#sec-7-7">7.7. 标准化选项</a></li>
+</ul>
+</li>
+<li><a href="#sec-8">8. 输入</a>
+<ul>
+<li><a href="#sec-8-1">8.1. <code>read</code> 标准输入</a></li>
+<li><a href="#sec-8-2">8.2. 文件输入</a></li>
+<li><a href="#sec-8-3">8.3. <code>/dev/tty</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-9">9. 输出</a>
+<ul>
+<li><a href="#sec-9-1">9.1. <code>echo</code></a></li>
+<li><a href="#sec-9-2">9.2. <code>printf</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-10">10. 运算</a>
+<ul>
+<li><a href="#sec-10-1">10.1. <code>expr</code></a></li>
+<li><a href="#sec-10-2">10.2. <code>bc</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-11">11. 重定向</a>
+<ul>
+<li><a href="#sec-11-1">11.1. 文件描述符</a></li>
+<li><a href="#sec-11-2">11.2. 简单重定向</a></li>
+<li><a href="#sec-11-3">11.3. <code>exec</code> 重定向</a></li>
+<li><a href="#sec-11-4">11.4. <code>tee</code></a></li>
+<li><a href="#sec-11-5">11.5. <code>/dev/null</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-12">12. 进程</a>
+<ul>
+<li><a href="#sec-12-1">12.1. 作业号</a></li>
+<li><a href="#sec-12-2">12.2. 信号</a></li>
+<li><a href="#sec-12-3">12.3. <code>trap</code> 拦截信号</a></li>
+<li><a href="#sec-12-4">12.4. 后台运行</a></li>
+</ul>
+</li>
+<li><a href="#sec-13">13. 示例</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 脚本</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Shell 脚本是保存了一组命令的 ASCII 文本文件。
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> 执行</h3>
+<div class="outline-text-3" id="text-1-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">$ sh &lt;script&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">sh &#21629;&#20196;&#25191;&#34892;</span>
+
+$ &lt;script&gt;    <span class="org-comment-delimiter"># </span><span class="org-comment">&#30452;&#25509;&#25191;&#34892;&#65292;&#38656;&#35201;&#65306;</span>
+              <span class="org-comment-delimiter"># </span><span class="org-comment">&#25991;&#20214;&#25152;&#22312;&#30446;&#24405;&#22312; PATH &#29615;&#22659;&#21464;&#37327;&#20013;</span>
+              <span class="org-comment-delimiter"># </span><span class="org-comment">&#25991;&#20214;&#26377;&#25191;&#34892;&#26435;&#38480;</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> 头部</h3>
+<div class="outline-text-3" id="text-1-2">
+<div class="org-src-container">
+<label class="org-src-name">指定要使用的 Shell</label>
+<pre class="src src-sh"><span class="org-comment-delimiter">#</span><span class="org-comment">!/bin/</span><span class="org-keyword">bash</span>
+<span class="org-comment-delimiter">#</span><span class="org-comment">!/bin/sh</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> 退出状态码</h3>
+<div class="outline-text-3" id="text-1-3">
+<div class="org-src-container">
+<label class="org-src-name">查看上一个命令（脚本）的退出状态码</label>
+<pre class="src src-sh"><span class="org-builtin">echo</span> $<span class="org-variable-name">?</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">设定脚本的退出状态码</label>
+<pre class="src src-sh"><span class="org-keyword">exit</span> &lt;code&gt;
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> 退出状态码参考值</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>0</code></th>
+<th scope="col" class="left">成功结束</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>1</code></td>
+<td class="left">通用未知错误</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>2</code></td>
+<td class="left">使用方式错误</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>126</code></td>
+<td class="left">不可执行（无权限）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>127</code></td>
+<td class="left">命令未找到</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>128</code></td>
+<td class="left">无效退出参数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>130</code></td>
+<td class="left">通过 <code>Ctrl+C</code> 终止</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>255</code></td>
+<td class="left">状态码越界</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> IFS</h3>
+<div class="outline-text-3" id="text-1-4">
+<dl class="org-dl">
+<dt> 内部字段分隔符 </dt><dd>Internal Field Separator (IFS) <br  />
+<ul class="org-ul">
+<li>默认：空格、制表符、换行符。
+</li>
+</ul>
+</dd>
+</dl>
+
+<div class="org-src-container">
+<label class="org-src-name">更改 IFS</label>
+<pre class="src src-sh">IFS.OLD=$<span class="org-variable-name">IFS</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#26356;&#25913;&#20043;&#21069;&#20445;&#23384;&#24403;&#21069;&#35774;&#32622;</span>
+<span class="org-variable-name">IFS</span>=$<span class="org-string">'\n'</span>    <span class="org-comment-delimiter"># </span><span class="org-comment">&#25351;&#23450;&#19968;&#20010;&#20998;&#38548;&#31526;</span>
+<span class="org-variable-name">IFS</span>=$<span class="org-string">'\n:;'</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">&#25351;&#23450;&#22810;&#20010;&#20998;&#38548;&#31526;</span>
+...
+<span class="org-variable-name">IFS</span>=$<span class="org-variable-name">IFS</span>.OLD <span class="org-comment-delimiter"># </span><span class="org-comment">&#35774;&#32622;&#22238;&#21407;&#20540;</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> 变量</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">&lt;var&gt;=&lt;value&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#23450;&#20041;&#65292;= &#20004;&#20391;&#26080;&#31354;&#26684;</span>
+
+$<span class="org-variable-name">var</span>   <span class="org-comment-delimiter"># </span><span class="org-comment">&#24341;&#29992;</span>
+${<span class="org-variable-name">var</span>} <span class="org-comment-delimiter"># </span><span class="org-comment">&#33457;&#25324;&#21495;&#24110;&#21161;&#35782;&#21035;&#21464;&#37327;&#21517;</span>
+<span class="org-string">"$var"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#21464;&#37327;&#20540;&#21253;&#21547;&#31354;&#26684;&#26102;</span>
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left">变量名规则</td>
+<td class="left">区分大小写</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">包含字母、数字、下划线</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">最长 20 个字符</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 环境变量</h3>
+<div class="outline-text-3" id="text-2-1">
+<div class="org-src-container">
+<label class="org-src-name">查看环境变量列表</label>
+<pre class="src src-sh"><span class="org-builtin">set</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">引用环境变量</label>
+<pre class="src src-sh"><span class="org-builtin">echo</span> $&lt;VAR&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">设置或显示环境变量</label>
+<pre class="src src-sh"><span class="org-builtin">export</span> &lt;options&gt; &lt;VAR&gt;[=&lt;value&gt;]
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> 默认环境变量</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>CDPATH</code></th>
+<th scope="col" class="left">由 <code>:</code> 分隔的目录列表，作为 <code>cd</code> 的搜多路径</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>HOME</code></td>
+<td class="left">当前用户的主目录</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>IFS</code></td>
+<td class="left">文本分隔符</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>MAIL</code></td>
+<td class="left">当前用户收件箱的文件名</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>MAILPATH</code></td>
+<td class="left">由 <code>:</code> 分隔的当前用户收件箱的文件名列表</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>OPTARG</code></td>
+<td class="left">保存 <code>getopts</code> 处理的选项的参数值</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>OPTIND</code></td>
+<td class="left">保存 <code>getopts</code> 处理的选项个数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>PATH</code></td>
+<td class="left">由 <code>:</code> 分隔的 Shell 查找命令的目录列表</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>PS1</code></td>
+<td class="left">命令行主提示符</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>PS2</code></td>
+<td class="left">命令行次提示符</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>$</code></td>
+<td class="left">当前 PID</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> 类型</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> 数组</h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+<label class="org-src-name">定义</label>
+<pre class="src src-sh"><span class="org-variable-name">array</span>=(val1 val2 ...) <span class="org-comment-delimiter"># </span><span class="org-comment">&#26522;&#20030;</span>
+<span class="org-variable-name">array</span>=($(cat))        <span class="org-comment-delimiter"># </span><span class="org-comment">&#20351;&#29992;&#21629;&#20196;&#36755;&#20986;</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">遍历</label>
+<pre class="src src-sh"><span class="org-keyword">for</span> value<span class="org-keyword"> in</span> ${<span class="org-variable-name">array</span>[@]}; <span class="org-keyword">do</span>
+    ...
+<span class="org-keyword">done</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">分片</label>
+<pre class="src src-sh">${<span class="org-variable-name">array</span>[@]:&lt;start&gt;:&lt;count&gt;}
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">替换字符</label>
+<pre class="src src-sh">${<span class="org-variable-name">array</span>[@]/&lt;pattern&gt;/&lt;replacement&gt;}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> 字符串</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+字符串实际上是字符数组。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name">子字符串</label>
+<pre class="src src-sh">${&lt;string&gt;:&lt;start&gt;:&lt;length&gt;}
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例：替换指定位置的字符</label>
+<pre class="src src-sh"><span class="org-variable-name">foo</span>=<span class="org-string">"${foo:0:9}x${foo:10}"</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例：删除最后一个字符</label>
+<pre class="src src-sh"><span class="org-variable-name">foo</span>=${<span class="org-variable-name">foo</span>%?}
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 表达式</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> <code>[]</code> 条件判断</h3>
+<div class="outline-text-3" id="text-4-1">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">if </span><span class="org-builtin">test</span> &lt;cond&gt;
+<span class="org-keyword">if</span> [ &lt;cond&gt; ]  <span class="org-comment-delimiter"># </span><span class="org-comment">&#31616;&#20889;&#65292;&#26041;&#25324;&#21495;&#20869;&#20004;&#20391;&#24517;&#39035;&#26377;&#31354;&#26684;</span>
+
+<span class="org-keyword">if</span> [ &lt;cond&gt; ] &amp;&amp; [ &lt;cond&gt; ] <span class="org-comment-delimiter"># </span><span class="org-comment">&#19982;</span>
+<span class="org-keyword">if</span> [ &lt;cond&gt; ] || [ &lt;cond&gt; ] <span class="org-comment-delimiter"># </span><span class="org-comment">&#25110;</span>
+<span class="org-keyword">if</span> [ <span class="org-negation-char">!</span> &lt;cond&gt; ]             <span class="org-comment-delimiter"># </span><span class="org-comment">&#38750;</span>
+</pre>
+</div>
+
+<p>
+只能以命令的退出状态码是否为 0 进行判断。通过 <code>test</code> 表达式可以将其他的条件转换为退出状态码：如果条件成立，则 <code>test</code> 退出并返回状态码 0。
+</p>
+</div>
+
+<div id="outline-container-sec-4-1-1" class="outline-4">
+<h4 id="sec-4-1-1"><span class="section-number-4">4.1.1</span> 数值比较</h4>
+<div class="outline-text-4" id="text-4-1-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>-eq</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>-ne</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-gt</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-ge</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-lt</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-le</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-sh"><span class="org-keyword">while</span> [ $<span class="org-variable-name">i</span> -lt 100 ]
+...
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">数值比较无法处理变量中存储的浮点值，需要用 <code>bc</code> ，示例：</label>
+<pre class="src src-sh"><span class="org-keyword">if</span> [ $(<span class="org-builtin">echo</span> <span class="org-string">"$var &gt;= 0.1"</span> | bc) -eq 1 ]; <span class="org-keyword">then</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-1-2" class="outline-4">
+<h4 id="sec-4-1-2"><span class="section-number-4">4.1.2</span> 字符串比较</h4>
+<div class="outline-text-4" id="text-4-1-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>==</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>!=</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>&gt;</code> <code>&lt;</code></td>
+<td class="left">必须转义</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-n $&lt;var&gt;</code></td>
+<td class="left">长度非 0</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-z $&lt;var&gt;</code></td>
+<td class="left">长度为 0 或变量不存在</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+字母的大小顺序与 <code>sort</code> 不同：
+</p>
+<ul class="org-ul">
+<li><code>test</code> 使用 ASCII 顺序，大写字母 &lt; 小写字母。
+</li>
+<li><code>sort</code> 使用系统本地化语言设置中的顺序，对于英语，小写字母 &lt; 大写字母。
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-4-1-3" class="outline-4">
+<h4 id="sec-4-1-3"><span class="section-number-4">4.1.3</span> 文件比较</h4>
+<div class="outline-text-4" id="text-4-1-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>-e</code></th>
+<th scope="col" class="left">存在</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>-s</code></td>
+<td class="left">存在且非空</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-d</code> <code>-f</code></td>
+<td class="left">存在且为目录、文件</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-r</code> <code>-w</code> <code>-x</code></td>
+<td class="left">存在且可读、可写、可执行</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-O</code></td>
+<td class="left">存在且属当前用户所有</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-G</code></td>
+<td class="left">存在且默认组与当前用户相同</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>&lt;file&gt; -nt &lt;file&gt;</code></td>
+<td class="left">第一个文件比第二个新（创建日期）</td>
+</tr>
+
+<tr>
+<td class="left"><code>&lt;file&gt; -ot &lt;file&gt;</code></td>
+<td class="left">第一个文件比第二个旧（创建日期）</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> <code>$()</code> 命令输出</h3>
+<div class="outline-text-3" id="text-4-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">&lt;var&gt;=$(&lt;command&gt;)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> <code>$[]</code> 数学运算</h3>
+<div class="outline-text-3" id="text-4-3">
+<div class="org-src-container">
+
+<pre class="src src-sh">$[ &lt;expr&gt; ] <span class="org-comment-delimiter"># </span><span class="org-comment">&#25324;&#21495;&#20869;&#20004;&#20391;&#21487;&#20197;&#26080;&#31354;&#26684;</span>
+            <span class="org-comment-delimiter"># </span><span class="org-comment">&#36816;&#31639;&#31526;&#19981;&#38656;&#35201;&#36716;&#20041;</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-sh"><span class="org-variable-name">var1</span>=1
+<span class="org-variable-name">var2</span>=2
+<span class="org-variable-name">var3</span>=$[ $<span class="org-variable-name">var1</span> + $<span class="org-variable-name">var2</span> ]
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> <code>${}</code> 数组</h3>
+<div class="outline-text-3" id="text-4-4">
+<div class="org-src-container">
+<label class="org-src-name">数组分片</label>
+<pre class="src src-sh"></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-5" class="outline-3">
+<h3 id="sec-4-5"><span class="section-number-3">4.5</span> <code>(())</code> 高级数学运算</h3>
+<div class="outline-text-3" id="text-4-5">
+<p>
+可以用于 <code>if</code> 条件，或用于赋值的普通命令。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">if</span> (( &lt;expr&gt; ))
+(( &lt;var&gt; = &lt;expr&gt; ))
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>++</code> <code>--</code></th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>**</code></td>
+<td class="left">幂</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>&amp;&amp;</code>  <code>&#124;&#124;</code>  <code>!</code></td>
+<td class="left">逻辑与或非</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>&amp;</code>  <code>&#124;</code> <code>~</code></td>
+<td class="left">位与或非</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>&lt;&lt;</code> <code>&gt;&gt;</code></td>
+<td class="left">位运算</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+运算符不需要转义。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4-6" class="outline-3">
+<h3 id="sec-4-6"><span class="section-number-3">4.6</span> <code>[[]]</code> 字符串</h3>
+<div class="outline-text-3" id="text-4-6">
+<p>
+提供针对字符串的高级特性，如正则表达式模式匹配。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">[[ &lt;expr&gt; ]]
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-sh"><span class="org-keyword">if</span> [[ $<span class="org-variable-name">USER</span> == r* ]]
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-7" class="outline-3">
+<h3 id="sec-4-7"><span class="section-number-3">4.7</span> Glob 表达式</h3>
+<div class="outline-text-3" id="text-4-7">
+<p>
+Shell 使用的、简化了的正则表达式。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>*</code></th>
+<th scope="col" class="left">任意个任意字符</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>?</code></td>
+<td class="left">任意一个字符</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>[&lt;char&gt;...]</code></td>
+<td class="left">多个字符中任意一个</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>[&lt;from&gt;-&lt;to&gt;]</code></td>
+<td class="left">范围内的字符</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>\</code></td>
+<td class="left">转义字符</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> 语句</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> <code>if</code></h3>
+<div class="outline-text-3" id="text-5-1">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">if</span> [ &lt;cond&gt; ]
+<span class="org-keyword">then</span>
+    ... <span class="org-comment-delimiter"># </span><span class="org-comment">if &#21629;&#20196;&#30340;&#36864;&#20986;&#29366;&#24577;&#30721;&#20026; 0</span>
+<span class="org-keyword">elif</span> [ &lt;cond&gt; ]
+<span class="org-keyword">then</span>
+    ...
+<span class="org-keyword">else</span>
+    ... <span class="org-comment-delimiter"># </span><span class="org-comment">if &#21629;&#20196;&#30340;&#36864;&#20986;&#29366;&#24577;&#30721;&#38750; 0</span>
+<span class="org-keyword">fi</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">简写</label>
+<pre class="src src-sh"><span class="org-keyword">if</span> [ &lt;cond&gt; ]; <span class="org-keyword">then</span>
+    ...
+<span class="org-keyword">fi</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> <code>case</code></h3>
+<div class="outline-text-3" id="text-5-2">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">case</span> $&lt;var&gt;<span class="org-keyword"> in</span>
+&lt;val1&gt; | &lt;val2&gt;)
+    &lt;cmd&gt;;;
+&lt;val3&gt;)
+    &lt;cmd&gt;;;
+*)
+    &lt;cmd&gt;;; <span class="org-comment-delimiter"># </span><span class="org-comment">&#40664;&#35748;&#20998;&#25903;</span>
+<span class="org-keyword">esac</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> <code>for</code></h3>
+<div class="outline-text-3" id="text-5-3">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">for</span> &lt;var&gt;<span class="org-keyword"> in</span> &lt;list&gt;
+<span class="org-keyword">do</span>
+    &lt;cmd&gt;
+<span class="org-keyword">done</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">简写</label>
+<pre class="src src-sh"><span class="org-keyword">for</span> &lt;var&gt;<span class="org-keyword"> in</span> &lt;list&gt;; <span class="org-keyword">do</span>
+    &lt;cmd&gt;
+<span class="org-keyword">done</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-5-3-1" class="outline-4">
+<h4 id="sec-5-3-1"><span class="section-number-4">5.3.1</span> 列表</h4>
+<div class="outline-text-4" id="text-5-3-1">
+<div class="org-src-container">
+<label class="org-src-name">直接输入</label>
+<pre class="src src-sh"><span class="org-keyword">for</span> var<span class="org-keyword"> in</span> a b c d <span class="org-comment-delimiter"># </span><span class="org-comment">&#40664;&#35748;&#20998;&#38548;&#31526;&#20026;&#31354;&#26684;</span>
+                   <span class="org-comment-delimiter"># </span><span class="org-comment">&#21333;&#24341;&#21495;&#38656;&#35201;&#36716;&#20041;&#65292;&#25110;&#29992;&#21452;&#24341;&#21495;&#20998;&#38548;</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">从变量读取</label>
+<pre class="src src-sh"><span class="org-variable-name">list</span>=<span class="org-string">'a b c d'</span>
+<span class="org-keyword">for</span> var<span class="org-keyword"> in</span> $<span class="org-variable-name">list</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">从输出读取</label>
+<pre class="src src-sh"><span class="org-keyword">for</span> var<span class="org-keyword"> in</span> <span class="org-sh-quoted-exec">`cat file`</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">遍历目录</label>
+<pre class="src src-sh"><span class="org-keyword">for</span> file<span class="org-keyword"> in</span> path/*; <span class="org-keyword">do</span>      <span class="org-comment-delimiter"># </span><span class="org-comment">&#30446;&#24405;&#65288;&#25991;&#20214;&#65289;&#21015;&#34920;&#20351;&#29992; glob &#34920;&#36798;&#24335;</span>
+    <span class="org-keyword">if</span> [ -d <span class="org-string">"$file"</span> ]; <span class="org-keyword">then</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#25991;&#20214;&#21517;&#20013;&#21487;&#33021;&#26377;&#31354;&#26684;&#65292;&#38656;&#29992;&#24341;&#21495;&#20998;&#38548;</span>
+
+<span class="org-keyword">for</span> file<span class="org-keyword"> in</span> path1/* path2/* <span class="org-comment-delimiter"># </span><span class="org-comment">&#21487;&#20197;&#20351;&#29992;&#22810;&#20010;&#34920;&#36798;&#24335;</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-3-2" class="outline-4">
+<h4 id="sec-5-3-2"><span class="section-number-4">5.3.2</span> C 风格 <code>for</code></h4>
+<div class="outline-text-4" id="text-5-3-2">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">for</span> (( &lt;var&gt;=&lt;start&gt;; &lt;cond&gt;; &lt;iter&gt; ))
+<span class="org-comment-delimiter">## </span><span class="org-comment">&#31034;&#20363;</span>
+<span class="org-keyword">for</span> (( <span class="org-variable-name">i</span>=1; i&lt;=10; i++ ))
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>给变量赋值可以有空格。
+</li>
+<li>条件中的变量不以 <code>$</code> 开头。
+</li>
+<li>迭代过程不是 <code>expr</code> 表达式格式。
+</li>
+</ul>
+
+<div class="org-src-container">
+<label class="org-src-name">可以使用多个变量，但条件只能有一个：</label>
+<pre class="src src-sh"><span class="org-keyword">for</span> (( <span class="org-variable-name">a</span>=1, <span class="org-variable-name">b</span>=10; a&lt;=10; a++, b-- ))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-3-3" class="outline-4">
+<h4 id="sec-5-3-3"><span class="section-number-4">5.3.3</span> 重定向输出</h4>
+<div class="outline-text-4" id="text-5-3-3">
+<div class="org-src-container">
+<label class="org-src-name">结果重定向到文件：</label>
+<pre class="src src-sh"><span class="org-keyword">for</span> ...
+...
+<span class="org-keyword">done</span> &gt; file
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-3-4" class="outline-4">
+<h4 id="sec-5-3-4"><span class="section-number-4">5.3.4</span> 示例</h4>
+<div class="outline-text-4" id="text-5-3-4">
+<div class="org-src-container">
+<label class="org-src-name">数值补齐，0 到 10 补齐两位：</label>
+<pre class="src src-sh"><span class="org-keyword">for</span> i<span class="org-keyword"> in</span> $(seq -f <span class="org-string">"%02g"</span> 0 10)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5-4" class="outline-3">
+<h3 id="sec-5-4"><span class="section-number-3">5.4</span> <code>while</code></h3>
+<div class="outline-text-3" id="text-5-4">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">while</span> [&lt;cond&gt;]
+<span class="org-keyword">do</span>
+    &lt;cmd&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#27979;&#35797;&#36864;&#20986;&#29366;&#24577;&#30721;&#20026; 0 &#26102;&#25191;&#34892;</span>
+<span class="org-keyword">done</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">使用多个测试</label>
+<pre class="src src-sh"><span class="org-keyword">while</span> [&lt;cond&gt;]
+    &lt;cond&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#27599;&#20010;&#27979;&#35797;&#21333;&#29420;&#19968;&#34892;</span>
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>只有最后一个测试的退出状态码会被用来判断循环的结束。
+</li>
+<li>每次（包括最后一次）循环开始时，所有测试命令都会被执行。
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-5-5" class="outline-3">
+<h3 id="sec-5-5"><span class="section-number-3">5.5</span> <code>until</code></h3>
+<div class="outline-text-3" id="text-5-5">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">until</span> &lt;cond&gt;
+<span class="org-keyword">do</span>
+    &lt;cmd&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#27979;&#35797;&#36864;&#20986;&#29366;&#24577;&#30721;&#38750; 0&#65288;&#26465;&#20214;&#19981;&#25104;&#31435;&#65289;&#26102;&#25191;&#34892;</span>
+<span class="org-keyword">done</span>
+</pre>
+</div>
+
+<p>
+可以使用多个测试，规则同 <code>while</code> 。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 3:</span> 逻辑对比</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left"><b>条件成立</b></th>
+<th scope="col" class="left"><b>条件不成立</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>while</code></td>
+<td class="left">运行命令</td>
+<td class="left">不运行命令</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>until</code></td>
+<td class="left">不运行命令</td>
+<td class="left">运行命令</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-5-6" class="outline-3">
+<h3 id="sec-5-6"><span class="section-number-3">5.6</span> <code>break</code> <code>continue</code></h3>
+<div class="outline-text-3" id="text-5-6">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">break</span> &lt;n&gt;    <span class="org-comment-delimiter"># </span><span class="org-comment">&#40664;&#35748;&#20026; 1</span>
+<span class="org-keyword">continue</span> &lt;n&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#40664;&#35748;&#20026; 1</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> 函数</h2>
+<div class="outline-text-2" id="text-6">
+<div class="org-src-container">
+
+<pre class="src src-sh">&lt;name&gt; () {
+    ... <span class="org-comment-delimiter"># </span><span class="org-comment">&#21442;&#25968;&#36890;&#36807; $1, $2... &#24341;&#29992;</span>
+    <span class="org-keyword">return</span> &lt;value&gt;
+}
+
+&lt;name&gt; &lt;arg1&gt; &lt;arg2&gt; ... <span class="org-comment-delimiter"># </span><span class="org-comment">&#35843;&#29992;</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> 参数</h2>
+<div class="outline-text-2" id="text-7">
+<div class="org-src-container">
+
+<pre class="src src-sh">./script -a -b param1 -c -d -- param2 param3
+    -a     <span class="org-comment-delimiter"># </span><span class="org-comment">&#36873;&#39033;</span>
+    param1 <span class="org-comment-delimiter"># </span><span class="org-comment">&#36873;&#39033;&#21442;&#25968;</span>
+    param2 <span class="org-comment-delimiter"># </span><span class="org-comment">&#39069;&#22806;&#21442;&#25968;</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> 无选项参数</h3>
+<div class="outline-text-3" id="text-7-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left"><code>$0</code></td>
+<td class="left">脚本名</td>
+</tr>
+
+<tr>
+<td class="left"><code>$n</code> , <code>${n}</code></td>
+<td class="left">输入参数</td>
+</tr>
+
+<tr>
+<td class="left"><code>$#</code></td>
+<td class="left">输入参数个数</td>
+</tr>
+
+<tr>
+<td class="left"><code>$*</code></td>
+<td class="left">所有输入参数，合并为一个值</td>
+</tr>
+
+<tr>
+<td class="left"><code>$@</code></td>
+<td class="left">所有输入参数，作为独立的值</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+输入参数用空格分隔，包含空格的字符串需要用 <code>""</code> 包围起来
+</p>
+
+<p>
+引用输入参数前，最好检查其是否存在
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">if</span> [ -n $<span class="org-variable-name">1</span> ]; <span class="org-keyword">then</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-7-1-1" class="outline-4">
+<h4 id="sec-7-1-1"><span class="section-number-4">7.1.1</span> <code>$0</code></h4>
+<div class="outline-text-4" id="text-7-1-1">
+<p>
+<code>$0</code> 包含执行时输入的路径，用 <code>basename</code> 去除路径
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-variable-name">name</span>=<span class="org-sh-quoted-exec">`basename $0`</span>
+</pre>
+</div>
+
+<p>
+用一个脚本，通过不同的执行命令，完成不同功能
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">## </span><span class="org-comment">&#33050;&#26412;&#21517;&#65306;calc</span>
+<span class="org-variable-name">name</span>=<span class="org-sh-quoted-exec">`basename $0`</span>
+<span class="org-keyword">if</span> [ $<span class="org-variable-name">name</span> = <span class="org-string">"add"</span> ]; <span class="org-keyword">then</span>
+    <span class="org-builtin">echo</span> $[ $<span class="org-variable-name">1</span> + $<span class="org-variable-name">2</span> ]
+<span class="org-keyword">elif</span> [ $<span class="org-variable-name">name</span> = <span class="org-string">"min"</span> ]; <span class="org-keyword">then</span>
+    <span class="org-builtin">echo</span> $[ $<span class="org-variable-name">1</span> - $<span class="org-variable-name">2</span> ]
+<span class="org-keyword">fi</span>
+
+$ ln -s calc add
+$ ln -s calc min
+$ ./add 1 2
+3
+$ ./min 2 1
+1
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7-1-2" class="outline-4">
+<h4 id="sec-7-1-2"><span class="section-number-4">7.1.2</span> <code>$n</code> , <code>${n}</code></h4>
+<div class="outline-text-4" id="text-7-1-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left"><code>$n</code></td>
+<td class="left">1 &lt;= n &lt;=9</td>
+</tr>
+
+<tr>
+<td class="left"><code>${n}</code></td>
+<td class="left">n &gt; 9</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-7-1-3" class="outline-4">
+<h4 id="sec-7-1-3"><span class="section-number-4">7.1.3</span> <code>$#</code></h4>
+<div class="outline-text-4" id="text-7-1-3">
+<p>
+检验参数总数
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">if</span> [ $<span class="org-variable-name">#</span> -ne 2 ]; <span class="org-keyword">then</span>
+    <span class="org-builtin">echo</span> Param not correct
+</pre>
+</div>
+
+<p>
+引用最后一个参数
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-builtin">echo</span> ${<span class="org-variable-name">!</span>#} <span class="org-comment-delimiter"># </span><span class="org-comment">{} &#20869;&#19981;&#21487;&#20197;&#29992; $</span>
+</pre>
+</div>
+
+<p>
+当没有输入参数时， <code>${!#}</code> 是脚本名
+</p>
+</div>
+</div>
+<div id="outline-container-sec-7-1-4" class="outline-4">
+<h4 id="sec-7-1-4"><span class="section-number-4">7.1.4</span> <code>$*</code> , <code>$@</code></h4>
+<div class="outline-text-4" id="text-7-1-4">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">for</span> param<span class="org-keyword"> in</span> $<span class="org-variable-name">*</span>; <span class="org-keyword">do</span>
+    <span class="org-builtin">echo</span> $<span class="org-variable-name">param</span>
+<span class="org-keyword">done</span>
+<span class="org-keyword">for</span> param<span class="org-keyword"> in</span> $<span class="org-variable-name">@</span>; <span class="org-keyword">do</span>
+    <span class="org-builtin">echo</span> $<span class="org-variable-name">param</span>
+<span class="org-keyword">done</span>
+
+$ ./test a b c
+a b c
+a
+b
+c
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7-2" class="outline-3">
+<h3 id="sec-7-2"><span class="section-number-3">7.2</span> <code>shift</code></h3>
+<div class="outline-text-3" id="text-7-2">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-builtin">shift</span> &lt;n&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#40664;&#35748;&#20026; 1</span>
+</pre>
+</div>
+
+<p>
+执行 <code>shift</code> 命令后
+</p>
+<ul class="org-ul">
+<li><code>$n-1</code> 将对应之前的 <code>$n</code> 的值
+</li>
+<li><code>$n-1</code> 原本的值会被丢弃
+</li>
+<li><code>$0</code> 不变
+</li>
+</ul>
+
+<p>
+在不知道个数的情况下遍历输入参数，即只操作 <code>$1</code>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">while</span> [ -n <span class="org-string">"$1"</span> ]; <span class="org-keyword">do</span>
+    <span class="org-builtin">echo</span> $<span class="org-variable-name">1</span>
+    <span class="org-builtin">shift</span>
+<span class="org-keyword">done</span>
+</pre>
+</div>
+
+<p>
+<code>shift</code> 后数字不为 1 时，一次进行多位参数移动
+</p>
+</div>
+</div>
+<div id="outline-container-sec-7-3" class="outline-3">
+<h3 id="sec-7-3"><span class="section-number-3">7.3</span> 简单选项</h3>
+<div class="outline-text-3" id="text-7-3">
+<p>
+将选项当做参数处理，检查是否是预期的选项之一
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">while</span> [ -n <span class="org-string">"$1"</span> ]; <span class="org-keyword">do</span>
+    <span class="org-keyword">case</span> $<span class="org-variable-name">1</span><span class="org-keyword"> in</span>
+    -a) ...
+    *) ...
+    esca
+    <span class="org-builtin">shift</span>
+<span class="org-keyword">done</span>
+</pre>
+</div>
+
+<p>
+处理带参数选项
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">while</span> [ -n <span class="org-string">"$1"</span> ]; <span class="org-keyword">do</span>
+    <span class="org-keyword">case</span> $<span class="org-variable-name">1</span><span class="org-keyword"> in</span>
+    -a) ...
+    -b) <span class="org-variable-name">param</span>=<span class="org-string">"$2"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#39044;&#26399;&#24102;&#19968;&#20010;&#21442;&#25968;&#30340;&#36873;&#39033;</span>
+        <span class="org-builtin">shift</span> 2;;
+    ...
+    <span class="org-keyword">esac</span>
+    <span class="org-builtin">shift</span>
+<span class="org-keyword">done</span>
+$ ./test -a -b value
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7-4" class="outline-3">
+<h3 id="sec-7-4"><span class="section-number-3">7.4</span> 额外参数</h3>
+<div class="outline-text-3" id="text-7-4">
+<p>
+用 <code>--</code> 分离选项和参数部分
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">while</span> [ -n <span class="org-string">"$1"</span> ]; <span class="org-keyword">do</span>
+    <span class="org-keyword">case</span> $<span class="org-variable-name">1</span><span class="org-keyword"> in</span>
+    -a) ...
+    --) <span class="org-builtin">shift</span>
+        <span class="org-keyword">break</span> ;; <span class="org-comment-delimiter"># </span><span class="org-comment">&#36339;&#20986;&#20043;&#21069;&#31227;&#20301;&#19968;&#27425;</span>
+    *) ...
+    esca
+    <span class="org-builtin">shift</span>
+<span class="org-keyword">done</span>
+<span class="org-keyword">for</span> param<span class="org-keyword"> in</span> $<span class="org-variable-name">@</span>; <span class="org-keyword">do</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#22788;&#29702;&#21097;&#20313;&#37096;&#20998;&#65292;&#21363;&#39069;&#22806;&#21442;&#25968;</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7-5" class="outline-3">
+<h3 id="sec-7-5"><span class="section-number-3">7.5</span> <code>getopt</code></h3>
+<div class="outline-text-3" id="text-7-5">
+<div class="org-src-container">
+
+<pre class="src src-sh">getopt &lt;options&gt; &lt;optstring&gt; &lt;params&gt;
+    -q <span class="org-comment-delimiter"># </span><span class="org-comment">&#24573;&#30053;&#38169;&#35823;&#28040;&#24687;</span>
+</pre>
+</div>
+
+<p>
+<code>getopt</code> 解析输入参数列表，以容易处理的格式输出
+</p>
+<ul class="org-ul">
+<li>识别有效的选项，无效选项会输出错误消息
+</li>
+<li>识别选项的参数
+</li>
+<li>将合并的选项拆分
+</li>
+<li>将额外参数分离出来
+</li>
+</ul>
+
+<p>
+<code>&lt;optstring&gt;</code> 定义：
+</p>
+<ul class="org-ul">
+<li>有效的选项字母
+</li>
+<li>哪些选项预期有参数，选项字母后加 <code>:</code>
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">$ getopt ab:cd -a -b v1 -cd v2 v3
+-a -b v1 -c -d -- v2 v3 <span class="org-comment-delimiter"># </span><span class="org-comment">&#35299;&#26512;&#32467;&#26524;</span>
+</pre>
+</div>
+
+<p>
+脚本中使用 <code>getopt</code> 处理输入参数列表
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-builtin">set</span> -- <span class="org-sh-quoted-exec">`getopt -q ab:cd "$@"`</span>
+</pre>
+</div>
+
+<p>
+getopt 不能处理双引号内带空格的参数，会按照空格分隔开（需要 <code>getopts</code> 解决这个问题 ）
+</p>
+</div>
+</div>
+<div id="outline-container-sec-7-6" class="outline-3">
+<h3 id="sec-7-6"><span class="section-number-3">7.6</span> <code>getopts</code></h3>
+<div class="outline-text-3" id="text-7-6">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-builtin">getopts</span> &lt;optstring&gt; &lt;var&gt;
+</pre>
+</div>
+
+<p>
+一次处理一个输入选项（和参数）
+</p>
+<ul class="org-ul">
+<li>选项保存在 <code>&lt;var&gt;</code> ；
+</li>
+<li>选项的参数保存在 <code>OPTARG</code> 环境变量；
+</li>
+<li>已处理的选项（和参数）个数保存在 <code>OPTIND</code> 环境变量；
+</li>
+<li>可以识别双引号内包含空格的参数；
+</li>
+<li>选项字母和参数值之间可以不加空格，eg. <code>-a1</code> ；
+</li>
+</ul>
+
+<p>
+<code>&lt;optstring&gt;</code> 语法同 <code>getopt</code>
+</p>
+<ul class="org-ul">
+<li>以 <code>:</code> 开头可以忽略错误消息；
+</li>
+<li>未定义的选项字母会转化成 <code>?</code> ；
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">while </span><span class="org-builtin">getopts</span> :ab:c opt
+<span class="org-keyword">do</span>
+    <span class="org-keyword">case</span> <span class="org-string">"$opt"</span><span class="org-keyword"> in</span>
+    a) ...             <span class="org-comment-delimiter"># </span><span class="org-comment">getopts &#20250;&#31227;&#38500;&#36873;&#39033;&#21069;&#30340; -</span>
+    b) <span class="org-builtin">echo</span> $<span class="org-variable-name">OPTARG</span> ;;
+    ...
+    <span class="org-keyword">esac</span>
+<span class="org-keyword">done</span>
+</pre>
+</div>
+
+<p>
+<code>OPTIND</code> 可以用于识别额外参数开始的位置
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">while </span><span class="org-builtin">getopts</span> :ab:c opt
+...
+<span class="org-keyword">done</span>
+<span class="org-builtin">shift</span> $[ $<span class="org-variable-name">OPTIND</span> - 1 ] <span class="org-comment-delimiter"># </span><span class="org-comment">&#31227;&#20301;&#21040;&#39069;&#22806;&#21442;&#25968;&#30340;&#20301;&#32622;</span>
+<span class="org-keyword">for</span> param<span class="org-keyword"> in</span> <span class="org-string">"$@"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7-7" class="outline-3">
+<h3 id="sec-7-7"><span class="section-number-3">7.7</span> 标准化选项</h3>
+<div class="outline-text-3" id="text-7-7">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>-a</code> , <code>--all</code></th>
+<th scope="col" class="left">所有对象</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>-c</code> , <code>--count</code></td>
+<td class="left">计数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-d</code> , <code>--directory</code></td>
+<td class="left">指定一个目录</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-e</code> , <code>--extend</code></td>
+<td class="left">扩展一个对象</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-f</code> , <code>--file</code></td>
+<td class="left">指定（输入）文件</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-h</code> , <code>--help</code></td>
+<td class="left">帮助</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-i</code> , <code>--insensitive</code></td>
+<td class="left">大小写不敏感</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-l</code> , <code>--long</code></td>
+<td class="left">长格式版本</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-n</code></td>
+<td class="left">非交互模式（批量操作）</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-o</code> , <code>--output</code></td>
+<td class="left">指定输出文件</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-q</code> , <code>--quiet</code></td>
+<td class="left">安静模式</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-r</code> , <code>--recursive</code></td>
+<td class="left">递归模式</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-s</code> , <code>--silent</code></td>
+<td class="left">安静模式</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-v</code> , <code>--verbose</code></td>
+<td class="left">详细输出</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-x</code> , <code>--exclude</code></td>
+<td class="left">排除</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>-y</code> , <code>--yes</code></td>
+<td class="left">对所有问题回答 yes</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> 输入</h2>
+<div class="outline-text-2" id="text-8">
+</div><div id="outline-container-sec-8-1" class="outline-3">
+<h3 id="sec-8-1"><span class="section-number-3">8.1</span> <code>read</code> 标准输入</h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+<code>read</code> 将输入保存在变量中。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-builtin">read</span> &lt;options&gt; &lt;var&gt; ...
+    -p &lt;string&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#25552;&#31034;&#25991;&#26412;</span>
+    -t &lt;second&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#26368;&#22823;&#31561;&#24453;&#36755;&#20837;&#30340;&#26102;&#38388;&#65292;&#26410;&#36755;&#20837;&#20250;&#36820;&#22238;&#38750;&#38646;&#29366;&#24577;&#30721;</span>
+    -n &lt;int&gt;    <span class="org-comment-delimiter"># </span><span class="org-comment">&#26368;&#22823;&#36755;&#20837;&#23383;&#31526;&#25968;&#65292;&#21040;&#36798;&#39044;&#35774;&#25968;&#37327;&#21518;&#19981;&#20877;&#25509;&#25910;&#36755;&#20837;</span>
+    -s          <span class="org-comment-delimiter"># </span><span class="org-comment">&#38544;&#34255;&#29992;&#25143;&#36755;&#20837;&#65288;&#23454;&#38469;&#19978;&#26159;&#25991;&#26412;&#21644;&#32972;&#26223;&#33394;&#19968;&#26679;&#65289;</span>
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>指定多个变量名：</b></th>
+<th scope="col" class="left">输入（空格分隔）和变量一一对应</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">剩余的输入保存在最后一个变量中</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>不指定变量名：</b></td>
+<td class="left">输入保存在 <code>REPLY</code> 环境变量中</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-sh"><span class="org-builtin">echo</span> <span class="org-string">"Enter your name: "</span>
+<span class="org-builtin">read</span> name
+<span class="org-builtin">echo</span> <span class="org-string">"Hello $name."</span>
+
+<span class="org-comment-delimiter">## </span><span class="org-comment">-p</span>
+<span class="org-builtin">read</span> -p <span class="org-string">"Enter your name: "</span> name
+
+<span class="org-comment-delimiter">## </span><span class="org-comment">-t</span>
+<span class="org-keyword">if </span><span class="org-builtin">read</span> -t 5 input; <span class="org-keyword">do</span>
+    ...
+<span class="org-keyword">else</span>
+    <span class="org-builtin">echo</span> <span class="org-string">"Empty input"</span>
+<span class="org-keyword">fi</span>
+
+<span class="org-comment-delimiter">## </span><span class="org-comment">-n</span>
+<span class="org-builtin">read</span> -n 1 -p <span class="org-string">"Do you want to continue [Y/N]? "</span> answer
+<span class="org-keyword">case</span> $<span class="org-variable-name">answer</span><span class="org-keyword"> in</span>
+Y | y) ...
+N | n) ...
+<span class="org-keyword">esac</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-8-2" class="outline-3">
+<h3 id="sec-8-2"><span class="section-number-3">8.2</span> 文件输入</h3>
+<div class="outline-text-3" id="text-8-2">
+<div class="org-src-container">
+<label class="org-src-name">每次读取一行</label>
+<pre class="src src-sh">cat file | <span class="org-keyword">while </span><span class="org-builtin">read</span> line
+<span class="org-keyword">do</span>
+    <span class="org-builtin">echo</span> $<span class="org-variable-name">line</span>
+<span class="org-keyword">done</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-8-3" class="outline-3">
+<h3 id="sec-8-3"><span class="section-number-3">8.3</span> <code>/dev/tty</code></h3>
+<div class="outline-text-3" id="text-8-3">
+<p>
+<code>/dev/tty</code> 打开时，会被自动重定向到一个终端窗口，可以用于读取人工输入。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">printf <span class="org-string">"Enter new password: "</span>
+stty -echo               <span class="org-comment-delimiter"># </span><span class="org-comment">&#20851;&#38381;&#33258;&#21160;&#25171;&#21360;&#36755;&#20837;&#23383;&#31526;</span>
+<span class="org-builtin">read</span> password &lt; /dev/tty <span class="org-comment-delimiter"># </span><span class="org-comment">&#20174;&#32456;&#31471;&#35835;&#21462;&#36755;&#20837;</span>
+printf <span class="org-string">"\n"</span>
+stty echo                <span class="org-comment-delimiter"># </span><span class="org-comment">&#25171;&#24320;&#33258;&#21160;&#25171;&#21360;&#36755;&#20837;&#23383;&#31526;</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> 输出</h2>
+<div class="outline-text-2" id="text-9">
+</div><div id="outline-container-sec-9-1" class="outline-3">
+<h3 id="sec-9-1"><span class="section-number-3">9.1</span> <code>echo</code></h3>
+<div class="outline-text-3" id="text-9-1">
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-builtin">echo</span> &lt;options&gt; &lt;string&gt;
+    &lt;string&gt; <span class="org-comment-delimiter"># </span><span class="org-comment">&#21487;&#20197;&#19981;&#21152;&#24341;&#21495;</span>
+    -e       <span class="org-comment-delimiter"># </span><span class="org-comment">&#35782;&#21035; \ &#36716;&#20041;&#23383;&#31526;</span>
+    -n       <span class="org-comment-delimiter"># </span><span class="org-comment">&#32467;&#23614;&#19981;&#25442;&#34892;</span>
+</pre>
+</div>
+
+<p>
+输出 tab 分割的行到文件
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-builtin">echo</span> -e <span class="org-string">"$val1\t$val2\t$val3"</span> &gt;&gt; file
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-9-2" class="outline-3">
+<h3 id="sec-9-2"><span class="section-number-3">9.2</span> <code>printf</code></h3>
+<div class="outline-text-3" id="text-9-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">printf <span class="org-string">"&lt;pattern&gt;"</span> &lt;value&gt;
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> 运算</h2>
+<div class="outline-text-2" id="text-10">
+</div><div id="outline-container-sec-10-1" class="outline-3">
+<h3 id="sec-10-1"><span class="section-number-3">10.1</span> <code>expr</code></h3>
+<div class="outline-text-3" id="text-10-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">expr &lt;expr&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-sh">expr 1 + 1
+</pre>
+</div>
+
+<p>
+一些运算符需要 <code>\</code> 转义，如 <code>|</code> <code>&gt;</code> 。
+</p>
+</div>
+</div>
+<div id="outline-container-sec-10-2" class="outline-3">
+<h3 id="sec-10-2"><span class="section-number-3">10.2</span> <code>bc</code></h3>
+<div class="outline-text-3" id="text-10-2">
+<p>
+Bash 数学运算符只支持整数运算，浮点运算需要使用内建计算器 <code>bc</code> 。 <code>bc</code> 可以将浮点值作为字符串存储进变量，但结果只能用 <code>echo</code> 显示，无法在基于数字的命令中工作，如数值比较。
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-builtin">echo</span> <span class="org-string">"&lt;options&gt;; &lt;expr&gt;"</span> | bc &lt;options&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">示例</label>
+<pre class="src src-sh"><span class="org-variable-name">var</span>=<span class="org-sh-quoted-exec">`echo "scale=4; 3.44 / 5" | bc`</span>
+<span class="org-variable-name">var</span>=<span class="org-sh-quoted-exec">`printf ".0f" $(echo "scale=2; $a * $b / 100" | bc)`</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> 重定向</h2>
+<div class="outline-text-2" id="text-11">
+<p>
+Linux 将每个对象都当做文件处理，包括输入和输出。
+</p>
+</div>
+
+<div id="outline-container-sec-11-1" class="outline-3">
+<h3 id="sec-11-1"><span class="section-number-3">11.1</span> 文件描述符</h3>
+<div class="outline-text-3" id="text-11-1">
+<ul class="org-ul">
+<li>唯一地标示会话中打开的文件对象；
+</li>
+<li>每个过程一次最多可以有 9 个文件描述符；
+</li>
+</ul>
+
+<p>
+bash 保留的文件描述符
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="right" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="right">&#xa0;</th>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">默认位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="right">0</td>
+<td class="left"><code>STDIN</code></td>
+<td class="left">键盘</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="right">1</td>
+<td class="left"><code>STDOUT</code></td>
+<td class="left">显示器</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="right">2</td>
+<td class="left"><code>STDERR</code></td>
+<td class="left">显示器</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-11-2" class="outline-3">
+<h3 id="sec-11-2"><span class="section-number-3">11.2</span> 简单重定向</h3>
+<div class="outline-text-3" id="text-11-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>&lt;</code></th>
+<th scope="col" class="left">重定向 <code>STDIN</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>&gt;</code></td>
+<td class="left">重定向 <code>STDOUT</code> ，覆盖</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>&gt;&gt;</code></td>
+<td class="left">重定向 <code>STDOUT</code> ，追加</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>2&gt;</code></td>
+<td class="left">重定向 <code>STDERR</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>&amp;&gt;</code></td>
+<td class="left">重定向 <code>STDOUT</code> 和 <code>STDERR</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<code>STDERR</code> 比 <code>STDOUT</code> 优先级高，合并重定向时 <code>STDERR</code> 输出在前
+</p>
+
+<p>
+脚本中，临时重定向
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-builtin">echo</span> <span class="org-string">'...'</span> &gt;&amp;2
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-11-3" class="outline-3">
+<h3 id="sec-11-3"><span class="section-number-3">11.3</span> <code>exec</code> 重定向</h3>
+<div class="outline-text-3" id="text-11-3">
+<p>
+<code>exec</code> 设置的重定向在脚本执行期间一直有效。
+</p>
+
+<p>
+标准文件描述符
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">exec</span> 1&gt;file
+<span class="org-keyword">exec</span> 2&gt;log
+
+<span class="org-keyword">exec</span> 0&lt; file
+<span class="org-keyword">while </span><span class="org-builtin">read</span> line
+...
+</pre>
+</div>
+
+<p>
+自定义文件描述符
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">exec</span> 3&gt;file
+<span class="org-builtin">echo</span> <span class="org-string">'...'</span> &gt;&amp;3
+</pre>
+</div>
+
+<p>
+文件描述符之间切换
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">exec</span> 3&gt;&amp;1   <span class="org-comment-delimiter"># </span><span class="org-comment">3 &#25351;&#21521;&#26174;&#31034;&#22120;&#65288;&#40664;&#35748;&#26631;&#20934;&#36755;&#20986;&#65289;</span>
+<span class="org-keyword">exec</span> 1&gt;file <span class="org-comment-delimiter"># </span><span class="org-comment">&#26631;&#20934;&#36755;&#20986;&#25351;&#21521;&#25991;&#20214;</span>
+<span class="org-builtin">echo</span> <span class="org-string">'...'</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">&#36755;&#20986;&#21040;&#25991;&#20214;</span>
+<span class="org-keyword">exec</span> 1&gt;&amp;3   <span class="org-comment-delimiter"># </span><span class="org-comment">&#26631;&#20934;&#36755;&#20986;&#25351;&#22238;&#26174;&#31034;&#22120;</span>
+<span class="org-builtin">echo</span> <span class="org-string">'...'</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">&#36755;&#20986;&#21040;&#26174;&#31034;&#22120;</span>
+
+<span class="org-keyword">exec</span> 4&lt;&amp;0       <span class="org-comment-delimiter"># </span><span class="org-comment">4 &#25351;&#21521;&#38190;&#30424;&#65288;&#40664;&#35748;&#26631;&#20934;&#36755;&#20837;&#65289;</span>
+<span class="org-keyword">exec</span> 0&lt; file    <span class="org-comment-delimiter"># </span><span class="org-comment">&#26631;&#20934;&#36755;&#20837;&#25351;&#21521;&#25991;&#20214;</span>
+<span class="org-keyword">while </span><span class="org-builtin">read</span> line <span class="org-comment-delimiter"># </span><span class="org-comment">&#20174;&#25991;&#20214;&#36755;&#20837;</span>
+...
+<span class="org-keyword">exec</span> 0&lt;&amp;4       <span class="org-comment-delimiter"># </span><span class="org-comment">&#26631;&#20934;&#36755;&#20837;&#25351;&#22238;</span>
+<span class="org-builtin">read</span> ...        <span class="org-comment-delimiter"># </span><span class="org-comment">&#20174;&#38190;&#30424;&#36755;&#20837;</span>
+</pre>
+</div>
+
+<p>
+读写文件描述符：
+</p>
+<ul class="org-ul">
+<li>将同一个文件描述符作为输入和输出；
+</li>
+<li>读写操作会从 shell 维护的文件指针的位置进行，容易造成混乱；
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">exec</span> 3&lt;&gt; file
+</pre>
+</div>
+
+<p>
+关闭文件描述符（关闭之后再次使用会报错）
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">exec</span> 3&gt;&amp;-
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-11-4" class="outline-3">
+<h3 id="sec-11-4"><span class="section-number-3">11.4</span> <code>tee</code></h3>
+<div class="outline-text-3" id="text-11-4">
+<p>
+将输出重定向到指定文件，同时不影响 <code>STDOUT</code> ， <code>STDOUT</code> 依旧输出。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">tee &lt;options&gt; &lt;file&gt;
+    -a, --append
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-11-5" class="outline-3">
+<h3 id="sec-11-5"><span class="section-number-3">11.5</span> <code>/dev/null</code></h3>
+<div class="outline-text-3" id="text-11-5">
+<p>
+将输出重定向到 <code>/dev/null</code> ，数据会被丢弃。
+</p>
+
+<p>
+获得命令的状态码，而忽略所有输出和错误信息。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">if</span> grep text file &gt; /dev/null
+<span class="org-keyword">then</span>
+    <span class="org-builtin">echo</span> <span class="org-string">"Found"</span>
+<span class="org-keyword">else</span>
+    <span class="org-builtin">echo</span> <span class="org-string">"Not found"</span>
+<span class="org-keyword">fi</span>
+</pre>
+</div>
+
+<p>
+快速移除文件中的数据，不需要删除再创建。
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh">cat /dev/null &gt; file
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> 进程</h2>
+<div class="outline-text-2" id="text-12">
+</div><div id="outline-container-sec-12-1" class="outline-3">
+<h3 id="sec-12-1"><span class="section-number-3">12.1</span> 作业号</h3>
+<div class="outline-text-3" id="text-12-1">
+<p>
+shell 中每个进程分配的唯一号码，位于 <code>[]</code> 中
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-comment-delimiter">## </span><span class="org-comment">Ctrl+Z</span>
+[1]+ Stopped
+$ kill -9 ...
+[1]+ Killed
+<span class="org-comment-delimiter">## </span><span class="org-comment">&#21518;&#21488;&#36827;&#31243;&#32467;&#26463;</span>
+[1]+ Done
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-12-2" class="outline-3">
+<h3 id="sec-12-2"><span class="section-number-3">12.2</span> 信号</h3>
+<div class="outline-text-3" id="text-12-2">
+<p>
+bash 收到 <code>SIGHUP</code> 信号
+</p>
+<ol class="org-ol">
+<li>将信号传给 shell 启动的所有进程（脚本）
+</li>
+<li>退出
+</li>
+</ol>
+
+<p>
+bash 收到 <code>SIGINT</code> 信号
+</p>
+<ol class="org-ol">
+<li>将信号传给 shell 启动的所有进程（脚本）
+</li>
+<li>中断（内核停止分配 CPU 时间给 shell）
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-sec-12-3" class="outline-3">
+<h3 id="sec-12-3"><span class="section-number-3">12.3</span> <code>trap</code> 拦截信号</h3>
+<div class="outline-text-3" id="text-12-3">
+<p>
+阻止 shell 对信号进行处理，执行本地命令
+</p>
+<div class="org-src-container">
+
+<pre class="src src-sh"><span class="org-keyword">trap</span> &lt;cmds&gt; &lt;sig&gt;
+
+<span class="org-comment-delimiter">## </span><span class="org-comment">eg. &#25318;&#25130; Ctrl+C</span>
+<span class="org-keyword">trap</span> <span class="org-string">"echo 'Ctrl+C is trapped'"</span> SIGINT SIGTERM
+
+<span class="org-comment-delimiter">## </span><span class="org-comment">eg. &#25318;&#25130;&#33050;&#26412;&#36864;&#20986;</span>
+<span class="org-keyword">trap</span> <span class="org-string">"echo Bye"</span> EXIT
+
+<span class="org-comment-delimiter">## </span><span class="org-comment">eg. &#31227;&#38500;&#25318;&#25130;&#65288;&#24674;&#22797;&#27491;&#24120;&#20449;&#21495;&#22788;&#29702;&#65289;</span>
+<span class="org-keyword">trap</span> - EXIT
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-12-4" class="outline-3">
+<h3 id="sec-12-4"><span class="section-number-3">12.4</span> 后台运行</h3>
+<div class="outline-text-3" id="text-12-4">
+<div class="org-src-container">
+
+<pre class="src src-sh">./script &amp;
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>命令和 shell 分离，作为独立的后台进程运行；
+</li>
+<li>后台进程绑定在终端会话上，如果会话退出，后台进程也会退出（某些终端会有提醒）；
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> 示例</h2>
+<div class="outline-text-2" id="text-13">
+<div class="org-src-container">
+<label class="org-src-name">批量替换文件前缀</label>
+<pre class="src src-sh"><span class="org-comment-delimiter">## </span><span class="org-comment">Usage: rpl_pfix.sh &lt;from_prefix&gt; &lt;to_prefix&gt;</span>
+<span class="org-variable-name">prefix1</span>=$<span class="org-variable-name">1</span>
+<span class="org-variable-name">prefix2</span>=$<span class="org-variable-name">2</span>
+<span class="org-keyword">for</span> file1<span class="org-keyword"> in</span> <span class="org-sh-quoted-exec">`ls  | grep "$prefix1*"`</span>
+<span class="org-keyword">do</span>
+    <span class="org-variable-name">suffix</span>=${<span class="org-variable-name">file1</span>#$<span class="org-variable-name">prefix1</span>}
+    mv $<span class="org-variable-name">file1</span> $<span class="org-variable-name">prefix2</span>$<span class="org-variable-name">suffix</span>
+<span class="org-keyword">done</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">随机抽取文件内容</label>
+<pre class="src src-sh"><span class="org-comment-delimiter">## </span><span class="org-comment">Usage: rand_line.sh &lt;src_file&gt; &lt;number_of_lines&gt;</span>
+<span class="org-comment-delimiter">## </span><span class="org-comment">Result: random lines saved in &lt;src_file&gt;_rand</span>
+<span class="org-variable-name">file</span>=$<span class="org-variable-name">1</span>
+<span class="org-keyword">for</span> (( <span class="org-variable-name">i</span>=1; i&lt;=$<span class="org-variable-name">2</span>; i++ )); <span class="org-keyword">do</span>
+    <span class="org-variable-name">rand</span>=$<span class="org-variable-name">RANDOM</span>
+    head -$(($<span class="org-variable-name">rand</span> % <span class="org-sh-quoted-exec">`wc -l &lt; $file`</span> + 1)) $<span class="org-variable-name">file</span> | tail -1 &gt;&gt; ${<span class="org-variable-name">file</span>}_rand
+<span class="org-keyword">done</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name">豆瓣计算书籍权重</label>
+<pre class="src src-sh"><span class="org-comment-delimiter">## </span><span class="org-comment">&#26435;&#37325; = log10(&#28857;&#35780;&#20154;&#25968;) * &#28857;&#35780;&#24179;&#22343;&#20998;</span>
+<span class="org-comment-delimiter">## </span><span class="org-comment">&#36755;&#20837;&#25991;&#20214;&#65306;&#28857;&#35780;&#20154;&#25968;\t&#28857;&#35780;&#24179;&#22343;&#20998;</span>
+<span class="org-comment-delimiter">## </span><span class="org-comment">&#36755;&#20986;&#25991;&#20214;&#65306;&#28857;&#35780;&#20154;&#25968;\t&#28857;&#35780;&#24179;&#22343;&#20998;\t&#26435;&#37325;</span>
+<span class="org-variable-name">IFS</span>=$<span class="org-string">'\n'</span>
+<span class="org-builtin">echo</span> /dev/null &gt; output
+<span class="org-keyword">for</span> line<span class="org-keyword"> in</span> <span class="org-sh-quoted-exec">`cat input`</span>; <span class="org-keyword">do</span>
+    <span class="org-variable-name">count</span>=$(<span class="org-builtin">echo</span> $<span class="org-variable-name">line</span> | cut -f1)
+    <span class="org-variable-name">score</span>=$(<span class="org-builtin">echo</span> $<span class="org-variable-name">line</span> | cut -f2)
+    <span class="org-variable-name">result</span>=<span class="org-sh-quoted-exec">`echo "$count $score" | awk '{print(log($1) / log(10) * $2)}'`</span>
+    <span class="org-builtin">echo</span> -e <span class="org-string">"$count\t$score\t$result"</span> &gt;&gt; output
+<span class="org-keyword">done</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2017-06-03 Sat 20:17</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

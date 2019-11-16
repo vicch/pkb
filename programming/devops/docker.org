@@ -1,0 +1,474 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Docker
+
+* Docker
+
+Docker is a tool for deploying applications in a sandbox (called containers) to run on the host operating system i.e. Linux. It allows bundling an application with its dependencies into a standardized unit for software development and deployment.
+
+** Image
+
+Images are the basis of containers. Image is akin to a git repository - they can be committed with changes and have multiple versions. If a specific version number is not provided, the client defaults to =latest=.
+
+- Base images are usually images with an OS like ubuntu, busybox or debian.
+- Child images are built on base images with additional functionality.
+
+*** =onbuild=
+
+镜像的 =onbuild= 版本的通常作为其他镜像的 base 镜像，负责复制文件、安装依赖等工作。
+
+** Container
+
+VMs run applications inside a guest Operating System, which runs on virtual hardware powered by the server's host OS. VMs provide full process isolation for applications: the host and guest system don't affect each other. But this isolation comes at great cost — the computational overhead spent virtualizing hardware for a guest OS to use is substantial.
+
+Containers leverage the low-level mechanics of the host operating system, and provide most of the isolation of virtual machines at a fraction of the computing power.
+
+** 网络
+
+Docker 支持创建相互隔离的网络，Docker 安装时自动创建三个网络：
+
+| =none=   |              |
+|----------+--------------|
+| =host=   |              |
+|----------+--------------|
+| =bridge= | 容器默认网络 |
+
+* Dockerfile
+
+Dockerfile 是构建镜像的指令列表。
+
+=Dockerfile= 可以使用后缀区分部署环境，如 =Dockerfile.dev= ，构建镜像时使用 =docker build -f= 指定文件名。
+
+** 指令列表
+
+#+ATTR_HTML: :class no-border
+| *镜像* | =FROM=    | Base 镜像          |
+|--------+-----------+--------------------|
+| *配置* | =WORKDIR= | 指定工作目录       |
+|        | =RUN=     | 执行命令           |
+|        | =COPY=    | 复制到容器文件系统 |
+|        | =ADD=     |                    |
+|        | =EXPOSE=  | 暴露端口           |
+|--------+-----------+--------------------|
+| *启动* | =CMD=     | 启动命令           |
+
+** =CMD=
+
+#+BEGIN_SRC sh
+CMD ["<command>", "<argument>", ...]
+#+END_SRC
+
+如果不指定启动命令，则默认使用 base 镜像的启动命令。
+
+** =COPY=
+
+#+BEGIN_SRC sh
+COPY <options> <host_path> <container_path>
+  --from=<stage>   # 从指定 stage 复制
+  <host_path>      # ./ 为主机当前路径
+  <container_path> # ./ 为容器根目录
+#+END_SRC
+
+镜像中已存在的文件会被覆盖。
+
+#+CAPTION: =--from= 示例
+#+BEGIN_SRC sh
+FROM alpine AS foo
+WORKDIR /usr
+RUN touch file.txt
+
+FROM alpine
+COPY --from=foo /usr/file.txt .
+#+END_SRC
+
+** =EXPOSE=
+
+#+BEGIN_SRC sh
+EXPOSE <port>
+#+END_SRC
+
+** =FROM=
+
+#+BEGIN_SRC sh
+FROM <image>:<tag> AS <stage>
+#+END_SRC
+
+** =RUN=
+
+#+BEGIN_SRC sh
+RUN <command>
+#+END_SRC
+
+** =WORKDIR=
+
+使之后的命令相对于指定目录执行，包括 =Dockerfile= 中的指令，和容器运行后通过 =docker exec= 执行的命令。
+
+#+BEGIN_SRC sh
+WORKDIR <path>
+#+END_SRC
+
+* Compose
+
+Docker Compose 用于同时运行多个容器，通过 YAML 文件配置容器的启动参数，如网络端口，以替代 =docker run= 命令的复杂选项。
+
+* Compose File
+** 示例
+
+#+CAPTION: =docker-compose.yml=
+#+BEGIN_SRC yaml
+version: "3"
+services:
+  redis: # 依赖服务，直接使用 Docker Hub 的镜像
+    image: "redis:latest"
+  server: # 本地服务，需要构建镜像
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    environment:
+      - REDIS_HOST=redis
+    volumes:
+      - ./server:/app
+      - /app/temp
+    ports:
+      - "4001:8081"
+    restart: always
+#+END_SRC
+
+** 配置列表
+
+#+ATTR_HTML: :class no-border
+|   | =version=     | Compose 文件版本                              |
+|   | =services=    |                                               |
+|---+---------------+-----------------------------------------------|
+|   | =image=       | =FROM= ，使用已有镜像                         |
+|   | =build=       | =docker build <path>= ， 根据指定路径构建镜像 |
+|   | =environment= | 环境变量                                      |
+|   | =volumes=     | =docker run -v=                               |
+|   | =ports=       | =docker run -p=                               |
+|   | =command=     | =docker run <command>= ， 覆盖镜像启动命令    |
+
+** =build=
+
+#+BEGIN_SRC yaml
+build: <path> # Dockerfile 路径
+
+build:
+  context: <path>    # 项目文件路径
+  dockerfile: <path> # Dockerfile 路径（包含文件名）
+#+END_SRC
+
+** =command=
+
+#+BEGIN_SRC yaml
+command: ["<command>", "<argument>", ...]
+#+END_SRC
+
+** =environment=
+
+#+BEGIN_SRC yaml
+environment:
+  - <name>=<value> # 使用指定值
+  - <name>         # 使用主机的环境变量值 
+#+END_SRC
+
+** =ports=
+
+#+BEGIN_SRC yaml
+ports:
+  - '<host_port>:<container_port>'
+#+END_SRC
+
+** =restart=
+
+#+BEGIN_SRC yaml
+restart: <value>
+  'no'           # 不重启
+  always         # 始终重启
+  on-failure     # 返回码为错误时（非 0）重启
+  unless-stopped # 始终重启，除非手动强制终止
+#+END_SRC
+
+** =services=
+
+#+BEGIN_SRC yaml
+services:
+  <name>:
+    ...
+#+END_SRC
+
+Service 的名称 =<name>= 即容器的主机名，Docker Compose 创建的容器可以通过主机名相互连接。
+
+** =volumes=
+
+#+BEGIN_SRC yaml
+volumes:
+  - <host_path>:<container_path> # 主机路径到容器路径的映射
+  - <container_path_exception>   # 被排除的容器路径不被映射到主机路径
+#+END_SRC
+
+设置路径映射，用于容器直接读取主机路径下的文件，文件被主机修改时将直接生效，不需要通过 =COPY= 重建镜像。
+
+* =docker=
+** 命令列表
+
+#+ATTR_HTML: :class no-border
+| *镜像*   | =build=   | 从 =Dockerfile= 构建镜像 |
+|          | =commit=  | 从容器构建镜像           |
+|          | =image=   |                          |
+|          | =images=  | 镜像列表                 |
+|          | =pull=    | 获取镜像                 |
+|          | =push=    | 推送镜像                 |
+|          | =rmi=     | 删除镜像                 |
+|          | =search=  |                          |
+|----------+-----------+--------------------------|
+| *容器*   | =run=     | 创建并运行容器           |
+|          | =ps=      | 显示容器列表             |
+|          | =attach=  | 将本地 IO 连接到容器     |
+|          | =exec=    | 在容器内执行命令         |
+|          | =logs=    | 获取容器运行日志         |
+|          | =create=  | 创建容器                 |
+|          | =rm=      | 删除容器                 |
+|          | =start=   | 运行容器                 |
+|          | =stop=    | 终止容器 =SIGTERM=       |
+|          | =kill=    | 终止容器 =SIGKILL=       |
+|----------+-----------+--------------------------|
+| *网络*   | =network= |                          |
+|          | =port=    |                          |
+|----------+-----------+--------------------------|
+| *Docker* | =system=  |                          |
+
+** =attach=
+
+将本地 IO （ =STDIN= =STDOUT= =STDERR= ）连接到容器。只能连接到容器内 ID 为 1 的进程。
+
+#+BEGIN_SRC sh
+docker attach <container>
+#+END_SRC
+
+** =build=
+
+#+BEGIN_SRC sh
+docker build <options> <path>
+  -f, --file <file>      # 指定 Dockerfile
+  -t, --tag <name>:<tag> # 指定标签，默认为 latest
+#+END_SRC
+
+#+BEGIN_SRC sh
+$ docker build . # Dockerfile 在当前目录
+$ docker build -t foo/bar:latest
+  # foo:    Docker ID
+  # bar:    Project name
+  # latest: Version tag                             
+#+END_SRC
+
+** =commit=
+
+#+BEGIN_SRC sh
+docker commit <options> <container>
+  -c, --change # 设置 Dockerfile 指令
+#+END_SRC
+
+#+BEGIN_SRC sh
+$ docker commit -c 'CMD ["<command>"]' <container> # 设置镜像启动命令
+#+END_SRC
+
+** =create=
+
+#+BEGIN_SRC sh
+docker create <options> <image> <command>
+
+# <command> 启动命令
+# Returns the container ID
+#+END_SRC
+
+** =exec=
+
+#+BEGIN_SRC sh
+docker exec <options> <container> <command>
+  -i, --interactive
+  -t, --tty
+#+END_SRC
+
+#+BEGIN_SRC sh
+$ docker exec -it <container> sh
+#+END_SRC
+
+** =image=
+
+#+BEGIN_SRC sh
+docker image <command>
+  rm <image>
+#+END_SRC
+
+** =images=
+
+#+BEGIN_SRC sh
+docker images <options>
+  <empty> # 输出本地镜像列表
+#+END_SRC
+
+** =kill=
+
+#+BEGIN_SRC sh
+docker kill <container>
+#+END_SRC
+
+** =logs=
+
+#+BEGIN_SRC sh
+docker logs <options> <container>
+#+END_SRC
+
+#+BEGIN_SRC sh
+$ docker run busybox echo foo
+<container>
+$ docker start <container>
+$ docker logs <container>
+foo
+$ docker start <container> # 多次运行
+$ docker logs <container>
+foo
+foo # 输出多次运行的日志
+#+END_SRC
+
+** =network=
+
+#+BEGIN_SRC sh
+docker network <command>
+  create <network> # 创建 bridge 网络
+  inspect <network>
+  ls
+#+END_SRC
+
+** =port=
+
+#+BEGIN_SRC sh
+docker port <container>
+#+END_SRC
+
+** =ps=
+
+#+BEGIN_SRC sh
+docker ps <options>
+  <empty>      # 显示正在运行的容器
+  -a, --all    # 显示所有容器
+  -f, --filter # 条件筛选
+    <key>=<value>
+  -q, --quiet  # 只显示容器 ID
+#+END_SRC
+
+** =pull=
+
+从 Docker registry 获取镜像并保存到本地。
+
+#+BEGIN_SRC sh
+docker pull <options> <name>
+#+END_SRC
+
+** =push=
+
+#+BEGIN_SRC sh
+docker push <options> <name>:<tag>
+#+END_SRC
+
+** =rm=
+
+#+BEGIN_SRC sh
+docker rm <options> <container>
+#+END_SRC
+
+#+CAPTION: =docker ps= 获取容器 ID 列表
+#+BEGIN_SRC sh
+docker rm $(docker ps -aq -f status=exited)
+#+END_SRC
+
+** =run=
+
+~docker run = docker create + docker start~
+
+#+BEGIN_SRC sh
+docker run <options> <image> <command> <args>
+
+# <options> 运行
+  -d, --detach        # 后台运行模式
+  -i, --interactive   # 交互模式（保持 STDIN 打开状态）
+  -t, --tty           # 分配虚拟 TTY
+  --name <name>       # 为容器命名
+  --rm                # 退出时自动删除
+
+# <options> 网络
+  -p, --publish       # 分配端口
+    <host_port>:<container_port>
+    <host_ip>:<container_ip>
+  -P, --publish-all   # 为所有暴露端口分配随机端
+  --network <network> # 指定网络
+
+# <options> 硬盘
+  -v, --volume        # 挂载一个 volume
+    <host_path>:<container_path>
+    <container_path_exception>   # 被排除的路径指向容器本地
+
+# <command> 覆盖镜像的默认命令
+#+END_SRC
+
+#+CAPTION: 确认 Docker 安装
+#+BEGIN_SRC sh
+$ docker run hello-world
+#+END_SRC
+
+** =search=
+
+#+BEGIN_SRC sh
+docker search <options> <keyword>
+#+END_SRC
+
+** =start=
+
+#+BEGIN_SRC sh
+docker start <options> <container>
+  -a, --attach # Attach STDOUT/STDERR and forward signals
+               # Prints out output from container
+#+END_SRC
+
+=docker start= 只能执行容器创建时指定的启动命令，不能重新指定启动命令。
+
+** =stop=
+
+#+BEGIN_SRC sh
+docker stop <options> <container>
+  -t, --time # 强制终止前等待秒数
+#+END_SRC
+
+** =system=
+
+#+BEGIN_SRC sh
+docker system <command>
+  prune    # Delete dangling (not associated with a container) images, containers, volumes, and networks
+  prune -a # Delete stopped containers and unused images
+#+END_SRC
+
+* =docker-compose=
+
+=docker-compose= 命令的对象是当前目录的 =docker-compose.yml= 定义的容器。
+
+#+BEGIN_SRC sh
+docker-compose <options> <command>
+  <options>
+    -f, --file <file> # 指定 compose file，默认为 ./docker-compose.yml
+  <command>
+    up   # 运行容器
+    down # 终止容器
+    ps   # 显示容器列表
+#+END_SRC
+
+** =up=
+
+#+BEGIN_SRC sh
+docker-compose up <options>
+  --build      # docker build && docker run，强制重新构建镜像
+  -d, --detach # docker run -d
+#+END_SRC
+
+* Links
+
+1. [[https://docs.docker.com/reference/][Docker Reference]]
+1. [[https://hub.docker.com/][Docker Hub]]

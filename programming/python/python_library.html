@@ -1,0 +1,1491 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-02-23 Sat 23:15 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Python Library</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Python Library</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orga8a9bef">1 数据结构</a>
+<ul>
+<li><a href="#org049227b">1.1 <code>collections</code></a>
+<ul>
+<li><a href="#orgc01cce4">1.1.1 <code>namedtuple()</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgcb7fd5d">2 数字</a>
+<ul>
+<li><a href="#orge6c6ab2">2.1 <code>math</code></a></li>
+<li><a href="#org60cc80a">2.2 <code>random</code></a>
+<ul>
+<li><a href="#orge98ca9c">2.2.1 <code>sample()</code></a></li>
+<li><a href="#org28467c7">2.2.2 <code>shuffle()</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org9589c36">3 序列</a>
+<ul>
+<li><a href="#org4d36a2e">3.1 <code>itertools</code></a></li>
+</ul>
+</li>
+<li><a href="#org2122146">4 日期时间</a>
+<ul>
+<li><a href="#orgb16634f">4.1 格式化占位符</a></li>
+<li><a href="#orgc214629">4.2 <code>time</code></a>
+<ul>
+<li><a href="#orgedcf9b4">4.2.1 <code>strftime()</code></a></li>
+<li><a href="#org505c4c1">4.2.2 <code>sleep()</code></a></li>
+</ul>
+</li>
+<li><a href="#orgdeedd52">4.3 <code>datetime.datetime</code></a>
+<ul>
+<li><a href="#org1f9c28d">4.3.1 <code>datetime()</code></a></li>
+<li><a href="#org811aea1">4.3.2 <code>datetime.now()</code></a></li>
+<li><a href="#org2d13267">4.3.3 <code>datetime.strftime()</code></a></li>
+<li><a href="#org4ca683e">4.3.4 <code>datetime.strptime()</code></a></li>
+</ul>
+</li>
+<li><a href="#orgde2ee40">4.4 <code>datetime.timedelta</code></a>
+<ul>
+<li><a href="#org692894d">4.4.1 <code>timedelta()</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org0045321">5 文本</a>
+<ul>
+<li><a href="#orgcd26172">5.1 <code>difflib</code></a>
+<ul>
+<li><a href="#orgf26a808">5.1.1 <code>difflib.get_close_matches()</code></a></li>
+</ul>
+</li>
+<li><a href="#org39c34ca">5.2 <code>difflib.SequenceMatcher</code></a></li>
+<li><a href="#org4af21ad">5.3 <code>re</code></a></li>
+</ul>
+</li>
+<li><a href="#org939dafb">6 文件</a>
+<ul>
+<li><a href="#orge74788a">6.1 <code>csv</code></a></li>
+</ul>
+</li>
+<li><a href="#orgad1fb9d">7 文件系统</a>
+<ul>
+<li><a href="#org39ed59e">7.1 <code>os</code></a>
+<ul>
+<li><a href="#org2a3c4f3">7.1.1 <code>getenv()</code></a></li>
+<li><a href="#orgcb634be">7.1.2 <code>mkdir()</code></a></li>
+<li><a href="#org0cb2dae">7.1.3 <code>putenv()</code></a></li>
+<li><a href="#org21d1ec6">7.1.4 <code>system()</code></a></li>
+</ul>
+</li>
+<li><a href="#org7585b3b">7.2 <code>os.path</code></a>
+<ul>
+<li><a href="#org59ac317">7.2.1 <code>exists()</code></a></li>
+</ul>
+</li>
+<li><a href="#org652e0c1">7.3 <code>glob</code></a></li>
+</ul>
+</li>
+<li><a href="#orge523c32">8 运行时</a>
+<ul>
+<li><a href="#org5a4a7a3">8.1 <code>sys</code></a>
+<ul>
+<li><a href="#orge9325ae">8.1.1 <code>argv</code></a></li>
+<li><a href="#orgcd8edd9">8.1.2 <code>path</code></a></li>
+<li><a href="#org9ec1549">8.1.3 <code>exit()</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgfdf7ac3">9 网络</a>
+<ul>
+<li><a href="#org5b456cd">9.1 <code>urllib</code></a>
+<ul>
+<li><a href="#org469767b">9.1.1 <code>urlopen()</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org2098d49">10 网络数据</a>
+<ul>
+<li><a href="#org80364b8">10.1 <code>json</code></a>
+<ul>
+<li><a href="#org3eb6d9c">10.1.1 数据格式</a></li>
+<li><a href="#orgb81ec97">10.1.2 <code>json.load()</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgbc77e32">11 持久化</a>
+<ul>
+<li><a href="#orga56412c">11.1 <code>pickle</code></a></li>
+<li><a href="#org80c5c27">11.2 <code>cPickle</code></a></li>
+</ul>
+</li>
+<li><a href="#orgf9f7388">12 Tkinter</a>
+<ul>
+<li><a href="#orgf69c8e9">12.1 <code>Tk</code></a>
+<ul>
+<li><a href="#org6d47962">12.1.1 <code>geometry()</code></a></li>
+</ul>
+</li>
+<li><a href="#org9e9bb15">12.2 <code>Frame</code></a></li>
+</ul>
+</li>
+<li><a href="#org905e73d">13 链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orga8a9bef" class="outline-2">
+<h2 id="orga8a9bef"><span class="section-number-2">1</span> 数据结构</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-org049227b" class="outline-3">
+<h3 id="org049227b"><span class="section-number-3">1.1</span> <code>collections</code></h3>
+<div class="outline-text-3" id="text-1-1">
+</div><div id="outline-container-orgc01cce4" class="outline-4">
+<h4 id="orgc01cce4"><span class="section-number-4">1.1.1</span> <code>namedtuple()</code></h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+Build classes of objects that are just bundles of attributes with no custom methods, like a database record.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">namedtuple(
+        typename
+,   field_names
+[,  verbose=<span class="org-constant">False</span> ]
+[,  rename=<span class="org-constant">False</span> ]
+)
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 1: </span>示例</label><pre class="src src-python"><span class="org-variable-name">Card</span> = collections.namedtuple(<span class="org-string">'Card'</span>, [<span class="org-string">'rank'</span>, <span class="org-string">'suit'</span>])
+<span class="org-variable-name">new_card</span> = Card(<span class="org-string">'7'</span>, <span class="org-string">'diamonds'</span>)
+<span class="org-comment-delimiter"># </span><span class="org-comment">Card(rank='7', suit='diamonds')</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcb7fd5d" class="outline-2">
+<h2 id="orgcb7fd5d"><span class="section-number-2">2</span> 数字</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-orge6c6ab2" class="outline-3">
+<h3 id="orge6c6ab2"><span class="section-number-3">2.1</span> <code>math</code></h3>
+<div class="outline-text-3" id="text-2-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>常量</b></th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>pi</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>方法</b></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>sqrt()</code></td>
+<td class="org-left">平方根</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org60cc80a" class="outline-3">
+<h3 id="org60cc80a"><span class="section-number-3">2.2</span> <code>random</code></h3>
+<div class="outline-text-3" id="text-2-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>choice()</code></th>
+<th scope="col" class="org-left">返回序列中的随机元素</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>random()</code></td>
+<td class="org-left">返回 0 和 1 之间的随机数</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>sample()</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>shuffle()</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-orge98ca9c" class="outline-4">
+<h4 id="orge98ca9c"><span class="section-number-4">2.2.1</span> <code>sample()</code></h4>
+<div class="outline-text-4" id="text-2-2-1">
+<p>
+Return a <code>k</code> length list of unique elements chosen from the <code>population</code> sequence.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">sample ( population, k )
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org28467c7" class="outline-4">
+<h4 id="org28467c7"><span class="section-number-4">2.2.2</span> <code>shuffle()</code></h4>
+<div class="outline-text-4" id="text-2-2-2">
+<div class="org-src-container">
+<pre class="src src-python">shuffle (
+        x
+[,  random
+])
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9589c36" class="outline-2">
+<h2 id="org9589c36"><span class="section-number-2">3</span> 序列</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-org4d36a2e" class="outline-3">
+<h3 id="org4d36a2e"><span class="section-number-3">3.1</span> <code>itertools</code></h3>
+<div class="outline-text-3" id="text-3-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>combinations()</code></th>
+<th scope="col" class="org-left">元素组合，顺序无关，不可重复使用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>combinations_with_replacement()</code></td>
+<td class="org-left">元素组合，顺序无关，可重复使用</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>permutations()</code></td>
+<td class="org-left">元素排列，顺序有关</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>product()</code></td>
+<td class="org-left">求两个序列的笛卡尔积</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2122146" class="outline-2">
+<h2 id="org2122146"><span class="section-number-2">4</span> 日期时间</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-orgb16634f" class="outline-3">
+<h3 id="orgb16634f"><span class="section-number-3">4.1</span> 格式化占位符</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+<a href="https://docs.python.org/3.7/library/datetime.html#strftime-and-strptime-behavior"> <code>strftime()</code> and <code>strptime()</code> Behavior</a>
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>%Y</code></th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>%m</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>%d</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgc214629" class="outline-3">
+<h3 id="orgc214629"><span class="section-number-3">4.2</span> <code>time</code></h3>
+<div class="outline-text-3" id="text-4-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>strftime()</code></th>
+<th scope="col" class="org-left">输出格式化日期时间字符串</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>sleep()</code></td>
+<td class="org-left">Suspend execution of the calling thread</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-orgedcf9b4" class="outline-4">
+<h4 id="orgedcf9b4"><span class="section-number-4">4.2.1</span> <code>strftime()</code></h4>
+<div class="outline-text-4" id="text-4-2-1">
+<div class="org-src-container">
+<pre class="src src-python">strftime (
+        <span class="org-builtin">format</span>
+[,  t
+])
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org505c4c1" class="outline-4">
+<h4 id="org505c4c1"><span class="section-number-4">4.2.2</span> <code>sleep()</code></h4>
+<div class="outline-text-4" id="text-4-2-2">
+<div class="org-src-container">
+<pre class="src src-python">sleep ( secs )
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdeedd52" class="outline-3">
+<h3 id="orgdeedd52"><span class="section-number-3">4.3</span> <code>datetime.datetime</code></h3>
+<div class="outline-text-3" id="text-4-3">
+</div><div id="outline-container-org1f9c28d" class="outline-4">
+<h4 id="org1f9c28d"><span class="section-number-4">4.3.1</span> <code>datetime()</code></h4>
+<div class="outline-text-4" id="text-4-3-1">
+<div class="org-src-container">
+<pre class="src src-python">datetime (
+        year
+,   month
+,   day
+,   hour=0
+,   minute=0
+,   second=0
+,   microsecond=0
+,   tzinfo=<span class="org-constant">None</span>
+)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org811aea1" class="outline-4">
+<h4 id="org811aea1"><span class="section-number-4">4.3.2</span> <code>datetime.now()</code></h4>
+<div class="outline-text-4" id="text-4-3-2">
+<div class="org-src-container">
+<pre class="src src-python">datetime.now(tz=<span class="org-constant">None</span>)
+</pre>
+</div>
+
+<p>
+返回 <code>datetime</code> 对象。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">datetime.now()
+<span class="org-comment-delimiter"># </span><span class="org-comment">datetime.datetime(2019, 2, 23, 16, 39, 22, 560828)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2d13267" class="outline-4">
+<h4 id="org2d13267"><span class="section-number-4">4.3.3</span> <code>datetime.strftime()</code></h4>
+<div class="outline-text-4" id="text-4-3-3">
+<div class="org-src-container">
+<pre class="src src-python">datetime.strftime(<span class="org-builtin">format</span>)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python">datetime(2019, 1, 10).strftime(<span class="org-string">"%m/%d/%Y"</span>)
+<span class="org-comment-delimiter"># </span><span class="org-comment">"01/10/2019"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4ca683e" class="outline-4">
+<h4 id="org4ca683e"><span class="section-number-4">4.3.4</span> <code>datetime.strptime()</code></h4>
+<div class="outline-text-4" id="text-4-3-4">
+<div class="org-src-container">
+<pre class="src src-python">datetime.strptime(date_string, <span class="org-builtin">format</span>)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python">datetime.strptime(<span class="org-string">"01-10-2019"</span>, <span class="org-string">"%m-%d-%Y"</span>)
+<span class="org-comment-delimiter"># </span><span class="org-comment">datetime.datetime(2019, 1, 10, 0, 0)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgde2ee40" class="outline-3">
+<h3 id="orgde2ee40"><span class="section-number-3">4.4</span> <code>datetime.timedelta</code></h3>
+<div class="outline-text-3" id="text-4-4">
+<div class="org-src-container">
+<pre class="src src-python">datetime(2019, 1, 10) - datetime(2019, 1, 1)
+<span class="org-comment-delimiter"># </span><span class="org-comment">datetime.timedelta(days=9)</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org692894d" class="outline-4">
+<h4 id="org692894d"><span class="section-number-4">4.4.1</span> <code>timedelta()</code></h4>
+<div class="outline-text-4" id="text-4-4-1">
+<div class="org-src-container">
+<pre class="src src-python">timedelta (
+        days=0
+,   seconds=0
+,   microseconds=0
+,   milliseconds=0
+,   minutes=0
+,   hours=0
+,   weeks=0
+)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0045321" class="outline-2">
+<h2 id="org0045321"><span class="section-number-2">5</span> 文本</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-orgcd26172" class="outline-3">
+<h3 id="orgcd26172"><span class="section-number-3">5.1</span> <code>difflib</code></h3>
+<div class="outline-text-3" id="text-5-1">
+</div><div id="outline-container-orgf26a808" class="outline-4">
+<h4 id="orgf26a808"><span class="section-number-4">5.1.1</span> <code>difflib.get_close_matches()</code></h4>
+<div class="outline-text-4" id="text-5-1-1">
+<div class="org-src-container">
+<pre class="src src-python">difflib.get_close_matches(
+        word          <span class="org-comment-delimiter"># </span><span class="org-comment">&#23383;&#31526;&#20018;</span>
+,   possibilities <span class="org-comment-delimiter"># </span><span class="org-comment">&#23383;&#31526;&#20018;&#24207;&#21015;</span>
+,   n=3           <span class="org-comment-delimiter"># </span><span class="org-comment">&#26368;&#22810;&#36820;&#22238; n &#20010;&#30456;&#20284;&#32467;&#26524;</span>
+,   cutoff=0.6    <span class="org-comment-delimiter"># </span><span class="org-comment">&#24573;&#30053;&#30456;&#20284;&#24230;&#19981;&#36275; cutoff &#30340;&#32467;&#26524;</span>
+)
+</pre>
+</div>
+
+<p>
+从字符串序列中寻找与给定字符串相似的结果，返回的结果序列按相似度从高到低排序。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">get_close_matches(<span class="org-string">'appel'</span>, [<span class="org-string">'ape'</span>, <span class="org-string">'apple'</span>, <span class="org-string">'peach'</span>, <span class="org-string">'puppy'</span>])
+<span class="org-comment-delimiter"># </span><span class="org-comment">['apple', 'ape']</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org39c34ca" class="outline-3">
+<h3 id="org39c34ca"><span class="section-number-3">5.2</span> <code>difflib.SequenceMatcher</code></h3>
+<div class="outline-text-3" id="text-5-2">
+<div class="org-src-container">
+<pre class="src src-python">difflib.SequenceMatcher(
+        isjunk=<span class="org-constant">None</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#21333;&#21442;&#25968;&#20989;&#25968;&#65292;&#36820;&#22238; True &#26102;&#34920;&#31034;&#35813;&#24207;&#21015;&#20803;&#32032;&#24212;&#35813;&#34987;&#24573;&#30053;</span>
+,   a=<span class="org-string">''</span>        <span class="org-comment-delimiter"># </span><span class="org-comment">&#24207;&#21015; A</span>
+,   b=<span class="org-string">''</span>        <span class="org-comment-delimiter"># </span><span class="org-comment">&#24207;&#21015; B</span>
+,   autojunk=<span class="org-constant">True</span>
+)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">s</span> = SequenceMatcher(
+        <span class="org-keyword">lambda</span> x: x == <span class="org-string">" "</span>,
+        <span class="org-string">"private Thread currentThread;"</span>,
+        <span class="org-string">"private volatile Thread currentThread;"</span>)
+
+s.ratio()       <span class="org-comment-delimiter"># </span><span class="org-comment">&#24207;&#21015;&#30456;&#20284;&#24230;</span>
+s.quick_ratio() <span class="org-comment-delimiter"># </span><span class="org-comment">&#24207;&#21015;&#30456;&#20284;&#24230;&#19978;&#38480;&#65292;&#36895;&#24230;&#36739;&#24555;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4af21ad" class="outline-3">
+<h3 id="org4af21ad"><span class="section-number-3">5.3</span> <code>re</code></h3>
+<div class="outline-text-3" id="text-5-3">
+<div class="org-src-container">
+<pre class="src src-python">match (
+        pattern
+,   string
+,   flags = 0
+)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org939dafb" class="outline-2">
+<h2 id="org939dafb"><span class="section-number-2">6</span> 文件</h2>
+<div class="outline-text-2" id="text-6">
+</div><div id="outline-container-orge74788a" class="outline-3">
+<h3 id="orge74788a"><span class="section-number-3">6.1</span> <code>csv</code></h3>
+</div>
+</div>
+<div id="outline-container-orgad1fb9d" class="outline-2">
+<h2 id="orgad1fb9d"><span class="section-number-2">7</span> 文件系统</h2>
+<div class="outline-text-2" id="text-7">
+</div><div id="outline-container-org39ed59e" class="outline-3">
+<h3 id="org39ed59e"><span class="section-number-3">7.1</span> <code>os</code></h3>
+<div class="outline-text-3" id="text-7-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">Linux</th>
+<th scope="col" class="org-left">Unix</th>
+<th scope="col" class="org-left">Windows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>name</code></td>
+<td class="org-left">操作系统名</td>
+<td class="org-left"><code>posix</code></td>
+<td class="org-left"><code>posix</code></td>
+<td class="org-left"><code>nt</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>sep</code></td>
+<td class="org-left">路径分隔符</td>
+<td class="org-left"><code>/</code></td>
+<td class="org-left"><code>/</code></td>
+<td class="org-left"><code>\</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>linesep</code></td>
+<td class="org-left">行尾符</td>
+<td class="org-left"><code>\n</code></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>\r\n</code></td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>目录</b></th>
+<th scope="col" class="org-left"><code>getcwd()</code></th>
+<th scope="col" class="org-left">返回当前工作目录</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>listdir()</code></td>
+<td class="org-left">返回目录下文件、目录名</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>mkdir()</code></td>
+<td class="org-left">创建目录</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>文件</b></td>
+<td class="org-left"><code>remove()</code></td>
+<td class="org-left">删除文件</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>环境</b></td>
+<td class="org-left"><code>system()</code></td>
+<td class="org-left">执行系统命令</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>getenv()</code></td>
+<td class="org-left">读取环境变量</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>putenv()</code></td>
+<td class="org-left">设置环境变量</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-org2a3c4f3" class="outline-4">
+<h4 id="org2a3c4f3"><span class="section-number-4">7.1.1</span> <code>getenv()</code></h4>
+<div class="outline-text-4" id="text-7-1-1">
+<div class="org-src-container">
+<pre class="src src-python">getenv (
+        name
+[,  value
+])
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcb634be" class="outline-4">
+<h4 id="orgcb634be"><span class="section-number-4">7.1.2</span> <code>mkdir()</code></h4>
+<div class="outline-text-4" id="text-7-1-2">
+<div class="org-src-container">
+<pre class="src src-python">mkdir (
+        path
+[,  mode
+])
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0cb2dae" class="outline-4">
+<h4 id="org0cb2dae"><span class="section-number-4">7.1.3</span> <code>putenv()</code></h4>
+<div class="outline-text-4" id="text-7-1-3">
+<div class="org-src-container">
+<pre class="src src-python">putenv (
+        name
+,   value
+)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org21d1ec6" class="outline-4">
+<h4 id="org21d1ec6"><span class="section-number-4">7.1.4</span> <code>system()</code></h4>
+<div class="outline-text-4" id="text-7-1-4">
+<div class="org-src-container">
+<pre class="src src-python">system ( command )
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">返回值</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">退出状态码</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+不推荐使用，容易引发严重错误。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7585b3b" class="outline-3">
+<h3 id="org7585b3b"><span class="section-number-3">7.2</span> <code>os.path</code></h3>
+<div class="outline-text-3" id="text-7-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>exists()</code></th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>isfile()</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>isdir()</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>split()</code></td>
+<td class="org-left">返回路径和文件名</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-org59ac317" class="outline-4">
+<h4 id="org59ac317"><span class="section-number-4">7.2.1</span> <code>exists()</code></h4>
+<div class="outline-text-4" id="text-7-2-1">
+<div class="org-src-container">
+<pre class="src src-python">exists ( path )
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org652e0c1" class="outline-3">
+<h3 id="org652e0c1"><span class="section-number-3">7.3</span> <code>glob</code></h3>
+<div class="outline-text-3" id="text-7-3">
+<div class="org-src-container">
+<pre class="src src-python">glob.glob(<span class="org-string">"*.txt"</span>)
+<span class="org-comment-delimiter"># </span><span class="org-comment">["foo.txt", "bar.txt", ...]</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge523c32" class="outline-2">
+<h2 id="orge523c32"><span class="section-number-2">8</span> 运行时</h2>
+<div class="outline-text-2" id="text-8">
+</div><div id="outline-container-org5a4a7a3" class="outline-3">
+<h3 id="org5a4a7a3"><span class="section-number-3">8.1</span> <code>sys</code></h3>
+<div class="outline-text-3" id="text-8-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>argv</code></th>
+<th scope="col" class="org-left">命令行参数列表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>path</code></td>
+<td class="org-left">查找加载模块的目录列表</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>函数</b></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>exit()</code></td>
+<td class="org-left">中断退出</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-orge9325ae" class="outline-4">
+<h4 id="orge9325ae"><span class="section-number-4">8.1.1</span> <code>argv</code></h4>
+<div class="outline-text-4" id="text-8-1-1">
+<p>
+<code>argv</code> 中元素都是字符串，需要手动转换类型。
+</p>
+
+<p>
+<code>argv[0]</code> 为当前脚本名称。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 2: </span>示例</label><pre class="src src-python"><span class="org-keyword">from</span> sys <span class="org-keyword">import</span> argv
+
+<span class="org-variable-name">script</span>, <span class="org-variable-name">foo</span>, <span class="org-variable-name">bar</span> = argv
+
+<span class="org-keyword">print</span> <span class="org-string">'Current script is:'</span>, script
+<span class="org-keyword">print</span> <span class="org-string">'foo ='</span>, foo
+<span class="org-keyword">print</span> <span class="org-string">'bar ='</span>, bar
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#36816;&#34892;</span>
+python script.py 1 2
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcd8edd9" class="outline-4">
+<h4 id="orgcd8edd9"><span class="section-number-4">8.1.2</span> <code>path</code></h4>
+<div class="outline-text-4" id="text-8-1-2">
+<p>
+第一个元素为空，表示当前目录。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9ec1549" class="outline-4">
+<h4 id="org9ec1549"><span class="section-number-4">8.1.3</span> <code>exit()</code></h4>
+<div class="outline-text-4" id="text-8-1-3">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-constant">exit</span>( [arg] )
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfdf7ac3" class="outline-2">
+<h2 id="orgfdf7ac3"><span class="section-number-2">9</span> 网络</h2>
+<div class="outline-text-2" id="text-9">
+</div><div id="outline-container-org5b456cd" class="outline-3">
+<h3 id="org5b456cd"><span class="section-number-3">9.1</span> <code>urllib</code></h3>
+<div class="outline-text-3" id="text-9-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>urlopen()</code></th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-org469767b" class="outline-4">
+<h4 id="org469767b"><span class="section-number-4">9.1.1</span> <code>urlopen()</code></h4>
+<div class="outline-text-4" id="text-9-1-1">
+<div class="org-src-container">
+<pre class="src src-python">urlopen (
+        url
+[,  data
+[,  proxies
+[,  context
+]]])
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 3: </span>示例</label><pre class="src src-python"><span class="org-variable-name">url</span> = <span class="org-string">'http://example.com/foo.txt'</span>
+<span class="org-keyword">for</span> line <span class="org-keyword">in</span> urllib.urlopen(url).readlines():
+        <span class="org-keyword">print</span> line
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2098d49" class="outline-2">
+<h2 id="org2098d49"><span class="section-number-2">10</span> 网络数据</h2>
+<div class="outline-text-2" id="text-10">
+</div><div id="outline-container-org80364b8" class="outline-3">
+<h3 id="org80364b8"><span class="section-number-3">10.1</span> <code>json</code></h3>
+<div class="outline-text-3" id="text-10-1">
+</div><div id="outline-container-org3eb6d9c" class="outline-4">
+<h4 id="org3eb6d9c"><span class="section-number-4">10.1.1</span> 数据格式</h4>
+<div class="outline-text-4" id="text-10-1-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>JSON</b></th>
+<th scope="col" class="org-left"><b>Python</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">object</td>
+<td class="org-left"><code>dict</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">array</td>
+<td class="org-left"><code>list</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">string</td>
+<td class="org-left"><code>str</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">int number</td>
+<td class="org-left"><code>int</code></td>
+</tr>
+
+<tr>
+<td class="org-left">real number</td>
+<td class="org-left"><code>float</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">true</td>
+<td class="org-left"><code>True</code></td>
+</tr>
+
+<tr>
+<td class="org-left">false</td>
+<td class="org-left"><code>False</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">null</td>
+<td class="org-left"><code>None</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgb81ec97" class="outline-4">
+<h4 id="orgb81ec97"><span class="section-number-4">10.1.2</span> <code>json.load()</code></h4>
+<div class="outline-text-4" id="text-10-1-2">
+<div class="org-src-container">
+<pre class="src src-python">json.load(
+        fp
+,   *
+,   cls=<span class="org-constant">None</span>
+,   object_hook=<span class="org-constant">None</span>
+,   parse_float=<span class="org-constant">None</span>
+,   parse_int=<span class="org-constant">None</span>
+,   parse_constant=<span class="org-constant">None</span>
+,   object_pairs_hook=<span class="org-constant">None</span>
+,   **kw
+)
+</pre>
+</div>
+
+<p>
+将 JSON 文件内容反序列化为 Python 对象。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">data</span> = json.load(<span class="org-builtin">open</span>(<span class="org-string">"data.json"</span>))
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbc77e32" class="outline-2">
+<h2 id="orgbc77e32"><span class="section-number-2">11</span> 持久化</h2>
+<div class="outline-text-2" id="text-11">
+</div><div id="outline-container-orga56412c" class="outline-3">
+<h3 id="orga56412c"><span class="section-number-3">11.1</span> <code>pickle</code></h3>
+<div class="outline-text-3" id="text-11-1">
+<p>
+从文件存取 Python 对象。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">pickle.dump (
+        obj
+,   <span class="org-builtin">file</span>
+[,  protocol
+])
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">eg.</span>
+<span class="org-keyword">import</span> pickle <span class="org-keyword">as</span> p
+<span class="org-variable-name">f</span> = <span class="org-builtin">file</span>(<span class="org-string">'pickle.tmp'</span>, <span class="org-string">'w'</span>)
+p.dump(&lt;obj&gt;, f)
+f.close()
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python">pickle.load ( <span class="org-builtin">file</span> )
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">eg.</span>
+<span class="org-keyword">import</span> pickle <span class="org-keyword">as</span> p
+<span class="org-variable-name">f</span> = <span class="org-builtin">file</span>(<span class="org-string">'pickle.tmp'</span>)
+&lt;obj&gt; = p.load(f)
+f.close()
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org80c5c27" class="outline-3">
+<h3 id="org80c5c27"><span class="section-number-3">11.2</span> <code>cPickle</code></h3>
+<div class="outline-text-3" id="text-11-2">
+<p>
+C 语言编写，比 pickle 速度快。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf9f7388" class="outline-2">
+<h2 id="orgf9f7388"><span class="section-number-2">12</span> Tkinter</h2>
+<div class="outline-text-2" id="text-12">
+</div><div id="outline-container-orgf69c8e9" class="outline-3">
+<h3 id="orgf69c8e9"><span class="section-number-3">12.1</span> <code>Tk</code></h3>
+<div class="outline-text-3" id="text-12-1">
+<p>
+Root window.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>geometry()</code></th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>mainloop()</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-org6d47962" class="outline-4">
+<h4 id="org6d47962"><span class="section-number-4">12.1.1</span> <code>geometry()</code></h4>
+<div class="outline-text-4" id="text-12-1-1">
+<div class="org-src-container">
+<pre class="src src-python">Tk.geometry(&lt;geo_string&gt;)
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 4: </span><code>&lt;geo_string&gt;</code></label><pre class="src src-python">&lt;width&gt;x&lt;height&gt;+/-&lt;x_offset&gt;+/-&lt;y_offset&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 5: </span>示例</label><pre class="src src-python"><span class="org-variable-name">root</span> = Tk()
+root.geometry(<span class="org-string">"250x150+300-300"</span>)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9e9bb15" class="outline-3">
+<h3 id="org9e9bb15"><span class="section-number-3">12.2</span> <code>Frame</code></h3>
+<div class="outline-text-3" id="text-12-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> <code>option</code></caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>background</code></th>
+<th scope="col" class="org-left">Hex code: <code>ffffff</code></th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">Color name: <code>white</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org905e73d" class="outline-2">
+<h2 id="org905e73d"><span class="section-number-2">13</span> 链接</h2>
+<div class="outline-text-2" id="text-13">
+<ol class="org-ol">
+<li><a href="https://docs.python.org/2/library/index.html">The Python Standard Library</a></li>
+<li><a href="http://infohost.nmt.edu/tcc/help/pubs/tkinter/web/index.html">Tkinter 8.5 reference</a></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2019-02-23 Sat 23:15</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

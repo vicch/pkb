@@ -1,0 +1,424 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Linux Tool
+
+* 分类
+
+| *包管理*   | APT      |
+|------------+----------|
+| *服务管理* |          |
+|------------+----------|
+| *网络*     | IPTables |
+|------------+----------|
+| *文本编辑* | Awk      |
+|------------+----------|
+|            | Sed      |
+|------------+----------|
+|            |          |
+
+* APT
+
+APT = Advanced Packaging Tool
+
+** 命令
+*** =apt-get=
+
+#+BEGIN_SRC sh
+apt-get <options> <command> <package>, ...
+
+# <options>
+    -y, --yes   # 所有确认项回答 Yes
+    --force-yes # 忽略异常，如不可信的包
+    -qq         # 忽略除错误和基本安装信息之外的输出
+
+# <command>
+    update            # 更新包列表
+    install <package> # 安装包
+    remove <package>  # 移除包
+    purge <package>   # 移除包和配置文件
+#+END_SRC
+
+*** =apt-cache=
+
+#+BEGIN_SRC sh
+apt-cache <options> <command>
+
+# <command>
+    search <options> <pattern> # 搜索包
+        -n # 只搜索包名
+    show <package>   # 查看包信息
+    policy <package> # 查看可安装的版本等
+#+END_SRC
+
+*** =add-apt-repository=
+
+#+BEGIN_SRC sh
+add-apt-repository <options> <repo>
+    -y, --yes # 所有确认项回答 Yes
+#+END_SRC
+
+*** 示例
+
+#+BEGIN_SRC sh
+$ add-apt-repository ppa:chris-lea/redis-server
+$ apt-get updaet
+$ apt-cache policy redis-server
+$ apt-get install -y redis-server
+#+END_SRC
+
+** 配置
+
+#+CAPTION: =/etc/apt/=
+| =sources.list=                   | 源（source）列表 |
+|----------------------------------+------------------|
+| =sources.list.d/*=               |                  |
+|----------------------------------+------------------|
+| =apt.conf.d/periodic=            | 定时运行配置     |
+|----------------------------------+------------------|
+| =apt.conf.d/unattended-upgrades= | 自动更新配置     |
+
+*** =periodic=
+
+#+CAPTION: 示例
+#+BEGIN_SRC sh
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Download-Upgradeable-Packages "1";
+APT::Periodic::AutocleanInterval "7";
+APT::Periodic::Unattended-Upgrade "1";
+#+END_SRC
+
+*** =unattended-upgrades=
+
+- 需要安装包 =unattended-upgrades= 。
+- 自动更新信息记录在 =/var/log/unattended-upgrades= 。
+
+#+CAPTION: 配置示例
+#+BEGIN_SRC sh
+Unattended-Upgrade::Allowed-Origins {
+    "${distro_id}:${distro_codename}-security";  # 安全更新，建议打开
+//  "${distro_id}:${distro_codename}-updates";   # 其他更新，建议关闭
+//  "${distro_id}:${distro_codename}-proposed";
+//  "${distro_id}:${distro_codename}-backports";
+}
+
+Unattended-Upgrade::Automatic-Reboot "false"; # 更新后是否自动重启
+#+END_SRC
+
+* Awk
+
+#+BEGIN_SRC sh
+awk <options> <script> <file>
+#+END_SRC
+
+** 选项
+
+| =-F, --field-separator=<char>= | 指定分割符   |
+|--------------------------------+--------------|
+| =-f, --file=<file>=            | 指定脚本文件 |
+|--------------------------------+--------------|
+| =-v, --assign <name>=<value>=  |              |
+
+*** 示例
+
+#+CAPTION: 统计某个字符在每行出现的次数（将其作为分割符，然后统计字段数）
+#+BEGIN_SRC sh
+awk -F <char> '{print NR, '\t', NF-1}' <file>
+#+END_SRC
+
+** 脚本
+
+- 如果包含空格、特殊字符（ =$= =*= ），需要用单引号包围。
+- 多个指令由 =;= 分隔。
+
+*** 条件
+
+| =if (<cond>) <cmd>; else <cmd>= |   |
+
+*** 匹配
+
+| =/<pattern>/ {<cmd>}=                            | 简单匹配           |
+|--------------------------------------------------+--------------------|
+| =match(<field>, /<pattern>/, <result>); {<cmd>}= | 字段匹配，提取结果 |
+
+#+CAPTION: 打印匹配行
+#+BEGIN_SRC sh
+awk '/<pattern>/ {print FILENAME, '\t', NR, '\t', $0}' <file>
+#+END_SRC
+
+#+CAPTION: 打印匹配部分
+#+BEGIN_SRC sh
+awk '{match($0, /<pattern>/, a); {print a[1]}}' <file>
+#+END_SRC
+
+#+CAPTION: 匹配电话号码 =xxx-xxx-xxxx= 和 =(xxx) xxx-xxxx=
+#+BEGIN_SRC sh
+awk '/^([0-9]{3}-|\([0-9]{3}\) )[0-9]{3}-[0-9]{4}$/' <file>
+#+END_SRC
+
+*** 遍历
+
+#+CAPTION: 计算所有行（数值）的平均值
+#+BEGIN_SRC sh
+awk '{sum += $1} END {print "Average = ", sum / NR}' <file>
+#+END_SRC
+
+** 变量
+
+| =FILENAME= | 文件名     |
+|------------+------------|
+| =NR=       | 当前行数   |
+|------------+------------|
+| =NF=       | 当前行列数 |
+|------------+------------|
+| =$0=       | 整行       |
+|------------+------------|
+| =$<n>=     | 第 n 列    |
+
+#+CAPTION: =NR=
+#+BEGIN_SRC sh
+awk 'NR == 10' <file>    # 输出第 10 行
+awk 'NR % 2 == 0' <file> # 输出偶数行
+#+END_SRC
+
+* IPTables
+** 命令
+
+#+BEGIN_SRC sh
+iptables <options>
+
+# <options> 输出
+    -L, --list [<chain> <rule>]       # 以表格形式
+    -S, --list-rules [<chain> <rule>] # 以命令形式
+    -v, --verbose
+
+# <options> 规则链
+    -A, --append <chain>          # 添加到规则链
+    -I, --insert <chain> <number> # 插入到规则链，序号从 1 开始
+    -D, --delete <chain> <number> # 从规则链删除，指定序号
+    -D, --delete <chain> <rule>   # 从规则链删除，指定规则参数，如 -i, -j 等
+    -N, --new <chain>             # 创建规则链
+    -P, --policy <chain> <target> # 修改规则链默认目标
+
+# <options> 规则
+    -i, --in-interface <interface> # 网络接口，如 lo
+    -p, --protocol <protocol>      # 协议，如 tcp
+    -j, --jump <target>            # 跳转到目标
+    -m, --match <module>           # 使用模块进行匹配，如 conntrack
+    --ctstate <state>              # 状态，如 RELATED, ESTABLISHED
+    --dport <port>                 # 目标端口
+#+END_SRC
+
+** 规则链
+
+#+CAPTION: 默认规则链
+| =INPUT=   |   |
+|-----------+---|
+| =OUTPUT=  |   |
+|-----------+---|
+| =FORWARD= |   |
+
+** 目标
+
+#+CAPTION: 默认目标
+| =ACCEPT= | 接受数据包               |
+|----------+--------------------------|
+| =REJECT= | 拒绝数据包，并告知客户端 |
+|----------+--------------------------|
+| =DROP=   | 丢弃数据包，不告知客户端 |
+
+*** 默认目标
+
+#+CAPTION: 一般配置方式
+| *规则链*  | *目标*   |
+|-----------+----------|
+| =INPUT=   | =DROP=   |
+|-----------+----------|
+| =OUTPUT=  | =ACCEPT= |
+|-----------+----------|
+| =FORWARD= | =DROP=   |
+
+#+CAPTION: 查看和修改规则链的默认目标
+#+BEGIN_SRC sh
+$ iptables -L -v
+Chain INPUT (policy ACCEPT ...)
+...
+$ iptables -P INPUT DROP
+$ iptables -L -v
+Chain INPUT (policy DROP ...)
+...
+#+END_SRC
+
+** 规则
+
+规则由上到下按顺序进行匹配，第一条匹配的规则即生效，之后的规则忽略。
+
+| =target=      | 目标               | =ACCEPT= =REJECT= =DROP= 等    |
+|---------------+--------------------+--------------------------------|
+| =prot=        | 协议               | =tcp= =udp= =all=              |
+|---------------+--------------------+--------------------------------|
+| =opt=         | Optional items     |                                |
+|---------------+--------------------+--------------------------------|
+| =in=          | 接收数据的网络接口 | =any= =lo= =eth0= 等           |
+|---------------+--------------------+--------------------------------|
+| =out=         | 响应数据的网络接口 | =any= =lo= =eth0= 等           |
+|---------------+--------------------+--------------------------------|
+| =source=      | 数据来源           | =anywhere= 或主机名、IP、IP 段 |
+|---------------+--------------------+--------------------------------|
+| =destination= | 数据目的地         | =anywhere= 等                  |
+
+*** 示例
+
+#+BEGIN_SRC sh
+# 添加：允许所有内部通信
+iptables -A INPUT -i lo -j ACCEPT
+
+# 添加：允许所有已经确立的连接，防止已经打开的连接被中断
+sudo iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+
+# 添加：允许 SSH 连接
+sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+
+# 添加：允许 HTTP 连接
+sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+
+# 添加：禁止连接，丢弃数据包，通常作为最后一条规则
+sudo iptables -A INPUT -j DROP
+
+# 插入：允许 HTTPS 连接
+sudo iptables -I INPUT 5 -p tcp --dport 443 -j ACCEPT
+
+# 删除：指定序号
+sudo iptables -D INPUT 3
+
+# 删除：指定规则
+sudo iptables -D INPUT -p tcp --dport 22 -j ACCEPT
+#+END_SRC
+
+** =iptables-save=
+
+#+CAPTION: 输出规则，可用于保存或备份：
+#+BEGIN_SRC sh
+iptables-save > iptables-backup.rules
+#+END_SRC
+
+** =iptables-restore=
+
+#+CAPTION: 从备份文件恢复规则：
+#+BEGIN_SRC sh
+iptables-restore < iptables-backup.rules
+#+END_SRC
+
+* Sed
+
+#+BEGIN_SRC sh
+sed <options> <script> <file>
+
+# <options> 
+    -e, --expression=<script> # 执行多个脚本时，每个脚本前加 -e
+    -f, --file=<file>         # 指定脚本文件
+    -i, --in-place=<suffix>   # 原处修改，指定后缀进行备份
+    -n, --quiet, --silent     # 关闭自动输出（Sed 默认输出所有行）
+    -r, --regexp-extended     # 使用扩展正则
+
+# <script> 如果包含空格、特殊字符 $、*，需要用单引号包围
+#+END_SRC
+
+** 打印
+
+=<options>= 为 =-n= 时控制输出的行。
+
+#+BEGIN_SRC sh
+<num>p         # 行数
+'/<pattern>/p' # 模式匹配
+#+END_SRC
+
+*** 示例
+
+#+CAPTION: 行数
+#+BEGIN_SRC sh
+# 输出第 10 行
+sed -n 10p <file>
+#+END_SRC
+
+#+CAPTION: 模式匹配
+#+BEGIN_SRC sh
+# 匹配电话号码 xxx-xxx-xxxx 和 (xxx) xxx-xxxx
+sed -n -r '/^([0-9]{3}-|\([0-9]{3}\) )[0-9]{3}-[0-9]{4}$/p' <file>
+#+END_SRC
+
+** 替换
+
+#+BEGIN_SRC sh
+'s/<search>/<replace>/<options>'
+
+# <replace>
+    '{&}'  # 整个匹配部分
+    '\<n>' # 多个匹配部分中一个
+
+# <options>
+    'g' # 全部替换（默认只替换第一处）
+    'I' # 忽略大小写
+#+END_SRC
+
+*** 示例
+
+#+CAPTION: 去除空白字符
+#+BEGIN_SRC sh
+sed 's/[[:space:]]//g'
+#+END_SRC
+
+#+CAPTION: 修改 PHP-FPM 配置
+#+BEGIN_SRC sh
+sed -i "s/listen =.*/listen = 127.0.0.1:9000/" /etc/php5/fpm/pool.d/www.conf
+#+END_SRC
+
+* Systemd
+
+Systemd is considered a "polyglot", taking over a lot of services such as logging, CRON and other system management.
+
+** 配置
+
+#+BEGIN_SRC sh
+
+#+END_SRC
+
+** 命令
+
+#+CAPTION: 服务控制
+#+BEGIN_SRC sh
+systemctl <command> <service>
+    enable
+    disable
+    start
+    stop
+    restart
+    reload
+    status
+#+END_SRC
+
+#+CAPTION: 
+#+BEGIN_SRC sh
+systemctl list-unit-files
+#+END_SRC
+
+* SysV
+** 配置
+
+#+BEGIN_SRC sh
+/etc/init.d/<service> # 配置文件为 Bash 脚本
+/etc/init.d/skeleton  # 配置文件模板
+#+END_SRC
+
+** 命令
+
+#+BEGIN_SRC sh
+/etc/init.d/<service> [start|stop|restart|reload]
+#+END_SRC
+
+* 链接
+
+1. [[https://www.gnu.org/software/gawk/manual/html_node/index.html][The GNU Awk User's Guide]]
+1. [[http://www.grymoire.com/Unix/Awk.html][Awk Tutorial]]
+
+-----
+
+1. [[http://www.grymoire.com/Unix/Sed.html][Sed Tutorial]]

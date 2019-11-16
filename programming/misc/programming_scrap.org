@@ -1,0 +1,288 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Programming Scrap
+
+* 代码的抽象三原则
+
+[[http://www.ruanyifeng.com/blog/2013/01/abstraction_principles.html][Source]]
+
+软件开发是「[[http://en.wikipedia.org/wiki/Abstraction_principle_(computer_programming)][抽象化原则]]」的一种体现。所谓「抽象化」，就是指从具体问题中，提取出具有共性的模式，再使用通用的解决方法加以处理。
+
+开发软件的时候，一方面，我们总是希望使用别人已经写好的代码，另一方面，又希望自己写的代码尽可能重用，以求减少工作量。要做到这两个目标，这需要「抽象化」。
+
+** DRY 原则
+
+DRY 是 Don't Repeat Yourself 的缩写。软件工程名著《The Pragmatic Programmer》首先提出了这个原则。它的涵义是，系统的每一个功能都应该有唯一的实现。也就是说，如果多次遇到同样的问题，就应该抽象出一个共同的解决方法，不要重复开发同样的功能。这个原则有时也称为「一次且仅一次」原则（Once and Only Once）。
+
+** YAGNI 原则
+
+YAGNI 是 You Aren't Gonna Need It 的缩写。这是「极限编程」提倡的原则，指的是你自以为有用的功能，实际上都是用不到的。因此， _除了最核心的功能，其他功能一概不要部署，这样可以大大加快开发。_ 它背后的指导思想，就是尽可能快、尽可能简单地让软件运行起来（do the simplest thing that could possibly work）。
+
+但是，这里出现了一个问题。仔细推敲的话，你会发现 DRY 原则和 YAGNI 原则并非完全兼容。前者追求「抽象化」，要求找到通用的解决方法；后者追求「快和省」，意味着不要把精力放在抽象化上面，因为很可能「你不会需要它」。所以，就有了第三个原则。
+
+** Rule of Three 原则
+
+Rule of Three 原则指的是当某个功能第三次出现时，才进行「抽象化」。这是软件开发大家 Martin Fowler 在《Refactoring》一书中提出的。它的涵义是， _第一次用到某个功能时，写一个特定的解决方法；第二次又用到的时候，拷贝上一次的代码；第三次出现的时候，你才着手「抽象化」，写出通用的解决方法。_
+
+这样做有几个理由：
+
+- 省事。如果一种功能只有一到两个地方会用到，就不需要在「抽象化」上面耗费时间了。
+- 容易发现模式。「抽象化」需要找到问题的模式，问题出现的场合越多，就越容易看出模式，从而可以更准确地「抽象化」。
+- 防止冗余。如果一种功能同时有多个实现，管理起来非常麻烦，修改的时候需要修改多处。在实际工作中，重复实现最多可以容忍出现一次，再多就无法接受了。
+
+综上所述， _Rule of Three 是 DRY 原则和 YAGNI 原则的折衷，是代码冗余和开发成本的平衡点，_ 值得在「抽象化」时遵循。
+
+* 持续集成
+
+[[http://www.ruanyifeng.com/blog/2015/09/continuous-integration.html][Source]]
+
+** 概念
+
+持续集成（Continuous Integration，简称 CI）指的是 _频繁地将代码集成到主干。_ 它的好处主要有两个：
+
+- 快速发现错误：每进行一点更新，就集成到主干，可以快速发现和定位错误。
+- 防止分支大幅偏离主干：如果不是经常集成，主干又在不断更新，会导致之后集成的难度变大。
+
+持续集成的目的，就是让产品快速迭代，同时保持高质量。它的核心措施是， _代码集成到主干之前，必须通过自动化测试，_ 只要有一个测试用例失败，就不能集成。Martin Fowler 说过，「持续集成并不能消除 bug，而是让它们非常容易发现和改正。」
+
+与持续集成相关的，还有两个概念，分别是持续交付和持续部署。
+
+** 持续交付
+
+持续交付（Continuous Delivery）指的是 _频繁地将软件的新版本交付给质量团队或者用户，以供评审。_ 如果评审通过，代码就进入生产阶段。持续交付可以看作持续集成的下一步。它强调的是， _软件是随时随地可以交付的。_
+
+** 持续部署
+
+持续部署（Continuous Deployment）是持续交付的下一步，指的是 _代码通过评审以后，自动部署到生产环境。_ 持续部署的目标是， _代码在任何时刻都是可部署的，可以进入生产阶段。_
+
+持续部署的前提是能自动化完成测试、构建、部署等步骤，它与持续交付的区别：
+
+file:../images/programming_scrap/01.gif
+
+** 流程
+*** 提交
+
+开发者向代码仓库提交代码，所有后面的步骤都始于本地代码的一次提交（commit）。
+
+*** 第一轮测试
+
+代码仓库对 commit 操作配置了 _钩子（hook），提交代码或者合并主干时，会运行自动化测试。_
+
+- 单元测试：针对函数或模块的测试。
+- 集成测试：针对整体产品的某个功能的测试，又称功能测试。
+- 端对端测试：从用户界面直达数据库的全链路测试。
+
+第一轮测试至少需要进行单元测试。
+
+*** 构建
+
+通过第一轮测试，代码就可以合并进主干，可以交付了。交付后，就先进行构建（build），再进入第二轮测试。所谓 _构建，指的是将源码转换为可以运行的实际代码，比如安装依赖、配置资源（CSS、JS、图片）等。_
+
+#+CAPTION: 常用的构建工具
+| [[https://jenkins.io/index.html][Jenkins]]    | 开源 |
+|------------+------|
+| [[https://travis-ci.com/][Travis CI]]  | 收费 |
+|------------+------|
+| [[https://codeship.com/][Codeship]]   | 收费 |
+|------------+------|
+| [[http://strider-cd.github.io/][Strider CD]] | 开源 |
+
+*** 第二轮测试
+
+如果第一轮测试已经涵盖了所有测试内容，第二轮测试可以省略，前提是构建已经移到第一轮测试之前。
+
+第二轮测试是 _全面测试，包括单元测试、集成测试、（有条件的话）端对端测试。所有测试以自动化为主，_ 少数无法自动化的测试用例，需要人工进行。
+
+需要强调的是，新版本的每一个更新点都必须测试到。如果测试的覆盖率不高，进入后面的部署阶段后，很可能会出现严重的问题。
+
+*** 部署
+
+通过第二轮测试，当前代码就是一个 _可以直接部署的版本（artifact），将这个版本的文件打包存档，发到生产服务器。生产服务器将文件解包成一个目录，再将运行路径的符号链接（symlink）指向这个目录，然后重新启动应用。_
+
+#+CAPTION: 部署工具
+| [[https://www.ansible.com/][Ansible]] |   |
+|---------+---|
+| [[https://www.chef.io/chef/][Chef]]    |   |
+|---------+---|
+| [[https://puppet.com/][Puppet]]  |   |
+
+*** 回滚
+
+一旦当前版本发生问题，就要回滚到上一个版本的构建结果。最简单的做法就是 _修改符号链接，指向上一个版本的目录。_
+
+** 链接
+
+1. [[https://blog.risingstack.com/continuous-deployment-of-node-js-applications/][Continuous Deployment of Node.js Applications]]
+1. [[https://codeship.com/continuous-integration-essentials][Continuous Integration Essentials]]
+
+* 各种流行的编程风格
+
+[[http://coolshell.cn/articles/2058.html][Source]]
+
+** 散弹枪编程
+
+这种编程风格是一种开发者使用非常随意的方式对待代码。「嗯，这个方法调用出错了……那么我会试着把传出的参数从 =false= 变成 =true= 」，当然依然出错，于是我们的程序员会这样：「好吧，那我就注释掉整个方法吧」，或是其它更为随意的处理方式，直到最后让这个调用成功。或是被旁边的某个程序员指出一个正确的方法。
+
+** 撞大运编程
+
+这是一种比散弹枪编程要温和一些的编程方式，我相信这种方式可能会是大多数程序员都会使用的方式。这种编程方式经常出现于程序员并不确切知道他们在干什么，也不知道所写的程序的本质和实际，但是可以让程序工作起来。他们以一种撞大运的方式在写程序，某些时候，他们根本就不知道某个错误的原因，就开始稀里糊涂地修改代码。一旦出现问题，他们会用两条路：1）停下来，理解一下程序，找到出错的原因。2）使用散弹枪编程方式开始解决问题。
+
+测试驱动开发（Test Driven Development）是一种可以用来拯救上百万的撞大运编程的程序员。于是，他们有了一个更为 NB 的借口：只要我的程序通过测试了，你还有什么话好说？别骂我，测试驱动开发是一个不错的事物，其主要是用来控制撞大运开发所带来的问题。
+
+** Cargo-Cult 编程
+
+Cargo Cults 这个词来自二战期间的某些太平洋上小岛里的土著人。在战争期间，美国利用这些小岛作为太平洋战场上的补给站。他们在这些小岛上修建自己的飞机跑道以用来运输战争物资。而那些小岛上的土著人从来没有见过飞机，当他们看到飞机的时候，觉得相当的牛，可以为那些白人带来各种各样的物品和食物。当二战结束后，那些土著人仿照着修建了飞机跑道，并用竹子修建了塔台。然后就在那期望着有飞机为他们送来物品和食物。
+
+Cargo Cult 编程是一种非常流行的编程方法，使用这种方法的程序员会学习其它编程高手的编程方法，虽然他们并不知道为什么高手们要那样做，但是他们觉得那样做可以让程序工作起来。举个例子，当时有大量的程序员在 J2EE 出现的第一年中过度地使用了 EJBs 和 Entity Beans。
+
+** 刻舟求剑编程
+
+这种风格的编程在程序员的圈子里是非常常见的。比如，有一天，你发现了一个空指针的异常，于是你到了产生空指针异常的地方，简单地放上一个判断 ~if (p != NULL)~ 。是的，这样的 fix 可以让你的程序工作起来，但你并没有真正地解决问题。你只不过是在你的船边记下了剑掉下去的位置，这样做只不过把问题隐藏起来，最终只会让你的程序的行为变得神出鬼没。你应该找到为什么指针会为空的原因，然后再解决这个问题。
+
+** 设计模式驱动型编程
+
+这种编程风格使用大量的设计模式，代码中到处都是 Facade，Observer ，Strategy，Adapter，等等。于是，程序要处理的业务逻辑被这些设计模式打乱得无法阅读，最后，也不知道是业务需求重来，还是设计模式重要，总之，实际业务需求的程序逻辑被各种设计模式混乱得不堪入目。
+
+** 侦探型编程
+
+在解决一个 bug 的时候，侦探型程序员会调查这个 bug 的原因。然后，则调查引发这个 bug 的原因的原因。再然后，会分析修正代码后是否会导致其它代码失败的因果关系。再然后然后，他会使用文本搜索查找所有使用这个改动的代码，并继续查找更上一级的调用代码。最后，这个程序员会写下 30 个不同的情形的测试案例，就算这些测试案例和那个 bug 没有什么关系，最最后，这个程序员有了足够多的信心，并且精确地修正了一个拼写错误。
+
+与此同时，一个正常的程序员修正了其它 5 个 bug。
+
+** 屠宰式编程
+
+使用这种风格的程序员，对重构代码有着一种难以控制的极端冲动。他们几乎会重构所有经手的代码。就算是在产品在 Release 的前夜，当他在修正几个拼写错误的 bug 同时，其会修改 10 个类，以及重构与这 10 个类有联系的另 20 个类，并且修改了代码的 build 脚本，以及 5 个部署描述符。
+* Stack 的三种含义
+
+[[http://www.ruanyifeng.com/blog/2013/11/stack.html][Source]]
+
+** 含义一：数据结构
+
+Stack 的第一种含义是一组数据的存放方式，特点为 LIFO（Last In, First Out）。与这种结构配套的，是一些特定的方法：
+
+| =push=    | 在顶层加入数据         |
+|-----------+------------------------|
+| =pop=     | 返回并移除顶层的数据   |
+|-----------+------------------------|
+| =top=     | 返回顶层数据，但不移除 |
+|-----------+------------------------|
+| =isempty= | Stack 是否为空         |
+
+** 含义二：代码运行方式
+
+Stack 的第二种含义是 +调用栈（call stack）+ ，表示函数或子例程层层调用。
+
+#+BEGIN_SRC java
+class Student {
+    int age;              
+    String name;      
+
+    public Student(int Age, String Name)
+    {
+        this.age = Age;
+        setName(Name);
+    }
+
+    public void setName(String Name)
+    {
+        this.name = Name;
+    }
+}
+
+public class Main {
+    public static void main(String[] args)
+    {
+        Student s;           
+        s = new Student(23, "Jonh");
+    }
+}
+#+END_SRC
+
+首先调用 =main()= 方法，里面需要生成一个 =Student= 实例，于是又调用 =Student= 构造函数。在构造函数中，又调用到 =setName()= 方法。这三次调用就叫做「调用栈」。程序运行的时候，总是 _先完成最上层的调用，然后将它的值返回到下一层调用，直至完成整个调用栈，返回最后的结果。_
+
+** 含义三：内存区域
+
+Stack 的第三种含义是存放数据的一种内存区域（[[https://en.wikipedia.org/wiki/Stack-based_memory_allocation][Stack-based memory allocation]]）。程序运行的时候，需要内存空间存放数据。一般来说，系统会划分出 _两种不同的内存空间：一种叫做 stack（栈），另一种叫做 heap（堆）。_ 它们的主要区别是：
+
+- Stack 是有结构的，每个区块按照一定次序存放，可以明确知道每个区块的大小；heap 是没有结构的，数据可以任意存放。因此，stack 的寻址速度要快于 heap。
+- 一般来说，每个线程分配一个 stack，每个进程分配一个 heap，也就是说， stack 是线程独占的，heap 是线程共用的。
+- Stack 大小是确定的，数据超过这个大小，就发生 stack overflow 错误；而 heap 的大小是不确定的，需要的话可以不断增加。
+
+数据存放的规则是：只要是 _局部的、占用空间确定的数据，一般都存放在 stack 里面，否则就放在 heap 里面。_
+
+#+BEGIN_SRC java
+public void Method1()
+{
+    int i = 4;
+    int y = 2;
+    Class1 cls1 = new Class1();
+}
+#+END_SRC
+
+- =i= 和 =y= 是整数，内存占用空间是确定的，而且是本地变量，只用在 =Method1()= 之内。
+- =cls1= 也是局部变量，类型为指针，指向一个对象的实例。指针变量占用的大小是确定的，但是对象实例以目前的信息无法确知所占用的内存空间大小，所以对象实例存放在 heap。作为一条规则， _所有的对象都存放在 heap。_
+
+#+BEGIN_SRC java
+public void Method1()
+{                               // | Stack       | Heap        |
+                                // |-------------|-------------|
+    int i = 4;                  // | i = 4       | (empty)     |
+                                // |-------------|-------------|
+    int y = 2;                  // | y = 2       | (empty)     |
+                                // | i = 4       |             |
+                                // |-------------|-------------|
+    Class1 cls1 = new Class1(); // | cls1 ref    | cls1 object |
+                                // | y = 2       |             |
+                                // | i = 4       |             |
+                                // |-------------|-------------|
+}                               // | (empty)     | cls1 object |
+#+END_SRC
+
+当 =Method1()= 运行结束，整个 stack 被清空，3 个本地变量消失。而 _heap 中的对象实例继续存在，直到系统的垃圾清理机制（garbage collector）将这块内存回收。_ 因此， _一般内存泄漏发生在 heap，即某些内存空间不再被使用了，却因为种种原因，没有被系统回收。
+
+* Norris Numbers
+
+[[https://www.teamten.com/lawrence/writings/norris-numbers.html][Source]]
+
+In 2011 John D. Cook wrote the following [[http://www.johndcook.com/blog/2011/11/22/norris-number/][blog post]]:
+
+#+BEGIN_QUOTE
+My friend Clift Norris has identified a fundamental constant that I call Norris's number, the average amount of code an untrained programmer can write before he or she hits a wall. Clift estimates this as 1,500 lines. Beyond that the code becomes so tangled that the author cannot debug or modify it without herculean effort.
+#+END_QUOTE
+
+I don't know enough novice programmers to confirm this effect, but I had independently noticed the next wall in the programmer's journey, which happens at 20,000 lines. I'll change Norris's number to 2,000 to get a nice power of ten jump.
+
+I ran into the 20,000-line wall repeatedly in my first job out of college, as did my co-workers (who were all as young as I). At DreamWorks we had 950 programs for animators to use, and a line count showed that the larger ones all hovered around 20,000 to 25,000 lines. Beyond that it was just too much effort to add features.
+
+In mid-1996 I was tasked with writing the [[https://www.teamten.com/lawrence/oscar/][DreamWorks lighting tool]] (with two other programmers) and knew that this would be far larger than 20,000 lines of code. I changed my approach to programming and the tool was successfully delivered a year later at around 200,000 lines. (It's scheduled to be retired in 2013, having been used daily over 16 years to make 32 movies.) I've since written several more programs in the 100,000 to 200,000 line range. I'm sure I'm hitting the next wall; I can feel it.
+
+What's particularly hard is having technical discussions with someone who hasn't broken through as many walls as you have. Breaking through these walls means making different trade-offs, and specifically it means making a decision that seems to make less sense in the short term but will help later. This is a hard argument to make — the short term advantages are immediately demonstrable, but I can't convince anyone that a year from now someone may make an innocent change that breaks this code.
+
+Edsger Dijkstra [[http://www.cs.utexas.edu/users/EWD/ewd02xx/EWD249.PDF][wrote in 1969]]:
+
+#+BEGIN_QUOTE
+A one-year old child will crawl on all fours with a speed of, say, one mile per hour. But a speed of a thousand miles per hour is that of a supersonic jet. Considered as objects with moving ability the child and the jet are incomparable, for whatever one can do the other cannot and vice versa.
+#+END_QUOTE
+
+A novice programmer, the kind Clift Norris is referring to, learns to crawl, then toddle, then walk, then jog, then run, then sprint, and he thinks, "At this rate of acceleration I can reach the speed of a supersonic jet!" But he runs into the 2,000 line limit because his skills don't scale up. He must move differently, using a car, to go faster. Then he learns to drive, first slowly, then faster, but runs into the 20,000 line limit. Driving skills don't transfer to flying a jet plane.
+
+My friend [[http://www.plunk.org/~grantham/][Brad Grantham]] explains this by saying that the novice programmer "brute-forces" the problem. I think this is right: _When the code is under 2,000 lines you can write any tangled garbage and rely on your memory to save you. Thoughtful class and package decomposition will let you scale up to 20,000 lines._
+
+What's the key to breaking past that? For me, it was keeping things simple. Absolutely refuse to add any feature or line of code unless you need it right now, and need it badly. I already touched on this in [[https://www.teamten.com/lawrence/writings/every_line_is_a_potential_bug.html][Every Line Is a Potential Bug]] (and sophomorically before that in [[https://www.teamten.com/lawrence/writings/plan03.html][Simple is Good]]). The chief architect of effects at DreamWorks phrased it this way:
+
+#+BEGIN_QUOTE
+To me, the genius of [the lighting tool] was in selecting a small set of features which were tractable to write and maintain and strong enough to make a great lighting tool.
+#+END_QUOTE
+
+As a tech lead I see my primary contribution as saying "no" to features that co-workers think are important but can't justify. _The real trick is knowing when a new feature adds linear complexity (its own weight only) or geometric complexity (interacts with other features)._ Both should be avoided, but the latter requires extra-convincing justification.
+
+For example, as of 2012, the Linux kernel had [[http://www.h-online.com/open/news/item/Linux-kernel-exceeds-15-million-lines-of-code-1409952.html][15 million lines of code]]. Of that, 75% had linear complexity (drivers, filesystems, and architecture-specific code); you might have dozens of video drivers and they don't interact (much) with each other. The rest is more geometric.
+
+Dijkstra's point is that _it's difficult to teach these advanced techniques, because they only make sense on 20,000-line or 200,000-line programs. Any class or textbook must limit its examples to a few hundred lines, and the brute-force method works just fine there._ You really need the textbook to show you the 30,000-line program and then show you the new feature that was added easily because the program wasn't too complex to start with. But that's effectively impossible.
+
+I don't know what I'll have to change to get past the 200,000 line wall. I've been switching to a more purely functional style recently and shedding mutable state, and perhaps these might help me break through.
+
+And I'm really curious to see what the 2-million line barrier is all about.
+
+#+BEGIN_QUOTE
+It seems like there's a wall at around 3-4M LOC, and really, after 3M LOC, the growth rate seems to slow down significantly no matter how many people (hundreds) or years are involved (decades). – [[https://plus.google.com/u/0/107919048662113456495/posts/AyGGqF9mLdB][Dan Wexler]]
+#+END_QUOTE

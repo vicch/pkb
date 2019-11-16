@@ -1,0 +1,112 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Javascript Tool
+
+* Babel
+
+Babel is a compiler which can compile experimental JavaScript features down into older JavaScript versions that can be supported on a wider range of platforms.
+
+** Modules
+
+Babel modules include the =babel-core= and plugins. Each individual language feature that Babel can compile has a separate plugin. Collections of plugins are grouped into presets such as =babel-preset-react=.
+
+Babel also groups experimental language features into presets called stages, with =stage-0= being the most experimental. =stage-1= is recommended as a good balance between practical and safe to use.
+
+| =babel-loader=                   |                                     |
+|----------------------------------+-------------------------------------|
+| =babel-core=                     |                                     |
+|----------------------------------+-------------------------------------|
+| =babel-preset-env=               | For ES2015, ES2016, ES2017 features |
+|----------------------------------+-------------------------------------|
+| =babel-preset-stage-0=           |                                     |
+| =babel-preset-stage-1=           |                                     |
+| =babel-preset-stage-2=           |                                     |
+| =babel-preset-stage-3=           |                                     |
+|----------------------------------+-------------------------------------|
+| =babel-plugin-transform-runtime= | For =async=, =await= in dev         |
+| =babel-runtime=                  | For =async=, =await= in prod        |
+
+** Config
+
+#+CAPTION: =webpack.config.js=
+#+BEGIN_SRC js
+{
+  ...
+  module: {
+    rules: [
+      {
+        test: /.js$/,            // Load all .js files
+        exclude: /node_modules/, // Exclude files
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true, // Cache already compiled files
+            },
+          },
+        ],
+      },
+    ],
+  },
+}
+#+END_SRC
+
+#+CAPTION: =.babelrc=
+#+BEGIN_SRC js
+{
+  "presets": [
+    ["env", {"modules": false}], // For better performance
+    "stage-1",
+    "react"
+  ],
+  "plugins": [
+    "transform-runtime"
+  ]
+}
+#+END_SRC
+
+* Webpack
+** =import=
+
+#+BEGIN_SRC js
+import foos from './foos';
+// First tries to resolve to ./foos.js
+// Then tries to resolve to ./foos/index.js
+#+END_SRC
+
+** 示例
+
+#+CAPTION: =webpack.config.js=
+#+BEGIN_SRC js
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    path: './dist',
+    filename: 'bundle.js'
+  }
+};
+#+END_SRC
+
+#+CAPTION: =package.json=
+#+BEGIN_SRC js
+{
+  ...
+  "scripts": {
+    "dev": "webpack-dev-server --env.dev",
+    "build": "webpack"
+  },
+  ...
+}
+#+END_SRC
+
+#+CAPTION: =index.html=
+#+BEGIN_SRC html
+<script src="./dist/bundle.js"></script>
+#+END_SRC
+
+* Lodash
+* 链接
+
+1. [[https://babeljs.io/docs/en/][Babel Documentation]]
+1. [[https://babeljs.io][Babel Online]]
+1. [[https://webpack.js.org/concepts/][Webpack Documentation]]
+1. [[https://lodash.com/][Lodash]]

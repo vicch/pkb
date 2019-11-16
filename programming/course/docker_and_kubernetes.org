@@ -1,0 +1,648 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Docker and Kubernetes
+
+* Dive into Docker
+** Namespacing and Control Group
+
+Most OS has a kernel - a process that governs access between the running programs and the physical hardware. Programs interact with the kernel through function invocations called system calls.
+
+file:../images/docker_and_kubernetes/01.png
+
+Think of an imaginary situation: on the same machine, Chrome need Python 2 to run, while NodeJS needs Python 3. But only Python 2 can be installed on the machine.
+
+file:../images/docker_and_kubernetes/02.png
+
+One way to solve this issue is to use the OS feature called *namespacing*, which is used to segment out portions of hardware or software resources dedicated to a process. When the process issues a system call to access the hard drive, the kernel will direct the call to the dedicated segment.
+
+file:../images/docker_and_kubernetes/03.png
+
+Namespacing allows isolating resources per process or group of processes. Another feature closely related to namespacing is *control group*, which can be used to limit the amount of resources a process and use. 
+
+file:../images/docker_and_kubernetes/04.png
+
+Namespacing and control groups are specific to Linux. When installing Docker on Windows or MacOS, a Linux virtual machine is installed, which will host the containers.
+
+file:../images/docker_and_kubernetes/07.png
+
+** Image
+
+An image is a single file containing all the dependencies and configuration required to run a specific program.
+
+An image contains a file system snapshot and a startup command. A file system snapshot is essentially a specific set of directories and files.
+
+file:../images/docker_and_kubernetes/06.png
+
+To start up a new container with a specific image, Docker server first chekcs the local image cache. If the image is not found there, Docker server will reach out to Docker Hub, which is the respository of free public images. Docker server will download the image and save it into the local image cache.
+
+The kernel then isolates a segement of the hard drive and grants access to the container being created. the file system snapshot of the image is placed into this segment of hard drive. Then the startup command is executed and a new process is created.
+
+** Container
+
+A container is an instance of an image. A container can be seen as a running process and the segment of resources assigned to it.
+
+file:../images/docker_and_kubernetes/05.png
+
+** Docker
+
+Docker client itself doesn't do anything with containers or images. It's a portal for users to issue commands. It interacts with the Docker server behind the scenes.
+
+* Manipulating Containers with the Docker Client
+
+~docker run = docker create + docker start~
+
+=docker create= takes the image file system to setup the file system snapshot to create the container, and =docker start= runs the image startup command.
+
+An already stopped container can be run again by =docker start=, but it cannot override the startup command, it will only run the startup command that was set when the container was created.
+
+-----
+
+=-i, --interactive= option is used to attach the terminal to the =STDIN= of the container. =-t, --tty= option is used to allocate a pseudo-TTY to the container, essentially formatting the =STDOUT= and =STDERR= output from the container.
+
+* Building Custom Images Through Docker Server
+
+When building an image, for each directive in the =Dockerfile=, Docker Server will:
+
+- Use the result image from last step to create a temporary container.
+- Execute the command of this directive, e.g. =RUN=.
+- Take a snapshot of the container's file system.
+- Create a tempoaray image.
+- Stop the temporary container.
+
+-----
+
+When rebuilding an image, Docker Server will check if any step is changed, including changes to files being copied via =COPY=. If there is a change, for steps before this one, Docker Server will reuse cached temporary images created in previous building. And for this step and following steps, Docker Server will rebuild the temporary images.
+
+-----
+
+As container is created from an image, image can also be created from a container, by using =docker commit=. But the recommended way to create an image is through =Dockerfile=.
+* Docker Compose with Multiple Local Containers
+
+By placing multiple containers under =services= in Docker Compose file, the containers will automatically share the same network and can connect to each other, by using the service names as host names.
+
+* Creating Production-Grade Workflow
+
+file:../images/docker_and_kubernetes/08.png
+
+* Continuous Integration and Deployment with AWS
+** AWS Elastic Beanstalk
+
+file:../images/docker_and_kubernetes/09.png
+
+* Continuous Integration Flow for Multiple Images
+** Production Multi-Container Deployments
+
+file:../images/docker_and_kubernetes/10.png
+
+file:../images/docker_and_kubernetes/11.png
+
+** Multiple Nginx Instances
+
+file:../images/docker_and_kubernetes/12.png
+
+* Multi-Container Deployments to AWS
+** Multi-Container Definition Files
+
+file:../images/docker_and_kubernetes/13.png
+
+file:../images/docker_and_kubernetes/14.png
+
+** Managed Data Service Providers
+
+file:../images/docker_and_kubernetes/15.png
+
+** AWS VPC and Security Groups
+
+file:../images/docker_and_kubernetes/16.png
+
+* Onwards to Kubernetes
+** The Why's and What's of Kubernetes
+
+file:../images/docker_and_kubernetes/17.png
+
+file:../images/docker_and_kubernetes/18.png
+
+** Kubernetes in Development and Production
+
+file:../images/docker_and_kubernetes/19.png
+
+** Setup on MacOS
+
+file:../images/docker_and_kubernetes/20.png
+
+** Mapping Existing Knowledge
+
+file:../images/docker_and_kubernetes/21.png
+
+file:../images/docker_and_kubernetes/22.png
+
+** Object Types and API Versions
+
+file:../images/docker_and_kubernetes/23.png
+
+** Service Config Files in Depth
+
+file:../images/docker_and_kubernetes/24.png
+
+file:../images/docker_and_kubernetes/25.png
+
+* Maintaining Sets of Containers with Deployments
+** Multiple Docker installations
+
+file:../images/docker_and_kubernetes/26.png
+
+* Multi-Container App with Kubernetes
+** The Path to Production
+
+file:../images/docker_and_kubernetes/27.png
+
+file:../images/docker_and_kubernetes/28.png
+
+** Kubernetes Volumes
+
+file:../images/docker_and_kubernetes/29.png
+* Handle Traffic with Ingress Controllers
+** One Other Quick Note
+
+There are two projects called "Nginx Ingress Controller": =ingress-nginx= and =kubernetes-ingress=. =ingress-nginx= should be used.
+
+** Behind the Scenes of Ingress
+
+=Ingress= config defines the desired state (routing rules etc.), and =Ingress= controller updates the environment to achieve the desired state.
+
+** More Behind the Scenes of Ingress
+
+Using =ingress-nginx= on Google Cloud involves these components:
+
+#+ATTR_HTML: :class no-border
+| Google Cloud load balancer | Provided by Google Cloud, directs traffic to Kubernetes cluster's =LoadBalancer= =Service= |
+|----------------------------+--------------------------------------------------------------------------------------------|
+| =LoadBalander= =Service=   | Directs traffic to Nginx =Deployment=                                                      |
+|----------------------------+--------------------------------------------------------------------------------------------|
+| Nginx =Deployment=         | Runs Nginx container, performs load balancing and routing to other =Deployment=            |
+|----------------------------+--------------------------------------------------------------------------------------------|
+| =Ingress= config           | Defines the desired state (routing rules etc.)                                             |
+|----------------------------+--------------------------------------------------------------------------------------------|
+| Default backend            | A =Deployment= used for health check                                                       |
+
+The reason of using =ingress-nginx= instead of a simple Nginx =Pod= for load balancing is because =ingress-nginx= provides more advanced features such as sticky sessions.
+
+** Optional Reading on Ingress Nginx
+
+[[https://www.joyfulbikeshedding.com/blog/2018-03-26-studying-the-kubernetes-ingress-system.html][Studying the Kubernetes Ingress system]]
+
+** Setting Up Ingress Locally
+
+Follow =ingress-nginx= [[https://kubernetes.github.io/ingress-nginx/deploy/][Installation Guide]]:
+
+#+CAPTION: Run generic deployment command to applies a yaml config to create the =Ingress= controller and other objects
+#+BEGIN_SRC sh
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
+#+END_SRC
+
+#+CAPTION: Run setup commands for minikube.
+#+BEGIN_SRC sh
+minikube addons enable ingress
+#+END_SRC
+
+The deployment command for Google Cloud applies a yaml config to create a =LoadBalancer= =Service=.
+
+** Create Ingress Configuration
+
+Create and apply =Ingress= config file.
+
+** Test Ingress Locally
+
+Obtain the minikube IP address and open in browser to confirm =Ingress= config works. Kubernetes =Ingress= controller uses a fake certificate so there is a browser security warning.
+
+** The Minikube Dashboard
+
+Minikube provides a dashboard web UI which can be enabled by =minikube dashboard=. The dashboard shows all info of the Kubernetes cluster.
+
+It is not recommended to do imperative changes through the dashboard, because Kubernetes config is supposed to be declarative, and the changes made in the dashboard won't be persisted to the config files.
+
+* Kubernetes Production Deployment
+** The Deployment Process
+
+1. Create a GitHub repo.
+2. Tie the repo to Travis CI.
+3. Create a Google Cloud project.
+   - Billing needs to be enabled. Cost can be estimated by using [[https://cloud.google.com/products/calculator/][Google Cloud Platform Pricing Calculator]].
+4. Add deployment scripts to the repo.
+
+** Google Cloud vs AWS for Kubernetes
+
+Reasons to use Google Cloud over AWS for Kubernetes:
+
+- Kubernetes was created by Google. The documentation is better.
+- Google Cloud's console is easier to use and supports =kubectl= commands.
+- AWS's support for Kubernetes was more recent.
+
+** Create GitHub Repo
+
+Create a repo on GitHub and set it as the "origin" remote for the local repo. Remove the existing remote first if there is any.
+
+** Link GitHub Repo to Travis CI
+
+Enable the repo in Travis CI settings.
+
+** Create Google Cloud Project
+
+Create a project on [[https://console.cloud.google.com][Google Cloud Platform]].
+
+** Link Billing Account
+
+Confirm the created project has billing linked to it on [[https://console.cloud.google.com/home/dashboard][Google Cloud Platform]].
+
+** Create Cluster with Google Cloud
+
+1. On [[https://console.cloud.google.com/kubernetes/list][Kubernetes Engine]], under Clusters, click "Create a Cluster".
+2. Specify a name, and leave other options as default.
+
+Billing will start once the cluster is created.
+
+** Kubernetes Dashboard on Google Cloud
+
+The [[https://console.cloud.google.com/kubernetes/list][Kubernetes Engine]] dashboard:
+
+- Clusters: manage cluster and nodes.
+- Workloads: manage pods and deployments.
+- Services: manage services such as load balancing.
+- Applications: manage plug-ins.
+- Configuration: manage environment variables and secrets.
+- Storage: manage persistent volumes.
+
+The default storage class is [[https://cloud.google.com/persistent-disk/][Google Persistent Disk]].
+
+** Travis Deployment Overview
+
+The Travis config file will:
+
+1. Install Google Cloud SDK
+2. Configure Google Cloud auth
+3. Login to Docker
+4. Build the test version of the client module
+5. Run tests of client module
+6. Deploy latest images (if tests are successful)
+7. Build Docker images, and push to Docker Hub
+8. Apply Kubernetes config files
+9. Set latest images on Kubernetes deployments
+
+** Install Google Cloud SDK
+
+#+CAPTION: =.travis.yml=
+#+BEGIN_SRC yaml
+env:
+  global:
+    # Disable prompts during SDK installation
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+before_install:
+  # Install Google Cloud SDK
+  - curl https://sdk.cloud.google.com | bash > /dev/null;
+  - source $HOME/google-cloud-sdk/path.bash.inc
+  # Setup kubectl
+  - gcloud components update kubectl
+  # Configure auth
+  - gcloud auth activate-service-account --key-file service-account.json
+# service-account.json contains credentials
+#+END_SRC
+
+** Generate Service Account
+
+Create a service account at [[https://console.cloud.google.com/iam-admin/serviceaccounts][Google Cloud Platform IAM Service Accounts]]. Set role to "Kubernetes Engine Admin", and create a JSON key. The JSON key file will be downloaded. This file should never be exposed externally.
+
+** Run Travis CI CLI in Container
+
+Travis CI CLI needs Ruby. It's more convenient to use a Docker image with Ruby installed.
+
+#+BEGIN_SRC sh
+docker run -it -v $(pwd):/app ruby:2.3 sh
+gem install travis
+#+END_SRC
+
+** Encrypt Service Account File
+
+#+CAPTION: (Following last section inside Docker)
+#+BEGIN_SRC sh
+# Go to the mounted dir where the service account JSON file is
+# Assuming the file is named as service-account.json
+cd /app
+travis login
+# Specify the Git repo to tie the encrypted file to
+travis encrypt-file service-account.json -r vicch/multi-k8s
+# Copy the given openssl command to .travis.yml under before_install
+#+END_SRC
+
+The encrypted keys will be added as environment variables to the repo on Travis CI. The variables are referenced in the generated =openssl= command.
+
+Commit the generated =service-account.json.enc= into Git repo, but DO NOT commit =service-account.json=.
+
+** More Google Cloud CLI Config
+
+#+CAPTION: =.travis.yml=
+#+BEGIN_SRC yaml
+before_install:
+  - ...
+  # Configure Google Cloud project and cluster
+  - gcloud config set project <project_id> # Project ID is not project name
+  - gcloud config set compute/zone <location> # E.g. us-central1-a
+  - gcloud container clusters get-credentials <cluster_name>
+#+END_SRC
+
+** Run Tests with Travis
+
+#+CAPTION: =.travis.yml=
+#+BEGIN_SRC yaml
+before_install:
+  - ...
+  # Login to Docker, username and password are added as environment variables
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  # Build the test image
+  - docker build ...
+script:
+  # Run the tests
+  - docker run ...
+#+END_SRC
+
+** Custom Deployment Providers
+
+Travis CI doesn's support Kubernetes as deployment provider, so a custom script is needed to perform the deployment.
+
+#+CAPTION: =.travis.yml=
+#+BEGIN_SRC yaml
+deploy:
+  provider: script
+  script: bash ./deploy.sh # The custom script to do deployment
+  on:
+    branch: master
+#+END_SRC
+
+** Unique Deployment Images
+
+#+CAPTION: =deploy.sh=
+#+BEGIN_SRC sh
+# Build images and push to Docker Hub
+docker build ...
+docker push ...
+# Apply Kubernetes config
+kubectl apply -f k8s
+# Imperatively set the latest image
+kubectl set image ...
+#+END_SRC
+
+** Unique Tags for Built Images
+
+To force Kubernetes deployments to use the latest Docker images built in the deployment process, we need to use the =kubectl set image= command by passing in the tag indicating the latest version of the image. This tag needs to be different from the tag of the current running image, otherwise Kubernetes thinks it's already running what is required and won't update to the latest version.
+
+The Git commit's SHA hash can be used as the tag:
+
+- It's guaranteed to be unique.
+- It's automatic, by using an environment variable there is no need to manually specify a tag.
+- It can be used for debugging purposes because it indicates the repo commit on which the cluster is running.
+
+** Updating Deployment Script
+
+#+CAPTION: =.travis.yml=
+#+BEGIN_SRC yaml
+env:
+  global:
+    # Define the environment variable for Git SHA
+    - SHA=$(git rev-parse HEAD)
+#+END_SRC
+
+#+CAPTION: =deploy.sh=
+#+BEGIN_SRC sh
+# Set Git SHA as image tag
+docker build ... -t ...:$SHA ...
+docker push ...:$SHA
+# Reference Git SHA when setting image
+kubectl set image ...:$SHA
+#+END_SRC
+
+** Configure Google Cloud CLI on Cloud Console
+
+The Postgres =Deployment= of the cluster needs a Kubernetes =Secret= object to hold the password. This needs to be done on the provider's side.
+
+To do this on Google Cloud, on [[https://console.cloud.google.com/kubernetes/list][Google Cloud Platform | Kubernetes Engine]] click "Activate Cloud Shell" to open a console, where =kubectl= commands can be executed to configure the cluster.
+
+#+CAPTION: Environment setup for using =kubectl=
+#+BEGIN_SRC sh
+gcloud config set project <project_id>
+gcloud config set compute/zone <location>
+gcloud container clusters get-credentials <cluster_name>
+# Confirm setup is successful
+kubectl get all
+#+END_SRC
+
+** Create Secret on Google Cloud
+
+#+CAPTION: Create =Secret= in Cloud Shell
+#+BEGIN_SRC sh
+kubectl create secret generic pg-password --from-literal PG_PASSWORD=123456
+#+END_SRC
+
+Confirm the =Secret= is created under [[https://console.cloud.google.com/kubernetes/config][Google Cloud Platform | Kubernetes Engine | Configuration]].
+
+** Helm Setup
+
+=ingress-unix= is needed to handle ingress. Helm can be used to manage =ingress-unix= on Google Cloud cluster. Go to [[https://helm.sh/docs/using_helm/#from-script][Helm Documentation | Installing Helm | Using Script]], run the commands in Cloud Shell to install Helm.
+
+#+BEGIN_SRC sh
+curl -LO https://git.io/get_helm.sh
+chmod 700 get_helm.sh
+./get_helm.sh
+#+END_SRC
+
+** Kubernetes Security with RBAC
+
+Tiller (server part of Helm) needs proper Kubernetes RBAC (Role-Based Access Control) permissions to modify the cluster. See [[https://helm.sh/docs/using_helm/#tiller-and-role-based-access-control][Helm Documentation | Role-Based Access Control]].
+
+** Assign Tiller a Service Account
+
+A service account and a =ClusterRoleBinding= need to be created to grant Tiller the permissions.
+
+#+BEGIN_SRC sh
+kubectl create serviceaccount --namespace kube-system tiller
+kubectl create clusterrolebinding tiller-cluster-role --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+#+END_SRC
+
+Initialize Helm with the service account just created.
+
+#+BEGIN_SRC sh
+helm init --service-account tiller --upgrade
+#+END_SRC
+
+** ingress-nginx with Helm
+
+Install =ingress-nginx= with Helm by following [[https://kubernetes.github.io/ingress-nginx/deploy/#using-helm][ingress-nginx | Installation Guide | Using Helm]].
+
+#+BEGIN_SRC sh
+helm install stable/nginx-ingress --name my-nginx --set rbac.create=true
+#+END_SRC
+
+The ingress-related objects will be created behind the scene.
+
+** The Result of ingress-nginx
+
+Go to [[https://console.cloud.google.com/kubernetes/workload][Google Cloud Platform | Kubernetes Engine | Workloads]] and confirm the =ingress-controller= and =ingress-default-backend= are created.
+
+Go to [[https://console.cloud.google.com/kubernetes/discovery][Google Cloud Platform | Kubernetes Engine | Services]] and confirm the endpoints of =ingress-controller= are created and they respond with a "default backend 404" message.
+
+Go to [[https://console.cloud.google.com/net-services/loadbalancing/loadBalancers/list][Google Cloud Platform | Network Services | Load Balancing]] and confirm the Google Cloud load balancer is created.
+
+** Finally Deployment
+
+Commit and push the Kubernetes repo. Wait for Travis CI build to finish. Go to [[https://console.cloud.google.com/kubernetes/workload][Google Cloud Platform | Kubernetes Engine | Workloads]] and confirm the deployments are created.
+
+Go to [[https://console.cloud.google.com/kubernetes/discovery][Google Cloud Platform | Kubernetes Engine | Services]] and click on the load balancer endpoint and confirm the app works.
+
+** Workflow for Changing in Prod
+
+1. Checkout a new branch and make the changes.
+2. Make a PR to master branch.
+3. Travis CI runs test on the PR.
+4. Merge the PR into master branch.
+5. Travis CI runs deployment.
+
+* HTTPS Setup with Kubernetes
+** HTTPS Setup Overview
+
+HTTPS certificate for Kubernetes cluster can be provided for free by Let's Encrypt. General flow of issuing a certificate:
+
+1. Kubernetes cluster sends request to Let's Encrypt, claiming the ownership of a certain domain name and requests a certificate.
+2. Let's Encrypt sends request to a random path under the domain name and expects a response containing certain info.
+3. If Let's Encrypt gets the expected response, a certificate will be issued valid for 90 days.
+
+** Domain Name Setup
+
+1. Register a domain name at [[https://domains.google.com][Google Domains]].
+2. Get the public IP of the cluster at [[https://console.cloud.google.com/kubernetes/discovery][Google Cloud Platform | Kubernetes Engine | Services]].
+3. Under DNS tab of the domain name settings, add 2 records:
+
+| *Name* | *Type* | *TTL* | *Data*        |
+|--------+--------+-------+---------------|
+| @      | A      | 1H    | <cluster_ip>  |
+|--------+--------+-------+---------------|
+| www    | CNAME  | 1H    | <domain_name> |
+
+** cert-manager Install
+
+[[https://github.com/jetstack/cert-manager][cert-manager]] can be used to manage certificates on Kubernetes cluster. Go to [[https://docs.cert-manager.io/en/latest/getting-started/install.html#installing-with-helm][cert-manager Documentation | Installing with Helm]] and run the command in Google Cloud Console.
+
+#+BEGIN_SRC sh
+kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.7/deploy/manifests/00-crds.yaml
+
+kubectl create namespace cert-manager
+kubectl label namespace cert-manager certmanager.k8s.io/disable-validation=true
+
+helm repo add jetstack https://charts.jetstack.io
+helm repo update
+
+helm install --name cert-manager --namespace cert-manager --version v0.7.2 --set webhook.enabled=false jetstack/cert-manager
+#+END_SRC
+
+** How to Wire Up cert-manager
+
+file:../images/docker_and_kubernetes/31.png
+
+#+ATTR_HTML: :class no-border
+| *Cert Manager* | Objects (deployment, role) that manipulate the cluster to manage certificates       |
+|----------------+-------------------------------------------------------------------------------------|
+| *Issuer*       | Object describing how to obtain a certificate from an authority, e.g. Let's Encrypt |
+|----------------+-------------------------------------------------------------------------------------|
+| *Certificate*  | Object describing the certificate to be obtained, e.g. issuer, valid period         |
+
+The Issuer and Certificate objects need to be setup by yaml config files and deployed in the cluster. When they are ready, the cert manager will communicate with the authority to obtain the certificate.   
+
+** Issuer Config File
+
+[[https://docs.cert-manager.io/en/latest/reference/issuers.html][cert-manager Documentation | Issuers]]
+
+#+CAPTION: =issuer.yaml=
+#+BEGIN_SRC yaml
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme: # Automatic Certificate Management Environment
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: <email>
+    privateKeySecretRef: # Used for comm between cluster and Let's Encrypt
+      name: letsencrypt-prod
+    http01: {} # Use HTTP-01 challenge mechanism
+#+END_SRC
+
+** Certificate Config File
+
+[[https://docs.cert-manager.io/en/latest/reference/certificates.html][cert-manager Documentation | Certificates]]
+
+#+CAPTION: =certificate.yaml=
+#+BEGIN_SRC yaml
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: <name> # e.g. example-com-tls
+spec:
+  secretName: <name> # The Secret to store the certificate after obtain, e.g. example-com-tls-secret
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: <domain> # e.g. example.com
+  dnsNames: # All domains to be associated with the certificate
+    - <domain> # e.g. example.com, www.example.com
+  acme:
+    config:
+      - http01:
+          ingressClass: nginx
+        domains: # Domains to be used for the HTTP-01 challenge
+          - <domain> # e.g. example.com, www.example.com
+#+END_SRC
+
+** Deploy Changes
+
+Commit the repo and wait for Travis CI to deploy the changes to Google Cloud.
+
+** Confirm the Certificate
+
+Confirm the Certificate and Secret object being created in Google Cloud Console:
+
+#+BEGIN_SRC sh
+kubectl get certificates
+kubectl describe certificates
+# There should be one message of "Certificate issued successfully" at the end
+kubectl get secrets
+#+END_SRC
+
+** Ingress Config for HTTPS
+
+The Ingress Service needs to be updated to serve HTTPS.
+
+#+CAPTION: =ingress-service.yaml=
+#+BEGIN_SRC sh
+...
+metadata:
+  annotations:
+    ...
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod # Name of the ClusterIssuer object
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true' # Always redirect users to HTTPS
+spec:
+  tls:
+    - hosts:
+        - <domain> # e.g. example.com, www.example.com
+      secretName: <name> # Name of the Secret object storing the certificate
+  rules:
+    - host: <domain> # e.g. example.com
+      ... # Don't change the rest, just add "host" to the existing rule
+    - host: <domain> # e.g. www.example.com
+      ... # Copy the same config as the rule above
+#+END_SRC
+
+** It Worked
+
+Go to [[https://console.cloud.google.com/kubernetes/discovery][Google Cloud Platform | Kubernetes Engine | Services]] and confirm the ingress service has endpoints of the domain name. Go to the domain name and confirm it's directed to HTTPS automatically.
+
+* Links
+
+1. [[https://github.com/kubernetes/ingress-nginx][ingress-nginx]]
+1. [[https://letsencrypt.org/][Let's Encrypt]]
+1. [[https://github.com/jetstack/cert-manager][cert-manager]]

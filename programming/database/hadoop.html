@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Hadoop</title>
+<!-- 2016-01-05 周二 23:05 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../../styles/bigblow/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/bigblow/css/bigblow-normal.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/bigblow/css/hideshow.css"/>
+<script type="text/javascript" src="../styles/bigblow/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/bigblow.js"></script>
+<script type="text/javascript" src="../styles/bigblow/js/hideshow.js"></script>
+<link rel="alternate stylesheet" type="text/css" href="../../styles/bigblow/css/htmlize.css" />
+<link rel="alternate stylesheet" type="text/css" href="../../styles/bigblow/css/bigblow.css" />
+<link rel="alternate stylesheet" type="text/css" href="../../styles/bigblow/css/hideshow.css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Hadoop</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Hadoop</a></li>
+<li><a href="#sec-2">2. HDFS</a>
+<ul>
+<li><a href="#sec-2-1">2.1. 主从（Master／Slave）结构</a></li>
+<li><a href="#sec-2-2">2.2. 读写</a></li>
+<li><a href="#sec-2-3">2.3. Block（块）</a></li>
+<li><a href="#sec-2-4">2.4. Chunk（分块）</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. MapReduce</a>
+<ul>
+<li><a href="#sec-3-1">3.1. RDBMS vs MapReduce</a></li>
+<li><a href="#sec-3-2">3.2. 执行过程</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Hadoop</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>一个基于 Java 的分布式存储计算框架；
+</li>
+<li>存储：HDFS（Hadoop Distributed File System）；
+</li>
+<li>计算：MapReduce 计算框架；
+</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="../images/hadoop/01.png" alt="01.png" />
+</p>
+</div>
+
+<hr  />
+
+<p>
+数据流
+</p>
+<ul class="org-ul">
+<li>使用 UNIX 标准流，作为程序与 Hadoop 之间的接口；
+</li>
+<li>任何语言只要可以从标准输入输出流中读写数据，就可以编写 MapReduce 函数；
+</li>
+</ul>
+
+<hr  />
+<p>
+<a href="http://www.uml.org.cn/sjjm/201410143.asp">http://www.uml.org.cn/sjjm/201410143.asp</a>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> HDFS</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+简单一致性模型，对文件实行一次写入、多次读取的访问模式。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">高数据量</th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">高容错</td>
+<td class="left">设计为部署在廉价硬件上</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">高吞吐</td>
+<td class="left">适用于大数据集应用程序流式数据访问</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">高延迟</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 主从（Master／Slave）结构</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Namenode（主节点）
+</p>
+<ul class="org-ul">
+<li>管理者；
+</li>
+<li>只有一个；
+</li>
+<li>管理：
+<ul class="org-ul">
+<li>文件系统命名空间；
+</li>
+<li>文件系统树；
+</li>
+<li>所有目录、文件（记录每个文件的每个块所在的节点信息）；
+</li>
+<li><code>客户端</code> 对文件的访问操作；
+</li>
+</ul>
+</li>
+</ul>
+
+<hr  />
+
+<p>
+Datanode（从节点）
+</p>
+<ul class="org-ul">
+<li>工作者；
+</li>
+<li>有多个；
+</li>
+<li>存储、检索数据；
+</li>
+<li>定期发送其上存储的信息到 <code>主节点</code> ；
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> 读写</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+写入
+</p>
+<ul class="org-ul">
+<li><code>客户端</code> 向 <code>主节点</code> 发起写入文件的请求；
+</li>
+<li><code>主节点</code> 根据文件大小和文件块配置情况，返回它管理的 <code>从节点</code> 的信息；
+</li>
+<li><code>客户端</code> 将文件划分为多个块，根据 <code>从节点</code> 的地址，按顺序将块写入 <code>从节点</code> 块中；
+</li>
+</ul>
+
+<p>
+写入只能在文件末尾添加，不支持在任意位置进行修改，也不支持多个写入者的操作。
+</p>
+
+<hr  />
+
+<p>
+读取
+</p>
+<ul class="org-ul">
+<li><code>客户端</code> 向 <code>主节点</code> 发起读取文件的请求；
+</li>
+<li><code>主节点</code> 返回文件存储的 <code>从节点</code> 的信息；
+</li>
+<li><code>客户端</code> 读取文件信息；
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Block（块）</h3>
+<div class="outline-text-3" id="text-2-3">
+<ul class="org-ul">
+<li>HDFS 存储空间的单位，默认为 64MB；
+</li>
+<li>默认 <code>块</code> 的大小远远大于一般文件系统的最小储存单位<br  />
+  这是为了相对于磁盘传输的时间开销，降低寻址的时间开销；
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Chunk（分块）</h3>
+<div class="outline-text-3" id="text-2-4">
+<ul class="org-ul">
+<li>文件被划分成的多个部分；
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> MapReduce</h2>
+<div class="outline-text-2" id="text-3">
+<ul class="org-ul">
+<li>一个分布式计算框架，用于大规模数据集的并行运算；
+</li>
+<li>通过把操作分发给网络上的每个节点执行来实现；
+</li>
+<li>应用：日志分析、数据挖掘；
+</li>
+</ul>
+
+<p>
+Map
+</p>
+<ul class="org-ul">
+<li>映射，负责将数据打散；
+</li>
+<li>可以高度并行，这对高性能要求的应用，以及并行计算领域的需求非常有用；
+</li>
+</ul>
+
+<p>
+Reduce
+</p>
+<ul class="org-ul">
+<li>归纳，负责对数据进行聚集；
+</li>
+<li>可并行性相对较差，主节点会尽量把操作只分配在一个节点上；
+</li>
+<li>节点的数量是特殊指定的；
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> RDBMS vs MapReduce</h3>
+<div class="outline-text-3" id="text-3-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">RDBMS（B 树结构）</th>
+<th scope="col" class="left">MapReduce</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">专长</td>
+<td class="left">更新一小部分数据时，效率更高</td>
+<td class="left">更新大部分数据时，效率更高</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">数据量级</td>
+<td class="left">GB</td>
+<td class="left">TB</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">数据访问</td>
+<td class="left">交互式、批处理</td>
+<td class="left">批处理</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> 执行过程</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+向框架提交一个计算作业时：
+</p>
+<ul class="org-ul">
+<li>数据被分割，并传输到不同的 Map 节点；
+</li>
+<li>Map 任务执行，产生中间结果；
+</li>
+<li>中间结果作为输入，被传输到 Reduce 节点，这一过程（shuffle）涉及数据的拆分和合并；
+</li>
+<li>Reduce 任务执行，产生处理结果；
+</li>
+<li>所有 Reduce 任务的处理结果合并在一起，产生最终结果数据；
+</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="../images/hadoop/02.png" alt="02.png" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/hadoop/03.png" alt="03.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2016-01-05 周二 23:05</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

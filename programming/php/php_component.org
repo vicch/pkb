@@ -1,0 +1,155 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: PHP Component
+
+* Component
+** Interoperability
+
+PHP community has evolved from a centralized framework model to a distributed ecosystem of efficient, interoperable, and specialized components.
+
+- Interface :: allow frameworks to assume what methods are provided by third-party dependencies
+             - without worrying about how the dependencies implement the interface
+
+- Autoloading :: the process by which a class is automatically located and loaded on-demand by the interpreter during runtime
+               - before standards, components and frameworks implement their own unique autoloaders using =\__autoload()= or =spl_autoload_register()=
+               - modern components and frameworks are compatible with a common autoloader standard
+
+** Sematic Versioning
+
+- 3 numbers separated with a period =.= character
+
+| 1 | major release number | changes that break backward compatibility               |
+|---+----------------------+---------------------------------------------------------|
+| 2 | minor release number | minor features that do not break backward compatibility |
+|---+----------------------+---------------------------------------------------------|
+| 3 | patch release number | backward-compatible bug fixes                           |
+
+* Composer
+
+- dependency manager for PHP components
+- runs on the command line
+- downloads and autoloads components into project
+- simplifies integrating and using third-party PHP components
+- works with Packagist
+
+** 安装
+
+#+BEGIN_SRC sh
+curl -sS https://getcomposer.org/installer | php
+sudo mv composer.phar /usr/local/bin/composer
+sudo chmod +x /usr/local/bin/composer
+
+# ~/.bash_profile, add:
+PATH=/usr/local/bin:$PATH
+#+END_SRC
+
+** 文件
+
+#+BEGIN_SRC sh
+src/
+tests/
+composer.json
+README.md       # Name, description, author, contributor guidelines, software license, etc.
+CONTRIBUTING.md # How others can contribute to this component
+LICENSE
+CHANGELOG.md
+#+END_SRC
+
+- =composer.lock= :: lists all PHP components (and version numbers) used by the project
+                   - Composer downloads the specific versions listed in =composer.lock= regardless of the latest available versions on Packagist
+
+- =composer.json= :: describes the component
+                   - contains information used by Composer to find, install, and autoload the component
+                   - contains information for the component's Packagist directory listing
+
+#+CAPTION: =composer.json= 示例
+#+BEGIN_SRC js
+{
+    "name": "<vendor>/<package>",
+    "description": "...",
+    "keywords": ["<keyword>", ...],
+    "homepage": "http://example.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "<name>",
+            "homepage": "<url>",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "help@example.com"
+    },
+    "require": {
+        "php": ">=5.4.0",
+        "<vendor>/<package>": "~5.0",
+        ...
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.3"
+    },
+    "suggest": {
+        "<vendor>/<package>": "~6.0",
+        ...
+    },
+    "autoload": {
+        "psr-4": {
+            "<Prefix>\\<Prefix>\\": "src/" // map namespace prefix to a relative path
+        }
+    }
+}
+#+END_SRC
+
+** 命令行
+
+#+BEGIN_SRC sh
+composer <options> <arguments>
+    -h, --help
+#+END_SRC
+
+#+CAPTION: 增加 component
+#+BEGIN_SRC sh
+# At project's root directory
+composer require <vendor>/<package>
+# composer.json and composer.lock are created/updated
+# Components are downloaded into vendor/ directory
+# Autoloader is created at vendor/autoload.php
+#+END_SRC
+
+#+CAPTION: 更新 component
+#+BEGIN_SRC sh
+composer update
+# Newer versions are installed
+# composer.lock is updated
+#+END_SRC
+
+** 使用
+
+#+BEGIN_SRC php
+<?php
+// Usually in bootstrap
+require 'vendor/autoload.php';
+#+END_SRC
+
+* Debug
+** Monolog
+
+[[https://github.com/Seldaek/monolog][monolog/monolog]]
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+<?php
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+$log = new Logger('myApp');
+$log->pushHandler(new StreamHandler('logs/development.log', Logger::DEBUG));
+$log->pushHandler(new StreamHandler('logs/production.log', Logger::WARNING));
+
+$log->debug('This is a debug message');
+$log->warning('This is a warning message');
+#+END_SRC
+
+* 链接
+
+1. [[https://packagist.org/][Packagist]]
+1. [[http://semver.org/][Sematic Versioning]]

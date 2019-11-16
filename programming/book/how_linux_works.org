@@ -1,0 +1,93 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: How Linux Works
+
+* Chapter 1: The Big Picture
+
+The most effective way to understand how an operating system works is through abstraction - a fancy way of saying that you can ignore most of the details. There are many terms for an abstracted subdivision in computer software, including subsystem, module, package, and component.
+
+** Levels and Layers of Abstraction in a Linux System
+
+A Linux system has three main levels:
+
+file:../images/how_linux_works/01.png
+
+The kernel is a software residing in memory. The kernel manages the hardware and acts primarily as an interface between the hardware and any running program. The kernel runs in kernel mode, where code has unrestricted access to the processor and main memory, which allows _a kernel process to easily crash the entire system._ The area that only the kernel can access is called *kernel space*.
+
+User processes run in user mode, which restricts access to a subset of memory and safe CPU operations. *User space* refers to the parts of main memory that the user processes can access. _If a user process crashes, the consequences are limited and can be cleaned up by the kernel._
+
+** Hardware: Understanding Main Memory
+
+A *state* is a particular arrangement of bits, but it's common to refer to the state in abstract terms rather than to the actual bits, for example, "the process is performing Stage 2 of its startup". The term *image* refers to a particular physical arrangement of bits.
+
+** The Kernel
+
+Kernel manages:
+
+- Processes 
+- Memory
+- Device drivers
+- System calls and support
+
+*** Process Management
+
+Kernel is responsible for determining which processes are allowed to use the CPU. The system appears to be running multiple processes at the same time (a capability known as multitasking), but only one process may actually use the CPU at any given time.
+
+Each piece of time is called a *time slice*. The act of one process giving up control of the CPU to another process is called a *context switch*. The kernel is responsible for context switching. Context switch answers the important question of _when the kernel runs: it runs between process time slices during a context switch._
+
+For example, a situation in which a process is running in user mode but its time slice is up:
+
+1. CPU interrupts the current process based on an internal timer, switches into kernel mode, and hands control back to kernel.
+2. Kernel records the current state of CPU and memory, which will be essential to resuming the process.
+3. Kernel performs any tasks that might have come up during the preceding time slice, such as collecting data from input and output, or I/O, operations.
+4. Kernel analyzes the list of processes that are ready to run and chooses one.
+5. Kernel prepares the memory and CPU for this new process.
+6. Kernel tells CPU how long the time slice for the new process will last.
+7. Kernel switches CPU into user mode and hands control of CPU to the process.
+
+*** Memory Management
+
+Kernel splits memory into subdivisions and maintains state information of the subdivisions. It keeps track of what is currently allocated to a particular process, what might be shared between processes, and what is free:
+
+- Each user process needs its own section of memory.
+- One user process may not access the private memory of another process.
+- User processes can share memory.
+- Some memory in user processes can be read-only.
+- Kernel must have its own private area in memory that user processes can't access.
+- The system can use more memory than is physically present by using disk space as auxiliary.
+
+Modern CPUs include a *memory management unit (MMU)* that enables a memory access scheme called virtual memory. A process does not directly access the memory by its physical location in the hardware. Instead, the kernel sets up each process to act as if it had an entire machine to itself. _When the process accesses some of its memory, the MMU intercepts the access and uses a memory address map to translate the memory location from the process into an actual physical memory location on the machine._ The implementation of a memory address map is called a page table.
+
+*** Device Drivers
+
+Kernel acts as an interface between hardware and processes.It's usually the kernel's job to operate the hardware. A device is typically accessible only in kernel mode because improper access could crash the machine. 
+
+Different devices rarely have the same programming interface, even if the devices do the same thing. Therefore, device drivers have traditionally been part of the kernel, and they strive to present a uniform interface to user processes in order to simplify the software developer's job.
+
+*** System Calls and Support
+
+Processes normally use system calls to communicate with the kernel. System calls perform specifc tasks that a user process alone cannot do, for example, the acts of opening, reading, and writing files.
+
+2 system calls, =fork()= and =exec()=, are important to understanding how processes start up:
+
+- =fork()=: Kernel creates a nearly identical copy of the process. All user processes except =init= start as a result of =fork()=.
+- =exec(program)=: Kernel starts =program=, replacing the current process. =exec()= is used to start a new program instead of running a copy of an existing process.
+
+For example, for any program that you run at the command line, the shell that's running inside the terminal window calls =fork()= to create a copy of the shell, and then the new copy of the shell calls =exec(program)= to run it.
+
+file:../images/how_linux_works/02.png
+
+Kernel also supports pseudodevices, which look like devices to user processes, but implemented purely in software. For example, the kernel random number generator device =/dev/random=.
+
+** Users
+
+A user is an entity that can run processes and own files. Users exist primarily to support permissions and boundaries. Every user-space process has a user owner, and processes are said to run as the owner. A user may terminate or modify the behavior of its own processes (within certain limits), but it cannot interfere with other users' processes.
+
+The root user may terminate and alter another user's processes and read any file on the local system. As powerful as the root user is, it still runs in the operating system's user mode, not kernel mode.
+
+Kernel does not manage the usernames, it identifes users by numeric identifers called userids.
+
+* Chapter 2: Basic Commands and Directory Hierarchy
+** The Bourne Shell: =/bin/sh=
+
+A shell is a program that runs commands, it also serves as a small programming environment. There are many different Unix shells, but all derive several of their features from the Bourne shell (=/bin/sh=), a standard shell developed at Bell Labs for early versions of Unix. Linux uses an enhanced version of the Bourne shell called bash or the "Bourne-again" shell.
+

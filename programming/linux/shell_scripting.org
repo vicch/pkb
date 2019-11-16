@@ -1,0 +1,1046 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Shell Scripting
+
+* 脚本
+
+Shell 脚本是保存了一组命令的 ASCII 文本文件，文件名不需要后缀，但通常为 =.sh= 。
+
+** 执行
+
+#+BEGIN_SRC sh
+sh <script> # sh 命令执行
+
+<script> # 直接执行，需要：
+         # 文件所在目录在 PATH 环境变量中
+         # 文件有执行权限
+#+END_SRC
+
+** Shebang
+
+指定用于解释脚本的程序。
+
+#+BEGIN_SRC sh
+#!/bin/bash
+#!/usr/bin/perl
+#+END_SRC
+
+** 退出状态码
+
+#+CAPTION: 查看上一个命令（脚本）的退出状态码
+#+BEGIN_SRC sh
+echo $?
+#+END_SRC
+
+#+CAPTION: 设定脚本的退出状态码
+#+BEGIN_SRC sh
+exit <code>
+#+END_SRC
+
+#+CAPTION: 退出状态码参考值
+| =0=   | 成功结束           |
+|-------+--------------------|
+| =1=   | 通用未知错误       |
+|-------+--------------------|
+| =2=   | 使用方式错误       |
+|-------+--------------------|
+| =126= | 不可执行（无权限） |
+|-------+--------------------|
+| =127= | 命令未找到         |
+|-------+--------------------|
+| =128= | 无效退出参数       |
+|-------+--------------------|
+| =130= | 通过 =Ctrl+C= 终止 |
+|-------+--------------------|
+| =255= | 状态码越界         |
+
+* 变量
+
+#+BEGIN_SRC sh
+<var>=<value> # 定义，= 两侧无空格
+
+$var   # 引用
+${var} # {} 帮助识别变量名
+"$var" # "" 用于变量值包含空格时
+#+END_SRC
+
+变量名区分大小写。
+
+** 环境变量
+
+#+BEGIN_SRC sh
+set                    # 查看环境变量列表
+echo $<VAR>            # 输出环境变量值
+export <VAR>[=<value>] # 设置或显示环境变量
+#+END_SRC
+
+#+CAPTION: 默认环境变量
+| =CDPATH=   | 由 =:= 分隔的目录列表，作为 =cd= 的搜多路径 |
+|------------+---------------------------------------------|
+| =HOME=     | 当前用户的主目录                            |
+|------------+---------------------------------------------|
+| =IFS=      | 文本分隔符                                  |
+|------------+---------------------------------------------|
+| =MAIL=     | 当前用户收件箱的文件名                      |
+|------------+---------------------------------------------|
+| =MAILPATH= | 由 =:= 分隔的当前用户收件箱的文件名列表     |
+|------------+---------------------------------------------|
+| =OPTARG=   | 保存 =getopts= 处理的选项的参数值           |
+|------------+---------------------------------------------|
+| =OPTIND=   | 保存 =getopts= 处理的选项个数               |
+|------------+---------------------------------------------|
+| =PATH=     | 由 =:= 分隔的 Shell 查找命令的目录列表      |
+|------------+---------------------------------------------|
+| =PS1=      | 命令行主提示符                              |
+|------------+---------------------------------------------|
+| =PS2=      | 命令行次提示符                              |
+|------------+---------------------------------------------|
+| =$=        | 当前 PID                                    |
+
+*** =IFS=
+
+Internal Field Separator (IFS)，默认为：空格、制表符、换行符。
+
+#+CAPTION: 更改 IFS
+#+BEGIN_SRC sh
+IFS.OLD=$IFS # 更改之前保存当前设置
+IFS=$'\n'    # 指定一个分隔符
+IFS=$'\n:;'  # 指定多个分隔符
+IFS=$IFS.OLD # 设置回原值
+#+END_SRC
+
+#+CAPTION: 更改 IFS 用于遍历特殊字符分隔的字符串
+#+BEGIN_SRC sh
+IFS.OLD=$IFS
+IFS=":"
+for dir in $PATH; do
+    echo $dir
+done
+IFS=$IFS.OLD
+#+END_SRC
+
+*** =PATH=
+
+#+CAPTION: 在登录脚本里设置自定义脚本的查找路径
+#+BEGIN_SRC sh
+# ~/.bashrc
+export PATH="$PATH:$HOME/.rvm/bin" # Ruby 脚本路径
+#+END_SRC
+
+* 类型
+** 数组
+
+#+CAPTION: 定义
+#+BEGIN_SRC sh
+array=(val1 val2 ...) # 枚举
+array=($(cat))        # 使用命令输出
+#+END_SRC
+
+#+CAPTION: 遍历
+#+BEGIN_SRC sh
+for value in ${array[@]}; do
+    ...
+done
+#+END_SRC
+
+#+CAPTION: 分片
+#+BEGIN_SRC sh
+${array[@]:<start>:<count>}
+#+END_SRC
+
+#+CAPTION: 替换字符
+#+BEGIN_SRC sh
+${array[@]/<pattern>/<replacement>}
+#+END_SRC
+
+** 字符串
+
+字符串实际上是字符数组。
+
+#+CAPTION: 子字符串
+#+BEGIN_SRC sh
+${<string>:<start>:<length>}
+#+END_SRC
+
+#+CAPTION: 示例：替换指定位置的字符
+#+BEGIN_SRC sh
+foo="${foo:0:9}x${foo:10}"
+#+END_SRC
+
+#+CAPTION: 示例：删除最后一个字符
+#+BEGIN_SRC sh
+foo=${foo%?}
+#+END_SRC
+
+* 表达式
+** =[]= 条件判断
+
+#+BEGIN_SRC sh
+if test <cond>
+if [ <cond> ]  # 简写，方括号内两侧必须有空格
+
+if [ <cond> ] && [ <cond> ] # 与
+if [ <cond> ] || [ <cond> ] # 或
+if [ ! <cond> ]             # 非
+#+END_SRC
+
+只能以命令的退出状态码是否为 0 进行判断。通过 =test= 表达式可以将其他的条件转换为退出状态码：如果条件成立，则 =test= 退出并返回状态码 0。
+
+*** 数值比较
+
+| =-eq= |   |
+|-------+---|
+| =-ne= |   |
+|-------+---|
+| =-gt= |   |
+|-------+---|
+| =-ge= |   |
+|-------+---|
+| =-lt= |   |
+|-------+---|
+| =-le= |   |
+
+#+CAPTION: 示例
+#+BEGIN_SRC sh
+while [ $i -lt 100 ]
+...
+#+END_SRC
+
+#+CAPTION: 数值比较无法处理变量中存储的浮点值，需要用 =bc= ，示例：
+#+BEGIN_SRC sh
+if [ $(echo "$var >= 0.1" | bc) -eq 1 ]; then
+#+END_SRC
+
+*** 字符串比较
+
+| ~==~        |                       |
+|-------------+-----------------------|
+| ~!=~        |                       |
+|-------------+-----------------------|
+| =>= =<=     | 必须转义              |
+|-------------+-----------------------|
+| =-n $<var>= | 长度非 0              |
+|-------------+-----------------------|
+| =-z $<var>= | 长度为 0 或变量不存在 |
+
+字母的大小顺序与 =sort= 不同：
+- =test= 使用 ASCII 顺序，大写字母 < 小写字母。
+- =sort= 使用系统本地化语言设置中的顺序，对于英语，小写字母 < 大写字母。
+
+*** 文件比较
+
+| =-e=                | 存在                             |
+|---------------------+----------------------------------|
+| =-s=                | 存在且非空                       |
+|---------------------+----------------------------------|
+| =-d= =-f=           | 存在且为目录、文件               |
+|---------------------+----------------------------------|
+| =-r= =-w= =-x=      | 存在且可读、可写、可执行         |
+|---------------------+----------------------------------|
+| =-O=                | 存在且属当前用户所有             |
+|---------------------+----------------------------------|
+| =-G=                | 存在且默认组与当前用户相同       |
+|---------------------+----------------------------------|
+| =<file> -nt <file>= | 第一个文件比第二个新（创建日期） |
+| =<file> -ot <file>= | 第一个文件比第二个旧（创建日期） |
+
+** =$()= 命令输出
+
+#+BEGIN_SRC sh
+$(<command>)
+#+END_SRC
+
+当命令 A 的输出作为命令 B 的参数时，Shell 会创建一个 subshell 运行命令 A，存储它的输出用于运行命令 B。
+
+** =$[]= 数学运算
+
+#+BEGIN_SRC sh
+$[ <expr> ] # 括号内两侧可以无空格
+            # 运算符不需要转义
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC sh
+var1=1
+var2=2
+var3=$[ $var1 + $var2 ]
+#+END_SRC
+
+** =${}= 数组
+
+#+CAPTION: 数组分片
+#+BEGIN_SRC sh
+
+#+END_SRC
+
+** =(())= 高级数学运算
+
+可以用于 =if= 条件，或用于赋值的普通命令。
+
+#+BEGIN_SRC sh
+if (( <expr> ))
+(( <var> = <expr> ))
+#+END_SRC
+
+| =++= =--=                                     |            |
+|-----------------------------------------------+------------|
+| =**=                                          | 幂         |
+|-----------------------------------------------+------------|
+| =&&=  @@html:<code>&#124;&#124;</code>@@  =!= | 逻辑与或非 |
+|-----------------------------------------------+------------|
+| =&=  @@html:<code>&#124;</code>@@ =~=         | 位与或非   |
+|-----------------------------------------------+------------|
+| =<<= =>>=                                     | 位运算     |
+  
+运算符不需要转义。
+
+** =[[]]= 字符串
+
+提供针对字符串的高级特性，如正则表达式模式匹配。
+
+#+BEGIN_SRC sh
+[[ <expr> ]]
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC sh
+if [[ $USER == r* ]]
+#+END_SRC
+
+** Glob 表达式
+
+Shell 使用的、简化了的正则表达式。
+
+| =*=             | 任意个任意字符     |
+|-----------------+--------------------|
+| =?=             | 任意一个字符       |
+|-----------------+--------------------|
+| =[<char>...]=   | 多个字符中任意一个 |
+|-----------------+--------------------|
+| =[<from>-<to>]= | 范围内的字符 |
+|-----------------+--------------------|
+| =\=             | 转义字符           |
+
+* 语句
+** =if=
+
+#+BEGIN_SRC sh
+if [ <cond> ]
+then
+    ... # if 命令的退出状态码为 0
+elif [ <cond> ]
+then
+    ...
+else
+    ... # if 命令的退出状态码非 0
+fi
+#+END_SRC
+
+#+CAPTION: 简写
+#+BEGIN_SRC sh
+if [ <cond> ]; then
+    ...
+fi
+#+END_SRC
+
+** =case=
+
+#+BEGIN_SRC sh
+case $<var> in
+    <val1> | <val2>) <cmd>;;
+    <val3>) <cmd>;;
+    *) <cmd>;; # 默认分支
+esac
+#+END_SRC
+
+** =for=
+
+#+BEGIN_SRC sh
+for <var> in <list>
+do
+    <cmd>
+done
+#+END_SRC
+
+#+CAPTION: 简写
+#+BEGIN_SRC sh
+for <var> in <list>; do
+    <cmd>
+done
+#+END_SRC
+
+*** 列表
+
+#+CAPTION: 直接输入
+#+BEGIN_SRC sh
+for var in a b c d # 默认分隔符为空格
+                   # 单引号需要转义，或用双引号分隔
+#+END_SRC
+
+#+CAPTION: 从变量读取
+#+BEGIN_SRC sh
+list='a b c d'
+for var in $list
+#+END_SRC
+
+#+CAPTION: 从输出读取
+#+BEGIN_SRC sh
+for var in `cat file`
+#+END_SRC
+
+#+CAPTION: 遍历目录
+#+BEGIN_SRC sh
+for file in path/*; do      # 目录（文件）列表使用 glob 表达式
+    if [ -d "$file" ]; then # 文件名中可能有空格，需用引号分隔
+
+for file in path1/* path2/* # 可以使用多个表达式
+#+END_SRC
+
+*** C 风格 =for=
+
+#+BEGIN_SRC sh
+for (( <var>=<start>; <cond>; <iter> ))
+## 示例
+for (( i=1; i<=10; i++ ))
+#+END_SRC
+
+- 给变量赋值可以有空格。
+- 条件中的变量不以 =$= 开头。
+- 迭代过程不是 =expr= 表达式格式。
+
+#+CAPTION: 可以使用多个变量，但条件只能有一个：
+#+BEGIN_SRC sh
+for (( a=1, b=10; a<=10; a++, b-- ))
+#+END_SRC
+
+*** 重定向输出
+
+#+CAPTION: 结果重定向到文件：
+#+BEGIN_SRC sh
+for ...
+...
+done > file
+#+END_SRC
+
+*** 示例
+
+#+CAPTION: 数值补齐，0 到 10 补齐两位：
+#+BEGIN_SRC sh
+for i in $(seq -f "%02g" 0 10)
+#+END_SRC
+
+** =while=
+
+#+BEGIN_SRC sh
+while [<cond>]
+do
+    <cmd> # 测试退出状态码为 0 时执行
+done
+#+END_SRC
+
+#+CAPTION: 使用多个测试
+#+BEGIN_SRC sh
+while [<cond>]
+    <cond> # 每个测试单独一行
+#+END_SRC
+
+- 只有最后一个测试的退出状态码会被用来判断循环的结束。
+- 每次（包括最后一次）循环开始时，所有测试命令都会被执行。
+
+** =until=
+
+#+BEGIN_SRC sh
+until <cond>
+do
+    <cmd> # 测试退出状态码非 0（条件不成立）时执行
+done
+#+END_SRC
+
+可以使用多个测试，规则同 =while= 。
+
+#+CAPTION: 逻辑对比
+|         | *条件成立* | *条件不成立* |
+|---------+------------+--------------|
+| =while= | 运行命令   | 不运行命令   |
+|---------+------------+--------------|
+| =until= | 不运行命令 | 运行命令     |
+
+** =break= =continue=
+
+#+BEGIN_SRC sh
+break <n>    # 默认为 1
+continue <n> # 默认为 1
+#+END_SRC
+
+* 函数
+
+#+BEGIN_SRC sh
+foo() {
+    echo "$1" # 参数通过 $n 引用
+    return 0
+}
+foo "bar" # 调用
+#+END_SRC
+
+* 参数
+
+#+BEGIN_SRC sh
+./script -a -b param1 -c -d -- param2 param3
+    -a     # 选项
+    param1 # 选项参数
+    param2 # 额外参数
+#+END_SRC
+
+** 无选项参数
+
+| =$0=          | 脚本名                     |
+| =$n= , =${n}= | 输入参数                   |
+| =$#=          | 输入参数个数               |
+| =$*=          | 所有输入参数，合并为一个值 |
+| =$@=          | 所有输入参数，作为独立的值 |
+
+输入参数用空格分隔，包含空格的字符串需要用 @@html:<code>""</code>@@ 包围起来
+
+引用输入参数前，最好检查其是否存在
+#+BEGIN_SRC sh
+if [ -n $1 ]; then
+#+END_SRC
+
+*** =$0=
+
+=$0= 包含执行时输入的路径，用 =basename= 去除路径
+#+BEGIN_SRC sh
+name=`basename $0`
+#+END_SRC
+
+用一个脚本，通过不同的执行命令，完成不同功能
+#+BEGIN_SRC sh
+## 脚本名：calc
+name=`basename $0`
+if [ $name = "add" ]; then
+    echo $[ $1 + $2 ]
+elif [ $name = "min" ]; then
+    echo $[ $1 - $2 ]
+fi
+
+$ ln -s calc add
+$ ln -s calc min
+$ ./add 1 2
+3
+$ ./min 2 1
+1
+#+END_SRC
+
+*** =$n= , =${n}=
+
+| =$n=   | 1 <= n <=9 |
+| =${n}= | n > 9   |
+
+*** =$#=
+
+检验参数总数
+#+BEGIN_SRC sh
+if [ $# -ne 2 ]; then
+    echo Param not correct
+#+END_SRC
+
+引用最后一个参数
+#+BEGIN_SRC sh
+echo ${!#} # {} 内不可以用 $
+#+END_SRC
+
+当没有输入参数时， =${!#}= 是脚本名
+
+*** =$*= , =$@=
+
+#+BEGIN_SRC sh
+for param in $*; do
+    echo $param
+done
+for param in $@; do
+    echo $param
+done
+
+$ ./test a b c
+a b c
+a
+b
+c
+#+END_SRC
+
+** =shift=
+
+#+BEGIN_SRC sh
+shift <n> # 默认为 1
+#+END_SRC
+
+执行 =shift= 命令后
+- =$n-1= 将对应之前的 =$n= 的值
+- =$n-1= 原本的值会被丢弃
+- =$0= 不变
+
+在不知道个数的情况下遍历输入参数，即只操作 =$1=
+#+BEGIN_SRC sh
+while [ -n "$1" ]; do
+    echo $1
+    shift
+done
+#+END_SRC
+
+=shift= 后数字不为 1 时，一次进行多位参数移动
+
+** 简单选项
+
+将选项当做参数处理，检查是否是预期的选项之一
+#+BEGIN_SRC sh
+while [ -n "$1" ]; do
+    case $1 in
+    -a) ...
+    *) ...
+    esca
+    shift
+done
+#+END_SRC
+
+处理带参数选项
+#+BEGIN_SRC sh
+while [ -n "$1" ]; do
+    case $1 in
+    -a) ...
+    -b) param="$2" # 预期带一个参数的选项
+        shift 2;;
+    ...
+    esac
+    shift
+done
+$ ./test -a -b value
+#+END_SRC
+
+** 额外参数
+
+用 =--= 分离选项和参数部分
+#+BEGIN_SRC sh
+while [ -n "$1" ]; do
+    case $1 in
+    -a) ...
+    --) shift
+        break ;; # 跳出之前移位一次
+    *) ...
+    esca
+    shift
+done
+for param in $@; do # 处理剩余部分，即额外参数
+#+END_SRC
+
+** =getopt=
+
+#+BEGIN_SRC sh
+getopt <options> <optstring> <params>
+    -q # 忽略错误消息
+#+END_SRC
+
+=getopt= 解析输入参数列表，以容易处理的格式输出
+- 识别有效的选项，无效选项会输出错误消息
+- 识别选项的参数
+- 将合并的选项拆分
+- 将额外参数分离出来
+
+=<optstring>= 定义：
+- 有效的选项字母
+- 哪些选项预期有参数，选项字母后加 =:=
+
+#+BEGIN_SRC sh
+$ getopt ab:cd -a -b v1 -cd v2 v3
+-a -b v1 -c -d -- v2 v3 # 解析结果
+#+END_SRC
+
+脚本中使用 =getopt= 处理输入参数列表
+#+BEGIN_SRC sh
+set -- `getopt -q ab:cd "$@"`
+#+END_SRC
+
+getopt 不能处理双引号内带空格的参数，会按照空格分隔开（需要 =getopts= 解决这个问题 ）
+
+** =getopts=
+
+#+BEGIN_SRC sh
+getopts <optstring> <var>
+#+END_SRC
+
+一次处理一个输入选项（和参数）
+- 选项保存在 =<var>= ；
+- 选项的参数保存在 =OPTARG= 环境变量；
+- 已处理的选项（和参数）个数保存在 =OPTIND= 环境变量；
+- 可以识别双引号内包含空格的参数；
+- 选项字母和参数值之间可以不加空格，eg. =-a1= ；
+
+=<optstring>= 语法同 =getopt=
+- 以 =:= 开头可以忽略错误消息；
+- 未定义的选项字母会转化成 =?= ；
+
+#+BEGIN_SRC sh
+while getopts :ab:c opt
+do
+    case "$opt" in
+    a) ...             # getopts 会移除选项前的 -
+    b) echo $OPTARG ;;
+    ...
+    esac
+done
+#+END_SRC
+
+=OPTIND= 可以用于识别额外参数开始的位置
+#+BEGIN_SRC sh
+while getopts :ab:c opt
+...
+done
+shift $[ $OPTIND - 1 ] # 移位到额外参数的位置
+for param in "$@"
+#+END_SRC
+
+** 标准化选项
+
+| =-a= , =--all=         | 所有对象               |
+|------------------------+------------------------|
+| =-c= , =--count=       | 计数                   |
+|------------------------+------------------------|
+| =-d= , =--directory=   | 指定一个目录           |
+|------------------------+------------------------|
+| =-e= , =--extend=      | 扩展一个对象           |
+|------------------------+------------------------|
+| =-f= , =--file=        | 指定（输入）文件       |
+|------------------------+------------------------|
+| =-h= , =--help=        | 帮助                   |
+|------------------------+------------------------|
+| =-i= , =--insensitive= | 大小写不敏感           |
+|------------------------+------------------------|
+| =-l= , =--long=        | 长格式版本             |
+|------------------------+------------------------|
+| =-n=                   | 非交互模式（批量操作） |
+|------------------------+------------------------|
+| =-o= , =--output=      | 指定输出文件           |
+|------------------------+------------------------|
+| =-q= , =--quiet=       | 安静模式               |
+|------------------------+------------------------|
+| =-r= , =--recursive=   | 递归模式               |
+|------------------------+------------------------|
+| =-s= , =--silent=      | 安静模式               |
+|------------------------+------------------------|
+| =-v= , =--verbose=     | 详细输出               |
+|------------------------+------------------------|
+| =-x= , =--exclude=     | 排除                   |
+|------------------------+------------------------|
+| =-y= , =--yes=         | 对所有问题回答 yes     |
+
+* 输入
+** =read= 标准输入
+
+=read= 将输入保存在变量中。
+
+#+BEGIN_SRC sh
+read <options> <var> ...
+    -p <string> # 提示文本
+    -t <second> # 最大等待输入的时间，未输入会返回非零状态码
+    -n <int>    # 最大输入字符数，到达预设数量后不再接收输入
+    -s          # 隐藏用户输入（实际上是文本和背景色一样）
+#+END_SRC
+
+#+ATTR_HTML: :class no-border
+| *指定多个变量名：* | 输入（空格分隔）和变量一一对应 |
+|                    | 剩余的输入保存在最后一个变量中 |
+|--------------------+--------------------------------|
+| *不指定变量名：*   | 输入保存在 =REPLY= 环境变量中  |
+
+#+CAPTION: 示例
+#+BEGIN_SRC sh
+echo "Enter your name: "
+read name
+echo "Hello $name."
+
+## -p
+read -p "Enter your name: " name
+
+## -t
+if read -t 5 input; do
+    ...
+else
+    echo "Empty input"
+fi
+
+## -n
+read -n 1 -p "Do you want to continue [Y/N]? " answer
+case $answer in
+Y | y) ...
+N | n) ...
+esac
+#+END_SRC
+
+** 文件输入
+
+#+CAPTION: 每次读取一行
+#+BEGIN_SRC sh
+cat file | while read line
+do
+    echo $line
+done
+#+END_SRC
+
+** =/dev/tty=
+
+=/dev/tty= 打开时，会被自动重定向到一个终端窗口，可以用于读取人工输入。
+
+#+BEGIN_SRC sh
+printf "Enter new password: "
+stty -echo               # 关闭自动打印输入字符
+read password < /dev/tty # 从终端读取输入
+printf "\n"
+stty echo                # 打开自动打印输入字符
+#+END_SRC
+
+* 输出
+** =echo=
+
+#+BEGIN_SRC sh
+echo <options> <string>
+    <string> # 可以不加引号
+    -e       # 识别 \ 转义字符
+    -n       # 结尾不换行
+#+END_SRC
+
+输出 tab 分割的行到文件
+#+BEGIN_SRC sh
+echo -e "$val1\t$val2\t$val3" >> file
+#+END_SRC
+
+** =printf=
+
+#+BEGIN_SRC sh
+printf "<pattern>" <value>
+#+END_SRC
+
+* 运算
+** =expr=
+
+#+BEGIN_SRC sh
+expr <expr>
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC sh
+expr 1 + 1
+#+END_SRC
+
+一些运算符需要 =\= 转义，如 =|= =>= 。
+
+** =bc=
+
+Bash 数学运算符只支持整数运算，浮点运算需要使用内建计算器 =bc= 。 =bc= 可以将浮点值作为字符串存储进变量，但结果只能用 =echo= 显示，无法在基于数字的命令中工作，如数值比较。
+
+#+BEGIN_SRC sh
+echo "<options>; <expr>" | bc <options>
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC sh
+var=`echo "scale=4; 3.44 / 5" | bc`
+var=`printf ".0f" $(echo "scale=2; $a * $b / 100" | bc)`
+#+END_SRC
+
+* 重定向
+
+Linux 将每个对象都当做文件处理，包括输入和输出。
+
+** 文件描述符
+
+- 唯一地标示会话中打开的文件对象；
+- 每个过程一次最多可以有 9 个文件描述符；
+
+bash 保留的文件描述符
+|   |          | 默认位置 |
+|---+----------+----------|
+| 0 | =STDIN=  | 键盘     |
+|---+----------+----------|
+| 1 | =STDOUT= | 显示器   |
+|---+----------+----------|
+| 2 | =STDERR= | 显示器   |
+
+** 简单重定向
+
+| =<=  | 重定向 =STDIN=              |
+|------+-----------------------------|
+| =>=  | 重定向 =STDOUT= ，覆盖      |
+|------+-----------------------------|
+| =>>= | 重定向 =STDOUT= ，追加      |
+|------+-----------------------------|
+| =2>= | 重定向 =STDERR=             |
+|------+-----------------------------|
+| =&>= | 重定向 =STDOUT= 和 =STDERR= |
+
+=STDERR= 比 =STDOUT= 优先级高，合并重定向时 =STDERR= 输出在前
+
+脚本中，临时重定向
+#+BEGIN_SRC sh
+echo '...' >&2
+#+END_SRC
+
+** =exec= 重定向
+
+=exec= 设置的重定向在脚本执行期间一直有效。
+
+标准文件描述符
+#+BEGIN_SRC sh
+exec 1>file
+exec 2>log
+
+exec 0< file
+while read line
+...
+#+END_SRC
+
+自定义文件描述符
+#+BEGIN_SRC sh
+exec 3>file
+echo '...' >&3
+#+END_SRC
+
+文件描述符之间切换
+#+BEGIN_SRC sh
+exec 3>&1   # 3 指向显示器（默认标准输出）
+exec 1>file # 标准输出指向文件
+echo '...'  # 输出到文件
+exec 1>&3   # 标准输出指回显示器
+echo '...'  # 输出到显示器
+
+exec 4<&0       # 4 指向键盘（默认标准输入）
+exec 0< file    # 标准输入指向文件
+while read line # 从文件输入
+...
+exec 0<&4       # 标准输入指回
+read ...        # 从键盘输入
+#+END_SRC
+
+读写文件描述符：
+- 将同一个文件描述符作为输入和输出；
+- 读写操作会从 shell 维护的文件指针的位置进行，容易造成混乱；
+#+BEGIN_SRC sh
+exec 3<> file
+#+END_SRC
+
+关闭文件描述符（关闭之后再次使用会报错）
+#+BEGIN_SRC sh
+exec 3>&-
+#+END_SRC
+
+** =tee=
+
+将输出重定向到指定文件，同时不影响 =STDOUT= ， =STDOUT= 依旧输出。
+#+BEGIN_SRC sh
+tee <options> <file>
+    -a, --append
+#+END_SRC
+
+** =/dev/null=
+
+将输出重定向到 =/dev/null= ，数据会被丢弃。
+
+获得命令的状态码，而忽略所有输出和错误信息。
+#+BEGIN_SRC sh
+if grep text file > /dev/null
+then
+    echo "Found"
+else
+    echo "Not found"
+fi
+#+END_SRC
+
+快速移除文件中的数据，不需要删除再创建。
+#+BEGIN_SRC sh
+cat /dev/null > file
+#+END_SRC
+
+* 进程
+** 作业号
+
+shell 中每个进程分配的唯一号码，位于 =[]= 中
+#+BEGIN_SRC sh
+## Ctrl+Z
+[1]+ Stopped
+$ kill -9 ...
+[1]+ Killed
+## 后台进程结束
+[1]+ Done
+#+END_SRC
+
+** 信号
+
+bash 收到 =SIGHUP= 信号
+1. 将信号传给 shell 启动的所有进程（脚本）
+2. 退出
+
+bash 收到 =SIGINT= 信号
+1. 将信号传给 shell 启动的所有进程（脚本）
+2. 中断（内核停止分配 CPU 时间给 shell）
+
+** =trap= 拦截信号
+
+阻止 shell 对信号进行处理，执行本地命令
+#+BEGIN_SRC sh
+trap <cmds> <sig>
+
+## eg. 拦截 Ctrl+C
+trap "echo 'Ctrl+C is trapped'" SIGINT SIGTERM
+
+## eg. 拦截脚本退出
+trap "echo Bye" EXIT
+
+## eg. 移除拦截（恢复正常信号处理）
+trap - EXIT
+#+END_SRC
+
+** 后台运行
+
+#+BEGIN_SRC sh
+./script &
+#+END_SRC
+
+- 命令和 shell 分离，作为独立的后台进程运行；
+- 后台进程绑定在终端会话上，如果会话退出，后台进程也会退出（某些终端会有提醒）；
+
+* 示例
+
+#+CAPTION: 批量替换文件前缀
+#+BEGIN_SRC sh
+## Usage: rpl_pfix.sh <from_prefix> <to_prefix>
+prefix1=$1
+prefix2=$2
+for file1 in `ls  | grep "$prefix1*"`
+do
+    suffix=${file1#$prefix1}
+    mv $file1 $prefix2$suffix
+done
+#+END_SRC
+
+#+CAPTION: 随机抽取文件内容
+#+BEGIN_SRC sh
+## Usage: rand_line.sh <src_file> <number_of_lines>
+## Result: random lines saved in <src_file>_rand
+file=$1
+for (( i=1; i<=$2; i++ )); do
+    rand=$RANDOM
+    head -$(($rand % `wc -l < $file` + 1)) $file | tail -1 >> ${file}_rand
+done
+#+END_SRC
+
+#+CAPTION: 豆瓣计算书籍权重
+#+BEGIN_SRC sh
+## 权重 = log10(点评人数) * 点评平均分
+## 输入文件：点评人数\t点评平均分
+## 输出文件：点评人数\t点评平均分\t权重
+IFS=$'\n'
+echo /dev/null > output
+for line in `cat input`; do
+    count=$(echo $line | cut -f1)
+    score=$(echo $line | cut -f2)
+    result=`echo "$count $score" | awk '{print(log($1) / log(10) * $2)}'`
+    echo -e "$count\t$score\t$result" >> output
+done
+#+END_SRC

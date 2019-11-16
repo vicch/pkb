@@ -1,0 +1,857 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Python
+
+* 语法
+
+| =#=                       | 注释                              |
+|---------------------------+-----------------------------------|
+| =\=                       | 折行                              |
+|---------------------------+-----------------------------------|
+| @@html:<code>"""</code>@@ | 文档字符串                        |
+| @@html:<code>'''</code>@@ |                                   |
+|---------------------------+-----------------------------------|
+| =``=                      | 获得对象的可打印形式，同 =repr()= |
+
+** 文档字符串
+
+- 文档字符串（DocString） :: 函数（类、模块）的第一行开始的多行字符串。\\
+                             第一行是简要说明，第二行是空行，第三行开始时详细说明。
+#+CAPTION: 示例
+#+BEGIN_SRC python
+def function():
+    '''Short introduction.
+
+    Detailed information,
+    continues ...
+    '''
+#+END_SRC
+
+#+CAPTION: 显示文档字符串
+#+BEGIN_SRC python
+function.__doc__
+help(function)
+#+END_SRC
+
+** 声明
+
+#+CAPTION: 声明编码
+#+BEGIN_SRC python
+# -*- coding: utf-8 -*-
+#+END_SRC
+
+* 类型
+** 概念
+*** 动态类型
+
+类型不需要声明，在运行过程中自动决定，表达式的语法决定创建的对象的类型。
+
+- 优点 :: 允许嵌套（列表、字典等），可以快速建立复杂的数据结构。
+        - 可以减少代码的量，同时是多态的基础。
+
+*** 强类型
+
+只能对一个对象进行适合其类型的操作。
+
+- 可用于多种类型的操作（内置函数或表达式的形式）： =len()= , =var[0]= 。
+- 类型特定的操作（对象方法的形式）： =string.upper()= 。
+
+*** 不可变性
+
+不可变性，即对象在创建后不可改变，对其进行操作时，会将结果（新的对象）赋给同一个变量名，旧的对象将被清理。
+
+不可变性提供了完整性的约束，在复杂程序中传递对象数据时，可以确保数据不会改变。
+
+#+ATTR_HTML: :class no-border
+| *可变（mutable）类型*     | 列表，字典         |
+|---------------------------+--------------------|
+| *不可变（immutable）类型* | 数字，字符串，元组 |
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+a = 3
+a = a + 2 # a 会指向新的对象（值为 5 的整数对象）
+#+END_SRC
+
+*** 自定义类
+
+实际上是定义新的对象类型，用于扩展核心类型。
+
+** 类型列表
+
+|              | *示例*                             |
+|--------------+------------------------------------|
+| 数字         | =100= , =99.9=                     |
+|--------------+------------------------------------|
+| 字符串       | @@html:<code>'string'</code>@@     |
+|--------------+------------------------------------|
+| 列表         | =[1, 2, 3]=                        |
+|--------------+------------------------------------|
+| 元组         | =(1, 'a', 2, 3)=                   |
+|--------------+------------------------------------|
+| 字典         | ={'a':1, 'b':2}=                   |
+|--------------+------------------------------------|
+| 文件         | =open('file', 'r')=                |
+|--------------+------------------------------------|
+| 集合         | =set('abc')= , ={'a', 'b', 'c'}=   |
+|--------------+------------------------------------|
+| 其他类型     | =type= , =None= , =True= , =False= |
+|--------------+------------------------------------|
+| 编程单元类型 | 函数、模块、类                     |
+|--------------+------------------------------------|
+| 实现相关类型 | 编译的代码堆栈跟踪                 |
+
+file:../images/python/04.png
+
+file:../images/python/05.png
+
+** 类型检验
+
+#+BEGIN_SRC python
+if type(foo) == type([]):
+if type(foo) == list:
+if isinstance(foo, list):
+#+END_SRC
+
+类型检验会破坏代码适用于各种类型的灵活性，代码应当不关注和限制特定的类型，应当编写对象接口（支持不同类型的操作），而不是类型。
+
+** 布尔
+
+#+BEGIN_SRC python
+True
+False
+#+END_SRC
+
+** 数字
+
+|           | 位数  |
+|-----------+-------|
+| =int=     | >= 32 |
+|-----------+-------|
+| =long=    | 无限  |
+|-----------+-------|
+| =float=   |       |
+|-----------+-------|
+| =complex= |       |
+
+** 序列
+
+序列类型包含 =str= =unicode= =list= =tuple= =bytearray= =buffer= =xrange= 。
+
+#+CAPTION: 表达式
+| =x in s=     | 检验元素存在       |
+| =x not in s= |                    |
+|--------------+--------------------|
+| =s + t=      | 合并               |
+|--------------+--------------------|
+| =s * <n>=    | 重复               |
+| =<n> * s=    |                    |
+|--------------+--------------------|
+| =s[i]=       | 索引，返回一个元素 |
+|--------------+--------------------|
+| =s[i:j:k]=   | 切片，返回子序列   |
+|--------------+--------------------|
+| =s[:]=       | 复制整个序列       |
+
+#+BEGIN_SRC python
+s[<l>:<r>:<step>]
+# <l> 默认为 0
+# <r> 默认为 len(s)
+# <step> 默认为 1，为负时表示倒序步进，如 s[::-1] 表示将字符串倒序
+#+END_SRC
+
+file:../images/python/03.png
+
+** 字符串
+
+#+BEGIN_SRC python
+s = "foo" # 可使用单引号或双引号
+
+# 连接
+s = "foo" + "bar"
+s = "foo" "bar" # 可省略 +
+
+# 重复
+s = "foo" * 3
+
+# 索引
+c = s[1]
+s[2] = "x" # TypeError，字符串是不可变类型
+
+# 测试包含字符
+if "a" in "foo":
+if "foo".find("a") != -1:
+#+END_SRC
+
+因为字符串是不可变类型，大量修改会影响性能，可以先将字符串转换为可变类型，修改之后再转换为字符串。
+
+#+BEGIN_SRC python
+l = list(s)
+l[x] = ...
+s = ''.join(l)
+#+END_SRC
+
+*** 转义字符
+
+|                  | @@html:<code>\'</code>@@ | 单引号               |
+|                  | @@html:<code>\"</code>@@ | 双引号               |
+|                  | =\\=                     | 反斜杠               |
+|------------------+--------------------------+----------------------|
+| *ASCII 特殊字符* | =\r=                     | Carriage return (CR) |
+|                  | =\n=                     | Linefeed (LF)        |
+|                  | =\t=                     | Horizontal tab (TAB) |
+|                  | =\a=                     | Bell (BEL)           |
+|                  | =\b=                     | Backspace (BS)       |
+|                  | =\f=                     | Formfeed (FF)        |
+|                  | =\v=                     | Vertical tab (VT)    |
+|------------------+--------------------------+----------------------|
+| *Unicode 字符*   | =\N<name>=               | 字符名称             |
+|                  | =\u<xxxx>=               | 字符 16 位十六进制值 |
+|                  | =\U<xxxxxxxx>=           | 字符 32 位十六进制值 |
+|------------------+--------------------------+----------------------|
+| *进制*           | =\o<value>=              | 字符八进制值         |
+|                  | =\h<value>=              | 字符示例进制值       |
+
+*** 格式
+
+#+BEGIN_SRC python
+r"" # Raw 字符串，关闭转义机制，用于路径或正则表达式
+    # r"C:\dir\file.txt"
+b"" # 字节字符串
+    # b"sp\x01am"
+u"" # Unicode 字符串
+    # u"\u0020spam"
+#+END_SRC
+
+*** 块字符串
+
+三个连续的引号（单或双），可以包围多行字符串。
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+var = """line1
+line2
+line3"""
+
+print """line1
+line2
+line3"""
+#+END_SRC
+
+** 列表
+
+列表元素通过偏移存取，元素有确定的顺序。列表实际存储的是对其他对象的引用。
+
+#+BEGIN_SRC python
+l = [1, 2, 3]
+l = list(range(1, 4))
+l = [1, "foo", True, 0.5] # 元素可以是任意类型
+
+l[0] = 4
+a = l[-1] # 最后一个元素
+
+# 添加，创建新的列表对象
+l = l + [4] # [1, 2, 3, 4]
+l = l + 4   # TypeError
+
+# 添加，原处修改
+l.append(3)   # [0, 1, 2, 3]
+l.append([3]) # [0, 1, 2, [3]]
+l.extend([3]) # [0, 1, 2, 3]
+l.extend(3)   # TypeError
+
+# 移除
+del l[1]
+del l[1:2]
+l[1:2] = []
+
+# 解包，变量个数和元素个数必须相等
+a, b, c = l
+# 等价于
+a = l[0]
+b = l[1]
+c = l[2]
+#+END_SRC
+
+*** 列表解析
+
+- List comprehension
+- 通过对序列的每一项应用一个表达式，以构建一个新的列表。
+- 可以替代 =for= 循环，且效率更高。
+
+#+BEGIN_SRC python
+lst = [<expr> for <elem> in <seq> if <cond>]
+#+END_SRC
+
+#+CAPTION: 示例：对元素进行计算
+#+BEGIN_SRC python
+doubles = [char * 2 for char in string]
+squares = [x ** 2 for x in lst]
+#+END_SRC
+
+#+CAPTION: 示例：从多维列表的每一行中取出固定的列
+#+BEGIN_SRC python
+col = [row[n] for row in lst]
+col = [row[1] for row in lst if row[1] % 2 == 0]
+#+END_SRC
+
+#+CAPTION: 示例：嵌套列表
+#+BEGIN_SRC python
+lst = [' '.join([a, b]) for a in ['1', '2', '3']
+                        for b in ['apple', 'banana']]
+# ['1 apple', '1 banana', '2 apple', '2 banana', '3 apple', '3 banana']
+#+END_SRC
+
+** 字典
+
+字典由哈希表实现，元素没有确定的顺序，实际存储的是对其他对象的引用。键必须是不可变对象，如字符串。。
+
+字典可以取代搜索数据结构。
+
+#+BEGIN_SRC python
+dct = {'name':'test', 'type':'file', 'size':99}
+
+a = dct['name']
+dct['type'] = 'link'
+
+# 遍历
+for key, value in dct.items():
+
+# 测试键值存在
+if key in dct:
+if dct.has_key(key): # 过时
+value = dct.get(key, 'default')
+value = dct[key] if key in dct else 'default'
+try:
+    value = dct[key]
+except KeyError:
+
+# 字典解析
+dct = {x: x*2 for x in range(10)}
+
+# 按照确定的顺序读取字典元素，需要把键的列表排序后循环读取
+keys = list(dict.keys())
+keys.sort()
+for key in keys:
+    print dict[key]
+#+END_SRC
+
+# 字典适合存储稀疏数据，比如，多维数组只有少数位置存储值，用元组存储坐标值作为键
+#+BEGIN_SRC python
+matrix = {}
+matrix[(1, 1, 1)] = 1 # {(1, 1, 1): 1}
+#+END_SRC
+
+** 列表 vs 字典
+
+- 列表不允许偏移量超过末尾，引用前必须分配足够大的空间。
+- 字典以数字（代表偏移量）作为键，不需要预先分配空间。
+
+#+BEGIN_SRC python
+lst = []
+lst[99] = 'value' # IndexError
+
+dct = {}
+dct[99] = 'value' # {99: 'value'}
+#+END_SRC
+
+** 元组
+
+元组（tuple）除值和长度不可变外，与列表类似，如可以包含复合对象、偏移量读取、切片。
+
+元组不支持方法调用，只支持操作符 =+= =*= 等。
+
+#+CAPTION: 构造方式
+#+BEGIN_SRC python
+tpl = (1,2,3)
+tpl = (1,) # 只有一个元素时，需要加 , 以区分元组和括号中的一个对象
+#+END_SRC
+
+#+CAPTION: 值和长度不可变
+#+BEGIN_SRC python
+tpl = (1,2)
+tpl[0] = 2    # TypeError
+tpl.append(1) # AttributeError
+#+END_SRC
+
+元组排序需要先转换为列表，或者使用 =sorted()= 内置函数。
+
+** 集合
+
+- 集合无重复元素，可用于列表去重。
+- 集合中的元素没有确定顺序。
+
+*** 语法
+
+#+BEGIN_SRC python
+foo = {1, 2}         # 直接赋值
+foo = set()          # 初始化
+foo = set([1, 2, 1]) # 从列表初始化
+#+END_SRC
+
+*** 运算
+
+| =&=                          | 交集 |
+|------------------------------+------|
+| @@html:<code>&#124;</code>@@ | 并集 |
+|------------------------------+------|
+| =-=                          | 差集 |
+
+*** 示例
+
+#+CAPTION: 列表去重
+#+BEGIN_SRC python
+unique = list(set([2, 1, 2]))
+#+END_SRC
+
+* 变量
+
+变量名大小写敏感。
+
+** 对象
+
+- 变量和对象保存在内存中的不同部分，变量是指向对象内存空间的指针。
+- 类型的概念存在于对象中，变量本身没有类型信息和约束，变量可以引用任何类型的对象。
+- 变量在表达式中会被它引用的对象代替。
+
+变量初始化，如 ~a = 3~ 的实际过程：
+
+1. 创建一个值为 3 的 =int= 对象。
+2. 创建一个变量 =a= （如果不存在）。
+3. 将变量与对象连接。
+
+** 引用传递
+
+#+CAPTION: 两个变量指向同一个对象的内存空间
+#+BEGIN_SRC python
+a = 3
+b = a
+#+END_SRC
+
+file:../images/python/01.png
+
+#+CAPTION: 引用传递后重新赋值，变量指向不同的对象
+#+BEGIN_SRC python
+a = 3
+b = a
+a = 'spam'
+#+END_SRC
+
+file:../images/python/02.png
+
+** 原处修改
+
+#+CAPTION: 修改可变类型的对象，变量之间会相互影响
+#+BEGIN_SRC python
+l1 = [1, 2, 3]
+l2 = l1
+l1[0] = 4 # 此时 l2 = [4, 2, 3]
+#+END_SRC
+
+** 变量复制
+
+避免变量相互影响的复制方式。
+
+#+CAPTION: 可变非序列类型，使用 =copy= 模块
+#+BEGIN_SRC python
+y = copy.copy(x)
+#+END_SRC
+
+#+CAPTION: 可变序列类型，使用分片赋值
+#+BEGIN_SRC python
+l2 = l1[:]
+#+END_SRC
+
+** 相等测试
+
+#+BEGIN_SRC python
+X = [1, 2, 3]
+Y = [1, 2, 3]
+X == Y # True，检查值的相等性 
+X is Y # False，检查对象的同一性
+#+END_SRC
+
+#+CAPTION: 整数和字符串对象有缓存和复用
+#+BEGIN_SRC python
+X = 42
+Y = 42
+X == Y # True
+X is Y # True
+#+END_SRC
+
+** 垃圾回收
+
+脚本中不需要考虑释放内存空间，当对象的引用数降为零，内存空间就会自动被回收。
+
+#+CAPTION: 查询对象被引用的次数
+#+BEGIN_SRC python
+sys.getrefcount()
+#+END_SRC
+
+* 运算符
+** 赋值
+
+#+CAPTION: 多个变量赋值
+#+BEGIN_SRC python
+a, b = int(input()), int(input())
+#+END_SRC
+
+** 数学
+
+| =/=  | 浮点数除法 | 即使操作数都为整数，非整除结果也为浮点数        |
+|------+------------+-------------------------------------------------|
+| =//= | 整数除法   | Python 2 需要 =from __future__ import division= |
+|------+------------+-------------------------------------------------|
+| =**= | 乘方       |                                                 |
+
+** 比较
+
+| ~==~ | 两个变量指向的对象的只相等时返回 =True= |
+|------+-----------------------------------------|
+| =is= | 两个变量指向同一个对象时返回 =True=     |
+
+#+BEGIN_SRC python
+a = [1, 2, 3]
+b = a
+b is a # True
+b == a # True
+
+a = [1, 2, 3]
+b = a[:]
+b is a # False
+b == a # True
+#+END_SRC
+
+** 逻辑
+
+#+CAPTION: 逻辑表达式的值
+|       |          | 表达式的值 |
+|-------+----------+------------|
+| =and= | 左值为假 | 左值       |
+|       | 左值为真 | 右值       |
+|-------+----------+------------|
+| =or=  | 左值为假 | 右值       |
+|       | 左值为真 | 左值       |
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+print True  and 1 # 1
+print True  or  1 # True
+print False and 1 # False
+print False or  1 # 1
+
+print 1 and True  # True
+print 1 or  True  # 1
+print 1 and False # False
+print 1 or  False # 1
+
+print 0     and False # 0
+print 0     or  False # False
+print False and 0     # False
+print False or  0     # 0
+
+print 0 and 1 # 0
+print 0 or  1 # 1
+print 1 and 0 # 0
+print 1 or  0 # 1
+
+print 1 and 2 # 2
+print 1 or  2 # 1
+print 2 and 1 # 1
+print 2 or  1 # 2
+#+END_SRC
+
+** 三元
+
+#+BEGIN_SRC python
+a = 1 if b == 3 else 2
+a = (2, 1)[b == 3]
+#+END_SRC
+
+* 语句
+** =assert=
+
+声明某个表达式为真。表达式非真时，会抛出 =AssertionError= 。
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+assert len(lst) >= 1
+#+END_SRC
+
+** =break=
+** =continue=
+** =del=
+
+- 删除一个变量，或列表中的一部分。
+- 引用已删除的变量名会导致错误。
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+a = [1,2,3,4,5]
+del a[0]   # [2,3,4,5] 
+del a[1:2] # [2,4,5]
+del a      # print(a): NameError
+#+END_SRC
+
+** =eval=
+
+计算存储在字符串中的 Python 表达式。
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+eval('2*3')
+#+END_SRC
+
+** =exec=
+
+执行字符串或文件中的 Python 语句。
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+exec 'print "Hello world"'
+#+END_SRC
+
+** =for=
+
+#+BEGIN_SRC python
+for <var> in <seq>:
+#+END_SRC
+
+#+CAPTION: Python 不支持 C 风格的 =for= ，替代实现方式：
+#+BEGIN_SRC python
+# 由 while 实现
+i = 0
+while i < 100:
+    ...
+    i += 1
+
+# 由 range() 实现
+for _ in range(5):
+    ...
+#+END_SRC
+
+** =if=
+
+#+BEGIN_SRC python
+if <expr>:
+    ...
+elif <expr>:
+    ...
+else:
+    ...
+#+END_SRC
+
+** =raise=
+
+#+BEGIN_SRC python
+raise <Exception>()
+raise <Error>()
+#+END_SRC
+
+** =try=
+
+#+BEGIN_SRC python
+try:
+    ...
+except FooError:
+    ...
+except: # 捕获所有其他错误
+    ...
+finally: # 触发异常之后，程序退出之前，进行收尾操作，如关闭文件
+    ...
+#+END_SRC
+
+如果错误或异常没有被处理，默认的处理器会被调用，中止运行并打印消息。
+
+** =with=
+
+用于确保嵌套的代码执行完成后会自动关闭文件，即使发生异常。
+
+#+BEGIN_SRC python
+with open('output.txt', 'w') as f:
+    f.write('Foo')
+#+END_SRC
+
+* 函数
+
+#+BEGIN_SRC python
+def <func>(<arg>=<default>, ...):
+#+END_SRC
+
+** 参数
+
+#+CAPTION: 不定数量参数
+#+BEGIN_SRC python
+def function(*args): # *args  将参数存储在元组中
+                     # **args 将参数存储在字典中
+
+    a, b = args    # 参数解包，需要确定参数个数
+    for i in args: # 参数遍历
+        ...
+#+END_SRC
+
+** 返回值
+
+#+CAPTION: 多个返回值
+#+BEGIN_SRC python
+def foo():
+    return 1, 2, 3
+
+a, b, c = foo()
+#+END_SRC
+
+** =lambda=
+
+#+BEGIN_SRC python
+lambda <arg>: <expr>
+#+END_SRC
+
+=lambda= 语句创建函数对象， =:= 后的表达式为函数体。
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+def repeat(n)
+    return lambda s: s*n
+
+twice = repeat(2)
+
+print twice('x')
+## xx
+#+END_SRC
+
+** =yield=
+* OO
+** 类
+
+#+BEGIN_SRC python
+class <Class>(<Parent>, ...):
+    ...
+#+END_SRC
+
+** 成员
+
+#+CAPTION: 命名规则
+| 类变量    | =<Class>.<var>= |
+|-----------+-----------------|
+| 对象变量  | =self.<var>=    |
+|-----------+-----------------|
+| Public    | =<name>=        |
+|-----------+-----------------|
+| Protected | =_<name>=       |
+|-----------+-----------------|
+| Private   | =__<name>=      |
+
+** 对象
+
+对象的头部信息：
+
+- 类型标示符
+- 引用计数器
+
+** =self=
+
+=self= 用于区分类变量和普通变量。
+
+调用类方法 =obj.method(arg, ...)= 时，Python 会将其转换为 =Class.method(obj, arg, ...)= ，因此类成员函数必须至少定义一个参数 =self= 。
+
+子类调用父类的方法需要显式传递 =self= ： =Parent.method(self, ...)=
+
+** =super()=
+
+显式调用基类的函数。
+
+#+BEGIN_SRC python
+super (
+    type
+[,  object_or_type
+])
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC python
+class Parent(object):
+    def foo(self):
+        ...
+
+class Child(object):
+    def foo(self):
+        super(Child, self).foo()
+#+END_SRC
+
+在多继承时， =super()= 通过 MRO（Method Resolution Order）和 C3 算法来遍历基类，查找函数。
+
+* 模块
+** =import=
+
+#+BEGIN_SRC python
+import <module>
+import <module> as <alias>
+from <module> import <prop>
+from <module> import <prop> as <alias>
+#+END_SRC
+
+=import= 在 =sys.path= 列出的目录下查找 =<module>.py= 。第一次加载模块时，模块的 =main()= 将首先执行。
+
+使用 =as= 可以用更简短的名称引用模块，同时方便在多个接口相同的可选模块中快速切换，而无需修改代码。
+
+** =__name__=
+
+#+CAPTION: 区分运行状态
+#+BEGIN_SRC python
+if __name__ == '__main__':
+    # 单独运行
+else:
+    # 被另一模块加载
+#+END_SRC
+
+* 规范
+** PEP 8
+
+- PEP :: Python Enhancement Proposal
+
+#+CAPTION: 命名
+| 函数 | =my_function()= |
+|------+-----------------|
+|      |                 |
+
+* 实现
+
+#+ATTR_HTML: :class no-border
+| *CPython* | - the most popular Python implementation written in C |
+|           | - source code interpreter                             |
+|-----------+-------------------------------------------------------|
+| *PyPy*    | - interpreter and just-in-time compiler               |
+|           | - compatible with Cpython interpreter                 |
+
+* 命令行
+** =python=
+
+#+BEGIN_SRC sh
+python <options>
+
+<options>
+    -c <cmd>
+    -m <module>
+#+END_SRC
+
+** =pydoc=
+
+#+BEGIN_SRC sh
+pydoc <name>
+python -m pydoc <name>
+
+# 示例
+pydoc raw_input
+#+END_SRC
+
+* 词汇
+
+| unpack | 解包 |
+|--------+------|
+|        |      |
+
+* 链接
+
+1. [[https://www.python.org/doc/versions/][Python Documentation by Version]]
+1. [[https://docs.python.org/2/library/index.html][The Python Standard Library (Python 2)]]
+1. [[https://www.python.org/dev/peps/pep-0008/][PEP 8 - Style Guide for Python Code]]
+1. [[https://github.com/vinta/awesome-python][Awesome Python]]

@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-07-23 Tue 15:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Operating System</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Operating System</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org063cdc5">1 任务</a>
+<ul>
+<li><a href="#org91f8fbd">1.1 进程</a>
+<ul>
+<li><a href="#orgd4330d1">1.1.1 Fork</a></li>
+</ul>
+</li>
+<li><a href="#org1b39ad8">1.2 线程</a></li>
+<li><a href="#org9221fde">1.3 资源</a>
+<ul>
+<li><a href="#orga85a24e">1.3.1 内存</a></li>
+<li><a href="#org8f12971">1.3.2 信号量</a></li>
+<li><a href="#org2f5f371">1.3.3 互斥锁</a></li>
+</ul>
+</li>
+<li><a href="#orgd0e94cc">1.4 多任务</a></li>
+</ul>
+</li>
+<li><a href="#org6b1985a">2 内存</a>
+<ul>
+<li><a href="#orge8c84ca">2.1 虚拟地址</a></li>
+<li><a href="#org81d1ac3">2.2 内存分配机制</a></li>
+<li><a href="#org728d211">2.3 分页</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org063cdc5" class="outline-2">
+<h2 id="org063cdc5"><span class="section-number-2">1</span> 任务</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-org91f8fbd" class="outline-3">
+<h3 id="org91f8fbd"><span class="section-number-3">1.1</span> 进程</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+进程是组织资源的最小单位，进程将相关的资源组织在一起，简化操作系统的资源管理。
+</p>
+
+<p>
+一个进程可以包括多个线程。进程中多个线程的并行，和操作系统中多个进程的并行类似。
+</p>
+
+<p>
+单个 CPU 无法被多个程序并行使用，任一时刻，CPU 总是运行一个程序，其他程序处于非运行状态。调度器（scheduler）负责把单个 CPU 的运行时间拆分，分给不同的程序轮流使用。因为分配、切换的速度极快，就制造出多程序并行在一个 CPU 上的假象。
+</p>
+</div>
+
+<div id="outline-container-orgd4330d1" class="outline-4">
+<h4 id="orgd4330d1"><span class="section-number-4">1.1.1</span> Fork</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+<a href="https://en.wikipedia.org/wiki/Fork_(system_call)">Wikipedia | Fork (system call)</a>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1b39ad8" class="outline-3">
+<h3 id="org1b39ad8"><span class="section-number-3">1.2</span> 线程</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+线程是安排 CPU 执行时间的最小单位。线程使得一个程序能够同时完成多个任务，而不会发生冲突，是一种简化编程的方式。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> 状态</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">阻塞（blocked）</th>
+<th scope="col" class="org-left">资源没有到位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">就绪（runnable）</td>
+<td class="org-left">资源到位，CPU 没有到位</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">运行（running）</td>
+<td class="org-left">资源、CPU 都到位</td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="figure">
+<p><img src="../images/operating_system/02.jpg" alt="02.jpg" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9221fde" class="outline-3">
+<h3 id="org9221fde"><span class="section-number-3">1.3</span> 资源</h3>
+<div class="outline-text-3" id="text-1-3">
+
+<div class="figure">
+<p><img src="../images/operating_system/01.jpg" alt="01.jpg" />
+</p>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">进程共享的资源</th>
+<th scope="col" class="org-left">进程独占的资源</th>
+<th scope="col" class="org-left">线程独占的资源</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">（线程之间共享）</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">物理内存</td>
+<td class="org-left">地址空间</td>
+<td class="org-left">栈</td>
+</tr>
+
+<tr>
+<td class="org-left">打印机</td>
+<td class="org-left">打开的文件</td>
+<td class="org-left">寄存器</td>
+</tr>
+
+<tr>
+<td class="org-left">键盘</td>
+<td class="org-left">子进程</td>
+<td class="org-left">状态</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">信号量</td>
+<td class="org-left">程序计数器</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">全局变量</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">用户信息</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-orga85a24e" class="outline-4">
+<h4 id="orga85a24e"><span class="section-number-4">1.3.1</span> 内存</h4>
+<div class="outline-text-4" id="text-1-3-1">
+<ul class="org-ul">
+<li>在进程之间独立，一个进程的所有线程，不能访问其他进程的内存空间。</li>
+<li>在同一进程的线程之间共享，一个进程的所有线程，都可以访问该进程的内存空间。</li>
+<li>一个线程使用某些共享内存时，其他线程必须等它结束。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org8f12971" class="outline-4">
+<h4 id="org8f12971"><span class="section-number-4">1.3.2</span> 信号量</h4>
+<div class="outline-text-4" id="text-1-3-2">
+<ul class="org-ul">
+<li>Semaphore</li>
+<li>某一内存允许固定数量（&gt;1）线程同时使用。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2f5f371" class="outline-4">
+<h4 id="org2f5f371"><span class="section-number-4">1.3.3</span> 互斥锁</h4>
+<div class="outline-text-4" id="text-1-3-3">
+<ul class="org-ul">
+<li>Mutual exclusion (Mutex)</li>
+<li>防止多于一个线程同时读写某一内存区域。</li>
+<li>互斥锁即信号量为 1 的特殊情况，但是互斥锁较为简单且效率高。</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd0e94cc" class="outline-3">
+<h3 id="orgd0e94cc"><span class="section-number-3">1.4</span> 多任务</h3>
+<div class="outline-text-3" id="text-1-4">
+
+<div class="figure">
+<p><img src="../images/operating_system/03.jpg" alt="03.jpg" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6b1985a" class="outline-2">
+<h2 id="org6b1985a"><span class="section-number-2">2</span> 内存</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+如果没有内存管理，就需要手工为每个程序安排运行的空间，即某个程序使用某一段固定的物理地址。
+</p>
+</div>
+
+<div id="outline-container-orge8c84ca" class="outline-3">
+<h3 id="orge8c84ca"><span class="section-number-3">2.1</span> 虚拟地址</h3>
+<div class="outline-text-3" id="text-2-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">硬件</th>
+<th scope="col" class="org-left">CPU 的 MMU（Memory Management Unit） 模块，负责转换虚拟地址和物理地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">OS</td>
+<td class="org-left">内存管理（Memory Management）核心组件，管理物理内存、虚拟内存相关的事务</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">软件</td>
+<td class="org-left">使用「进程」模型，每个进程无论何时运行，都使用一致的虚拟地址空间</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">虚拟地址由 OS 和 MMU 映射到不同的物理地址空间上</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org81d1ac3" class="outline-3">
+<h3 id="org81d1ac3"><span class="section-number-3">2.2</span> 内存分配机制</h3>
+<div class="outline-text-3" id="text-2-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">malloc/free</th>
+<th scope="col" class="org-left">导致内存碎片，加重内存管理器的负担</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">slab</td>
+<td class="org-left">按照预先规定的大小，将分配的内存分割成特定长度的 chunk</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">分配到的内存不会释放，而是重复利用</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">解决内存碎片问题</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org728d211" class="outline-3">
+<h3 id="org728d211"><span class="section-number-3">2.3</span> 分页</h3>
+<div class="outline-text-3" id="text-2-3">
+<ul class="org-ul">
+<li>将虚拟地址和物理地址按固定大小，切割成页（page）和页帧（page frame）。</li>
+<li>程序内存不够用时，可以将不常用的物理内存页转移到其他存储设备上，但必须以页为单位传输。</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2019-07-23 Tue 15:57</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

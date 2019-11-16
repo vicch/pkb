@@ -1,0 +1,426 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Apache
+
+* 概念
+** 虚拟主机
+
+- Apache 通过虚拟主机配置多个网站。
+- 虚拟主机的匹配可以基于 IP 地址或主机名。
+
+*** 基于 IP 地址
+
+基于 IP 地址的虚拟主机很少见，服务器通常只有一个公网地址，特殊情况是使用 SSL 证书要求每个域名有独立的 IP 地址。
+
+#+CAPTION: 每一个 IP 地址和端口组合能且只能对应一个 =<VirtualHost>=
+#+BEGIN_SRC sh
+<VirtualHost 0.0.0.0:80>
+</VirtualHost>
+#+END_SRC
+
+*** 基于主机名
+
+Apache 按照虚拟主机在配置文件中的顺序，将被 HTTP header 的 =Host= 值与 =ServerName= 或 =ServerAlias= 进行匹配，第一个匹配的虚拟主机接收请求。
+
+** MPM
+
+- Multi-Processing Modules
+- 控制 Apache 的运行模式和并发策略。
+
+#+CAPTION: 查看 MPM 模式
+#+BEGIN_SRC sh
+$ apachectl status | grep "MPM"
+Server MPM: event
+#+END_SRC
+
+*** Prefork
+
+父进程创建一定数量的单线程的子进程，根据负载和配置对子进程数进行增减。所有子进程竞争 accept 用户请求，由 accept 成功的子进程处理请求。
+
+- 比 worker 和 event 模式消耗更多（内存）资源。
+- 需要使用非线程安全（non-thread safe）的库，如 =mod_php= 时，或需要进程隔离时，选用此模式。
+
+#+CAPTION: 配置
+#+BEGIN_SRC sh
+<IfModule mpm_prefork_module>
+    StartServers            5
+    MinSpareServers         5
+    MaxSpareServers         10
+    MaxRequestWorkers       150
+    MaxConnectionsPerChild  0
+</IfModule>
+#+END_SRC
+
+*** Worker
+
+每个子进程有多个线程，可以使用更少的资源处理更多请求。
+
+*** Event
+
+- Apache >= 2.4
+- 每个线程可以处理多个请求。
+
+* 配置
+** 文件
+
+#+CAPTION: =/etc/apache2/=
+|            | =apache2.conf=  | 主配置       |
+|------------+-----------------+--------------|
+|            | =envvars=       | 环境变量     |
+|------------+-----------------+--------------|
+|            | =ports.conf=    | 监听端口配置 |
+|------------+-----------------+--------------|
+| =conf-*/=  | =security.conf= | 安全配置     |
+|------------+-----------------+--------------|
+| =mods-*/=  |                 |              |
+|------------+-----------------+--------------|
+| =sites*-/= | =*.conf=        |              |
+
+- 通过在 =*-enabled= 目录下创建、删除 symbolic link 指向 =*-available= 目录下的文件，可以启用、禁用配置。
+- 配置文件按照文件名顺序加载，通常使用数字前缀确保加载顺序，如 =001-default.conf= 。
+
+*** =envvars=
+
+| =APACHE_RUN_USER=         | 子进程和线程所属的账户 |
+|---------------------------+------------------------|
+| =APACHE_RUN_GROUP=        | 子进程和线程所属的组   |
+|---------------------------+------------------------|
+| =APACHE_LOG_DIR=          | 日志目录               |
+|---------------------------+------------------------|
+| =APACHE_ULIMIT_MAX_FILES= | 最大文件（进程数）     |
+
+为 Apache 进程所属的组（通常为 =www-data= ）设置程序目录的写权限，可以避免权限问题，适用于直接由 Apache 加载代码的情况，如 PHP 通过 =mod_php= 。大部分应用作为独立的进程运行，如 PHP 应用通过 PHP-FPM 运行，不受 Apache 所属的用户和组影响。
+
+*** Red Hat
+
+Red Hat 下主配置文件为 =/etc/httpd/conf/httpd.conf= 。
+
+** 标签
+
+| =<VirtualHost>=    |                                          |
+|--------------------+------------------------------------------|
+| =<Directory>=      | 应用配置于指定目录和子目录               |
+|--------------------+------------------------------------------|
+| =<DirectoryMatch>= | 应用配置于指定目录和子目录，使用正则匹配 |
+|--------------------+------------------------------------------|
+| =<Location>=       | 应用配置于指定 URL 路径                  |
+|--------------------+------------------------------------------|
+| =<IfModule>=       | 如果模块存在                             |
+
+*** =<Directory>=
+
+#+BEGIN_SRC sh
+<Directory <path>>    # 使用路径
+<Directory ~ <regex>> # 使用正则
+#+END_SRC
+
+*** =<DirectoryMatch>=
+
+#+BEGIN_SRC sh
+<DirectoryMatch <regex>>
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC sh
+<DirectoryMatch "/\.git">
+    Require all denied
+</Directory>
+#+END_SRC
+
+*** =<Location>=
+
+#+BEGIN_SRC sh
+<Location <url>>
+    # /  任意 URL
+#+END_SRC
+
+*** =<VirtualHost>=
+
+#+BEGIN_SRC sh
+<VirtualHost <addr>[:<port>]>
+    # <addr> 为 * 表示匹配所有 IP 地址
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC sh
+# /etc/apache2/sites-available/foo.com.conf
+<VirtualHost *:80>
+    ServerName foo.com
+    ServerAlias www.foo.com
+    DocumentRoot /var/www/foo.com
+
+    ServerAdmin webmaster@localhost
+    
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+#+END_SRC
+
+** 指令
+
+| *虚拟主机* | =DocumentRoot=    | 根目录                               |
+|------------+-------------------+--------------------------------------|
+|            | =Listen=          | 监听地址和端口                       |
+|------------+-------------------+--------------------------------------|
+|            | =ServerName=      | 服务器名                             |
+|------------+-------------------+--------------------------------------|
+|            | =ServerAlias=     | 服务器别名                           |
+|------------+-------------------+--------------------------------------|
+| *选项*     | =AllowOverride=   | 是否使用 =.htaccess=                 |
+|------------+-------------------+--------------------------------------|
+|            | =Options=         |                                      |
+|------------+-------------------+--------------------------------------|
+| *日志*     | =ErrorLog=        |                                      |
+|------------+-------------------+--------------------------------------|
+|            | =LogLevel=        | 错误日志级别                         |
+|------------+-------------------+--------------------------------------|
+| *安全*     | =Require=         |                                      |
+|------------+-------------------+--------------------------------------|
+|            | =ServerSignature= | 页面底部服务器和操作系统信息         |
+|------------+-------------------+--------------------------------------|
+|            | =ServerTokens=    | 响应 header 中的服务器和操作系统信息 |
+|------------+-------------------+--------------------------------------|
+| *其他*     | =Include=         | 加载配置文件，失败时报错             |
+|------------+-------------------+--------------------------------------|
+|            | =IncludeOptional= | 加载配置文件，失败时忽略             |
+
+*** =AllowOverride=
+
+#+BEGIN_SRC sh
+AllowOverride <option>
+    # All
+    # None
+    # Options=
+#+END_SRC
+
+使用 =AllowOverride All= 会查找各级目录下的 =.htaccess= 文件，增加系统调用。
+
+*** =Listen=
+
+#+BEGIN_SRC sh
+Listen [<ip>:]<port>
+#+END_SRC
+
+*** =LogLevel=
+
+#+BEGIN_SRC sh
+LogLevel [<module>:]<level> ...
+    # warn  默认级别
+#+END_SRC
+
+*** =Options=
+
+#+BEGIN_SRC sh
+Options [+|-]<option> ...
+    # + enables option, - disables option
+#+END_SRC
+
+#+CAPTION: 选项
+| =All=            | 除 =MultiViews= 外所有选项                          |
+|------------------+-----------------------------------------------------|
+| =FollowSymLinks= | 是否跟踪软链接                                      |
+|------------------+-----------------------------------------------------|
+| =Indexes=        | 在没有索引文件时是否显示目录文件列表                |
+|------------------+-----------------------------------------------------|
+| =MultiViews=     | 是否使用 =mod_negotiation= 的 =MultiViews= 内容协商 |
+
+*** =ServerAlias=
+
+#+BEGIN_SRC sh
+ServerAlias <hostname> ...
+    # 可以包含 * 通配符
+#+END_SRC
+
+*** =ServerSignature=
+
+#+BEGIN_SRC sh
+ServerSignature <option>
+    # On
+    # Off
+    # Email 显示管理员邮箱
+#+END_SRC
+
+*** =ServerTokens=
+
+#+BEGIN_SRC sh
+ServerTokens <option>
+    # Full    Apache/2.4.18 (Ubuntu)
+    # OS      Apache/2.4.18 (Ubuntu)
+    # Minimal Apache/2.4.18
+    # Minor   Apache/2.4
+    # Major   Apache/2
+    # Prod    Apache
+#+END_SRC
+
+* 模块
+** =mod_authz_core=
+
+访问控制模块，控制文件读取权限。
+
+| =Require= |   |
+|-----------+---|
+|           |   |
+
+*** =Require=
+
+#+BEGIN_SRC sh
+Require all granted|denied
+Require ip <ip> ...
+#+END_SRC
+
+** =mod_log_config=
+*** =CustomLog=
+
+#+BEGIN_SRC sh
+CustomLog <file> <nickname>|<format>
+
+# <nickname>
+    # combined
+    # common
+
+# <format>
+#+END_SRC
+
+** =mod_negotiation=
+
+内容协商，或内容选择，从多个符合条件（如文件名匹配）的文件中选择最符合客户端需求、能力的文件。
+
+** =mod_proxy=
+
+| =ProxyPass=      | 将本地服务器（反向代理或 gateway）URL 映射到远程服务器 URL |
+|------------------+------------------------------------------------------------|
+| =ProxyPassMatch= | 同上，使用正则匹配                                         |
+
+** =mod_proxy_balancer=
+
+负载均衡模块，需要开启 =mod_proxy= 和以下任一调度算法。
+
+| =mod_lbmethod_byrequests= | 平均分配请求 |
+|---------------------------+--------------|
+| =mod_lbmethod_bytraffic=  |              |
+|---------------------------+--------------|
+| =mod_lbmethod_bybusyness= |              |
+|---------------------------+--------------|
+| =mod_lbmethod_heartbeat=  |              | 
+
+*** 示例
+
+#+BEGIN_SRC sh
+<VirtualHost *:80>
+    <Directory /var/www/example.com/public>
+        <Proxy balancer://cluster>                # Define balancer cluster
+            BalancerMember http://localhost:9000/ # Define multiple backends
+            BalancerMember http://localhost:9001/
+            BalancerMember http://localhost:9002/
+        </Proxy>
+        <Location />
+            ProxyPass balancer://cluster/ # Proxy requests to balancer cluster
+            ProxyPassReverse balancer://cluster/
+        </Location>
+        <Location /static>
+            ProxyPass !
+        <Location>
+    </Directory>
+</VirtualHost>
+#+END_SRC  
+
+** =mod_status=
+*** 配置
+
+#+CAPTION: 设置状态页面
+#+BEGIN_SRC sh
+<Location "/server-status">
+    SetHandler server-status
+    # 允许指定域名的主机访问
+    Require host <domain>
+    # 允许指定 IP 的主机访问（允许宿主机访问虚拟机）
+    Require ip <addr>
+</Location>
+#+END_SRC
+
+*** 输出
+
+#+BEGIN_SRC sh
+Server uptime: 3 minutes 4 seconds
+Server load: 5.68 2.19 0.78
+Total accesses: 12025 - Total Traffic: 133.8 MB
+CPU Usage: u1 s8.32 cu0 cs0 - 5.07% CPU load
+65.4 requests/sec - 0.7 MB/second - 11.4 kB/request   # 吞吐率
+1 requests currently being processed, 74 idle workers # 当前并发用户数
+#+END_SRC
+
+** =mpm_common=
+
+
+| *进程* | =MaxRequestWorkers=      | 最大并发连接数，超过时进入等待队列         |
+|        |                          | =prefork= 最大进程数                       |
+|        |                          | =worker= 和 =event= 最大线程数             |
+|--------+--------------------------+--------------------------------------------|
+|        | =ServerLimit=            | =MaxRequestWorkers= 可配置的最大值         |
+|--------+--------------------------+--------------------------------------------|
+|        | =StartServers=           | 启动时创建的进程数                         |
+|--------+--------------------------+--------------------------------------------|
+| *线程* | =ThreadsPerChild=        | 每个进程的线程数                           |
+|--------+--------------------------+--------------------------------------------|
+|        | =ThreadsLimit=           | =ThreadsPerChild= 可配置的最大值           |
+|--------+--------------------------+--------------------------------------------|
+|        | =MinSpareThreads=        | 最小空闲线程数，不足时创建进程和线程       |
+|--------+--------------------------+--------------------------------------------|
+|        | =MaxSpareThreads=        | 最大空闲线程数，超过时销毁线程和进程       |
+|--------+--------------------------+--------------------------------------------|
+| *连接* | =MaxConnectionsPerChild= | 每个进程最大连接数，超过时销毁并重建新进程 |
+
+- 空闲线程占用内存空间，但是可以更快速地处理请求（不用重新创建线程）。
+
+* 日志
+
+#+CAPTION: =/var/log/apache2/=
+| =access.log= |   |
+|--------------+---|
+| =error.log=  |   |
+
+* 命令
+** 安装
+
+#+CAPTION: Add repository for latest stable release
+#+BEGIN_SRC sh
+add-apt-repository -y ppa:ondrej/apache2
+#+END_SRC
+
+** =apache2= =httpd=
+
+| Debian, Ubuntu         | =apache2= |
+|------------------------+-----------|
+| RedHat, CentOS, Fedora | =httpd=   |
+
+** =service=
+
+#+BEGIN_SRC sh
+/etc/init.d/apache2 <command>
+service apache2 <command>
+
+# <command>
+    start
+    stop
+    restart
+    reload  # 重新加载配置
+#+END_SRC
+
+** =a2enmod= =a2dismod=
+
+#+BEGIN_SRC sh
+a2enmod <module>
+a2dismod <module>
+#+END_SRC
+
+** =a2ensite= =a2dissite=
+
+#+BEGIN_SRC sh
+a2ensite <domain>.conf
+a2dissite <domain>.conf
+#+END_SRC
+
+** =a2enconf= =a2disconf=
+* 链接
+
+1. [[http://httpd.apache.org/docs/current/mod/core.html][Apache Core Features]]
+1. [[https://httpd.apache.org/docs/2.4/mod/directives.html][Apache Directive Index]]

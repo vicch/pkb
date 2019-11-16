@@ -1,0 +1,130 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: MemcacheQ
+
+* 安装
+
+#+CAPTION: 安装 libevent
+#+BEGIN_SRC sh
+wget https://sourceforge.net/projects/levent/files/libevent/libevent-2.0/libevent-2.0.22-stable.tar.gz
+tar -xvzf libevent-2.0.22-stable.tar.gz
+cd libevent-2.0.22-stable
+./configure
+make
+make install
+#+END_SRC
+
+#+CAPTION: 安装 BerkeleyDB
+#+BEGIN_SRC sh
+wget http://fossies.org/linux/misc/db-6.1.23.tar.gz
+tar -xvzf db-6.1.23.tar.gz
+cd db-6.1.23/build_unix
+../dist/configure
+make
+make install
+#+END_SRC
+
+#+CAPTION: 配置动态链接库查找路径
+#+BEGIN_SRC sh
+vim /etc/ld.so.conf
+## 添加两行
+/usr/local/lib
+/usr/local/BerkeleyDB.6.1/lib
+## 运行 ldconfig
+ldconfig
+#+END_SRC
+
+#+CAPTION: 安装 memcacheq
+#+BEGIN_SRC sh
+wget https://memcacheq.googlecode.com/files/memcacheq-0.2.0.tar.gz
+tar -xvzf memcacheq-0.2.0.tar.gz
+cd memcacheq-0.2.0
+./configure --with-bdb=/usr/local/BerkeleyDB.6.1 --with-libevent=/usr/local/lib --enable-threads
+#+END_SRC
+
+#+CAPTION: 运行 memcacheq
+#+BEGIN_SRC sh
+mkdir /var/mcq/data
+mkdir /var/mcq/logs
+memcacheq -d -l 192.168.0.105 -r -H /var/mcq/data -N -R -v -L 1024 -B 1024 > /var/mcq/logs/memcacheq.log 2>&1
+
+## 查看端口
+netstat -tlnp
+#+END_SRC
+
+#+CAPTION: 连接测试
+#+BEGIN_SRC sh
+telnet 192.168.0.105 22201
+set ...
+get ...
+#+END_SRC
+
+* 命令行
+** 运行
+#+BEGIN_SRC sh
+memcacheq <options>
+    -p <port>  # TCP
+    -U <port>  # UDP
+    -d         # daemon
+    -r         # 最大化核心文件限制
+    -u <user>  # root 身份运行时
+    -c <num>   # 最大连接数，默认 1024
+    -v         # verbose
+
+    -m <mbyte> # 内存中缓存大小，默认 64
+    -A <byte>  # 分页大小，默认 4096
+    -B <byte>  # 信息长度，默认 1024
+    -H <path>  # 数据库 home 目录，默认 /data1/memcacheq
+    -T <sec>   # 运行 memp_trickle 时间间隔，默认 30，0 表示关闭
+    -L <kbyte> # 日志缓冲大小，默认 32
+    -R         # 自动清除过期日志
+    -N         # 激活 DB_TXN_NOSYN 提升性能
+#+END_SRC
+
+#+CAPTION: 示例（微博等级队列）
+#+BEGIN_SRC sh
+memcacheq -drNvR -uroot -A8192 -B4096 -L1024 -m64 -c8000 -T16 -H/data2/mcq/6825 -p6825
+#+END_SRC
+** 操作
+
+#+CAPTION: 写入
+#+BEGIN_SRC sh
+set <queue> <flags> 0 <msg_len>
+<msg_body>
+
+## output
+STORED
+#+END_SRC
+
+#+CAPTION: 读取
+#+BEGIN_SRC sh
+get <queue>
+
+## output
+VALUE <queue> <flags> <msg_len>
+<msg_body>
+END
+#+END_SRC
+
+#+CAPTION: 删除队列
+#+BEGIN_SRC sh
+delete <queue>
+#+END_SRC
+
+#+CAPTION: 查看所有队列状态
+#+BEGIN_SRC sh
+stats queue
+
+## output
+STAT <queue> <all_msg_cnt>/<consumed_msg_cnt>
+#+END_SRC
+
+#+CAPTION: 查看当前队列中消息数量
+#+BEGIN_SRC sh
+db_stat
+#+END_SRC
+
+* 资源
+
+1. [[http://memcachedb.org/memcacheq/][MemcacheQ - Simple Queue Service over Memcache]]
+2. [[http://blog.xiayf.cn/2013/04/27/compile-and-install-memcacheq/][编译安装 MemcacheQ]]
+3. [[http://haoyun.blog.51cto.com/2038762/1133345][MemcacheQ 的安装、配置、使用]]

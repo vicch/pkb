@@ -1,0 +1,2033 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-02-24 Sun 10:58 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Python</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Python</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org1c4abdc">1 语法</a>
+<ul>
+<li><a href="#org06ccf25">1.1 文档字符串</a></li>
+<li><a href="#org7a372ff">1.2 声明</a></li>
+</ul>
+</li>
+<li><a href="#org0a359ee">2 类型</a>
+<ul>
+<li><a href="#org791f28e">2.1 概念</a>
+<ul>
+<li><a href="#org3b9a858">2.1.1 动态类型</a></li>
+<li><a href="#orgb17b58c">2.1.2 强类型</a></li>
+<li><a href="#org2dd2138">2.1.3 不可变性</a></li>
+<li><a href="#org224cea1">2.1.4 自定义类</a></li>
+</ul>
+</li>
+<li><a href="#org9c7f22d">2.2 类型列表</a></li>
+<li><a href="#org46ac961">2.3 类型检验</a></li>
+<li><a href="#org1779383">2.4 布尔</a></li>
+<li><a href="#org7477701">2.5 数字</a></li>
+<li><a href="#org08486e9">2.6 序列</a></li>
+<li><a href="#orgad5962c">2.7 字符串</a>
+<ul>
+<li><a href="#org696b0e7">2.7.1 转义字符</a></li>
+<li><a href="#orgf21ef02">2.7.2 格式</a></li>
+<li><a href="#orga926141">2.7.3 块字符串</a></li>
+</ul>
+</li>
+<li><a href="#orgd7169a5">2.8 列表</a>
+<ul>
+<li><a href="#org313e045">2.8.1 列表解析</a></li>
+</ul>
+</li>
+<li><a href="#orgc5fe12c">2.9 字典</a></li>
+<li><a href="#org6dc8c44">2.10 列表 vs 字典</a></li>
+<li><a href="#org1581530">2.11 元组</a></li>
+<li><a href="#org17a03de">2.12 集合</a>
+<ul>
+<li><a href="#orga84256c">2.12.1 语法</a></li>
+<li><a href="#org04f0375">2.12.2 运算</a></li>
+<li><a href="#org2aa9889">2.12.3 示例</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org91185c0">3 变量</a>
+<ul>
+<li><a href="#org5853f71">3.1 对象</a></li>
+<li><a href="#org94d0c23">3.2 引用传递</a></li>
+<li><a href="#orgf31c26e">3.3 原处修改</a></li>
+<li><a href="#org6ad3654">3.4 变量复制</a></li>
+<li><a href="#org163a11b">3.5 相等测试</a></li>
+<li><a href="#orgb3392e8">3.6 垃圾回收</a></li>
+</ul>
+</li>
+<li><a href="#orgf8b19dd">4 运算符</a>
+<ul>
+<li><a href="#orge250ff9">4.1 赋值</a></li>
+<li><a href="#orga86b6a2">4.2 数学</a></li>
+<li><a href="#org2f622f7">4.3 比较</a></li>
+<li><a href="#orgcdbdb40">4.4 逻辑</a></li>
+<li><a href="#org5a5e3c2">4.5 三元</a></li>
+</ul>
+</li>
+<li><a href="#orgb4707af">5 语句</a>
+<ul>
+<li><a href="#org169800b">5.1 <code>assert</code></a></li>
+<li><a href="#org0824151">5.2 <code>break</code></a></li>
+<li><a href="#orga6844dd">5.3 <code>continue</code></a></li>
+<li><a href="#org1fff1a8">5.4 <code>del</code></a></li>
+<li><a href="#org91e8eb3">5.5 <code>eval</code></a></li>
+<li><a href="#orgd14f582">5.6 <code>exec</code></a></li>
+<li><a href="#org3d4dab6">5.7 <code>for</code></a></li>
+<li><a href="#org898b7a2">5.8 <code>if</code></a></li>
+<li><a href="#org4cf9669">5.9 <code>raise</code></a></li>
+<li><a href="#org0c74ec4">5.10 <code>try</code></a></li>
+<li><a href="#orga307003">5.11 <code>with</code></a></li>
+</ul>
+</li>
+<li><a href="#orgfa405f5">6 函数</a>
+<ul>
+<li><a href="#org5860b5b">6.1 参数</a></li>
+<li><a href="#org1d051d7">6.2 返回值</a></li>
+<li><a href="#org4ad9551">6.3 <code>lambda</code></a></li>
+<li><a href="#org7dc47cc">6.4 <code>yield</code></a></li>
+</ul>
+</li>
+<li><a href="#org9f71b19">7 OO</a>
+<ul>
+<li><a href="#org785ddf9">7.1 类</a></li>
+<li><a href="#org4fffa2c">7.2 成员</a></li>
+<li><a href="#orge22871d">7.3 对象</a></li>
+<li><a href="#org3c049bf">7.4 <code>self</code></a></li>
+<li><a href="#orgb951bcd">7.5 <code>super()</code></a></li>
+</ul>
+</li>
+<li><a href="#orgb7d0630">8 模块</a>
+<ul>
+<li><a href="#org93aa832">8.1 <code>import</code></a></li>
+<li><a href="#org294f140">8.2 <code>__name__</code></a></li>
+</ul>
+</li>
+<li><a href="#org0beb3b1">9 规范</a>
+<ul>
+<li><a href="#org232956b">9.1 PEP 8</a></li>
+</ul>
+</li>
+<li><a href="#orgbb04e19">10 实现</a></li>
+<li><a href="#org0856dd1">11 命令行</a>
+<ul>
+<li><a href="#orgbb20f88">11.1 <code>python</code></a></li>
+<li><a href="#orgf56a594">11.2 <code>pydoc</code></a></li>
+</ul>
+</li>
+<li><a href="#orgef85e51">12 词汇</a></li>
+<li><a href="#orgaaee0db">13 链接</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1c4abdc" class="outline-2">
+<h2 id="org1c4abdc"><span class="section-number-2">1</span> 语法</h2>
+<div class="outline-text-2" id="text-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>#</code></th>
+<th scope="col" class="org-left">注释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>\</code></td>
+<td class="org-left">折行</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>"""</code></td>
+<td class="org-left">文档字符串</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>'''</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>``</code></td>
+<td class="org-left">获得对象的可打印形式，同 <code>repr()</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-org06ccf25" class="outline-3">
+<h3 id="org06ccf25"><span class="section-number-3">1.1</span> 文档字符串</h3>
+<div class="outline-text-3" id="text-1-1">
+<dl class="org-dl">
+<dt>文档字符串（DocString）</dt><dd>函数（类、模块）的第一行开始的多行字符串。<br />
+第一行是简要说明，第二行是空行，第三行开始时详细说明。</dd>
+</dl>
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 1: </span>示例</label><pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">function</span>():
+        <span class="org-doc">'''Short introduction.</span>
+
+<span class="org-doc">        Detailed information,</span>
+<span class="org-doc">        continues ...</span>
+<span class="org-doc">        '''</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 2: </span>显示文档字符串</label><pre class="src src-python">function.<span class="org-builtin">__doc__</span>
+<span class="org-builtin">help</span>(function)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7a372ff" class="outline-3">
+<h3 id="org7a372ff"><span class="section-number-3">1.2</span> 声明</h3>
+<div class="outline-text-3" id="text-1-2">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 3: </span>声明编码</label><pre class="src src-python"><span class="org-comment-delimiter"># </span><span class="org-comment">-*- coding: utf-8 -*-</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0a359ee" class="outline-2">
+<h2 id="org0a359ee"><span class="section-number-2">2</span> 类型</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-org791f28e" class="outline-3">
+<h3 id="org791f28e"><span class="section-number-3">2.1</span> 概念</h3>
+<div class="outline-text-3" id="text-2-1">
+</div><div id="outline-container-org3b9a858" class="outline-4">
+<h4 id="org3b9a858"><span class="section-number-4">2.1.1</span> 动态类型</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+类型不需要声明，在运行过程中自动决定，表达式的语法决定创建的对象的类型。
+</p>
+
+<dl class="org-dl">
+<dt>优点</dt><dd>允许嵌套（列表、字典等），可以快速建立复杂的数据结构。
+<ul class="org-ul">
+<li>可以减少代码的量，同时是多态的基础。</li>
+</ul></dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-orgb17b58c" class="outline-4">
+<h4 id="orgb17b58c"><span class="section-number-4">2.1.2</span> 强类型</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<p>
+只能对一个对象进行适合其类型的操作。
+</p>
+
+<ul class="org-ul">
+<li>可用于多种类型的操作（内置函数或表达式的形式）： <code>len()</code> , <code>var[0]</code> 。</li>
+<li>类型特定的操作（对象方法的形式）： <code>string.upper()</code> 。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2dd2138" class="outline-4">
+<h4 id="org2dd2138"><span class="section-number-4">2.1.3</span> 不可变性</h4>
+<div class="outline-text-4" id="text-2-1-3">
+<p>
+不可变性，即对象在创建后不可改变，对其进行操作时，会将结果（新的对象）赋给同一个变量名，旧的对象将被清理。
+</p>
+
+<p>
+不可变性提供了完整性的约束，在复杂程序中传递对象数据时，可以确保数据不会改变。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>可变（mutable）类型</b></th>
+<th scope="col" class="org-left">列表，字典</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>不可变（immutable）类型</b></td>
+<td class="org-left">数字，字符串，元组</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 4: </span>示例</label><pre class="src src-python"><span class="org-variable-name">a</span> = 3
+<span class="org-variable-name">a</span> = a + 2 <span class="org-comment-delimiter"># </span><span class="org-comment">a &#20250;&#25351;&#21521;&#26032;&#30340;&#23545;&#35937;&#65288;&#20540;&#20026; 5 &#30340;&#25972;&#25968;&#23545;&#35937;&#65289;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org224cea1" class="outline-4">
+<h4 id="org224cea1"><span class="section-number-4">2.1.4</span> 自定义类</h4>
+<div class="outline-text-4" id="text-2-1-4">
+<p>
+实际上是定义新的对象类型，用于扩展核心类型。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9c7f22d" class="outline-3">
+<h3 id="org9c7f22d"><span class="section-number-3">2.2</span> 类型列表</h3>
+<div class="outline-text-3" id="text-2-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><b>示例</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">数字</td>
+<td class="org-left"><code>100</code> , <code>99.9</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">字符串</td>
+<td class="org-left"><code>'string'</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">列表</td>
+<td class="org-left"><code>[1, 2, 3]</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">元组</td>
+<td class="org-left"><code>(1, 'a', 2, 3)</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">字典</td>
+<td class="org-left"><code>{'a':1, 'b':2}</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">文件</td>
+<td class="org-left"><code>open('file', 'r')</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">集合</td>
+<td class="org-left"><code>set('abc')</code> , <code>{'a', 'b', 'c'}</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">其他类型</td>
+<td class="org-left"><code>type</code> , <code>None</code> , <code>True</code> , <code>False</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">编程单元类型</td>
+<td class="org-left">函数、模块、类</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">实现相关类型</td>
+<td class="org-left">编译的代码堆栈跟踪</td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="figure">
+<p><img src="../images/python/04.png" alt="04.png" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/python/05.png" alt="05.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org46ac961" class="outline-3">
+<h3 id="org46ac961"><span class="section-number-3">2.3</span> 类型检验</h3>
+<div class="outline-text-3" id="text-2-3">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">if</span> <span class="org-builtin">type</span>(foo) == <span class="org-builtin">type</span>([]):
+<span class="org-keyword">if</span> <span class="org-builtin">type</span>(foo) == <span class="org-builtin">list</span>:
+<span class="org-keyword">if</span> <span class="org-builtin">isinstance</span>(foo, <span class="org-builtin">list</span>):
+</pre>
+</div>
+
+<p>
+类型检验会破坏代码适用于各种类型的灵活性，代码应当不关注和限制特定的类型，应当编写对象接口（支持不同类型的操作），而不是类型。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1779383" class="outline-3">
+<h3 id="org1779383"><span class="section-number-3">2.4</span> 布尔</h3>
+<div class="outline-text-3" id="text-2-4">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-constant">True</span>
+<span class="org-constant">False</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7477701" class="outline-3">
+<h3 id="org7477701"><span class="section-number-3">2.5</span> 数字</h3>
+<div class="outline-text-3" id="text-2-5">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">位数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>int</code></td>
+<td class="org-left">&gt;= 32</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>long</code></td>
+<td class="org-left">无限</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>float</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>complex</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org08486e9" class="outline-3">
+<h3 id="org08486e9"><span class="section-number-3">2.6</span> 序列</h3>
+<div class="outline-text-3" id="text-2-6">
+<p>
+序列类型包含 <code>str</code> <code>unicode</code> <code>list</code> <code>tuple</code> <code>bytearray</code> <code>buffer</code> <code>xrange</code> 。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> 表达式</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>x in s</code></th>
+<th scope="col" class="org-left">检验元素存在</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left"><code>x not in s</code></th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>s + t</code></td>
+<td class="org-left">合并</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>s * &lt;n&gt;</code></td>
+<td class="org-left">重复</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>&lt;n&gt; * s</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>s[i]</code></td>
+<td class="org-left">索引，返回一个元素</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>s[i:j:k]</code></td>
+<td class="org-left">切片，返回子序列</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>s[:]</code></td>
+<td class="org-left">复制整个序列</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<pre class="src src-python">s[&lt;l&gt;:&lt;r&gt;:&lt;step&gt;]
+<span class="org-comment-delimiter"># </span><span class="org-comment">&lt;l&gt; &#40664;&#35748;&#20026; 0</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&lt;r&gt; &#40664;&#35748;&#20026; len(s)</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">&lt;step&gt; &#40664;&#35748;&#20026; 1&#65292;&#20026;&#36127;&#26102;&#34920;&#31034;&#20498;&#24207;&#27493;&#36827;&#65292;&#22914; s[::-1] &#34920;&#31034;&#23558;&#23383;&#31526;&#20018;&#20498;&#24207;</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/python/03.png" alt="03.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgad5962c" class="outline-3">
+<h3 id="orgad5962c"><span class="section-number-3">2.7</span> 字符串</h3>
+<div class="outline-text-3" id="text-2-7">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">s</span> = <span class="org-string">"foo"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#21487;&#20351;&#29992;&#21333;&#24341;&#21495;&#25110;&#21452;&#24341;&#21495;</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#36830;&#25509;</span>
+<span class="org-variable-name">s</span> = <span class="org-string">"foo"</span> + <span class="org-string">"bar"</span>
+<span class="org-variable-name">s</span> = <span class="org-string">"foo"</span> <span class="org-string">"bar"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#21487;&#30465;&#30053; +</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#37325;&#22797;</span>
+<span class="org-variable-name">s</span> = <span class="org-string">"foo"</span> * 3
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#32034;&#24341;</span>
+<span class="org-variable-name">c</span> = s[1]
+<span class="org-variable-name">s</span>[2] = <span class="org-string">"x"</span> <span class="org-comment-delimiter"># </span><span class="org-comment">TypeError&#65292;&#23383;&#31526;&#20018;&#26159;&#19981;&#21487;&#21464;&#31867;&#22411;</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#27979;&#35797;&#21253;&#21547;&#23383;&#31526;</span>
+<span class="org-keyword">if</span> <span class="org-string">"a"</span> <span class="org-keyword">in</span> <span class="org-string">"foo"</span>:
+<span class="org-keyword">if</span> <span class="org-string">"foo"</span>.find(<span class="org-string">"a"</span>) != -1:
+</pre>
+</div>
+
+<p>
+因为字符串是不可变类型，大量修改会影响性能，可以先将字符串转换为可变类型，修改之后再转换为字符串。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">l</span> = <span class="org-builtin">list</span>(s)
+<span class="org-variable-name">l</span>[x] = ...
+<span class="org-variable-name">s</span> = <span class="org-string">''</span>.join(l)
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org696b0e7" class="outline-4">
+<h4 id="org696b0e7"><span class="section-number-4">2.7.1</span> 转义字符</h4>
+<div class="outline-text-4" id="text-2-7-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><code>\'</code></th>
+<th scope="col" class="org-left">单引号</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><code>\"</code></th>
+<th scope="col" class="org-left">双引号</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><code>\\</code></th>
+<th scope="col" class="org-left">反斜杠</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>ASCII 特殊字符</b></td>
+<td class="org-left"><code>\r</code></td>
+<td class="org-left">Carriage return (CR)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>\n</code></td>
+<td class="org-left">Linefeed (LF)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>\t</code></td>
+<td class="org-left">Horizontal tab (TAB)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>\a</code></td>
+<td class="org-left">Bell (BEL)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>\b</code></td>
+<td class="org-left">Backspace (BS)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>\f</code></td>
+<td class="org-left">Formfeed (FF)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>\v</code></td>
+<td class="org-left">Vertical tab (VT)</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>Unicode 字符</b></td>
+<td class="org-left"><code>\N&lt;name&gt;</code></td>
+<td class="org-left">字符名称</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>\u&lt;xxxx&gt;</code></td>
+<td class="org-left">字符 16 位十六进制值</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>\U&lt;xxxxxxxx&gt;</code></td>
+<td class="org-left">字符 32 位十六进制值</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>进制</b></td>
+<td class="org-left"><code>\o&lt;value&gt;</code></td>
+<td class="org-left">字符八进制值</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>\h&lt;value&gt;</code></td>
+<td class="org-left">字符示例进制值</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgf21ef02" class="outline-4">
+<h4 id="orgf21ef02"><span class="section-number-4">2.7.2</span> 格式</h4>
+<div class="outline-text-4" id="text-2-7-2">
+<div class="org-src-container">
+<pre class="src src-python">r<span class="org-doc">""</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Raw &#23383;&#31526;&#20018;&#65292;&#20851;&#38381;&#36716;&#20041;&#26426;&#21046;&#65292;&#29992;&#20110;&#36335;&#24452;&#25110;&#27491;&#21017;&#34920;&#36798;&#24335;</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">r"C:\dir\file.txt"</span>
+b<span class="org-doc">""</span> <span class="org-comment-delimiter"># </span><span class="org-comment">&#23383;&#33410;&#23383;&#31526;&#20018;</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">b"sp\x01am"</span>
+u<span class="org-string">""</span> <span class="org-comment-delimiter"># </span><span class="org-comment">Unicode &#23383;&#31526;&#20018;</span>
+        <span class="org-comment-delimiter"># </span><span class="org-comment">u"\u0020spam"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga926141" class="outline-4">
+<h4 id="orga926141"><span class="section-number-4">2.7.3</span> 块字符串</h4>
+<div class="outline-text-4" id="text-2-7-3">
+<p>
+三个连续的引号（单或双），可以包围多行字符串。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 5: </span>示例</label><pre class="src src-python"><span class="org-variable-name">var</span> = <span class="org-string">"""line1</span>
+<span class="org-string">line2</span>
+<span class="org-string">line3"""</span>
+
+<span class="org-keyword">print</span> <span class="org-string">"""line1</span>
+<span class="org-string">line2</span>
+<span class="org-string">line3"""</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd7169a5" class="outline-3">
+<h3 id="orgd7169a5"><span class="section-number-3">2.8</span> 列表</h3>
+<div class="outline-text-3" id="text-2-8">
+<p>
+列表元素通过偏移存取，元素有确定的顺序。列表实际存储的是对其他对象的引用。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">l</span> = [1, 2, 3]
+<span class="org-variable-name">l</span> = <span class="org-builtin">list</span>(<span class="org-builtin">range</span>(1, 4))
+<span class="org-variable-name">l</span> = [1, <span class="org-string">"foo"</span>, <span class="org-constant">True</span>, 0.5] <span class="org-comment-delimiter"># </span><span class="org-comment">&#20803;&#32032;&#21487;&#20197;&#26159;&#20219;&#24847;&#31867;&#22411;</span>
+
+<span class="org-variable-name">l</span>[0] = 4
+<span class="org-variable-name">a</span> = l[-1] <span class="org-comment-delimiter"># </span><span class="org-comment">&#26368;&#21518;&#19968;&#20010;&#20803;&#32032;</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#28155;&#21152;&#65292;&#21019;&#24314;&#26032;&#30340;&#21015;&#34920;&#23545;&#35937;</span>
+<span class="org-variable-name">l</span> = l + [4] <span class="org-comment-delimiter"># </span><span class="org-comment">[1, 2, 3, 4]</span>
+<span class="org-variable-name">l</span> = l + 4   <span class="org-comment-delimiter"># </span><span class="org-comment">TypeError</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#28155;&#21152;&#65292;&#21407;&#22788;&#20462;&#25913;</span>
+l.append(3)   <span class="org-comment-delimiter"># </span><span class="org-comment">[0, 1, 2, 3]</span>
+l.append([3]) <span class="org-comment-delimiter"># </span><span class="org-comment">[0, 1, 2, [3]]</span>
+l.extend([3]) <span class="org-comment-delimiter"># </span><span class="org-comment">[0, 1, 2, 3]</span>
+l.extend(3)   <span class="org-comment-delimiter"># </span><span class="org-comment">TypeError</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#31227;&#38500;</span>
+<span class="org-keyword">del</span> l[1]
+<span class="org-keyword">del</span> l[1:2]
+<span class="org-variable-name">l</span>[1:2] = []
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#35299;&#21253;&#65292;&#21464;&#37327;&#20010;&#25968;&#21644;&#20803;&#32032;&#20010;&#25968;&#24517;&#39035;&#30456;&#31561;</span>
+<span class="org-variable-name">a</span>, <span class="org-variable-name">b</span>, <span class="org-variable-name">c</span> = l
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#31561;&#20215;&#20110;</span>
+<span class="org-variable-name">a</span> = l[0]
+<span class="org-variable-name">b</span> = l[1]
+<span class="org-variable-name">c</span> = l[2]
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org313e045" class="outline-4">
+<h4 id="org313e045"><span class="section-number-4">2.8.1</span> 列表解析</h4>
+<div class="outline-text-4" id="text-2-8-1">
+<ul class="org-ul">
+<li>List comprehension</li>
+<li>通过对序列的每一项应用一个表达式，以构建一个新的列表。</li>
+<li>可以替代 <code>for</code> 循环，且效率更高。</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">lst</span> = [&lt;expr&gt; <span class="org-keyword">for</span> &lt;elem&gt; <span class="org-keyword">in</span> &lt;seq&gt; <span class="org-keyword">if</span> &lt;cond&gt;]
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 6: </span>示例：对元素进行计算</label><pre class="src src-python"><span class="org-variable-name">doubles</span> = [char * 2 <span class="org-keyword">for</span> char <span class="org-keyword">in</span> string]
+<span class="org-variable-name">squares</span> = [x ** 2 <span class="org-keyword">for</span> x <span class="org-keyword">in</span> lst]
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 7: </span>示例：从多维列表的每一行中取出固定的列</label><pre class="src src-python"><span class="org-variable-name">col</span> = [row[n] <span class="org-keyword">for</span> row <span class="org-keyword">in</span> lst]
+<span class="org-variable-name">col</span> = [row[1] <span class="org-keyword">for</span> row <span class="org-keyword">in</span> lst <span class="org-keyword">if</span> row[1] % 2 == 0]
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 8: </span>示例：嵌套列表</label><pre class="src src-python"><span class="org-variable-name">lst</span> = [<span class="org-string">' '</span>.join([a, b]) <span class="org-keyword">for</span> a <span class="org-keyword">in</span> [<span class="org-string">'1'</span>, <span class="org-string">'2'</span>, <span class="org-string">'3'</span>]
+                                                <span class="org-keyword">for</span> b <span class="org-keyword">in</span> [<span class="org-string">'apple'</span>, <span class="org-string">'banana'</span>]]
+<span class="org-comment-delimiter"># </span><span class="org-comment">['1 apple', '1 banana', '2 apple', '2 banana', '3 apple', '3 banana']</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc5fe12c" class="outline-3">
+<h3 id="orgc5fe12c"><span class="section-number-3">2.9</span> 字典</h3>
+<div class="outline-text-3" id="text-2-9">
+<p>
+字典由哈希表实现，元素没有确定的顺序，实际存储的是对其他对象的引用。键必须是不可变对象，如字符串。。
+</p>
+
+<p>
+字典可以取代搜索数据结构。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">dct</span> = {<span class="org-string">'name'</span>:<span class="org-string">'test'</span>, <span class="org-string">'type'</span>:<span class="org-string">'file'</span>, <span class="org-string">'size'</span>:99}
+
+<span class="org-variable-name">a</span> = dct[<span class="org-string">'name'</span>]
+<span class="org-variable-name">dct</span>[<span class="org-string">'type'</span>] = <span class="org-string">'link'</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#36941;&#21382;</span>
+<span class="org-keyword">for</span> key, value <span class="org-keyword">in</span> dct.items():
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#27979;&#35797;&#38190;&#20540;&#23384;&#22312;</span>
+<span class="org-keyword">if</span> key <span class="org-keyword">in</span> dct:
+<span class="org-keyword">if</span> dct.has_key(key): <span class="org-comment-delimiter"># </span><span class="org-comment">&#36807;&#26102;</span>
+<span class="org-variable-name">value</span> = dct.get(key, <span class="org-string">'default'</span>)
+<span class="org-variable-name">value</span> = dct[key] <span class="org-keyword">if</span> key <span class="org-keyword">in</span> dct <span class="org-keyword">else</span> <span class="org-string">'default'</span>
+<span class="org-keyword">try</span>:
+        <span class="org-variable-name">value</span> = dct[key]
+<span class="org-keyword">except</span> <span class="org-type">KeyError</span>:
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#23383;&#20856;&#35299;&#26512;</span>
+<span class="org-variable-name">dct</span> = {x: x*2 <span class="org-keyword">for</span> x <span class="org-keyword">in</span> <span class="org-builtin">range</span>(10)}
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#25353;&#29031;&#30830;&#23450;&#30340;&#39034;&#24207;&#35835;&#21462;&#23383;&#20856;&#20803;&#32032;&#65292;&#38656;&#35201;&#25226;&#38190;&#30340;&#21015;&#34920;&#25490;&#24207;&#21518;&#24490;&#29615;&#35835;&#21462;</span>
+<span class="org-variable-name">keys</span> = <span class="org-builtin">list</span>(<span class="org-builtin">dict</span>.keys())
+keys.sort()
+<span class="org-keyword">for</span> key <span class="org-keyword">in</span> keys:
+        <span class="org-keyword">print</span> <span class="org-builtin">dict</span>[key]
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">matrix</span> = {}
+<span class="org-variable-name">matrix</span>[(1, 1, 1)] = 1 <span class="org-comment-delimiter"># </span><span class="org-comment">{(1, 1, 1): 1}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6dc8c44" class="outline-3">
+<h3 id="org6dc8c44"><span class="section-number-3">2.10</span> 列表 vs 字典</h3>
+<div class="outline-text-3" id="text-2-10">
+<ul class="org-ul">
+<li>列表不允许偏移量超过末尾，引用前必须分配足够大的空间。</li>
+<li>字典以数字（代表偏移量）作为键，不需要预先分配空间。</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">lst</span> = []
+<span class="org-variable-name">lst</span>[99] = <span class="org-string">'value'</span> <span class="org-comment-delimiter"># </span><span class="org-comment">IndexError</span>
+
+<span class="org-variable-name">dct</span> = {}
+<span class="org-variable-name">dct</span>[99] = <span class="org-string">'value'</span> <span class="org-comment-delimiter"># </span><span class="org-comment">{99: 'value'}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1581530" class="outline-3">
+<h3 id="org1581530"><span class="section-number-3">2.11</span> 元组</h3>
+<div class="outline-text-3" id="text-2-11">
+<p>
+元组（tuple）除值和长度不可变外，与列表类似，如可以包含复合对象、偏移量读取、切片。
+</p>
+
+<p>
+元组不支持方法调用，只支持操作符 <code>+</code> <code>*</code> 等。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 9: </span>构造方式</label><pre class="src src-python"><span class="org-variable-name">tpl</span> = (1,2,3)
+<span class="org-variable-name">tpl</span> = (1,) <span class="org-comment-delimiter"># </span><span class="org-comment">&#21482;&#26377;&#19968;&#20010;&#20803;&#32032;&#26102;&#65292;&#38656;&#35201;&#21152; , &#20197;&#21306;&#20998;&#20803;&#32452;&#21644;&#25324;&#21495;&#20013;&#30340;&#19968;&#20010;&#23545;&#35937;</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 10: </span>值和长度不可变</label><pre class="src src-python"><span class="org-variable-name">tpl</span> = (1,2)
+<span class="org-variable-name">tpl</span>[0] = 2    <span class="org-comment-delimiter"># </span><span class="org-comment">TypeError</span>
+tpl.append(1) <span class="org-comment-delimiter"># </span><span class="org-comment">AttributeError</span>
+</pre>
+</div>
+
+<p>
+元组排序需要先转换为列表，或者使用 <code>sorted()</code> 内置函数。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org17a03de" class="outline-3">
+<h3 id="org17a03de"><span class="section-number-3">2.12</span> 集合</h3>
+<div class="outline-text-3" id="text-2-12">
+<ul class="org-ul">
+<li>集合无重复元素，可用于列表去重。</li>
+<li>集合中的元素没有确定顺序。</li>
+</ul>
+</div>
+
+<div id="outline-container-orga84256c" class="outline-4">
+<h4 id="orga84256c"><span class="section-number-4">2.12.1</span> 语法</h4>
+<div class="outline-text-4" id="text-2-12-1">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">foo</span> = {1, 2}         <span class="org-comment-delimiter"># </span><span class="org-comment">&#30452;&#25509;&#36171;&#20540;</span>
+<span class="org-variable-name">foo</span> = <span class="org-builtin">set</span>()          <span class="org-comment-delimiter"># </span><span class="org-comment">&#21021;&#22987;&#21270;</span>
+<span class="org-variable-name">foo</span> = <span class="org-builtin">set</span>([1, 2, 1]) <span class="org-comment-delimiter"># </span><span class="org-comment">&#20174;&#21015;&#34920;&#21021;&#22987;&#21270;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org04f0375" class="outline-4">
+<h4 id="org04f0375"><span class="section-number-4">2.12.2</span> 运算</h4>
+<div class="outline-text-4" id="text-2-12-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>&amp;</code></th>
+<th scope="col" class="org-left">交集</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>&#124;</code></td>
+<td class="org-left">并集</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>-</code></td>
+<td class="org-left">差集</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org2aa9889" class="outline-4">
+<h4 id="org2aa9889"><span class="section-number-4">2.12.3</span> 示例</h4>
+<div class="outline-text-4" id="text-2-12-3">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 11: </span>列表去重</label><pre class="src src-python"><span class="org-variable-name">unique</span> = <span class="org-builtin">list</span>(<span class="org-builtin">set</span>([2, 1, 2]))
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org91185c0" class="outline-2">
+<h2 id="org91185c0"><span class="section-number-2">3</span> 变量</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+变量名大小写敏感。
+</p>
+</div>
+
+<div id="outline-container-org5853f71" class="outline-3">
+<h3 id="org5853f71"><span class="section-number-3">3.1</span> 对象</h3>
+<div class="outline-text-3" id="text-3-1">
+<ul class="org-ul">
+<li>变量和对象保存在内存中的不同部分，变量是指向对象内存空间的指针。</li>
+<li>类型的概念存在于对象中，变量本身没有类型信息和约束，变量可以引用任何类型的对象。</li>
+<li>变量在表达式中会被它引用的对象代替。</li>
+</ul>
+
+<p>
+变量初始化，如 <code>a = 3</code> 的实际过程：
+</p>
+
+<ol class="org-ol">
+<li>创建一个值为 3 的 <code>int</code> 对象。</li>
+<li>创建一个变量 <code>a</code> （如果不存在）。</li>
+<li>将变量与对象连接。</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org94d0c23" class="outline-3">
+<h3 id="org94d0c23"><span class="section-number-3">3.2</span> 引用传递</h3>
+<div class="outline-text-3" id="text-3-2">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 12: </span>两个变量指向同一个对象的内存空间</label><pre class="src src-python"><span class="org-variable-name">a</span> = 3
+<span class="org-variable-name">b</span> = a
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/python/01.png" alt="01.png" />
+</p>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 13: </span>引用传递后重新赋值，变量指向不同的对象</label><pre class="src src-python"><span class="org-variable-name">a</span> = 3
+<span class="org-variable-name">b</span> = a
+<span class="org-variable-name">a</span> = <span class="org-string">'spam'</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/python/02.png" alt="02.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf31c26e" class="outline-3">
+<h3 id="orgf31c26e"><span class="section-number-3">3.3</span> 原处修改</h3>
+<div class="outline-text-3" id="text-3-3">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 14: </span>修改可变类型的对象，变量之间会相互影响</label><pre class="src src-python"><span class="org-variable-name">l1</span> = [1, 2, 3]
+<span class="org-variable-name">l2</span> = l1
+<span class="org-variable-name">l1</span>[0] = 4 <span class="org-comment-delimiter"># </span><span class="org-comment">&#27492;&#26102; l2 = [4, 2, 3]</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6ad3654" class="outline-3">
+<h3 id="org6ad3654"><span class="section-number-3">3.4</span> 变量复制</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+避免变量相互影响的复制方式。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 15: </span>可变非序列类型，使用 <code>copy</code> 模块</label><pre class="src src-python"><span class="org-variable-name">y</span> = copy.copy(x)
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 16: </span>可变序列类型，使用分片赋值</label><pre class="src src-python"><span class="org-variable-name">l2</span> = l1[:]
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org163a11b" class="outline-3">
+<h3 id="org163a11b"><span class="section-number-3">3.5</span> 相等测试</h3>
+<div class="outline-text-3" id="text-3-5">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">X</span> = [1, 2, 3]
+<span class="org-variable-name">Y</span> = [1, 2, 3]
+X == Y <span class="org-comment-delimiter"># </span><span class="org-comment">True&#65292;&#26816;&#26597;&#20540;&#30340;&#30456;&#31561;&#24615; </span>
+X <span class="org-keyword">is</span> Y <span class="org-comment-delimiter"># </span><span class="org-comment">False&#65292;&#26816;&#26597;&#23545;&#35937;&#30340;&#21516;&#19968;&#24615;</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 17: </span>整数和字符串对象有缓存和复用</label><pre class="src src-python"><span class="org-variable-name">X</span> = 42
+<span class="org-variable-name">Y</span> = 42
+X == Y <span class="org-comment-delimiter"># </span><span class="org-comment">True</span>
+X <span class="org-keyword">is</span> Y <span class="org-comment-delimiter"># </span><span class="org-comment">True</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb3392e8" class="outline-3">
+<h3 id="orgb3392e8"><span class="section-number-3">3.6</span> 垃圾回收</h3>
+<div class="outline-text-3" id="text-3-6">
+<p>
+脚本中不需要考虑释放内存空间，当对象的引用数降为零，内存空间就会自动被回收。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 18: </span>查询对象被引用的次数</label><pre class="src src-python">sys.getrefcount()
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf8b19dd" class="outline-2">
+<h2 id="orgf8b19dd"><span class="section-number-2">4</span> 运算符</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-orge250ff9" class="outline-3">
+<h3 id="orge250ff9"><span class="section-number-3">4.1</span> 赋值</h3>
+<div class="outline-text-3" id="text-4-1">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 19: </span>多个变量赋值</label><pre class="src src-python"><span class="org-variable-name">a</span>, <span class="org-variable-name">b</span> = <span class="org-builtin">int</span>(<span class="org-builtin">input</span>()), <span class="org-builtin">int</span>(<span class="org-builtin">input</span>())
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga86b6a2" class="outline-3">
+<h3 id="orga86b6a2"><span class="section-number-3">4.2</span> 数学</h3>
+<div class="outline-text-3" id="text-4-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>/</code></th>
+<th scope="col" class="org-left">浮点数除法</th>
+<th scope="col" class="org-left">即使操作数都为整数，非整除结果也为浮点数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>//</code></td>
+<td class="org-left">整数除法</td>
+<td class="org-left">Python 2 需要 <code>from __future__ import division</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>**</code></td>
+<td class="org-left">乘方</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org2f622f7" class="outline-3">
+<h3 id="org2f622f7"><span class="section-number-3">4.3</span> 比较</h3>
+<div class="outline-text-3" id="text-4-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>==</code></th>
+<th scope="col" class="org-left">两个变量指向的对象的只相等时返回 <code>True</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>is</code></td>
+<td class="org-left">两个变量指向同一个对象时返回 <code>True</code></td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">a</span> = [1, 2, 3]
+<span class="org-variable-name">b</span> = a
+b <span class="org-keyword">is</span> a <span class="org-comment-delimiter"># </span><span class="org-comment">True</span>
+b == a <span class="org-comment-delimiter"># </span><span class="org-comment">True</span>
+
+<span class="org-variable-name">a</span> = [1, 2, 3]
+<span class="org-variable-name">b</span> = a[:]
+b <span class="org-keyword">is</span> a <span class="org-comment-delimiter"># </span><span class="org-comment">False</span>
+b == a <span class="org-comment-delimiter"># </span><span class="org-comment">True</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcdbdb40" class="outline-3">
+<h3 id="orgcdbdb40"><span class="section-number-3">4.4</span> 逻辑</h3>
+<div class="outline-text-3" id="text-4-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> 逻辑表达式的值</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">表达式的值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>and</code></td>
+<td class="org-left">左值为假</td>
+<td class="org-left">左值</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">左值为真</td>
+<td class="org-left">右值</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>or</code></td>
+<td class="org-left">左值为假</td>
+<td class="org-left">右值</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">左值为真</td>
+<td class="org-left">左值</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 20: </span>示例</label><pre class="src src-python"><span class="org-keyword">print</span> <span class="org-constant">True</span>  <span class="org-keyword">and</span> 1 <span class="org-comment-delimiter"># </span><span class="org-comment">1</span>
+<span class="org-keyword">print</span> <span class="org-constant">True</span>  <span class="org-keyword">or</span>  1 <span class="org-comment-delimiter"># </span><span class="org-comment">True</span>
+<span class="org-keyword">print</span> <span class="org-constant">False</span> <span class="org-keyword">and</span> 1 <span class="org-comment-delimiter"># </span><span class="org-comment">False</span>
+<span class="org-keyword">print</span> <span class="org-constant">False</span> <span class="org-keyword">or</span>  1 <span class="org-comment-delimiter"># </span><span class="org-comment">1</span>
+
+<span class="org-keyword">print</span> 1 <span class="org-keyword">and</span> <span class="org-constant">True</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">True</span>
+<span class="org-keyword">print</span> 1 <span class="org-keyword">or</span>  <span class="org-constant">True</span>  <span class="org-comment-delimiter"># </span><span class="org-comment">1</span>
+<span class="org-keyword">print</span> 1 <span class="org-keyword">and</span> <span class="org-constant">False</span> <span class="org-comment-delimiter"># </span><span class="org-comment">False</span>
+<span class="org-keyword">print</span> 1 <span class="org-keyword">or</span>  <span class="org-constant">False</span> <span class="org-comment-delimiter"># </span><span class="org-comment">1</span>
+
+<span class="org-keyword">print</span> 0     <span class="org-keyword">and</span> <span class="org-constant">False</span> <span class="org-comment-delimiter"># </span><span class="org-comment">0</span>
+<span class="org-keyword">print</span> 0     <span class="org-keyword">or</span>  <span class="org-constant">False</span> <span class="org-comment-delimiter"># </span><span class="org-comment">False</span>
+<span class="org-keyword">print</span> <span class="org-constant">False</span> <span class="org-keyword">and</span> 0     <span class="org-comment-delimiter"># </span><span class="org-comment">False</span>
+<span class="org-keyword">print</span> <span class="org-constant">False</span> <span class="org-keyword">or</span>  0     <span class="org-comment-delimiter"># </span><span class="org-comment">0</span>
+
+<span class="org-keyword">print</span> 0 <span class="org-keyword">and</span> 1 <span class="org-comment-delimiter"># </span><span class="org-comment">0</span>
+<span class="org-keyword">print</span> 0 <span class="org-keyword">or</span>  1 <span class="org-comment-delimiter"># </span><span class="org-comment">1</span>
+<span class="org-keyword">print</span> 1 <span class="org-keyword">and</span> 0 <span class="org-comment-delimiter"># </span><span class="org-comment">0</span>
+<span class="org-keyword">print</span> 1 <span class="org-keyword">or</span>  0 <span class="org-comment-delimiter"># </span><span class="org-comment">1</span>
+
+<span class="org-keyword">print</span> 1 <span class="org-keyword">and</span> 2 <span class="org-comment-delimiter"># </span><span class="org-comment">2</span>
+<span class="org-keyword">print</span> 1 <span class="org-keyword">or</span>  2 <span class="org-comment-delimiter"># </span><span class="org-comment">1</span>
+<span class="org-keyword">print</span> 2 <span class="org-keyword">and</span> 1 <span class="org-comment-delimiter"># </span><span class="org-comment">1</span>
+<span class="org-keyword">print</span> 2 <span class="org-keyword">or</span>  1 <span class="org-comment-delimiter"># </span><span class="org-comment">2</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5a5e3c2" class="outline-3">
+<h3 id="org5a5e3c2"><span class="section-number-3">4.5</span> 三元</h3>
+<div class="outline-text-3" id="text-4-5">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-variable-name">a</span> = 1 <span class="org-keyword">if</span> b == 3 <span class="org-keyword">else</span> 2
+<span class="org-variable-name">a</span> = (2, 1)[b == 3]
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb4707af" class="outline-2">
+<h2 id="orgb4707af"><span class="section-number-2">5</span> 语句</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-org169800b" class="outline-3">
+<h3 id="org169800b"><span class="section-number-3">5.1</span> <code>assert</code></h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+声明某个表达式为真。表达式非真时，会抛出 <code>AssertionError</code> 。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 21: </span>示例</label><pre class="src src-python"><span class="org-keyword">assert</span> <span class="org-builtin">len</span>(lst) &gt;= 1
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0824151" class="outline-3">
+<h3 id="org0824151"><span class="section-number-3">5.2</span> <code>break</code></h3>
+</div>
+<div id="outline-container-orga6844dd" class="outline-3">
+<h3 id="orga6844dd"><span class="section-number-3">5.3</span> <code>continue</code></h3>
+</div>
+<div id="outline-container-org1fff1a8" class="outline-3">
+<h3 id="org1fff1a8"><span class="section-number-3">5.4</span> <code>del</code></h3>
+<div class="outline-text-3" id="text-5-4">
+<ul class="org-ul">
+<li>删除一个变量，或列表中的一部分。</li>
+<li>引用已删除的变量名会导致错误。</li>
+</ul>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 22: </span>示例</label><pre class="src src-python"><span class="org-variable-name">a</span> = [1,2,3,4,5]
+<span class="org-keyword">del</span> a[0]   <span class="org-comment-delimiter"># </span><span class="org-comment">[2,3,4,5] </span>
+<span class="org-keyword">del</span> a[1:2] <span class="org-comment-delimiter"># </span><span class="org-comment">[2,4,5]</span>
+<span class="org-keyword">del</span> a      <span class="org-comment-delimiter"># </span><span class="org-comment">print(a): NameError</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org91e8eb3" class="outline-3">
+<h3 id="org91e8eb3"><span class="section-number-3">5.5</span> <code>eval</code></h3>
+<div class="outline-text-3" id="text-5-5">
+<p>
+计算存储在字符串中的 Python 表达式。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 23: </span>示例</label><pre class="src src-python"><span class="org-builtin">eval</span>(<span class="org-string">'2*3'</span>)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd14f582" class="outline-3">
+<h3 id="orgd14f582"><span class="section-number-3">5.6</span> <code>exec</code></h3>
+<div class="outline-text-3" id="text-5-6">
+<p>
+执行字符串或文件中的 Python 语句。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 24: </span>示例</label><pre class="src src-python"><span class="org-keyword">exec</span> <span class="org-string">'print "Hello world"'</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3d4dab6" class="outline-3">
+<h3 id="org3d4dab6"><span class="section-number-3">5.7</span> <code>for</code></h3>
+<div class="outline-text-3" id="text-5-7">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">for</span> &lt;var&gt; <span class="org-keyword">in</span> &lt;seq&gt;:
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 25: </span>Python 不支持 C 风格的 <code>for</code> ，替代实现方式：</label><pre class="src src-python"><span class="org-comment-delimiter"># </span><span class="org-comment">&#30001; while &#23454;&#29616;</span>
+<span class="org-variable-name">i</span> = 0
+<span class="org-keyword">while</span> i &lt; 100:
+        ...
+        <span class="org-variable-name">i</span> += 1
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#30001; range() &#23454;&#29616;</span>
+<span class="org-keyword">for</span> _ <span class="org-keyword">in</span> <span class="org-builtin">range</span>(5):
+        ...
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org898b7a2" class="outline-3">
+<h3 id="org898b7a2"><span class="section-number-3">5.8</span> <code>if</code></h3>
+<div class="outline-text-3" id="text-5-8">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">if</span> &lt;expr&gt;:
+        ...
+<span class="org-keyword">elif</span> &lt;expr&gt;:
+        ...
+<span class="org-keyword">else</span>:
+        ...
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4cf9669" class="outline-3">
+<h3 id="org4cf9669"><span class="section-number-3">5.9</span> <code>raise</code></h3>
+<div class="outline-text-3" id="text-5-9">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">raise</span> &lt;<span class="org-type">Exception</span>&gt;()
+<span class="org-keyword">raise</span> &lt;Error&gt;()
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0c74ec4" class="outline-3">
+<h3 id="org0c74ec4"><span class="section-number-3">5.10</span> <code>try</code></h3>
+<div class="outline-text-3" id="text-5-10">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">try</span>:
+        ...
+<span class="org-keyword">except</span> FooError:
+        ...
+<span class="org-keyword">except</span>: <span class="org-comment-delimiter"># </span><span class="org-comment">&#25429;&#33719;&#25152;&#26377;&#20854;&#20182;&#38169;&#35823;</span>
+        ...
+<span class="org-keyword">finally</span>: <span class="org-comment-delimiter"># </span><span class="org-comment">&#35302;&#21457;&#24322;&#24120;&#20043;&#21518;&#65292;&#31243;&#24207;&#36864;&#20986;&#20043;&#21069;&#65292;&#36827;&#34892;&#25910;&#23614;&#25805;&#20316;&#65292;&#22914;&#20851;&#38381;&#25991;&#20214;</span>
+        ...
+</pre>
+</div>
+
+<p>
+如果错误或异常没有被处理，默认的处理器会被调用，中止运行并打印消息。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga307003" class="outline-3">
+<h3 id="orga307003"><span class="section-number-3">5.11</span> <code>with</code></h3>
+<div class="outline-text-3" id="text-5-11">
+<p>
+用于确保嵌套的代码执行完成后会自动关闭文件，即使发生异常。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">with</span> <span class="org-builtin">open</span>(<span class="org-string">'output.txt'</span>, <span class="org-string">'w'</span>) <span class="org-keyword">as</span> f:
+        f.write(<span class="org-string">'Foo'</span>)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfa405f5" class="outline-2">
+<h2 id="orgfa405f5"><span class="section-number-2">6</span> 函数</h2>
+<div class="outline-text-2" id="text-6">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">def</span> &lt;func&gt;(&lt;arg&gt;=&lt;default&gt;, ...):
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org5860b5b" class="outline-3">
+<h3 id="org5860b5b"><span class="section-number-3">6.1</span> 参数</h3>
+<div class="outline-text-3" id="text-6-1">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 26: </span>不定数量参数</label><pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">function</span>(*args): <span class="org-comment-delimiter"># </span><span class="org-comment">*args  &#23558;&#21442;&#25968;&#23384;&#20648;&#22312;&#20803;&#32452;&#20013;</span>
+                                         <span class="org-comment-delimiter"># </span><span class="org-comment">**args &#23558;&#21442;&#25968;&#23384;&#20648;&#22312;&#23383;&#20856;&#20013;</span>
+
+        <span class="org-variable-name">a</span>, <span class="org-variable-name">b</span> = args    <span class="org-comment-delimiter"># </span><span class="org-comment">&#21442;&#25968;&#35299;&#21253;&#65292;&#38656;&#35201;&#30830;&#23450;&#21442;&#25968;&#20010;&#25968;</span>
+        <span class="org-keyword">for</span> i <span class="org-keyword">in</span> args: <span class="org-comment-delimiter"># </span><span class="org-comment">&#21442;&#25968;&#36941;&#21382;</span>
+                ...
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1d051d7" class="outline-3">
+<h3 id="org1d051d7"><span class="section-number-3">6.2</span> 返回值</h3>
+<div class="outline-text-3" id="text-6-2">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 27: </span>多个返回值</label><pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">foo</span>():
+        <span class="org-keyword">return</span> 1, 2, 3
+
+<span class="org-variable-name">a</span>, <span class="org-variable-name">b</span>, <span class="org-variable-name">c</span> = foo()
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4ad9551" class="outline-3">
+<h3 id="org4ad9551"><span class="section-number-3">6.3</span> <code>lambda</code></h3>
+<div class="outline-text-3" id="text-6-3">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">lambda</span> &lt;arg&gt;: &lt;expr&gt;
+</pre>
+</div>
+
+<p>
+<code>lambda</code> 语句创建函数对象， <code>:</code> 后的表达式为函数体。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 28: </span>示例</label><pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">repeat</span>(n)
+        <span class="org-keyword">return</span> <span class="org-keyword">lambda</span> s: s*n
+
+<span class="org-variable-name">twice</span> = repeat(2)
+
+<span class="org-keyword">print</span> twice(<span class="org-string">'x'</span>)
+<span class="org-comment-delimiter">## </span><span class="org-comment">xx</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7dc47cc" class="outline-3">
+<h3 id="org7dc47cc"><span class="section-number-3">6.4</span> <code>yield</code></h3>
+</div>
+</div>
+<div id="outline-container-org9f71b19" class="outline-2">
+<h2 id="org9f71b19"><span class="section-number-2">7</span> OO</h2>
+<div class="outline-text-2" id="text-7">
+</div><div id="outline-container-org785ddf9" class="outline-3">
+<h3 id="org785ddf9"><span class="section-number-3">7.1</span> 类</h3>
+<div class="outline-text-3" id="text-7-1">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">class</span> &lt;Class&gt;(&lt;Parent&gt;, ...):
+        ...
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4fffa2c" class="outline-3">
+<h3 id="org4fffa2c"><span class="section-number-3">7.2</span> 成员</h3>
+<div class="outline-text-3" id="text-7-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 3:</span> 命名规则</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">类变量</th>
+<th scope="col" class="org-left"><code>&lt;Class&gt;.&lt;var&gt;</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">对象变量</td>
+<td class="org-left"><code>self.&lt;var&gt;</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Public</td>
+<td class="org-left"><code>&lt;name&gt;</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Protected</td>
+<td class="org-left"><code>_&lt;name&gt;</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Private</td>
+<td class="org-left"><code>__&lt;name&gt;</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orge22871d" class="outline-3">
+<h3 id="orge22871d"><span class="section-number-3">7.3</span> 对象</h3>
+<div class="outline-text-3" id="text-7-3">
+<p>
+对象的头部信息：
+</p>
+
+<ul class="org-ul">
+<li>类型标示符</li>
+<li>引用计数器</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org3c049bf" class="outline-3">
+<h3 id="org3c049bf"><span class="section-number-3">7.4</span> <code>self</code></h3>
+<div class="outline-text-3" id="text-7-4">
+<p>
+<code>self</code> 用于区分类变量和普通变量。
+</p>
+
+<p>
+调用类方法 <code>obj.method(arg, ...)</code> 时，Python 会将其转换为 <code>Class.method(obj, arg, ...)</code> ，因此类成员函数必须至少定义一个参数 <code>self</code> 。
+</p>
+
+<p>
+子类调用父类的方法需要显式传递 <code>self</code> ： <code>Parent.method(self, ...)</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb951bcd" class="outline-3">
+<h3 id="orgb951bcd"><span class="section-number-3">7.5</span> <code>super()</code></h3>
+<div class="outline-text-3" id="text-7-5">
+<p>
+显式调用基类的函数。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-builtin">super</span> (
+        <span class="org-builtin">type</span>
+[,  object_or_type
+])
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 29: </span>示例</label><pre class="src src-python"><span class="org-keyword">class</span> <span class="org-type">Parent</span>(<span class="org-builtin">object</span>):
+        <span class="org-keyword">def</span> <span class="org-function-name">foo</span>(<span class="org-keyword">self</span>):
+                ...
+
+<span class="org-keyword">class</span> <span class="org-type">Child</span>(<span class="org-builtin">object</span>):
+        <span class="org-keyword">def</span> <span class="org-function-name">foo</span>(<span class="org-keyword">self</span>):
+                <span class="org-builtin">super</span>(Child, <span class="org-keyword">self</span>).foo()
+</pre>
+</div>
+
+<p>
+在多继承时， <code>super()</code> 通过 MRO（Method Resolution Order）和 C3 算法来遍历基类，查找函数。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb7d0630" class="outline-2">
+<h2 id="orgb7d0630"><span class="section-number-2">8</span> 模块</h2>
+<div class="outline-text-2" id="text-8">
+</div><div id="outline-container-org93aa832" class="outline-3">
+<h3 id="org93aa832"><span class="section-number-3">8.1</span> <code>import</code></h3>
+<div class="outline-text-3" id="text-8-1">
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">import</span> &lt;module&gt;
+<span class="org-keyword">import</span> &lt;module&gt; <span class="org-keyword">as</span> &lt;alias&gt;
+<span class="org-keyword">from</span> &lt;module&gt; <span class="org-keyword">import</span> &lt;prop&gt;
+<span class="org-keyword">from</span> &lt;module&gt; <span class="org-keyword">import</span> &lt;prop&gt; <span class="org-keyword">as</span> &lt;alias&gt;
+</pre>
+</div>
+
+<p>
+<code>import</code> 在 <code>sys.path</code> 列出的目录下查找 <code>&lt;module&gt;.py</code> 。第一次加载模块时，模块的 <code>main()</code> 将首先执行。
+</p>
+
+<p>
+使用 <code>as</code> 可以用更简短的名称引用模块，同时方便在多个接口相同的可选模块中快速切换，而无需修改代码。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org294f140" class="outline-3">
+<h3 id="org294f140"><span class="section-number-3">8.2</span> <code>__name__</code></h3>
+<div class="outline-text-3" id="text-8-2">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 30: </span>区分运行状态</label><pre class="src src-python"><span class="org-keyword">if</span> <span class="org-builtin">__name__</span> == <span class="org-string">'__main__'</span>:
+        <span class="org-comment-delimiter"># </span><span class="org-comment">&#21333;&#29420;&#36816;&#34892;</span>
+<span class="org-keyword">else</span>:
+        <span class="org-comment-delimiter"># </span><span class="org-comment">&#34987;&#21478;&#19968;&#27169;&#22359;&#21152;&#36733;</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0beb3b1" class="outline-2">
+<h2 id="org0beb3b1"><span class="section-number-2">9</span> 规范</h2>
+<div class="outline-text-2" id="text-9">
+</div><div id="outline-container-org232956b" class="outline-3">
+<h3 id="org232956b"><span class="section-number-3">9.1</span> PEP 8</h3>
+<div class="outline-text-3" id="text-9-1">
+<dl class="org-dl">
+<dt>PEP</dt><dd>Python Enhancement Proposal</dd>
+</dl>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 4:</span> 命名</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">函数</th>
+<th scope="col" class="org-left"><code>my_function()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbb04e19" class="outline-2">
+<h2 id="orgbb04e19"><span class="section-number-2">10</span> 实现</h2>
+<div class="outline-text-2" id="text-10">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>CPython</b></th>
+<th scope="col" class="org-left">- the most popular Python implementation written in C</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">- source code interpreter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>PyPy</b></td>
+<td class="org-left">- interpreter and just-in-time compiler</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">- compatible with Cpython interpreter</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org0856dd1" class="outline-2">
+<h2 id="org0856dd1"><span class="section-number-2">11</span> 命令行</h2>
+<div class="outline-text-2" id="text-11">
+</div><div id="outline-container-orgbb20f88" class="outline-3">
+<h3 id="orgbb20f88"><span class="section-number-3">11.1</span> <code>python</code></h3>
+<div class="outline-text-3" id="text-11-1">
+<div class="org-src-container">
+<pre class="src src-sh">python &lt;options&gt;
+
+&lt;options&gt;
+    -c &lt;cmd&gt;
+    -m &lt;module&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf56a594" class="outline-3">
+<h3 id="orgf56a594"><span class="section-number-3">11.2</span> <code>pydoc</code></h3>
+<div class="outline-text-3" id="text-11-2">
+<div class="org-src-container">
+<pre class="src src-sh">pydoc &lt;name&gt;
+python -m pydoc &lt;name&gt;
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">&#31034;&#20363;</span>
+pydoc raw_input
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgef85e51" class="outline-2">
+<h2 id="orgef85e51"><span class="section-number-2">12</span> 词汇</h2>
+<div class="outline-text-2" id="text-12">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">unpack</th>
+<th scope="col" class="org-left">解包</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgaaee0db" class="outline-2">
+<h2 id="orgaaee0db"><span class="section-number-2">13</span> 链接</h2>
+<div class="outline-text-2" id="text-13">
+<ol class="org-ol">
+<li><a href="https://www.python.org/doc/versions/">Python Documentation by Version</a></li>
+<li><a href="https://docs.python.org/2/library/index.html">The Python Standard Library (Python 2)</a></li>
+<li><a href="https://www.python.org/dev/peps/pep-0008/">PEP 8 - Style Guide for Python Code</a></li>
+<li><a href="https://github.com/vinta/awesome-python">Awesome Python</a></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2019-02-24 Sun 10:58</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

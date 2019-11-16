@@ -1,0 +1,1702 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: PHP
+
+* 类型
+
+| 基本类型   | =int= =float= =string= =bool= |
+|------------+-------------------------------|
+| 复合类型   | =array= =object=              |
+|------------+-------------------------------|
+| =null=     | 没有赋值的变量                |
+|            | 被 =unset()= 的变量           |
+|            | 被赋值为 =null= 的变量        |
+|------------+-------------------------------|
+| =resource= | 外部资源，如数据库连接        |
+
+** 弱类型
+
+PHP 是弱类型（loosely typed）语言，即：变量使用前不需要声明类型，变量使用时根据上下文自动转换（cast）类型。
+
+#+CAPTION: 字符串中的数字在数学表达式中被转换为整数、浮点数。
+#+BEGIN_SRC php
+$a = '5';
+$b = 6;
+$c = $a + $b; // 11
+#+END_SRC
+
+** 字符串
+
+#+CAPTION: 字符串作为字符数组进行读写
+#+BEGIN_SRC php
+$s = 'test';
+$c = $str[0];
+$s[0] = 'n'; 
+#+END_SRC
+
+#+CAPTION: 字符串自增
+#+BEGIN_SRC php
+$a = 'A';
+echo ++$a; // B
+$b = 'A00';
+echo ++$b; // A01
+#+END_SRC
+
+*** 引号
+
+| 单引号 | 严格保留字符串的内容           |
+|--------+--------------------------------|
+| 双引号 | PHP 会试图将变量名替换为变量值 |
+
+- 双引号可以方便地将字符串和变量值连接，避免重复使用连接符和引号。
+- 如果已知字符串中没有变量，最好使用单引号，节约搜索可替换变量的时间。
+
+#+CAPTION: 使用大括号将变量名与前后连接的字符隔离开
+#+BEGIN_SRC php
+$foo = 'bar';
+echo "get{$foo}function()";
+#+END_SRC
+
+** 类型判断
+
+| =is_bool()=     |         |                                  |
+| =is_float()=    |         |                                  |
+| =is_integer()=  |         |                                  |
+| =is_string()=   |         |                                  |
+|-----------------+---------+----------------------------------|
+| =is_array()=    |         |                                  |
+| =is_object()=   |         |                                  |
+| =is_resource()= |         |                                  |
+|-----------------+---------+----------------------------------|
+| =is_null()=     |         |                                  |
+|-----------------+---------+----------------------------------|
+| =is_scalar()=   | =true=  | =int= =float= =string= =boolean= |
+|                 | =false= | =array= =object= =resource=      |
+|-----------------+---------+----------------------------------|
+| =is_numeric()=  | =true=  | =int= =float=                    |
+|                 |         | 二、八、十六进制数               |
+|                 |         | 可以解释为以上数的字符串         |
+
+** 类型转换
+
+|             | 规则                                                                                |
+|-------------+-------------------------------------------------------------------------------------|
+| =(<type>)=  |                                                                                     |
+|-------------+-------------------------------------------------------------------------------------|
+| =intval()=  | 空数组转换为 0，非空数组转换为 1。                                                  |
+|             | 不以数字开头的字符串转换为 0。                                                      |
+|-------------+-------------------------------------------------------------------------------------|
+| =boolval()= | =0= =0.0= @@html:<code>""</code>@@ @@html:<code>"0"</code>@@ =[]= 转换为 =false= 。 |
+|-------------+-------------------------------------------------------------------------------------|
+| =strval()=  |                                                                                     |
+
+** Callable
+
+| =string= | 函数名，原生或自定义                      |
+|----------+-------------------------------------------|
+| =array=  | 类名、方法名， =array(<class>, <method>)= |
+
+#+CAPTION: 普通函数
+#+BEGIN_SRC php
+function foo() {}
+call_user_func('foo');
+#+END_SRC
+
+#+CAPTION: 类函数
+#+BEGIN_SRC php
+class Foo {
+    public static function bar() {}
+}
+
+$foo = new Foo();
+call_user_func('Foo::bar');
+call_user_func(['Foo', 'bar']);
+call_user_func([new Foo(), 'bar']);
+call_user_func([$foo, 'bar']);
+#+END_SRC
+
+#+CAPTION: 子类函数
+#+BEGIN_SRC php
+class A {
+    public static function who() {}
+}
+class B extends A {
+    public static function who() {}
+}
+call_user_func(['B', 'parent::who']);
+#+END_SRC
+
+* 变量
+
+|           |              | 声明     | 可见性                               |
+|-----------+--------------+----------+--------------------------------------|
+| =$var=    | 本地变量     |          | 函数内声明，只在函数内部有效         |
+|           | 静态变量     | =static= | 函数外声明，只在（所有）函数外部有效 |
+|-----------+--------------+----------+--------------------------------------|
+| =$VAR=    | 全局变量     | =global= | 代码任意位置有效                     |
+|-----------+--------------+----------+--------------------------------------|
+| =$_VAR=   | 超级全局变量 | 预定义   | 代码任意位置有效                     |
+|-----------+--------------+----------+--------------------------------------|
+| =VAR=     | 常量         |          |                                      |
+|-----------+--------------+----------+--------------------------------------|
+| =__VAR__= | 预定义常量   |          |                                      |
+
+** 变量名
+
+- 字母、下划线开头。
+- 包含字母、数字、下划线。
+- 大小写敏感。
+
+** 传递
+
+|          | *传值*           | *传引用*             |
+|----------+------------------+----------------------|
+| 函数参数 | 默认             | 签名中的参数前加 =&= |
+|----------+------------------+----------------------|
+| 变量赋值 | 默认             | 等式右边变量前加 =&= |
+|----------+------------------+----------------------|
+| 数组赋值 | 始终传值（复制） |                      |
+|----------+------------------+----------------------|
+| 对象赋值 | PHP 5 之前       | PHP 5 之后           |
+
+需要函数内的变化影响到输入的变量时，可以使用[[global_variable][全局变量]]。
+
+** 作用域
+
+在函数内定义的变量为本地变量，在所有函数外定义的变量为全局变量。
+
+代码不能读取比当前作用域更「本地」的变量，比如在函数内可以读取全局变量，但函数外不能读取函数内的本地变量。
+
+** 本地变量
+
+变量在声明时默认为本地变量。函数内的本地变量，包括函数内声明的变量和输入参数。
+
+** 静态变量
+
+普通的本地变量在函数结束时会清空，要在函数结束后保留变量的值，需要声明为静态变量。
+
+#+BEGIN_SRC php
+function incr() {
+	static $count = 0; // 非首次调用函数时，声明会被忽略
+	$count++;
+    echo $count;
+}
+incr(); // 1
+incr(); // 2
+#+END_SRC
+
+#+CAPTION: 静态变量不能用表达式为静态变量赋值，只能用确定的值。
+#+BEGIN_SRC php
+static $int = 1 + 2;     // 错误
+static $int = sqrt(144); // 错误
+#+END_SRC
+
+** 全局变量
+<<global_variable>>
+
+全局变量是 =$GLOBALS= 数组中的元素，可以直接通过 =$GLOBALS['<NAME>']= 进行声明、读写。
+
+应避免使用全局变量，代码和数据隔离的程序，更容易维护和 debug。且全局变量在函数内外同名，不是良好的习惯。
+
+#+BEGIN_SRC php
+function bar() {
+	global $foo; // 声明引用全局变量
+	echo $GLOBALS['foo'] . "\n";
+}
+$foo = 'global variable'; // 声明全局变量
+bar();
+#+END_SRC
+
+** 超级全局变量
+
+PHP 预定义的全局变量。
+
+| =$GLOBALS=  | 保存当前所有全局变量，键为全局变量名               |
+|-------------+----------------------------------------------------|
+| =$_SERVER=  | 由服务器创建，包含服务器和执行环境的信息           |
+|-------------+----------------------------------------------------|
+| =$_GET=     | 通过 GET 方法传递的变量                            |
+|-------------+----------------------------------------------------|
+| =$_POST=    | 通过 POST 方法传递的变量                           |
+|-------------+----------------------------------------------------|
+| =$_FILES=   | 通过 POST 方法上传的文件                           |
+|-------------+----------------------------------------------------|
+| =$_COOKIE=  | 通过 cookie 传递的变量                             |
+|-------------+----------------------------------------------------|
+| =$_SESSION= | 当前代码中可用的 session 变量                      |
+|-------------+----------------------------------------------------|
+| =$_REQUEST= | 浏览器传递的内容，包括 =$_GET= =$_POST= =$_COOKIE= |
+|-------------+----------------------------------------------------|
+| =$_ENV=     | 通过 =environment= 方法传递的变量                  |
+
+#+CAPTION: 为避免通过 =$_GET= 和 =$_POST= 向服务器发送恶意代码，使用前需要转义
+#+BEGIN_SRC php
+$came_from = htmlentities($_SERVER['HTTP_REFERER']);
+#+END_SRC
+
+*** =$_SERVER=
+
+| *客户端*      | =REMOTE_ADDR=            | 客户端 IP 地址                        | =::ffff:10.245.205.147=                                           |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =REMOTE_PORT=            | 客户端端口号                          | =49718=                                                           |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =REMOTE_HOST=            | 客户端主机名，DNS 反向查找            |                                                                   |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+| *请求*        | =REQUEST_URI=            | 请求 URI                              | =/render.php=                                                     |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =QUERY_STRING=           | 请求参数                              |                                                                   |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =REQUEST_METHOD=         | 请求方法                              | =POST=                                                            |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =CONTENT_LENGTH=         |                                       | =72=                                                              |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =CONTENT_TYPE=           |                                       | =application/x-www-form-urlencoded=                               |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =HTTP_COOKIE=            |                                       | =__utmt=1; __utma=165884987; ...=                                 |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =HTTPS=                  | 请求是否使用 HTTPS 协议               |                                                                   |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+| *请求 header* | =HTTP_HOST=              | =Host=                                | =www.tehplayground.com=                                           |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =HTTP_REFERER=           | 转向当前页面之前的页面地址（不可信）  | =http://www.tehplayground.com/=                                   |
+|               |                          | 若直接输入地址到浏览器，则为空字符串  |                                                                   |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =HTTP_USER_AGENT=        | =User-Agent=                          | =Mozilla/5.0 (Windows NT 6.1; WOW64) ...=                         |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =HTTP_CONNECTION=        | =Connection=                          | =Keep-Alive=                                                      |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =HTTP_CONTENT_LENGTH=    |                                       | =72=                                                              |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =HTTP_ACCEPT=            | =Accept=                              |                                                                   |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =HTTP_ACCEPT_CHARSET=    | =Accept-Charset=                      | =iso-8859-1,*,utf-8=                                              |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =HTTP_ACCEPT_ENCODING=   | =Accept-Encoding=                     | =gzip=                                                            |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =HTTP_ACCEPT_LANGUAGE=   | =Accept-Language=                     | =en-US,en;q=0.8=                                                  |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =HTTP_X_FORWARDED_FOR=   |                                       | =129.173.43.60=                                                   |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =HTTP_X_FORWARDED_PROTO= |                                       | =http=                                                            |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+| *服务器端*    | =SERVER_NAME=            | 服务器主机名，或虚拟主机名            | =www.tehplayground.com=                                           |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =SERVER_ADDR=            | 服务器 IP 地址                        | =::ffff:10.245.205.147=                                           |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =SERVER_PORT=            | 服务器端口号                          | =80=                                                              |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =SERVER_SOFTWARE=        | 服务器软件、版本号                    | =lighttpd/1.4.31=                                                 |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =SERVER_PROTOCOL=        | 请求的协议、版本号                    | =HTTP/1.1=                                                        |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =GATEWAY_INTERFACE=      | 服务器使用的 CGI 规范版本号           | =CGI/1.1=                                                         |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+| *身份验证*    | =AUTH_TYPE=              |                                       |                                                                   |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =PHP_AUTH_USER=          | HTTP 验证时用户输入的用户名           |                                                                   |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =PHP_AUTH_PW=            | HTTP 验证时用户输入的密码             |                                                                   |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =REMOTE_USER=            | 验证用户                              |                                                                   |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+| *执行脚本*    | =DOCUMENT_ROOT=          | 根目录（服务器配置文件中定义）        | =/var/www/=                                                       |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =PHP_SELF=               | 当前脚本相对路径                      | =/render.php=                                                     |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =SCRIPT_NAME=            | 当前脚本路径                          | =/render.php=                                                     |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =SCRIPT_FILENAME=        | 当前脚本绝对路径                      | =/var/www/render.php=                                             |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =REQUEST_TIME=           | 请求时间戳                            | =1456329981=                                                      |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =REQUEST_TIME_FLOAT=     | 请求时间戳，精确到毫秒                |                                                                   |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+| *执行环境*    | =PATH=                   |                                       | =/sbin:/usr/sbin:/bin:/usr/bin=                                   |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =PATH_INFO=              | URL 中脚本名之后、请求参数之前的部分  | =/some/stuff= （ =http://foo.com/index.php/some/stuff?foo=bar= ） |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+| *命令行*      | =argv=                   | 命令行参数数组，或 GET 请求的参数数组 |                                                                   |
+|---------------+--------------------------+---------------------------------------+-------------------------------------------------------------------|
+|               | =argc=                   | 命令行参数个数                        |                                                                   |
+
+** 预定义变量
+
+| =$argc=                 | 从命令行传递的参数个数 |
+|-------------------------+------------------------|
+| =$argv=                 | 从命令行传递的参数数组 |
+|-------------------------+------------------------|
+| =$php_errormsg=         |                        |
+|-------------------------+------------------------|
+| =$HTTP_RAW_POST_DATA=   |                        |
+|-------------------------+------------------------|
+| =$http_response_header= |                        |
+
+* 常量
+
+常量定义之后，在程序运行的过程中值不会改变。
+
+常量名不能加 =$= 前缀，通常用大写字母命名。
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+define('ROOT_LOCATION', '/usr/local/www/'); // 定义
+$directory = ROOT_LOCATION;                 // 引用
+#+END_SRC
+
+** 预定义常量
+
+| =PHP_VERSION= |   |
+|---------------+---|
+|               |   |
+
+** Magic 常量
+
+| =__LINE__=      | 当前文件的当前行数                         |
+|-----------------+--------------------------------------------|
+| =__FUNCTION__=  | 当前函数名                                 |
+|-----------------+--------------------------------------------|
+| =__METHOD__=    | 当前类方法名                               |
+|-----------------+--------------------------------------------|
+| =__CLASS__=     | 当前类名                                   |
+|-----------------+--------------------------------------------|
+| =__FILE__=      | 当前文件的绝对路径和文件名                 |
+|-----------------+--------------------------------------------|
+| =__DIR__=       | 当前文件的目录名，等于 =dirname(__FILE__)= |
+|-----------------+--------------------------------------------|
+| =__NAMESPACE__= | 当前命名空间                               |
+
+* 运算符
+** 比较
+
+| @@html:<code>==</code>@@  | 比较值       | 进行隐性类型转换，会混淆零值 =0= =false= =null= |
+|---------------------------+--------------+-------------------------------------------------|
+| @@html:<code>===</code>@@ | 比较值和类型 | 无隐式类型转换                                  |
+
+#+BEGIN_SRC php
+$result = strpos($haystack, $needle);
+if ($result == false) {}  // 错误，返回值为 0 时条件也成立
+if ($result === false) {} // 正确
+#+END_SRC
+
+#+CAPTION: 数组比较
+| @@html:<code>==</code>@@  | 比较键值（即排序后完全一致） |
+|---------------------------+------------------------------|
+| @@html:<code>===</code>@@ | 比较键值和顺序               |
+
+** =instanceof=
+
+判断对象是否属于指定类型。
+
+#+CAPTION: 子类的对象属于基类的类型。
+#+BEGIN_SRC php
+class Foo {}
+class Bar extends Foo {}
+$bar = new Bar();
+$bar instanceof Foo; // true
+$bar instanceof Bar; // true
+#+END_SRC
+
+* 语法
+** heredoc
+
+- 保留一段文本中的换行、空格和缩进。
+- 可以输出整段 HTML，但浏览器会按自己的方式处理换行（显示为空格）。
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+$author = "Alfred E Newman";
+echo <<<_FOO          // 开头标示符后不能加分号，否则产生解析错误
+                      // 标示符可以自定义，但为了不与变量和方法重名，通常使用 _CAPITAL
+
+This is a Headline    // 换行、引号不需要转义，可以使用分号
+- Written by $author. // 文本相当于被双引号包装，变量名会被替换
+
+_FOO;                 // 结尾标示符加分号，前后不能加任何内容，包括空格、注释
+                      // 前后两个标示符必须对应
+#+END_SRC
+
+* 函数
+
+- 函数名不区分大小写。
+
+** 类型约束
+
+类型约束（type hinting）只在运行时（runtime），即函数被调用时检查参数类型。
+
+| *类型*     | *最低版本* |
+|------------+------------|
+| 类名       |        5.0 |
+| 接口名     |            |
+| =self=     |            |
+|------------+------------|
+| =array=    |        5.1 |
+|------------+------------|
+| =callable= |        5.4 |
+|------------+------------|
+| =bool=     |        7.0 |
+| =float=    |            |
+| =int=      |            |
+| =string=   |            |
+
+#+BEGIN_SRC php
+class Foo {}
+class Bar extends Foo {}
+
+function foo(Foo $arg) {}
+function bar(Bar $arg) {}
+
+$foo = new Foo();
+$bar = new Bar();
+
+foo($foo); // OK
+foo($bar); // OK
+bar($foo); // Catchable fatal error (< PHP 7)
+           // Fatal error: Uncaught TypeError (hPHP 7)
+bar($bar); // OK
+#+END_SRC
+
+*** 类型转换
+
+#+CAPTION: PHP 默认会对标量类型的参数进行必要的类型转换。
+#+BEGIN_SRC php
+function foo(float $arg) {}
+foo('123'); // OK
+foo('abc'); // Fatal error: Uncaught TypeError
+#+END_SRC
+
+*** 严格类型
+
+声明严格类型可以避免隐式类型转换。严格类型声明在客户代码，即函数调用的位置进行，且必须在文件的第一行。
+
+#+BEGIN_SRC php
+// 未声明严格类型
+function foo(bool $arg) {
+    echo ($arg) ? 'true' : 'false';
+}
+foo('false'); // true，字符串 false 转换成 bool 为 true
+
+// 声明严格类型
+declare(strict_types=1);
+function foo(bool $arg) {
+    echo ($arg) ? 'true' : 'false';
+}
+foo('false'); // Fatal error: Uncaught TypeError
+#+END_SRC
+
+** 类型声明
+
+#+BEGIN_SRC php
+function foo(): <type> {
+}
+#+END_SRC
+
+|   |   |
+|---+---|
+|   |   |
+
+** 闭包
+
+闭包（closure）是在在创建时将环境状态（surrounding state）封装（encapsulate）起来的函数，封装的状态一直存在于闭包内部，即使原本的环境已经不存在，即匿名函数可以引用其父作用域中定义的变量。
+
+PHP 的闭包和匿名函数是等价的，匿名函数使用普通函数的语法，但实际是 =Closure= 类的对象。 =Closure= 类实现 =__invoke()= 方法，当变量名后加 =()= 时，PHP 会调用 =__invoke()= 方法。
+
+#+BEGIN_SRC php
+function output($prefix) {
+    $count = 10;
+    return function(string $text) use ($prefix, $count) {
+        while ($count > 0) {
+            echo $prefix . $text . "\n";
+            $count--;
+        }
+    };
+}
+call_user_func(output('Foo: '), 'bar');
+#+END_SRC
+
+#+CAPTION: 闭包修改外部变量的值
+#+BEGIN_SRC php
+class Foo {
+    public static function add($first) {
+        $total = 0;
+        return function($second) use ($first, &$total) { // & 传递引用
+            $total += $first + $second;
+            return $total;
+        };
+    }
+}
+
+$foo = Foo::add(10);
+echo $foo(5); // 15 = 10 + 5
+echo $foo(6); // 31 = 15 + 10 + 6
+#+END_SRC
+
+*** Attach state
+
+Attach state
+- with the closure object’s =bindTo()= method or the =use= keyword
+- attached variable retains the value assigned to it at the time it is attached
+
+=use= example
+#+BEGIN_SRC php
+<?php
+function enclosePerson($name) {
+    return function ($doCommand) use ($name) { // attach multiple variables with ,
+        return sprintf('%s, %s', $name, $doCommand);
+    };
+}
+$clay = enclosePerson('Clay');
+echo $clay('get me sweet tea!');
+// Outputs --> "Clay, get me sweet tea!"
+#+END_SRC
+
+=bindTo()=
+- can bind a =Closure= object’s internal state to a different object
+- accept a second argument that specifies the PHP class of the object to which the closure is bound
+- let the closure access protected and private member variables of the object to which it is bound
+
+=bindTo()= example
+#+BEGIN_SRC php
+<?php
+class App
+{
+    protected $routes = array();
+    protected $responseStatus = '200 OK';
+    protected $responseContentType = 'text/html';
+    protected $responseBody = 'Hello world';
+
+    public function addRoute($routePath, $routeCallback)
+    {
+        // accept an anonymous function and bind it to the application object
+        // can create a callback function that can manipulate the App instance state
+        $this->routes[$routePath] = $routeCallback->bindTo($this, __CLASS__);
+    }
+
+    public function dispatch($currentPath)
+    {
+        foreach ($this->routes as $routePath => $callback) {
+            if ($routePath === $currentPath) {
+                $callback(); // invoke the matching route callback
+            }
+        }
+        header('HTTP/1.1 ' . $this->responseStatus);
+        header('Content-type: ' . $this->responseContentType);
+        header('Content-length: ' . mb_strlen($this->responseBody));
+        echo $this->responseBody;
+    }
+}
+
+<?php
+$app = new App();
+$app->addRoute('/users/josh', function () {
+    // reference the application object with $this keyword
+    $this->responseContentType = 'application/json;charset=utf8';
+    $this->responseBody = '{"name": "Josh"}';
+});
+$app->dispatch('/users/josh');
+#+END_SRC
+
+** 函数式编程
+
+匿名函数可以被赋值给变量，或进行传递，也可用作回调函数。
+
+#+CAPTION: 函数赋值给变量
+#+BEGIN_SRC php
+// 内置函数赋值给变量
+$func = 'time';
+echo $func();
+
+// 自定义函数赋值给变量
+$func = function ($arg) {
+    echo 'Input: ' . $arg . "\n";
+}; // 结尾有 ;
+$func('test');
+call_user_func($func, 'test');
+#+END_SRC
+
+#+CAPTION: 函数作为参数和返回值
+#+BEGIN_SRC php
+function twice($func) {
+    return function ($arg) use ($func) { // 闭包
+        return $func($func($arg));
+    };
+}
+$func = twice(function ($arg) {
+    return $arg * 2;
+});
+echo $func(3); // 12 = 3 * 2 * 2;
+#+END_SRC
+
+** 回调函数
+
+#+CAPTION: 二维数组的元素使用指定键值进行排序
+#+BEGIN_SRC php
+$array = array(
+    array('a' => 3),
+    array('a' => 1),
+    array('a' => 2),
+);
+$column = 'a';
+usort($array, function ($a, $b) use ($column) {
+    return ($a[$column] < $b[$column]) ? -1 : 1;
+});
+#+END_SRC
+
+#+CAPTION: 二维数组提取指定键值
+#+BEGIN_SRC php
+$data = array(
+    array('value' => 'a'),
+    array('value' => 'b'),
+    array('value' => 'c'),
+);
+$values = array_map(function ($a) {
+    return $a['value'];
+}, $data);
+// array('a', 'b', 'c');
+#+END_SRC
+
+#+CAPTION: 数组元素累加
+#+BEGIN_SRC php
+$nums = array(1, 2, 3);
+$sum = array_reduce($nums, function ($carry, $item) {
+    $carry += $item;
+    return $carry;
+});
+#+END_SRC
+
+* OO
+** 对象
+*** 对象 ID
+
+每一个 PHP 对象有唯一的 ID，对象被销毁之后，ID 会被回收并重复使用。
+
+#+BEGIN_SRC php
+namespace Foo;
+class Bar {}
+$bar = new Bar();
+var_dump($bar);
+// object(Foo\Bar)#1 (0) {}
+#+END_SRC
+
+*** 打印对象
+
+#+CAPTION: PHP 5.2 之前可以直接打印对象。
+#+BEGIN_SRC php
+class Bar {}
+$bar = new Bar();
+print $bar;
+// Object id #1
+#+END_SRC
+
+#+CAPTION: PHP 5.2 之后类必须实现 =__toString()= 方法才可以打印对象。
+#+BEGIN_SRC php
+class Bar {
+    public function __toString() {
+        return 'This is an object.';
+    }
+}
+$bar = new Bar();
+print $bar;
+// This is an object.
+#+END_SRC
+
+** 可见性
+
+| =public=    | 默认可见性，可以被任何代码使用                     |
+|-------------+----------------------------------------------------|
+| =protected= | 只能被当前类和子类的方法使用                       |
+|-------------+----------------------------------------------------|
+| =private=   | 只能被当前类的方法使用，不能被子类的方法继承或使用 |
+
+一般先将成员声明为 =private= 或 =protected= ，只在必要时增加其可见性。
+
+** 属性
+
+#+CAPTION: 未声明的属性可以动态添加，但不是良好的习惯，发生拼写错误时不会得到警告。
+#+BEGIN_SRC php
+class Foo {
+    public $bar;
+}
+$foo = new Foo();
+$foo->baz = '123';
+#+END_SRC
+
+** 常量
+
+常量必须定义值，且只能定义为原始类型的值。常量只能通过类而不是对象进行访问。
+
+#+BEGIN_SRC php
+class Foo {
+    const BAR; // Parse error: syntax error, unexpected ';', expecting '=' ...
+    const BAZ = 1;
+}
+Foo::BAZ = 2; // Parse error: syntax error, unexpected '=' ...
+#+END_SRC
+
+** 静态
+
+一般成员在类实例之间各不相同，静态成员在类的所有实例中保持不变。静态成员在类而不是对象的上下文中引用，因此静态方法不能访问普通属性或 =$this= （属于对象而不是类）。
+
+使用静态成员可以减少实例化类造成的开销（overhead）。
+
+*** 示例
+
+#+BEGIN_SRC php
+class Foo {
+    public static $bar = 'test';   // 声明静态属性
+    public static function one() { // 声明静态方法
+        echo self::$bar;           // 引用静态属性
+    }
+    public function two() {
+        self::one();               // 引用静态方法
+    }
+}
+$a = Foo::$bar; // 引用静态属性
+Foo::one();     // 引用静态方法
+#+END_SRC
+
+*** 静态方法
+
+#+CAPTION: 静态方法可以作为工厂方法，生成不同的示例。
+#+BEGIN_SRC php
+class Foo {
+    public static function getFoo(int $type = 1) {
+        switch ($type) {
+            case 1:
+                return new FooOne();
+            case 2:
+                return new FooTwo();
+        }
+    }
+}
+
+class FooOne extends Foo {}
+class FooTwo extends Foo {}
+
+$foo1 = Foo::getFoo(1);
+$foo2 = Foo::getFoo(2);
+#+END_SRC
+
+** 抽象
+
+抽象类和抽象方法用来确保子类中一定会包含和重载（override）某些方法。接口也可以实现同样目的。
+
+#+BEGIN_SRC php
+abstract class Foo {
+    abstract function operation($param1, $param2);
+}
+
+class Bar extends Foo {
+    function operation($param1, $param2) {}
+}
+#+END_SRC
+
+*** 抽象方法
+
+抽象方法是只有签名而没有实现的方法。
+
+#+BEGIN_SRC php
+class Foo {
+    abstract public function bar();
+}
+#+END_SRC
+
+*** 抽象类
+
+抽象类不能被实例化。
+
+定义了抽象方法的类必须为抽象类，但抽象类也可以定义有实现的非抽象方法。
+
+抽象类的作用是定义一种接口。继承了抽象类的子类，必须实现基类的所有抽象方法（且方法签名必须一致），或本身被声明被抽象类。
+
+** 接口
+
+#+BEGIN_SRC php
+interface Foo {}
+interface Bar {}
+class Concrete implements Foo, Bar {}
+#+END_SRC
+
+接口只有成员的声明，没有实现。
+
+一个类只能继承一个父类，但可以实现多个接口（只要接口中没有与此类重名的方法）。实现接口的类必须实现接口定义的方法，或被声明为抽象类。
+
+#+CAPTION: 实现了接口的类就具有了接口的类型。
+#+BEGIN_SRC php
+interface Foo {}
+interface Bar {}
+class Hoge implements Foo, Bar {}
+
+$hoge = new Hoge();
+echo ($hoge instanceof Foo); // 1
+echo ($hoge instanceof Bar); // 1
+#+END_SRC
+
+接口是对象之间的契约（contract），可以将代码和它的依赖解耦，因为面向对象的代码只能使用固定类的对象，而面向接口的代码可以使用任何实现了接口的对象，更加灵活。
+
+#+BEGIN_SRC php
+interface Bar {}
+class BarOne implements Bar {}
+class BarTwo implements Bar {}
+
+function bar(Bar $arg) {} // 面向接口
+
+bar(new BarOne());
+bar(new BarTwo());
+#+END_SRC
+
+** =final= 类
+
+#+BEGIN_SRC php
+final class Foo {}      // final 类无法被继承
+final function foo() {} // final 方法在子类中无法被重载
+final public function bar() {} // final 关键字在最前
+#+END_SRC
+
+** Trait
+
+继承不支持多个基类，而接口不提供实现，trait 提供了复用部分（partial）实现的代码的方式，而使用 trait 的类（在继承关系中）可以是不相关的。Trait 改变类的功能，但不改变类型。
+
+Trait 语法类似于类，但不能被实例化。PHP 在编译时将 trait 代码复制到引用 trait 的位置。
+
+*** 语法
+
+#+BEGIN_SRC php
+trait Foo {} // 定义
+trait Bar {}
+class Hego {
+    use Foo, Bar; // 使用
+}
+#+END_SRC
+
+#+CAPTION: 含有同名方法时，类中的方法会覆盖 trait 的方法。
+#+BEGIN_SRC php
+trait Foo {
+    public function run() {
+        echo 'foo';
+    }
+}
+
+class Bar {
+    use Foo;
+    public function run() {
+        echo 'bar';
+    }
+}
+
+$bar = new Bar();
+$bar->run(); // bar
+#+END_SRC
+
+#+CAPTION: Trait 可以访问宿主的属性和方法，但是无法保证宿主类含有指定的属性和方法，所以应该避免。
+#+BEGIN_SRC php
+trait Foo {
+    public function foo() {
+        echo $this->prefix . '-' . $this->getSuffix();
+    }
+}
+
+class Bar {
+    use Foo;
+    private $prefix = '123';
+    private function getSuffix() {
+        return '456';
+    }
+}
+
+$bar= new Bar();
+$bar->foo(); // 123-456
+#+END_SRC
+
+*** =as=
+
+#+CAPTION: 为 trait 方法指定别名。
+#+BEGIN_SRC php
+trait Foo {
+    public function run() {}
+}
+
+class Bar {
+    use Foo {
+        Foo::run as fooRun;
+    }
+    public function run() {}
+}
+
+$bar = new Bar();
+$bar->fooRun(); // Foo::run()
+$bar->run();    // Bar::run()
+#+END_SRC
+
+#+CAPTION: 修改 trait 方法的可见性。
+#+BEGIN_SRC php
+trait Foo {
+    private function foo() {}
+}
+
+class Bar {
+    use Foo {
+        Foo::foo as public;
+    }
+}
+
+$bar= new Bar();
+$bar->foo();
+#+END_SRC
+
+*** =insteadof=
+
+两个 trait 包含同名方法时，用 =insteadof= 指定要使用的方法，避免冲突。
+
+#+BEGIN_SRC php
+trait Foo {
+    public function run() {}
+}
+
+trait Bar {
+    public function run() {}
+}
+
+class Hoge {
+    use Foo, Bar {
+        Bar::run insteadof Foo; // 指定使用 Bar 的 run()
+        Foo::run as fooRun;     // 通过别名使用 Foo 的 run()
+    }
+}
+#+END_SRC
+
+*** 静态方法
+
+#+BEGIN_SRC php
+trait Foo {
+    public static function run() {}
+}
+
+class Bar {
+    use Foo;
+}
+
+$bar = new Bar();
+$bar::run();
+#+END_SRC
+
+*** 抽象方法
+
+#+CAPTION: 通过定义抽象方法，trait 可以确保包含它的类一定会实现指定方法。
+#+BEGIN_SRC php
+trait Foo {
+    abstract function getText(): string;
+    public function output() {
+        echo $this->getText();
+    }
+}
+
+class Bar {
+    use Foo;
+    private function getText(): string {
+        return 'text';
+    }
+}
+
+$bar= new Bar();
+$bar->output(); // text
+#+END_SRC
+
+*** 示例
+
+#+BEGIN_SRC php
+trait Logger {
+    private $logFile;
+    public function logError(string $msg = 'unknown') {
+        echo '[file=' . $this->logFile . '] [msg=' . $msg . ']';
+    }
+}
+
+class Foo {
+    use Logger;
+    public function __construct() {
+        $this->logFile = 'foo.log';
+    }
+}
+
+class Bar {
+    use Logger;
+    public function __construct() {
+        $this->logFile = 'bar.log';
+    }
+}
+
+$foo = new Foo();
+$foo->logError(); // [file=foo.log] [msg=unknown]
+$bar = new Bar();
+$bar->logError(); // [file=bar.log] [msg=unknown]
+#+END_SRC
+
+** =::= 运算符
+
+在类而不是对象上下文中引用方法时，使用 =::= 而不是 =->= 。
+
+*** =parent=
+
+=parent::<method>()= 是唯一可以用静态语法调用非静态方法的场合。
+
+#+BEGIN_SRC php
+class Foo {
+    public function __construct() {}
+}
+class Bar extends Foo {
+    public function __construct() {
+        parent::__construct();
+        // ...
+    }
+}
+#+END_SRC
+
+*** =self=
+
+类的 =self= 相当于对象的 =$this= 。
+
+#+BEGIN_SRC php
+class Foo {
+    protected static $counter = 0;
+    public static function visit() {
+        self::$counter++;
+    }
+    public static function create() {
+        return new self();
+    }
+}
+#+END_SRC
+
+#+CAPTION: =self= 得解析不依赖于调用时的上下文，而是定义位置。
+#+BEGIN_SRC php
+abstract class Foo {
+    public static function create() {
+        return new self(); // self == Foo
+    }
+}
+class Bar extends Foo {}
+$bar = Bar::create();
+// Fatal error: Uncaught Error: Cannot instantiate abstract class Foo ...
+#+END_SRC
+
+*** =static=
+
+PHP 5.3 引入 late static binding，以解决基类中 =self= 无法解析为子类的问题。
+
+#+BEGIN_SRC php
+abstract class Foo {
+    public static function create() {
+        return new static(); // static == 调用时的类
+    }
+    public function output() {
+        echo static::getName(); // static 可以在非静态上下文中，以静态语法调用静态或非静态方法
+    }
+}
+class Bar extends Foo {
+    public $name = 'Bar';
+    protected function getName() {
+        return $this->name;
+    }
+}
+$bar = Bar::create();
+echo get_class($bar); // Bar
+$bar->output();       // Bar
+#+END_SRC
+
+*** =class=
+
+=<class_name>::class= 表示类的 fully qualified 类名， =<class_name>= 可以是类的别名。
+
+#+BEGIN_SRC php
+namespace Foo;
+class Bar {}
+Bar::class; // Foo\Bar
+#+END_SRC
+
+** =clone=
+
+PHP 5 之后对象赋值为传递引用，使用 =clone= 可以显式复制对象，此时会在副本对象上调用 =__clone()= 方法。使用 =__clone()= 方法可以解决以下问题：
+
+- 对象属性中包含标识符，如 ID 时， =clone= 对象默认会与原对象指向同一个数据源记录的问题。
+- 对象属性中包含对象， =clone= 对象默认复制属性对象的引用。
+
+#+BEGIN_SRC php
+class Foo {
+    private $id;
+    public $name;
+    public $bar;
+    public function __construct($name, Bar $bar) {
+        $this->name = $name;
+        $this->bar = $bar;
+    }
+    public function __clone() {
+        $this->id = 0; // 重置 ID，避免指向同一条记录
+        $this->name = 'This is a clone of ' . $this->name;
+        $this->bar = clone $this->bar; // 复制属性对象
+    }
+}
+
+$a = new Foo('bar');
+$b = clone $a;
+echo $b->name; // This is a clone of bar
+#+END_SRC
+
+* 错误
+** 错误等级
+
+|       |                    |                       |                                              | 产生者            | 示例                       |
+|-------+--------------------+-----------------------+----------------------------------------------+-------------------+----------------------------|
+|     1 | =---------------1= | =E_ERROR=             | 运行时致命错误，程序停止运行                 |                   | 一个对象调用一个不存在的类 |
+|-------+--------------------+-----------------------+----------------------------------------------+-------------------+----------------------------|
+|     2 | =--------------1-= | =E_WARNING=           | 运行时警告（非致命错误），程序不会停止       |                   | 使用了未定义的包的功能     |
+|-------+--------------------+-----------------------+----------------------------------------------+-------------------+----------------------------|
+|     4 | =-------------1--= | =E_PARSE=             | 编译时解析错误                               | 解析器            |                            |
+|-------+--------------------+-----------------------+----------------------------------------------+-------------------+----------------------------|
+|     8 | =------------1---= | =E_NOTICE=            | 运行时提示                                   |                   | 使用了未声明变量           |
+|       |                    |                       | 代码执行有可能造成问题，程序不会停止         |                   |                            |
+|-------+--------------------+-----------------------+----------------------------------------------+-------------------+----------------------------|
+|    16 | =-----------1----= | =E_CORE_ERROR=        | PHP 启动时的致命错误                         | PHP 核心          |                            |
+|-------+--------------------+-----------------------+----------------------------------------------+-------------------+----------------------------|
+|    32 | =----------1-----= | =E_CORE_WARNING=      | PHP 启动时的警告（非致命错误）               | PHP 核心          |                            |
+|-------+--------------------+-----------------------+----------------------------------------------+-------------------+----------------------------|
+|    64 | =---------1------= | =E_COMPILE_ERROR=     | 编译时致命错误                               | Zend 脚本引擎     |                            |
+|-------+--------------------+-----------------------+----------------------------------------------+-------------------+----------------------------|
+|   128 | =--------1-------= | =E_COMPILE_WARNING=   | 编译时警告（非致命错误）                     | Zend 脚本引擎     |                            |
+|-------+--------------------+-----------------------+----------------------------------------------+-------------------+----------------------------|
+|   256 | =-------1--------= | =E_USER_ERROR=        | 用户生成的错误信息                           | =trigger_error()= |                            |
+|-------+--------------------+-----------------------+----------------------------------------------+-------------------+----------------------------|
+|   512 | =------1---------= | =E_USER_WARNING=      | 用户生成的警告信息                           | =trigger_error()= |                            |
+|-------+--------------------+-----------------------+----------------------------------------------+-------------------+----------------------------|
+|  1024 | =-----1----------= | =E_USER_NOTICE=       | 用户生成的提示信息                           | =trigger_error()= |                            |
+|-------+--------------------+-----------------------+----------------------------------------------+-------------------+----------------------------|
+|  2048 | =----1-----------= | =E_STRICT=            | 对代码互操作性和向后兼容性的建议             |                   |                            |
+|-------+--------------------+-----------------------+----------------------------------------------+-------------------+----------------------------|
+|  4096 | =---1------------= | =E_RECOVERABLE_ERROR= | 可捕获的致命错误                             |                   |                            |
+|       |                    |                       | 如果没有被错误处理函数捕获，则产生 =E_ERROR= |                   |                            |
+|-------+--------------------+-----------------------+----------------------------------------------+-------------------+----------------------------|
+|  8192 | =--1-------------= | =E_DEPRECATED=        | 运行时提示，在未来版本中无法使用的代码       |                   |                            |
+|-------+--------------------+-----------------------+----------------------------------------------+-------------------+----------------------------|
+| 16384 | =-1--------------= | =E_USER_DEPRECATED=   | 用户生成的警告信息                           | =trigger_error()= |                            |
+|-------+--------------------+-----------------------+----------------------------------------------+-------------------+----------------------------|
+| 32767 | =-111111111111111= | =E_ALL=               | 以上全部错误、警告、提示                     |                   |                            |
+
+设定错误报告等级的方式：
+
+- =php.ini= 的 =error_reporting= 指令
+- =error_reporting()=
+
+** 配置
+
+#+CAPTION: 显示错误
+#+BEGIN_SRC php
+error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
+ini_set('display_errors', '1');
+#+END_SRC
+
+#+CAPTION: 记录错误日志
+#+BEGIN_SRC php
+error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
+ini_set('log_errors', '1');
+ini_set('error_log', 'path/to/file');
+#+END_SRC
+
+** =@=
+
+#+BEGIN_SRC php
+@<expr>
+#+END_SRC
+
+忽略表达式可能产生的错误信息。如果启动了 =track_errors= 选项，错误信息会保存在 =$php_errormsg= 中。
+
+#+BEGIN_SRC php
+$foo = @(57/0);
+$bar = @file('file_name') or die('Failed opening file');
+#+END_SRC
+
+** =Error= 类
+
+PHP 7 加入 =Error= 类，实现 =Throwable= 接口，使内部错误可以像代码错误一样被捕获。
+
+| =ArithmeticError=     | 数学运算错误                     |
+|-----------------------+----------------------------------|
+| =AssertionError=      | =assert()= 错误                  |
+|-----------------------+----------------------------------|
+| =DivisionByZeroError= |                                  |
+|-----------------------+----------------------------------|
+| =ParseError=          | 运行时 PHP 解析错误，如 =eval()= |
+|-----------------------+----------------------------------|
+| =TypeError=           | 参数、返回值类型错误             |
+
+#+BEGIN_SRC php
+function foo(int $arg) {}
+try {
+    foo('bar');
+} catch (Error $e) {
+    echo $e->getMessage(); // Argument 1 passed to foo() must be of the type integer, string given ...
+}
+#+END_SRC
+
+* 异常
+
+当代码运行中发现错误，而没有如何处理错误的上下文信息时，应当抛出异常，将错误处理交给客户代码。
+
+#+BEGIN_SRC php
+try {
+    throw new Exception();
+    // 如果抛出异常，之后的代码不被执行
+} catch(FooException $e) {
+    // 只执行第一个与异常类型匹配的捕获代码
+} catch(Exception $e) {
+    throw new Exception(); // 再次抛出异常
+} finally {
+    // 执行：抛出异常时，包括捕获后再次抛出异常或返回时
+    // 不执行：try 或 catch 中执行了 die() 或 exit() 时
+}
+#+END_SRC
+
+未被捕获的异常会被隐式地再次抛出，直到异常被捕获，或无法继续抛出并导致错误。
+
+#+BEGIN_SRC php
+function foo() {
+    throw new Exception();
+}
+foo(); // Fatal error: Uncaught Exception ...
+#+END_SRC
+
+** 自定义异常
+
+#+BEGIN_SRC php
+class OpenFileException extends Exception {
+    function open() {
+        touch("tmp.txt");
+        $file = fopen("tmp.txt", "r");
+        return $file;
+    }
+}
+
+class MyClass {
+    function openfile() {
+        $file = @fopen("non-exist.txt", "r");
+        if (!$file) {
+            throw new OpenFileException("文件打开失败");
+        }
+    }
+}
+
+try {
+    $my = new MyClass();
+    $my->openfile();
+} catch (OpenFileException $e) {
+    echo $e->getMessage() . "<br />";
+    $file = $e->open();
+} catch (Exception $e) {  //接收没有处理的所有异常
+    echo $e->getMessage();
+}
+#+END_SRC
+
+* 配置
+** 可设定范围
+
+|                  | 可设定的位置                  |
+|------------------+-------------------------------|
+| =PHP_INI_ALL=    | 任何地方                      |
+|------------------+-------------------------------|
+| =PHP_INI_SYSTEM= | =php.ini=                     |
+|                  | =httpd.conf=                  |
+|------------------+-------------------------------|
+| =PHP_INI_PERDIR= | =php.ini=                     |
+|                  | =httpd.conf=                  |
+|                  | =.htaccess=                   |
+|------------------+-------------------------------|
+| =PHP_INI_USER=   | PHP 脚本（使用 =ini_set()= ） |
+|                  | =.user.ini=                   |
+
+** 错误处理
+
+|                          |                                   | 类型      | 默认值 | 可设定范围    |
+|--------------------------+-----------------------------------+-----------+--------+---------------|
+| =error_reporting=        | 错误报告级别                      | =int=     | =null= | =PHP_INI_ALL= |
+|--------------------------+-----------------------------------+-----------+--------+---------------|
+| =display_errors=         | 是否打印错误输出                  | =string=  | =1=    | =PHP_INI_ALL= |
+|--------------------------+-----------------------------------+-----------+--------+---------------|
+| =display_startup_errors= | 是否打印 PHP 启动过程中的错误输出 | =boolean= | =0=    | =PHP_INI_ALL= |
+|--------------------------+-----------------------------------+-----------+--------+---------------|
+| =log_errors=             | 是否将脚本错误信息输出到日志文件  | =boolean= | =0=    | =PHP_INI_ALL= |
+|--------------------------+-----------------------------------+-----------+--------+---------------|
+| =error_log=              | 错误日志文件路径                  | =string=  | =null= | =PHP_INI_ALL= |
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+ini_set('display_errors', '0');
+ini_set('log_errors', '1');
+ini_set('error_log', ROOT . '/log/error.log');
+#+END_SRC
+
+** 文件上传
+
+|                       |                                                    | 类型   | 默认值 |
+|-----------------------+----------------------------------------------------+--------+--------|
+| =file_uploads=        | 是否允许 HTTP 上传文件                             | int    | =1=    |
+|-----------------------+----------------------------------------------------+--------+--------|
+| =upload_tmp_dir=      | 存放上传文件的临时文件夹，必须是可写的             | string | =NULL= |
+|                       | 若为 null 或文件夹不可写，则使用系统默认临时文件夹 |        |        |
+|-----------------------+----------------------------------------------------+--------+--------|
+| =upload_max_filesize= | 上传文件的最大字节数                               | int    |        |
+|-----------------------+----------------------------------------------------+--------+--------|
+| =max_file_uploads=    | 允许同时上传文件的数量                             | int    |        |
+
+** 路径和目录
+
+|                |                                                                                | 类型   | 默认值                | 可设定范围    |
+|----------------+--------------------------------------------------------------------------------+--------+-----------------------+---------------|
+| =include_path= | 用于查找使用相对路径的文件的目录列表，类似 =PATH= 环境变量                     | string | =.;/path/to/php/pear= | =PHP_INI_ALL= |
+|                | 用于 =require= =include= =fopen()= =file()= =readfile()= =file_get_contents()= |        |                       |               |
+|                | 可以使用 =set_include_path()= 进行设定                                         |        |                       |               |
+
+** 安全模式
+
+|             |                                                             | 类型 | 默认值 | 可设定范围       |
+|-------------+-------------------------------------------------------------+------+--------+------------------|
+| =safe_mode= | 安全模式，主要影响文件操作                                  | int  | =0=    | =PHP_INI_SYSTEM= |
+|             | PHP 会检查当前脚本的拥有者和被操作文件的拥有者是否一致      |      |        |                  |
+|             | 受影响的函数： =pathinfo()= =basename()= =fopen()= =exec()= |      |        |                  |
+
+** 扩展控制
+
+|                 |                              | 类型   | 默认值         | 可设定范围       |
+|-----------------+------------------------------+--------+----------------+------------------|
+| =extension=     | 控制扩展的开闭               | string | =NULL=         | =php.ini=        |
+|                 | e.g. =extension=php_pdo.dll= |        |                |                  |
+|-----------------+------------------------------+--------+----------------+------------------|
+| =extension_dir= | 动态加载扩展的目录           | string | =/path/to/php= | =PHP_INI_SYSTEM= |
+
+* 环境
+** 环境变量
+
+#+CAPTION: Apache 设置环境变量
+#+BEGIN_SRC sh
+<VirtualHost ...>
+    SetEnv <NAME> "<value>"
+</VirtualHost>
+#+END_SRC
+
+#+CAPTION: Nginx 设置环境变量
+#+BEGIN_SRC sh
+# fastcgi_params 文件
+fastcgi_param <NAME> '<value>';
+
+# nginx.conf 文件
+server {
+    include fastcgi_params;
+}
+#+END_SRC
+
+#+CAPTION: PHP 读取环境变量
+#+BEGIN_SRC php
+$var = getenv('NAME');
+#+END_SRC
+
+* 高级
+** 命名空间
+
+PHP 5.3 引入命名空间，通过为一组类、接口、函数、常量加上共同的前缀，避免名称冲突（name collision）。
+
+*** 声明
+
+#+BEGIN_SRC php
+// Symfony/Component/HttpFoundation/Response.php
+// 声明必须在文件第一行
+namespace Symfony\Component\HttpFoundation;
+// 此文件中的类、接口、函数、常量，都属于此命名空间
+#+END_SRC
+
+#+CAPTION: 可以在一个文件中声明多个命名空间，但不是良好习惯。
+#+BEGIN_SRC php
+namespace Foo {
+}
+namespace Bar {
+}
+#+END_SRC
+
+*** 引用
+
+#+BEGIN_SRC php
+// 直接引用绝对命名空间，需要 \ 前缀
+$response = new \Symfony\Component\HttpFoundation\Response('Oops', 400);
+
+// 直接引用相对命名空间
+namespace Symfony\Component;
+$response = HttpFoundation\Response('Oops', 400);
+
+// use 引用绝对命名空间，不需要 \ 前缀（use 无法引用相对命名空间）
+use Symfony\Component\HttpFoundation\Response; // 隐式别名为 Response
+$response = new Response('Oops', 400);
+
+// use 显式别名引用
+use Symfony\Component\HttpFoundation\Response as Res;
+$response = new Res('Oops', 400);
+
+// use func/constant
+use func Namespace\functionName;
+use constant Namespace\CONST_NAME;
+functionName();
+echo CONST_NAME;
+#+END_SRC
+
+- 不指定命名空间时，默认引用属于当前命名空间的类、接口、函数、常量。
+- 引用另一个命名空间的代码时，必须使用全称（fully qualified name）。
+- =use= 可以在命名空间声明之后，但必须在全局范围内，不能在任何类或函数内。
+
+*** 全局命名空间
+
+没有命名空间的类、接口、函数、常量，属于全局命名空间。
+
+#+CAPTION: 引用全局命名空间的类
+#+BEGIN_SRC php
+namespace My\App;
+class Foo {
+    public function bar() {
+        $e = new \Exception(); // 当前代码是在 My\App 命名空间下，如果没有 \ 前缀，
+                               // PHP 会试图寻找 My\App\Exception 类
+    }
+}
+#+END_SRC
+
+#+CAPTION: 引用全局命名空间的函数
+#+BEGIN_SRC php
+namespace A\B\C;
+function fopen() {  // A\B\C 命名空间下的 fopen()
+     $f = \fopen(); // 全局命名空间下的 fopen()
+     return $f;
+}
+#+END_SRC
+
+*** 规范
+
+PHP 组件和框架通常将其代码放在全局唯一的 vendor 命名空间下。
+
+命名空间不一定映射到文件系统的结构，但为了兼容 PSR-4，大部分 PHP 组件将命名空间映射到文件系统。
+
+** 生成器
+
+- since PHP 5.5.0
+- compute and yield iteration values on-demand
+- used for iterating large or numerically sequenced data sets using less system memory
+- forward-only, impossible to rewind or fast-forward
+
+#+CAPTION: 示例
+#+BEGIN_SRC php
+// Generator
+function generator() {
+    yield 'value1';
+    yield 'value2';
+    yield 'value3';
+    // 无返回值
+}
+// Invoker
+foreach (generator() as $yield) {
+    echo $yield, PHP_EOL;
+}
+#+END_SRC
+
+Internal process
+- when invoking the generator function, PHP returns an object that belongs to the =Generator= class
+- during each iteration, PHP asks the =Generator= instance to compute and provide the next iteration value
+- the generator pauses its internal state whenever it yields a value
+- the generator resumes internal state when it is asked for the next value
+
+*** Compare with standard iterator
+
+Standard iterator
+- require implementing the Iterator interface
+- iterate in-memory, precomputed data sets
+- inefficient with large and formulaic data sets
+
+Standard iterator example
+#+BEGIN_SRC php
+<?php
+function makeRange($length) {
+    $dataset = [];
+    for ($i = 0; $i < $length; $i++) {
+        $dataset[] = $i;
+    }
+    return $dataset;
+}
+$customRange = makeRange(1000000); // allocate 1 million integers into a precomputed array
+foreach ($customRange as $i) {
+    echo $i, PHP_EOL;
+}
+#+END_SRC
+
+Generator example
+#+BEGIN_SRC php
+<?php
+function makeRange($length) {
+    for ($i = 0; $i < $length; $i++) {
+        yield $i;
+    }
+}
+foreach (makeRange(1000000) as $i) { // invoke with foreach()
+                                     // allocate memory for only 1 integer at any given time
+    echo $i, PHP_EOL;
+}
+#+END_SRC
+
+*** CSV generator example
+
+#+BEGIN_SRC php
+<?php
+function getRows($file) {
+    $handle = fopen($file, 'rb');
+    if ($handle === false) {
+        throw new Exception();
+    }
+    while (feof($handle) === false) {
+        yield fgetcsv($handle);
+    }
+    fclose($handle);
+}
+foreach (getRows('data.csv') as $row) { // allocate memory for one row at a time
+                                        // instead of reading the entire file into memory
+    print_r($row);
+}
+#+END_SRC
+
+* 框架
+
+#+ATTR_HTML: :class no-border
+| *CakePHP*     | 受 RoR 启发，坚持至简的原则（Keep It Simple Stupid） |
+|               | 优点：社区活跃，比 Zend 和 Symfony 简单              |
+|               | 缺点：编程方式有一些特殊要求                         |
+|---------------+------------------------------------------------------|
+| *CodeIgniter* | 优点：运行速度快，轻量，开发迅速，社区活跃，文档完整 |
+|               | 缺点：编程方式太自由                                 |
+|---------------+------------------------------------------------------|
+| *Laravel*     |                                                      |
+|---------------+------------------------------------------------------|
+| *Phalcon*     |                                                      |
+|---------------+------------------------------------------------------|
+| *Slim*        |                                                      |
+|---------------+------------------------------------------------------|
+| *Symfony*     | 优点：使用 ORM，有专属的模板引擎 Twig，社区活跃      |
+|               | 缺点：学习曲线陡                                     |
+|---------------+------------------------------------------------------|
+| *Yii*         | 优点：运行速度快，特性丰富                           |
+|---------------+------------------------------------------------------|
+| *Zend*        | 优点：企业级应用，Lucene 搜索特性                    |
+|               | 缺点：设计模式难以理解                               |
+
+* 命令
+** =php=
+
+#+BEGIN_SRC sh
+php <options> <file>
+
+    -a                # 交互 shell
+    -e                # 扩展信息模式，用做 debugger、profiler
+
+    -c <path>|<file>  # 设定查找 php.ini 的目录，或自定义 .ini 文件
+    -n                # 完全忽略 php.ini
+    --ini             # 输出配置文件目录和路径 
+
+    -d <direc>[=<value>] # 设置指令
+        <direc>          # 设为 1
+        <direc>=         # 设为 ""
+        <direc>=<value>  # 设为指定值
+
+    -f <file>         # 解析、执行指定文件，可省略 -f
+    -r <code>         # 执行代码
+    -B <code>         # 处理输入行之前执行代码
+    -r <code>         # 处理每行输入都执行代码
+    -E <code>         # 处理输入行之后执行代码
+
+    -i                # phpinfo()
+    -m                # 输出已加载的 PHP 和 Zend 模块
+    -v                # 输出 SAPI 名、PHP 和 Zend 版本
+
+    -S <addr>:<port>  # 启动内置 web server（PHP 5.4）
+    -t <path>         # 为内置 web server 设定根目录
+
+    -l                # 检查 PHP 语法
+    -s                # 生成语法高亮的 HTML 代码（<code>...</code>）
+    -w                # 去除代码中的注释和空白字符
+
+    -z <file>         # 加载 Zend 扩展
+
+    --rf <name>       # 输出函数、类方法的信息（参数个数、名称）
+    --rc <name>       # 输出类的信息（常量、成员、方法）
+    --re <name>       # 输出扩展的信息（php.ini 设置项、函数、常量、类）
+    --rz <name>       # 输出 Zend 扩展的信息（php.ini 设置项、函数、常量、类）
+    --ri <name>       # 输出扩展的配置信息
+#+END_SRC
+
+*** 参数
+
+#+BEGIN_SRC sh
+php <file> arg1 arg2 ...
+#+END_SRC
+
+传递给脚本的第一个参数是脚本文件名，所以 =$argc= 至少为 1， =$argv[0]= 为脚本文件名。
+
+*** 执行代码
+
+#+BEGIN_SRC sh
+php -r "$foo = get_defined_constants();"                 # 报错，shell 会试图替换 $foo
+php -r '$foo = get_defined_constants(); var_dump($foo);' # 使用单引号避免 shell 变量替换
+#+END_SRC
+
+*** 内置服务器
+
+#+CAPTION: 示例
+#+BEGIN_SRC sh
+$ php -S localhost:4000
+$ php -S 0.0.0.0:4000                         # 监听所有端口
+$ php -S localhost:8000 -c app/config/php.ini # 指定配置文件
+#+END_SRC
+
+- current working directory is the web server's document root be default
+- each HTTP request is logged to standard out in terminal
+- doesn't support .htaccess files, must use router script for front controllers
+
+*** Router script
+
+- executed before every HTTP request
+- if returns false, the static asset referenced by the HTTP request URI is returned
+- otherwise the output of the router script is returned as the HTTP response body
+- can be used to hardcode the functionality as an .htaccess file for front controllers
+
+#+BEGIN_SRC sh
+php -S localhost:8000 router.php
+#+END_SRC
+
+*** CGI
+
+| =-b= =--bindpath=  |   |
+|--------------------+---|
+| =-C= =--no-chdir=  |   |
+|--------------------+---|
+| =-q= =--no-header= |   |
+|--------------------+---|
+| =-T= =--timing=    |   |
+
+*** 进程
+
+| =-B= =--process-begin= |   |
+|------------------------+---|
+| =-R= =--process-code=  |   |
+|------------------------+---|
+| =-F= =--process-file=  |   |
+|------------------------+---|
+| =-E= =--process-end=   |   |
+
+** =phpenmod= =phpdismod=
+
+#+BEGIN_SRC sh
+phpenmod <extension>
+phpdismod <extension>
+#+END_SRC
+
+* 链接
+
+1. [[http://cn2.php.net/manual/en/][PHP Manual]]
+1. [[https://github.com/php/php-langspec][PHP Language Specifications]]
+1. [[http://php.net/manual/en/ini.list.php][List of php.ini directives]]

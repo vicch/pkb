@@ -1,0 +1,65 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: OOP Scrap
+
+* OOP Isn't a Fundamental Particle of Computing
+
+[[http://prog21.dadgum.com/156.html][Source]]
+
+The biggest change in programming over the last 25 years is that today you manipulate a set of useful, flexible data types, and 25 years ago you spent a disproportionately high amount of time building those data types yourself.
+
+C and Pascal - the standard languages of the time - provided a handful of machine-oriented types: numbers, pointers, arrays, the illusion of strings, and a way of tying multiple values together into a record or structure. The emphasis was on using these rudiments as stepping stones to engineer more interesting types, such as stacks, trees, linked lists, hash tables, and resizable arrays.
+
+In Perl or Python or Erlang, I don't think about this stuff. I use lists and strings and arrays with no concern about how many elements they contain or where the memory comes from. For almost everything else I use dictionaries, again no time spent worrying about size or details such as how hash collisions are handled.
+
+I still need new data types, but it's more a repurposing of what's already there than crafting a custom solution. A vector of arbitrary dimension is an array. An RGB color is a three-element tuple. A polynomial is either a tuple (where each value is the coefficient and the index is the degree) or a list of {Coefficient, Degree} tuples. It's surprising how arrays, tuples, lists, and dictionaries have eliminated much of the heavy lifting from the data structure courses I took in college. The focus when implementing a balanced binary tree is on how balanced binary trees work and not about suffering through a tangled web of pointer manipulation.
+
+Thinking about _how to arrange ready-made building blocks into something new_ is a more radical change than it may first appear. _How those building blocks themselves come into existence is no longer the primary concern._ In many programming courses and tutorials, everything is going along just fine when there's a sudden speed bump of vocabulary: objects and constructors and abstract base classes and private methods. Then in the next assignment the simple three-element tuple representing an RGB color is replaced by a class with getters and setters and multiple constructors and--most critically--a lot more code.
+
+This is where someone desperately needs to step in and explain why this is a bad idea and the death of fun, but it rarely happens.
+
+It's not that OOP is bad or even flawed. It's that _object-oriented programming isn't the fundamental particle of computing_ that some people want it to be. _When blindly applied to problems below an arbitrary complexity threshold, OOP can be verbose and contrived_, yet there's often an aesthetic insistence on objects for everything all the way down. That's too bad, because _it makes it harder to identify the cases where an object-oriented style truly results in an overall simplicity and ease of understanding_.
+* Don't Get Obsessed With Design Patterns
+
+[[https://simpleprogrammer.com/dont-get-obsessed-design-patterns/][Source]]
+
+_Knowing object-oriented design principles and applying best practices like SOLID, KISS and YAGNI are far more important than design patterns themselves._ If you apply these principles, patterns will come out naturally.
+
+Most design patterns have something in common: _to apply them, you need to lay out some structure,_ such as new classes and/or interfaces. _The cost and potential benefit need to be considered before applying a design pattern._ Doing it only for the sake of doing it will make the code more complex than it needs to be.
+
+Sometimes we look at a piece of code, we cringe at how ugly it is, and we notice instantly that a pattern may make it better. But what if it works and doesn't need to be changed?
+
+For example, to create a music sheet displaying app, we need one class per type of clef. The app is going to support all clefs based on the 3 basic ones: the C, the F and the G clef. The function that returns the correct instance of clef:
+
+#+BEGIN_SRC php
+function getClef($note, $octave) {
+    switch ($note) {
+        case 'C':
+            switch ($octave) {
+                case 1: return new C1Clef();
+                case 2: return new C2Clef();
+                case 3: return new C3Clef();
+                case 4: return new C4Clef();
+                case 5: return new C5Clef();
+                default: throw new UnknownClefException();
+            }
+        case 'F':
+            switch ($octave) {
+                case 3: return new F3Clef();
+                case 4: return new F4Clef();
+                case 5: return new F5Clef();
+                default: throw new UnknownClefException();
+            }
+        case 'G': 
+            switch ($octave) {
+                case 1: return new G1Clef();
+                case 2: return new G2Clef();
+                default: throw new UnknownClefException();
+            }
+        default: throw new UnknownClefException();
+    }
+}
+#+END_SRC
+
+It's easy to think of applying the Factory Method pattern, and it would definitely make the code cleaner. But what if this code is not going to change ever? It seems unrealistic that new notes are going to be invented in the future, so we can safely assume that no clefs or notes will be added.
+
+When writing new code from scratch, it's fairly easy to recognize the need for a pattern as you go along. However, taking old code and making it use a design pattern is more challenging. You need to fullt understand what the code does before touching it. Figuring this out can be the easiest or the most painful experience, depending on how convoluted the code is.

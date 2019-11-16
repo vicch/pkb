@@ -1,0 +1,1544 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-10-20 Sun 21:03 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Go</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Go</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgcad6307">1 Type</a>
+<ul>
+<li><a href="#org80cf1a2">1.1 Boolean</a></li>
+<li><a href="#org388e568">1.2 Number</a></li>
+<li><a href="#org2c007d2">1.3 String</a></li>
+<li><a href="#orgd6d7c6a">1.4 Array</a>
+<ul>
+<li><a href="#org7bb935a">1.4.1 数组分片</a></li>
+<li><a href="#org082349a">1.4.2 手动分片</a></li>
+<li><a href="#orgb5a7b54">1.4.3 长度和容量</a></li>
+</ul>
+</li>
+<li><a href="#org2ba7aba">1.5 Map</a></li>
+<li><a href="#org8c9c75d">1.6 Pointer</a></li>
+<li><a href="#org442e2c7">1.7 Channel</a></li>
+</ul>
+</li>
+<li><a href="#orgc1afa7a">2 Type Usage</a>
+<ul>
+<li><a href="#org6ae33f8">2.1 Custom Type</a></li>
+<li><a href="#orgcb51bb1">2.2 Assertion</a></li>
+<li><a href="#org3d44a20">2.3 Casting</a></li>
+</ul>
+</li>
+<li><a href="#orgb2f49e6">3 Struct</a>
+<ul>
+<li><a href="#orgd6b0c27">3.1 Syntax</a></li>
+<li><a href="#org853dc84">3.2 Struct Extension</a></li>
+</ul>
+</li>
+<li><a href="#org6db4c6b">4 Interface</a>
+<ul>
+<li><a href="#org0aae6de">4.1 Interface Implementation</a></li>
+</ul>
+</li>
+<li><a href="#org27c5f8f">5 变量</a>
+<ul>
+<li><a href="#orge7273aa">5.1 语法</a></li>
+</ul>
+</li>
+<li><a href="#org7327f03">6 常量</a></li>
+<li><a href="#org3023653">7 语句</a>
+<ul>
+<li><a href="#orge494f53">7.1 <code>defer</code></a></li>
+<li><a href="#org82e3724">7.2 <code>for</code></a></li>
+<li><a href="#orgf727a91">7.3 <code>go</code></a></li>
+<li><a href="#org8a0a8d6">7.4 <code>if</code></a></li>
+<li><a href="#org11e30dd">7.5 <code>range</code></a></li>
+<li><a href="#org34248ec">7.6 <code>switch</code></a></li>
+</ul>
+</li>
+<li><a href="#org497cf5a">8 Function</a>
+<ul>
+<li><a href="#org2e3471b">8.1 参数</a>
+<ul>
+<li><a href="#org0a5650a">8.1.1 Variadic Parameter</a></li>
+</ul>
+</li>
+<li><a href="#orgd416349">8.2 返回值</a></li>
+<li><a href="#org6021b7e">8.3 函数类型</a></li>
+<li><a href="#orgeb1f8f6">8.4 函数字面量</a></li>
+</ul>
+</li>
+<li><a href="#org3b46a60">9 方法</a>
+<ul>
+<li><a href="#org3818b4d">9.1 示例</a></li>
+<li><a href="#org2d0757f">9.2 Receiver</a></li>
+<li><a href="#orgd1989f4">9.3 内置类型</a></li>
+</ul>
+</li>
+<li><a href="#org251a113">10 包</a>
+<ul>
+<li><a href="#org2105fb8">10.1 <code>package</code></a></li>
+<li><a href="#org0bd47ce">10.2 <code>import</code></a></li>
+<li><a href="#orgf000e0a">10.3 可见性</a></li>
+</ul>
+</li>
+<li><a href="#orgf1f0130">11 测试</a></li>
+<li><a href="#org795b54c">12 环境</a>
+<ul>
+<li><a href="#org0e1ae7a">12.1 <code>GOPATH</code></a></li>
+<li><a href="#orgd69ae8d">12.2 工作区</a></li>
+</ul>
+</li>
+<li><a href="#orgaedf75d">13 Command</a>
+<ul>
+<li><a href="#orgb458e20">13.1 <code>go</code></a></li>
+</ul>
+</li>
+<li><a href="#org24b5437">14 Links</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgcad6307" class="outline-2">
+<h2 id="orgcad6307"><span class="section-number-2">1</span> Type</h2>
+<div class="outline-text-2" id="text-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>Value types</b></th>
+<th scope="col" class="org-left">boolean, number, string, struct</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>Reference types</b></td>
+<td class="org-left">slice, map, channel, pointer, function</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-org80cf1a2" class="outline-3">
+<h3 id="org80cf1a2"><span class="section-number-3">1.1</span> Boolean</h3>
+<div class="outline-text-3" id="text-1-1">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-constant">true</span>
+<span class="org-constant">false</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org388e568" class="outline-3">
+<h3 id="org388e568"><span class="section-number-3">1.2</span> Number</h3>
+<div class="outline-text-3" id="text-1-2">
+<div class="org-src-container">
+<pre class="src src-go">uint8       <span class="org-comment-delimiter">// </span><span class="org-comment">0 to 255</span>
+uint16      <span class="org-comment-delimiter">// </span><span class="org-comment">0 to 65535</span>
+uint32      <span class="org-comment-delimiter">// </span><span class="org-comment">0 to 4294967295</span>
+uint64      <span class="org-comment-delimiter">// </span><span class="org-comment">0 to 18446744073709551615</span>
+
+int8        <span class="org-comment-delimiter">// </span><span class="org-comment">-128 to 127</span>
+int16       <span class="org-comment-delimiter">// </span><span class="org-comment">-32768 to 32767</span>
+int32       <span class="org-comment-delimiter">// </span><span class="org-comment">-2147483648 to 2147483647</span>
+int64       <span class="org-comment-delimiter">// </span><span class="org-comment">-9223372036854775808 to 9223372036854775807</span>
+
+byte        <span class="org-comment-delimiter">// </span><span class="org-comment">alias for uint8</span>
+rune        <span class="org-comment-delimiter">// </span><span class="org-comment">alias for int32</span>
+
+float32     <span class="org-comment-delimiter">// </span><span class="org-comment">IEEE-754 32-bit floating-point number</span>
+float64     <span class="org-comment-delimiter">// </span><span class="org-comment">IEEE-754 64-bit floating-point number</span>
+
+complex64   <span class="org-comment-delimiter">// </span><span class="org-comment">complex number with float32 real and imaginary parts</span>
+complex128  <span class="org-comment-delimiter">// </span><span class="org-comment">complex number with float64 real and imaginary parts</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-go">100  <span class="org-comment-delimiter">// </span><span class="org-comment">&#26222;&#36890;&#34920;&#31034;&#27861;</span>
+1e9  <span class="org-comment-delimiter">// </span><span class="org-comment">&#31185;&#23398;&#35745;&#25968;&#27861;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2c007d2" class="outline-3">
+<h3 id="org2c007d2"><span class="section-number-3">1.3</span> String</h3>
+<div class="outline-text-3" id="text-1-3">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-string">"string"</span> <span class="org-comment-delimiter">// </span><span class="org-comment">Interpreted string literal</span>
+<span class="org-string">`string`</span> <span class="org-comment-delimiter">// </span><span class="org-comment">Raw string literal</span>
+<span class="org-string">'s'</span>      <span class="org-comment-delimiter">// </span><span class="org-comment">Character literal</span>
+
+str := <span class="org-string">"foo"</span> + <span class="org-string">"bar"</span> <span class="org-comment-delimiter">// </span><span class="org-comment">Concatenation</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Equality</span>
+str1 := <span class="org-string">"apple"</span>
+str2 := <span class="org-string">"a"</span> + <span class="org-string">"pple"</span>
+compare1 := (str1 == str2)   <span class="org-comment-delimiter">// </span><span class="org-comment">true</span>
+compare2 := (&amp;str1 == &amp;str2) <span class="org-comment-delimiter">// </span><span class="org-comment">false</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">Compare</span>
+str3 := <span class="org-string">"banana"</span>
+compare3 := (str1 &lt; str3) <span class="org-comment-delimiter">// </span><span class="org-comment">true</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd6d7c6a" class="outline-3">
+<h3 id="orgd6d7c6a"><span class="section-number-3">1.4</span> Array</h3>
+<div class="outline-text-3" id="text-1-4">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">var</span> a [2]<span class="org-type">string</span>
+a := <span class="org-builtin">make</span>([]<span class="org-type">string</span>, 2)
+a[0] = <span class="org-string">"foo"</span>
+
+b := [3]<span class="org-type">int</span>{1, 2, 3} <span class="org-comment-delimiter">// </span><span class="org-comment">&#22768;&#26126;&#21152;&#21021;&#22987;&#21270;</span>
+
+c := []<span class="org-type">int</span>{4, 5, 6}  <span class="org-comment-delimiter">// </span><span class="org-comment">&#21021;&#22987;&#21270;&#21487;&#30465;&#30053;&#38271;&#24230;</span>
+
+d := [][]<span class="org-type">string</span>{     <span class="org-comment-delimiter">// </span><span class="org-comment">&#22810;&#32500;&#25968;&#32452;&#21021;&#22987;&#21270;</span>
+    []<span class="org-type">string</span>{<span class="org-string">"a"</span>, <span class="org-string">"b"</span>},
+    []<span class="org-type">string</span>{<span class="org-string">"c"</span>, <span class="org-string">"d"</span>}
+}
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org7bb935a" class="outline-4">
+<h4 id="org7bb935a"><span class="section-number-4">1.4.1</span> 数组分片</h4>
+<div class="outline-text-4" id="text-1-4-1">
+<ul class="org-ul">
+<li>数组是原始数据类型，创建之后大小无法改变，很少被直接使用。</li>
+<li>分片是对数组的引用，分片的大小可以变化。</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="../images/go/01.png" alt="01.png" />
+</p>
+</div>
+
+<p>
+当创建一个数组时，Go 其实同时创建了两个数据结构：底层的数组，和引用此数组的分片，分片中包含：指向数组的指针、长度、容量。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/go/02.png" alt="02.png" />
+</p>
+</div>
+
+<p>
+由于函数参数为传值，因此当分片作为参数时，传入的其实是对底层数组的引用，修改此分片的字段值将修改底层的数组元素值。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/go/03.png" alt="03.png" />
+</p>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 1: </span>分片作参数时传递引用</label><pre class="src src-go"><span class="org-keyword">func</span> <span class="org-function-name">Foo</span>(a []<span class="org-type">int</span>) {
+    a[0] += 10
+}
+a := []<span class="org-type">int</span>{1, 2, 3}
+<span class="org-function-name">Foo</span>(a) <span class="org-comment-delimiter">// </span><span class="org-comment">a = {11, 2, 3}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org082349a" class="outline-4">
+<h4 id="org082349a"><span class="section-number-4">1.4.2</span> 手动分片</h4>
+<div class="outline-text-4" id="text-1-4-2">
+<p>
+除了创建数组时自动生成的分片，也可以手动创建数组的分片。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go">a := []<span class="org-type">int</span>{10, 11, 12, 13}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">from &#21253;&#21547;&#65292;to &#19981;&#21253;&#21547;</span>
+b := a[1:3] <span class="org-comment-delimiter">// </span><span class="org-comment">b = {11, 12}</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">from &#40664;&#35748;&#20026; 0&#65292;to &#40664;&#35748;&#20026;&#25968;&#32452;&#38271;&#24230;</span>
+b := a[:] <span class="org-comment-delimiter">// </span><span class="org-comment">b = {10, 11, 12, 13}</span>
+
+b, c := a[:2], a[2:] <span class="org-comment-delimiter">// </span><span class="org-comment">b = {10, 11}</span>
+                     <span class="org-comment-delimiter">// </span><span class="org-comment">c = {12, 13}</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#20998;&#29255;&#26159;&#23545;&#21407;&#25968;&#32452;&#30340;&#24341;&#29992;</span>
+a[0] = 14 <span class="org-comment-delimiter">// </span><span class="org-comment">b = {14, 11}</span>
+          <span class="org-comment-delimiter">// </span><span class="org-comment">c = {12, 13}</span>
+b[1] = 15 <span class="org-comment-delimiter">// </span><span class="org-comment">a = {14, 15, 12, 13}            </span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb5a7b54" class="outline-4">
+<h4 id="orgb5a7b54"><span class="section-number-4">1.4.3</span> 长度和容量</h4>
+<div class="outline-text-4" id="text-1-4-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>Length</b></th>
+<th scope="col" class="org-left">分片的元素数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>Capacity</b></td>
+<td class="org-left">分片引用的数组中，从此分片的第一个元素，到数组的最后一个元素的元素数</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<pre class="src src-go">a := []<span class="org-type">int</span>{1, 3, 5, 7} <span class="org-comment-delimiter">// </span><span class="org-comment">len = 4, cap = 4</span>
+a  = a[:0]             <span class="org-comment-delimiter">// </span><span class="org-comment">len = 0, cap = 4</span>
+a  = a[:2]             <span class="org-comment-delimiter">// </span><span class="org-comment">len = 2, cap = 4</span>
+a  = a[2:]             <span class="org-comment-delimiter">// </span><span class="org-comment">len = 2, cap = 2</span>
+
+b = []<span class="org-type">int</span>              <span class="org-comment-delimiter">// </span><span class="org-comment">len = 0, cap = 0</span>
+                       <span class="org-comment-delimiter">// </span><span class="org-comment">&#31354;&#20998;&#29255;&#38271;&#24230;&#21644;&#23481;&#37327;&#37117;&#20026; 0</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2ba7aba" class="outline-3">
+<h3 id="org2ba7aba"><span class="section-number-3">1.5</span> Map</h3>
+<div class="outline-text-3" id="text-1-5">
+<div class="org-src-container">
+<pre class="src src-code">map[&lt;ktype&gt;]&lt;vtype&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">var</span> a <span class="org-keyword">map</span>[<span class="org-type">string</span>]<span class="org-type">int</span>
+a := <span class="org-builtin">make</span>(<span class="org-keyword">map</span>[<span class="org-type">string</span>]<span class="org-type">int</span>)
+
+a := <span class="org-keyword">map</span>[<span class="org-type">string</span>]<span class="org-type">int</span>{
+    <span class="org-string">"foo"</span>: 1,
+    <span class="org-string">"bar"</span>: 2, <span class="org-comment-delimiter">// </span><span class="org-comment">&#27599;&#34892;&#24517;&#39035;&#20197; , &#32467;&#23614;</span>
+}
+
+a[<span class="org-string">"foo"</span>] = 1
+
+v = a[<span class="org-string">"foo"</span>]
+v, ok = a[<span class="org-string">"bar"</span>] <span class="org-comment-delimiter">// </span><span class="org-comment">&#35835;&#21462;&#24182;&#27979;&#35797;&#20540;&#26159;&#21542;&#23384;&#22312;&#65292;v = nil&#65292;ok = false</span>
+_, ok = a[<span class="org-string">"foo"</span>] <span class="org-comment-delimiter">// </span><span class="org-comment">&#21482;&#27979;&#35797;&#20540;&#26159;&#21542;&#23384;&#22312;</span>
+
+<span class="org-builtin">delete</span>(a, <span class="org-string">"foo"</span>)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8c9c75d" class="outline-3">
+<h3 id="org8c9c75d"><span class="section-number-3">1.6</span> Pointer</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+指针无法进行数学运算，或与数组交替使用（C 语言风格）。
+</p>
+
+<p>
+Go 记录指针和对象的引用关系，对象的内存空间在所有引用其的指针被销毁前不会被回收（deallocate）。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">var</span> a *string
+b := <span class="org-string">"foo"</span>
+a := &amp;b
+*a = <span class="org-string">"bar"</span>
+
+<span class="org-keyword">type</span> <span class="org-type">Foo</span> <span class="org-keyword">struct</span> {
+    x, y int32
+}
+c := <span class="org-type">Foo</span>{1, 2}
+d := &amp;c
+d.x = 3 <span class="org-comment-delimiter">// </span><span class="org-comment">&#32467;&#26500;&#20307;&#25351;&#38024;&#21487;&#20197;&#30465;&#30053; *</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org442e2c7" class="outline-3">
+<h3 id="org442e2c7"><span class="section-number-3">1.7</span> Channel</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+频道（channel）用于线程间通信，多个线程可以通过一个频道收发消息。
+</p>
+
+<p>
+频道的类型即可通过此频道交换的数据的类型，如 <code>int</code> <code>string</code> 。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go">ch := <span class="org-builtin">make</span>(<span class="org-keyword">chan</span> <span class="org-type">string</span>)
+
+ch &lt;- <span class="org-string">"foo"</span> <span class="org-comment-delimiter">// </span><span class="org-comment">&#21521;&#39057;&#36947;&#21457;&#36865;&#28040;&#24687;</span>
+
+v &lt;- ch            <span class="org-comment-delimiter">// </span><span class="org-comment">&#31561;&#24453;&#39057;&#36947;&#25509;&#25910;&#28040;&#24687;&#65292;&#24182;&#36171;&#20540;&#32473;&#21464;&#37327;</span>
+fmt.<span class="org-function-name">Println</span>(&lt;- ch) <span class="org-comment-delimiter">// </span><span class="org-comment">&#31561;&#24453;&#39057;&#36947;&#25509;&#25910;&#28040;&#24687;&#65292;&#24182;&#25171;&#21360;&#36755;&#20986;</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#25171;&#21360;&#39057;&#36947;&#20013;&#25152;&#26377;&#28040;&#24687;&#65292;&#20004;&#31181;&#26041;&#24335;&#31561;&#20215;</span>
+<span class="org-keyword">for</span> s := <span class="org-keyword">range</span> ch {
+    fmt.<span class="org-function-name">Println</span>(s)
+}
+<span class="org-keyword">for</span> {
+    fmt.<span class="org-function-name">Println</span>(&lt;- ch)
+}
+</pre>
+</div>
+
+<p>
+等待频道接收数据 <code>&lt;- ch</code> 为阻塞过程，频道接收到数据时解除阻塞。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc1afa7a" class="outline-2">
+<h2 id="orgc1afa7a"><span class="section-number-2">2</span> Type Usage</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-org6ae33f8" class="outline-3">
+<h3 id="org6ae33f8"><span class="section-number-3">2.1</span> Custom Type</h3>
+<div class="outline-text-3" id="text-2-1">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">type</span> <span class="org-type">&lt;name&gt;</span> Type
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#23450;&#20041;&#21518;&#65292;&lt;name&gt; &#23558;&#23436;&#20840;&#31561;&#20215;&#20110;&#25351;&#23450;&#30340; Type</span>
+<span class="org-keyword">type</span> <span class="org-type">color</span> <span class="org-type">string</span>
+foo := <span class="org-function-name">color</span>(<span class="org-string">"red"</span>)
+
+<span class="org-keyword">type</span> <span class="org-type">list</span> []<span class="org-type">string</span>
+bar := <span class="org-type">list</span>{<span class="org-string">"a"</span>, <span class="org-string">"b"</span>}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcb51bb1" class="outline-3">
+<h3 id="orgcb51bb1"><span class="section-number-3">2.2</span> Assertion</h3>
+<div class="outline-text-3" id="text-2-2">
+<div class="org-src-container">
+<pre class="src src-go">&lt;name&gt;.(<span class="org-type">Type</span>)
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 2: </span>类型断言用于类型判断</label><pre class="src src-go"><span class="org-keyword">switch</span> foo.(<span class="org-keyword">type</span>) {
+    <span class="org-keyword">case</span> int:
+        ...
+    <span class="org-keyword">case</span> string:
+        ...
+    <span class="org-keyword">default</span>:
+        fmt.<span class="org-function-name">Printf</span>(<span class="org-string">"Unknown type: %T\n"</span>, t)
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 3: </span>类型断言用于读取接口变量的实际（基础类型）值</label><pre class="src src-go"><span class="org-keyword">var</span> i <span class="org-keyword">interface</span>{} = <span class="org-string">"hello"</span>
+
+fmt.<span class="org-function-name">Println</span>(i.(<span class="org-type">string</span>))  <span class="org-comment-delimiter">// </span><span class="org-comment">OK: hello</span>
+fmt.<span class="org-function-name">Println</span>(i.(<span class="org-type">float64</span>)) <span class="org-comment-delimiter">// </span><span class="org-comment">Panic: &#31867;&#22411;&#19981;&#21305;&#37197;</span>
+
+s, ok := i.(<span class="org-type">string</span>)  <span class="org-comment-delimiter">// </span><span class="org-comment">s = hello, ok = true</span>
+f, ok := i.(<span class="org-type">float64</span>) <span class="org-comment-delimiter">// </span><span class="org-comment">f = 0, ok = false</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3d44a20" class="outline-3">
+<h3 id="org3d44a20"><span class="section-number-3">2.3</span> Casting</h3>
+<div class="outline-text-3" id="text-2-3">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-function-name">Type</span>(&lt;name&gt;)
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 4: </span>定义指定类型变量</label><pre class="src src-go">foo := <span class="org-function-name">uint8</span>(99)
+bar := <span class="org-function-name">string</span>(<span class="org-string">"test"</span>)
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 5: </span>类型转换</label><pre class="src src-go">foo := <span class="org-string">"test"</span>
+bar := []<span class="org-function-name">byte</span>(foo)
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 6: </span>不同类型变量的赋值必须进行显式类型转换</label><pre class="src src-go"><span class="org-keyword">var</span> i int = 1
+f := <span class="org-function-name">float64</span>(i)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb2f49e6" class="outline-2">
+<h2 id="orgb2f49e6"><span class="section-number-2">3</span> Struct</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-orgd6b0c27" class="outline-3">
+<h3 id="orgd6b0c27"><span class="section-number-3">3.1</span> Syntax</h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">type</span> <span class="org-type">Foo</span> <span class="org-keyword">struct</span> {
+    x, y int32 <span class="org-comment-delimiter">// </span><span class="org-comment">Lowercase initial, invisible outside of pacakge</span>
+    Z string   <span class="org-comment-delimiter">// </span><span class="org-comment">Uppercase initial, visible outside of package</span>
+}
+
+a := <span class="org-type">Foo</span>{1, 2} <span class="org-comment-delimiter">// </span><span class="org-comment">Field names optional, will assign in same order</span>
+a := <span class="org-type">Foo</span>{x: 1, y: 2}
+a := <span class="org-type">Foo</span>{
+    <span class="org-constant">x</span>: 1,
+    <span class="org-constant">y</span>: 2, <span class="org-comment-delimiter">// </span><span class="org-comment">&#20889;&#20316;&#22810;&#34892;&#26102;&#65292;&#27599;&#34892;&#24517;&#39035;&#20197; , &#32467;&#23614;</span>
+}
+
+b := <span class="org-type">Foo</span>{x: 1} <span class="org-comment-delimiter">// </span><span class="org-comment">&#26410;&#25351;&#23450;&#30340;&#25104;&#21592;&#40664;&#35748;&#20026;&#38646;&#20540;&#65292;b = {x: 1, y: 0}</span>
+b.y = 2
+
+c := [] <span class="org-keyword">struct</span> {
+    i int
+    b bool
+} {
+    {1, <span class="org-constant">true</span>},
+    {2, <span class="org-constant">false</span>},
+}
+
+d := <span class="org-keyword">map</span>[<span class="org-type">string</span>]<span class="org-type">Foo</span>{
+    <span class="org-string">"foo"</span>: <span class="org-type">Foo</span>{1, 2},
+    <span class="org-string">"bar"</span>: <span class="org-type">Foo</span>{3, 4},
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org853dc84" class="outline-3">
+<h3 id="org853dc84"><span class="section-number-3">3.2</span> Struct Extension</h3>
+<div class="outline-text-3" id="text-3-2">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">type</span> <span class="org-type">person</span> <span class="org-keyword">struct</span> {
+    name string
+}
+
+<span class="org-keyword">type</span> <span class="org-type">account</span> <span class="org-keyword">struct</span> {
+    person <span class="org-comment-delimiter">// </span><span class="org-comment">Name can be omitted is same as type</span>
+    balance int32
+}
+
+<span class="org-keyword">func</span> (p <span class="org-type">person</span>) <span class="org-function-name">output</span>() {
+    fmt.<span class="org-function-name">Println</span>(<span class="org-string">"Person name is"</span>, p.name)
+}
+
+account1 := <span class="org-type">account</span>{
+    <span class="org-type">person</span>{
+        <span class="org-string">"Foo"</span>,
+    },
+    100,
+}
+fmt.<span class="org-function-name">Println</span>(account1.name)        <span class="org-comment-delimiter">// </span><span class="org-comment">Foo (falls back to account1.person.name)</span>
+fmt.<span class="org-function-name">Println</span>(account1.person.name) <span class="org-comment-delimiter">// </span><span class="org-comment">Foo</span>
+account1.<span class="org-function-name">output</span>()                 <span class="org-comment-delimiter">// </span><span class="org-comment">Person name is Foo (falls back to account1.person.output())</span>
+account1.person.<span class="org-function-name">output</span>()          <span class="org-comment-delimiter">// </span><span class="org-comment">Person name is Foo</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">type</span> <span class="org-type">person</span> <span class="org-keyword">struct</span> {
+    name string
+}
+
+<span class="org-keyword">type</span> <span class="org-type">account</span> <span class="org-keyword">struct</span> {
+    person
+    name string <span class="org-comment-delimiter">// </span><span class="org-comment">Takes precedence over person.name</span>
+    balance int32
+}
+
+<span class="org-keyword">func</span> (p <span class="org-type">person</span>) <span class="org-function-name">output</span>() {
+    fmt.<span class="org-function-name">Println</span>(<span class="org-string">"Person name is"</span>, p.name)
+}
+
+<span class="org-keyword">func</span> (a <span class="org-type">account</span>) <span class="org-function-name">output</span>() { <span class="org-comment-delimiter">// </span><span class="org-comment">Take precedence over person.output()</span>
+    fmt.<span class="org-function-name">Println</span>(<span class="org-string">"Account name is"</span>, a.name)
+}
+
+account1 := <span class="org-type">account</span>{
+    <span class="org-type">person</span>{
+        <span class="org-string">"Foo"</span>,
+    },
+    <span class="org-string">"Bar"</span>,
+    100,
+}
+fmt.<span class="org-function-name">Println</span>(account1.name)        <span class="org-comment-delimiter">// </span><span class="org-comment">Bar</span>
+fmt.<span class="org-function-name">Println</span>(account1.person.name) <span class="org-comment-delimiter">// </span><span class="org-comment">Foo</span>
+account1.<span class="org-function-name">output</span>()                 <span class="org-comment-delimiter">// </span><span class="org-comment">Account name is Bar</span>
+account1.person.<span class="org-function-name">output</span>()          <span class="org-comment-delimiter">// </span><span class="org-comment">Person name is Foo</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6db4c6b" class="outline-2">
+<h2 id="org6db4c6b"><span class="section-number-2">4</span> Interface</h2>
+<div class="outline-text-2" id="text-4">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">type</span> <span class="org-type">&lt;name&gt;</span> <span class="org-keyword">interface</span> {
+    &lt;method&gt;() &lt;<span class="org-keyword">type</span>&gt;
+}
+</pre>
+</div>
+
+<p>
+空接口 <code>interface{}</code> 可存放任何值，因此可用于定义可接受任何基础类型的函数：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">var</span> foo <span class="org-keyword">interface</span>{} = 10
+<span class="org-keyword">var</span> bar <span class="org-keyword">interface</span>{} = <span class="org-string">"string"</span>
+
+<span class="org-keyword">func</span> <span class="org-function-name">foo</span>(i <span class="org-keyword">interface</span>{}) {
+    fmt.<span class="org-function-name">Printf</span>(<span class="org-string">"Type is %T\n"</span>, i)
+}
+
+<span class="org-function-name">foo</span>(1)        <span class="org-comment-delimiter">// </span><span class="org-comment">Type is int</span>
+<span class="org-function-name">foo</span>(<span class="org-string">"string"</span>) <span class="org-comment-delimiter">// </span><span class="org-comment">Type is string</span>
+<span class="org-function-name">foo</span>(<span class="org-constant">false</span>)    <span class="org-comment-delimiter">// </span><span class="org-comment">Type is bool</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org0aae6de" class="outline-3">
+<h3 id="org0aae6de"><span class="section-number-3">4.1</span> Interface Implementation</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+任何实现了接口中定义的方法的类型，即隐式实现了该接口，这种方式称为 duck typing。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">type</span> <span class="org-type">Obj</span> <span class="org-keyword">interface</span> {
+    <span class="org-function-name">GetType</span>() string
+}
+
+<span class="org-keyword">func</span> <span class="org-function-name">PrintType</span>(o <span class="org-type">Obj</span>) { <span class="org-comment-delimiter">// </span><span class="org-comment">&#25509;&#21475;&#21482;&#33021;&#20316;&#20026;&#20989;&#25968;&#21442;&#25968;&#65292;&#19981;&#33021;&#20316;&#20026;&#26041;&#27861; receiver</span>
+    fmt.<span class="org-function-name">Println</span>(o.GetType)
+}
+
+<span class="org-keyword">type</span> <span class="org-type">Foo</span> <span class="org-keyword">struct</span> {}
+<span class="org-keyword">type</span> <span class="org-type">Bar</span> <span class="org-keyword">struct</span> {}
+
+<span class="org-keyword">func</span> (f <span class="org-type">Foo</span>) <span class="org-function-name">GetType</span>() <span class="org-type">string</span> { <span class="org-keyword">return</span> <span class="org-string">"Foo"</span> } <span class="org-comment-delimiter">// </span><span class="org-comment">Foo &#31867;&#22411;&#23454;&#29616;&#20102; Obj &#25509;&#21475;</span>
+<span class="org-keyword">func</span> (b <span class="org-type">Bar</span>) <span class="org-function-name">GetType</span>() <span class="org-type">string</span> { <span class="org-keyword">return</span> <span class="org-string">"Bar"</span> } <span class="org-comment-delimiter">// </span><span class="org-comment">Bar &#31867;&#22411;&#23454;&#29616;&#20102; Obj &#25509;&#21475;</span>
+
+<span class="org-keyword">func</span> <span class="org-function-name">main</span>() {
+    <span class="org-function-name">PrintType</span>(<span class="org-type">Foo</span>{})
+    <span class="org-function-name">PrintType</span>(<span class="org-type">Bar</span>{})
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org27c5f8f" class="outline-2">
+<h2 id="org27c5f8f"><span class="section-number-2">5</span> 变量</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-orge7273aa" class="outline-3">
+<h3 id="orge7273aa"><span class="section-number-3">5.1</span> 语法</h3>
+<div class="outline-text-3" id="text-5-1">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-comment-delimiter">// </span><span class="org-comment">&#22768;&#26126;&#26410;&#21021;&#22987;&#21270;&#30340;&#21464;&#37327;&#20026;&#38646;&#20540;</span>
+<span class="org-keyword">var</span> foo int <span class="org-comment-delimiter">// </span><span class="org-comment">foo = 0</span>
+<span class="org-keyword">var</span> foo, bar int
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#22768;&#26126;&#21152;&#21021;&#22987;&#21270;</span>
+<span class="org-keyword">var</span> foo int = 1
+<span class="org-keyword">var</span> foo, bar int = 1, 2
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#21021;&#22987;&#21270;&#21487;&#20197;&#30465;&#30053;&#31867;&#22411;</span>
+<span class="org-keyword">var</span> foo = 1
+<span class="org-keyword">var</span> foo, bar = 1, <span class="org-string">"test"</span>
+
+<span class="org-keyword">var</span> (
+    foo = 1
+    bar = <span class="org-string">"test"</span>
+)
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#22768;&#26126;&#21152;&#21021;&#22987;&#21270;&#31616;&#20889;&#65292;&#21482;&#33021;&#22312;&#20989;&#25968;&#20307;&#20869;&#20351;&#29992;</span>
+foo := 1
+foo, bar := 1, <span class="org-string">"test"</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#21021;&#22987;&#20540;&#20026;&#25968;&#23383;&#26102;&#65292;&#31867;&#22411;&#30001;&#20540;&#30340;&#31934;&#30830;&#24230;&#20915;&#23450;</span>
+a := 1            <span class="org-comment-delimiter">// </span><span class="org-comment">int</span>
+b := 3.142        <span class="org-comment-delimiter">// </span><span class="org-comment">float64</span>
+c := 0.867 + 0.5i <span class="org-comment-delimiter">// </span><span class="org-comment">complex128</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7327f03" class="outline-2">
+<h2 id="org7327f03"><span class="section-number-2">6</span> 常量</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+常量可以是布尔、数字、字符串类型。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">const</span> a string = <span class="org-string">"constant"</span>
+
+<span class="org-keyword">func</span> <span class="org-function-name">main</span>() {
+    <span class="org-keyword">const</span> b = 500000000
+    <span class="org-keyword">const</span> c = 3e20 / d <span class="org-comment-delimiter">// </span><span class="org-comment">&#21487;&#20197;&#24341;&#29992;&#20854;&#20182;&#24120;&#37327;</span>
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3023653" class="outline-2">
+<h2 id="org3023653"><span class="section-number-2">7</span> 语句</h2>
+<div class="outline-text-2" id="text-7">
+</div><div id="outline-container-orge494f53" class="outline-3">
+<h3 id="orge494f53"><span class="section-number-3">7.1</span> <code>defer</code></h3>
+<div class="outline-text-3" id="text-7-1">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">defer</span> &lt;stat&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">func</span> <span class="org-function-name">foo</span>() {
+    <span class="org-keyword">defer</span> fmt.<span class="org-function-name">Println</span>(<span class="org-string">"deferred line"</span>)  <span class="org-comment-delimiter">// </span><span class="org-comment">&#24310;&#36831;&#21040;&#20989;&#25968;&#36820;&#22238;&#21069;&#25191;&#34892;</span>
+    fmt.<span class="org-function-name">Println</span>(<span class="org-string">"normal line"</span>)
+    <span class="org-keyword">return</span>
+}
+<span class="org-comment-delimiter">// </span><span class="org-comment">normal line</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">deferred line</span>
+
+<span class="org-keyword">func</span> <span class="org-function-name">foo</span>() {
+    <span class="org-keyword">defer</span> fmt.<span class="org-function-name">Println</span>(<span class="org-string">"1 + 1 ="</span>, <span class="org-function-name">bar</span>(1)) <span class="org-comment-delimiter">// </span><span class="org-comment">&#24310;&#36831;&#35821;&#21477;&#30340;&#21442;&#25968;&#20250;&#31435;&#21363;&#27714;&#20540;</span>
+    fmt.<span class="org-function-name">Println</span>(<span class="org-string">"running foo"</span>)
+}
+<span class="org-keyword">func</span> <span class="org-function-name">bar</span>(x <span class="org-type">int</span>) <span class="org-type">int</span> {
+    fmt.<span class="org-function-name">Println</span>(<span class="org-string">"running bar"</span>)
+    <span class="org-keyword">return</span> x + 1
+}
+<span class="org-comment-delimiter">// </span><span class="org-comment">running bar</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">running foo</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">1 + 1 = 2</span>
+
+<span class="org-keyword">func</span> <span class="org-function-name">foo</span>() {
+    <span class="org-keyword">for</span> i := 0; i &lt; 10; i++ {
+        <span class="org-keyword">defer</span> fmt.<span class="org-function-name">Println</span>(<span class="org-string">"i ="</span>, i) <span class="org-comment-delimiter">// </span><span class="org-comment">&#24310;&#36831;&#35821;&#21477;&#25918;&#20837;&#22534;&#26632;&#65292;&#21518;&#25918;&#20837;&#20808;&#25191;&#34892;</span>
+    }
+}
+<span class="org-comment-delimiter">// </span><span class="org-comment">i = 9</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">i = 8</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">...</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org82e3724" class="outline-3">
+<h3 id="org82e3724"><span class="section-number-3">7.2</span> <code>for</code></h3>
+<div class="outline-text-3" id="text-7-2">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">for</span> i := 0; i &lt; 10; i++ {
+    <span class="org-keyword">if</span> i % 2 == 0 {
+        <span class="org-keyword">continue</span>
+    }
+}
+
+i := 0
+<span class="org-keyword">for</span> i &lt; 10 { <span class="org-comment-delimiter">// </span><span class="org-comment">&#21482;&#26377;&#26465;&#20214;&#65292;&#30456;&#24403;&#20110; while</span>
+    i += 1
+}
+
+<span class="org-keyword">for</span> { <span class="org-comment-delimiter">// </span><span class="org-comment">&#26080;&#38480;&#24490;&#29615;</span>
+    <span class="org-keyword">break</span>
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf727a91" class="outline-3">
+<h3 id="orgf727a91"><span class="section-number-3">7.3</span> <code>go</code></h3>
+<div class="outline-text-3" id="text-7-3">
+<p>
+Goroutine 即异步执行的函数调用。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">go</span> &lt;<span class="org-keyword">func</span>&gt;()
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">func</span> <span class="org-function-name">foo</span>(s <span class="org-type">string</span>) {
+    fmt.<span class="org-function-name">Println</span>(s)
+}
+<span class="org-function-name">foo</span>(<span class="org-string">"line 1"</span>)       <span class="org-comment-delimiter">// </span><span class="org-comment">&#26222;&#36890;&#20989;&#25968;&#35843;&#29992;</span>
+<span class="org-keyword">go</span> <span class="org-function-name">foo</span>(<span class="org-string">"line 2"</span>)    <span class="org-comment-delimiter">// </span><span class="org-comment">Goroutine &#20989;&#25968;&#35843;&#29992;</span>
+
+<span class="org-keyword">go</span> <span class="org-keyword">func</span>(s <span class="org-type">string</span>) { <span class="org-comment-delimiter">// </span><span class="org-comment">Goroutine &#21311;&#21517;&#20989;&#25968;&#35843;&#29992;</span>
+    fmt.<span class="org-function-name">Println</span>(s)
+}(<span class="org-string">"line 3"</span>)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8a0a8d6" class="outline-3">
+<h3 id="org8a0a8d6"><span class="section-number-3">7.4</span> <code>if</code></h3>
+<div class="outline-text-3" id="text-7-4">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">if</span> i &lt; 10 {
+} <span class="org-keyword">else</span> <span class="org-keyword">if</span> i &lt; 100 {
+} <span class="org-keyword">else</span> {
+}
+
+<span class="org-keyword">if</span> i := 10; i &lt; 10 { <span class="org-comment-delimiter">// </span><span class="org-comment">&#36827;&#34892;&#21028;&#26029;&#20043;&#21069;&#21487;&#25191;&#34892;&#35821;&#21477;</span>
+    i += 1           <span class="org-comment-delimiter">// </span><span class="org-comment">&#22768;&#26126;&#30340;&#21464;&#37327;&#21482;&#22312; if &#35821;&#21477;&#33539;&#22260;&#20869;&#26377;&#25928;</span>
+} <span class="org-keyword">else</span> {
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org11e30dd" class="outline-3">
+<h3 id="org11e30dd"><span class="section-number-3">7.5</span> <code>range</code></h3>
+<div class="outline-text-3" id="text-7-5">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 7: </span>字符串</label><pre class="src src-go"><span class="org-keyword">for</span> k, v := <span class="org-keyword">range</span> <span class="org-string">"foo"</span> {
+    fmt.<span class="org-function-name">Printf</span>(<span class="org-string">"%d %c\n"</span>, k, v)
+}
+<span class="org-comment-delimiter">// </span><span class="org-comment">0 f</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">1 o</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">2 o</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 8: </span>数组</label><pre class="src src-go">pow := []<span class="org-type">int</span>{1, 2, 4, 8}
+<span class="org-keyword">for</span> k, v := <span class="org-keyword">range</span> pow {
+    fmt.<span class="org-function-name">Printf</span>(<span class="org-string">"2^%d = %d\n"</span>, k, v)
+}
+<span class="org-comment-delimiter">// </span><span class="org-comment">2^0 = 1</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">2^1 = 2</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">2^2 = 4</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">2^3 = 8</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 9: </span>Map</label><pre class="src src-go">m := <span class="org-keyword">map</span>[<span class="org-type">int</span>]<span class="org-type">string</span>{10: <span class="org-string">"ten"</span>, 11: <span class="org-string">"eleven"</span>}
+<span class="org-keyword">for</span> k, v := <span class="org-keyword">range</span> m {
+    fmt.<span class="org-function-name">Printf</span>(<span class="org-string">"%d = %v\n"</span>, k, v)
+}
+<span class="org-comment-delimiter">// </span><span class="org-comment">10 = ten</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">11 = eleven</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org34248ec" class="outline-3">
+<h3 id="org34248ec"><span class="section-number-3">7.6</span> <code>switch</code></h3>
+<div class="outline-text-3" id="text-7-6">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">switch</span> [&lt;stat&gt;;] &lt;name&gt; {
+    <span class="org-keyword">case</span> &lt;value&gt;:
+        ... <span class="org-comment-delimiter">// </span><span class="org-comment">&#33258;&#21160; break&#65292;&#38500;&#38750;&#26377; fallthrough</span>
+    <span class="org-keyword">case</span> &lt;value&gt;, &lt;value&gt;: <span class="org-comment-delimiter">// </span><span class="org-comment">&#24182;&#21015;&#22810;&#20010;&#20540;</span>
+        ...
+    <span class="org-keyword">default</span>:
+        ...
+}
+
+<span class="org-keyword">switch</span> { <span class="org-comment-delimiter">// </span><span class="org-comment">switch &#27809;&#26377;&#34920;&#36798;&#24335;&#65292;&#21482;&#26681;&#25454; case &#34920;&#36798;&#24335;&#21028;&#26029;&#65292;&#21487;&#20197;&#23454;&#29616;&#22797;&#26434;&#30340; if/else</span>
+    <span class="org-keyword">case</span> &lt;stat&gt;:
+        ...
+    <span class="org-keyword">case</span> &lt;stat&gt;:
+        ...
+    <span class="org-keyword">default</span>:
+        ...
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org497cf5a" class="outline-2">
+<h2 id="org497cf5a"><span class="section-number-2">8</span> Function</h2>
+<div class="outline-text-2" id="text-8">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">func</span> (&lt;receiver&gt;) &lt;name&gt;(&lt;params&gt;) (&lt;returns&gt;) {}
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org2e3471b" class="outline-3">
+<h3 id="org2e3471b"><span class="section-number-3">8.1</span> 参数</h3>
+<div class="outline-text-3" id="text-8-1">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">func</span> <span class="org-function-name">foo</span>(x <span class="org-type">int</span>) {}
+<span class="org-keyword">func</span> <span class="org-function-name">foo</span>(x, y <span class="org-type">int</span>) {}
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org0a5650a" class="outline-4">
+<h4 id="org0a5650a"><span class="section-number-4">8.1.1</span> Variadic Parameter</h4>
+<div class="outline-text-4" id="text-8-1-1">
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 10: </span>同一类型</label><pre class="src src-go"><span class="org-keyword">func</span> <span class="org-function-name">foo</span>(args ...<span class="org-type">int</span>) <span class="org-type">int</span> {
+    sum := 0
+    <span class="org-keyword">for</span> _, i := <span class="org-keyword">range</span> args {
+        sum += i
+    }
+    <span class="org-keyword">return</span> sum
+}
+x := <span class="org-function-name">foo</span>(1, 2, 3)           <span class="org-comment-delimiter">// </span><span class="org-comment">6</span>
+y := <span class="org-function-name">foo</span>([]<span class="org-type">int</span>{1, 2, 3}...) <span class="org-comment-delimiter">// </span><span class="org-comment">6</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 11: </span>任意类型</label><pre class="src src-go"><span class="org-keyword">func</span> <span class="org-function-name">foo</span>(args ...<span class="org-keyword">interface</span>{}) {
+    <span class="org-keyword">for</span> _, arg := <span class="org-keyword">range</span> args {
+        fmt.<span class="org-function-name">Printf</span>(<span class="org-string">"type = %T\n"</span>, arg)
+    }
+}
+<span class="org-function-name">foo</span>(1, <span class="org-string">"test"</span>, <span class="org-constant">true</span>)
+<span class="org-comment-delimiter">// </span><span class="org-comment">type = int</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">type = string</span>
+<span class="org-comment-delimiter">// </span><span class="org-comment">type = bool</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd416349" class="outline-3">
+<h3 id="orgd416349"><span class="section-number-3">8.2</span> 返回值</h3>
+<div class="outline-text-3" id="text-8-2">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">func</span> <span class="org-function-name">foo</span>(bar <span class="org-type">int</span>) <span class="org-type">int</span> {
+    <span class="org-keyword">return</span> 0
+}
+
+<span class="org-keyword">func</span> <span class="org-function-name">foo</span>(bar <span class="org-type">int</span>) (<span class="org-type">int</span>, <span class="org-type">int</span>) {
+    <span class="org-keyword">return</span> 0, 1
+}
+x, y = <span class="org-function-name">foo</span>(1) <span class="org-comment-delimiter">// </span><span class="org-comment">OK</span>
+x = <span class="org-function-name">foo</span>(1)    <span class="org-comment-delimiter">// </span><span class="org-comment">Error: multiple-value foo() in single-value context</span>
+x, _ = <span class="org-function-name">foo</span>(1) <span class="org-comment-delimiter">// </span><span class="org-comment">OK</span>
+
+<span class="org-keyword">func</span> <span class="org-function-name">foo</span>(x, y <span class="org-type">int</span>) (sum, diff <span class="org-type">int</span>) { <span class="org-comment-delimiter">// </span><span class="org-comment">Named return values</span>
+    <span class="org-comment-delimiter">// </span><span class="org-comment">Return values inited to empty values at start</span>
+    sum = x + y
+    diff = x - y
+    <span class="org-keyword">return</span> <span class="org-comment-delimiter">// </span><span class="org-comment">Return all named return values by default</span>
+}
+a, b := <span class="org-function-name">foo</span>(1, 5) <span class="org-comment-delimiter">// </span><span class="org-comment">6, -4</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6021b7e" class="outline-3">
+<h3 id="org6021b7e"><span class="section-number-3">8.3</span> 函数类型</h3>
+<div class="outline-text-3" id="text-8-3">
+<p>
+自定义类型可以为函数，任何符合此签名的函数都可以认为属于此类型。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">type</span> <span class="org-type">fooFunc</span> <span class="org-keyword">func</span>(<span class="org-type">Type</span>) <span class="org-type">Type</span>
+
+<span class="org-keyword">func</span> <span class="org-function-name">fooOne</span>(<span class="org-type">Type</span>) <span class="org-type">Type</span> {...}
+<span class="org-keyword">func</span> <span class="org-function-name">fooTwo</span>(<span class="org-type">Type</span>) <span class="org-type">Type</span> {...}
+
+<span class="org-keyword">func</span> <span class="org-function-name">getFooFuncs</span>() []<span class="org-type">fooFunc</span> {
+    <span class="org-keyword">return</span> []<span class="org-type">fooFunc</span>{fooOne, fooTwo}
+}
+
+<span class="org-keyword">for</span> _, fooFunc := <span class="org-keyword">range</span> <span class="org-function-name">getFooFuncs</span>() {
+    <span class="org-function-name">fooFunc</span>()
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgeb1f8f6" class="outline-3">
+<h3 id="orgeb1f8f6"><span class="section-number-3">8.4</span> 函数字面量</h3>
+<div class="outline-text-3" id="text-8-4">
+<p>
+函数字面量（literal）即匿名函数，也称为闭包。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go">foo := <span class="org-keyword">func</span>(x, y <span class="org-type">int</span>) <span class="org-type">int</span> {
+    <span class="org-keyword">return</span> x + y
+}
+bar := <span class="org-function-name">foo</span>(1, 2) <span class="org-comment-delimiter">// </span><span class="org-comment">3</span>
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#23450;&#20041;&#21518;&#31435;&#21363;&#35843;&#29992;</span>
+foo := <span class="org-keyword">func</span>(x, y <span class="org-type">int</span>) <span class="org-type">int</span> {
+    <span class="org-keyword">return</span> x + y
+} (1, 2) <span class="org-comment-delimiter">// </span><span class="org-comment">3</span>
+</pre>
+</div>
+
+<p>
+闭包内可以引用声明闭包的作用域内的任何变量，即使其外部函数返回，外部的变量依然有效。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">func</span> <span class="org-function-name">main</span>() {
+    x := 1
+    foo := <span class="org-keyword">func</span>() {
+        <span class="org-function-name">bar</span>(x) <span class="org-comment-delimiter">// </span><span class="org-comment">&#24341;&#29992;&#38381;&#21253;&#22806;&#22768;&#26126;&#30340;&#21464;&#37327; x</span>
+        x += 1
+    }
+    <span class="org-function-name">foo</span>() <span class="org-comment-delimiter">// </span><span class="org-comment">x = 1</span>
+    <span class="org-function-name">foo</span>() <span class="org-comment-delimiter">// </span><span class="org-comment">x = 2</span>
+}
+<span class="org-keyword">func</span> <span class="org-function-name">bar</span>(x <span class="org-type">int</span>) {
+    fmt.<span class="org-function-name">Println</span>(<span class="org-string">"x ="</span>, x)
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3b46a60" class="outline-2">
+<h2 id="org3b46a60"><span class="section-number-2">9</span> 方法</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+方法是带有 receiver 参数的函数。
+</p>
+
+<p>
+名称相同但参数不同的函数不能共存，但名称相同而 receiver 不同的方法可以共存。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">func</span> (&lt;rc&gt; &lt;rc_type&gt;) &lt;name&gt;() &lt;rt_type&gt; {
+    ...
+}
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org3818b4d" class="outline-3">
+<h3 id="org3818b4d"><span class="section-number-3">9.1</span> 示例</h3>
+<div class="outline-text-3" id="text-9-1">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">type</span> <span class="org-type">Vertex</span> <span class="org-keyword">struct</span> {
+    X, Y float64
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#20989;&#25968;</span>
+<span class="org-keyword">func</span> <span class="org-function-name">Abs</span>(v <span class="org-type">Vertex</span>) <span class="org-type">float64</span> {
+    <span class="org-keyword">return</span> math.<span class="org-function-name">Sqrt</span>(v.X * v.X + v.Y * v.Y)
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">&#26041;&#27861;</span>
+<span class="org-keyword">func</span> (v <span class="org-type">Vertex</span>) <span class="org-function-name">Abs</span>() <span class="org-type">float64</span> {
+    <span class="org-keyword">return</span> math.<span class="org-function-name">Sqrt</span>(v.X * v.X + v.Y * v.Y)
+}
+
+v := <span class="org-type">Vertex</span>{3, 4}
+fmt.<span class="org-function-name">Println</span>(<span class="org-function-name">Abs</span>(v))  <span class="org-comment-delimiter">// </span><span class="org-comment">&#35843;&#29992;&#20989;&#25968;</span>
+fmt.<span class="org-function-name">Println</span>(v.<span class="org-function-name">Abs</span>()) <span class="org-comment-delimiter">// </span><span class="org-comment">&#35843;&#29992;&#26041;&#27861;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2d0757f" class="outline-3">
+<h3 id="org2d0757f"><span class="section-number-3">9.2</span> Receiver</h3>
+<div class="outline-text-3" id="text-9-2">
+<p>
+<a id="org13f7fcb"></a>
+</p>
+
+<p>
+方法的 receiver 传递的是值而不是引用，需要修改 receiver 的值时，将 receiver 定义为指针。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 12: </span>示例</label><pre class="src src-go"><span class="org-keyword">type</span> <span class="org-type">Vertex</span> <span class="org-keyword">struct</span> {
+    X, Y float64
+}
+
+<span class="org-keyword">func</span> <span class="org-function-name">Scale1</span>(v <span class="org-type">Vertex</span>, f <span class="org-type">float64</span>) {}   <span class="org-comment-delimiter">// </span><span class="org-comment">&#20989;&#25968;&#65292;&#21442;&#25968;&#20026;&#20540;</span>
+<span class="org-keyword">func</span> <span class="org-function-name">Scale2</span>(v *<span class="org-type">Vertex</span>, f <span class="org-type">float64</span>) {}  <span class="org-comment-delimiter">// </span><span class="org-comment">&#20989;&#25968;&#65292;&#21442;&#25968;&#20026;&#25351;&#38024;</span>
+<span class="org-keyword">func</span> (v <span class="org-type">Vertex</span>) <span class="org-function-name">Scale3</span>(f <span class="org-type">float64</span>) {}  <span class="org-comment-delimiter">// </span><span class="org-comment">&#26041;&#27861;&#65292;receiver &#20026;&#20540;</span>
+<span class="org-keyword">func</span> (v *<span class="org-type">Vertex</span>) <span class="org-function-name">Scale4</span>(f <span class="org-type">float64</span>) {} <span class="org-comment-delimiter">// </span><span class="org-comment">&#26041;&#27861;&#65292;receiver &#20026;&#25351;&#38024;</span>
+
+<span class="org-keyword">func</span> <span class="org-function-name">main</span>() {
+    v := <span class="org-type">Vertex</span>{3, 4}
+    p = &amp;<span class="org-type">Vertex</span>{3, 4}
+
+    <span class="org-function-name">Scale1</span>(v, 10)   <span class="org-comment-delimiter">// </span><span class="org-comment">&#20989;&#25968;&#21442;&#25968;&#20026;&#20540;&#65292;&#20351;&#29992;&#20540;&#35843;&#29992;&#65306;OK</span>
+    <span class="org-function-name">Scale1</span>(*p, 10)  <span class="org-comment-delimiter">// </span><span class="org-comment">&#20989;&#25968;&#21442;&#25968;&#20026;&#20540;&#65292;&#20351;&#29992;&#20540;&#35843;&#29992;&#65306;OK</span>
+    <span class="org-function-name">Scale1</span>(p, 10)   <span class="org-comment-delimiter">// </span><span class="org-comment">&#20989;&#25968;&#21442;&#25968;&#20026;&#20540;&#65292;&#20351;&#29992;&#25351;&#38024;&#35843;&#29992;&#65306;Compile error</span>
+
+    <span class="org-function-name">Scale2</span>(&amp;v, 10)  <span class="org-comment-delimiter">// </span><span class="org-comment">&#20989;&#25968;&#21442;&#25968;&#20026;&#25351;&#38024;&#65292;&#20351;&#29992;&#25351;&#38024;&#35843;&#29992;&#65306;OK</span>
+    <span class="org-function-name">Scale2</span>(p, 10)   <span class="org-comment-delimiter">// </span><span class="org-comment">&#20989;&#25968;&#21442;&#25968;&#20026;&#25351;&#38024;&#65292;&#20351;&#29992;&#25351;&#38024;&#35843;&#29992;&#65306;OK</span>
+    <span class="org-function-name">Scale2</span>(v, 10)   <span class="org-comment-delimiter">// </span><span class="org-comment">&#20989;&#25968;&#21442;&#25968;&#20026;&#25351;&#38024;&#65292;&#20351;&#29992;&#20540;&#35843;&#29992;&#65306;Compile error</span>
+
+    v.<span class="org-function-name">Scale3</span>(10)    <span class="org-comment-delimiter">// </span><span class="org-comment">&#26041;&#27861; receiver &#20026;&#20540;&#65292;&#20351;&#29992;&#20540;&#35843;&#29992;&#65306;OK</span>
+    (*p).<span class="org-function-name">Scale3</span>(10) <span class="org-comment-delimiter">// </span><span class="org-comment">&#26041;&#27861; receiver &#20026;&#20540;&#65292;&#20351;&#29992;&#20540;&#35843;&#29992;&#65306;OK</span>
+    p.<span class="org-function-name">Scale3</span>(10)    <span class="org-comment-delimiter">// </span><span class="org-comment">&#26041;&#27861; receiver &#20026;&#20540;&#65292;&#20351;&#29992;&#25351;&#38024;&#35843;&#29992;&#65306;OK&#65292;p &#33258;&#21160;&#36716;&#25442;&#20026; *p</span>
+
+    (&amp;v).<span class="org-function-name">Scale4</span>(10) <span class="org-comment-delimiter">// </span><span class="org-comment">&#26041;&#27861; receiver &#20026;&#25351;&#38024;&#65292;&#20351;&#29992;&#25351;&#38024;&#35843;&#29992;&#65306;OK</span>
+    p.<span class="org-function-name">Scale4</span>(10)    <span class="org-comment-delimiter">// </span><span class="org-comment">&#26041;&#27861; receiver &#20026;&#25351;&#38024;&#65292;&#20351;&#29992;&#25351;&#38024;&#35843;&#29992;&#65306;OK</span>
+    v.<span class="org-function-name">Scale4</span>(10)    <span class="org-comment-delimiter">// </span><span class="org-comment">&#26041;&#27861; receiver &#20026;&#25351;&#38024;&#65292;&#20351;&#29992;&#20540;&#35843;&#29992;&#65306;OK&#65292;v &#33258;&#21160;&#36716;&#25442;&#20026; &amp;v</span>
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd1989f4" class="outline-3">
+<h3 id="orgd1989f4"><span class="section-number-3">9.3</span> 内置类型</h3>
+<div class="outline-text-3" id="text-9-3">
+<p>
+方法只可以被当前包中定义的类型的变量调用，内置类型如 <code>int</code> 需要被重新定义，才可以作为 receiver 类型。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">type</span> <span class="org-type">MyFloat</span> <span class="org-type">float64</span>;
+
+<span class="org-keyword">func</span> (f <span class="org-type">MyFloat</span>) <span class="org-function-name">Abs</span>() <span class="org-type">float64</span> {
+    ...
+}
+
+<span class="org-keyword">func</span> <span class="org-function-name">main</span>() {
+    f := <span class="org-function-name">MyFloat</span>(-math.Sqrt2)
+    fmt.<span class="org-function-name">Println</span>(f.<span class="org-function-name">Abs</span>())
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org251a113" class="outline-2">
+<h2 id="org251a113"><span class="section-number-2">10</span> 包</h2>
+<div class="outline-text-2" id="text-10">
+</div><div id="outline-container-org2105fb8" class="outline-3">
+<h3 id="org2105fb8"><span class="section-number-3">10.1</span> <code>package</code></h3>
+<div class="outline-text-3" id="text-10-1">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">package</span> &lt;name&gt;
+</pre>
+</div>
+
+<p>
+可执行程序必须有 <code>main</code> 包，其中定义 <code>main()</code> 函数。
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 13: </span>一个包可以跨越多个文件</label><pre class="src src-go"><span class="org-comment-delimiter">// </span><span class="org-comment">main_one.go</span>
+<span class="org-keyword">package</span> main
+<span class="org-keyword">func</span> <span class="org-function-name">main</span>() {
+}
+
+<span class="org-comment-delimiter">// </span><span class="org-comment">main_two.go</span>
+<span class="org-keyword">package</span> main
+<span class="org-keyword">func</span> <span class="org-function-name">foo</span>() {
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0bd47ce" class="outline-3">
+<h3 id="org0bd47ce"><span class="section-number-3">10.2</span> <code>import</code></h3>
+<div class="outline-text-3" id="text-10-2">
+<div class="org-src-container">
+<pre class="src src-go"><span class="org-keyword">import</span> <span class="org-string">"&lt;package&gt;"</span>
+<span class="org-keyword">import</span> &lt;alias&gt; <span class="org-string">"&lt;package&gt;"</span>
+<span class="org-keyword">import</span> (
+    <span class="org-string">"&lt;package&gt;"</span>
+    <span class="org-string">"&lt;package&gt;"</span>
+    &lt;alias&gt; <span class="org-string">"&lt;package&gt;"</span>
+)
+</pre>
+</div>
+
+<p>
+加载包之后，可以通过 <code>&lt;package&gt;.</code> 引用其输出（export）的所有类型、变量、常量、函数。
+</p>
+
+<p>
+<code>import</code> 不在此处加载包代码，而在代码链接时（非运行时）加载。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf000e0a" class="outline-3">
+<h3 id="orgf000e0a"><span class="section-number-3">10.3</span> 可见性</h3>
+</div>
+</div>
+<div id="outline-container-orgf1f0130" class="outline-2">
+<h2 id="orgf1f0130"><span class="section-number-2">11</span> 测试</h2>
+<div class="outline-text-2" id="text-11">
+<div class="org-src-container">
+<pre class="src src-sh">foo.go      <span class="org-comment-delimiter"># </span><span class="org-comment">&#20195;&#30721;&#25991;&#20214;</span>
+foo_test.go <span class="org-comment-delimiter"># </span><span class="org-comment">&#27979;&#35797;&#25991;&#20214;</span>
+$ go test   <span class="org-comment-delimiter"># </span><span class="org-comment">&#36816;&#34892;&#27979;&#35797;</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 14: </span><code>foo_test.go</code></label><pre class="src src-go"><span class="org-keyword">func</span> <span class="org-function-name">TestFoo</span>(t *<span class="org-type">testing.T</span>) {
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org795b54c" class="outline-2">
+<h2 id="org795b54c"><span class="section-number-2">12</span> 环境</h2>
+<div class="outline-text-2" id="text-12">
+</div><div id="outline-container-org0e1ae7a" class="outline-3">
+<h3 id="org0e1ae7a"><span class="section-number-3">12.1</span> <code>GOPATH</code></h3>
+<div class="outline-text-3" id="text-12-1">
+<p>
+<code>GOPATH</code> 表示 Go 的工作空间，默认为 <code>$HOME/go</code> 。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd69ae8d" class="outline-3">
+<h3 id="orgd69ae8d"><span class="section-number-3">12.2</span> 工作区</h3>
+<div class="outline-text-3" id="text-12-2">
+<div class="org-src-container">
+<pre class="src src-sh">$<span class="org-variable-name">GOPATH</span>/
+    bin/ <span class="org-comment-delimiter"># </span><span class="org-comment">Installed Go applications</span>
+    src/ <span class="org-comment-delimiter"># </span><span class="org-comment">Go packages</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgaedf75d" class="outline-2">
+<h2 id="orgaedf75d"><span class="section-number-2">13</span> Command</h2>
+<div class="outline-text-2" id="text-13">
+</div><div id="outline-container-orgb458e20" class="outline-3">
+<h3 id="orgb458e20"><span class="section-number-3">13.1</span> <code>go</code></h3>
+<div class="outline-text-3" id="text-13-1">
+<div class="org-src-container">
+<pre class="src src-sh">go build &lt;file&gt;   <span class="org-comment-delimiter"># </span><span class="org-comment">&#32534;&#35793;&#21253;&#21644;&#20381;&#36182;&#65292;&#29983;&#25104;&#21487;&#25191;&#34892;&#25991;&#20214;</span>
+go run &lt;file&gt; ... <span class="org-comment-delimiter"># </span><span class="org-comment">&#32534;&#35793;&#24182;&#36816;&#34892;</span>
+go test           <span class="org-comment-delimiter"># </span><span class="org-comment">&#36816;&#34892;&#39033;&#30446;&#27979;&#35797;</span>
+go fmt [&lt;file&gt;]   <span class="org-comment-delimiter"># </span><span class="org-comment">&#26684;&#24335;&#21270;&#24403;&#21069;&#30446;&#24405;&#19979;&#65288;&#25152;&#26377;&#25110;&#25351;&#23450;&#65289;&#20195;&#30721;&#25991;&#20214;</span>
+
+go get &lt;package&gt;  <span class="org-comment-delimiter"># </span><span class="org-comment">e.g. go get github.com/foo/bar</span>
+go install &lt;package&gt;
+
+go version
+</pre>
+</div>
+
+<p>
+Go 代码编译不生成中间代码，如 Java 的字节码，而是直接生成二进制代码。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org24b5437" class="outline-2">
+<h2 id="org24b5437"><span class="section-number-2">14</span> Links</h2>
+<div class="outline-text-2" id="text-14">
+<ol class="org-ol">
+<li><a href="https://golang.org/ref/spec">The Go Programming Language Specification</a></li>
+<li><a href="https://play.golang.org/">The Go Playground</a></li>
+<li><a href="https://gobyexample.com/">Go by Example</a></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2019-10-20 Sun 21:03</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

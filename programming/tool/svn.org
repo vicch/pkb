@@ -1,0 +1,65 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: SVN
+
+* 命令
+** 信息
+
+#+CAPTION: 基本信息：分支、版本号、最近一次提交等
+#+BEGIN_SRC sh
+svn info
+#+END_SRC
+
+#+CAPTION: 文件修改状态
+#+BEGIN_SRC sh
+svn status
+#+END_SRC
+
+#+CAPTION: 提交日志
+#+BEGIN_SRC sh
+svn log
+#+END_SRC
+
+#+CAPTION: 文件差异
+#+BEGIN_SRC sh
+svn diff <options> <path>
+    -r, --revision # 一个或两个版本号：<rev>:<rev>
+#+END_SRC
+
+** 操作
+
+#+CAPTION: 检出
+#+BEGIN_SRC sh
+svn checkout <url> <path>
+svn checkout <repo>/branches/<branch>/<path>
+#+END_SRC
+
+#+CAPTION: 提交
+#+BEGIN_SRC sh
+svn commit <options>
+    -m, --message "" #
+#+END_SRC
+
+#+CAPTION: 合并
+#+BEGIN_SRC sh
+svn merge
+#+END_SRC
+
+#+CAPTION: 重置
+#+BEGIN_SRC sh
+svn revert <options> <path>
+    -R, --recursive # 路径为目录时递归操作
+#+END_SRC
+
+** 示例
+
+#+CAPTION: 已提交后进行回滚
+#+BEGIN_SRC sh
+svn update                      # 确认代码最新
+svn log <path>                  # 确认要回滚到的版本号
+svn merge -r <rev>:<rev> <path> # 回滚
+svn diff <path>                 # 确认回滚结果
+svn commit -m "Revert ..."      # 提交
+#+END_SRC
+* 资源
+
+1. [[http://riaoo.com/subpages/svn_cmd_reference.html][SVN 命令参考]]

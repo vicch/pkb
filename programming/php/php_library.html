@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>PHP Library</title>
+<!-- 2016-10-30 周日 12:24 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">PHP Library</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. 分类</a></li>
+<li><a href="#sec-2">2. cURL</a>
+<ul>
+<li><a href="#sec-2-1">2.1. <code>curl_init()</code></a></li>
+<li><a href="#sec-2-2">2.2. <code>curl_setopt()</code></a></li>
+<li><a href="#sec-2-3">2.3. <code>curl_exec()</code></a></li>
+<li><a href="#sec-2-4">2.4. <code>curl_errno()</code></a></li>
+<li><a href="#sec-2-5">2.5. <code>curl_error()</code></a></li>
+<li><a href="#sec-2-6">2.6. <code>curl_getinfo()</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. PHPMailer</a></li>
+<li><a href="#sec-4">4. PHPExcel</a></li>
+<li><a href="#sec-5">5. TCPDF</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> 分类</h2>
+<div class="outline-text-2" id="text-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>ORM</b></th>
+<th scope="col" class="left">Doctrine</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">Eloquent</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">Propel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><b>日志</b></td>
+<td class="left">Monolog</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> cURL</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<a href="http://php.net/manual/en/book.curl.php">php.net</a>
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> 传输前</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>curl_init()</code></th>
+<th scope="col" class="left">初始化 cURL 会话</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>curl_setopt()</code></td>
+<td class="left">为 cURL 传输设置选项（option）</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> 传输</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left"><code>curl_exec()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 3:</span> 传输后</caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><code>curl_errno()</code></th>
+<th scope="col" class="left">返回最后一次 cURL 操作的错误状态码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>curl_error()</code></td>
+<td class="left">返回最后一次 cURL 操作的错误信息</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>curl_getinfo()</code></td>
+<td class="left">返回最后一次传输的相关信息</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>curl_close()</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> <code>curl_init()</code></h3>
+<div class="outline-text-3" id="text-2-1">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">resource</span> <span class="org-function-name">curl_init</span> ([ <span class="org-type">string</span> $<span class="org-variable-name">url</span> = <span class="org-constant">null</span> ])
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> <code>curl_setopt()</code></h3>
+<div class="outline-text-3" id="text-2-2">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">bool</span> <span class="org-function-name">curl_setopt</span> (
+    <span class="org-type">resource</span> $<span class="org-variable-name">ch</span>
+,   <span class="org-type">int</span>      $<span class="org-variable-name">option</span>
+,   <span class="org-type">mixed</span>    $<span class="org-variable-name">value</span>
+)
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 4:</span> <code>$option</code></caption>
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">类型</th>
+<th scope="col" class="left">含义</th>
+<th scope="col" class="left">示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left"><code>CURLINFO_HEADER_OUT</code></td>
+<td class="left">bool</td>
+<td class="left">是否追踪句柄的请求字符串</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>CURLOPT_CONNECTTIMEOUT</code></td>
+<td class="left">int</td>
+<td class="left">发起连接前等待的时间，7.16.2 之后使用毫秒数</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left"><code>CURLOPT_CONNECTTIMEOUT_MS</code></td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>CURLOPT_COOKIE</code></td>
+<td class="left">string</td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>&lt;name&gt;=&lt;value&gt;; ...</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>CURLOPT_CUSTOMREQUEST</code></td>
+<td class="left">string</td>
+<td class="left">自定义的请求类型</td>
+<td class="left"><code>GET</code> <code>POST</code> <code>CONNECT</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>CURLOPT_ENCODING</code></td>
+<td class="left">string</td>
+<td class="left">HTTP header 中 <code>Accept-Encoding</code> 的值</td>
+<td class="left"><code>identity</code> <code>deflate</code> <code>gzip</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>CURLOPT_HEADER</code></td>
+<td class="left">bool</td>
+<td class="left">是否将 header 内容作为数据流输出</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>CURLOPT_HTTPHEADER</code></td>
+<td class="left">array</td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>array('&lt;header&gt;', '&lt;header&gt;', ...)</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>CURLOPT_HTTP_VERSION</code></td>
+<td class="left">int</td>
+<td class="left"><code>CURL_HTTP_VERSION_NONE</code> ：自行判断版本（默认值）</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>CURL_HTTP_VERSION_1_0</code> ：强制 HTTP/1.0</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>CURL_HTTP_VERSION_1_1</code> ：强制 HTTP/1.1</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>CURLOPT_NOBODY</code></td>
+<td class="left">bool</td>
+<td class="left">是否对 HTML 中的 <code>&lt;body&gt;</code> 部分进行输出</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>CURLOPT_NOSIGNAL</code></td>
+<td class="left">bool</td>
+<td class="left">是否忽略 cURL 传递给 PHP 的信号</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>CURLOPT_POSTFIELDS</code></td>
+<td class="left">string</td>
+<td class="left">字符串为 <code>urlencoded()</code> 后的字符串</td>
+<td class="left"><code>&lt;name&gt;=&lt;value&gt;&amp;...</code></td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">array</td>
+<td class="left">发送文件时，值为 <code>@&lt;full_path&gt;</code></td>
+<td class="left"><code>array(&lt;name&gt; =&gt; &lt;value&gt;, ... )</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>CURLOPT_PROXY</code></td>
+<td class="left">string</td>
+<td class="left">代理服务器地址</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>CURLOPT_PROXYPORT</code></td>
+<td class="left">int</td>
+<td class="left">代理服务器端口</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>CURLOPT_PROXYTYPE</code></td>
+<td class="left">int</td>
+<td class="left"><code>CURLPROXY_HTTP</code> （默认值）</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left"><code>CURLPROXY_SOCKS5</code></td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>CURLOPT_RANGE</code></td>
+<td class="left">string</td>
+<td class="left">获取数据的字节范围</td>
+<td class="left"><code>&lt;from&gt;-&lt;to&gt;</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>CURLOPT_RETURNTRANSFER</code></td>
+<td class="left">bool</td>
+<td class="left">是否将 <code>curl_exec()</code> 的结果以文件流的形式返回，而不是直接输出</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>CURLOPT_SSL_VERIFYPEER</code></td>
+<td class="left">bool</td>
+<td class="left">是否从服务端进行验证</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>CURLOPT_TIMEOUT</code></td>
+<td class="left">int</td>
+<td class="left">允许执行的最长秒数，7.16.2 之后使用毫秒数</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left"><code>CURLOPT_TIMEOUT_MS</code></td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>CURLOPT_URL</code></td>
+<td class="left">string</td>
+<td class="left">需要获取的 URL 地址</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="left"><code>CURLOPT_USERPWD</code></td>
+<td class="left">string</td>
+<td class="left">用户名和密码</td>
+<td class="left"><code>&lt;user&gt;:&lt;password&gt;</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> <code>curl_exec()</code></h3>
+<div class="outline-text-3" id="text-2-3">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">mixed</span> <span class="org-function-name">curl_exec</span> ( <span class="org-type">resource</span> $<span class="org-variable-name">ch</span> )
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">返回值</td>
+<td class="left">boolean</td>
+<td class="left">成功时返回 <code>true</code> ，否则返回 <code>false</code></td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">mixed</td>
+<td class="left"><code>CURLOPT_RETURNTRANSFER</code> 设置为 <code>true</code> 时，成功时返回执行结果，否则返回 <code>false</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> <code>curl_errno()</code></h3>
+<div class="outline-text-3" id="text-2-4">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">int</span> <span class="org-function-name">curl_errno</span> ( <span class="org-type">resource</span> $<span class="org-variable-name">ch</span> )
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left">返回值</td>
+<td class="left">int</td>
+<td class="left"><code>0</code> 为没有发生错误</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> <code>curl_error()</code></h3>
+<div class="outline-text-3" id="text-2-5">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">string</span> <span class="org-function-name">curl_error</span> ( <span class="org-type">resource</span> $<span class="org-variable-name">ch</span> )
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left">返回值</td>
+<td class="left">string</td>
+<td class="left">空字符串为没有发生错误</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> <code>curl_getinfo()</code></h3>
+<div class="outline-text-3" id="text-2-6">
+<div class="org-src-container">
+
+<pre class="src src-php"><span class="org-type">mixed</span> <span class="org-function-name">curl_getinfo</span> (
+    <span class="org-type">resource</span> $<span class="org-variable-name">ch</span>
+[,  <span class="org-type">int</span>      $<span class="org-variable-name">opt</span> = <span class="org-default">0</span>
+])
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> PHPMailer</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+<a href="https://github.com/PHPMailer/PHPMailer">GitHub</a>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> PHPExcel</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<a href="https://github.com/PHPOffice/PHPExcel">GitHub</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> TCPDF</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<a href="http://www.tcpdf.org/">TCPDF</a>
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2016-10-30 周日 12:24</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

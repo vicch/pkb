@@ -1,0 +1,636 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: React
+
+* React
+** Performance Model
+
+[[http://www.react.express/performance_model][Performance Model | React Express]]
+
+#+ATTR_HTML: :class no-border
+| *Operation*               | *Cost*    | *Descrption*                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+|---------------------------+-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| DOM manipulation          | Slow      | Modifying the DOM is slow. React is built to modify that DOM as little as possible. React builds anin-memory representation of the components rendered, and then syncs this representation to the DOM. As components are updated, React will update the in-memory representation, and then make the least amount of changes to the DOM possible. This is what keeps the application fast. React does this automatically most of the time - however, hints can be given about when and how to update the DOM to improve performance. This is especially relevant when dealing with hundreds or thousands of components, in the case of large lists.                                                                     |
+|---------------------------+-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Component render          | Fast      | Components can re-render very frequently without a noticeable performance impact. It's common for =render()= to be called many times as the =state= or =props= of a component change. This is part of the magic of React. In other JavaScript libraries, you may have tried to reduce calls to =render()= in order to limit DOM updates and improve performance. In React, reducing re-renders is only for particularly complex or expensive components. Note: =render()= generally refers to the render method of components getting called as part of the component lifecycle. This doesn't refer to actually updating the DOM, which React handles automatically based on what is returned from =render()= methods. |
+|---------------------------+-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| =shouldComponentUpdate()= | Very fast | In cases where component render is happening too frequently and causing performance issues, React gives more control over the component lifecycle with =shouldComponentUpdate()=, allowing to choose exactly when a component does and doesn't re-render. When this method isn't defined, components will always re-render whenever their =state= or =props= change. Defining =shouldComponentUpdate()= allows to manually compare whatever data is needed to determine whether or not the component should re-render. Return =true= to trigger a =render()= call and =false= to prevent it.                                                                                                                           |
+
+* Structure
+
+#+BEGIN_SRC sh
+<project>/
+  node_modules/     # Dependency files
+  public/           # Static files
+  src/              # Source code
+    actions/        # Action creators
+    components/
+    reducers/
+    index.js
+  package.json      # Dependencies and configurations
+  package.lock.json # Exact versions of dependencies
+#+END_SRC
+
+* JSX
+
+JSX 会被 Babel 转换为 JS 函数调用，如 =<div />= 转换为 =React.createElement('div')= ，因此虽然代码内不显式引用 =React= ，但是需要 =import= 。
+
+ReactDOM provides built-in DOM-node components with same names as the corresponding HTML tags, e.g. =<div />=, =<input />=. They don't need to be required when used, that's handled automatically during the JSX language transformation.
+
+** ={}=
+
+#+CAPTION: 使用 ={}= 嵌入变量或表达式
+#+BEGIN_SRC js
+const buttonText = 'Foo';
+return <button>{buttonText}</button>
+
+function getButtonText() { return 'Foo'; }
+return <button>{getButtonText()}</button>
+
+// 使用 || 提供默认值
+return <button>{foo || 'Default'}</button>
+
+// 嵌入匿名函数
+return <button onClick={e => console.log(e.target.value)}>Submit</button>
+#+END_SRC
+
+#+CAPTION: 不同类型值转换为字符串输出
+#+BEGIN_SRC js
+const buttonText = 'Foo';          // Foo
+const buttonText = 1234;           // 1234
+const buttonText = ['Foo', 'Bar']; // FooBar
+
+return <button>{buttonText}</button>
+#+END_SRC
+
+** =${}=
+
+#+CAPTION: 使用 =${}= 在字符串中嵌入变量
+#+BEGIN_SRC js
+const text = 'foo bar';
+return <div>{`Some text: ${text}`}</div>
+#+END_SRC
+
+** =className=
+
+因为 =class= 是 JS 关键字，JSX 的 =class= 属性需要替换为 =className= 。
+
+** =htmlFor=
+
+因为 =for= 是 JS 关键字，JSX 的 =for= 属性需要替换为 =htmlFor= 。
+
+** =style=
+
+=style= 属性的值必须是对象。
+
+#+BEGIN_SRC js
+return <tag style={{ <attr>: <value>; ... }}></tag>
+#+END_SRC
+
+#+CAPTION: 示例
+#+BEGIN_SRC js
+// CSS 属性名可以使用 camelcase，或者直接使用字符串
+return <div style={{ backgroundColor: 'grey' }}></div>
+return <div style={{ 'background-color': 'grey' }}></div>
+
+const elementStyle = { backgroundColor: 'grey' };
+return <div style={elementStyle}></div>
+#+END_SRC
+
+* Component
+** Functional Component
+
+#+BEGIN_SRC js
+const Component = (props) => <tag></tag>;
+#+END_SRC
+
+** Class Component
+
+#+BEGIN_SRC js
+class Component extends React.Component {
+  render() {
+    return <tag></tag>
+  }
+}
+#+END_SRC
+
+** Props
+
+#+BEGIN_SRC js
+<Foo bar="text" ... />
+
+const Foo = (props) => {
+  return <div>{props.bar}</div>
+}
+
+class Foo extends React.Component {
+  render() {
+    return <div>{this.props.bar}</div>
+  }
+}
+#+END_SRC
+
+*** =children=
+
+JSX =<Component>= 标签内的内容可以通过 =props.children= 读取。
+
+#+BEGIN_SRC js
+<ComponentOne>
+  <ComponentTwo />
+</ComponentOne>
+
+const ComponentOne = (props) => {
+  return <div>{props.children}</div>
+}
+#+END_SRC
+
+*** =defaultProps=
+
+定义 =<Component>.defaultProps= 可以在未提供 prop 值时使用默认值。
+
+#+BEGIN_SRC js
+const Foo = (props) => {
+  return <div>{props.bar}</div>;
+}
+Foo.defaultProps = {
+  bar: 'default'
+};
+#+END_SRC
+
+*** =key=
+
+[[https://reactjs.org/docs/lists-and-keys.html#keys][Keys | React]]
+
+Keys help React identify which items have changed, are added, or are removed.
+
+#+BEGIN_SRC js
+const numbers = [1, 2, 3, 4, 5];
+const listItems = numbers.map((number) =>
+  <li key={number.toString()}>
+    {number}
+  </li>
+);
+#+END_SRC
+
+** State
+*** 用法
+
+#+BEGIN_SRC js
+class Component {
+  constructor(props) {
+    super(props);
+    this.state = { <name>: <value> }; // 初始化
+  }
+  state = { <name>: <value> }; // 初始化简化形式
+
+  someFunction() {
+    this.setState({ <name>: <value> }); // 修改
+  }
+
+  render() {
+    return <div>{this.state.<name>}</div> // 读取
+  }
+}
+#+END_SRC
+
+*** Controlled element
+
+Controlled element 即将用户输入存储在 state 中，而不是 DOM 中的元素。
+
+#+BEGIN_SRC js
+class Foo extends React.Component {
+  state = { bar: '' };
+  render() {
+    return (
+      <form>
+        <input type="text"
+          value={this.state.bar}
+          onChange={e => this.setState({ bar: e.target.value })}
+        />
+      </form>
+    );
+  }
+}
+#+END_SRC
+
+** Lifecycle
+
+file:../images/react/01.png
+
+| *Lifecycle 函数*         | *一般用法*                            |
+|--------------------------+---------------------------------------|
+| =constructor()=          | One-time setup                        |
+|--------------------------+---------------------------------------|
+| =render()=               | Return JSX                            |
+|--------------------------+---------------------------------------|
+| =componentDidMount()=    | Initial data loading                  |
+|--------------------------+---------------------------------------|
+| =componentDidUpdate()=   | Data loading after props/state change |
+|--------------------------+---------------------------------------|
+| =componentWillUnmount()= | Cleanup                               |
+
+** Event Handler
+
+#+CAPTION: 使用箭头函数
+#+BEGIN_SRC js
+class Foo extends React.Component {
+  handleSubmit = (event) => { // 箭头函数自动 bind
+    event.preventDefault();
+  }
+  render() {
+    return <form onSubmit={this.handleSubmit}></form>;
+  }
+}
+#+END_SRC
+
+#+CAPTION: 使用普通函数
+#+BEGIN_SRC js
+class Foo extends React.Component {
+  handleSubmit(event) {
+    event.preventDefault();
+  }
+  render() {
+    return <form onSubmit={(event) => this.handleSubmit(event)}></form>; // 设置 handler 时 bind
+  }
+}
+#+END_SRC
+
+* React
+** =createRef()=
+
+[[https://reactjs.org/docs/react-api.html#reactcreateref][React.createRef() | React]]
+
+#+BEGIN_SRC js
+class Foo extends React.Component {
+  constructor(props) {
+    super(props);
+    this.inputRef = React.createRef();
+  }
+
+  componentDidMount() {
+    this.inputRef.current.focus();
+  }
+
+  render() {
+    return <input type="text" ref={this.inputRef} />;
+  }
+}
+#+END_SRC
+
+* Redux
+** Lifecycle
+
+file:../images/react/02.png
+
+** Structure
+
+file:../images/react/03.png
+
+file:../images/react/04.png
+
+** Action
+
+Action 对象表示发生的事件，如用户动作。
+
+#+BEGIN_SRC js
+{
+  type: <ACTION_TYPE>,
+  <payload> // Optional, A single key/value pair or an object
+}
+#+END_SRC
+
+** Action Creator
+
+Action creator 函数返回一个 action 对象。
+
+#+CAPTION: Synchronous action creator
+#+BEGIN_SRC js
+const fooAction = (param, ...) => {
+  return {
+    type: 'FOO_ACTION',
+    payload: ...
+  };
+}
+#+END_SRC
+
+#+CAPTION: Asynchronous action creator
+#+BEGIN_SRC js
+const fooAction = (param, ...) => async (dispatch) => {
+  const response = await ...
+  dispatch({
+    type: 'FOO_ACTION',
+    payload: ...
+  });
+}
+#+END_SRC
+
+** Reducer
+
+Reducer 函数定义当 action 发生时，state 如何变化。Reducer 的参数为 action 发生之前的 state （初始化时为 undefined）和 action 本身，返回值为 action 发生之后的 state，返回值不能为 undefined。
+
+整个应用的 state 由一个 store 对象表示，每个 reducer 维护此对象的一个元素，reducer 和 state 元素的对应关系在 =combineReducers()= 的调用参数中指定。
+
+#+BEGIN_SRC js
+const initialState = { bar: 1 };
+
+// 调用时传入的 state 为该 reducer 对应的 state
+// 需要指定默认值，即初次调用时的初始 state
+const fooReducer = (previousState = initialState, action) => {
+  switch (action.type) {
+    case 'FOO_ACTION':
+      return [...previousState, action.payload];
+      // Reducer 不应该修改传入的 state 对象并返回，如：
+      // previousState.push(action.payload);
+      // return previousState;
+      // 应该返回新的 state 对象，否则 Redux 会认为 state 没有发生变化
+    default:
+      return previousState;
+  }
+};
+
+// 输出合并的 reducer
+export default combineReducers({
+  foo: fooReducer
+});
+#+END_SRC
+
+*** =combineReducers()=
+
+=combineReducers()= 把多个 reducer 函数合并成一个函数，作为 =createStore()= 的参数生成 store。
+
+#+BEGIN_SRC js
+const fooReducer = (state, action) => {}
+const barReducer = (state, action) => {}
+
+const singleReducer = combineReducers({
+  fooState: fooReducer,
+  barState: barReducer
+});
+#+END_SRC
+
+*** State mutation
+
+#+CAPTION: Array
+#+BEGIN_SRC js
+const fooReducer(state, action) => {
+  return [...state, <v>];                         // Add
+  return state.filter((e) => e !== <v>);          // Remove
+  return state.map((e) => e === <v1> ? <v2> : e); // Update
+}
+#+END_SRC
+
+#+CAPTION: Object
+#+BEGIN_SRC js
+const fooReducer(state, action) => {
+  return {...state, <k>: <v>};       // Add
+  return {...state, <k>: undefined}; // Remove
+  return {...state, <k>: <v>};       // Update
+}
+#+END_SRC
+
+** Store
+
+Store 是整个应用的 state 的集合，store 对象的每个 key 对应一个 reducer 函数，state 必须通过 reducer 函数进行修改，不能直接修改。
+
+*** =createStore()=
+
+#+BEGIN_SRC js
+const fooReducer = (state, action) => {}
+const barReducer = (state, action) => {}
+const singleReducer = combineReducers({
+  foo: fooReducer,
+  bar: barReducer
+});
+
+const store = createStore(singleReducer);
+// store.getState() = {
+//   foo: {...},
+//   bar: {...},
+// }
+#+END_SRC
+
+*** =dispatch()=
+
+=dispatch()= 将遍历调用 store 中的 reducer 函数，传入每个 reducer 函数对应的 state 和当前 action。
+
+#+BEGIN_SRC js
+const store = createStore(singleReducer);
+const action = fooAction('bar');
+store.dispatch(action);
+#+END_SRC
+
+*** =getState()=
+
+返回 state 集合。
+
+#+BEGIN_SRC js
+const store = createStore(singleReducer);
+store.getState();
+#+END_SRC
+
+** Provider
+** Connect
+
+#+BEGIN_SRC js
+import { connect } from 'react-redux';
+import { fooAction } from '../actions';
+
+class Foo extends React.Component {
+  render() {
+    // this.props = {
+    //   foo: ...,      // State
+    //   fooAction: ... // Action creator
+    // }
+  }
+}
+
+// mapStateToProps 将应用的 state 映射到 component 的 props
+// 当应用的 state 被 reducer 修改时，component 的 props 会相应变化
+// state: 应用的 state 集合
+// props: component 当前的 props
+const mapStateToProps = (state, props) => {
+  // 从 state 中查找当前 component 需要的数据并返回
+  return { foo: state.foo };
+}
+
+// 将 action creator 传递给 store
+// 当 action creator 被调用时，store 会自动调用 dispatch() 将生成的 action 传递给 reducers
+export default connect(mapStateToProps, { fooAction })(Foo);
+#+END_SRC
+
+** 示例 1
+
+#+BEGIN_SRC js
+const depositAction = (name, amount) => {
+  return {
+    type: 'DEPOSIT',
+    payload: {name: name, amount: amount}
+  }
+}
+
+const withdrawAction = (name, amount) => {
+  return {
+    type: 'WITHDRAW',
+    payload: {name: name, amount: amount}
+  }
+}
+
+const balanceReducer = (state = {}, action) => {
+  if (action.type === 'DEPOSIT' || action.type === 'WITHDRAW') {
+    const name = action.payload.name;
+    const amount = action.payload.amount;
+    let balance = (state.hasOwnProperty(name)) ? state[name] : 0;
+
+    if (action.type === 'DEPOSIT') {
+      balance += amount;
+    } else if (action.type === "WITHDRAW" && balance >= amount) {
+      balance -= amount;
+    }
+
+    return Object.assign({}, state, {[name]: balance});
+  }
+  return state;
+}
+
+const singleReducer = Redux.combineReducers({
+  balance: balanceReducer
+});
+const bank = Redux.createStore(singleReducer);
+
+bank.dispatch(depositAction('Foo', 100)); // bank.getState() = {balance: {Foo: 100}}
+bank.dispatch(depositAction('Bar', 50));  // bank.getState() = {balance: {Foo: 100, Bar: 50}}
+bank.dispatch(depositAction('Foo', 50));  // bank.getState() = {balance: {Foo: 150, Bar: 50}}
+bank.dispatch(withdrawAction('Bar', 30)); // bank.getState() = {balance: {Foo: 150, Bar: 20}}
+#+END_SRC
+
+** 示例 2
+
+#+CAPTION: =index.js=
+#+BEGIN_SRC js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+
+import App from './components/App';
+import reducers from './reducers';
+
+ReactDOM.render((
+  <Provider store={createStore(reducers)}>
+    <App />
+  </Provider>
+), document.querySelector('#root'));
+#+END_SRC
+
+#+CAPTION: =actions/index.js=
+#+BEGIN_SRC js
+export const fooAction = () => {
+  return {
+    type: 'FOO_ACTION',
+    ...
+  }
+}
+#+END_SRC
+
+#+CAPTION: =reducers/index.js=
+#+BEGIN_SRC js
+import { combineReducers } from 'redux';
+
+const fooReducer = (state = null, action) => {
+  switch (action.type) {
+    case 'FOO_ACTION':
+      ...
+    default:
+      return state;
+  }
+}
+
+export default combineReducers({
+  foo: fooReducer
+});
+#+END_SRC
+
+#+CAPTION: =components/App.js=
+#+BEGIN_SRC js
+import React from 'react';
+import FooComponent from './FooComponent';
+
+const App = () => {
+  return <div><FooComponent /></div>;
+}
+
+export default App;
+#+END_SRC
+
+#+CAPTION: =components/FooComponent.js=
+#+BEGIN_SRC js
+import React from 'react';
+import { connect } from 'react-redux';
+import { fooAction } from '../actions';
+
+class Foo extends React.Component {
+  handleSth = () => {
+    this.props.fooAction();
+  }
+  render() {
+    return <div>{this.props.foo}</div>;
+  }
+}
+
+const mapStateToProps = (state) => {
+  return { foo: state.foo };
+}
+
+export default connect(mapStateToProps, { fooAction })(Foo);
+#+END_SRC
+
+* Middleware
+
+Middleware 是在调用 =store.dispatch(action)= 时被调用的函数，可以中止或修改 action 对象。Middleware 最常用于处理异步 action，如 =react-thunk= 。
+
+** Redux Thunk
+
+使用 =redux-thunk= ，action creator 不止可以返回 action 对象，还可以返回函数。
+
+- 同步 action creator 返回 action 对象，action 对象被 Redux 隐式调用 =dispatch()= 时传递给 reducers。
+- 异步 action creator 返回 action 函数，action 函数被 Redux Thunk 调用时，action 函数内显式调用 =dispatch()= 将 action 对象传递给 reducers。
+
+*** 示例
+
+#+CAPTION: =index.js=
+#+BEGIN_SRC js
+...
+import { crateStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import reducers from './reducers';
+
+const store = createStore(reducers, applyMiddleware(thunk));
+
+...
+<Provider store={store}>
+...
+#+END_SRC
+
+#+CAPTION: =actions/index.js=
+#+BEGIN_SRC js
+export const fooAction = () => { // 异步 action creator
+  return async (dispatch, getState) => { // action 函数的参数为 dispatch 和 getState 函数
+    const response = await ...;
+    const action = { type: 'FOO_ACTION', payload: ... };
+    dispatch(action);
+  }
+}
+#+END_SRC
+
+* 命令
+** =create-react-app=
+
+生成 React 项目目录结构和基础文件。
+
+#+BEGIN_SRC sh
+create-react-app <name>
+#+END_SRC
+
+* 链接
+
+1. [[https://reactjs.org/docs/][React Documentation]]
+1. [[https://redux.js.org/introduction/getting-started][Redux Documentation]]

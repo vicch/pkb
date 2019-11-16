@@ -1,0 +1,148 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Git Scrap
+
+* Oh shit, git!
+
+[[http://ohshitgit.com/][Source]]
+
+#+CAPTION: I did something terribly wrong, please tell me git has a magic time machine.
+#+BEGIN_SRC sh
+git reflog
+# a list of everything done in git across all branches, each one has an index HEAD@{index}
+git reset HEAD@{index}
+#+END_SRC
+
+- To recover accidentally deleted files.
+- To remove testing files that broke the repo.
+- To recover after a bad merge.
+
+-----
+
+#+CAPTION: I committed and immediately realized I need to make one small change.
+#+BEGIN_SRC sh
+# make the changes
+git add .
+# or add individual files
+git commit --amend
+# follow prompts to change or keep the commit message
+#+END_SRC
+
+You can also make the change as a new commit and then =rebase -i= to squash them together, but this is much faster.
+
+-----
+
+#+CAPTION: I need to change the message on my last commit.
+#+BEGIN_SRC sh
+git commit --amend
+#+END_SRC
+
+-----
+
+#+CAPTION: I accidentally committed something to master that should have been on a brand new branch.
+#+BEGIN_SRC sh
+# create a new branch from the current state of master
+git branch new-branch
+# remove the commit from the master branch
+git reset HEAD~ --hard
+git checkout new-branch
+# continue to work on new branch
+#+END_SRC
+
+This doesn't work if it's already pushed to origin. And if you tried other things first, you might need to =git reset HEAD@{index}= instead of =HEAD~=.
+
+-----
+
+#+CAPTION: I accidentally committed to the wrong branch.
+#+BEGIN_SRC sh
+# undo the last commit, but leave the changes available
+git reset HEAD~ --soft
+git stash
+# move to the correct branch
+git checkout correct-branch
+git stash pop
+git add .
+git commit -m "message"
+# continue to work on correct branch
+#+END_SRC
+
+#+CAPTION: Another way is to use cherry-pick.
+#+BEGIN_SRC sh
+git checkout correct-branch
+# grab the last commit to master
+git cherry-pick master
+# delete the commit from master
+git checkout master
+git reset HEAD~ --hard
+#+END_SRC
+
+-----
+
+#+CAPTION: I tried to run a diff but nothing happened.
+#+BEGIN_SRC sh
+git diff --staged
+#+END_SRC
+
+Git won't do a diff of files that have been =add=-ed to staging area without this flag.
+
+-----
+
+#+CAPTION: I give up.
+#+BEGIN_SRC sh
+cd ..
+sudo rm -r git-repo
+git clone https://some.github.url/git-repo.git
+cd git-repo
+#+END_SRC
+* How to revert multiple git commits?
+
+[[https://stackoverflow.com/questions/1463340/how-to-revert-multiple-git-commits][Source]]
+
+I have a git repository that looks like this:
+
+#+BEGIN_SRC text
+A <- B <- C <- D
+#+END_SRC
+
+I want the head of the branch to point to =A=, i.e. I want =B=, =C=, =D=, and =HEAD= to disappear and I want =HEAD= to be synonymous with =A=. How do I revert multiple commits?
+
+-----
+
+The general rule is that you should not rewrite (change) git history that you have published, because somebody might have based their work on it. If you rewrite (change) history, you would make problems with merging their changes and with updating for them.
+
+So the solution is to create a new commit which reverts changes that you want to get rid of:
+
+#+BEGIN_SRC text
+A <- B <- C <- D <- [(BCD)^-1]
+#+END_SRC
+
+You can get the required situation using the following commands:
+
+#+BEGIN_SRC sh
+$ git revert --no-commit D
+$ git revert --no-commit C
+$ git revert --no-commit B
+$ git commit -m "Revert B, C, D"
+#+END_SRC
+
+Alternate solution would be to checkout contents of commit =A=, and commit this state:
+
+#+BEGIN_SRC sh
+$ git checkout -f A -- .
+$ git commit -a
+#+END_SRC
+
+Then you would have the following situation:
+
+#+BEGIN_SRC text
+A <- B <- C <- D <- A'
+#+END_SRC
+
+The commit =A'= has the same contents as commit =A=, but is a different commit (commit message, parents, commit date).
+
+Another solution builds upon the same idea:
+
+#+BEGIN_SRC sh
+$ git reset --hard A
+$ git reset --soft @{1}  # Or ORIG_HEAD, which is D
+$ git commit -m "Revert B, C, D"
+#+END_SRC
