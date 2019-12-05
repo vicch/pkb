@@ -30,12 +30,12 @@
 void echo ( string $arg, ... )
 #+END_SRC
 
-- 属于构造体，与普通函数的行为和使用语境不同。
-- 一般不用 =()= ，输入参数多于一个时不能用 =()= 。
+=echo()= 属于构造体，与普通函数的行为和使用语境不同。一般不用 =()= ，输入参数多于一个时不能用 =()= 。
 
 ** =ob_start()=
 
-#+CAPTION: 示例：渲染模板但不输出，将结果保存到字符串
+渲染模板但不输出，将结果保存到字符串：
+
 #+BEGIN_SRC php
 public function render() {
     extract($this->variables);
@@ -54,15 +54,13 @@ public function render() {
 <<print>>
 
 #+BEGIN_SRC php
-int print ( string $arg )
+int print ( string $arg ) : int
 #+END_SRC
 
-| 返回值 | =int= | 1 |
+=print()= 属于构造体，与普通函数的行为和使用语境相同，可以不用 =()= 。
 
-- 属于构造体，与普通函数的行为和使用语境相同，可以不用 =()= 。
-- 因为 =echo= 不能用于复杂表达式，某些语境下只能用 =print()= 。
+因为 =echo()= 不能用于复杂表达式，某些语境下只能用 =print()= ：
 
-#+CAPTION: 示例
 #+BEGIN_SRC php
 ($some_var) ? echo 'true' : echo 'false';   // 错误
 ($some_var) ? print 'true' : print 'false'; // 可以运行
@@ -74,27 +72,19 @@ echo $some_var ? 'true': 'false';           // 可以运行
 
 #+BEGIN_SRC php
 int printf (
-    string $format
-[,  mixed  $args
+    string $format // 输出格式
+[,  mixed  $args   // 变量或表达式
 [,  ...
-]])
+]]) : int          // 输出字符串的长度
 #+END_SRC
 
-| =$format= | =string= | 输出格式         |
-|-----------+----------+------------------|
-| =$args=   | =mixed=  | 变量或表达式     |
-|-----------+----------+------------------|
-| 返回值    | =int=    | 输出字符串的长度 |
-
-#+CAPTION: 示例
 #+BEGIN_SRC php
 printf("<font color='#%X%X%X'>Hello</font>", $r-20, $g-20, $b-20);
 #+END_SRC
 
 *** 转换指示符
 
-- conversion specifier
-- 和输入参数必须一一对应，如果缺少输入参数，会导致 =parse= 错误。
+转换指示符（conversion specifier）和输入参数必须一一对应，否则会导致 =parse= 错误。
 
 | =%d=          | 带符号十进制数 |
 |---------------+----------------|
@@ -104,7 +94,6 @@ printf("<font color='#%X%X%X'>Hello</font>", $r-20, $g-20, $b-20);
 |---------------+----------------|
 | =%<n>$<type>= | 指定输入参数   |
 
-#+CAPTION: 示例
 #+BEGIN_SRC php
 $format = 'The %2$s contains %1$d monkeys';
 echo sprintf($format, $num, $location);
@@ -115,10 +104,10 @@ echo sprintf($format, $num, $location);
 
 #+BEGIN_SRC php
 mixed print_r (
-    mixed $expression     // string|int|float: 输出字面值
-                          // object|array: 输出详细信息
+    mixed $expression     // string|int|float 输出字面值
+                          // object|array     输出详细信息
 [,  bool  $return = false
-] )
+])
 #+END_SRC
 
 #+BEGIN_SRC php
@@ -136,13 +125,11 @@ print_r($a);
 
 #+BEGIN_SRC php
 string sprintf (
-    string $format
+    string $format // 与 printf() 使用同样的格式规则
 [,  mixed  $args
 [,  ...
 ]])
 #+END_SRC
-
-| =$format= | =string= | 与 =printf()= 使用同样的格式规则 |
 
 ** =var_dump()=
 <<var_dump>>
@@ -154,14 +141,14 @@ void var_dump ( mixed $expression , ... )
 ** =var_export()=
 <<var_export>>
 
-与 =var_dump()= 的区别是，输出或返回的是有效的 PHP 代码。
-
 #+BEGIN_SRC php
 mixed var_export (
     mixed $expression
-[,  bool  $return = false // true 表示不输出，将输出文本赋值给字符串
+[,  bool  $return = false // true 表示不输出，而将输出文本赋值给字符串
 ])
 #+END_SRC
+
+=var_export()= 与 =var_dump()= 的区别是， =var_export()= 输出或返回的是有效的 PHP 代码。
 
 * 数组
 ** 增删
@@ -187,11 +174,8 @@ int array_unshift (
 mixed array_pop   (
 mixed array_shift (
     array &$array
-)
+) : mixed           // $array 为空或不是数组时返回 NULL
 #+END_SRC
-
-| 返回值 | =mixed= | 取出的元素              |
-|        | =null=  | =$array= 为空或不是数组 |
 
 - =array_pop()= 会将数组指针重置。
 - =array_shift()= 会将数字索引重新排列，关联数组的索引不变。
@@ -225,7 +209,6 @@ bool krsort (
 ])
 #+END_SRC
 
-#+CAPTION: 示例
 #+BEGIN_SRC php
 ksort($array, SORT_STRING | SORT_FLAG_CASE);
 #+END_SRC
@@ -241,7 +224,6 @@ bool uasort (
 )
 #+END_SRC
 
-#+CAPTION: 示例
 #+BEGIN_SRC php
 function cmp($a, $b) {
     if ($a == $b) {
@@ -267,14 +249,13 @@ uasort($array, 'cmp');
 *** =array_keys()=
 
 #+BEGIN_SRC php
-array array_keys (             // 返回索引数组
+array array_keys (
     array $input
 [,  mixed $search_value = null // 筛选条件，只返回与此值相同的元素的索引
 [,  bool  $strict = false      // true 表示比较值和类型
 ]] )
 #+END_SRC
 
-#+CAPTION: 示例
 #+BEGIN_SRC php
 $a = array('1', '2', '1', 2, 1);
 $b = array_keys($a, 1);       // array(0, 2, 4);
@@ -315,7 +296,7 @@ mixed end     (
 
 ** 合并
 
-| =array_merge()=           |                                    |
+| =array_merge()=           | 合并                               |
 |---------------------------+------------------------------------|
 | =array_merge_recursive()= | 递归合并                           |
 |---------------------------+------------------------------------|
@@ -327,10 +308,8 @@ mixed end     (
 array array_merge ( array $array , ... )
 #+END_SRC
 
-- 如果数组中出现重复的字符串索引，后出现的元素覆盖前面的元素。
-- 数字索引不会被覆盖，所有数字索引的元素从 0 开始重新排列。
+如果数组中出现重复的字符串索引，后出现的元素覆盖前面的元素。数字索引不会被覆盖，所有数字索引的元素从 0 开始重新排列。
 
-#+CAPTION: 示例
 #+BEGIN_SRC php
 $arr1 = array("color" => "red", 2, 4);
 $arr2 = array("a", "b", "color" => "green", "shape" => "trapezoid", 4);
@@ -352,7 +331,6 @@ $result = array_merge($arr1, $arr2);
 array array_merge_recursive ( array $array , ... )
 #+END_SRC
 
-#+CAPTION: 示例
 #+BEGIN_SRC php
 $arr1 = array("color" => array("favorite" => "red"), 5);
 $arr2 = array(10, "color" => array("favorite" => "green", "blue"));
@@ -373,31 +351,31 @@ $result = array_merge_recursive($arr1, $arr2);
 *** =array_combine()=
 
 #+BEGIN_SRC php
-array array_combine ( // 两个数组元素个数不同时返回 false
+array array_combine (
     array $keys
 ,   array $values
-)
+) : array             // 两个数组元素个数不同时返回 false
 #+END_SRC
   
 ** 变量
  
-| =compact()= | 将与字符串同名的变量的值，组合为字符串数组 |
-|-------------+--------------------------------------------|
-| =extract()= | 将字符串数组中的元素转换为一组变量         |
-|-------------+--------------------------------------------|
-| =list()=    | 用数组中的元素为多个变量赋值               |
+| =compact()= | 将与字符串同名的变量的值，组合为数组 |
+|-------------+--------------------------------------|
+| =extract()= | 将字符串数组中的元素转换为一组变量   |
+|-------------+--------------------------------------|
+| =list()=    | 用数组中的元素为多个变量赋值         |
 
 *** =compact()=
 
 #+BEGIN_SRC php
 array compact (
-    mixed $varname1 // string
-[,  mixed $varname2 // array  遍历数组中的字符串
+    mixed $varname1 // string 字符串直接作为变量名处理
+                    // array  遍历数组中的字符串，作为变量名处理
+[,  mixed $varname2
 [,  ...
 ]] )
 #+END_SRC
 
-#+CAPTION: 示例
 #+BEGIN_SRC php
 $city  = 'San Francisco';
 $state = 'CA';
@@ -439,7 +417,6 @@ int extract (
 |-------------------------+-------------------------------------------------|
 | =EXTR_REFS=             | 新变量是对传入的数组的值的引用                  |
 
-#+CAPTION: 示例
 #+BEGIN_SRC php
 $size = 'large';
 $var_array = array(
@@ -448,22 +425,20 @@ $var_array = array(
     'shape' => 'sphere'
 );
 extract($var_array, EXTR_PREFIX_SAME, 'wddx');
-// $color     : 'blue';
-// $size      : 'large';
-// $shape     : 'sphere';
-// $wddx_size : 'medium';
+// $color     -> 'blue'
+// $size      -> 'large'
+// $shape     -> 'sphere'
+// $wddx_size -> 'medium'
 #+END_SRC
 
 *** =list()=
-
-- 构造体，非函数。
-- 变量与数组元素按顺序一一对应。
 
 #+BEGIN_SRC php
 array list ( mixed $var , ... )
 #+END_SRC
 
-#+CAPTION: 示例
+=list()= 为构造体，非函数。变量与数组元素按顺序一一对应。
+
 #+BEGIN_SRC php
 $info = array('coffee', 'brown', 'caffeine');
 list($drink, $color, $power) = $info;
@@ -471,7 +446,8 @@ list($drink, , $power) = $info;
 list( , , $power) = $info;
 #+END_SRC
 
-#+CAPTION: 可以用于交换变量
+用于交换变量：
+
 #+BEGIN_SRC php
 $a = 1; $b = 2;
 list($a, $b) = array($b, $a);
@@ -499,10 +475,9 @@ array array_filter (
 ]] )
 #+END_SRC
 
-#+CAPTION: 示例
 #+BEGIN_SRC php
 function even($var) {
-    return !($var & 1); // 返回 true 则保留元素，否则过滤掉
+    return !($var & 1); // 返回 true 则保留元素
 }
 $array = array(6, 7, 8, 9, 10, 11, 12);
 $evens = array_filter($array, 'even');
@@ -520,7 +495,6 @@ array array_map (
 ]] )
 #+END_SRC
 
-#+CAPTION: 示例
 #+BEGIN_SRC php
 function cube($n) {
     return($n * $n * $n);
@@ -540,7 +514,8 @@ mixed array_reduce (
 ] )
 #+END_SRC
 
-#+CAPTION: 回调函数
+回调函数签名：
+
 #+BEGIN_SRC php
 mixed callback (
     mixed $carry
@@ -548,7 +523,6 @@ mixed callback (
 )
 #+END_SRC
 
-#+CAPTION: 示例
 #+BEGIN_SRC php
 function sum($carry, $item) {
     $carry += $item;
@@ -578,7 +552,6 @@ bool array_walk (
 ] )
 #+END_SRC
 
-#+CAPTION: 示例
 #+BEGIN_SRC php
 function test_print($item2, $key) {
     echo "$key. $item2\n";
@@ -611,7 +584,8 @@ bool array_walk_recursive (
 ] )
 #+END_SRC
 
-#+CAPTION: 回调函数
+回调函数签名：
+
 #+BEGIN_SRC php
 void callback (
     mixed $value
@@ -619,7 +593,6 @@ void callback (
 )
 #+END_SRC
 
-#+CAPTION: 示例
 #+BEGIN_SRC php
 $sweet = array('a' => 'apple', 'b' => 'banana');
 $fruits = array('sweet' => $sweet, 'sour' => 'lemon');
@@ -650,7 +623,6 @@ array array_fill (
 )
 #+END_SRC
 
-#+CAPTION: 示例
 #+BEGIN_SRC php
 $a = array_fill(5, 3, 'banana');
 // array(
@@ -670,15 +642,12 @@ array range (
 ])
 #+END_SRC
 
-#+CAPTION: 示例
 #+BEGIN_SRC php
-// array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
-foreach (range(0, 12) as $number) {
+foreach (range(0, 12) as $number) { // array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
     echo $number;
 }
 
-// array('c', 'b', 'a');
-foreach (range('c', 'a') as $letter) {
+foreach (range('c', 'a') as $letter) { // array('c', 'b', 'a');
     echo $letter;
 }
 #+END_SRC
@@ -687,9 +656,9 @@ foreach (range('c', 'a') as $letter) {
 
 |        | =count()=        | 返回元素个数           |
 |--------+------------------+------------------------|
-|        | =sizeof()=       |                        |
+|        | =sizeof()=       | =count()= 的别名       |
 |--------+------------------+------------------------|
-|        | =array_unique()= | 去除重复值        |
+|        | =array_unique()= | 去除重复值             |
 |--------+------------------+------------------------|
 | *切片* | =array_slice()=  |                        |
 |--------+------------------+------------------------|
@@ -706,11 +675,9 @@ int count (
 int sizeof (
     mixed $var
 [,  int   $mode = COUNT_NORMAL
-] )
+]) : int // 变量的值为 null、变量未赋值、数组为空时返回 0
+         // 变量为数组以外其他类型，且不满足返回 0 的条件时返回 1
 #+END_SRC
-
-| 返回值 | =0= | 变量的值为 =null= 、变量未赋值、数组为空      |
-|        | =1= | 变量为数组以外其他类型，且不满足返回 0 的条件 |
 
 *** =array_rand()=
 
@@ -724,20 +691,19 @@ mixed array_rand (
 *** =array_splice()=
 
 #+BEGIN_SRC php
-array array_splice (               // 返回被替换的部分
+array array_splice (
     array &$input                  // 输入数组
 ,   int    $offset                 // 替换起始
 [,  int    $length = count($input) // 替换长度
 [,  mixed  $replacement = array()  // 替换数组
-]] )
+]]) : array                        // 返回被替换的部分
 #+END_SRC
 
-#+CAPTION: 示例
 #+BEGIN_SRC php
 $a = array(1, 3, 5, 7, 9);
 $b = array_splice($a, 2, 1, 6);
-// $a : array(1, 3, 6, 7, 9)
-// $b : array(5)
+// $a -> array(1, 3, 6, 7, 9)
+// $b -> array(5)
 #+END_SRC
 
 *** =shuffle()=
@@ -745,6 +711,7 @@ $b = array_splice($a, 2, 1, 6);
 #+BEGIN_SRC php
 bool shuffle ( array &$array )
 #+END_SRC
+
 * 数字
 
 | =min()=  |   |

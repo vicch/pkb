@@ -870,3 +870,434 @@ $ ll /sbin/init
 $ sudo stat /proc/1/exe
 File: ‘/proc/1/exe’ -> ‘/usr/lib/systemd/systemd’
 #+END_SRC
+* Shared Libraries: Understanding Dynamic Loading
+
+[[https://amir.rachum.com/blog/2016/09/17/shared-libraries/][Source]]
+
+** Shared Library
+
+A library is a file that contains compiled code and data. Libraries in general are useful because they allow for fast compilation times (you don’t have to compile all sources of dependencies when compiling application) and modular development process.
+
+*Static libraries* are linked into a compiled executable or another library. After compilation, the new artifact contains the static library’s content. *Shared libraries* are not linked into the compiled executable. They are loaded by the executable or other shared library at runtime.
+
+** Example Setup
+
+The main file of the executable just calls a function from a =random= library.
+
+#+CAPTION: =main.cpp=
+#+BEGIN_SRC cpp
+#include "random.h"
+
+int main() {
+    return get_random_number();
+}
+#+END_SRC
+
+The =random= library defines a function in its header file.
+
+#+CAPTION: =random.h=
+#+BEGIN_SRC cpp
+int get_random_number();
+#+END_SRC
+
+And implementation in its source file.
+
+#+CAPTION: =random.cpp=
+#+BEGIN_SRC cpp
+#include "random.h"
+
+int get_random_number(void) {
+    return 4;
+}
+#+END_SRC
+
+** Compiling Shared Library
+
+#+BEGIN_QUOTE
+This example uses LLVM (clang) compiler instead of GCC to compile C++ code.
+#+END_QUOTE
+
+#+BEGIN_SRC sh
+# Create object file from source file
+$ clang++ -o random.o -c random.cpp
+# -o <file>  Output file
+# -c         No linking, just compiling
+
+# Compile object file into shared library
+$ clang++ -shared -o librandom.so random.o
+# -shared  Build shared library
+#+END_SRC
+
+Shared library files should be named =lib<name>.so= for them to link properly.
+
+** Compiling and Linking Dynamic Executable
+
+#+BEGIN_SRC sh
+# Create object file from source file
+$ clang++ -o main.o -c main.cpp
+
+# Create executable from object file
+$ clang++ -o main main.o
+Undefined symbols for architecture x86_64:
+  "get_random_number()", referenced from:
+     _main in main.o
+ld: symbol(s) not found for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+#+END_SRC
+
+Linker throws error because the shared library is not being linked. It is possible to link the library statically, but we choose to dynamically link =librandom.so= to =main=.
+
+#+BEGIN_SRC sh
+$ clang++ -o main main.o -lrandom
+# -l<library>  Link library, the target library file is "lib<library>.so"
+ld: library not found for -lrandom
+#+END_SRC
+
+Why does the compiler need this file at compile time when it is supposed to be loaded dynamically at runtime? Because the compiler needs to make sure that the dependent libraries contain all the symbols needed for the executable.
+
+By using =-l= flag, we told compiler to look for a =librandom.so= file. We also need to tell compiler the location to search for this file, which can be done with =-L= flag:
+
+#+BEGIN_SRC sh
+$ clang++ -o main main.o -lrandom -L.
+# -L<path>  Path to search for library
+#+END_SRC
+
+Run the executable:
+
+#+BEGIN_SRC sh
+$ ./main
+./main: error while loading shared libraries: librandom.so ... No such file or directory
+#+END_SRC
+
+This error means a dependency can’t be located. It is thrown before the execution of the actual code, because shared libraries are loaded before symbols in the executable. Now the questions:
+
+- How does =main= know it depends on =librandom.so=?
+- Where does =main= look for =librandom.so=?
+- How to tell =main= the location to look for =librandom.so= at runtime?
+
+** ELF (Executable and Linkable Format)
+
+#+BEGIN_QUOTE
+Executable file format under Mac OS is Mach-O, instead of ELF under Linux, so the tool =readelf= doesn't exist under Mac OS. [[https://en.wikipedia.org/wiki/Comparison_of_executable_file_formats][Wikipedia | Comparison of executable file formats]]
+#+END_QUOTE
+
+The shared library and executable file format is called [[https://en.wikipedia.org/wiki/Executable_and_Linkable_Format][ELF (Executable and Linkable Format)]]. In summary, an ELF file contains:
+
+#+ATTR_HTML: :class no-border
+| *ELF header*           | Specifies the size and number of segments/sections in the program/section header table |
+|------------------------+----------------------------------------------------------------------------------------|
+| *Program header table* | Contains a list of segment headers                                                     |
+|------------------------+----------------------------------------------------------------------------------------|
+| *Section header table* | Contains a list of section headers                                                     |
+|------------------------+----------------------------------------------------------------------------------------|
+| *Data*                 | Data pointed to by the segment/section headers                                         |
+
+Program/section header tables consist of fixed size segment/section headers. Each header contain a pointer (an offset in the file) to the location of the segment/section body, which exists in the data part of the file.
+
+The difference between segment and section is that, section is a part of a segment, or a segment contains multiple sections. The same data is referenced as either part of a segment or a section depending on the current context: sections are used when linking, and segments are used when executing.
+
+file:../images/linux_scrap/07.gif
+
+Use =readelf= to read the ELF header of =main=:
+
+#+BEGIN_SRC sh
+$ readelf -h main
+ELF Header:
+  Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00
+  Class:                             ELF64
+  ...
+  Type:                              EXEC (Executable file)
+  ...
+  Number of program headers:         9
+  Size of section headers:           64 (bytes)
+  Number of section headers:         30
+  ...
+#+END_SRC
+
+And the program headers:
+
+#+BEGIN_SRC sh
+$ readelf -l main
+
+Elf file type is EXEC (Executable file)
+Entry point 0x400530
+There are 9 program headers, starting at offset 64
+
+Program Headers:
+  Type           Offset             VirtAddr           PhysAddr
+                 FileSiz            MemSiz              Flags  Align
+  ...
+  DYNAMIC        0x0000000000000de8 0x0000000000600de8 0x0000000000600de8
+                 0x0000000000000210 0x0000000000000210  RW     8
+  ...
+
+ Section to Segment mapping:
+  Segment Sections...
+   00
+   ...
+   08     .init_array .fini_array .dynamic .got
+#+END_SRC
+
+And the section headers:
+
+#+BEGIN_SRC sh
+$ readelf -S main
+There are 30 section headers, starting at offset 0x1930:
+
+Section Headers:
+  [Nr] Name              Type             Address           Offset
+       Size              EntSize          Flags  Link  Info  Align
+  ...
+  [21] .dynamic          DYNAMIC          0000000000600de8  00000de8
+       0000000000000210  0000000000000010  WA       6     0     8
+  ...
+#+END_SRC
+
+As you can see, an ELF file has a segment of type =DYNAMIC= in its program header table. The =DYNAMIC= segment owns a =.dynamic= section, which contains useful information to understand dynamic dependencies.
+
+** Direct Dependency
+
+Use =readelf= to show all dynamic dependencies of =main=:
+
+#+BEGIN_SRC sh
+$ readelf -d main | grep NEEDED
+ 0x0000000000000001 (NEEDED)             Shared library: [librandom.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libstdc++.so.6]
+ 0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]
+ 0x0000000000000001 (NEEDED)             Shared library: [libgcc_s.so.1]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+#+END_SRC
+
+Except =librandom.so=, there are 4 other shared libraries in the result, these are the dependencies that appear in all compiled shared library. Use =objdump= to see a similar result by specifying =librandom.so=:
+
+#+BEGIN_SRC sh
+$ objdump -p librandom.so | grep NEEDED
+  NEEDED               libstdc++.so.6
+  NEEDED               libm.so.6
+  NEEDED               libgcc_s.so.1
+  NEEDED               libc.so.6
+#+END_SRC
+
+These libraries are:
+
+#+ATTR_HTML: :class no-border
+| =libstdc++= | Standard C++ library                                                                             |
+|-------------+--------------------------------------------------------------------------------------------------|
+| =libm=      | Library of basic math functions                                                                  |
+|-------------+--------------------------------------------------------------------------------------------------|
+| =libgcc_s=  | GCC (GNU Compiler Collection) runtime library                                                    |
+|-------------+--------------------------------------------------------------------------------------------------|
+| =libc=      | C library, which defines system calls and basic facilities, e.g. =open= =malloc= =printf= =exit= |
+
+** Runtime Search Path
+
+Use =ldd= to see recursive shared library dependencies of =main=, and their locations:
+
+#+BEGIN_SRC sh
+$ ldd main
+	linux-vdso.so.1 =>  (0x00007fff373d7000)
+	librandom.so => not found
+	libstdc++.so.6 => /lib64/libstdc++.so.6 (0x00007fa1b674e000)
+	libm.so.6 => /lib64/libm.so.6 (0x00007fa1b644c000)
+	libgcc_s.so.1 => /lib64/libgcc_s.so.1 (0x00007fa1b6236000)
+	libc.so.6 => /lib64/libc.so.6 (0x00007fa1b5e68000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007fa1b6a55000)
+#+END_SRC
+
+Note =librandom.so='s location is =not found=, but not the others.
+
+Each shared library in an executable's dependencies is searched in the following locations in order:
+
+#+ATTR_HTML: :class no-border
+| 1. =rpath=               | Directories listed in the executable’s =rpath=                        |
+|--------------------------+-----------------------------------------------------------------------|
+| 2. =LD_LIBRARY_PATH=     | Directories in the =LD_LIBRARY_PATH= environment variable             |
+|--------------------------+-----------------------------------------------------------------------|
+| 3. =runpath=             | Directories listed in the executable’s =runpath=                      |
+|--------------------------+-----------------------------------------------------------------------|
+| 4. =/etc/ld.so.conf=     | Directories in the file =/etc/ld.so.conf=                             |
+|--------------------------+-----------------------------------------------------------------------|
+| 5. =/lib= and =/usr/lib= | Default system libraries (skipped if compiled with =-z nodefaultlib=) |
+
+** Fixing Dependency
+
+Use =ldd= to see the search process of =librandom.so= when executing =main=:
+
+#+BEGIN_SRC sh
+$ LD_DEBUG=libs ldd main
+        ...
+        48:	find library=librandom.so [0]; searching
+        48:	 search path=/opt/rh/llvm-toolset-7/root/usr/lib64/tls/x86_64:/opt/rh/llvm-toolset-7/root/usr/lib64/tls:/opt/rh/llvm-toolset-7/root/usr/lib64/x86_64:/opt/rh/llvm-toolset-7/root/usr/lib64		(LD_LIBRARY_PATH)
+        48:	  trying file=/opt/rh/llvm-toolset-7/root/usr/lib64/tls/x86_64/librandom.so
+        48:	  trying file=/opt/rh/llvm-toolset-7/root/usr/lib64/tls/librandom.so
+        48:	  trying file=/opt/rh/llvm-toolset-7/root/usr/lib64/x86_64/librandom.so
+        48:	  trying file=/opt/rh/llvm-toolset-7/root/usr/lib64/librandom.so
+        48:	 search cache=/etc/ld.so.cache
+        48:	 search path=/lib64/tls/x86_64:/lib64/tls:/lib64/x86_64:/lib64:/usr/lib64/tls/x86_64:/usr/lib64/tls:/usr/lib64/x86_64:/usr/lib64		(system search path)
+        48:	  trying file=/lib64/tls/x86_64/librandom.so
+        48:	  trying file=/lib64/tls/librandom.so
+        48:	  trying file=/lib64/x86_64/librandom.so
+        48:	  trying file=/lib64/librandom.so
+        48:	  trying file=/usr/lib64/tls/x86_64/librandom.so
+        48:	  trying file=/usr/lib64/tls/librandom.so
+        48:	  trying file=/usr/lib64/x86_64/librandom.so
+        48:	  trying file=/usr/lib64/librandom.so
+        ...
+#+END_SRC
+
+Note that =librandom.so= doesn't exist in any of these locations being searched. To fix this, the most ad-hoc way to solve this is to use =LD_LIBRARY_PATH=:
+
+#+BEGIN_SRC sh
+$ LD_LIBRARY_PATH=.
+$ ./main
+#+END_SRC
+
+This fix is not portable. A better way is to put dependencies inside the file, via =rpath= and =runpath=.
+
+** =rpath= and =runpath=
+
+=rpath= and =runpath= are optional entries in the =.dynamic= section of an executable. They are lists of directories. The difference is =rpath= is searched before =LD_LIBRARY_PATH=, while =runpath= is searched after.
+
+To bake =rpath= into the executable:
+
+#+BEGIN_SRC sh
+$ clang++ -o main main.o -lrandom -L. -Wl,-rpath,.
+# -Wl,<arg>,<arg>...  Pass comma separated arguments to linker
+#+END_SRC
+
+=-Wl,-rpath,.= means passing =-rpath .= to the linker. Or to do the same thing for =runpath=:
+
+#+BEGIN_SRC sh
+$ clang++ -o main main.o -lrandom -L. -Wl,--enable-new-dtags,-rpath,.
+#+END_SRC
+
+Check =.dynamic= section of =main= again:
+
+#+BEGIN_SRC sh
+$ readelf -d main | grep path
+ 0x000000000000000f (RPATH)              Library rpath: [.]
+#+END_SRC
+
+The downside of using =.= (the current working directory) as search path is that, it won't work when executing =main= from a different directory:
+
+#+BEGIN_SRC sh
+$ cd /tmp
+$ /home/cpp/main
+/home/cpp/main: error while loading shared libraries: librandom.so ...
+#+END_SRC
+
+An easy way to solve this is to copy =librandom.so= to a directory that is on the search path, e.g. =/lib=. Another way is, of course, to set =rpath= to be relative to the executable, instead of the current location.
+
+** =$ORIGIN=
+
+Paths in =rpath= and =runpath= can be:
+
+#+ATTR_HTML: :class no-border
+| Absolute                                | E.g. =/path/to/my/libs= |
+|-----------------------------------------+-------------------------|
+| Relative to current working directory   | E.g. =.=                |
+|-----------------------------------------+-------------------------|
+| Relative to executable                  | E.g. =$ORIGIN=          |
+
+=$ORIGIN= is not an environment variable, =export ORIGIN=/path= has no effect, it is always the directory in which the executable being executed is placed.
+
+To use =$ORIGIN= in =rpath=:
+
+#+BEGIN_SRC sh
+$ clang++ -o main main.o -lrandom -L. -Wl,-rpath,"\$ORIGIN"
+#+END_SRC
+
+=$= needs to be escaped in this case, because we don't want Shell to expand it here. Then check the executable data:
+
+#+BEGIN_SRC sh
+$ readelf main -d | grep path
+ 0x000000000000000f (RPATH)              Library rpath: [$ORIGIN]
+$ ldd main | grep librandom
+	librandom.so => /home/cpp/./librandom.so (0x00007f4ef0f20000)
+#+END_SRC
+
+Now =main= works when being executed from any directory:
+
+#+BEGIN_SRC sh
+$ cd /tmp
+$ /home/cpp/main
+#+END_SRC
+
+** Runtime Search Path Security
+
+Linux user password hash is stored in =/etc/shadow= and it's root protected. But a non-root user can change his password with =passwd=. The reason is that =passwd= executable has the =setuid= bit set:
+
+#+BEGIN_SRC sh
+$ ls -l /usr/bin/passwd
+-rwsr-xr-x 1 root root 27832 Jun 10  2014 /usr/bin/passwd
+#  ^--- The "setuid" bit is set for user execution.
+#+END_SRC
+
+A program with the =setuid= bit set is executed as the owner of that program, which in this example is root.
+
+To demonstrate how this is relevant to the shared library, we move the library file to =libs/librandom.so= relative to =main=, and set the =rpath= accordingly:
+
+#+BEGIN_SRC sh
+$ clang++ -o main main.o -lrandom -L. -Wl,-rpath,"\$ORIGIN/libs"
+# librandom.so needs to be in the same path when compiling, otherwise
+# linker doesn't know where to find it
+$ ldd main | grep librandom
+	librandom.so => /home/cpp/./libs/librandom.so (0x00007f8868973000)
+$ mkdir libs
+$ mv librandom.so libs
+$ ./main
+# main should execute without error
+#+END_SRC
+
+Turn on =setuid= bit for =main= and try execute it (as root):
+
+#+BEGIN_SRC sh
+$ sudo chown root main
+$ sudo chmod a+s main
+
+$ ./main
+./main: error while loading shared libraries: librandom.so ...
+# rpath is not working
+
+$ LD_LIBRARY_PATH=./libs
+$ ./main
+./main: error while loading shared libraries: librandom.so ...
+# LD_LIBRARY_PATH is not working either
+#+END_SRC
+
+This is because, for security reasons, when running an executable with elevated privileges, e.g. =setuid= and =setgid=, the search path list is different than normal: =LD_LIBRARY_PATH=, =rpath= and =runpath= are all ignored, because using these search path allows exploit of elevated privileges executable to run as root, see [[https://marc.info/?l=full-disclosure&m=128739684614072&w=2][The GNU C library dynamic linker expands $ORIGIN in setuid library search path]].
+
+Basically, it allows someone to make the elevated privileges executable load custom library, which will run as root (or a different user), and running code as root pretty much gives people absolute control over the machine.
+
+Therefore, if the executable needs to have elevated privileges, the dependencies need to be specified in absolute paths, or placed in the default locations, e.g. =/lib=.
+
+** Debugging Cheat Sheet
+
+When seeing this error on running an executable:
+
+#+BEGIN_SRC sh
+$ ./executable
+./executable: error while loading shared libraries: ...
+#+END_SRC
+
+Try these debugging steps:
+
+1. Check what dependencies are missing with =ldd <executable>=.
+2. Check if they are direct dependencies with =readelf -d <executable> | grep NEEDED=.
+3. Check if the libraries actually exist in the expected location.
+4. Check where dependencies are being searched with =LD_DEBUG=libs ldd <executable>=.
+5. To add a directory to the search:
+   - Add the directory to =LD_LIBRARY_PATH= environment variable.
+   - Add the directory to the executable or shared library’s =rpath= (=-Wl,-rpath,<dir>=) or =runpath= (=-Wl,--enable-new-dtags,-rpath,<dir>=). Use =$ORIGIN= for paths relative to the executable.
+6. If =ldd= shows that no dependencies are missing, check if the executable has elevated privileges. If so, use absolute paths for dependencies.
+
+** Links
+
+1. [[https://docs.oracle.com/cd/E23824_01/html/819-0690/chapter6-42444.html][Oracle | Linker and Libraries Guide]]
+1. [[https://www.gnu.org/software/libc/][The GNU C Library (glibc)]]
+1. [[http://tldp.org/HOWTO/Program-Library-HOWTO/shared-libraries.html][The Linux Documentation Project | Shared Libraries]]
+1. [[https://unix.stackexchange.com/questions/22926/where-do-executables-look-for-shared-objects-at-runtime][StackExchange | Where do executables look for shared objects at runtime?]]
+1. [[http://www.sco.com/developers/gabi/latest/ch5.pheader.html][System V Application Binary Interface | Program Header]]
+1. [[https://greek0.net/elf.html][The ELF format - how programs look from the inside]]
+1. [[https://en.wikipedia.org/wiki/Comparison_of_executable_file_formats][Wikipedia | Comparison of executable file formats]]
+1. [[https://clang.llvm.org/docs/ClangCommandLineReference.html#linker-flags][Clang command line argument reference | Linker flags]]

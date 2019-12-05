@@ -666,26 +666,21 @@ git clone <url> <dir>
 
 如果不指定本地目录名，则新建与项目同名的目录，并检出最新工作目录。
 
-** Hotfix
+** 重建仓库
 
-1. 从工作分支切换到生产分支，更新分支。
-2. 创建 hotfix 分支，修复问题。
-3. 合并 hotfix 分支，推送。
-4. 切换回工作分支。
+#+BEGIN_SRC sh
+rm -rf .git
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin <remote_url>
+git push -u --force origin master
+#+END_SRC
 
-** 删除所有已合并分支
+** 删除已合并分支
 
 #+BEGIN_SRC sh
 git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d
-#+END_SRC
-
-** 同步 fork
-
-#+BEGIN_SRC sh
-git remote add upstream git://...
-git fetch upstream
-git checkout master
-git merge upstream/master master
 #+END_SRC
 
 ** 查找删除记录

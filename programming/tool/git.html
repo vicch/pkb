@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-05-12 Sun 18:46 -->
+<!-- 2019-11-16 Sat 18:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Git</title>
@@ -241,98 +241,97 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge8974ce">1 概念</a>
+<li><a href="#org6b1d04f">1 概念</a>
 <ul>
-<li><a href="#org4b7d519">1.1 组成</a></li>
-<li><a href="#org517334c">1.2 HEAD 指针</a></li>
+<li><a href="#org8858c81">1.1 组成</a></li>
+<li><a href="#orgedcd2c5">1.2 HEAD 指针</a></li>
 </ul>
 </li>
-<li><a href="#orge3c4f48">2 协议</a></li>
-<li><a href="#orgc97b921">3 操作</a></li>
-<li><a href="#orgccb6866">4 文件</a></li>
-<li><a href="#orga7a1061">5 分支</a>
+<li><a href="#org0371ee6">2 协议</a></li>
+<li><a href="#orgf2f99cf">3 操作</a></li>
+<li><a href="#org420e4e6">4 文件</a></li>
+<li><a href="#org85fdcd5">5 分支</a>
 <ul>
-<li><a href="#orge4556ff">5.1 创建</a></li>
-<li><a href="#org9643c76">5.2 切换</a>
+<li><a href="#org7f61671">5.1 创建</a></li>
+<li><a href="#orgf133f63">5.2 切换</a>
 <ul>
-<li><a href="#org40667fd">5.2.1 冲突</a></li>
+<li><a href="#org42f9b61">5.2.1 冲突</a></li>
 </ul>
 </li>
-<li><a href="#org14bbe0b">5.3 合并</a>
+<li><a href="#orgb8cfd72">5.3 合并</a>
 <ul>
-<li><a href="#orgccc226f">5.3.1 冲突</a></li>
-<li><a href="#org7825cc7">5.3.2 三向合并</a></li>
-<li><a href="#org7d1b12f">5.3.3 Fast forward</a></li>
+<li><a href="#org2822028">5.3.1 冲突</a></li>
+<li><a href="#orgb2e8af7">5.3.2 三向合并</a></li>
+<li><a href="#orge4eecd9">5.3.3 Fast forward</a></li>
 </ul>
 </li>
-<li><a href="#org95420f5">5.4 远程分支</a></li>
-<li><a href="#org4fe1119">5.5 追踪</a></li>
-<li><a href="#org852c6e9">5.6 分支模式</a>
+<li><a href="#orgd08aa19">5.4 远程分支</a></li>
+<li><a href="#org9d02018">5.5 追踪</a></li>
+<li><a href="#org3f5ec2c">5.6 分支模式</a>
 <ul>
-<li><a href="#org86f117b">5.6.1 Long-running 模式</a></li>
-<li><a href="#org292f29b">5.6.2 Feature 模式</a></li>
+<li><a href="#orgaa5f69e">5.6.1 Long-running 模式</a></li>
+<li><a href="#org2f14b57">5.6.2 Feature 模式</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orge2feb5f">6 配置</a>
+<li><a href="#org7c1c0ec">6 配置</a>
 <ul>
-<li><a href="#orgbba3def">6.1 <code>.gitignore</code></a></li>
+<li><a href="#org93d5446">6.1 <code>.gitignore</code></a></li>
 </ul>
 </li>
-<li><a href="#org3391b48">7 命令</a>
+<li><a href="#org5b55f54">7 命令</a>
 <ul>
-<li><a href="#orgc24613b">7.1 命令列表</a></li>
-<li><a href="#org0af8402">7.2 <code>add</code></a></li>
-<li><a href="#org338bfa9">7.3 <code>blame</code></a></li>
-<li><a href="#orga513591">7.4 <code>branch</code></a></li>
-<li><a href="#org64abfe9">7.5 <code>checkout</code></a></li>
-<li><a href="#org07405fe">7.6 <code>cherry-pick</code></a></li>
-<li><a href="#org6b5c7a5">7.7 <code>clone</code></a></li>
-<li><a href="#org9f501d2">7.8 <code>commit</code></a></li>
-<li><a href="#org90b2709">7.9 <code>config</code></a></li>
-<li><a href="#org27c7e01">7.10 <code>diff</code></a></li>
-<li><a href="#orgb565689">7.11 <code>fetch</code></a></li>
-<li><a href="#org517b378">7.12 <code>init</code></a></li>
-<li><a href="#org85e7655">7.13 <code>log</code></a></li>
-<li><a href="#org3f39efb">7.14 <code>merge</code></a></li>
-<li><a href="#orgb9cfb50">7.15 <code>mergetool</code></a></li>
-<li><a href="#org99031d2">7.16 <code>mv</code></a></li>
-<li><a href="#orga113be3">7.17 <code>pull</code></a></li>
-<li><a href="#org2a5239b">7.18 <code>push</code></a></li>
-<li><a href="#orge6fd429">7.19 <code>rebase</code></a></li>
-<li><a href="#org1a55832">7.20 <code>remote</code></a></li>
-<li><a href="#orga207c5d">7.21 <code>reset</code></a></li>
-<li><a href="#orgb104260">7.22 <code>revert</code></a></li>
-<li><a href="#org40483f6">7.23 <code>rev-parse</code></a></li>
-<li><a href="#org5f6438b">7.24 <code>rm</code></a></li>
-<li><a href="#org3800c30">7.25 <code>shortlog</code></a></li>
-<li><a href="#org5cd5ce5">7.26 <code>show</code></a></li>
-<li><a href="#orgefd1547">7.27 <code>stage</code></a></li>
-<li><a href="#org03ecd3a">7.28 <code>stash</code></a></li>
-<li><a href="#org2558c4f">7.29 <code>status</code></a></li>
-<li><a href="#org20a5e91">7.30 <code>tag</code></a></li>
-<li><a href="#orgfad5a1d">7.31 <code>whatchanged</code></a></li>
+<li><a href="#orga695f7a">7.1 命令列表</a></li>
+<li><a href="#org6a59380">7.2 <code>add</code></a></li>
+<li><a href="#org5e57425">7.3 <code>blame</code></a></li>
+<li><a href="#org207d0a9">7.4 <code>branch</code></a></li>
+<li><a href="#org5213715">7.5 <code>checkout</code></a></li>
+<li><a href="#orgbaa8f26">7.6 <code>cherry-pick</code></a></li>
+<li><a href="#orgf340880">7.7 <code>clone</code></a></li>
+<li><a href="#org4054d64">7.8 <code>commit</code></a></li>
+<li><a href="#org6f5a0f8">7.9 <code>config</code></a></li>
+<li><a href="#org4f52aae">7.10 <code>diff</code></a></li>
+<li><a href="#org496f5fc">7.11 <code>fetch</code></a></li>
+<li><a href="#org75f934f">7.12 <code>init</code></a></li>
+<li><a href="#org8b2b61e">7.13 <code>log</code></a></li>
+<li><a href="#org9af242e">7.14 <code>merge</code></a></li>
+<li><a href="#orgb04a5ab">7.15 <code>mergetool</code></a></li>
+<li><a href="#orga5f05d0">7.16 <code>mv</code></a></li>
+<li><a href="#org52fa462">7.17 <code>pull</code></a></li>
+<li><a href="#org4f28388">7.18 <code>push</code></a></li>
+<li><a href="#org5f7499b">7.19 <code>rebase</code></a></li>
+<li><a href="#org74b0da7">7.20 <code>remote</code></a></li>
+<li><a href="#org1ee6e05">7.21 <code>reset</code></a></li>
+<li><a href="#org60df7d8">7.22 <code>revert</code></a></li>
+<li><a href="#orgf14c44d">7.23 <code>rev-parse</code></a></li>
+<li><a href="#org1d61aec">7.24 <code>rm</code></a></li>
+<li><a href="#org72f7b76">7.25 <code>shortlog</code></a></li>
+<li><a href="#org81e6987">7.26 <code>show</code></a></li>
+<li><a href="#orgaa1e5c6">7.27 <code>stage</code></a></li>
+<li><a href="#org4199c26">7.28 <code>stash</code></a></li>
+<li><a href="#org5154b21">7.29 <code>status</code></a></li>
+<li><a href="#org15c0751">7.30 <code>tag</code></a></li>
+<li><a href="#org1909256">7.31 <code>whatchanged</code></a></li>
 </ul>
 </li>
-<li><a href="#org24fdb59">8 常用</a>
+<li><a href="#org45f63fa">8 常用</a>
 <ul>
-<li><a href="#orgfdc1733">8.1 创建仓库</a></li>
-<li><a href="#orga97e9ac">8.2 Hotfix</a></li>
-<li><a href="#org65c59e8">8.3 删除所有已合并分支</a></li>
-<li><a href="#org74cf16b">8.4 同步 fork</a></li>
-<li><a href="#orgd06ac35">8.5 查找删除记录</a></li>
-<li><a href="#org9571d64">8.6 撤销修改</a></li>
+<li><a href="#org8baae71">8.1 创建仓库</a></li>
+<li><a href="#orgbc02277">8.2 重建仓库</a></li>
+<li><a href="#orga3485c4">8.3 删除已合并分支</a></li>
+<li><a href="#org0f5fdcf">8.4 查找删除记录</a></li>
+<li><a href="#orge549830">8.5 撤销修改</a></li>
 </ul>
 </li>
-<li><a href="#org41c4c71">9 词汇表</a></li>
-<li><a href="#org130d4b1">10 链接</a></li>
+<li><a href="#org0637f1b">9 词汇表</a></li>
+<li><a href="#orga4b800e">10 链接</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orge8974ce" class="outline-2">
-<h2 id="orge8974ce"><span class="section-number-2">1</span> 概念</h2>
+<div id="outline-container-org6b1d04f" class="outline-2">
+<h2 id="org6b1d04f"><span class="section-number-2">1</span> 概念</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 分布式版本控制系统
@@ -347,8 +346,8 @@ Git 是一个文件系统的快照（snapshot），如果文件没有被修改�
 </p>
 </div>
 
-<div id="outline-container-org4b7d519" class="outline-3">
-<h3 id="org4b7d519"><span class="section-number-3">1.1</span> 组成</h3>
+<div id="outline-container-org8858c81" class="outline-3">
+<h3 id="org8858c81"><span class="section-number-3">1.1</span> 组成</h3>
 <div class="outline-text-3" id="text-1-1">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -407,8 +406,8 @@ Git 是一个文件系统的快照（snapshot），如果文件没有被修改�
 </div>
 </div>
 
-<div id="outline-container-org517334c" class="outline-3">
-<h3 id="org517334c"><span class="section-number-3">1.2</span> HEAD 指针</h3>
+<div id="outline-container-orgedcd2c5" class="outline-3">
+<h3 id="orgedcd2c5"><span class="section-number-3">1.2</span> HEAD 指针</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 指向当前使用的分支的指针，默认指向 master 分支。
@@ -417,8 +416,8 @@ Git 是一个文件系统的快照（snapshot），如果文件没有被修改�
 </div>
 </div>
 
-<div id="outline-container-orge3c4f48" class="outline-2">
-<h2 id="orge3c4f48"><span class="section-number-2">2</span> 协议</h2>
+<div id="outline-container-org0371ee6" class="outline-2">
+<h2 id="org0371ee6"><span class="section-number-2">2</span> 协议</h2>
 <div class="outline-text-2" id="text-2">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -478,8 +477,8 @@ Git 是一个文件系统的快照（snapshot），如果文件没有被修改�
 </div>
 </div>
 
-<div id="outline-container-orgc97b921" class="outline-2">
-<h2 id="orgc97b921"><span class="section-number-2">3</span> 操作</h2>
+<div id="outline-container-orgf2f99cf" class="outline-2">
+<h2 id="orgf2f99cf"><span class="section-number-2">3</span> 操作</h2>
 <div class="outline-text-2" id="text-3">
 
 <div class="figure">
@@ -495,8 +494,8 @@ Git 是一个文件系统的快照（snapshot），如果文件没有被修改�
 </div>
 </div>
 
-<div id="outline-container-orgccb6866" class="outline-2">
-<h2 id="orgccb6866"><span class="section-number-2">4</span> 文件</h2>
+<div id="outline-container-org420e4e6" class="outline-2">
+<h2 id="org420e4e6"><span class="section-number-2">4</span> 文件</h2>
 <div class="outline-text-2" id="text-4">
 
 <div class="figure">
@@ -563,16 +562,16 @@ Git 是一个文件系统的快照（snapshot），如果文件没有被修改�
 </div>
 </div>
 
-<div id="outline-container-orga7a1061" class="outline-2">
-<h2 id="orga7a1061"><span class="section-number-2">5</span> 分支</h2>
+<div id="outline-container-org85fdcd5" class="outline-2">
+<h2 id="org85fdcd5"><span class="section-number-2">5</span> 分支</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Git 的 commit 快照之间通过指针相连，每一个快照的指针指向它的 upstream。创建一个分支，就是创建一个指向最后一个提交的指针。
 </p>
 </div>
 
-<div id="outline-container-orge4556ff" class="outline-3">
-<h3 id="orge4556ff"><span class="section-number-3">5.1</span> 创建</h3>
+<div id="outline-container-org7f61671" class="outline-3">
+<h3 id="org7f61671"><span class="section-number-3">5.1</span> 创建</h3>
 <div class="outline-text-3" id="text-5-1">
 <div class="org-src-container">
 <pre class="src src-sh">git branch &lt;branch&gt;
@@ -587,8 +586,8 @@ Git 的 commit 快照之间通过指针相连，每一个快照的指针指向�
 </div>
 </div>
 
-<div id="outline-container-org9643c76" class="outline-3">
-<h3 id="org9643c76"><span class="section-number-3">5.2</span> 切换</h3>
+<div id="outline-container-orgf133f63" class="outline-3">
+<h3 id="orgf133f63"><span class="section-number-3">5.2</span> 切换</h3>
 <div class="outline-text-3" id="text-5-2">
 <div class="org-src-container">
 <label class="org-src-name"><span class="listing-number">Listing 1: </span>切换分支</label><pre class="src src-sh">git checkout &lt;branch&gt;
@@ -618,8 +617,8 @@ Git 的 commit 快照之间通过指针相连，每一个快照的指针指向�
 </div>
 </div>
 
-<div id="outline-container-org40667fd" class="outline-4">
-<h4 id="org40667fd"><span class="section-number-4">5.2.1</span> 冲突</h4>
+<div id="outline-container-org42f9b61" class="outline-4">
+<h4 id="org42f9b61"><span class="section-number-4">5.2.1</span> 冲突</h4>
 <div class="outline-text-4" id="text-5-2-1">
 <p>
 如果当前分支有未提交、并与准备检出的分支有冲突的修改，Git 不允许切换分支。解决方法：
@@ -633,8 +632,8 @@ Git 的 commit 快照之间通过指针相连，每一个快照的指针指向�
 </div>
 </div>
 
-<div id="outline-container-org14bbe0b" class="outline-3">
-<h3 id="org14bbe0b"><span class="section-number-3">5.3</span> 合并</h3>
+<div id="outline-container-orgb8cfd72" class="outline-3">
+<h3 id="orgb8cfd72"><span class="section-number-3">5.3</span> 合并</h3>
 <div class="outline-text-3" id="text-5-3">
 <div class="org-src-container">
 <label class="org-src-name"><span class="listing-number">Listing 2: </span>将 A 合并入 B 时，先检出 B，然后运行 <code>merge</code> 命令</label><pre class="src src-sh">git checkout branch_b
@@ -643,8 +642,8 @@ git merge branch_a
 </div>
 </div>
 
-<div id="outline-container-orgccc226f" class="outline-4">
-<h4 id="orgccc226f"><span class="section-number-4">5.3.1</span> 冲突</h4>
+<div id="outline-container-org2822028" class="outline-4">
+<h4 id="org2822028"><span class="section-number-4">5.3.1</span> 冲突</h4>
 <div class="outline-text-4" id="text-5-3-1">
 <p>
 合并的两个分支中对同一个文件有不同的修改时，会出现冲突。当合并出现冲突时，Git 不自动提交，冲突的文件被标为 <code>unmerged</code> 。
@@ -661,8 +660,8 @@ git merge branch_a
 </div>
 </div>
 
-<div id="outline-container-org7825cc7" class="outline-4">
-<h4 id="org7825cc7"><span class="section-number-4">5.3.2</span> 三向合并</h4>
+<div id="outline-container-orgb2e8af7" class="outline-4">
+<h4 id="orgb2e8af7"><span class="section-number-4">5.3.2</span> 三向合并</h4>
 <div class="outline-text-4" id="text-5-3-2">
 <p>
 如果 A 和 B 不在同一条提交时间线上，Git 会自动找到它们的共同 upstream，进行三向合并。
@@ -686,8 +685,8 @@ git merge branch_a
 </div>
 </div>
 
-<div id="outline-container-org7d1b12f" class="outline-4">
-<h4 id="org7d1b12f"><span class="section-number-4">5.3.3</span> Fast forward</h4>
+<div id="outline-container-orge4eecd9" class="outline-4">
+<h4 id="orge4eecd9"><span class="section-number-4">5.3.3</span> Fast forward</h4>
 <div class="outline-text-4" id="text-5-3-3">
 <p>
 将 B 合并入当前分支 A 时，如果 A 和 B 在同一条提交时间线上，且 A 是 B 的 upstream：
@@ -712,8 +711,8 @@ git merge branch_a
 </div>
 </div>
 
-<div id="outline-container-org95420f5" class="outline-3">
-<h3 id="org95420f5"><span class="section-number-3">5.4</span> 远程分支</h3>
+<div id="outline-container-orgd08aa19" class="outline-3">
+<h3 id="orgd08aa19"><span class="section-number-3">5.4</span> 远程分支</h3>
 <div class="outline-text-3" id="text-5-4">
 <ul class="org-ul">
 <li>在本地仓库但无法移动，网络通信时会自动更新。</li>
@@ -722,8 +721,8 @@ git merge branch_a
 </div>
 </div>
 
-<div id="outline-container-org4fe1119" class="outline-3">
-<h3 id="org4fe1119"><span class="section-number-3">5.5</span> 追踪</h3>
+<div id="outline-container-org9d02018" class="outline-3">
+<h3 id="org9d02018"><span class="section-number-3">5.5</span> 追踪</h3>
 <div class="outline-text-3" id="text-5-5">
 <p>
 如果当前分支与远程分支存在追踪关系， <code>git pull</code> 就可以省略远程分支名。
@@ -746,11 +745,11 @@ git pull          <span class="org-comment-delimiter"># </span><span class="org-
 </div>
 </div>
 
-<div id="outline-container-org852c6e9" class="outline-3">
-<h3 id="org852c6e9"><span class="section-number-3">5.6</span> 分支模式</h3>
+<div id="outline-container-org3f5ec2c" class="outline-3">
+<h3 id="org3f5ec2c"><span class="section-number-3">5.6</span> 分支模式</h3>
 <div class="outline-text-3" id="text-5-6">
-</div><div id="outline-container-org86f117b" class="outline-4">
-<h4 id="org86f117b"><span class="section-number-4">5.6.1</span> Long-running 模式</h4>
+</div><div id="outline-container-orgaa5f69e" class="outline-4">
+<h4 id="orgaa5f69e"><span class="section-number-4">5.6.1</span> Long-running 模式</h4>
 <div class="outline-text-4" id="text-5-6-1">
 <p>
 在一条提交时间线上保留多个分支，代表不同稳定性的版本。
@@ -764,8 +763,8 @@ git pull          <span class="org-comment-delimiter"># </span><span class="org-
 </div>
 </div>
 
-<div id="outline-container-org292f29b" class="outline-4">
-<h4 id="org292f29b"><span class="section-number-4">5.6.2</span> Feature 模式</h4>
+<div id="outline-container-org2f14b57" class="outline-4">
+<h4 id="org2f14b57"><span class="section-number-4">5.6.2</span> Feature 模式</h4>
 <div class="outline-text-4" id="text-5-6-2">
 <p>
 为开发某个功能而建立的、存在时间短的分支，开发完成后应合并入主提交时间线。
@@ -781,8 +780,8 @@ git pull          <span class="org-comment-delimiter"># </span><span class="org-
 </div>
 </div>
 
-<div id="outline-container-orge2feb5f" class="outline-2">
-<h2 id="orge2feb5f"><span class="section-number-2">6</span> 配置</h2>
+<div id="outline-container-org7c1c0ec" class="outline-2">
+<h2 id="org7c1c0ec"><span class="section-number-2">6</span> 配置</h2>
 <div class="outline-text-2" id="text-6">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -812,8 +811,8 @@ git pull          <span class="org-comment-delimiter"># </span><span class="org-
 </table>
 </div>
 
-<div id="outline-container-orgbba3def" class="outline-3">
-<h3 id="orgbba3def"><span class="section-number-3">6.1</span> <code>.gitignore</code></h3>
+<div id="outline-container-org93d5446" class="outline-3">
+<h3 id="org93d5446"><span class="section-number-3">6.1</span> <code>.gitignore</code></h3>
 <div class="outline-text-3" id="text-6-1">
 <ul class="org-ul">
 <li>Git 忽略的文件，修改时不会被列为 <code>untracked</code> 。</li>
@@ -834,11 +833,11 @@ doc/**/*.txt <span class="org-comment-delimiter"># </span><span class="org-comme
 </div>
 </div>
 
-<div id="outline-container-org3391b48" class="outline-2">
-<h2 id="org3391b48"><span class="section-number-2">7</span> 命令</h2>
+<div id="outline-container-org5b55f54" class="outline-2">
+<h2 id="org5b55f54"><span class="section-number-2">7</span> 命令</h2>
 <div class="outline-text-2" id="text-7">
-</div><div id="outline-container-orgc24613b" class="outline-3">
-<h3 id="orgc24613b"><span class="section-number-3">7.1</span> 命令列表</h3>
+</div><div id="outline-container-orga695f7a" class="outline-3">
+<h3 id="orga695f7a"><span class="section-number-3">7.1</span> 命令列表</h3>
 <div class="outline-text-3" id="text-7-1">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -850,7 +849,7 @@ doc/**/*.txt <span class="org-comment-delimiter"># </span><span class="org-comme
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="org-left"><a href="#org9c9204a"><code>add</code></a></th>
+<th scope="col" class="org-left"><a href="#orgb00af45"><code>add</code></a></th>
 <th scope="col" class="org-left">将目录、文件添加指定文件到暂存区</th>
 </tr>
 </thead>
@@ -868,97 +867,97 @@ doc/**/*.txt <span class="org-comment-delimiter"># </span><span class="org-comme
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#org3c03354"><code>branch</code></a></td>
+<td class="org-left"><a href="#orgfccde47"><code>branch</code></a></td>
 <td class="org-left">&#xa0;</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#org53d9327"><code>checkout</code></a></td>
+<td class="org-left"><a href="#orgb77bf2d"><code>checkout</code></a></td>
 <td class="org-left">移动 HEAD 指针，切换到分支</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#org9ceb589"><code>cherry-pick</code></a></td>
+<td class="org-left"><a href="#org287d847"><code>cherry-pick</code></a></td>
 <td class="org-left">将指定 commit 合并入当前分支</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#org9e5a57d"><code>clone</code></a></td>
+<td class="org-left"><a href="#org9d26515"><code>clone</code></a></td>
 <td class="org-left">&#xa0;</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#org08d94b4"><code>commit</code></a></td>
+<td class="org-left"><a href="#org881fdf3"><code>commit</code></a></td>
 <td class="org-left">提交所有暂存区中的文件</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#org78998e8"><code>config</code></a></td>
+<td class="org-left"><a href="#org3a19b78"><code>config</code></a></td>
 <td class="org-left">配置 Git</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#orge78c48d"><code>diff</code></a></td>
+<td class="org-left"><a href="#org41ee13b"><code>diff</code></a></td>
 <td class="org-left">显示文件差异</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#orgdede46d"><code>fetch</code></a></td>
+<td class="org-left"><a href="#orgb705cf1"><code>fetch</code></a></td>
 <td class="org-left">从远程仓库获取更新数据</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#org31c31d9"><code>init</code></a></td>
+<td class="org-left"><a href="#org8a7cd8e"><code>init</code></a></td>
 <td class="org-left">初始化</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#org332718f"><code>log</code></a></td>
+<td class="org-left"><a href="#orgc3d1b3a"><code>log</code></a></td>
 <td class="org-left">显示 commit 历史</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#org607f13c"><code>merge</code></a></td>
+<td class="org-left"><a href="#org2dc7680"><code>merge</code></a></td>
 <td class="org-left">将指定分支合并入当前分支</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#org0ff8efb"><code>mergetool</code></a></td>
+<td class="org-left"><a href="#org853682b"><code>mergetool</code></a></td>
 <td class="org-left">打开图形化合并工具处理冲突</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#org8c56485"><code>mv</code></a></td>
+<td class="org-left"><a href="#org6e4d889"><code>mv</code></a></td>
 <td class="org-left">重命名文件，并将操作放入暂存区</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#org1270f33"><code>pull</code></a></td>
+<td class="org-left"><a href="#org90b95ba"><code>pull</code></a></td>
 <td class="org-left">取远程分支的更新，并与本地分支合并</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#org9bfeb4c"><code>push</code></a></td>
+<td class="org-left"><a href="#org6f8f408"><code>push</code></a></td>
 <td class="org-left">将指定分支同步到远程仓库</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#orgb40c4c5"><code>rebase</code></a></td>
+<td class="org-left"><a href="#orgf8bc6f3"><code>rebase</code></a></td>
 <td class="org-left">在指定分支上重做当前分支与其进入不同分支后经历的变化</td>
 </tr>
 </tbody>
@@ -970,13 +969,13 @@ doc/**/*.txt <span class="org-comment-delimiter"># </span><span class="org-comme
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#orgeab359d"><code>remote</code></a></td>
+<td class="org-left"><a href="#orgb2c6332"><code>remote</code></a></td>
 <td class="org-left">管理远程主机</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#org24edb13"><code>reset</code></a></td>
+<td class="org-left"><a href="#org9726e66"><code>reset</code></a></td>
 <td class="org-left">&#xa0;</td>
 </tr>
 </tbody>
@@ -988,7 +987,7 @@ doc/**/*.txt <span class="org-comment-delimiter"># </span><span class="org-comme
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#org7f28f76"><code>rm</code></a></td>
+<td class="org-left"><a href="#orgc205d80"><code>rm</code></a></td>
 <td class="org-left">删除工作区文件，并将删除操作放入暂存区</td>
 </tr>
 </tbody>
@@ -1000,31 +999,31 @@ doc/**/*.txt <span class="org-comment-delimiter"># </span><span class="org-comme
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#orgdf22a5e"><code>show</code></a></td>
+<td class="org-left"><a href="#org1319f63"><code>show</code></a></td>
 <td class="org-left">&#xa0;</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#orge62465d"><code>stage</code></a></td>
+<td class="org-left"><a href="#org4339437"><code>stage</code></a></td>
 <td class="org-left">&#xa0;</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#orgd12165a"><code>stash</code></a></td>
+<td class="org-left"><a href="#org6f40430"><code>stash</code></a></td>
 <td class="org-left">临时保存已修改的文件</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#org0f53b19"><code>status</code></a></td>
+<td class="org-left"><a href="#orgd1af2a4"><code>status</code></a></td>
 <td class="org-left">检查文件状态，显示分支信息</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><a href="#orgd1a6a5e"><code>tag</code></a></td>
+<td class="org-left"><a href="#orgc5eb6f5"><code>tag</code></a></td>
 <td class="org-left">&#xa0;</td>
 </tr>
 </tbody>
@@ -1038,11 +1037,11 @@ doc/**/*.txt <span class="org-comment-delimiter"># </span><span class="org-comme
 </div>
 </div>
 
-<div id="outline-container-org0af8402" class="outline-3">
-<h3 id="org0af8402"><span class="section-number-3">7.2</span> <code>add</code></h3>
+<div id="outline-container-org6a59380" class="outline-3">
+<h3 id="org6a59380"><span class="section-number-3">7.2</span> <code>add</code></h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
-<a id="org9c9204a"></a>
+<a id="orgb00af45"></a>
 </p>
 
 <div class="org-src-container">
@@ -1059,8 +1058,8 @@ doc/**/*.txt <span class="org-comment-delimiter"># </span><span class="org-comme
 </div>
 </div>
 
-<div id="outline-container-org338bfa9" class="outline-3">
-<h3 id="org338bfa9"><span class="section-number-3">7.3</span> <code>blame</code></h3>
+<div id="outline-container-org5e57425" class="outline-3">
+<h3 id="org5e57425"><span class="section-number-3">7.3</span> <code>blame</code></h3>
 <div class="outline-text-3" id="text-7-3">
 <div class="org-src-container">
 <pre class="src src-sh">git blame &lt;file&gt;
@@ -1069,11 +1068,11 @@ doc/**/*.txt <span class="org-comment-delimiter"># </span><span class="org-comme
 </div>
 </div>
 
-<div id="outline-container-orga513591" class="outline-3">
-<h3 id="orga513591"><span class="section-number-3">7.4</span> <code>branch</code></h3>
+<div id="outline-container-org207d0a9" class="outline-3">
+<h3 id="org207d0a9"><span class="section-number-3">7.4</span> <code>branch</code></h3>
 <div class="outline-text-3" id="text-7-4">
 <p>
-<a id="org3c03354"></a>
+<a id="orgfccde47"></a>
 </p>
 
 <div class="org-src-container">
@@ -1101,11 +1100,11 @@ git branch --set-upstream &lt;branch&gt; &lt;remote&gt;/&lt;branch&gt; <span cla
 </div>
 </div>
 
-<div id="outline-container-org64abfe9" class="outline-3">
-<h3 id="org64abfe9"><span class="section-number-3">7.5</span> <code>checkout</code></h3>
+<div id="outline-container-org5213715" class="outline-3">
+<h3 id="org5213715"><span class="section-number-3">7.5</span> <code>checkout</code></h3>
 <div class="outline-text-3" id="text-7-5">
 <p>
-<a id="org53d9327"></a>
+<a id="orgb77bf2d"></a>
 </p>
 
 <div class="org-src-container">
@@ -1125,11 +1124,11 @@ git checkout &lt;commit&gt; &lt;file&gt; <span class="org-comment-delimiter"># <
 </div>
 </div>
 
-<div id="outline-container-org07405fe" class="outline-3">
-<h3 id="org07405fe"><span class="section-number-3">7.6</span> <code>cherry-pick</code></h3>
+<div id="outline-container-orgbaa8f26" class="outline-3">
+<h3 id="orgbaa8f26"><span class="section-number-3">7.6</span> <code>cherry-pick</code></h3>
 <div class="outline-text-3" id="text-7-6">
 <p>
-<a id="org9ceb589"></a>
+<a id="org287d847"></a>
 </p>
 
 <div class="org-src-container">
@@ -1139,11 +1138,11 @@ git checkout &lt;commit&gt; &lt;file&gt; <span class="org-comment-delimiter"># <
 </div>
 </div>
 
-<div id="outline-container-org6b5c7a5" class="outline-3">
-<h3 id="org6b5c7a5"><span class="section-number-3">7.7</span> <code>clone</code></h3>
+<div id="outline-container-orgf340880" class="outline-3">
+<h3 id="orgf340880"><span class="section-number-3">7.7</span> <code>clone</code></h3>
 <div class="outline-text-3" id="text-7-7">
 <p>
-<a id="org9e5a57d"></a>
+<a id="org9d26515"></a>
 </p>
 
 <p>
@@ -1160,11 +1159,11 @@ git clone -o &lt;remote&gt; &lt;url&gt; <span class="org-comment-delimiter"># </
 </div>
 </div>
 
-<div id="outline-container-org9f501d2" class="outline-3">
-<h3 id="org9f501d2"><span class="section-number-3">7.8</span> <code>commit</code></h3>
+<div id="outline-container-org4054d64" class="outline-3">
+<h3 id="org4054d64"><span class="section-number-3">7.8</span> <code>commit</code></h3>
 <div class="outline-text-3" id="text-7-8">
 <p>
-<a id="org08d94b4"></a>
+<a id="org881fdf3"></a>
 </p>
 
 <div class="org-src-container">
@@ -1179,11 +1178,11 @@ git clone -o &lt;remote&gt; &lt;url&gt; <span class="org-comment-delimiter"># </
 </div>
 </div>
 
-<div id="outline-container-org90b2709" class="outline-3">
-<h3 id="org90b2709"><span class="section-number-3">7.9</span> <code>config</code></h3>
+<div id="outline-container-org6f5a0f8" class="outline-3">
+<h3 id="org6f5a0f8"><span class="section-number-3">7.9</span> <code>config</code></h3>
 <div class="outline-text-3" id="text-7-9">
 <p>
-<a id="org78998e8"></a>
+<a id="org3a19b78"></a>
 </p>
 
 <div class="org-src-container">
@@ -1257,11 +1256,11 @@ git clone -o &lt;remote&gt; &lt;url&gt; <span class="org-comment-delimiter"># </
 </div>
 </div>
 
-<div id="outline-container-org27c7e01" class="outline-3">
-<h3 id="org27c7e01"><span class="section-number-3">7.10</span> <code>diff</code></h3>
+<div id="outline-container-org4f52aae" class="outline-3">
+<h3 id="org4f52aae"><span class="section-number-3">7.10</span> <code>diff</code></h3>
 <div class="outline-text-3" id="text-7-10">
 <p>
-<a id="orge78c48d"></a>
+<a id="org41ee13b"></a>
 </p>
 
 <div class="org-src-container">
@@ -1280,11 +1279,11 @@ git diff --shortstat <span class="org-string">"@{0 day ago}"</span> <span class=
 </div>
 </div>
 
-<div id="outline-container-orgb565689" class="outline-3">
-<h3 id="orgb565689"><span class="section-number-3">7.11</span> <code>fetch</code></h3>
+<div id="outline-container-org496f5fc" class="outline-3">
+<h3 id="org496f5fc"><span class="section-number-3">7.11</span> <code>fetch</code></h3>
 <div class="outline-text-3" id="text-7-11">
 <p>
-<a id="orgdede46d"></a>
+<a id="orgb705cf1"></a>
 </p>
 
 <p>
@@ -1302,11 +1301,11 @@ git fetch -p
 </div>
 </div>
 
-<div id="outline-container-org517b378" class="outline-3">
-<h3 id="org517b378"><span class="section-number-3">7.12</span> <code>init</code></h3>
+<div id="outline-container-org75f934f" class="outline-3">
+<h3 id="org75f934f"><span class="section-number-3">7.12</span> <code>init</code></h3>
 <div class="outline-text-3" id="text-7-12">
 <p>
-<a id="org31c31d9"></a>
+<a id="org8a7cd8e"></a>
 </p>
 
 <div class="org-src-container">
@@ -1317,11 +1316,11 @@ git init &lt;dir&gt; <span class="org-comment-delimiter"># </span><span class="o
 </div>
 </div>
 
-<div id="outline-container-org85e7655" class="outline-3">
-<h3 id="org85e7655"><span class="section-number-3">7.13</span> <code>log</code></h3>
+<div id="outline-container-org8b2b61e" class="outline-3">
+<h3 id="org8b2b61e"><span class="section-number-3">7.13</span> <code>log</code></h3>
 <div class="outline-text-3" id="text-7-13">
 <p>
-<a id="org332718f"></a>
+<a id="orgc3d1b3a"></a>
 </p>
 
 <div class="org-src-container">
@@ -1343,11 +1342,11 @@ git log &lt;commit&gt; HEAD --grep &lt;keyword&gt;   <span class="org-comment-de
 </div>
 </div>
 
-<div id="outline-container-org3f39efb" class="outline-3">
-<h3 id="org3f39efb"><span class="section-number-3">7.14</span> <code>merge</code></h3>
+<div id="outline-container-org9af242e" class="outline-3">
+<h3 id="org9af242e"><span class="section-number-3">7.14</span> <code>merge</code></h3>
 <div class="outline-text-3" id="text-7-14">
 <p>
-<a id="org607f13c"></a>
+<a id="org2dc7680"></a>
 </p>
 
 <div class="org-src-container">
@@ -1357,11 +1356,11 @@ git log &lt;commit&gt; HEAD --grep &lt;keyword&gt;   <span class="org-comment-de
 </div>
 </div>
 
-<div id="outline-container-orgb9cfb50" class="outline-3">
-<h3 id="orgb9cfb50"><span class="section-number-3">7.15</span> <code>mergetool</code></h3>
+<div id="outline-container-orgb04a5ab" class="outline-3">
+<h3 id="orgb04a5ab"><span class="section-number-3">7.15</span> <code>mergetool</code></h3>
 <div class="outline-text-3" id="text-7-15">
 <p>
-<a id="org0ff8efb"></a>
+<a id="org853682b"></a>
 </p>
 
 <div class="org-src-container">
@@ -1371,11 +1370,11 @@ git log &lt;commit&gt; HEAD --grep &lt;keyword&gt;   <span class="org-comment-de
 </div>
 </div>
 
-<div id="outline-container-org99031d2" class="outline-3">
-<h3 id="org99031d2"><span class="section-number-3">7.16</span> <code>mv</code></h3>
+<div id="outline-container-orga5f05d0" class="outline-3">
+<h3 id="orga5f05d0"><span class="section-number-3">7.16</span> <code>mv</code></h3>
 <div class="outline-text-3" id="text-7-16">
 <p>
-<a id="org8c56485"></a>
+<a id="org6e4d889"></a>
 </p>
 
 <div class="org-src-container">
@@ -1390,11 +1389,11 @@ git log &lt;commit&gt; HEAD --grep &lt;keyword&gt;   <span class="org-comment-de
 </div>
 </div>
 
-<div id="outline-container-orga113be3" class="outline-3">
-<h3 id="orga113be3"><span class="section-number-3">7.17</span> <code>pull</code></h3>
+<div id="outline-container-org52fa462" class="outline-3">
+<h3 id="org52fa462"><span class="section-number-3">7.17</span> <code>pull</code></h3>
 <div class="outline-text-3" id="text-7-17">
 <p>
-<a id="org1270f33"></a>
+<a id="org90b95ba"></a>
 </p>
 
 <div class="org-src-container">
@@ -1409,11 +1408,11 @@ git pull --rebase &lt;remote&gt; &lt;remote_branch&gt; <span class="org-comment-
 </div>
 </div>
 
-<div id="outline-container-org2a5239b" class="outline-3">
-<h3 id="org2a5239b"><span class="section-number-3">7.18</span> <code>push</code></h3>
+<div id="outline-container-org4f28388" class="outline-3">
+<h3 id="org4f28388"><span class="section-number-3">7.18</span> <code>push</code></h3>
 <div class="outline-text-3" id="text-7-18">
 <p>
-<a id="org9bfeb4c"></a>
+<a id="org6f8f408"></a>
 </p>
 
 <div class="org-src-container">
@@ -1449,11 +1448,11 @@ git config --global push.default simple
 </div>
 </div>
 
-<div id="outline-container-orge6fd429" class="outline-3">
-<h3 id="orge6fd429"><span class="section-number-3">7.19</span> <code>rebase</code></h3>
+<div id="outline-container-org5f7499b" class="outline-3">
+<h3 id="org5f7499b"><span class="section-number-3">7.19</span> <code>rebase</code></h3>
 <div class="outline-text-3" id="text-7-19">
 <p>
-<a id="orgb40c4c5"></a>
+<a id="orgf8bc6f3"></a>
 </p>
 
 <div class="org-src-container">
@@ -1471,11 +1470,11 @@ git config --global push.default simple
 </div>
 </div>
 
-<div id="outline-container-org1a55832" class="outline-3">
-<h3 id="org1a55832"><span class="section-number-3">7.20</span> <code>remote</code></h3>
+<div id="outline-container-org74b0da7" class="outline-3">
+<h3 id="org74b0da7"><span class="section-number-3">7.20</span> <code>remote</code></h3>
 <div class="outline-text-3" id="text-7-20">
 <p>
-<a id="orgeab359d"></a>
+<a id="orgb2c6332"></a>
 </p>
 
 <div class="org-src-container">
@@ -1493,11 +1492,11 @@ git remote update
 </div>
 </div>
 
-<div id="outline-container-orga207c5d" class="outline-3">
-<h3 id="orga207c5d"><span class="section-number-3">7.21</span> <code>reset</code></h3>
+<div id="outline-container-org1ee6e05" class="outline-3">
+<h3 id="org1ee6e05"><span class="section-number-3">7.21</span> <code>reset</code></h3>
 <div class="outline-text-3" id="text-7-21">
 <p>
-<a id="org24edb13"></a>
+<a id="org9726e66"></a>
 </p>
 
 <div class="org-src-container">
@@ -1514,8 +1513,8 @@ git reset &lt;options&gt; &lt;commit&gt; <span class="org-comment-delimiter"># <
 </div>
 </div>
 
-<div id="outline-container-orgb104260" class="outline-3">
-<h3 id="orgb104260"><span class="section-number-3">7.22</span> <code>revert</code></h3>
+<div id="outline-container-org60df7d8" class="outline-3">
+<h3 id="org60df7d8"><span class="section-number-3">7.22</span> <code>revert</code></h3>
 <div class="outline-text-3" id="text-7-22">
 <div class="org-src-container">
 <pre class="src src-sh">git revert &lt;commit&gt;
@@ -1524,8 +1523,8 @@ git reset &lt;options&gt; &lt;commit&gt; <span class="org-comment-delimiter"># <
 </div>
 </div>
 
-<div id="outline-container-org40483f6" class="outline-3">
-<h3 id="org40483f6"><span class="section-number-3">7.23</span> <code>rev-parse</code></h3>
+<div id="outline-container-orgf14c44d" class="outline-3">
+<h3 id="orgf14c44d"><span class="section-number-3">7.23</span> <code>rev-parse</code></h3>
 <div class="outline-text-3" id="text-7-23">
 <p>
 返回 SHA hash。
@@ -1535,14 +1534,19 @@ git reset &lt;options&gt; &lt;commit&gt; <span class="org-comment-delimiter"># <
 <pre class="src src-sh">git rev-parse &lt;branch&gt;|&lt;pointer&gt;
 </pre>
 </div>
+
+<div class="org-src-container">
+<pre class="src src-sh">git rev-parse HEAD
+</pre>
+</div>
 </div>
 </div>
 
-<div id="outline-container-org5f6438b" class="outline-3">
-<h3 id="org5f6438b"><span class="section-number-3">7.24</span> <code>rm</code></h3>
+<div id="outline-container-org1d61aec" class="outline-3">
+<h3 id="org1d61aec"><span class="section-number-3">7.24</span> <code>rm</code></h3>
 <div class="outline-text-3" id="text-7-24">
 <p>
-<a id="org7f28f76"></a>
+<a id="orgc205d80"></a>
 </p>
 
 <div class="org-src-container">
@@ -1560,8 +1564,8 @@ git reset &lt;options&gt; &lt;commit&gt; <span class="org-comment-delimiter"># <
 </div>
 </div>
 
-<div id="outline-container-org3800c30" class="outline-3">
-<h3 id="org3800c30"><span class="section-number-3">7.25</span> <code>shortlog</code></h3>
+<div id="outline-container-org72f7b76" class="outline-3">
+<h3 id="org72f7b76"><span class="section-number-3">7.25</span> <code>shortlog</code></h3>
 <div class="outline-text-3" id="text-7-25">
 <div class="org-src-container">
 <pre class="src src-sh">git shortlog -sn <span class="org-comment-delimiter"># </span><span class="org-comment">&#26174;&#31034;&#25152;&#26377;&#25552;&#20132;&#36807;&#30340;&#29992;&#25143;&#65292;&#25353;&#25552;&#20132;&#27425;&#25968;&#25490;&#24207;</span>
@@ -1570,11 +1574,11 @@ git reset &lt;options&gt; &lt;commit&gt; <span class="org-comment-delimiter"># <
 </div>
 </div>
 
-<div id="outline-container-org5cd5ce5" class="outline-3">
-<h3 id="org5cd5ce5"><span class="section-number-3">7.26</span> <code>show</code></h3>
+<div id="outline-container-org81e6987" class="outline-3">
+<h3 id="org81e6987"><span class="section-number-3">7.26</span> <code>show</code></h3>
 <div class="outline-text-3" id="text-7-26">
 <p>
-<a id="orgdf22a5e"></a>
+<a id="org1319f63"></a>
 </p>
 
 <div class="org-src-container">
@@ -1588,11 +1592,11 @@ git show &lt;tag&gt;    <span class="org-comment-delimiter"># </span><span class
 </div>
 </div>
 
-<div id="outline-container-orgefd1547" class="outline-3">
-<h3 id="orgefd1547"><span class="section-number-3">7.27</span> <code>stage</code></h3>
+<div id="outline-container-orgaa1e5c6" class="outline-3">
+<h3 id="orgaa1e5c6"><span class="section-number-3">7.27</span> <code>stage</code></h3>
 <div class="outline-text-3" id="text-7-27">
 <p>
-<a id="orge62465d"></a>
+<a id="org4339437"></a>
 </p>
 
 <div class="org-src-container">
@@ -1602,11 +1606,11 @@ git show &lt;tag&gt;    <span class="org-comment-delimiter"># </span><span class
 </div>
 </div>
 
-<div id="outline-container-org03ecd3a" class="outline-3">
-<h3 id="org03ecd3a"><span class="section-number-3">7.28</span> <code>stash</code></h3>
+<div id="outline-container-org4199c26" class="outline-3">
+<h3 id="org4199c26"><span class="section-number-3">7.28</span> <code>stash</code></h3>
 <div class="outline-text-3" id="text-7-28">
 <p>
-<a id="orgd12165a"></a>
+<a id="org6f40430"></a>
 </p>
 
 <div class="org-src-container">
@@ -1624,11 +1628,11 @@ git stash pop &lt;stash&gt;   <span class="org-comment-delimiter"># </span><span
 </div>
 </div>
 
-<div id="outline-container-org2558c4f" class="outline-3">
-<h3 id="org2558c4f"><span class="section-number-3">7.29</span> <code>status</code></h3>
+<div id="outline-container-org5154b21" class="outline-3">
+<h3 id="org5154b21"><span class="section-number-3">7.29</span> <code>status</code></h3>
 <div class="outline-text-3" id="text-7-29">
 <p>
-<a id="org0f53b19"></a>
+<a id="orgd1af2a4"></a>
 </p>
 
 <div class="org-src-container">
@@ -1638,11 +1642,11 @@ git stash pop &lt;stash&gt;   <span class="org-comment-delimiter"># </span><span
 </div>
 </div>
 
-<div id="outline-container-org20a5e91" class="outline-3">
-<h3 id="org20a5e91"><span class="section-number-3">7.30</span> <code>tag</code></h3>
+<div id="outline-container-org15c0751" class="outline-3">
+<h3 id="org15c0751"><span class="section-number-3">7.30</span> <code>tag</code></h3>
 <div class="outline-text-3" id="text-7-30">
 <p>
-<a id="orgd1a6a5e"></a>
+<a id="orgc5eb6f5"></a>
 </p>
 
 <div class="org-src-container">
@@ -1660,8 +1664,8 @@ git tag -d &lt;tag&gt; <span class="org-comment-delimiter"># </span><span class=
 </div>
 </div>
 
-<div id="outline-container-orgfad5a1d" class="outline-3">
-<h3 id="orgfad5a1d"><span class="section-number-3">7.31</span> <code>whatchanged</code></h3>
+<div id="outline-container-org1909256" class="outline-3">
+<h3 id="org1909256"><span class="section-number-3">7.31</span> <code>whatchanged</code></h3>
 <div class="outline-text-3" id="text-7-31">
 <div class="org-src-container">
 <pre class="src src-sh">git whatchanged &lt;file&gt;
@@ -1671,11 +1675,11 @@ git tag -d &lt;tag&gt; <span class="org-comment-delimiter"># </span><span class=
 </div>
 </div>
 
-<div id="outline-container-org24fdb59" class="outline-2">
-<h2 id="org24fdb59"><span class="section-number-2">8</span> 常用</h2>
+<div id="outline-container-org45f63fa" class="outline-2">
+<h2 id="org45f63fa"><span class="section-number-2">8</span> 常用</h2>
 <div class="outline-text-2" id="text-8">
-</div><div id="outline-container-orgfdc1733" class="outline-3">
-<h3 id="orgfdc1733"><span class="section-number-3">8.1</span> 创建仓库</h3>
+</div><div id="outline-container-org8baae71" class="outline-3">
+<h3 id="org8baae71"><span class="section-number-3">8.1</span> 创建仓库</h3>
 <div class="outline-text-3" id="text-8-1">
 <div class="org-src-container">
 <label class="org-src-name"><span class="listing-number">Listing 6: </span>将已有项目加入到 Git</label><pre class="src src-sh">git init              <span class="org-comment-delimiter"># </span><span class="org-comment">&#22312;&#39033;&#30446;&#30446;&#24405;&#19979;&#29983;&#25104; .git/ &#23376;&#30446;&#24405;&#21644;&#21021;&#22987;&#25991;&#20214;</span>
@@ -1695,20 +1699,23 @@ git commit -m <span class="org-string">"..."</span>
 </div>
 </div>
 
-<div id="outline-container-orga97e9ac" class="outline-3">
-<h3 id="orga97e9ac"><span class="section-number-3">8.2</span> Hotfix</h3>
+<div id="outline-container-orgbc02277" class="outline-3">
+<h3 id="orgbc02277"><span class="section-number-3">8.2</span> 重建仓库</h3>
 <div class="outline-text-3" id="text-8-2">
-<ol class="org-ol">
-<li>从工作分支切换到生产分支，更新分支。</li>
-<li>创建 hotfix 分支，修复问题。</li>
-<li>合并 hotfix 分支，推送。</li>
-<li>切换回工作分支。</li>
-</ol>
+<div class="org-src-container">
+<pre class="src src-sh">rm -rf .git
+git init
+git add .
+git commit -m <span class="org-string">"Initial commit"</span>
+git remote add origin &lt;remote_url&gt;
+git push -u --force origin master
+</pre>
+</div>
 </div>
 </div>
 
-<div id="outline-container-org65c59e8" class="outline-3">
-<h3 id="org65c59e8"><span class="section-number-3">8.3</span> 删除所有已合并分支</h3>
+<div id="outline-container-orga3485c4" class="outline-3">
+<h3 id="orga3485c4"><span class="section-number-3">8.3</span> 删除已合并分支</h3>
 <div class="outline-text-3" id="text-8-3">
 <div class="org-src-container">
 <pre class="src src-sh">git branch --merged | egrep -v <span class="org-string">"(^\*|master|dev)"</span> | xargs git branch -d
@@ -1717,22 +1724,9 @@ git commit -m <span class="org-string">"..."</span>
 </div>
 </div>
 
-<div id="outline-container-org74cf16b" class="outline-3">
-<h3 id="org74cf16b"><span class="section-number-3">8.4</span> 同步 fork</h3>
+<div id="outline-container-org0f5fdcf" class="outline-3">
+<h3 id="org0f5fdcf"><span class="section-number-3">8.4</span> 查找删除记录</h3>
 <div class="outline-text-3" id="text-8-4">
-<div class="org-src-container">
-<pre class="src src-sh">git remote add upstream git://...
-git fetch upstream
-git checkout master
-git merge upstream/master master
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgd06ac35" class="outline-3">
-<h3 id="orgd06ac35"><span class="section-number-3">8.5</span> 查找删除记录</h3>
-<div class="outline-text-3" id="text-8-5">
 <div class="org-src-container">
 <pre class="src src-sh">git log -c -S <span class="org-string">"&lt;deleted_text&gt;"</span> /path/to/file
 </pre>
@@ -1740,9 +1734,9 @@ git merge upstream/master master
 </div>
 </div>
 
-<div id="outline-container-org9571d64" class="outline-3">
-<h3 id="org9571d64"><span class="section-number-3">8.6</span> 撤销修改</h3>
-<div class="outline-text-3" id="text-8-6">
+<div id="outline-container-orge549830" class="outline-3">
+<h3 id="orge549830"><span class="section-number-3">8.5</span> 撤销修改</h3>
+<div class="outline-text-3" id="text-8-5">
 <div class="org-src-container">
 <label class="org-src-name"><span class="listing-number">Listing 8: </span>撤销一个文件的修改到 <code>HEAD</code> 。</label><pre class="src src-sh">git checkout /path/to/file
 </pre>
@@ -1751,8 +1745,8 @@ git merge upstream/master master
 </div>
 </div>
 
-<div id="outline-container-org41c4c71" class="outline-2">
-<h2 id="org41c4c71"><span class="section-number-2">9</span> 词汇表</h2>
+<div id="outline-container-org0637f1b" class="outline-2">
+<h2 id="org0637f1b"><span class="section-number-2">9</span> 词汇表</h2>
 <div class="outline-text-2" id="text-9">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -1832,8 +1826,8 @@ git merge upstream/master master
 </div>
 </div>
 
-<div id="outline-container-org130d4b1" class="outline-2">
-<h2 id="org130d4b1"><span class="section-number-2">10</span> 链接</h2>
+<div id="outline-container-orga4b800e" class="outline-2">
+<h2 id="orga4b800e"><span class="section-number-2">10</span> 链接</h2>
 <div class="outline-text-2" id="text-10">
 <ol class="org-ol">
 <li><a href="https://git-scm.com/docs">Git Reference</a></li>
@@ -1852,7 +1846,7 @@ git merge upstream/master master
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Victor Chen</p>
-<p class="date">Created: 2019-05-12 Sun 18:46</p>
+<p class="date">Created: 2019-11-16 Sat 18:11</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
