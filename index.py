@@ -23,7 +23,7 @@ def indexDir(dir, excludes):
 	# Add dir title to root index
 	writeTitle('.', dirName);
 
-	for subDir in os.listdir(dir):
+	for subDir in sorted(os.listdir(dir)):
 		indexSubDir(dir, dirName, subDir, excludes)
 
 
@@ -45,7 +45,7 @@ def indexSubDir(dir, dirName, subDir, excludes):
 	# Add sub dir title to sub dir index
 	writeTitle(subDirPath, dirName + ' / ' + subDirName)
 
-	for file in os.listdir(subDirPath):
+	for file in sorted(os.listdir(subDirPath)):
 		if (not file.startswith('.')) and file.endswith('.org'):
 			# Add doc entry to sub dir index
 			title = linecache.getline(subDirPath + '/' + file, 2)[9:].rstrip()
