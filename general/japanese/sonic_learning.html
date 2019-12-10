@@ -1,0 +1,622 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-12-09 Mon 23:06 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>音速語言學習</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">音速語言學習</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org4427523">1 助詞教學</a>
+<ul>
+<li><a href="#org1257d76">1.1 「は」和「が」的區別</a>
+<ul>
+<li><a href="#org3c5bf34">1.1.1 一</a></li>
+<li><a href="#org96db119">1.1.2 二</a></li>
+<li><a href="#org44f6572">1.1.3 三</a></li>
+<li><a href="#org06eabd4">1.1.4 四</a></li>
+</ul>
+</li>
+<li><a href="#orge0a7e4a">1.2 「に」的用法</a>
+<ul>
+<li><a href="#org9fc9db3">1.2.1 一</a></li>
+<li><a href="#orgb651019">1.2.2 二</a></li>
+<li><a href="#org6b6be40">1.2.3 三</a></li>
+</ul>
+</li>
+<li><a href="#orged018fd">1.3 「で」的用法</a>
+<ul>
+<li><a href="#orgef5dec8">1.3.1 一</a></li>
+<li><a href="#orgcc00f13">1.3.2 二</a></li>
+<li><a href="#orgcd45b92">1.3.3 三</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org22eab4f">2 Links</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org4427523" class="outline-2">
+<h2 id="org4427523"><span class="section-number-2">1</span> 助詞教學</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-org1257d76" class="outline-3">
+<h3 id="org1257d76"><span class="section-number-3">1.1</span> 「は」和「が」的區別</h3>
+<div class="outline-text-3" id="text-1-1">
+</div><div id="outline-container-org3c5bf34" class="outline-4">
+<h4 id="org3c5bf34"><span class="section-number-4">1.1.1</span> 一</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+「は」的重點在後面，「が」的重點在前面。
+</p>
+
+<blockquote>
+<ul class="org-ul">
+<li>王さんは誰ですか？王さんは学生です。（王先生是學生。重點在學生。）</li>
+<li>学生は誰ですか？王さんが学生です。（學生是王先生。重點在王先生。）</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<ul class="org-ul">
+<li>今日はどうしましたか？今日は休みです。（今天放假。重點在放假。）</li>
+<li>休みはいつですか？今日が休みです。（放假的是今天。重點在今天。）</li>
+</ul>
+</blockquote>
+
+<p>
+在疑問句當中，「疑問詞」應該是整個句子的重點，因此，疑問句中的「疑問詞」，就會位於「は」的後面，或是「が」的前面。
+</p>
+
+<blockquote>
+<ul class="org-ul">
+<li>休みはいつですか。（重點為詢問「什麼時候」。）</li>
+<li>どれが美味しいですか。（重點為詢問「哪一樣」。）</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<ul class="org-ul">
+<li>駅はどこですか？（車站在哪裡？）</li>
+<li>どこが駅ですか？（哪裡是車站？）</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<ul class="org-ul">
+<li>私の傘はどれですか？（我的傘是哪一把？）</li>
+<li>どれが私の傘ですか？（哪一把是我的傘？）</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<ul class="org-ul">
+<li>日本語の先生は誰ですか？（日文老師是誰？）</li>
+<li>誰が日本語の先生ですか？（誰是日文老師？）</li>
+</ul>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org96db119" class="outline-4">
+<h4 id="org96db119"><span class="section-number-4">1.1.2</span> 二</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<p>
+表示對比句時用「は」，表示直述句時用「が」。
+</p>
+
+<blockquote>
+<ul class="org-ul">
+<li>今日は天気がいい。</li>
+<li>今日は天気はいい、昨日は天気は悪かった。</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<ul class="org-ul">
+<li>私は刺身が嫌いです。</li>
+<li>私は刺身は嫌いですが、寿司は好きです。</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<ul class="org-ul">
+<li>夏が暑いです。冬が寒いです。</li>
+<li>日本は夏は暑いですが、冬はかなり寒いです。</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<ul class="org-ul">
+<li>昼間が静かです。夜がうるさいです。</li>
+<li>昼間は静かですが、夜はうるさいです。</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<ul class="org-ul">
+<li>東京が賑やかです。九州が静かです。</li>
+<li>東京は賑やかですが、九州は静かです。</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<ul class="org-ul">
+<li>電車が速いです。自転車が遅いです。</li>
+<li>桃園に行くのに、電車は速いですが、自転車は遅いです。</li>
+</ul>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org44f6572" class="outline-4">
+<h4 id="org44f6572"><span class="section-number-4">1.1.3</span> 三</h4>
+<div class="outline-text-4" id="text-1-1-3">
+<p>
+描述「附屬關係」時，必須使用「～は～が」的句型。
+</p>
+
+<p>
+「身體部位」就是其中一個例子。
+</p>
+
+<blockquote>
+<ul class="org-ul">
+<li>象の鼻が長いです。×</li>
+<li>象は鼻が長いです。⃝</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<ul class="org-ul">
+<li>私は背が高いです。</li>
+<li>彼は髪が短いです。</li>
+<li>彼女の足が細いです。</li>
+</ul>
+</blockquote>
+
+<p>
+在描述某地區的某樣特色時，具有「整體的某個部分」的意思，因此也必須使用「～は～が」的句型。
+</p>
+
+<blockquote>
+<ul class="org-ul">
+<li>東京の人が多いです。×</li>
+<li>東京は人が多いです。⃝</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<ul class="org-ul">
+<li>大阪は食べ物が美味しいです。</li>
+<li>九份は屋台が沢山あります。</li>
+</ul>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org06eabd4" class="outline-4">
+<h4 id="org06eabd4"><span class="section-number-4">1.1.4</span> 四</h4>
+<div class="outline-text-4" id="text-1-1-4">
+<p>
+「は」可以作用到句子最後，「が」只能作用到下一個字。
+</p>
+
+<blockquote>
+<ul class="org-ul">
+<li>彼は日本に行くと言った。（彼は日本に行く＋彼は言った。他說他要去日本。）</li>
+<li>彼が日本に行くと言った。（彼は日本に行く＋（？）は言った。有人說他要去日本。）</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<ul class="org-ul">
+<li>母はスーパーに行くと言いました。</li>
+<li>母がスーパーに行くと言いました。</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<ul class="org-ul">
+<li>彼は日本に到着したら、母に電話した。</li>
+<li>彼が日本に到着したら、（私は？）母に電話した。</li>
+</ul>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge0a7e4a" class="outline-3">
+<h3 id="orge0a7e4a"><span class="section-number-3">1.2</span> 「に」的用法</h3>
+<div class="outline-text-3" id="text-1-2">
+</div><div id="outline-container-org9fc9db3" class="outline-4">
+<h4 id="org9fc9db3"><span class="section-number-4">1.2.1</span> 一</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<p>
+表示事物存在的地點，和「ある」「いる」連用。
+</p>
+
+<blockquote>
+<ul class="org-ul">
+<li>森に熊がいる。</li>
+<li>部屋に犬がいる。</li>
+<li>机の上に雑誌がある。</li>
+<li>庭に桜の木がある。</li>
+</ul>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orgb651019" class="outline-4">
+<h4 id="orgb651019"><span class="section-number-4">1.2.2</span> 二</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<p>
+表示時間。
+</p>
+
+<blockquote>
+<ul class="org-ul">
+<li>６時に起きる。</li>
+<li>土曜日に出発する。</li>
+<li>１０月１０日に転勤する。</li>
+<li>１９８５年に生まれた。</li>
+</ul>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org6b6be40" class="outline-4">
+<h4 id="org6b6be40"><span class="section-number-4">1.2.3</span> 三</h4>
+<div class="outline-text-4" id="text-1-2-3">
+<p>
+表示具體或抽象的對象、目的地。
+</p>
+
+<blockquote>
+<ul class="org-ul">
+<li>猫に魚を与える。</li>
+<li>先生に相談する。</li>
+<li>歌手になる。</li>
+<li>親に叱られた。（ 被雙親責罵。）</li>
+<li>子供に行かせる。（ 讓小孩去。）</li>
+<li>恋に苦しむ。（ 對於戀情很苦惱。）</li>
+</ul>
+</blockquote>
+
+<blockquote>
+<ul class="org-ul">
+<li>日本に行く。</li>
+<li>駅に近い。</li>
+<li>駅に着く。</li>
+</ul>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orged018fd" class="outline-3">
+<h3 id="orged018fd"><span class="section-number-3">1.3</span> 「で」的用法</h3>
+<div class="outline-text-3" id="text-1-3">
+</div><div id="outline-container-orgef5dec8" class="outline-4">
+<h4 id="orgef5dec8"><span class="section-number-4">1.3.1</span> 一</h4>
+<div class="outline-text-4" id="text-1-3-1">
+<p>
+表示動作發生的場所。
+</p>
+
+<blockquote>
+<ul class="org-ul">
+<li>部屋で寝る。</li>
+<li>店で本を買う。</li>
+<li>喫茶店で勉強する。</li>
+<li>学校で授業を受ける。</li>
+</ul>
+</blockquote>
+
+<p>
+表示地點的「に」和「で」不同之處：
+</p>
+
+<ul class="org-ul">
+<li>「に」＋ある・いる</li>
+<li>「で」＋動詞</li>
+</ul>
+
+<blockquote>
+<ul class="org-ul">
+<li>妹は部屋にいる。</li>
+<li>妹は部屋で遊ぶ。</li>
+</ul>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orgcc00f13" class="outline-4">
+<h4 id="orgcc00f13"><span class="section-number-4">1.3.2</span> 二</h4>
+<div class="outline-text-4" id="text-1-3-2">
+<p>
+表示方法手段。
+</p>
+
+<blockquote>
+<ul class="org-ul">
+<li>電話で話す。</li>
+<li>新幹線で行く。</li>
+<li>木で椅子を作る。</li>
+<li>二人で完成させる。</li>
+</ul>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-orgcd45b92" class="outline-4">
+<h4 id="orgcd45b92"><span class="section-number-4">1.3.3</span> 三</h4>
+<div class="outline-text-4" id="text-1-3-3">
+<p>
+表示原因理由。
+</p>
+
+<blockquote>
+<ul class="org-ul">
+<li>雨で濡れる。（ 因為雨水而全身濕淋淋。）</li>
+<li>盗難で倒産する。（由於遭小偷而破産。）</li>
+<li>台風で木が折れる。（因為颱風樹木折斷了。）</li>
+<li>病気で会社を休む。（因為生病而向公司請假 。）</li>
+</ul>
+</blockquote>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org22eab4f" class="outline-2">
+<h2 id="org22eab4f"><span class="section-number-2">2</span> Links</h2>
+<div class="outline-text-2" id="text-2">
+<ol class="org-ol">
+<li><a href="https://jp.sonic-learning.com/">音速語言學習</a></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2019-12-09 Mon 23:06</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

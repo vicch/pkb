@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-12-02 Mon 17:04 -->
+<!-- 2019-12-05 Thu 21:14 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>PHP Scrap</title>
@@ -241,115 +241,116 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org76b272d">1 在 2016 年做 PHP 开发</a>
+<li><a href="#org2d13235">1 在 2016 年做 PHP 开发</a>
 <ul>
-<li><a href="#org24c1a47">1.1 Links</a></li>
+<li><a href="#org0957350">1.1 Links</a></li>
 </ul>
 </li>
-<li><a href="#org6831882">2 什么是 CGI, FastCGI, PHP-CGI, PHP-FPM, Spawn-FCGI？</a>
+<li><a href="#orgb0c10a0">2 什么是 CGI, FastCGI, PHP-CGI, PHP-FPM, Spawn-FCGI？</a>
 <ul>
-<li><a href="#org5d5f0a1">2.1 CGI</a></li>
-<li><a href="#org5d45626">2.2 FastCGI</a>
+<li><a href="#orge564d81">2.1 CGI</a></li>
+<li><a href="#org97f5c67">2.2 FastCGI</a>
 <ul>
-<li><a href="#org12255c0">2.2.1 工作原理</a></li>
+<li><a href="#org894f04c">2.2.1 工作原理</a></li>
 </ul>
 </li>
-<li><a href="#orgee70532">2.3 PHP-FPM</a></li>
-<li><a href="#org4f37b4e">2.4 Spawn-FCGI</a></li>
-<li><a href="#orgcf8c577">2.5 Links</a></li>
+<li><a href="#org37c238d">2.3 PHP-FPM</a></li>
+<li><a href="#orgd4c903b">2.4 Spawn-FCGI</a></li>
+<li><a href="#org4a2ef3d">2.5 Links</a></li>
 </ul>
 </li>
-<li><a href="#org8a72a50">3 Difference between PHP-CGI and PHP-FPM</a>
+<li><a href="#orgfed5814">3 Difference between PHP-CGI and PHP-FPM</a>
 <ul>
-<li><a href="#orgdf079c4">3.1 PHP-CGI</a></li>
-<li><a href="#org8967c23">3.2 PHP-FPM</a></li>
-<li><a href="#orgfcd9047">3.3 Links</a></li>
+<li><a href="#org85af590">3.1 PHP-CGI</a></li>
+<li><a href="#orgcd5cf32">3.2 PHP-FPM</a></li>
+<li><a href="#org4dd685d">3.3 Links</a></li>
 </ul>
 </li>
-<li><a href="#orgb614025">4 浅谈 PHP FastCGI 和 PHP-FPM</a>
+<li><a href="#orgad27d03">4 浅谈 PHP FastCGI 和 PHP-FPM</a>
 <ul>
-<li><a href="#org6e58ca4">4.1 <code>mod_php</code> 模式</a></li>
-<li><a href="#orgefb016f">4.2 <code>mod_fastcgi</code> 模式</a></li>
-<li><a href="#orgdbd03d6">4.3 Links</a></li>
+<li><a href="#org334c055">4.1 <code>mod_php</code> 模式</a></li>
+<li><a href="#org50b377d">4.2 <code>mod_fastcgi</code> 模式</a></li>
+<li><a href="#org2586dc4">4.3 Links</a></li>
 </ul>
 </li>
-<li><a href="#orgaddd353">5 CGI、FastCGI 和 PHP-FPM 关系图解</a>
+<li><a href="#org3969c79">5 CGI、FastCGI 和 PHP-FPM 关系图解</a>
 <ul>
-<li><a href="#org6768269">5.1 Links</a></li>
+<li><a href="#orgcb8831c">5.1 Links</a></li>
 </ul>
 </li>
-<li><a href="#org3804f52">6 PHP-FPM: The Future of PHP Handling</a>
+<li><a href="#org97f2bdd">6 PHP-FPM: The Future of PHP Handling</a>
 <ul>
-<li><a href="#orgdc8853f">6.1 PHP-FPM’s Architecture</a></li>
-<li><a href="#orgf3c720c">6.2 Performance</a>
+<li><a href="#org43f0ca9">6.1 PHP-FPM’s Architecture</a></li>
+<li><a href="#org67596b2">6.2 Performance</a>
 <ul>
-<li><a href="#org1d0375b">6.2.1 More Efficient PHP Handling</a></li>
-<li><a href="#org841e287">6.2.2 Opcode Caching</a></li>
+<li><a href="#orgae73178">6.2.1 More Efficient PHP Handling</a></li>
+<li><a href="#org40c014f">6.2.2 Opcode Caching</a></li>
 </ul>
 </li>
-<li><a href="#orgf953f0c">6.3 Security</a></li>
-<li><a href="#orgeb1639d">6.4 Stability</a></li>
-<li><a href="#orga6fb86f">6.5 Configurability</a></li>
-<li><a href="#org3f97488">6.6 Links</a></li>
+<li><a href="#orgaae6127">6.3 Security</a></li>
+<li><a href="#org2275597">6.4 Stability</a></li>
+<li><a href="#orga351f53">6.5 Configurability</a></li>
+<li><a href="#org2894c23">6.6 Links</a></li>
 </ul>
 </li>
-<li><a href="#orgeda9dd1">7 Optimizing PHP-FPM for High Performance</a>
+<li><a href="#org2da3f96">7 Optimizing PHP-FPM for High Performance</a>
 <ul>
-<li><a href="#orga3a9ca0">7.1 What is PHP-FPM?</a></li>
-<li><a href="#orgd34bda1">7.2 Why optimize PHP-FPM?</a></li>
-<li><a href="#orge51e708">7.3 How to optimize PHP-FPM?</a></li>
-<li><a href="#org2e88133">7.4 Links</a></li>
+<li><a href="#orgf7fcb13">7.1 What is PHP-FPM?</a></li>
+<li><a href="#org389a54c">7.2 Why optimize PHP-FPM?</a></li>
+<li><a href="#orga24b74b">7.3 How to optimize PHP-FPM?</a></li>
+<li><a href="#org752fa89">7.4 Links</a></li>
 </ul>
 </li>
-<li><a href="#orgcf9d1cf">8 Moving from mod_php to PHP-FPM</a>
+<li><a href="#org13ba28a">8 Moving from mod_php to PHP-FPM</a>
 <ul>
-<li><a href="#org8bcd190">8.1 Move Apache Functions</a></li>
-<li><a href="#orge31b3e7">8.2 Move PHP Settings to <code>.user.ini</code></a></li>
-<li><a href="#orgead50f8">8.3 Switch PHP Package</a></li>
-<li><a href="#org7cce93b">8.4 Tweak Default httpd Configuration</a></li>
-<li><a href="#orgce2d9bb">8.5 Switch MPM</a></li>
-<li><a href="#orged7ba9d">8.6 Restart httpd</a></li>
-<li><a href="#orgf9ebd96">8.7 Links</a></li>
+<li><a href="#org1baa0c8">8.1 Move Apache Functions</a></li>
+<li><a href="#org5b5a4cb">8.2 Move PHP Settings to <code>.user.ini</code></a></li>
+<li><a href="#orga42a0e0">8.3 Switch PHP Package</a></li>
+<li><a href="#org920eff4">8.4 Tweak Default httpd Configuration</a></li>
+<li><a href="#org6373a5f">8.5 Switch MPM</a></li>
+<li><a href="#org5dd0b46">8.6 Restart httpd</a></li>
+<li><a href="#orgd412e38">8.7 Links</a></li>
 </ul>
 </li>
-<li><a href="#org7082699">9 Migrating from mod_php to PHP-FPM</a>
+<li><a href="#orgdda0475">9 Migrating from mod_php to PHP-FPM</a>
 <ul>
-<li><a href="#org87dee74">9.1 Links</a></li>
+<li><a href="#orgf526f17">9.1 Links</a></li>
 </ul>
 </li>
-<li><a href="#org9a23316">10 深入理解 PHP 内核之 SAPI 探究</a>
+<li><a href="#org9ca62e1">10 深入理解 PHP 内核之 SAPI 探究</a>
 <ul>
-<li><a href="#org64624f6">10.1 SAPI</a></li>
-<li><a href="#org47aa5ed">10.2 PHP 的运行和加载</a></li>
-<li><a href="#orgd843ee6">10.3 Links</a></li>
+<li><a href="#org0c6e248">10.1 SAPI</a></li>
+<li><a href="#org76da676">10.2 PHP 生命周期</a></li>
+<li><a href="#orga0fa9c0">10.3 CLI/CGI 模式</a></li>
+<li><a href="#org00c038e">10.4 Links</a></li>
 </ul>
 </li>
-<li><a href="#org7551068">11 提高 PHP 代码质量 36 计</a>
+<li><a href="#orgdbff05f">11 提高 PHP 代码质量 36 计</a>
 <ul>
-<li><a href="#org93722d0">11.1 不要使用相对路径</a></li>
-<li><a href="#orge3e8ff6">11.2 不要直接使用 <code>require</code> 和 <code>include</code></a></li>
-<li><a href="#org86c1be5">11.3 保留调试代码</a></li>
-<li><a href="#org6f5040e">11.4 Links</a></li>
+<li><a href="#org57c8cb7">11.1 不要使用相对路径</a></li>
+<li><a href="#org54eb3c2">11.2 不要直接使用 <code>require</code> 和 <code>include</code></a></li>
+<li><a href="#org5661f1f">11.3 保留调试代码</a></li>
+<li><a href="#org9e5a568">11.4 Links</a></li>
 </ul>
 </li>
-<li><a href="#org74ba803">12 Fastest way to determine where PHP script exits?</a>
+<li><a href="#org525a860">12 Fastest way to determine where PHP script exits?</a>
 <ul>
-<li><a href="#orgc4ed8ba">12.1 Links</a></li>
+<li><a href="#orgb5868bc">12.1 Links</a></li>
 </ul>
 </li>
-<li><a href="#org082ab6a">13 Restart PHP Service Command</a>
+<li><a href="#orgd17e53f">13 Restart PHP Service Command</a>
 <ul>
-<li><a href="#org47a68d1">13.1 Restarting web server</a></li>
-<li><a href="#org344e62b">13.2 Restart PHP-FAM Fastcgi</a></li>
-<li><a href="#org2bc170b">13.3 Links</a></li>
+<li><a href="#org4ccc8d3">13.1 Restarting web server</a></li>
+<li><a href="#orgbbf2b10">13.2 Restart PHP-FAM Fastcgi</a></li>
+<li><a href="#org07561fd">13.3 Links</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org76b272d" class="outline-2">
-<h2 id="org76b272d"><span class="section-number-2">1</span> 在 2016 年做 PHP 开发</h2>
+<div id="outline-container-org2d13235" class="outline-2">
+<h2 id="org2d13235"><span class="section-number-2">1</span> 在 2016 年做 PHP 开发</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 对性能要求比较高，或者需要开发 socket 相关功能可以使用的框架：
@@ -410,8 +411,8 @@ HipHop 是 Facebook 开发的用于加速 PHP 运行的工具，核心原理是�
 </p>
 </div>
 
-<div id="outline-container-org24c1a47" class="outline-3">
-<h3 id="org24c1a47"><span class="section-number-3">1.1</span> Links</h3>
+<div id="outline-container-org0957350" class="outline-3">
+<h3 id="org0957350"><span class="section-number-3">1.1</span> Links</h3>
 <div class="outline-text-3" id="text-1-1">
 <ol class="org-ol">
 <li><a href="https://www.v2ex.com/t/312651">在 2016 年做 PHP 开发</a></li>
@@ -420,11 +421,11 @@ HipHop 是 Facebook 开发的用于加速 PHP 运行的工具，核心原理是�
 </div>
 </div>
 
-<div id="outline-container-org6831882" class="outline-2">
-<h2 id="org6831882"><span class="section-number-2">2</span> 什么是 CGI, FastCGI, PHP-CGI, PHP-FPM, Spawn-FCGI？</h2>
+<div id="outline-container-orgb0c10a0" class="outline-2">
+<h2 id="orgb0c10a0"><span class="section-number-2">2</span> 什么是 CGI, FastCGI, PHP-CGI, PHP-FPM, Spawn-FCGI？</h2>
 <div class="outline-text-2" id="text-2">
-</div><div id="outline-container-org5d5f0a1" class="outline-3">
-<h3 id="org5d5f0a1"><span class="section-number-3">2.1</span> CGI</h3>
+</div><div id="outline-container-orge564d81" class="outline-3">
+<h3 id="orge564d81"><span class="section-number-3">2.1</span> CGI</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 CGI (Common Gateway Interface) 是 Web 服务器与其他程序之间传递信息的一种工具。CGI 规范允许 Web 服务器执行外部程序，并将它们的输出发送给客户端。CGI 是语言无关的，只要这种语言具有标准输入、输出和环境变量。
@@ -436,8 +437,8 @@ CGI (Common Gateway Interface) 是 Web 服务器与其他程序之间传递信�
 </div>
 </div>
 
-<div id="outline-container-org5d45626" class="outline-3">
-<h3 id="org5d45626"><span class="section-number-3">2.2</span> FastCGI</h3>
+<div id="outline-container-org97f5c67" class="outline-3">
+<h3 id="org97f5c67"><span class="section-number-3">2.2</span> FastCGI</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 FastCGI 是将 CGI 解释器进程保持在内存中，即常驻（long-live）型的 CGI，不需要为每次调用 fork （即 CGI 为人诟病的 fork-and-execute 模式)，因此性能更高。同时 CGI 解释器接受 FastCGI 进程管理器调度，可以提供伸缩性、fail-over 特性等。
@@ -448,8 +449,8 @@ FastCGI 支持分布式计算, 即 FastCGI 程序可以在 Web 服务器以外�
 </p>
 </div>
 
-<div id="outline-container-org12255c0" class="outline-4">
-<h4 id="org12255c0"><span class="section-number-4">2.2.1</span> 工作原理</h4>
+<div id="outline-container-org894f04c" class="outline-4">
+<h4 id="org894f04c"><span class="section-number-4">2.2.1</span> 工作原理</h4>
 <div class="outline-text-4" id="text-2-2-1">
 
 <div class="figure">
@@ -474,8 +475,8 @@ FastCGI 支持分布式计算, 即 FastCGI 程序可以在 Web 服务器以外�
 </div>
 </div>
 
-<div id="outline-container-orgee70532" class="outline-3">
-<h3 id="orgee70532"><span class="section-number-3">2.3</span> PHP-FPM</h3>
+<div id="outline-container-org37c238d" class="outline-3">
+<h3 id="org37c238d"><span class="section-number-3">2.3</span> PHP-FPM</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 PHP-FPM (FastCGI Process Manager) 是用于 PHP 的 FastCGI 管理器，提供更好的 PHP 进程管理方式，可以平滑重载 PHP 配置。
@@ -483,8 +484,8 @@ PHP-FPM (FastCGI Process Manager) 是用于 PHP 的 FastCGI 管理器，提供�
 </div>
 </div>
 
-<div id="outline-container-org4f37b4e" class="outline-3">
-<h3 id="org4f37b4e"><span class="section-number-3">2.4</span> Spawn-FCGI</h3>
+<div id="outline-container-orgd4c903b" class="outline-3">
+<h3 id="orgd4c903b"><span class="section-number-3">2.4</span> Spawn-FCGI</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 Spawn-FCGI 是一个通用的 FastCGI 管理器。
@@ -492,8 +493,8 @@ Spawn-FCGI 是一个通用的 FastCGI 管理器。
 </div>
 </div>
 
-<div id="outline-container-orgcf8c577" class="outline-3">
-<h3 id="orgcf8c577"><span class="section-number-3">2.5</span> Links</h3>
+<div id="outline-container-org4a2ef3d" class="outline-3">
+<h3 id="org4a2ef3d"><span class="section-number-3">2.5</span> Links</h3>
 <div class="outline-text-3" id="text-2-5">
 <ol class="org-ol">
 <li><a href="https://segmentfault.com/a/1190000005342074">什么是 CGI, FastCGI, PHP-CGI, PHP-FPM, Spawn-FCGI？</a></li>
@@ -503,16 +504,16 @@ Spawn-FCGI 是一个通用的 FastCGI 管理器。
 </div>
 </div>
 
-<div id="outline-container-org8a72a50" class="outline-2">
-<h2 id="org8a72a50"><span class="section-number-2">3</span> Difference between PHP-CGI and PHP-FPM</h2>
+<div id="outline-container-orgfed5814" class="outline-2">
+<h2 id="orgfed5814"><span class="section-number-2">3</span> Difference between PHP-CGI and PHP-FPM</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 When running PHP through web server, there are 2 distinct options: as PHP-CGI, or as PHP-FPM.
 </p>
 </div>
 
-<div id="outline-container-orgdf079c4" class="outline-3">
-<h3 id="orgdf079c4"><span class="section-number-3">3.1</span> PHP-CGI</h3>
+<div id="outline-container-org85af590" class="outline-3">
+<h3 id="org85af590"><span class="section-number-3">3.1</span> PHP-CGI</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 CGI is a specification “protocol” for transferring information between a web server and a CGI program. A CGI program is any program designed to accept and return data that conforms to the CGI specification. Basically, it’s a way to run a server-side script (PHP, Perl, Python) when an HTTP request comes.
@@ -532,8 +533,8 @@ Another benefit of CGI is that PHP reads its settings every time a page is reque
 </div>
 </div>
 
-<div id="outline-container-org8967c23" class="outline-3">
-<h3 id="org8967c23"><span class="section-number-3">3.2</span> PHP-FPM</h3>
+<div id="outline-container-orgcd5cf32" class="outline-3">
+<h3 id="orgcd5cf32"><span class="section-number-3">3.2</span> PHP-FPM</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 PHP-FPM (PHP FastCGI Process Manager) is PHP's FastCGI implementation. It has better performance and lower resource consumption. PHP-FPM runs as a standalone FastCGI server and Apache connects to the server using  <code>mod_fcgid</code> or <code>mod_fastcgi</code> module.
@@ -552,8 +553,8 @@ PHP-FPM features:
 </div>
 </div>
 
-<div id="outline-container-orgfcd9047" class="outline-3">
-<h3 id="orgfcd9047"><span class="section-number-3">3.3</span> Links</h3>
+<div id="outline-container-org4dd685d" class="outline-3">
+<h3 id="org4dd685d"><span class="section-number-3">3.3</span> Links</h3>
 <div class="outline-text-3" id="text-3-3">
 <ol class="org-ol">
 <li><a href="https://www.basezap.com/difference-php-cgi-php-fpm/">Difference between PHP-CGI and PHP-FPM</a></li>
@@ -562,11 +563,11 @@ PHP-FPM features:
 </div>
 </div>
 
-<div id="outline-container-orgb614025" class="outline-2">
-<h2 id="orgb614025"><span class="section-number-2">4</span> 浅谈 PHP FastCGI 和 PHP-FPM</h2>
+<div id="outline-container-orgad27d03" class="outline-2">
+<h2 id="orgad27d03"><span class="section-number-2">4</span> 浅谈 PHP FastCGI 和 PHP-FPM</h2>
 <div class="outline-text-2" id="text-4">
-</div><div id="outline-container-org6e58ca4" class="outline-3">
-<h3 id="org6e58ca4"><span class="section-number-3">4.1</span> <code>mod_php</code> 模式</h3>
+</div><div id="outline-container-org334c055" class="outline-3">
+<h3 id="org334c055"><span class="section-number-3">4.1</span> <code>mod_php</code> 模式</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 当使用 <code>mod_php</code> 模式时，Apache 将 PHP 作为模块来运行，配置如下：
@@ -607,8 +608,8 @@ SAPI 是 PHP 与其他应用，如 Web 服务器，进行数据交互的接口�
 </div>
 </div>
 
-<div id="outline-container-orgefb016f" class="outline-3">
-<h3 id="orgefb016f"><span class="section-number-3">4.2</span> <code>mod_fastcgi</code> 模式</h3>
+<div id="outline-container-org50b377d" class="outline-3">
+<h3 id="org50b377d"><span class="section-number-3">4.2</span> <code>mod_fastcgi</code> 模式</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 当使用 <code>mod_fastcgi</code> 模式时，Apache 通过 FastCGI 服务器调用 PHP。
@@ -620,8 +621,8 @@ FastCGI 本身是语言无关的接口，PHP-FPM 是 PHP 自带的 FastCGI 实�
 </div>
 </div>
 
-<div id="outline-container-orgdbd03d6" class="outline-3">
-<h3 id="orgdbd03d6"><span class="section-number-3">4.3</span> Links</h3>
+<div id="outline-container-org2586dc4" class="outline-3">
+<h3 id="org2586dc4"><span class="section-number-3">4.3</span> Links</h3>
 <div class="outline-text-3" id="text-4-3">
 <ol class="org-ol">
 <li><a href="https://www.jianshu.com/p/d095cbcbcf1b">浅谈 PHP FastCGI 和 PHP-FPM</a></li>
@@ -630,8 +631,8 @@ FastCGI 本身是语言无关的接口，PHP-FPM 是 PHP 自带的 FastCGI 实�
 </div>
 </div>
 
-<div id="outline-container-orgaddd353" class="outline-2">
-<h2 id="orgaddd353"><span class="section-number-2">5</span> CGI、FastCGI 和 PHP-FPM 关系图解</h2>
+<div id="outline-container-org3969c79" class="outline-2">
+<h2 id="org3969c79"><span class="section-number-2">5</span> CGI、FastCGI 和 PHP-FPM 关系图解</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 在网站架构中，Web Server（如 Apache）只是内容的分发者。
@@ -699,8 +700,8 @@ PHP-CGI 是 PHP 官方实现的 CGI 接口，但其性能较差：
 </p>
 </div>
 
-<div id="outline-container-org6768269" class="outline-3">
-<h3 id="org6768269"><span class="section-number-3">5.1</span> Links</h3>
+<div id="outline-container-orgcb8831c" class="outline-3">
+<h3 id="orgcb8831c"><span class="section-number-3">5.1</span> Links</h3>
 <div class="outline-text-3" id="text-5-1">
 <ol class="org-ol">
 <li><a href="https://www.awaimai.com/371.html">CGI、FastCGI 和 PHP-FPM 关系图解</a></li>
@@ -709,11 +710,11 @@ PHP-CGI 是 PHP 官方实现的 CGI 接口，但其性能较差：
 </div>
 </div>
 
-<div id="outline-container-org3804f52" class="outline-2">
-<h2 id="org3804f52"><span class="section-number-2">6</span> PHP-FPM: The Future of PHP Handling</h2>
+<div id="outline-container-org97f2bdd" class="outline-2">
+<h2 id="org97f2bdd"><span class="section-number-2">6</span> PHP-FPM: The Future of PHP Handling</h2>
 <div class="outline-text-2" id="text-6">
-</div><div id="outline-container-orgdc8853f" class="outline-3">
-<h3 id="orgdc8853f"><span class="section-number-3">6.1</span> PHP-FPM’s Architecture</h3>
+</div><div id="outline-container-org43f0ca9" class="outline-3">
+<h3 id="org43f0ca9"><span class="section-number-3">6.1</span> PHP-FPM’s Architecture</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 As a high-level programming language, PHP scripts require compiling before a web server’s underlying processor hardware can understand it. Traditionally, the web server handles compiling PHP scripts through integrated web server modules such as single user PHP (suPHP), Common Gateway Interface (CGI), or Dynamic Shared Object (DSO, also known as <code>mod_php</code>). When using these PHP handlers, the web server is tightly coupled to processing PHP scripts:
@@ -746,11 +747,11 @@ PHP-FPM’s architecture shares design similarities with event-driven web server
 </div>
 </div>
 
-<div id="outline-container-orgf3c720c" class="outline-3">
-<h3 id="orgf3c720c"><span class="section-number-3">6.2</span> Performance</h3>
+<div id="outline-container-org67596b2" class="outline-3">
+<h3 id="org67596b2"><span class="section-number-3">6.2</span> Performance</h3>
 <div class="outline-text-3" id="text-6-2">
-</div><div id="outline-container-org1d0375b" class="outline-4">
-<h4 id="org1d0375b"><span class="section-number-4">6.2.1</span> More Efficient PHP Handling</h4>
+</div><div id="outline-container-orgae73178" class="outline-4">
+<h4 id="orgae73178"><span class="section-number-4">6.2.1</span> More Efficient PHP Handling</h4>
 <div class="outline-text-4" id="text-6-2-1">
 <p>
 PHP-FPM can reuse worker processes repeatedly instead of having to create and terminate them for every single PHP request.
@@ -758,8 +759,8 @@ PHP-FPM can reuse worker processes repeatedly instead of having to create and te
 </div>
 </div>
 
-<div id="outline-container-org841e287" class="outline-4">
-<h4 id="org841e287"><span class="section-number-4">6.2.2</span> Opcode Caching</h4>
+<div id="outline-container-org40c014f" class="outline-4">
+<h4 id="org40c014f"><span class="section-number-4">6.2.2</span> Opcode Caching</h4>
 <div class="outline-text-4" id="text-6-2-2">
 <p>
 With opcode caching, the resulting opcode from compiled PHP scripts gets cached in memory. If a request comes in for a PHP script, PHP-FPM quickly checks for previously cached copies, and if it finds a cached copy, PHP-FPM executes the script using the cached opcode immediately. This removes the need for reading the script’s source code from disk and compiling the PHP source code to opcode. Reading data from memory is orders of magnitude quicker than reading the same data from filesystem. Time and resources saved by not having to compile the PHP source code to opcode is more significant when the same set of PHP scripts are requested repeatedly and frequentely.
@@ -772,8 +773,8 @@ Opcode caching has no effect when using the suPHP and CGI handlers due to the wa
 </div>
 </div>
 
-<div id="outline-container-orgf953f0c" class="outline-3">
-<h3 id="orgf953f0c"><span class="section-number-3">6.3</span> Security</h3>
+<div id="outline-container-orgaae6127" class="outline-3">
+<h3 id="orgaae6127"><span class="section-number-3">6.3</span> Security</h3>
 <div class="outline-text-3" id="text-6-3">
 <p>
 PHP-FPM provides an enormous security benefit over other PHP handlers by maintaining isolated PHP processing for each user.
@@ -795,8 +796,8 @@ These settings prevent users from obtaining access to other users’ opcode cach
 </div>
 </div>
 
-<div id="outline-container-orgeb1639d" class="outline-3">
-<h3 id="orgeb1639d"><span class="section-number-3">6.4</span> Stability</h3>
+<div id="outline-container-org2275597" class="outline-3">
+<h3 id="org2275597"><span class="section-number-3">6.4</span> Stability</h3>
 <div class="outline-text-3" id="text-6-4">
 <p>
 When web servers handle requests for PHP scripts in their own processes, additional web server processes have to be created. As traffic for PHP scripts increases, the workload can come to the point where the host server becomes unresponsive.
@@ -812,8 +813,8 @@ Properly configuring PHP-FPM to provide enough workers is key. Too few workers c
 </div>
 </div>
 
-<div id="outline-container-orga6fb86f" class="outline-3">
-<h3 id="orga6fb86f"><span class="section-number-3">6.5</span> Configurability</h3>
+<div id="outline-container-orga351f53" class="outline-3">
+<h3 id="orga351f53"><span class="section-number-3">6.5</span> Configurability</h3>
 <div class="outline-text-3" id="text-6-5">
 <p>
 As a separate service, PHP-FPM provides more configuration options than other PHP handlers. Many of these configuration options can also be defined differently for each website on the server. For example:
@@ -831,8 +832,8 @@ As a separate service, PHP-FPM provides more configuration options than other PH
 </div>
 </div>
 
-<div id="outline-container-org3f97488" class="outline-3">
-<h3 id="org3f97488"><span class="section-number-3">6.6</span> Links</h3>
+<div id="outline-container-org2894c23" class="outline-3">
+<h3 id="org2894c23"><span class="section-number-3">6.6</span> Links</h3>
 <div class="outline-text-3" id="text-6-6">
 <ol class="org-ol">
 <li><a href="https://www.inmotionhosting.com/support/product-guides/wordpress-hosting/php-fpm-the-future-of-php-handling/">PHP-FPM: The Future of PHP Handling</a></li>
@@ -841,11 +842,11 @@ As a separate service, PHP-FPM provides more configuration options than other PH
 </div>
 </div>
 
-<div id="outline-container-orgeda9dd1" class="outline-2">
-<h2 id="orgeda9dd1"><span class="section-number-2">7</span> Optimizing PHP-FPM for High Performance</h2>
+<div id="outline-container-org2da3f96" class="outline-2">
+<h2 id="org2da3f96"><span class="section-number-2">7</span> Optimizing PHP-FPM for High Performance</h2>
 <div class="outline-text-2" id="text-7">
-</div><div id="outline-container-orga3a9ca0" class="outline-3">
-<h3 id="orga3a9ca0"><span class="section-number-3">7.1</span> What is PHP-FPM?</h3>
+</div><div id="outline-container-orgf7fcb13" class="outline-3">
+<h3 id="orgf7fcb13"><span class="section-number-3">7.1</span> What is PHP-FPM?</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 When browser sends a request to a server running PHP, the first point of contact is the HTTP server. The web servers then decide how to connect to PHP, and pass on the request type, data, and headers to it.
@@ -887,8 +888,8 @@ The line <code>fastcgi_pass unix:/run/php/php7.2-fpm.sock;</code> tells Nginx to
 </div>
 </div>
 
-<div id="outline-container-orgd34bda1" class="outline-3">
-<h3 id="orgd34bda1"><span class="section-number-3">7.2</span> Why optimize PHP-FPM?</h3>
+<div id="outline-container-org389a54c" class="outline-3">
+<h3 id="org389a54c"><span class="section-number-3">7.2</span> Why optimize PHP-FPM?</h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 Nginx was built for handling thousands of connection at the same time, but if the same isn’t true of the PHP setup, it wastes resources as Nginx will be blocked by PHP to finish current process and accept the next, conclusively negative any advantages that Nginx was built to provide.
@@ -896,8 +897,8 @@ Nginx was built for handling thousands of connection at the same time, but if th
 </div>
 </div>
 
-<div id="outline-container-orge51e708" class="outline-3">
-<h3 id="orge51e708"><span class="section-number-3">7.3</span> How to optimize PHP-FPM?</h3>
+<div id="outline-container-orga24b74b" class="outline-3">
+<h3 id="orga24b74b"><span class="section-number-3">7.3</span> How to optimize PHP-FPM?</h3>
 <div class="outline-text-3" id="text-7-3">
 <p>
 In PHP-FPM's config file, e.g. <code>/etc/php/7.2/fpm/php-fpm.conf</code> :
@@ -989,8 +990,8 @@ On the other hand, websites that handle large amounts of traffic or must respond
 </div>
 </div>
 
-<div id="outline-container-org2e88133" class="outline-3">
-<h3 id="org2e88133"><span class="section-number-3">7.4</span> Links</h3>
+<div id="outline-container-org752fa89" class="outline-3">
+<h3 id="org752fa89"><span class="section-number-3">7.4</span> Links</h3>
 <div class="outline-text-3" id="text-7-4">
 <ol class="org-ol">
 <li><a href="https://geekflare.com/php-fpm-optimization/">Optimizing PHP-FPM for High Performance</a></li>
@@ -1000,8 +1001,8 @@ On the other hand, websites that handle large amounts of traffic or must respond
 </div>
 </div>
 
-<div id="outline-container-orgcf9d1cf" class="outline-2">
-<h2 id="orgcf9d1cf"><span class="section-number-2">8</span> Moving from mod_php to PHP-FPM</h2>
+<div id="outline-container-org13ba28a" class="outline-2">
+<h2 id="org13ba28a"><span class="section-number-2">8</span> Moving from mod_php to PHP-FPM</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 After running PHP on Apache for many years with <code>mod_php</code>, there is now a clear reason to switch to PHP-FPM:
@@ -1013,8 +1014,8 @@ After running PHP on Apache for many years with <code>mod_php</code>, there is n
 </ul>
 </div>
 
-<div id="outline-container-org8bcd190" class="outline-3">
-<h3 id="org8bcd190"><span class="section-number-3">8.1</span> Move Apache Functions</h3>
+<div id="outline-container-org1baa0c8" class="outline-3">
+<h3 id="org1baa0c8"><span class="section-number-3">8.1</span> Move Apache Functions</h3>
 <div class="outline-text-3" id="text-8-1">
 <p>
 Check if you’re using any of PHP’s <a href="https://www.php.net/manual/en/ref.apache.php">Apache Functions</a>, as these won’t be available once you stop using <code>mod_php</code>.
@@ -1022,8 +1023,8 @@ Check if you’re using any of PHP’s <a href="https://www.php.net/manual/en/re
 </div>
 </div>
 
-<div id="outline-container-orge31b3e7" class="outline-3">
-<h3 id="orge31b3e7"><span class="section-number-3">8.2</span> Move PHP Settings to <code>.user.ini</code></h3>
+<div id="outline-container-org5b5a4cb" class="outline-3">
+<h3 id="org5b5a4cb"><span class="section-number-3">8.2</span> Move PHP Settings to <code>.user.ini</code></h3>
 <div class="outline-text-3" id="text-8-2">
 <p>
 If you’re currently changing any <a href="https://www.php.net/manual/en/configuration.changes.php">PHP settings in Apache configuration files</a>, move these to <a href="https://www.php.net/manual/en/configuration.file.per-user.php"><code>.user.ini</code> files</a> which are picked up by PHP-FPM. For example, move:
@@ -1047,8 +1048,8 @@ To an equivalent:
 </div>
 </div>
 
-<div id="outline-container-orgead50f8" class="outline-3">
-<h3 id="orgead50f8"><span class="section-number-3">8.3</span> Switch PHP Package</h3>
+<div id="outline-container-orga42a0e0" class="outline-3">
+<h3 id="orga42a0e0"><span class="section-number-3">8.3</span> Switch PHP Package</h3>
 <div class="outline-text-3" id="text-8-3">
 <p>
 Run the following as root:
@@ -1064,8 +1065,8 @@ systemctl enable php-fpm
 </div>
 </div>
 
-<div id="outline-container-org7cce93b" class="outline-3">
-<h3 id="org7cce93b"><span class="section-number-3">8.4</span> Tweak Default httpd Configuration</h3>
+<div id="outline-container-org920eff4" class="outline-3">
+<h3 id="org920eff4"><span class="section-number-3">8.4</span> Tweak Default httpd Configuration</h3>
 <div class="outline-text-3" id="text-8-4">
 <p>
 To avoid PHP-FPM gets called for files that don't exist (httpd logs like <code>AH01071: Got error ‘Primary script unknown</code>):
@@ -1082,8 +1083,8 @@ To avoid PHP-FPM gets called for files that don't exist (httpd logs like <code>A
 </div>
 </div>
 
-<div id="outline-container-orgce2d9bb" class="outline-3">
-<h3 id="orgce2d9bb"><span class="section-number-3">8.5</span> Switch MPM</h3>
+<div id="outline-container-org6373a5f" class="outline-3">
+<h3 id="org6373a5f"><span class="section-number-3">8.5</span> Switch MPM</h3>
 <div class="outline-text-3" id="text-8-5">
 <div class="org-src-container">
 <label class="org-src-name"><span class="listing-number">Listing 5: </span><code>/etc/httpd/conf.modules.d/00-mpm.conf</code></label><pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">LoadModule mpm_prefork_module modules/mod_mpm_prefork.so</span>
@@ -1093,8 +1094,8 @@ LoadModule mpm_event_module modules/mod_mpm_event.so
 </div>
 </div>
 
-<div id="outline-container-orged7ba9d" class="outline-3">
-<h3 id="orged7ba9d"><span class="section-number-3">8.6</span> Restart httpd</h3>
+<div id="outline-container-org5dd0b46" class="outline-3">
+<h3 id="org5dd0b46"><span class="section-number-3">8.6</span> Restart httpd</h3>
 <div class="outline-text-3" id="text-8-6">
 <div class="org-src-container">
 <pre class="src src-sh">apachectl configtest
@@ -1109,8 +1110,8 @@ Note that PHP logs are now in <code>/var/log/php-fpm</code>.
 </div>
 </div>
 
-<div id="outline-container-orgf9ebd96" class="outline-3">
-<h3 id="orgf9ebd96"><span class="section-number-3">8.7</span> Links</h3>
+<div id="outline-container-orgd412e38" class="outline-3">
+<h3 id="orgd412e38"><span class="section-number-3">8.7</span> Links</h3>
 <div class="outline-text-3" id="text-8-7">
 <ol class="org-ol">
 <li><a href="https://medium.com/@jacksonpauls/moving-from-mod-php-to-php-fpm-914125a7f336">Moving from mod_php to PHP-FPM</a></li>
@@ -1119,8 +1120,8 @@ Note that PHP logs are now in <code>/var/log/php-fpm</code>.
 </div>
 </div>
 
-<div id="outline-container-org7082699" class="outline-2">
-<h2 id="org7082699"><span class="section-number-2">9</span> Migrating from mod_php to PHP-FPM</h2>
+<div id="outline-container-orgdda0475" class="outline-2">
+<h2 id="orgdda0475"><span class="section-number-2">9</span> Migrating from mod_php to PHP-FPM</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 Apache PHP module, a.k.a. <code>mod_php</code> is the module that allows Apache to interpret PHP files, and it’s known to suffer from memory problems. Here is what I did to migrate to PHP-FPM on Ubuntu 16.04 and using PHP 7.0.
@@ -1159,8 +1160,8 @@ service php7.0-fpm restart
 </div>
 </div>
 
-<div id="outline-container-org87dee74" class="outline-3">
-<h3 id="org87dee74"><span class="section-number-3">9.1</span> Links</h3>
+<div id="outline-container-orgf526f17" class="outline-3">
+<h3 id="orgf526f17"><span class="section-number-3">9.1</span> Links</h3>
 <div class="outline-text-3" id="text-9-1">
 <ol class="org-ol">
 <li><a href="https://smddzcy.com/posts/2017-09-16/migrating-from-mod-php-to-php-fpm">Migrating from mod_php to php-fpm</a></li>
@@ -1169,11 +1170,11 @@ service php7.0-fpm restart
 </div>
 </div>
 
-<div id="outline-container-org9a23316" class="outline-2">
-<h2 id="org9a23316"><span class="section-number-2">10</span> 深入理解 PHP 内核之 SAPI 探究</h2>
+<div id="outline-container-org9ca62e1" class="outline-2">
+<h2 id="org9ca62e1"><span class="section-number-2">10</span> 深入理解 PHP 内核之 SAPI 探究</h2>
 <div class="outline-text-2" id="text-10">
-</div><div id="outline-container-org64624f6" class="outline-3">
-<h3 id="org64624f6"><span class="section-number-3">10.1</span> SAPI</h3>
+</div><div id="outline-container-org0c6e248" class="outline-3">
+<h3 id="org0c6e248"><span class="section-number-3">10.1</span> SAPI</h3>
 <div class="outline-text-3" id="text-10-1">
 <p>
 PHP 通过 SAPI 提供了一组接口，供应用和 PHP 内核之间进行数据交互。
@@ -1224,11 +1225,11 @@ PHP 函数查看当前 SAPI 接口类型：
 </div>
 </div>
 
-<div id="outline-container-org47aa5ed" class="outline-3">
-<h3 id="org47aa5ed"><span class="section-number-3">10.2</span> PHP 的运行和加载</h3>
+<div id="outline-container-org76da676" class="outline-3">
+<h3 id="org76da676"><span class="section-number-3">10.2</span> PHP 生命周期</h3>
 <div class="outline-text-3" id="text-10-2">
 <p>
-无论使用哪种 SAPI，PHP 执行都经过 4 个阶段，在每个阶段，PHP 引擎会调用每个模块的回调函数：
+无论使用哪种 SAPI，PHP 执行都经过 4 个阶段，在每个阶段，PHP 引擎调用每个模块的回调函数：
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1280,9 +1281,24 @@ PHP 函数查看当前 SAPI 接口类型：
 </div>
 </div>
 
-<div id="outline-container-orgd843ee6" class="outline-3">
-<h3 id="orgd843ee6"><span class="section-number-3">10.3</span> Links</h3>
+<div id="outline-container-orga0fa9c0" class="outline-3">
+<h3 id="orga0fa9c0"><span class="section-number-3">10.3</span> CLI/CGI 模式</h3>
 <div class="outline-text-3" id="text-10-3">
+<p>
+CLI 和 CGI 都属于单进程模式，PHP 的生命周期在每一次请求中完成，即每次执行 PHP 脚本，都会执行上面提到的四个阶段。
+</p>
+
+
+<div class="figure">
+<p><img src="../images/php_scrap/06.jpg" alt="06.jpg" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org00c038e" class="outline-3">
+<h3 id="org00c038e"><span class="section-number-3">10.4</span> Links</h3>
+<div class="outline-text-3" id="text-10-4">
 <ol class="org-ol">
 <li><a href="https://www.jb51.net/article/74639.htm">深入理解 PHP 内核之 SAPI 探究</a></li>
 </ol>
@@ -1290,11 +1306,11 @@ PHP 函数查看当前 SAPI 接口类型：
 </div>
 </div>
 
-<div id="outline-container-org7551068" class="outline-2">
-<h2 id="org7551068"><span class="section-number-2">11</span> 提高 PHP 代码质量 36 计</h2>
+<div id="outline-container-orgdbff05f" class="outline-2">
+<h2 id="orgdbff05f"><span class="section-number-2">11</span> 提高 PHP 代码质量 36 计</h2>
 <div class="outline-text-2" id="text-11">
-</div><div id="outline-container-org93722d0" class="outline-3">
-<h3 id="org93722d0"><span class="section-number-3">11.1</span> 不要使用相对路径</h3>
+</div><div id="outline-container-org57c8cb7" class="outline-3">
+<h3 id="org57c8cb7"><span class="section-number-3">11.1</span> 不要使用相对路径</h3>
 <div class="outline-text-3" id="text-11-1">
 <div class="org-src-container">
 <pre class="src src-php"><span class="org-keyword">require_once</span>('../../<span class="org-warning">lib</span>/<span class="org-warning">some_class</span>.<span class="org-warning">php</span>');
@@ -1337,8 +1353,8 @@ PHP 函数查看当前 SAPI 接口类型：
 </div>
 </div>
 
-<div id="outline-container-orge3e8ff6" class="outline-3">
-<h3 id="orge3e8ff6"><span class="section-number-3">11.2</span> 不要直接使用 <code>require</code> 和 <code>include</code></h3>
+<div id="outline-container-org54eb3c2" class="outline-3">
+<h3 id="org54eb3c2"><span class="section-number-3">11.2</span> 不要直接使用 <code>require</code> 和 <code>include</code></h3>
 <div class="outline-text-3" id="text-11-2">
 <p>
 在脚本头部引入文件、库、工具文件和助手函数等：
@@ -1378,8 +1394,8 @@ PHP 函数查看当前 SAPI 接口类型：
 </div>
 </div>
 
-<div id="outline-container-org86c1be5" class="outline-3">
-<h3 id="org86c1be5"><span class="section-number-3">11.3</span> 保留调试代码</h3>
+<div id="outline-container-org5661f1f" class="outline-3">
+<h3 id="org5661f1f"><span class="section-number-3">11.3</span> 保留调试代码</h3>
 <div class="outline-text-3" id="text-11-3">
 <div class="org-src-container">
 <pre class="src src-php"><span class="org-function-name">define</span>('<span class="org-warning">ENVIRONMENT</span>' , '<span class="org-warning">development</span>'); <span class="org-comment-delimiter">// </span><span class="org-comment">&#24320;&#21457;&#29615;&#22659;</span>
@@ -1397,8 +1413,8 @@ PHP 函数查看当前 SAPI 接口类型：
 </div>
 </div>
 
-<div id="outline-container-org6f5040e" class="outline-3">
-<h3 id="org6f5040e"><span class="section-number-3">11.4</span> Links</h3>
+<div id="outline-container-org9e5a568" class="outline-3">
+<h3 id="org9e5a568"><span class="section-number-3">11.4</span> Links</h3>
 <div class="outline-text-3" id="text-11-4">
 <ol class="org-ol">
 <li><a href="http://www.oschina.net/question/1579_47231">提高 PHP 代码质量 36 计</a></li>
@@ -1407,8 +1423,8 @@ PHP 函数查看当前 SAPI 接口类型：
 </div>
 </div>
 
-<div id="outline-container-org74ba803" class="outline-2">
-<h2 id="org74ba803"><span class="section-number-2">12</span> Fastest way to determine where PHP script exits?</h2>
+<div id="outline-container-org525a860" class="outline-2">
+<h2 id="org525a860"><span class="section-number-2">12</span> Fastest way to determine where PHP script exits?</h2>
 <div class="outline-text-2" id="text-12">
 <div class="org-src-container">
 <pre class="src src-php"><span class="org-keyword">function</span> <span class="org-function-name">write_stack</span>()
@@ -1428,8 +1444,8 @@ PHP 函数查看当前 SAPI 接口类型：
 </div>
 </div>
 
-<div id="outline-container-orgc4ed8ba" class="outline-3">
-<h3 id="orgc4ed8ba"><span class="section-number-3">12.1</span> Links</h3>
+<div id="outline-container-orgb5868bc" class="outline-3">
+<h3 id="orgb5868bc"><span class="section-number-3">12.1</span> Links</h3>
 <div class="outline-text-3" id="text-12-1">
 <ol class="org-ol">
 <li><a href="https://stackoverflow.com/questions/216963/fastest-way-to-determine-where-php-script-exits">Fastest way to determine where PHP script exits?</a></li>
@@ -1438,16 +1454,16 @@ PHP 函数查看当前 SAPI 接口类型：
 </div>
 </div>
 
-<div id="outline-container-org082ab6a" class="outline-2">
-<h2 id="org082ab6a"><span class="section-number-2">13</span> Restart PHP Service Command</h2>
+<div id="outline-container-orgd17e53f" class="outline-2">
+<h2 id="orgd17e53f"><span class="section-number-2">13</span> Restart PHP Service Command</h2>
 <div class="outline-text-2" id="text-13">
 <p>
 PHP is associated with either web server, or external FastCGI process manager.
 </p>
 </div>
 
-<div id="outline-container-org47a68d1" class="outline-3">
-<h3 id="org47a68d1"><span class="section-number-3">13.1</span> Restarting web server</h3>
+<div id="outline-container-org4ccc8d3" class="outline-3">
+<h3 id="org4ccc8d3"><span class="section-number-3">13.1</span> Restarting web server</h3>
 <div class="outline-text-3" id="text-13-1">
 <div class="org-src-container">
 <pre class="src src-sh">$ /etc/init.d/apache2 restart
@@ -1462,8 +1478,8 @@ $ service lighttpd restart
 </div>
 </div>
 
-<div id="outline-container-org344e62b" class="outline-3">
-<h3 id="org344e62b"><span class="section-number-3">13.2</span> Restart PHP-FAM Fastcgi</h3>
+<div id="outline-container-orgbbf2b10" class="outline-3">
+<h3 id="orgbbf2b10"><span class="section-number-3">13.2</span> Restart PHP-FAM Fastcgi</h3>
 <div class="outline-text-3" id="text-13-2">
 <div class="org-src-container">
 <pre class="src src-sh">$ /etc/init.d/php-fpm restart
@@ -1474,8 +1490,8 @@ $ service php-fpm restart
 </div>
 </div>
 
-<div id="outline-container-org2bc170b" class="outline-3">
-<h3 id="org2bc170b"><span class="section-number-3">13.3</span> Links</h3>
+<div id="outline-container-org07561fd" class="outline-3">
+<h3 id="org07561fd"><span class="section-number-3">13.3</span> Links</h3>
 <div class="outline-text-3" id="text-13-3">
 <ol class="org-ol">
 <li><a href="https://www.cyberciti.biz/faq/unix-linux-restart-php-service-command/">Restart PHP Service Command</a></li>
@@ -1490,7 +1506,7 @@ $ service php-fpm restart
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Victor Chen</p>
-<p class="date">Created: 2019-12-02 Mon 17:04</p>
+<p class="date">Created: 2019-12-05 Thu 21:14</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

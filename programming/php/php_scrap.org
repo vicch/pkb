@@ -441,7 +441,7 @@ service php7.0-fpm restart
 * 深入理解 PHP 内核之 SAPI 探究
 ** SAPI
 
-PHP 通过 SAPI 提供了一组接口，供应用和 PHP 内核之间进行数据交互。
+PHP 是 Zend 引擎提供的一组标准交互接口（如初始化、析构、输入、输出），供应用（如 web server）和 PHP 内核之间进行数据交互。
 
 #+ATTR_HTML: :class no-border
 | *命令行调用 PHP*  | Shell 通过 SAPI 传入参数 -> Zend 引擎执行 PHP 代码 -> 结果返回给 Shell -> Shell 输出结果到 stdout    |
@@ -483,11 +483,40 @@ php_sapi_name(): string
 
 CLI 和 CGI 都属于单进程模式，PHP 的生命周期在每一次请求中完成，即每次执行 PHP 脚本，都会执行上面提到的四个阶段。
 
+file:../images/php_scrap/06.jpg
 
+** Multiprocess 模式
+
+多进程模式可以将 PHP 内置到 web server 中，比如将 PHP 编译成 Apache 的 Prefork MPM 模式和 APXS 模块，当 Apache 启动后，会 fork 很多子进程，每个子进程拥有自己独立的进程地址空间。在每个子进程中，PHP 的生命周期是调用 =MINT= 启动后，执行多次请求 =RINT/RSHUTDOWN= ，在 Apache 关闭或进程结束后，才会调用 =MSHUTDOWN= 进行回收阶段。 
+
+file:../images/php_scrap/07.jpg
+
+多进程模型中，每个子进程都是独立运行，没有代码和数据共享，因此一个子进程终止退出和重新生成，不会影响其他子进程的稳定。
+
+** Multithreaded 模式
+
+Apache 的 Worker MPM 采用多线程模型，在一个进程下创建多个线程，在同一个进程地址空间执行。
+
+file:../images/php_scrap/08.jpg
+
+** FastCGI 模式
+
+PHP-FPM（PHP 的 FastCGI 实现）运行后 fork 多个 CGI 进程，并管理和调度进程池，Nginx 和 PHP-FPM 通过本地的 TCP socket 和 Unix socket 进行通信。
+
+file:../images/php_scrap/09.jpg
+
+当请求达到 PHP-FPM，管理器选择 CGI 进程进行处理，Nginx 将环境变量和标准输入发送到 CGI 进程，处理完成后，将标准输出和错误信息返回给 Nginx，CGI 进程关闭连接，并等待着下一个连接。
+
+FastCGI 的优点在于，PHP 的初始化，如解析 =php.ini= 、载入并初始化扩展（ =MINT/MSHUTDOWN= ），每个进程只需要进行一次。
+
+** Embedded 模式
+
+Embedded SAPI 允许在 C/C++ 代码中调用 PHP 提供的函数。Embedded SAPI 和 CLI/CGI 模式一样，按照 PHP 生命周期的四个阶段运行。
 
 ** Links
 
 1. [[https://www.jb51.net/article/74639.htm][深入理解 PHP 内核之 SAPI 探究]]
+1. [[https://github.com/php/php-src/blob/master/main/SAPI.h][GitHub | php-src/main/SAPI.h]]
 
 * 提高 PHP 代码质量 36 计
 ** 不要使用相对路径
