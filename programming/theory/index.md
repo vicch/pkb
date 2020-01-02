@@ -8,6 +8,7 @@
 - [Cloud Computing](/pkb/programming/theory/cloud_computing.html)
 - [Data Structure](/pkb/programming/theory/data_structure.html)
 - [Design Pattern](/pkb/programming/theory/design_pattern.html)
+- [Graph](/pkb/programming/theory/graph.html)
 - [Object-Oriented Programming](/pkb/programming/theory/oop.html)
 - [OOP Scrap](/pkb/programming/theory/oop_scrap.html)
 - [Operating System](/pkb/programming/theory/operating_system.html)

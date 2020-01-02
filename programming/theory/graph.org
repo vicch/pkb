@@ -1,0 +1,107 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Graph
+
+* Theory
+** Graph
+
+Graph consists of vertexes and edges. Edges may have weights.
+
+*** Bipartite Graph
+
+https://en.wikipedia.org/wiki/Bipartite_graph
+
+*** Strongly Connected Component
+
+https://en.wikipedia.org/wiki/Strongly_connected_component
+
+** Tree
+*** Minimum Spanning Tree (MST)
+
+https://en.wikipedia.org/wiki/Minimum_spanning_tree
+
+For unweighted graphy, any spanning tree is Minimum Spanning Tree.
+
+*** Shortest-Path Tree (SPT)
+
+https://en.wikipedia.org/wiki/Shortest-path_tree
+
+** Algorithm
+*** Topological Sorting
+
+https://en.wikipedia.org/wiki/Topological_sorting
+
+* Representation
+** Adjacency Matrix
+
+- Adding/removing/searching edge takes =O(1)=.
+- Adding vertex takes =O(n^2)=, because all data need to be copied to a new (bigger) matrix.
+- Consumes same amount of space for a certain number of vertexes, regardless of number of edges.
+
+** Adjacency List
+
+- Adding vertex takes =O(1)=.
+- Consumes less space comparing with adjacency matrix.
+
+There are different implementations of the adjacency list:
+
+|                        | Adding edge | Search edge | Sorted edges |
+|------------------------+-------------+-------------+--------------|
+| *Vector*               | =O(1)=      | =O(n)=      | No           |
+|------------------------+-------------+-------------+--------------|
+| *Set*                  | =O(logn)=   | =O(logn)=   | Yes          |
+|------------------------+-------------+-------------+--------------|
+| *Unordered Set (Hash)* | =O(1)=      | =O(1)=      | No           |
+
+- Using vector:
+  + Adding edge takes =O(1)=.
+  + Searching edge takes =O(n)=.
+- Using set:
+  + Adding edge takes =O(logn)=, because the data structure is sorted.
+  + Searching edge takes =O(logn)=.
+- Using unsorted set:
+  + Adding edge takes
+
+* Traversal
+** Breadth First Search (BFS)
+
+- Use a `visited` boolean array to avoid infinite loop when there is cycle in the graph.
+- Use a `to_visit` queue, push an initial vertex into it.
+- To visit a vertex, pop from the queue, and push its unvisited adjacent vertexes into the queue.
+
+*** Application
+
+- Find shortest path
+  + Find friend in SNS
+  + Find neighbors in P2P network
+  + Search engine crawler
+- Detect cycle
+- Test for Bipartite
+- Produce Minimum Spanning Tree (for unweighted graph)
+- Garbage collection using Cheney’s algorithm
+
+** Depth First Search (DFS)
+*** Recursive Approach
+
+- Use a `visited` boolean array to avoid infinite loop when there is cycle in the graph.
+- Visit an initial vertex.
+- To visit a vertex, mark it as visited, and recursively visit all its unvisited adjacent vertexes.
+
+*** Stack Approach
+
+- Use a `visited` boolean array to avoid infinite loop when there is cycle in the graph.
+- Use a `to_visit` stack, push an initial vertex into it.
+- To visit a vertex, pop from the stack, and push its unvisited adjacent vertexes into the stack.
+
+*** Application
+
+- Detect cycle
+- Find path (solve puzzle such as maze)
+- Topological sorting
+- Test for Bipartite
+- Find Strongly Connected Component
+- Produce Minimum Spanning Tree (for unweighted graph)
+- Produce all-pairs Shortest-Path Tree (for unweighted graph)
+
+* Links
+
+1. [[https://www.geeksforgeeks.org/graph-data-structure-and-algorithms/][GeeksforGeeks | Graph Data Structure And Algorithms]]

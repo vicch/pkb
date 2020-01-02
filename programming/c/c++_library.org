@@ -1,11 +1,11 @@
 #+SETUPFILE: ../../styles/readtheorg.setup
 #+TITLE: C++ Library
 
-* C vs C++
+* Notation
 
 | =<string.h>= | C 库                 |
 |--------------+----------------------|
-| =<cstring>=  | C 库（用于 C++ 中）  |
+| =<cstring>=  | C 库用于 C++         |
 |--------------+----------------------|
 | =<string>=   | C++ =std::string= 类 |
 
@@ -18,60 +18,6 @@
 | =M_E=  | $e$     |
 
 http://pubs.opengroup.org/onlinepubs/7908799/xsh/math.h.html  
-
-** =<cstring>=
-
-| =strlen()=  |   |
-|-------------+---|
-| *复制*      |   |
-|-------------+---|
-| =strcpy()=  |   |
-|-------------+---|
-| *比较*      |   |
-|-------------+---|
-| =strncmp()= |   |
-
-*** =strcpy()=
-
-#+BEGIN_SRC cpp
-char * strcpy (
-  char *       destination
-, const char * source
-);
-#+END_SRC
-
-*** =strlen()=
-
-#+BEGIN_SRC cpp
-size_t strlen ( const char * str );
-#+END_SRC
-
-=strlen()= 不包含字符串结尾 null 字符，所以存储字符串需要的长度是 =strlen()= 结果加 1。
-
-*** =strncmp()=
-
-#+BEGIN_SRC cpp
-int strncmp (
-  const char * str1
-, const char * str2
-, size_t       num
-);
-#+END_SRC
-
-比较两个字符串直到
-- 出现不同的字符
-- 遇到 null 字符
-- 达到最大字符数
-
-| =str1= |                    |                                        |
-|--------+--------------------+----------------------------------------|
-| =str2= |                    |                                        |
-|--------+--------------------+----------------------------------------|
-| =num=  | =unsigned integer= | 比较的最大字符数                       |
-|--------+--------------------+----------------------------------------|
-| 返回值 | =0=                | 两个字符串相同                         |
-|        | =>0=               | 第一个不匹配的字符 =str1= 比 =str2= 大 |
-|        | =<0=               | 第一个不匹配的字符 =str1= 比 =str2= 小 |
 
 ** =<cstdio>=
 
@@ -236,7 +182,7 @@ exit(0);
 |--------+-----------------+--------------------------------|
 | *查找* | [[algorithm_lower_bound][=lower_bound()=]] | 返回查找值或更大值出现的首位置 |
 |--------+-----------------+--------------------------------|
-|        | [[algorithm_upper_bound][=upper_bound()=]] | 返回更大值出现的首位置         |
+|        | =upper_bound()= | 返回更大值出现的首位置         |
 |--------+-----------------+--------------------------------|
 | *极值* | =min()=         |                                |
 |        | =max()=         |                                |
@@ -360,7 +306,6 @@ sort(vec.begin(), vec.begin(), sortobj);
 #+END_SRC
 
 *** =upper_bound()=
-<<algorithm_lower_bound>>
 
 #+BEGIN_SRC cpp
 template <class ForwardIterator, class T>
@@ -461,6 +406,98 @@ cout << accumulate(nums, nums + 3, init, minus<int>()); // 40 (100 - 10 - 20 -30
 cout << accumulate(nums, nums + 3, init, myfunc);       // 220 (100 + 20 + 40 + 60)
 cout << accumulate(nums, nums + 3, init, myobject);     // 280 (100 + 30 + 60 + 90)
 #+END_SRC
+
+** =<utility>=
+
+| =swap()= |   |
+|----------+---|
+|          |   |
+
+* String
+** List
+
+| =<cctype>=  | Character data type functions              |
+|-------------+--------------------------------------------|
+| =<cstring>= | Narrow character string handling functions |
+|-------------+--------------------------------------------|
+| =<string>=  | =std::basic_string= class template         |
+
+** =<cctype>=
+
+[[https://en.cppreference.com/w/cpp/header/cctype][C++ Reference | Standard Library Headers | =<cctype>=]]
+
+*** List
+
+| =isalpha= | Checks if alphabetic character |
+|-----------+-------------------------------|
+| =tolower= | Converts to lowercase         |
+
+*** =isalpha=
+
+[[https://en.cppreference.com/w/cpp/string/byte/isalpha][C++ Reference | Standard Library Headers | =<cctype>= | =std::isalpha=]]
+
+#+BEGIN_SRC cpp
+int isalpha( int ch ); // Returns non-0 if is alphabetic, 0 otherwise
+#+END_SRC
+
+*** =tolower=
+
+[[https://en.cppreference.com/w/cpp/string/byte/tolower][C++ Reference | Standard Library Headers | =<cctype>= | =std::tolower=]]
+
+#+BEGIN_SRC cpp
+int tolower( int ch ); // Returns lowercase version of char if there is lowercase
+                       // Returns unmodified char if there is no lowercase
+#+END_SRC
+
+** =<cstring>=
+
+| =strlen()=  |   |
+|-------------+---|
+| =strcpy()=  |   |
+|-------------+---|
+| =strncmp()= |   |
+
+*** =strcpy()=
+
+#+BEGIN_SRC cpp
+char * strcpy (
+  char *       destination
+, const char * source
+);
+#+END_SRC
+
+*** =strlen()=
+
+#+BEGIN_SRC cpp
+size_t strlen ( const char * str );
+#+END_SRC
+
+=strlen()= 不包含字符串结尾 null 字符，所以存储字符串需要的长度是 =strlen()= 结果加 1。
+
+*** =strncmp()=
+
+#+BEGIN_SRC cpp
+int strncmp (
+  const char * str1
+, const char * str2
+, size_t       num
+);
+#+END_SRC
+
+比较两个字符串直到
+- 出现不同的字符
+- 遇到 null 字符
+- 达到最大字符数
+
+| =str1= |                    |                                        |
+|--------+--------------------+----------------------------------------|
+| =str2= |                    |                                        |
+|--------+--------------------+----------------------------------------|
+| =num=  | =unsigned integer= | 比较的最大字符数                       |
+|--------+--------------------+----------------------------------------|
+| 返回值 | =0=                | 两个字符串相同                         |
+|        | =>0=               | 第一个不匹配的字符 =str1= 比 =str2= 大 |
+|        | =<0=               | 第一个不匹配的字符 =str1= 比 =str2= 小 |
 
 ** =<string>=
 
@@ -609,27 +646,43 @@ string substr (
 ) const;
 #+END_SRC
 
-** =<utility>=
-
-| =swap()= |   |
-|----------+---|
-|          |   |
-
 * Container
+** List
 
-| =<deque>=         | 双端队列     |
-|-------------------+--------------|
-| =<map>=           | 有序映射     |
-|-------------------+--------------|
-| =<queue>=         |              |
-|-------------------+--------------|
-| =<set>=           |              |
-|-------------------+--------------|
-| =<stack>=         |              |
-|-------------------+--------------|
-| =<unordered_map>= | 无序映射     |
-|-------------------+--------------|
-| =<vector>=        | 可变大小序列 |
+| *Sequence*              | =<array>=              | Static contiguous array          |
+|-------------------------+------------------------+----------------------------------|
+|                         | =<vector>=             | Dynamic contiguous array         |
+|-------------------------+------------------------+----------------------------------|
+|                         | =<list>=               | Double-linked list               |
+|-------------------------+------------------------+----------------------------------|
+|                         | =<forward_list>=       | Single-linked list               |
+|-------------------------+------------------------+----------------------------------|
+|                         | =<deque>=              | Double-ended queue               |
+|-------------------------+------------------------+----------------------------------|
+| *Associative*           | =<map>=                | Key-value pairs, keys are unique |
+|-------------------------+------------------------+----------------------------------|
+|                         | =<multimap>=           | Key-value pairs                  |
+|-------------------------+------------------------+----------------------------------|
+|                         | =<set>=                | Keys, keys are unique            |
+|-------------------------+------------------------+----------------------------------|
+|                         | =<multiset>=           | Keys                             |
+|-------------------------+------------------------+----------------------------------|
+| *Unordered Associative* | =<unordered_map>=      | Key-value pairs, keys are unique |
+|-------------------------+------------------------+----------------------------------|
+|                         | =<unordered_multimap>= | Key-value pairs                  |
+|-------------------------+------------------------+----------------------------------|
+|                         | =<unordered_set>=      | Keys, keys are unique            |
+|-------------------------+------------------------+----------------------------------|
+|                         | =<unordered_multiset>= | Keys                             |
+|-------------------------+------------------------+----------------------------------|
+| *Adaptor*               | =<stack>=              |                                  |
+|-------------------------+------------------------+----------------------------------|
+|                         | =<queue>=              |                                  |
+|-------------------------+------------------------+----------------------------------|
+|                         | =<priority_queue>=     |                                  |
+
+- Associative containers are implemented with sorted data structures, e.g. binary search tree, search time is =O(logn)=.
+- Unordered associative containers are implemented hash data structures, search time is =O(1)= armotized (=O(n)= worst-case).
 
 ** =<deque>=
 
@@ -1301,7 +1354,8 @@ vector<int> parseInts(string str) {
 vector<int> nums = parstInts("1,3,5");
 #+END_SRC
 
-* 链接
+* Links
 
-1. [[http://www.cplusplus.com/reference/][Standard C++ Library reference]]
+1. [[https://en.cppreference.com/w/cpp/header][C++ Reference | C++ Standard Library]]
+1. [[http://www.cplusplus.com/reference/][Standard C++ Library]]
 1. [[http://www.boost.org/][C++ Boost Library]]
