@@ -150,6 +150,7 @@ map[<ktype>]<vtype>
 #+BEGIN_SRC go
 var a map[string]int
 a := make(map[string]int)
+a := make(map[string]int, 10)
 
 var a = map[string]int{
     "foo": 1,
@@ -163,8 +164,12 @@ a := map[string]int{
 a["foo"] = 1
 
 v = a["foo"]
-v, ok = a["bar"] // 读取并测试值是否存在，v = nil，ok = false
+v, ok = a["bar"] // 读取并测试值是否存在，不存在时 v = nil，ok = false
 _, ok = a["foo"] // 只测试值是否存在
+
+if v, ok = a[k]; ok {
+    return v;
+}
 
 delete(a, "foo")
 #+END_SRC
@@ -214,7 +219,7 @@ for {
 
 等待频道接收数据 =<- ch= 为阻塞过程，频道接收到数据时解除阻塞。
 
-* Type Usage
+* Type Related
 ** Custom Type
 
 #+BEGIN_SRC go
@@ -914,5 +919,6 @@ Go 代码编译不生成中间代码，如 Java 的字节码，而是直接生�
 * Links
 
 1. [[https://golang.org/ref/spec][The Go Programming Language Specification]]
+1. [[https://golang.org/doc/effective_go.html][Effective Go]]
 1. [[https://play.golang.org/][The Go Playground]]
 1. [[https://gobyexample.com/][Go by Example]]

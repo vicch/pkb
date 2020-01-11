@@ -795,7 +795,32 @@ cout << (i == m.end() ? 'Not found' : i->second) << endl;
 
 ** =<unordered_map>=
 
+[[https://en.cppreference.com/w/cpp/container/unordered_map][C++ Reference | Containers Library | =std::unordered_map=]]
+
 由哈希表实现，读写时间（平均）为 $O(1)$ 。
+
+| *Lookup* | =find()= | Find element with specific key |
+
+*** =find()=
+
+[[https://en.cppreference.com/w/cpp/container/unordered_map/find][C++ Reference | Containers Library | =std::unordered_map= | =find=]]
+
+#+BEGIN_SRC cpp
+iterator find( const Key& key );
+#+END_SRC
+
+Returns iterator to an element with key equivalent to =key=. If no such element is found, past-the-end iterator =end()= is returned:
+
+#+BEGIN_SRC cpp
+std::unordered_map<int,char> example = {{1,'a'},{2,'b'}};
+ 
+auto search = example.find(2);
+if (search != example.end()) {
+    std::cout << "Found " << search->first << ": " << search->second << '\n';
+} else {
+    std::cout << "Not found\n";
+}
+#+END_SRC
 
 ** =<vector>=
 
