@@ -20,6 +20,8 @@ def indexDir(dir, excludes):
 
 	dirName = string.capwords(dir)
 
+	writeFrontMatter('.')
+
 	# Add dir title to root index
 	writeTitle('.', dirName);
 
@@ -42,6 +44,8 @@ def indexSubDir(dir, dirName, subDir, excludes):
 
 	truncateIndex(subDirPath)
 
+	writeFrontMatter(subDirPath)
+
 	# Add sub dir title to sub dir index
 	writeTitle(subDirPath, dirName + ' / ' + subDirName)
 
@@ -56,6 +60,11 @@ def truncateIndex(dirPath):
 	filePath = dirPath + '/index.md'
 	with open(filePath, 'w+') as file:
 		file.truncate()
+
+
+def writeFrontMatter(dirPath)
+	# Set the title to be empty string
+	writeLine(dirPath, '---\ntitle: ""\n---\n\n')
 
 
 def writeTitle(dirPath, title):
