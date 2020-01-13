@@ -64,11 +64,11 @@ def truncateIndex(dirPath):
 
 def writeFrontMatter(dirPath):
 	# Set the title to be empty string
-	writeLine(dirPath, '---\ntitle: ""\n---\n\n')
+	writeLine(dirPath, '---\ntitle: ""\n---\n')
 
 
 def writeTitle(dirPath, title):
-	writeLine(dirPath, '## ' + title + '\n\n')
+	writeLine(dirPath, '\n## ' + title + '\n\n')
 
 
 def writeEntry(dirPath, name, link):
