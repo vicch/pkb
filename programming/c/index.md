@@ -2,7 +2,6 @@
 title: ""
 ---
 
-
 ## Programming / C
 
 - [C++](/pkb/programming/c/c++.html)

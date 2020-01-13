@@ -2,7 +2,6 @@
 title: ""
 ---
 
-
 ## Programming / Misc
 
 - [Computer Scrap](/pkb/programming/misc/computer_scrap.html)

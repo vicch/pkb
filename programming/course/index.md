@@ -2,7 +2,6 @@
 title: ""
 ---
 
-
 ## Programming / Course
 
 - [AWS Certified Developer](/pkb/programming/course/aws_certified_developer.html)

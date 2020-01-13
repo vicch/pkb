@@ -2,7 +2,6 @@
 title: ""
 ---
 
-
 ## Programming / Book
 
 - [97 Things Every Programmer Should Know](/pkb/programming/book/97_things_every_programmer_should_know.html)

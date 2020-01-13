@@ -2,7 +2,6 @@
 title: ""
 ---
 
-
 ## Programming / Linux
 
 - [CentOS](/pkb/programming/linux/centos.html)

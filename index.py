@@ -7,6 +7,8 @@ import string
 def index(dirs, excludes):
 	truncateIndex('.')
 
+	writeFrontMatter('.')
+
 	for dir in dirs:
 		indexDir(dir, excludes)
 
@@ -19,8 +21,6 @@ def indexDir(dir, excludes):
 	info('Indexing: ' + path([dir]))
 
 	dirName = string.capwords(dir)
-
-	writeFrontMatter('.')
 
 	# Add dir title to root index
 	writeTitle('.', dirName);
@@ -68,7 +68,7 @@ def writeFrontMatter(dirPath):
 
 
 def writeTitle(dirPath, title):
-	writeLine(dirPath, '\n## ' + title + '\n\n')
+	writeLine(dirPath, '## ' + title + '\n\n')
 
 
 def writeEntry(dirPath, name, link):

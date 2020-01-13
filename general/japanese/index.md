@@ -2,7 +2,6 @@
 title: ""
 ---
 
-
 ## General / Japanese
 
 - [Glossary](/pkb/general/japanese/glossary.html)

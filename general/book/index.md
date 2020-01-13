@@ -2,7 +2,6 @@
 title: ""
 ---
 
-
 ## General / Book
 
 - [Are you smart enough to work at Google?](/pkb/general/book/are_you_smart_enough_to_work_at_google.html)

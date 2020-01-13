@@ -2,7 +2,6 @@
 title: ""
 ---
 
-
 ## General / Photography
 
 - [Photography Accessory](/pkb/general/photography/accessory.html)

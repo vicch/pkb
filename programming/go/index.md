@@ -2,7 +2,6 @@
 title: ""
 ---
 
-
 ## Programming / Go
 
 - [Go](/pkb/programming/go/go.html)

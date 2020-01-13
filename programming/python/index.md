@@ -2,7 +2,6 @@
 title: ""
 ---
 
-
 ## Programming / Python
 
 - [Django](/pkb/programming/python/django.html)

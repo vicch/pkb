@@ -2,7 +2,6 @@
 title: ""
 ---
 
-
 ## Programming / Theory
 
 - [Algorithm](/pkb/programming/theory/algorithm.html)

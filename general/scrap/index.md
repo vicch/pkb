@@ -2,7 +2,6 @@
 title: ""
 ---
 
-
 ## General / Scrap
 
 - [History](/pkb/general/scrap/history.html)
