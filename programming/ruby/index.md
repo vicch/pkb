@@ -1,5 +1,5 @@
 ---
-title: ""
+title: "Programming / Ruby"
 ---
 
 ## Programming / Ruby

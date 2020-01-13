@@ -1,5 +1,5 @@
 ---
-title: ""
+title: "General / Japanese"
 ---
 
 ## General / Japanese

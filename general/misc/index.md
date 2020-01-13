@@ -1,5 +1,5 @@
 ---
-title: ""
+title: "General / Misc"
 ---
 
 ## General / Misc
