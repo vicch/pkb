@@ -53,6 +53,7 @@ def indexSubDir(dir, dirName, subDir, excludes):
 
 	for file in sorted(os.listdir(subDirPath)):
 		if (not file.startswith('.')) and file.endswith('.org'):
+			# Expect title string on 2nd line and skip the first 9 chars
 			title = linecache.getline(subDirPath + '/' + file, 2)[9:].rstrip()
 			htmlFilePath = subDirPath + '/' + file.replace('.org', '.html')
 			# Add doc entry to sub dir index
@@ -77,10 +78,16 @@ def writeFrontMatterToIndex(dirPath, title):
 
 
 def writeFrontMatterToPage(filePath, title):
-	with open(filePath, 'r+') as f:
-		body = f.read()
-		f.seek(0)
-		f.write(getFrontMatterString(title) + body)
+	try:
+		with open(filePath, 'r+') as f:
+			body = f.read()
+			# If not already have front matter
+			# TODO: Make it replace existing front matter
+			if (not body.startswith('---')):
+				f.seek(0)
+				f.write(getFrontMatterString(title) + body)
+	except IOError:
+		return
 
 
 def writeTitle(dirPath, title):
