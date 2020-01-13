@@ -62,7 +62,7 @@ def truncateIndex(dirPath):
 		file.truncate()
 
 
-def writeFrontMatter(dirPath)
+def writeFrontMatter(dirPath):
 	# Set the title to be empty string
 	writeLine(dirPath, '---\ntitle: ""\n---\n\n')
 
