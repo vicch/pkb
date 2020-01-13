@@ -7,7 +7,7 @@ import string
 def index(dirs, excludes):
 	truncateIndex('.')
 
-	writeFrontMatter('.')
+	writeFrontMatterToIndex('.', '')
 
 	for dir in dirs:
 		indexDir(dir, excludes)
@@ -44,16 +44,21 @@ def indexSubDir(dir, dirName, subDir, excludes):
 
 	truncateIndex(subDirPath)
 
-	writeFrontMatter(subDirPath)
+	title = dirName + ' / ' + subDirName
+
+	writeFrontMatterToIndex(subDirPath, title)
 
 	# Add sub dir title to sub dir index
-	writeTitle(subDirPath, dirName + ' / ' + subDirName)
+	writeTitle(subDirPath, title)
 
 	for file in sorted(os.listdir(subDirPath)):
 		if (not file.startswith('.')) and file.endswith('.org'):
-			# Add doc entry to sub dir index
 			title = linecache.getline(subDirPath + '/' + file, 2)[9:].rstrip()
-			writeEntry(subDirPath, title, subDirPath + '/' + file.replace('.org', '.html'))
+			htmlFilePath = subDirPath + '/' + file.replace('.org', '.html')
+			# Add doc entry to sub dir index
+			writeEntry(subDirPath, title, htmlFilePath)
+			# Add Jekyll front matter to HTML file
+			writeFrontMatterToPage(htmlFilePath, title)
 
 
 def truncateIndex(dirPath):
@@ -62,9 +67,20 @@ def truncateIndex(dirPath):
 		file.truncate()
 
 
-def writeFrontMatter(dirPath):
+def getFrontMatterString(title):
+	return '---\ntitle: "' + title + '"\n---\n'
+
+
+def writeFrontMatterToIndex(dirPath, title):
 	# Set the title to be empty string
-	writeLine(dirPath, '---\ntitle: ""\n---\n')
+	writeLine(dirPath, getFrontMatterString(title))
+
+
+def writeFrontMatterToPage(filePath, title):
+	with open(filePath, 'r+') as f:
+		body = f.read()
+		f.seek(0)
+		f.write(getFrontMatterString(title) + body)
 
 
 def writeTitle(dirPath, title):
