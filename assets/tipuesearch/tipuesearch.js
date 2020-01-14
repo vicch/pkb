@@ -20,7 +20,7 @@ http://www.tipue.com/search
 		'descriptiveWords'       : 25,
 		'footerPages'            : 3,
 		'highlightTerms'         : true,
-		'imageZoom'              : true,
+		'imageZoom'              : false,
 		'minimumLength'          : 2,
 		'newWindow'              : false,
 		'show'                   : 10,
@@ -29,7 +29,7 @@ http://www.tipue.com/search
 		'showTime'               : true,
 		'showTitleCount'         : true,
 		'showURL'                : true,
-		'wholeWords'             : true
+		'wholeWords'             : false
 		}, options);
 		
 		return this.each(function() {
