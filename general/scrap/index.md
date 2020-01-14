@@ -1,5 +1,5 @@
 ---
-title: "General / Scrap"
+title: ""
 ---
 
 ## General / Scrap

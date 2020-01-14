@@ -1,5 +1,5 @@
 ---
-title: "Programming / Tool"
+title: ""
 ---
 
 ## Programming / Tool

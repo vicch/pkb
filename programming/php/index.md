@@ -1,5 +1,5 @@
 ---
-title: "Programming / Php"
+title: ""
 ---
 
 ## Programming / Php

@@ -46,7 +46,7 @@ def indexSubDir(dir, dirName, subDir, excludes):
 
 	title = dirName + ' / ' + subDirName
 
-	writeFrontMatterToIndex(subDirPath, title)
+	writeFrontMatterToIndex(subDirPath, '')
 
 	# Add sub dir title to sub dir index
 	writeTitle(subDirPath, title)

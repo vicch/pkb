@@ -1,5 +1,5 @@
 ---
-title: "Programming / Javascript"
+title: ""
 ---
 
 ## Programming / Javascript

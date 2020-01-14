@@ -1,5 +1,5 @@
 ---
-title: "Programming / Misc"
+title: ""
 ---
 
 ## Programming / Misc

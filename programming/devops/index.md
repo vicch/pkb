@@ -1,5 +1,5 @@
 ---
-title: "Programming / Devops"
+title: ""
 ---
 
 ## Programming / Devops

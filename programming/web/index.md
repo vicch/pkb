@@ -1,5 +1,5 @@
 ---
-title: "Programming / Web"
+title: ""
 ---
 
 ## Programming / Web

@@ -1,5 +1,5 @@
 ---
-title: "Programming / Theory"
+title: ""
 ---
 
 ## Programming / Theory

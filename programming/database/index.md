@@ -1,5 +1,5 @@
 ---
-title: "Programming / Database"
+title: ""
 ---
 
 ## Programming / Database

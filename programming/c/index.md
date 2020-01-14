@@ -1,5 +1,5 @@
 ---
-title: "Programming / C"
+title: ""
 ---
 
 ## Programming / C

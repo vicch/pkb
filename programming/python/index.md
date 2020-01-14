@@ -1,5 +1,5 @@
 ---
-title: "Programming / Python"
+title: ""
 ---
 
 ## Programming / Python

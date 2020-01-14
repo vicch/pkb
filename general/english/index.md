@@ -1,5 +1,5 @@
 ---
-title: "General / English"
+title: ""
 ---
 
 ## General / English

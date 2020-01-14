@@ -1,5 +1,5 @@
 ---
-title: "General / Book"
+title: ""
 ---
 
 ## General / Book

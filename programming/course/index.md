@@ -1,5 +1,5 @@
 ---
-title: "Programming / Course"
+title: ""
 ---
 
 ## Programming / Course

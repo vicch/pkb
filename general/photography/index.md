@@ -1,5 +1,5 @@
 ---
-title: "General / Photography"
+title: ""
 ---
 
 ## General / Photography

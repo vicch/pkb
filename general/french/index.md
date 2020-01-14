@@ -1,5 +1,5 @@
 ---
-title: "General / French"
+title: ""
 ---
 
 ## General / French

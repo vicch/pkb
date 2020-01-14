@@ -1,5 +1,5 @@
 ---
-title: "Programming / Linux"
+title: ""
 ---
 
 ## Programming / Linux

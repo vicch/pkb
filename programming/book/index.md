@@ -1,5 +1,5 @@
 ---
-title: "Programming / Book"
+title: ""
 ---
 
 ## Programming / Book
