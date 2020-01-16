@@ -8,6 +8,7 @@ title: ""
 - [Japanese A Comprehensive Grammar](/pkb/general/japanese/japanese_a_comprehensive_grammar.html)
 - [Japanese Grammer](/pkb/general/japanese/jp_grammer.html)
 - [Japanese Lyric](/pkb/general/japanese/jp_lyric.html)
+- [Japanese Scrap](/pkb/general/japanese/jp_scrap.html)
 - [Japanese Sentence](/pkb/general/japanese/jp_sentence.html)
 - [Japanese Vocabulary](/pkb/general/japanese/jp_vocabulary.html)
 - [Japanese Vocabulary: Category](/pkb/general/japanese/jp_vocabulary_category.html)
