@@ -7,6 +7,7 @@ title: ""
 - [Book](/pkb/programming/book/index)
 - [C](/pkb/programming/c/index)
 - [Course](/pkb/programming/course/index)
+- [Cpp](/pkb/programming/cpp/index)
 - [Database](/pkb/programming/database/index)
 - [Devops](/pkb/programming/devops/index)
 - [Go](/pkb/programming/go/index)
