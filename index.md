@@ -4,6 +4,8 @@ title: ""
 
 ## Programming
 
+- [Architecture](/pkb/programming/architecture/index)
+- [Basic](/pkb/programming/basic/index)
 - [Book](/pkb/programming/book/index)
 - [C](/pkb/programming/c/index)
 - [Course](/pkb/programming/course/index)
@@ -12,12 +14,12 @@ title: ""
 - [Devops](/pkb/programming/devops/index)
 - [Go](/pkb/programming/go/index)
 - [Javascript](/pkb/programming/javascript/index)
+- [Language](/pkb/programming/language/index)
 - [Linux](/pkb/programming/linux/index)
 - [Misc](/pkb/programming/misc/index)
 - [Php](/pkb/programming/php/index)
 - [Python](/pkb/programming/python/index)
 - [Ruby](/pkb/programming/ruby/index)
-- [Theory](/pkb/programming/theory/index)
 - [Tool](/pkb/programming/tool/index)
 - [Web](/pkb/programming/web/index)
 
