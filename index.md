@@ -13,6 +13,7 @@ title: ""
 - [Database](/pkb/programming/database/index)
 - [Devops](/pkb/programming/devops/index)
 - [Go](/pkb/programming/go/index)
+- [Interview](/pkb/programming/interview/index)
 - [Javascript](/pkb/programming/javascript/index)
 - [Language](/pkb/programming/language/index)
 - [Linux](/pkb/programming/linux/index)

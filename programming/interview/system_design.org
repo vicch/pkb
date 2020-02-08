@@ -1,0 +1,66 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: System Design
+
+* Messenger Service
+** Features
+
+Talk about features needed, from basic to advanced, e.g.
+
+#+ATTR_HTML: :class no-border
+| *Content types* | Text, image, voice, video    |
+|-----------------+------------------------------|
+| *Modes*         | 1-on-1, group                |
+|-----------------+------------------------------|
+| *Clients*       | Web, mobile                  |
+|-----------------+------------------------------|
+| *States*        | Sent, delivered, read        |
+|-----------------+------------------------------|
+| *History*       | How long is the history kept |
+
+*Architecture can be derived from features.*
+
+** High-level Architecture
+
+In the most basic scenario, there are 2 clients and 1 server.
+
+Message sent from one client should be stored on the server, because the other client may not be online and the message cannot be lost. So the actual message sending is asynchronized.
+
+The server is the bottleneck of the service. It should be horizontally scalable.
+
+When there are multiple servers, clients should be able to connect to different servers while being in the same conversation.
+
+** Low-level Architecture
+
+*Once the high-level architecture is clear, drill down to the design and functions of a single server node.*
+
+Messages sent to the servers should be stored in queues. When the receiver comes online, the messages are retrieved from the queue, can then can be deleted.
+
+Because each time a client sends a message, it may connect to different servers (therefore stored in different queues), when the receicer retrieves the messages, they may be in an arbitrary order (assuming the timestamps on the messages are not precise enough).
+
+** States
+
+1. Sender sends a message to a server.
+2. Server responds with a =sent= message.
+3. Receiver retrieves the message.
+4. Server sends (server initiates the connection) a =delivered= message to the sender.
+5. Receiver reads the message.
+6. Receiver sends a =read= message (can be implemented as a special type of message that works the same way behind the scene as a normal text message) to the sender via a server (can be a different server).
+7. Sender retrieves the =read= message.
+
+** Push Notification
+
+Push notification is usually platform-dependent, and there are existing services that can be used directly, such as Google Cloud Messenging. Push notifications usually work in fire-and-forget manners.
+
+There can be a layer of servers that are dedicated to push notification processing. Once a normal server receives a message, it can request one of these servers to handle the push notification.
+
+** More Topics
+
+- Other features: group chat, message history etc.
+- Scaling
+- Caching
+- Database sharding, replication
+- Monitoring
+
+** Links
+
+1. [[https://www.youtube.com/watch?v=5m0L0k8ZtEs][System Design: Messenger service like Whatsapp or WeChat]]

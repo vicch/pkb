@@ -1,8 +1,8 @@
 #+SETUPFILE: ../../styles/readtheorg.setup
 #+TITLE: C++
 
-* Type
-** Type List
+* 类型
+** 类型列表
 
 |          |                   | 字节 |                            |
 |----------+-------------------+------+----------------------------|
@@ -32,7 +32,7 @@
 
 具体字节数因编译器而定。
 
-** Character
+** 字符
 
 字符由 @@html:<code>'</code>@@ 包围时，表示它对应的整数值，即字符码（character code）。
 
@@ -40,7 +40,7 @@
 'A' == 65;
 #+END_SRC
 
-** Array
+** 数组
 
 数组中只能存储同一数据类型的元素，因为每个元素占用的内存空间相同，才可以使用数组索引值迅速定位元素位置。
 
@@ -59,7 +59,7 @@ int foo[10] = {1, 2, 3}; // 指定前三个元素，之后默认为 0
 int foo[10] = {0};       // 全部元素初始化为 0
 #+END_SRC
 
-** String
+** 字符串
 
 字符串实质是字符数组。由 null 字符 =\0= 结尾，字符串操作函数通过 null 字符来确定字符串的结尾。
 
@@ -956,61 +956,17 @@ print_vector<stirng>(string_vector);
 
 * OO
 ** 类
-*** 定义
 
 #+BEGIN_SRC cpp
-class Foo {}; // 类定义结束有 ;
+class Foo {};      // 定义，必须以 ; 结束
+Foo foo;           // 实例化，作为数据类型
+Foo foo(1);        // 实例化，调用构造函数
+class Foo {} foo1; // 定义同时声明变量
+
+class Foo : public Bar, protected Qux {}; // 继承
 #+END_SRC
 
-*** 实例化
-
-#+CAPTION: 作为数据类型声明变量
-#+BEGIN_SRC cpp
-class Foo {}; // 定义
-Foo foo;      // 实例化
-Foo foo(1);   // 调用构造函数
-#+END_SRC
-
-#+CAPTION: 类定义的同时声明变量
-#+BEGIN_SRC cpp
-class Foo {} foo1 foo2;
-#+END_SRC
-
-*** 继承
-
-#+BEGIN_SRC cpp
-class Foo : public Bar, protected Qux {};
-#+END_SRC
-
-- 支持多继承。
-- 基类必须在子类之前定义。
-
-*** 示例
-
-#+BEGIN_SRC cpp
-class Class {
-private:
-    int a, b;
-public:
-    void foo(int va, int vb) {
-        a = va;
-        b = vb;
-        return;
-    }
-    void bar();
-}
-
-void Class::bar() {
-    return;
-}
-
-int main() {
-    Class obj;
-    obj.foo(1, 2);
-    obj.bar();
-    return 0;
-}
-#+END_SRC
+C++ 支持多继承，基类必须在子类之前定义。
 
 ** 抽象类
 

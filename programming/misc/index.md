@@ -12,6 +12,7 @@ title: ""
 - [Performance Scrap](/pkb/programming/misc/performance_scrap.html)
 - [Programming](/pkb/programming/misc/programming.html)
 - [Programming Scrap](/pkb/programming/misc/programming_scrap.html)
+- [Scrap](/pkb/programming/misc/scrap.html)
 - [Security](/pkb/programming/misc/security.html)
 - [Security Scrap](/pkb/programming/misc/security_scrap.html)
 - [Standard](/pkb/programming/misc/standard.html)
