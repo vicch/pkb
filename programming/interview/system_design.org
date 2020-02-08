@@ -1,6 +1,95 @@
 #+SETUPFILE: ../../styles/readtheorg.setup
 #+TITLE: System Design
 
+* System Design Cheatsheet
+** Basic Steps
+*** Scoping
+
+Clarify and agree on the scope of the system.
+
+#+ATTR_HTML: :class no-border
+| *User cases*  | Who is going to use it?                                 |
+|               | How (as a sequence of events) are they going to use it? |
+|---------------+---------------------------------------------------------|
+| *Constraints* | Traffic: requests per second, requests types etc.       |
+|               | Data handling: data input/output per second etc.        |
+|               | Multithreading etc.                                     |
+
+*** Abstract Design
+
+Sktech high level architecture of important components and connections between them. For example:
+
+- Load balancer
+- Application layer (web server)
+- Data storage layer (master/slave, database cluster etc.)
+- Caching layer
+- Other services
+
+*** Component Design
+
+#+ATTR_HTML: :class no-border
+| *APIs*            |                                                                  |
+|-------------------+------------------------------------------------------------------|
+| *OO*              | Map features to modules/classes.                                 |
+|                   | Relations and patterns: singleton, composition, inheritance etc. |
+|-------------------+------------------------------------------------------------------|
+| *Database schema* |                                                                  |
+
+*** Bottlenecks
+
+Identify and mitigate bottlenecks. E.g.
+
+- Bottleneck: data volume is too large ot database is too slow.
+- Mitigation: Distribute data on multiple machines, or add in-memory caching.
+
+*** Scaling
+
+#+ATTR_HTML: :class no-border
+| *Vertical*   |                                   |
+|--------------+-----------------------------------|
+| *Horizontal* | Caching                           |
+|              | Load balancing                    |
+|              | Database partitioning, map-reduce |
+
+** Key Topics
+*** Caching
+
+Caching generally refers to in-memory caches, such as Memcached and Redis.
+
+#+ATTR_HTML: :class no-border
+| *Application caching* | Check if a key exists in cache. If not, retrieve from database.                          |
+|-----------------------+------------------------------------------------------------------------------------------|
+| *Database caching*    | Database's default config usually provides some degree of caching.                       |
+|                       | There are more advanced optimizations, such as MySQL InnoDB buffer pool and query cache. |
+
+Caching strategies:
+
+#+ATTR_HTML: :class no-border
+| *Pre-calculation* | Pre-calculate expensive data and store in cache. |
+|                   | E.g. suggestion data, aggregation data.          |
+|-------------------+--------------------------------------------------|
+| *Hot data*        | Store more frequently used data in faster cache. |
+
+*** Load Balancing
+
+#+ATTR_HTML: :class no-border
+| *Smart client*           | Client-side load balancing, more difficult to use. |
+|--------------------------+----------------------------------------------------|
+| *Hardware load balancer* | Reliable but expensive.                            |
+|--------------------------+----------------------------------------------------|
+| *Software load balancer* | Most used.                                         |
+
+*** Database
+
+#+ATTR_HTML: :class no-border
+| *Replication*  | Replicating changes between distributed databases to synchronize data.                             |
+|----------------+----------------------------------------------------------------------------------------------------|
+| *Partitioning* | Decomposing data tables vertically (column-wise) or horizontally (row-wise, also called sharding). |
+
+** Links
+
+1. [[https://gist.github.com/vasanthk/485d1c25737e8e72759f][System Design Cheatsheet]]
+
 * Messenger Service
 ** Features
 
