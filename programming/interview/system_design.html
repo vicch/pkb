@@ -6,7 +6,7 @@ title: "System Design"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-08 Sat 12:25 -->
+<!-- 2020-02-08 Sat 16:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>System Design</title>
@@ -244,50 +244,56 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgdfc11c8">1 System Design Cheatsheet</a>
+<li><a href="#orgfeccce9">1 System Design Cheatsheet</a>
 <ul>
-<li><a href="#orgcfff90e">1.1 Basic Steps</a>
+<li><a href="#org43a639b">1.1 Basic Steps</a>
 <ul>
-<li><a href="#orgcbd086e">1.1.1 Scoping</a></li>
-<li><a href="#org5d576ff">1.1.2 Abstract Design</a></li>
-<li><a href="#orgcb35e34">1.1.3 Component Design</a></li>
-<li><a href="#orgb452ecb">1.1.4 Bottlenecks</a></li>
-<li><a href="#org6720d30">1.1.5 Scaling</a></li>
+<li><a href="#org3d42c77">1.1.1 Scoping</a></li>
+<li><a href="#orgabafd2f">1.1.2 Abstract Design</a></li>
+<li><a href="#orgce8146b">1.1.3 Component Design</a></li>
+<li><a href="#org8d482c0">1.1.4 Bottlenecks</a></li>
+<li><a href="#orge3ec285">1.1.5 Scaling</a></li>
 </ul>
 </li>
-<li><a href="#org0b91618">1.2 Key Topics</a>
+<li><a href="#org077c6df">1.2 Key Topics</a>
 <ul>
-<li><a href="#org6dabc28">1.2.1 Caching</a></li>
-<li><a href="#org3de9409">1.2.2 Load Balancing</a></li>
-<li><a href="#org1f6d0cc">1.2.3 Database</a></li>
+<li><a href="#org9fc0146">1.2.1 Platform</a></li>
+<li><a href="#org6521338">1.2.2 Load Balancing</a></li>
+<li><a href="#org665ae88">1.2.3 Caching</a></li>
+<li><a href="#org2b339eb">1.2.4 Database</a></li>
+<li><a href="#org46f4a0d">1.2.5 Concurrency</a></li>
+<li><a href="#orgbb2e968">1.2.6 Networking</a></li>
+<li><a href="#org4a97637">1.2.7 Real-World Performance</a></li>
+<li><a href="#orga0e6828">1.2.8 Availability &amp; Reliability</a></li>
 </ul>
 </li>
-<li><a href="#orgda7a2fa">1.3 Links</a></li>
+<li><a href="#orgb3facbb">1.3 Web System Design Topics</a></li>
+<li><a href="#orgc788282">1.4 Links</a></li>
 </ul>
 </li>
-<li><a href="#org2713517">2 Messenger Service</a>
+<li><a href="#org008d6b7">2 Messenger Service</a>
 <ul>
-<li><a href="#orgc90a43b">2.1 Features</a></li>
-<li><a href="#orge644559">2.2 High-level Architecture</a></li>
-<li><a href="#orgbaeeefc">2.3 Low-level Architecture</a></li>
-<li><a href="#orgb254f07">2.4 States</a></li>
-<li><a href="#org7d1d05d">2.5 Push Notification</a></li>
-<li><a href="#orgd09964d">2.6 More Topics</a></li>
-<li><a href="#org04bd7bb">2.7 Links</a></li>
+<li><a href="#org0289781">2.1 Features</a></li>
+<li><a href="#org2305e27">2.2 High-level Architecture</a></li>
+<li><a href="#org8244820">2.3 Low-level Architecture</a></li>
+<li><a href="#orgea19dfc">2.4 States</a></li>
+<li><a href="#orga8e2916">2.5 Push Notification</a></li>
+<li><a href="#org35f8358">2.6 More Topics</a></li>
+<li><a href="#orgd051946">2.7 Links</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgdfc11c8" class="outline-2">
-<h2 id="orgdfc11c8"><span class="section-number-2">1</span> System Design Cheatsheet</h2>
+<div id="outline-container-orgfeccce9" class="outline-2">
+<h2 id="orgfeccce9"><span class="section-number-2">1</span> System Design Cheatsheet</h2>
 <div class="outline-text-2" id="text-1">
-</div><div id="outline-container-orgcfff90e" class="outline-3">
-<h3 id="orgcfff90e"><span class="section-number-3">1.1</span> Basic Steps</h3>
+</div><div id="outline-container-org43a639b" class="outline-3">
+<h3 id="org43a639b"><span class="section-number-3">1.1</span> Basic Steps</h3>
 <div class="outline-text-3" id="text-1-1">
-</div><div id="outline-container-orgcbd086e" class="outline-4">
-<h4 id="orgcbd086e"><span class="section-number-4">1.1.1</span> Scoping</h4>
+</div><div id="outline-container-org3d42c77" class="outline-4">
+<h4 id="org3d42c77"><span class="section-number-4">1.1.1</span> Scoping</h4>
 <div class="outline-text-4" id="text-1-1-1">
 <p>
 Clarify and agree on the scope of the system.
@@ -332,8 +338,8 @@ Clarify and agree on the scope of the system.
 </div>
 </div>
 
-<div id="outline-container-org5d576ff" class="outline-4">
-<h4 id="org5d576ff"><span class="section-number-4">1.1.2</span> Abstract Design</h4>
+<div id="outline-container-orgabafd2f" class="outline-4">
+<h4 id="orgabafd2f"><span class="section-number-4">1.1.2</span> Abstract Design</h4>
 <div class="outline-text-4" id="text-1-1-2">
 <p>
 Sktech high level architecture of important components and connections between them. For example:
@@ -349,8 +355,8 @@ Sktech high level architecture of important components and connections between t
 </div>
 </div>
 
-<div id="outline-container-orgcb35e34" class="outline-4">
-<h4 id="orgcb35e34"><span class="section-number-4">1.1.3</span> Component Design</h4>
+<div id="outline-container-orgce8146b" class="outline-4">
+<h4 id="orgce8146b"><span class="section-number-4">1.1.3</span> Component Design</h4>
 <div class="outline-text-4" id="text-1-1-3">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
 
@@ -387,8 +393,8 @@ Sktech high level architecture of important components and connections between t
 </div>
 </div>
 
-<div id="outline-container-orgb452ecb" class="outline-4">
-<h4 id="orgb452ecb"><span class="section-number-4">1.1.4</span> Bottlenecks</h4>
+<div id="outline-container-org8d482c0" class="outline-4">
+<h4 id="org8d482c0"><span class="section-number-4">1.1.4</span> Bottlenecks</h4>
 <div class="outline-text-4" id="text-1-1-4">
 <p>
 Identify and mitigate bottlenecks. E.g.
@@ -401,8 +407,8 @@ Identify and mitigate bottlenecks. E.g.
 </div>
 </div>
 
-<div id="outline-container-org6720d30" class="outline-4">
-<h4 id="org6720d30"><span class="section-number-4">1.1.5</span> Scaling</h4>
+<div id="outline-container-orge3ec285" class="outline-4">
+<h4 id="orge3ec285"><span class="section-number-4">1.1.5</span> Scaling</h4>
 <div class="outline-text-4" id="text-1-1-5">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
 
@@ -439,12 +445,65 @@ Identify and mitigate bottlenecks. E.g.
 </div>
 </div>
 
-<div id="outline-container-org0b91618" class="outline-3">
-<h3 id="org0b91618"><span class="section-number-3">1.2</span> Key Topics</h3>
+<div id="outline-container-org077c6df" class="outline-3">
+<h3 id="org077c6df"><span class="section-number-3">1.2</span> Key Topics</h3>
 <div class="outline-text-3" id="text-1-2">
-</div><div id="outline-container-org6dabc28" class="outline-4">
-<h4 id="org6dabc28"><span class="section-number-4">1.2.1</span> Caching</h4>
+</div><div id="outline-container-org9fc0146" class="outline-4">
+<h4 id="org9fc0146"><span class="section-number-4">1.2.1</span> Platform</h4>
 <div class="outline-text-4" id="text-1-2-1">
+<p>
+Separating the backend into application layer and platform layer. The platform layer provides low-level services, such as caching and APIs, to the application layer. Advantages:
+</p>
+
+<ul class="org-ul">
+<li>Application layer and platform layer can scale independently. Platform layer scales up when there is a new service, e.g. a new API endpoint.</li>
+<li>Platform layer can be reused to support multiple products, e.g. a web application and a mobile app.</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="../images/system_design/01.png" alt="01.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6521338" class="outline-4">
+<h4 id="org6521338"><span class="section-number-4">1.2.2</span> Load Balancing</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>Smart client</b></th>
+<th scope="col" class="org-left">Client-side load balancing, more difficult to use.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>Hardware load balancer</b></td>
+<td class="org-left">Reliable but expensive.</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>Software load balancer</b></td>
+<td class="org-left">Most used.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org665ae88" class="outline-4">
+<h4 id="org665ae88"><span class="section-number-4">1.2.3</span> Caching</h4>
+<div class="outline-text-4" id="text-1-2-3">
 <p>
 Caching generally refers to in-memory caches, such as Memcached and Redis.
 </p>
@@ -509,42 +568,9 @@ Caching strategies:
 </div>
 </div>
 
-<div id="outline-container-org3de9409" class="outline-4">
-<h4 id="org3de9409"><span class="section-number-4">1.2.2</span> Load Balancing</h4>
-<div class="outline-text-4" id="text-1-2-2">
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left"><b>Smart client</b></th>
-<th scope="col" class="org-left">Client-side load balancing, more difficult to use.</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left"><b>Hardware load balancer</b></td>
-<td class="org-left">Reliable but expensive.</td>
-</tr>
-</tbody>
-<tbody>
-<tr>
-<td class="org-left"><b>Software load balancer</b></td>
-<td class="org-left">Most used.</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-
-<div id="outline-container-org1f6d0cc" class="outline-4">
-<h4 id="org1f6d0cc"><span class="section-number-4">1.2.3</span> Database</h4>
-<div class="outline-text-4" id="text-1-2-3">
+<div id="outline-container-org2b339eb" class="outline-4">
+<h4 id="org2b339eb"><span class="section-number-4">1.2.4</span> Database</h4>
+<div class="outline-text-4" id="text-1-2-4">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
 
 
@@ -565,14 +591,284 @@ Caching strategies:
 <td class="org-left">Decomposing data tables vertically (column-wise) or horizontally (row-wise, also called sharding).</td>
 </tr>
 </tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>Map-reduce</b></td>
+<td class="org-left">Map-reduce layer makes it possible to perform intensive operations in a reasonable amount of time.</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">E.g.  calculating suggested users in a social graph, or generating analytics reports.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org46f4a0d" class="outline-4">
+<h4 id="org46f4a0d"><span class="section-number-4">1.2.5</span> Concurrency</h4>
+<div class="outline-text-4" id="text-1-2-5">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>Threads</b></th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>Deadlock</b></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>Starvation</b></td>
+<td class="org-left">When a process is perpetually denied necessary resources to process its work.</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>Coherence</b></td>
+<td class="org-left">When multiple processes access the same memory location, they should always get the most recently updated value.</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>Consistency</b></td>
+<td class="org-left">Constraints of a shared address space on the order in which memory operations must be performed.</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">When processes all follow this order to access memory locations, deadlock and incoherent data can be avoided.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgbb2e968" class="outline-4">
+<h4 id="orgbb2e968"><span class="section-number-4">1.2.6</span> Networking</h4>
+<div class="outline-text-4" id="text-1-2-6">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>Latency</b></th>
+<th scope="col" class="org-left">The time taken for a packet to be transferred across a network.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>Throughput</b></td>
+<td class="org-left">The quantity of data being sent and received within a unit of time.</td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="figure">
+<p><img src="../images/system_design/02.jpg" alt="02.jpg" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/system_design/03.png" alt="03.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4a97637" class="outline-4">
+<h4 id="org4a97637"><span class="section-number-4">1.2.7</span> Real-World Performance</h4>
+<div class="outline-text-4" id="text-1-2-7">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><b>Randome access</b></th>
+<th scope="col" class="org-left"><b>Read 1MB sequentially</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>Memory</b></td>
+<td class="org-left">0.0001ms</td>
+<td class="org-left">0.003ms</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>SSD</b></td>
+<td class="org-left">0.016ms</td>
+<td class="org-left">0.049ms</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>Disk</b></td>
+<td class="org-left">2ms</td>
+<td class="org-left">0.825ms</td>
+</tr>
+</tbody>
+</table>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Send 1MB over network</th>
+<th scope="col" class="org-left">0.022ms</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Packet in same data center</td>
+<td class="org-left">0.5ms</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Packet from CA to Netherlands</td>
+<td class="org-left">75ms</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+1s = 1,000ms (millisecond) = 1,000,000μs (microsecond) = 1,000,000,000ns (nanosecond)
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga0e6828" class="outline-4">
+<h4 id="orga0e6828"><span class="section-number-4">1.2.8</span> Availability &amp; Reliability</h4>
+<div class="outline-text-4" id="text-1-2-8">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><b>Single point of failure</b></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
 </table>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgda7a2fa" class="outline-3">
-<h3 id="orgda7a2fa"><span class="section-number-3">1.3</span> Links</h3>
+<div id="outline-container-orgb3facbb" class="outline-3">
+<h3 id="orgb3facbb"><span class="section-number-3">1.3</span> Web System Design Topics</h3>
 <div class="outline-text-3" id="text-1-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>Security</b></th>
+<th scope="col" class="org-left">CORS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>Search</b></td>
+<td class="org-left">Full-text search engines that use indexes for better performance, e.g. Sphinx, Lucene, Solr</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>Service workers</b></td>
+<td class="org-left">Scripts browser run in the background, for features that don't need a web page or user interaction.</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">E.g. push notifications, background sync.</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>Web workers</b></td>
+<td class="org-left">Scripts ran in background thread, to perform tasks without interfering with the UI.</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">They can perform I/O using <code>XMLHttpRequest</code> and sending messages to JS event handlers.</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>Server/Client side rendering</b></td>
+<td class="org-left">Server side rendering: full page reloads, more requests, slower rendering.</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">Client side rendering: partial reloads (Ajax), less requests, faster rendering.</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>CDN</b></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>Lazy loading</b></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgc788282" class="outline-3">
+<h3 id="orgc788282"><span class="section-number-3">1.4</span> Links</h3>
+<div class="outline-text-3" id="text-1-4">
 <ol class="org-ol">
 <li><a href="https://gist.github.com/vasanthk/485d1c25737e8e72759f">System Design Cheatsheet</a></li>
 </ol>
@@ -580,11 +876,11 @@ Caching strategies:
 </div>
 </div>
 
-<div id="outline-container-org2713517" class="outline-2">
-<h2 id="org2713517"><span class="section-number-2">2</span> Messenger Service</h2>
+<div id="outline-container-org008d6b7" class="outline-2">
+<h2 id="org008d6b7"><span class="section-number-2">2</span> Messenger Service</h2>
 <div class="outline-text-2" id="text-2">
-</div><div id="outline-container-orgc90a43b" class="outline-3">
-<h3 id="orgc90a43b"><span class="section-number-3">2.1</span> Features</h3>
+</div><div id="outline-container-org0289781" class="outline-3">
+<h3 id="org0289781"><span class="section-number-3">2.1</span> Features</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Talk about features needed, from basic to advanced, e.g.
@@ -636,8 +932,8 @@ Talk about features needed, from basic to advanced, e.g.
 </div>
 </div>
 
-<div id="outline-container-orge644559" class="outline-3">
-<h3 id="orge644559"><span class="section-number-3">2.2</span> High-level Architecture</h3>
+<div id="outline-container-org2305e27" class="outline-3">
+<h3 id="org2305e27"><span class="section-number-3">2.2</span> High-level Architecture</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 In the most basic scenario, there are 2 clients and 1 server.
@@ -657,8 +953,8 @@ When there are multiple servers, clients should be able to connect to different 
 </div>
 </div>
 
-<div id="outline-container-orgbaeeefc" class="outline-3">
-<h3 id="orgbaeeefc"><span class="section-number-3">2.3</span> Low-level Architecture</h3>
+<div id="outline-container-org8244820" class="outline-3">
+<h3 id="org8244820"><span class="section-number-3">2.3</span> Low-level Architecture</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 <b>Once the high-level architecture is clear, drill down to the design and functions of a single server node.</b>
@@ -674,8 +970,8 @@ Because each time a client sends a message, it may connect to different servers 
 </div>
 </div>
 
-<div id="outline-container-orgb254f07" class="outline-3">
-<h3 id="orgb254f07"><span class="section-number-3">2.4</span> States</h3>
+<div id="outline-container-orgea19dfc" class="outline-3">
+<h3 id="orgea19dfc"><span class="section-number-3">2.4</span> States</h3>
 <div class="outline-text-3" id="text-2-4">
 <ol class="org-ol">
 <li>Sender sends a message to a server.</li>
@@ -689,8 +985,8 @@ Because each time a client sends a message, it may connect to different servers 
 </div>
 </div>
 
-<div id="outline-container-org7d1d05d" class="outline-3">
-<h3 id="org7d1d05d"><span class="section-number-3">2.5</span> Push Notification</h3>
+<div id="outline-container-orga8e2916" class="outline-3">
+<h3 id="orga8e2916"><span class="section-number-3">2.5</span> Push Notification</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 Push notification is usually platform-dependent, and there are existing services that can be used directly, such as Google Cloud Messenging. Push notifications usually work in fire-and-forget manners.
@@ -702,8 +998,8 @@ There can be a layer of servers that are dedicated to push notification processi
 </div>
 </div>
 
-<div id="outline-container-orgd09964d" class="outline-3">
-<h3 id="orgd09964d"><span class="section-number-3">2.6</span> More Topics</h3>
+<div id="outline-container-org35f8358" class="outline-3">
+<h3 id="org35f8358"><span class="section-number-3">2.6</span> More Topics</h3>
 <div class="outline-text-3" id="text-2-6">
 <ul class="org-ul">
 <li>Other features: group chat, message history etc.</li>
@@ -715,8 +1011,8 @@ There can be a layer of servers that are dedicated to push notification processi
 </div>
 </div>
 
-<div id="outline-container-org04bd7bb" class="outline-3">
-<h3 id="org04bd7bb"><span class="section-number-3">2.7</span> Links</h3>
+<div id="outline-container-orgd051946" class="outline-3">
+<h3 id="orgd051946"><span class="section-number-3">2.7</span> Links</h3>
 <div class="outline-text-3" id="text-2-7">
 <ol class="org-ol">
 <li><a href="https://www.youtube.com/watch?v=5m0L0k8ZtEs">System Design: Messenger service like Whatsapp or WeChat</a></li>
@@ -727,7 +1023,7 @@ There can be a layer of servers that are dedicated to push notification processi
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Victor Chen</p>
-<p class="date">Created: 2020-02-08 Sat 12:25</p>
+<p class="date">Created: 2020-02-08 Sat 16:29</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

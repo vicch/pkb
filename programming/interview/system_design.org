@@ -52,6 +52,24 @@ Identify and mitigate bottlenecks. E.g.
 |              | Database partitioning, map-reduce |
 
 ** Key Topics
+*** Platform
+
+Separating the backend into application layer and platform layer. The platform layer provides low-level services, such as caching and APIs, to the application layer. Advantages:
+
+- Application layer and platform layer can scale independently. Platform layer scales up when there is a new service, e.g. a new API endpoint.
+- Platform layer can be reused to support multiple products, e.g. a web application and a mobile app.
+
+file:../images/system_design/01.png
+
+*** Load Balancing
+
+#+ATTR_HTML: :class no-border
+| *Smart client*           | Client-side load balancing, more difficult to use. |
+|--------------------------+----------------------------------------------------|
+| *Hardware load balancer* | Reliable but expensive.                            |
+|--------------------------+----------------------------------------------------|
+| *Software load balancer* | Most used.                                         |
+
 *** Caching
 
 Caching generally refers to in-memory caches, such as Memcached and Redis.
@@ -70,21 +88,83 @@ Caching strategies:
 |-------------------+--------------------------------------------------|
 | *Hot data*        | Store more frequently used data in faster cache. |
 
-*** Load Balancing
-
-#+ATTR_HTML: :class no-border
-| *Smart client*           | Client-side load balancing, more difficult to use. |
-|--------------------------+----------------------------------------------------|
-| *Hardware load balancer* | Reliable but expensive.                            |
-|--------------------------+----------------------------------------------------|
-| *Software load balancer* | Most used.                                         |
-
 *** Database
 
 #+ATTR_HTML: :class no-border
 | *Replication*  | Replicating changes between distributed databases to synchronize data.                             |
 |----------------+----------------------------------------------------------------------------------------------------|
 | *Partitioning* | Decomposing data tables vertically (column-wise) or horizontally (row-wise, also called sharding). |
+|----------------+----------------------------------------------------------------------------------------------------|
+| *Map-reduce*   | Map-reduce layer makes it possible to perform intensive operations in a reasonable amount of time. |
+|                | E.g.  calculating suggested users in a social graph, or generating analytics reports.              |
+
+*** Concurrency
+
+#+ATTR_HTML: :class no-border
+| *Threads*     |                                                                                                                  |
+|---------------+------------------------------------------------------------------------------------------------------------------|
+| *Deadlock*    |                                                                                                                  |
+|---------------+------------------------------------------------------------------------------------------------------------------|
+| *Starvation*  | When a process is perpetually denied necessary resources to process its work.                                    |
+|---------------+------------------------------------------------------------------------------------------------------------------|
+| *Coherence*   | When multiple processes access the same memory location, they should always get the most recently updated value. |
+|---------------+------------------------------------------------------------------------------------------------------------------|
+| *Consistency* | Constraints of a shared address space on the order in which memory operations must be performed.                 |
+|               | When processes all follow this order to access memory locations, deadlock and incoherent data can be avoided.    |
+
+*** Networking
+
+#+ATTR_HTML: :class no-border
+| *Latency*    | The time taken for a packet to be transferred across a network.     |
+|--------------+---------------------------------------------------------------------|
+| *Throughput* | The quantity of data being sent and received within a unit of time. |
+
+file:../images/system_design/02.jpg
+
+file:../images/system_design/03.png
+ 
+*** Real-World Performance
+
+|          | *Randome access* | *Read 1MB sequentially* |
+|----------+------------------+-------------------------|
+| *Memory* | 0.0001ms         | 0.003ms                 |
+|----------+------------------+-------------------------|
+| *SSD*    | 0.016ms          | 0.049ms                 |
+|----------+------------------+-------------------------|
+| *Disk*   | 2ms              | 0.825ms                 |
+
+| Send 1MB over network         | 0.022ms  |
+|-------------------------------+----------|
+| Packet in same data center    | 0.5ms    |
+|-------------------------------+----------|
+| Packet from CA to Netherlands | 75ms     |
+
+1s = 1,000ms (millisecond) = 1,000,000μs (microsecond) = 1,000,000,000ns (nanosecond)
+
+*** Availability & Reliability
+
+#+ATTR_HTML: :class no-border
+| *Single point of failure* |   |
+
+** Web System Design Topics
+
+#+ATTR_HTML: :class no-border
+| *Security*                     | CORS                                                                                                |
+|--------------------------------+-----------------------------------------------------------------------------------------------------|
+| *Search*                       | Full-text search engines that use indexes for better performance, e.g. Sphinx, Lucene, Solr         |
+|--------------------------------+-----------------------------------------------------------------------------------------------------|
+| *Service workers*              | Scripts browser run in the background, for features that don't need a web page or user interaction. |
+|                                | E.g. push notifications, background sync.                                                           |
+|--------------------------------+-----------------------------------------------------------------------------------------------------|
+| *Web workers*                  | Scripts ran in background thread, to perform tasks without interfering with the UI.                 |
+|                                | They can perform I/O using =XMLHttpRequest= and sending messages to JS event handlers.              |
+|--------------------------------+-----------------------------------------------------------------------------------------------------|
+| *Server/Client side rendering* | Server side rendering: full page reloads, more requests, slower rendering.                          |
+|                                | Client side rendering: partial reloads (Ajax), less requests, faster rendering.                     |
+|--------------------------------+-----------------------------------------------------------------------------------------------------|
+| *CDN*                          |                                                                                                     |
+|--------------------------------+-----------------------------------------------------------------------------------------------------|
+| *Lazy loading*                 |                                                                                                     |
 
 ** Links
 
