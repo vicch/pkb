@@ -2,9 +2,6 @@
 #+TITLE: Architecture Scrap
 
 * 软件架构入门
-
-[[http://www.ruanyifeng.com/blog/2016/09/software-architecture.html][Source]]
-
 ** 分层架构
 
 分层架构（layered architecture）是最常见（默认）的软件架构，也是事实上的标准架构。
@@ -140,16 +137,12 @@ file:../images/architecture_scrap/29.png
 |--------+----------------------------------------------------------|
 | *扩展* | （优）高扩展性。                                         |
 
-** 链接
+** Links
 
+1. [[http://www.ruanyifeng.com/blog/2016/09/software-architecture.html][软件架构入门]]
 1. [[http://www.oreilly.com/programming/free/software-architecture-patterns.csp][Software Architecture Patterns]]
 
 * 微服务的理论模型和现实路径
-
-[[http://blog.csdn.net/mindfloating/article/details/51221780][Source]]
-
-两年前接触到了微服务的概念，面对日益膨胀的系统感觉豁然开朗。之后的两年逐步把系统按微服务的架构理念进行了重构，并将业务迁移到了新架构之上。感觉现在差不多是时候写一篇关于微服务的总结文章了。
-
 ** 定义
 
 Martin Fowler & James Lewis 的文章 [[http://martinfowler.com/articles/microservices.html][Microservices]] 给出了微服务架构的一个定义：
@@ -343,12 +336,11 @@ file:../images/architecture_scrap/15.png
 按微服务拆分系统后，按照「服务即产品」的思路，人员角色将发生变化。普通工程师从仅仅开发功能转变为开发、运营服务，工作性质的转变将带来思路和关注点的变化。每个服务至少有一个工程师作为负责人，当然能力更强的人可能会负责更多的服务。大量拆分的微服务带来开发人员交集的减少，对于大规模的团队并行开发好处明显。而服务负责制对个人能力要求更高，自驱动和自学习能力更强的人会得到更多的成长机会，个人成长路线的发展也打开了空间。
 
 这时团队的构成会变得类似 NBA 球队的组成，工程师的角色类似球员，架构师或技术经理类似教练，而部门经理则是球队经理。球员只管打好球，教练负责球员训练、培养、战术安排和比赛全场把控，经理则掌握着人事权，控制着球员的薪水升迁，招聘到优秀的球员以及想办法带领球队去更受欢迎的比赛上打球。
+** Links
+
+1. [[http://blog.csdn.net/mindfloating/article/details/51221780][微服务的理论模型和现实路径]]
+
 * 京东咚咚架构演进
-
-[[http://blog.csdn.net/mindfloating/article/details/50166169][Source]]
-
-咚咚之于京东相当于旺旺之于淘宝，它们都是服务于买家和卖家的沟通。自从京东开始为第三方卖家提供入驻平台服务后，咚咚也就随之诞生了。 
-
 ** 1.0 诞生
 
 为了业务的快速上线，1.0 版本的技术架构实现是非常直接且简单粗暴的。
@@ -360,8 +352,6 @@ file:../images/architecture_scrap/16.jpg
 这个模型的做法导致需要 _以一种高频率的方式来轮询 Redis，遍历属于自己连接的关联会话消息_ 。这个模型很简单，「简单」包括多个层面的意思：理解起来简单；开发起来简单；部署起来也简单。只需要一个 Tomcat 应用依赖一个共享的 Redis，简单的实现核心业务功能，并支持业务快速上线。
 
 但这个简单的模型也有些严重的缺陷，主要是效率和扩展问题。 _轮询的频率间隔大小基本决定了消息的延时，轮询越快延时越低，但轮询越快消耗也越高。_ 这个模型实际上是一个高功耗低效能的模型，因为不活跃的连接在那做高频率的无意义轮询。高频有多高呢，基本在 100 ms 以内，不能让轮询太慢，比如超过 2 秒轮一次，人就会在聊天过程中感受到明显的会话延迟。随着在线人数增加，轮询的耗时也线性增长，因此这个模型导致了扩展能力和承载能力都不好，一定会随着在线人数的增长碰到性能瓶颈。
-
-1.0 的时代背景正是京东技术平台从 .NET 向 Java 转型的年代，我也正是在这期间加入京东并参与了京东主站技术转型架构升级的过程。之后开始接手了京东咚咚，并持续完善这个产品，进行了三次技术架构演进。
 
 ** 2.0 成长
 
@@ -438,9 +428,11 @@ _细粒度的微服务做到了进程间隔离，严格的开发规范和工具�
 
 file:../images/architecture_scrap/25.png
 
-* The Tumblr Architecture Yahoo Bought For A Cool Billion Dollars
+** Links
 
-[[http://highscalability.com/blog/2013/5/20/the-tumblr-architecture-yahoo-bought-for-a-cool-billion-doll.html][Source]]
+1. [[http://blog.csdn.net/mindfloating/article/details/50166169][京东咚咚架构演进]]
+
+* The Tumblr Architecture Yahoo Bought For A Cool Billion Dollars
 
 It's being reported Yahoo bought Tumblr for $1.1 billion. You may recall [[http://highscalability.com/blog/2012/4/9/the-instagram-architecture-facebook-bought-for-a-cool-billio.html][Instagram was profiled on HighScalability]] and they were also bought by Facebook for a ton of money. 
 
@@ -743,27 +735,21 @@ On the Tumblr Engineering Blog they've posted memorials giving their respects fo
 - Read papers and blog posts. Key design ideas like the cell architecture and +selective materialization+ were taken from elsewhere.
 - Ask your peers. They talked to engineers from Facebook, Twitter, LinkedIn about their experiences and learned from them. You may not have access to this level, but reach out to somebody somewhere.
 - Wade, don't jump into technologies. They took pains to learn HBase and Redis before putting them into production by using them in pilot projects or in roles where the damage would be limited.
+** Links
+
+1. [[http://highscalability.com/blog/2013/5/20/the-tumblr-architecture-yahoo-bought-for-a-cool-billion-doll.html][The Tumblr Architecture Yahoo Bought For A Cool Billion Dollars]]
+
 * Web service 是什么？
-
-[[http://www.ruanyifeng.com/blog/2009/08/what_is_web_service.html][Source]]
-
-下一代互联网软件将建立在 Web service（也就是「云」）的基础上。
-
 ** Web service 的概念
 
-想要理解 Web service，必须先理解什么是 service（服务）。
+传统上，我们把计算机后台程序（daemon）提供的功能，称为「服务」。比如，一个杀毒软件在后台运行，它会自动监控系统，这种自动监控就是一个「服务」。
 
-传统上，我们把计算机后台程序（daemon）提供的功能，称为「服务」（service）。比如，一个杀毒软件在后台运行，它会自动监控系统，这种自动监控就是一个「服务」。通俗地说，「服务」就是计算机可以提供的某种功能。
+根据来源的不同，「服务」又可以分成两种：
 
-根据来源的不同，「服务」又可以分成两种：「本地服务」（使用同一台机器提供的服务，不需要网络），和「网络服务」（使用另一台计算机提供的服务，必须通过网络才能完成）。
+- 本地服务：使用同一台机器提供的服务，不需要网络。
+- 网络服务：使用另一台计算机提供的服务，必须通过网络才能完成。
 
-举例来说，现在有一批图片，需要把它们的大小缩小一半。把「缩放图片」看成是一种服务。可以使用「本地服务」，在自己计算机上用软件缩小图片，也可以使用「网络服务」，将图片上传到某个网站，让服务器缩小图片，完成后再通过网络送回。
-
-_Web Service 的本质，就是通过网络调用其他网站的资源。_
-
-举例来说，去年我写过一个「四川大地震图片墙」，它能动态显示关于四川地震的最新图片。但是，所有的图片都不是储存在我的服务器上，而是来自 Flickr。我只是发出一个动态请求，要求 Flickr 提供图片。这种情况下，Flickr 提供的就是一种 Web service。
-
-Web service 让你的网站可以使用其他网站的资源，比如在网页上显示天气、地图、Twitter 上的最新动态等等。
+_Web Service 的本质，就是通过网络调用其他网站的资源，_ 比如天气、地图、Twitter 上的最新动态等等。
 
 ** Web service 架构和云
 
@@ -795,10 +781,11 @@ Web service 是未来软件开发和使用的趋势，本地服务将使用得�
 - 在使用方式上，RPC 和 SOAP 的使用在减少，Restful 架构占到了主导地位。
 - 在数据格式上，XML 格式的使用在减少，JSON 等轻量级格式的使用在增多。
 - 在设计架构上，越来越多的第三方软件让用户在客户端（即浏览器），直接与云端对话，不再使用第三方的服务器进行中转或处理数据。
+** Links
+
+1. [[http://www.ruanyifeng.com/blog/2009/08/what_is_web_service.html][Web service 是什么？]]
+
 * Scalability for Dummies
-
-[[http://www.lecloud.net/tagged/scalability][Source]]
-
 ** Part 1: Clones
 
 Public servers of a scalable web service are hidden behind a load balancer. This load balancer evenly distributes load (requests from users) onto a group/cluster of application servers.
@@ -807,31 +794,29 @@ User should always get the same results of his request back, independent what se
 
 _User data needs to be stored in a centralized data store which is accessible to all application servers._ It can be an external database or an external persistent cache, like Redis. An external persistent cache will have better performance than an external database. The data store does not reside on the application servers. Instead, it is somewhere in or near the data center of the application servers. 
 
-But what about deployment? How can you make sure that a code change is sent to all your servers without one server still serving old code? This tricky problem is fortunately already solved by the great tool _Capistrano_.
+But what about deployment? How can you _make sure that a code change is sent to all servers_ without one server still serving old code? This tricky problem is fortunately already solved by the great tool _Capistrano_.
 
-Create an image file from one of these servers. AWS calls this AMI - Amazon Machine Image. Use this AMI as a "super-clone" that all new instances are based upon. For a new instance, just do an initial deployment of latest code and it is ready.
+For example, on AWS you can create an image file (called AMI, Amazon Machine Image) from one of these servers, and this AMI as a "super-clone" that all new instances are based upon. For a new instance, just do an initial deployment of latest code and it is ready.
 
 ** Part 2: Database
 
 Servers can now horizontally scale and serve thousands of concurrent requests. But somewhere down the road the application gets slower and finally breaks down. The reason: database. You can choose from two paths:
 
-Path 1 is to stick with MySQL. Hire a DBA to do master-slave replication (read from slaves, write to master) and upgrade master server by adding more RAM. In some months, the DBA will come up with words like "sharding", "denormalization" and "SQL tuning". At that point every new action to keep the database running will be more expensive and time consuming than the previous one.
+Path 1 is to stick with MySQL. Hire a DBA to do _master-slave replication (read from slaves, write to master) and upgrade master server by adding more RAM_. In some months, the DBA will come up with words like "sharding", "denormalization" and "SQL tuning". At that point every new action to keep the database running will be more expensive and time consuming than the previous one.
 
-Path 2 is to _denormalize right from the beginning and include no more =join= in any database query._ You can stay with MySQL, and use it like a NoSQL database, or you can switch to a better and easier to scale NoSQL database like MongoDB or CouchDB. _Joins will now need to be done in application code._
+Path 2 is to _denormalize right from the beginning and include no more =join= in any database query._ You can stay with MySQL, and use it like a NoSQL database, or you can switch to _an easier to scale NoSQL database like MongoDB or CouchDB_. _Joins will now need to be done in application code._
 
 ** Part 3: Cache
 
-With a scalable database solution, you have no fear of storing terabytes. But users still have to suffer slow page requests when a lot of data is fetched from the database. The solution is the implementation of a cache.
-
-With "cache" I always mean _in-memory caches like Memcached or Redis. Never do file-based caching, it makes cloning and auto-scaling of your servers just a pain._
+With "cache" I always mean in-memory caches like Memcached or Redis. _Never do file-based caching, it makes cloning and auto-scaling of servers just a pain._
 
 A cache is a simple key-value store and it should reside as a buffering layer between application and data storage. Whenever the application has to read data it should at first try to retrieve the data from cache.
 
-There are two patterns of caching data:
-
 *** Pattern 1: Cached Database Queries
 
-Whenever you do a query to database, store the result dataset in cache. A hashed version of the query is the cache key. The next time you run the query, first check if it is already in the cache. This pattern has several issues. The main issue is the expiration. _It is hard to delete a cached result when you cache a complex query. When one piece of data changes, you need to delete all cached queries who may include that table cell._
+Whenever you do a query to database, store the result dataset in cache. A hashed version of the query is the cache key. The next time you run the query, first check if it is already in the cache.
+
+This pattern has several issues. The main issue is the expiration. _It is hard to delete a cached result when one piece of data changes, you need to delete all cached queries who may include that table cell._
 
 *** Pattern 2: Cached Objects
 
@@ -839,17 +824,17 @@ In general, see data as an object like in code (classes, instances, etc.). Let t
 
 It makes asynchronous processing possible. Imagine an army of _worker servers who assemble the objects. The application just consumes the latest cached objects_ and nearly never touches the databases anymore.
 
-In general, I am more a friend of Redis than Memcached, because I love the extra database-features of Redis like persistence and the built-in data structures like lists and sets. But if you just need to cache, take Memcached, because it scales like a charm.
+I love the extra database-features of Redis like persistence and the built-in data structures like lists and sets. But if you just need to cache, take Memcached, because it scales like a charm.
 
 ** Part 4: Asynchronism
 
-Imagine that you want to buy bread at a bakery. But there is no bread at the moment, instead you are asked to come back in 2 hours. To avoid such a "please wait" situation, asynchronism needs to be done. In general, there are two paradigms:
+Imagine that you want to buy bread at a bakery. But there is no bread at the moment, instead you are asked to come back in 2 hours. To avoid such a "please wait" situation, asynchronism needs to be done.
 
 *** Paradigm 1
 
 The first way of async processing is "bake the breads at night and sell them in the morning". Referring to a web app this means _doing the time-consuming work in advance_ and serving the finished work with a low request time.
 
-Very often this paradigm is used to turn dynamic content into static content. Pages of a website, maybe built with a massive framework or CMS, are pre-rendered and locally stored as static HTML files on every change. Often these computing tasks are done on a regular basis, maybe by a script which is called every hour by a cronjob. The website could upload these pre-rendered HTML pages to AWS S3 or Cloudfront or another CDN to become even more responsive.
+Very often this paradigm is used to _turn dynamic content into static content_. Pages of a website, maybe built with a massive framework or CMS, are pre-rendered and locally stored as static HTML files on every change. Often these computing tasks are done on a regular basis, maybe by a script which is called every hour by a cronjob. The website could upload these pre-rendered HTML pages to AWS S3 or Cloudfront or another CDN to become even more responsive.
 
 *** Paradigm 2
 
@@ -857,4 +842,224 @@ Back to the bakery. Sometimes customers has special requests like a birthday cak
 
 Refering to a web service, this would mean a user comes to the website and starts a very computing intensive task which would take several minutes to finish. _The frontend sends a job onto a job queue and immediately signals back to the user. The job queue is constantly checked by workers. If there is a new job then the worker does the job and sends a signal that the job was done._
 
-_RabbitMQ_ is one of many systems which help to implement async processing. You could also use ActiveMQ or a simple Redis list.
+** Links
+
+1. [[http://www.lecloud.net/tagged/scalability][Scalability for Dummies]]
+* Introduction to Architecting Systems for Scale
+
+file:../images/architecture_scrap/30.png
+
+** Load Balancing
+
+The ideal system _increases capacity linearly with adding hardware_. In such a system, if you have one machine and add another, your capacity would double. This is called _horizontal scalability_.
+
+On the failure side, an ideal system isn't disrupted by the loss of a server. This is called _redundancy_.
+
+Horizontal scalability and redundancy are usually achieved via load balancing.
+
+Load balancing is the process of spreading requests across multiple resources according to some metric:
+
+- random
+- round-robin
+- random with weighting for machine capacity
+
+and their current status:
+
+- available for requests
+- not responding
+- elevated error rate
+
+Load needs to be _balanced at every stage to achieve full scalability and redundancy_. A moderately large system may balance load at three layers:
+
+- user to web servers
+- web servers to internal platform layer
+- internal platform layer to database
+
+*** Smart Clients
+
+Developers lean towards smart clients not because they are simple or robust, but because they are developers, and so they are used to writing software to solve their problems, and smart clients are software.
+
+A smart client is a client which _takes a pool of service hosts and balances load across them_, detects downed hosts and avoids sending requests their way (they also have to detect recovered hosts, deal with adding new hosts, etc, making them fun to get working decently).
+
+*** Hardware Load Balancers
+
+The most expensive, but very high performance, solution is to buy a dedicated hardware load balancer.
+
+Even large companies with substantial budgets will often avoid using dedicated hardware for all their load-balancing needs; instead they use them _only as the first point of contact_ from user requests to their infrastructure, and use other mechanisms for load balancing for traffic within their network.
+
+*** Software Load Balancers
+
+HAProxy is a great example. It runs locally on each of box, and each service to load-balance has a locally bound port. For example:
+
+- platform machines accessible via =localhost:9000=
+- database read-pool at =localhost:9001=
+- database write-pool at =localhost:9002=
+
+HAProxy manages healthchecks, by removing and returning machines to those pools according to configuration, as well as balancing across all the machines in those pools as well.
+
+** Caching
+
+Cachine consists of:
+
+#+ATTR_HTML: :class no-border
+| Precalculating results                               | E.g. number of visits for the previous day             |
+|------------------------------------------------------+--------------------------------------------------------|
+| Pre-generating expensive indexes                     | E.g. suggested stories based on a user's click history |
+|------------------------------------------------------+--------------------------------------------------------|
+| Storing frequently accessed data in a faster backend | E.g. Memcache instead of PostgreSQL                    |
+
+Caching is important earlier in the development process than load-balancing, because starting with a consistent caching strategy will save time later on. It also ensures you don't optimize access patterns (e.g. ORM) which can't be replicated with your caching mechanism, or where performance becomes unimportant after the addition of caching.
+
+For example, many heavily optimized Cassandra applications are a challenge to cleanly add caching to when the database's caching strategy can't be applied to the access patterns, as the data model is generally inconsistent between the Cassandra and cache.
+
+*** Application Caching
+
+file:../images/architecture_scrap/31.png
+
+Application caching requires explicit integration in the application code itself:
+
+1. Check if a value is in the cache.
+2. If not, retrieve the value from the database.
+3. Write that value into the cache.
+
+*** Database Caching
+
+file:../images/architecture_scrap/32.png
+
+Database usually comes with some level of default configuration which will provide some degree of caching and performance. Those initial settings will be optimized for a generic use case. By tweaking them to the system's access patterns, you can generally squeeze a great deal of performance improvement, without any change to the code.
+
+*** In-Memory Caching
+
+Accesses to RAM are orders of magnitude faster than those to disk. Memcached and Redis are examples of in-memory caches (Redis can be configured to store some data to disk).
+
+On the other hand, there is generally far less RAM available than disk space, so you'll need a strategy for only keeping the hot subset of data in memory cache. The most straightforward strategy is LRU (Least Recently Used). LRU works by evicting less commonly used data in preference of more frequently used data, and is almost always an appropriate caching strategy.
+
+*** CDN
+
+CDNs take the burden of serving static media off of the application servers (which are typically optimzed for serving dynamic pages), and provide geographic distribution. Static assets will load more quickly and with less strain on servers (but a new strain of business expense).
+
+In a typical CDN setup:
+
+1. A request first asks CDN for a piece of static media.
+2. CDN will serve that content if it has it locally available (HTTP headers are used for configuring how CDN caches content)
+3. If it isn't available, CDN will query servers for the file.
+4. CDN then caches it locally and serves it to the client.
+
+If the site isn't yet large enough to merit its own CDN, you can ease a future transition by serving static media off a separate subdomain, e.g. =static.example.com=, using a lightweight HTTP server like Nginx, and cut over the DNS from servers to a CDN at a later date.
+
+*** Caching Invalidation
+
+Using caches require you to maintain consistency between caches and database (the source of truth). Solving this problem is known as cache invalidation.
+
+It is straightforward to deal with a single database:
+
+#+ATTR_HTML: :class no-border
+| *Write-through cache* | Each time a value changes, write the new value into the cache.                        |
+|-----------------------+---------------------------------------------------------------------------------------|
+| *Read-through cache*  | Delete current value from cache, and allow a read-through cache to populate it later. |
+
+Choosing between read and write through caches depends on the application's details, but generally I prefer write-through caches as they reduce likelihood of a stampede on the backend database.
+
+Cache invalidation becomes challenging for scenarios involving:
+
+- fuzzy queries, e.g to add application level caching in front of a full-text search engine like SOLR, or
+- modifications to unknown number of elements, e.g. deleting all objects created more than a week ago.
+
+Possible solutions:
+
+- Felying fully on database caching.
+- Adding aggressive expirations to the cached data.
+- Reworking application logic, e.g. instead of =DELETE FROM ... WHERE ...=, retrieve all the items which match the criteria, invalidate the corresponding cache rows and then delete the rows by their primary key explicitly.
+
+** Offline Processing
+
+As a system grows more complex, it is almost always necessary to perform processing which can't be performed inline with a client's request either because:
+
+- it creates unacceptable latency, e.g. to propagate a user's action across a social graph, or
+- it needs to occur periodically, e.g. to create daily rollups of analytics.
+
+*** Message Queues
+
+Dividing work between offline work handled by a consumer and inline work done by the web application depends entirely on the interface exposed to users. Generally you'll either:
+
+- perform almost no work in the consumer (merely scheduling a task) and inform user that the task will occur offline, usually with a polling mechanism to update the interface once the task is complete, or
+- perform some work inline to make it appear to the user that the task has completed, and tie up hanging ends afterwards, e.g. posting a message on Twitter likely follows this pattern, by updating the tweet in your timeline but updating your followers' timelines out of band.
+
+Message queues have another benefit: it is a separate machine pool. This allows you to increase resources only on the current bottleneck, rather than uniformly increasing resources across the bottleneck and non-bottleneck systems.
+
+*** Map-Reduce
+
+file:../images/architecture_scrap/33.png
+
+For a large scale application is dealing with a large quantity of data, at some point you're likely to add support for map-reduce, probably using Hadoop, Hive or HBase. A map-reduce layer makes it possible to perform intensive data processing in a reasonable amount of time, e.g. calculating suggested users in a social graph, or  generating analytics reports.
+
+** Platform Layer
+
+Separating the platform and web application allows scaling the pieces independently. If you add a new API, you can add platform servers without adding unnecessary capacity for web application tier.
+
+Specializing servers' role opens up an additional level of configuration optimization, which isn't available for general purpose machines:
+
+- Database machine usually have a high I/O load and will benefit from SSDs.
+- Application server probably isn't reading from disk at all during normal operation, but might benefit from faster and more CPUs.
+
+Adding a platform layer can be a way to reuse infrastructure for multiple products or interfaces (web application, API, mobile app etc.) without writing redundant boilerplate code for dealing with caches, databases, etc.
+
+Platform layer can make it easier to scale an organization. At their best, a platform exposes a crisp product-agnostic interface which masks implementation details. This allows multiple independent teams to develop utilizing the platform's capabilities, as well as another team implementing/optimizing the platform itself.
+
+** Links
+
+1. [[https://lethain.com/introduction-to-architecting-systems-for-scale/][Introduction to Architecting Systems for Scale]]
+* Scalable System Design
+** General Principles
+
+Scalability is not equivalent to raw performance. _Scalability is about reducing the adverse impact due to growth_ on performance, cost, maintainability and many other aspects. E.g. running all components in one box will have higher performance when the load is small. But it is not scalable because performance drops drastically when the load is increased beyond the machine's capacity.
+
+_Understand environmental workload conditions that the system is design for:_
+
+- Dimension of growth and growth rate. E.g. number of users, transaction volume, data volume.
+- Measurement and target. E.g. response time, throughput.
+
+_Don't guess the bottleneck, measure it._ Bottlenecks are slow code which are frequently executed. Don't optimize slow code if they are rarely executed. Write performance unit test to collect fine grain performance data at the component level. Setup a performance lab to conduct end-to-end performance improvement measurement easily.
+
+Plan for growth. Do regular capacity planning. _Collect usage statistics, predict the growth rate._
+
+Scale the system horizontally by adding more cheap machine, but not vertically by upgrading to a more powerful machine.
+
+Keep code modular and simple. The ability to swap out old code and replace with new code without worries of breaking other parts of the system allows to experiment different ways of optimization quickly. _Never sacrifice code modularity for any reason,_ including performance-related.
+
+Understand who is priority customers. Rank the importance of traffic so you know what to sacrifice in case you cannot handle all of them.
+
+** Common Techniques
+*** Server Farms
+
+To serve a large number of independent (potentially concurrent) requests, you can use a server farm which is basically a set of identically configured machine, frontend by a load balancer. _The application needs to be stateless_ so the request can be dispatched purely based on load conditions and not other factors.
+
+Incoming requests will be dispatched by the load balancer to different machines, hence the workload is spread and shared across the servers. This architecture allows horizontal growth, and is even more effective when combining with cloud computing, as adding more instances into the farm is just an API call.
+
+*** Data Partitioning
+
+Spread data into multiple databases, so data access load can be distributed.
+
+By nature, data is stateful, so there must be a deterministic mechanism to dispatch data requests to the servers that host the data.
+
+Data partitioning mechanism depends on data access pattern. _Data that need to be accessed together should be stored on the same server._
+
+*** Map-Reduce
+
+Map-reduce is a solution for batch parallel processing. The algorithm itself needs to be parallelizable, which means the steps of execution should be relatively independent of each other. Google MapReduce is a good framework for this model. There is also open source tools such as Hadoop in Java.
+
+*** Cache Engine
+
+Some executions may use the same set of input parameters repeatedly. Instead of redoing the same execution every time, we can remember the previous execution's result. This is a time vs. space tradeoff. It's typically implemented as a lookup cache.
+
+*** Approximate Calculation
+
+If real life, usually some degree of inaccuracy is tolerable. Instead of calculating an accurate answer, see if you can tradeoff some accuracy for speed.
+
+*** Early Processing
+
+Try to do more processing upstream (where data get generated) rather than downstream, because it reduces the amount of data being propagated.
+
+** Links
+
+1. [[http://horicky.blogspot.com/2008/02/scalable-system-design.html][Scalable System Design]]

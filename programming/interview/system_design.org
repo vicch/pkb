@@ -98,6 +98,38 @@ Caching strategies:
 | *Map-reduce*   | Map-reduce layer makes it possible to perform intensive operations in a reasonable amount of time. |
 |                | E.g.  calculating suggested users in a social graph, or generating analytics reports.              |
 
+** Web System Design Topics
+
+#+ATTR_HTML: :class no-border
+| *Security*        | CORS                                                                                                |
+|-------------------+-----------------------------------------------------------------------------------------------------|
+| *Search*          | Full-text search engines that use indexes for better performance, e.g. Sphinx, Lucene, Solr         |
+|-------------------+-----------------------------------------------------------------------------------------------------|
+| *Service workers* | Scripts browser run in the background, for features that don't need a web page or user interaction. |
+|                   | E.g. push notifications, background sync.                                                           |
+|-------------------+-----------------------------------------------------------------------------------------------------|
+| *Web workers*     | Scripts ran in background thread, to perform tasks without interfering with the UI.                 |
+|                   | They can perform I/O using =XMLHttpRequest= and sending messages to JS event handlers.              |
+|-------------------+-----------------------------------------------------------------------------------------------------|
+| *Rendering*       | Server side rendering: full page reloads, more requests, slower rendering.                          |
+|                   | Client side rendering: partial reloads (Ajax), less requests, faster rendering.                     |
+|-------------------+-----------------------------------------------------------------------------------------------------|
+| *CDN*             |                                                                                                     |
+|-------------------+-----------------------------------------------------------------------------------------------------|
+| *Lazy loading*    |                                                                                                     |
+
+** Links
+
+1. [[https://gist.github.com/vasanthk/485d1c25737e8e72759f][System Design Cheatsheet]]
+
+* How to Ace a System Design Interview
+** Focus on Thought Process
+
+What sets it apart from a coding or an algorithms interview, is that whatever solution you come up with during the interview is just a side effect. What we actually care about is the +thought process behind the design choices+.
+
+As engineers we have a tremendous amount of freedom. We aren’t asked to implement fully-specced features. Instead we +take ownership of open-ended problems+, and it’s our job to come up with the best solution to each. We need people we can trust to +do the right thing without a lot of supervision+ — people who can own large projects and take them consistently in the right direction. Invariably, this means being able to communicate effectively with the people around you.
+
+** Topics
 *** Concurrency
 
 #+ATTR_HTML: :class no-border
@@ -122,7 +154,7 @@ Caching strategies:
 file:../images/system_design/02.jpg
 
 file:../images/system_design/03.png
- 
+
 *** Real-World Performance
 
 |          | *Randome access* | *Read 1MB sequentially* |
@@ -146,29 +178,9 @@ file:../images/system_design/03.png
 #+ATTR_HTML: :class no-border
 | *Single point of failure* |   |
 
-** Web System Design Topics
-
-#+ATTR_HTML: :class no-border
-| *Security*                     | CORS                                                                                                |
-|--------------------------------+-----------------------------------------------------------------------------------------------------|
-| *Search*                       | Full-text search engines that use indexes for better performance, e.g. Sphinx, Lucene, Solr         |
-|--------------------------------+-----------------------------------------------------------------------------------------------------|
-| *Service workers*              | Scripts browser run in the background, for features that don't need a web page or user interaction. |
-|                                | E.g. push notifications, background sync.                                                           |
-|--------------------------------+-----------------------------------------------------------------------------------------------------|
-| *Web workers*                  | Scripts ran in background thread, to perform tasks without interfering with the UI.                 |
-|                                | They can perform I/O using =XMLHttpRequest= and sending messages to JS event handlers.              |
-|--------------------------------+-----------------------------------------------------------------------------------------------------|
-| *Server/Client side rendering* | Server side rendering: full page reloads, more requests, slower rendering.                          |
-|                                | Client side rendering: partial reloads (Ajax), less requests, faster rendering.                     |
-|--------------------------------+-----------------------------------------------------------------------------------------------------|
-| *CDN*                          |                                                                                                     |
-|--------------------------------+-----------------------------------------------------------------------------------------------------|
-| *Lazy loading*                 |                                                                                                     |
-
 ** Links
 
-1. [[https://gist.github.com/vasanthk/485d1c25737e8e72759f][System Design Cheatsheet]]
+1. [[http://www.palantir.com/2011/10/how-to-rock-a-systems-design-interview/][How to Ace a System Design Interview]]
 
 * Messenger Service
 ** Features
@@ -186,7 +198,7 @@ Talk about features needed, from basic to advanced, e.g.
 |-----------------+------------------------------|
 | *History*       | How long is the history kept |
 
-*Architecture can be derived from features.*
++Architecture can be derived from features.+
 
 ** High-level Architecture
 
@@ -200,7 +212,7 @@ When there are multiple servers, clients should be able to connect to different 
 
 ** Low-level Architecture
 
-*Once the high-level architecture is clear, drill down to the design and functions of a single server node.*
++Once the high-level architecture is clear, drill down to the design and functions of a single server node.+
 
 Messages sent to the servers should be stored in queues. When the receiver comes online, the messages are retrieved from the queue, can then can be deleted.
 
