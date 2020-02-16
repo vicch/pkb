@@ -1040,9 +1040,7 @@ Incoming requests will be dispatched by the load balancer to different machines,
 
 Spread data into multiple databases, so data access load can be distributed.
 
-By nature, data is stateful, so there must be a deterministic mechanism to dispatch data requests to the servers that host the data.
-
-Data partitioning mechanism depends on data access pattern. _Data that need to be accessed together should be stored on the same server._
+By nature, data is stateful, so there must be a deterministic mechanism to dispatch data requests to the servers that host the data. Data partitioning mechanism depends on data access pattern. _Data that need to be accessed together should be stored on the same server._
 
 *** Map-Reduce
 
@@ -1060,6 +1058,125 @@ If real life, usually some degree of inaccuracy is tolerable. Instead of calcula
 
 Try to do more processing upstream (where data get generated) rather than downstream, because it reduces the amount of data being propagated.
 
+*** Asynchronous Processing
+
+Sometimes a process doesn't need the result of a certain call until a later stage, so it doesn't need to wait (and be blocked meanwhile) for the call to return. It can proceed until it reaches the point where the result is needed.
+
+$$ \text{number of idle threads} = \text{request arrival rate} \times \text{processing time per thread} $$
+
+A waiting thread is idle but consumes system resource. For high transaction volume with a high arrival rate, the number of idle threads can be huge, and the system is running in an ineffective mode. The service call in this example is better handled using an asynchronous processing model. This is typically done in 2 ways: _callback and polling_.
+
+In callback mode, the caller provides a response handler when making the call. The call itself returns immediately. When the work is done, response comes back as a separate thread which executes the registered response handler.
+
+In polling mode, the call itself returns a =future= handle immediately. The caller can go off doing other things and later polls the =future= handle to see if the response if ready. In this model, there is no extra thread being created.
+
+** Implementation Considerations
+*** Efficiency
+
+Use efficient algorithms and data structure. Analyze the time (CPU) and space (memory) complexity for frequently executed logics, i.e. hot spots. For example, decide if hash table or binary tree should be use for lookup.
+
+*** Concurrency
+
+Analyze the concurrent access and sync scenarios when multiple threads access shared data, to make sure the locking is fine-grain enough. Watch out for potential deadlock situations and prevent them. Consider using lock-free data structure, e.g. Java's concurrent package.
+
+*** Memory Usage
+
+Analyze the memory usage patterns. Determine where new objects are created and where they are eligible for garbage collection. Be aware of the creation of short-lived temporary objects as they will put a high load on the garbage collector.
+
 ** Links
 
 1. [[http://horicky.blogspot.com/2008/02/scalable-system-design.html][Scalable System Design]]
+* Web Site Scalability
+
+A classic large scale web site typically has multiple data centers in geographically distributed locations. Each data center typically has the following tiers in its architecture:
+
+#+ATTR_HTML: :class no-border
+| *Web tier*         | Serves static contents, e.g. static pages, photos, videos.                 |
+|--------------------+----------------------------------------------------------------------------|
+| *Application tier* | Serves dynamic contents, e.g. dynamic pages.                               |
+|                    | Executes application logic, e.g. order processing, transaction processing. |
+|--------------------+----------------------------------------------------------------------------|
+| *Data tier*        | Stores persistent states, e.g. databases, file systems.                    |
+
+** Content Delivery
+*** Static Content
+
+Content Delivery Network is an effective solution for delivering static contents. It reduces the overall hits to the web site, as well as improves response time, because the cache is in closer proximity to the user.
+
+*** Dynamic Content
+
+Some application logic is executed on the web server to generate an HTML for the client browser. Sometimes it is possible to pre-generate dynamic content, and store it as static content. When the requests come in, instead of running the application logic to generate the page, we just need to lookup and serve the pre-generated page.
+
+** Request Dispatching
+
+DNS server returns an ordered list of server IPs to the browser, based on client's IP address and proximity measurement. Therefore client requests are routed to the closest data center. Client browser will cache this server IP.
+
+** Load Balancing
+
+Load balancer decides which machine in the pool should handle the request based on various strategies.
+
+** Session State Handling
+
+When storing the state in web server's local memory, we need to make sure the subsequent requests land on the same server. Load balancer affinity needs to be turned on, for example:
+
+- route requests with the same cookie value to the same app server, or
+- store in cookie the IP address of the last server which processed the client request, the server which receives the next request from this client will read this IP address and pull the session state from there.
+
+Another way is to have all the servers share a global session state, e.g. store the session state into a database which can be accessed by all servers.
+
+If session state is small, you can embed all information inside cookie, but cookie needs to be digitally signed so they can't be modified.
+
+** Links
+
+1. [[http://horicky.blogspot.com/2008/03/web-site-scalability.html][Web Site Scalability]]
+* Design Web Site to be Highly Scalable
+** Use Narrow Tables
+
+If you use wide tables (each field or property is a column), when it comes to upgrade the database schema, for example, adding a new column, the system will need to lock the table while the schema change is implemented. When operating at scale this would mean a large database outage.
+
+A narrow table stores each property of an object as a single row. Therefore when you want to add a new column to the database, all you need to do is =INSERT= records, which is a non-locking operation.
+
+For example, to load the last 10 journal entries of blog, and each journal entry has 10 properties:
+
+In a classic wide table layout, each property correlates to a column in a table. A user queries the table once to fetch all the data, e.g. =SELECT * FROM entries ORDER BY date LIMIT 10=.
+
+In a narrow table layout, there are actually 2 tables:
+
+- Table =A= stores simple criteria for search purposes, e.g. entry ID, author ID, entry date etc.
+- Table =B= stores the other properties associated with an entry. Table =B= has 3 columns: =entry_id=, =key= and =value=. For every row in table =A=, there are 10 rows in table =B= (one row per property).
+
+To fetch the last 10 entries, you need 11 queries: the first query returns the list of entry IDs, and the next 10 queries fetch the properties associated with each of the entries.
+
+How on earth can that be more scalable? The answer to that question relies entirely upon the next bullet.
+
+** Use Memcache
+
+Memcache is a distributed, stateless, low latency, network based caching system. It was invented partially to help offset the database overhead inherent in a narrow table database design.
+
+The first time a user visits a page and nothing is in the cache:
+
+1. Query table =A=, which returns the IDs of the last 10 entries.
+2. For each entry, query table =B= to retrieve the associated properties.
+3. Constitute an object using the properties.
+4. Stash that object (or a serialized form) in memcache.
+
+The second time a user visits the same page:
+
+1. Query table =A=, which returns the IDs of the last 10 entries.
+2. For each entry, first go to Memcache and check if the entry exists.
+3. If yes, read the entry object from Memcache, and return.
+4. If not, query table =B= to retrieve the associated properties. Then the same process as first visit.
+
+So most of the time, there is only one database query, all other data is pulled directly from Memcache. In practice, most of the system's data, especially the less volatile data, is cached in Memcache.
+
+** Database Partitioning
+
+The narrow tables will grow to be very large. To offset this, manage the size by partitioning the tables in someway, so that different clusters of users are served by separate databases. This distributes loads on the databases and keeps the queries efficient.
+
+** Indexing
+
+The speed of the queries depends largely upon how well indexed the tables are. For MySQL, turn on the slow query log to monitor for queries that take a long time to fulfill. Then figure out what index is needed.
+
+** Links
+
+1. [[https://softwareengineering.stackexchange.com/questions/108671/what-is-the-best-way-to-design-a-web-site-to-be-highly-scalable/108679#108679][What is the best way to design a web site to be highly scalable?]]

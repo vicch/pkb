@@ -1,7 +1,7 @@
 #+SETUPFILE: ../../styles/readtheorg.setup
 #+TITLE: Org-mode
 
-* 按键缩写
+* Keys
 
 | =C-=  | =Ctrl=   |
 |-------+----------|
@@ -11,7 +11,7 @@
 |-------+----------|
 | =RET= | =Return= |
 
-* 快捷键
+* Shortcuts
 ** 控制
 
 | =C-x= =u=       | 撤销     |
@@ -84,7 +84,7 @@
 
 | =C-s= | 开始搜索，到下一处 |
 
-* 特殊格式
+* Formatting
 
 | HTML     | =@@html:= ... =@@=     |
 |----------+------------------------|
@@ -102,6 +102,8 @@
 
 | 表格中转义 @@html:<code>&#124;</code>@@ | =@@html:<code>&#124;</code>@@= |
 |-----------------------------------------+--------------------------------|
+| 表格列左对齐                            | =<l>=                          |
+|-----------------------------------------+--------------------------------|
 | 段落内换行                              | =\\=                           |
 
 | 图片、表格标题 | =#+CAPTION: <text>=                |
@@ -109,9 +111,10 @@
 | HTML 属性      | =#+ATTR_HTML: :<attr> <value> ...= |
 |                | e.g. =#+ATTR_HTML: :class special= |
 
-* 代码块
+* Code Blocks
 
-#+CAPTION: 不输出代码块（直接嵌入生成的文件，不用每次输出时重新生成）
+不输出代码块（直接嵌入生成的文件，不用每次输出时重新生成）：
+
 #+BEGIN_SRC code
 \#+BEGIN_SRC ... :exports none
 #+END_SRC
@@ -145,11 +148,15 @@ tex2jax: {
 * PlantUML
 ** 安装
 
-1 - 安装 Graphviz 和 PlantUML
+安装 Graphviz 和 PlantUML：
 
-2 - 将 plantuml.jar 放置到 =emacs/etc/=
+#+BEGIN_SRC sh
+brew install graphviz
+brew install plantuml
+#+END_SRC
 
-#+CAPTION: 3 - 修改 =config/.emacs=
+将 =plantuml.jar= 放置到 =emacs/etc/= 。修改 =config/.emacs= ：
+
 #+BEGIN_SRC lisp
 ;; PlantUML, active Org-babel languages
 (org-babel-do-load-languages
@@ -160,60 +167,40 @@ tex2jax: {
   (expand-file-name "../etc/plantuml.jar"))
 #+END_SRC
 
-** 使用
+** 示例
 
 #+BEGIN_SRC code
-\#+BEGIN_SRC plantuml :file ../images/.svg
-!include ../styles/plantuml-style
+\#+BEGIN_SRC plantuml :file ../images/01.svg
+@startuml
+!include ../../styles/plantuml-style
 ...
+@enduml
 \#+END_SRC
 #+END_SRC
 
-#+CAPTION: 示例
-#+BEGIN_SRC code
-\#+BEGIN_SRC plantuml :file ../images/工作日志_0505_01.svg
-!include ../styles/plantuml-style
+In newer versions, the start and end tags can be omitted:
 
-start
-:读 Redis 经验值
-换算为旧等级;
-:读 MCQ 经验值
-换算为新等级;
-if (新等级 > 旧等级) then (Y)
-  :写新等级到平台;
-else (N)
-endif
-stop
+#+BEGIN_SRC code
+\#+BEGIN_SRC plantuml :file ../images/01.svg
+!include ../../styles/plantuml-style
+...
 \#+END_SRC
 #+END_SRC
 
 ** =skinparam=
 
-[[http://plantuml.com/skinparam.html][skinparam]]
-
-#+CAPTION: 示例
-#+BEGIN_SRC sh
-@startuml
-skinparam monochrome true
-skinparam shadowing false
-...
-@enduml
-#+END_SRC
-
 | =monochrome= | Boolean | 单色主题 |
 |--------------+---------+----------|
 | =shadowing=  | Boolean | 显示阴影 |
-|--------------+---------+----------|
-|              |         |          |
 
-** 资源
+** Links
 
-[[http://sdntutorials.com/steps-to-install-plantuml-on-windows-7/][Steps To Install PlantUML On Windows 7]] \\
-[[http://plantuml.com/][PlantUML in a nutshell]] \\
+1. [[http://sdntutorials.com/steps-to-install-plantuml-on-windows-7/][Steps To Install PlantUML On Windows 7]]
+1. [[http://plantuml.com/][PlantUML in a nutshell]]
+1. [[https://plantuml.com/skinparam][PlantUML | =skinparam=]]
 
 * Ditaa
 
-#+CAPTION: 使用
 #+BEGIN_SRC code
 \#+BEGIN_SRC ditaa :file <path> :cmdline <options>
 ...
@@ -348,7 +335,8 @@ skinparam shadowing false
 #+END_SRC
 * 修改
 
-#+CAPTION: =<blockquote>= 输出标题：
+=<blockquote>= 输出标题：
+
 #+BEGIN_SRC lisp
 ; \site-lisp\org\lisp\ox-html.el line 2979
 (defun org-html-quote-block (quote-block contents info)
@@ -373,7 +361,7 @@ brew cask install emacs
 ln -s ~/Dropbox/portable/orgmode/config/.emacs ~/.emacs
 #+END_SRC
 
-* 链接
+* Links
 
 1. [[http://home.fnal.gov/~neilsen/notebook/orgExamples/org-examples.html][Emacs org-mode examples and cookbook]]
 1. [[http://orgmode.org/worg/org-tutorials/index.html][Org tutorials]]

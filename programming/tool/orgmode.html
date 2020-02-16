@@ -6,22 +6,30 @@ title: "Org-mode"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
+<!-- 2020-02-15 Sat 21:26 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Org-mode</title>
-<!-- 2017-04-03 Mon 13:43 -->
-<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta  name="generator" content="Org-mode" />
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
   .todo   { font-family: monospace; color: red; }
-  .done   { color: green; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
             padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
-  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
   .underline { text-decoration: underline; }
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
@@ -48,27 +56,110 @@ title: "Org-mode"
     border: 1px solid black;
   }
   pre.src:hover:before { display: inline;}
-  pre.src-sh:before    { content: 'sh'; }
-  pre.src-bash:before  { content: 'sh'; }
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
   pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-R:before     { content: 'R'; }
-  pre.src-perl:before  { content: 'Perl'; }
-  pre.src-java:before  { content: 'Java'; }
-  pre.src-sql:before   { content: 'SQL'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
 
   table { border-collapse:collapse; }
   caption.t-above { caption-side: top; }
   caption.t-bottom { caption-side: bottom; }
   td, th { vertical-align:top;  }
-  th.right  { text-align: center;  }
-  th.left   { text-align: center;   }
-  th.center { text-align: center; }
-  td.right  { text-align: right;  }
-  td.left   { text-align: left;   }
-  td.center { text-align: center; }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
   dt { font-weight: bold; }
-  .footpara:nth-child(2) { display: inline; }
-  .footpara { display: block; }
+  .footpara { display: inline; }
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
@@ -88,6 +179,7 @@ title: "Org-mode"
     { font-size: 10px; font-weight: bold; white-space: nowrap; }
   .org-info-js_search-highlight
     { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -97,13 +189,13 @@ title: "Org-mode"
 <script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
 <script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2013 Free Software Foundation, Inc.
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -152,119 +244,125 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. 按键缩写</a></li>
-<li><a href="#sec-2">2. 快捷键</a>
+<li><a href="#orgfa61d99">1 Keys</a></li>
+<li><a href="#orgab9339e">2 Shortcuts</a>
 <ul>
-<li><a href="#sec-2-1">2.1. 控制</a></li>
-<li><a href="#sec-2-2">2.2. 大纲</a></li>
-<li><a href="#sec-2-3">2.3. 表格</a></li>
-<li><a href="#sec-2-4">2.4. 文本</a></li>
-<li><a href="#sec-2-5">2.5. 搜索</a></li>
+<li><a href="#org6fc07e9">2.1 控制</a></li>
+<li><a href="#orge2f9419">2.2 大纲</a></li>
+<li><a href="#org5cacf49">2.3 表格</a></li>
+<li><a href="#orgf06cf14">2.4 文本</a></li>
+<li><a href="#orgb8b61e8">2.5 搜索</a></li>
 </ul>
 </li>
-<li><a href="#sec-3">3. 特殊格式</a></li>
-<li><a href="#sec-4">4. 代码块</a></li>
-<li><a href="#sec-5">5. MathJax</a>
+<li><a href="#org99bfdf7">3 Formatting</a></li>
+<li><a href="#orgcc5d195">4 Code Blocks</a></li>
+<li><a href="#org6433f98">5 MathJax</a>
 <ul>
-<li><a href="#sec-5-1">5.1. Debug</a></li>
+<li><a href="#org0577c96">5.1 Debug</a></li>
 </ul>
 </li>
-<li><a href="#sec-6">6. PlantUML</a>
+<li><a href="#org0b2f0db">6 PlantUML</a>
 <ul>
-<li><a href="#sec-6-1">6.1. 安装</a></li>
-<li><a href="#sec-6-2">6.2. 使用</a></li>
-<li><a href="#sec-6-3">6.3. <code>skinparam</code></a></li>
-<li><a href="#sec-6-4">6.4. 资源</a></li>
+<li><a href="#org8cce242">6.1 安装</a></li>
+<li><a href="#orgcc1274e">6.2 示例</a></li>
+<li><a href="#orgdc188a4">6.3 <code>skinparam</code></a></li>
+<li><a href="#org5342c86">6.4 Links</a></li>
 </ul>
 </li>
-<li><a href="#sec-7">7. Ditaa</a></li>
-<li><a href="#sec-8">8. Latex</a>
+<li><a href="#orgebad33c">7 Ditaa</a></li>
+<li><a href="#org07e5d3d">8 Latex</a>
 <ul>
-<li><a href="#sec-8-1">8.1. 安装</a></li>
-<li><a href="#sec-8-2">8.2. 配置</a></li>
-<li><a href="#sec-8-3">8.3. 使用</a></li>
+<li><a href="#orgd770c1c">8.1 安装</a></li>
+<li><a href="#orgf139cd2">8.2 配置</a></li>
+<li><a href="#orgb77aa80">8.3 使用</a></li>
 </ul>
 </li>
-<li><a href="#sec-9">9. 修改</a></li>
-<li><a href="#sec-10">10. 链接</a></li>
+<li><a href="#orgd0155c9">9 修改</a></li>
+<li><a href="#orgb676f71">10 安装</a>
+<ul>
+<li><a href="#orgac39d25">10.1 MacOS</a></li>
+</ul>
+</li>
+<li><a href="#orgad70cf1">11 Links</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> 按键缩写</h2>
+<div id="outline-container-orgfa61d99" class="outline-2">
+<h2 id="orgfa61d99"><span class="section-number-2">1</span> Keys</h2>
 <div class="outline-text-2" id="text-1">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="left"><code>C-</code></th>
-<th scope="col" class="left"><code>Ctrl</code></th>
+<th scope="col" class="org-left"><code>C-</code></th>
+<th scope="col" class="org-left"><code>Ctrl</code></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="left"><code>M-</code></td>
-<td class="left"><code>Alt</code></td>
+<td class="org-left"><code>M-</code></td>
+<td class="org-left"><code>Alt</code></td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="left"><code>S-</code></td>
-<td class="left"><code>Shift</code></td>
+<td class="org-left"><code>S-</code></td>
+<td class="org-left"><code>Shift</code></td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="left"><code>RET</code></td>
-<td class="left"><code>Return</code></td>
+<td class="org-left"><code>RET</code></td>
+<td class="org-left"><code>Return</code></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> 快捷键</h2>
+
+<div id="outline-container-orgab9339e" class="outline-2">
+<h2 id="orgab9339e"><span class="section-number-2">2</span> Shortcuts</h2>
 <div class="outline-text-2" id="text-2">
-</div><div id="outline-container-sec-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> 控制</h3>
+</div><div id="outline-container-org6fc07e9" class="outline-3">
+<h3 id="org6fc07e9"><span class="section-number-3">2.1</span> 控制</h3>
 <div class="outline-text-3" id="text-2-1">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="left"><code>C-x</code> <code>u</code></th>
-<th scope="col" class="left">撤销</th>
+<th scope="col" class="org-left"><code>C-x</code> <code>u</code></th>
+<th scope="col" class="org-left">撤销</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="left"><code>C-x</code> <code>C-s</code></td>
-<td class="left">保存</td>
+<td class="org-left"><code>C-x</code> <code>C-s</code></td>
+<td class="org-left">保存</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="left"><code>C-c</code> <code>C-e</code></td>
-<td class="left">导出</td>
+<td class="org-left"><code>C-c</code> <code>C-e</code></td>
+<td class="org-left">导出</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="left"><code>C-x</code> <code>RET</code> <code>f</code></td>
-<td class="left">设置编码</td>
+<td class="org-left"><code>C-x</code> <code>RET</code> <code>f</code></td>
+<td class="org-left">设置编码</td>
 </tr>
 </tbody>
 </table>
@@ -273,174 +371,176 @@ for the JavaScript code in this tag.
 
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="left"><code>M-w</code></th>
-<th scope="col" class="left">复制</th>
+<th scope="col" class="org-left"><code>M-w</code></th>
+<th scope="col" class="org-left">复制</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="left"><code>C-y</code></td>
-<td class="left">粘贴</td>
+<td class="org-left"><code>C-y</code></td>
+<td class="org-left">粘贴</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="left"><code>C-w</code></td>
-<td class="left">剪切</td>
+<td class="org-left"><code>C-w</code></td>
+<td class="org-left">剪切</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div id="outline-container-sec-2-2" class="outline-3">
-<h3 id="sec-2-2"><span class="section-number-3">2.2</span> 大纲</h3>
+
+<div id="outline-container-orge2f9419" class="outline-3">
+<h3 id="orge2f9419"><span class="section-number-3">2.2</span> 大纲</h3>
 <div class="outline-text-3" id="text-2-2">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="left"><code>Tab</code></th>
-<th scope="col" class="left">循环切换当前大纲状态</th>
+<th scope="col" class="org-left"><code>Tab</code></th>
+<th scope="col" class="org-left">循环切换当前大纲状态</th>
 </tr>
 
 <tr>
-<th scope="col" class="left"><code>S-Tab</code></th>
-<th scope="col" class="left">循环切换所有大纲状态</th>
+<th scope="col" class="org-left"><code>S-Tab</code></th>
+<th scope="col" class="org-left">循环切换所有大纲状态</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="left"><code>C-c</code> <code>C-n</code></td>
-<td class="left">上一标题</td>
+<td class="org-left"><code>C-c</code> <code>C-n</code></td>
+<td class="org-left">上一标题</td>
 </tr>
 
 <tr>
-<td class="left"><code>C-c</code> <code>C-p</code></td>
-<td class="left">下一标题</td>
+<td class="org-left"><code>C-c</code> <code>C-p</code></td>
+<td class="org-left">下一标题</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="left"><code>C-c</code> <code>C-f</code></td>
-<td class="left">上一标题（同级）</td>
+<td class="org-left"><code>C-c</code> <code>C-f</code></td>
+<td class="org-left">上一标题（同级）</td>
 </tr>
 
 <tr>
-<td class="left"><code>C-c</code> <code>C-b</code></td>
-<td class="left">下一标题（同级）</td>
+<td class="org-left"><code>C-c</code> <code>C-b</code></td>
+<td class="org-left">下一标题（同级）</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="left"><code>C-c</code> <code>C-u</code></td>
-<td class="left">上一级标题</td>
+<td class="org-left"><code>C-c</code> <code>C-u</code></td>
+<td class="org-left">上一级标题</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="left"><code>C-c</code> <code>C-j</code></td>
-<td class="left">大纲浏览状态</td>
+<td class="org-left"><code>C-c</code> <code>C-j</code></td>
+<td class="org-left">大纲浏览状态</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div id="outline-container-sec-2-3" class="outline-3">
-<h3 id="sec-2-3"><span class="section-number-3">2.3</span> 表格</h3>
+
+<div id="outline-container-org5cacf49" class="outline-3">
+<h3 id="org5cacf49"><span class="section-number-3">2.3</span> 表格</h3>
 <div class="outline-text-3" id="text-2-3">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="left"><code>M-S-Up</code></th>
-<th scope="col" class="left">删除行</th>
+<th scope="col" class="org-left"><code>M-S-Up</code></th>
+<th scope="col" class="org-left">删除行</th>
 </tr>
 
 <tr>
-<th scope="col" class="left"><code>M-S-Down</code></th>
-<th scope="col" class="left">添加行</th>
+<th scope="col" class="org-left"><code>M-S-Down</code></th>
+<th scope="col" class="org-left">添加行</th>
 </tr>
 
 <tr>
-<th scope="col" class="left"><code>M-S-Left</code></th>
-<th scope="col" class="left">删除列</th>
+<th scope="col" class="org-left"><code>M-S-Left</code></th>
+<th scope="col" class="org-left">删除列</th>
 </tr>
 
 <tr>
-<th scope="col" class="left"><code>M-S-Right</code></th>
-<th scope="col" class="left">添加列</th>
+<th scope="col" class="org-left"><code>M-S-Right</code></th>
+<th scope="col" class="org-left">添加列</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="left"><code>M-Up</code></td>
-<td class="left">上移一行</td>
+<td class="org-left"><code>M-Up</code></td>
+<td class="org-left">上移一行</td>
 </tr>
 
 <tr>
-<td class="left"><code>M-Down</code></td>
-<td class="left">下移一行</td>
+<td class="org-left"><code>M-Down</code></td>
+<td class="org-left">下移一行</td>
 </tr>
 
 <tr>
-<td class="left"><code>M-Left</code></td>
-<td class="left">左移一列</td>
+<td class="org-left"><code>M-Left</code></td>
+<td class="org-left">左移一列</td>
 </tr>
 
 <tr>
-<td class="left"><code>M-Right</code></td>
-<td class="left">右移一列</td>
+<td class="org-left"><code>M-Right</code></td>
+<td class="org-left">右移一列</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="left"><code>C-c</code> <code>C-x</code> <code>M-w</code></td>
-<td class="left">复制单元格</td>
+<td class="org-left"><code>C-c</code> <code>C-x</code> <code>M-w</code></td>
+<td class="org-left">复制单元格</td>
 </tr>
 
 <tr>
-<td class="left"><code>C-c</code> <code>C-x</code> <code>C-w</code></td>
-<td class="left">剪切单元格</td>
+<td class="org-left"><code>C-c</code> <code>C-x</code> <code>C-w</code></td>
+<td class="org-left">剪切单元格</td>
 </tr>
 
 <tr>
-<td class="left"><code>C-c</code> <code>C-x</code> <code>C-y</code></td>
-<td class="left">粘贴单元格</td>
+<td class="org-left"><code>C-c</code> <code>C-x</code> <code>C-y</code></td>
+<td class="org-left">粘贴单元格</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="left"><code>M-Return</code></td>
-<td class="left">光标之后内容移到下方单元格</td>
+<td class="org-left"><code>M-Return</code></td>
+<td class="org-left">光标之后内容移到下方单元格</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="left"><code>C-c</code> <code>-</code></td>
-<td class="left">下方插入分隔行</td>
+<td class="org-left"><code>C-c</code> <code>-</code></td>
+<td class="org-left">下方插入分隔行</td>
 </tr>
 
 <tr>
-<td class="left"><code>C-c</code> <code>Return</code></td>
-<td class="left">下方插入分隔行</td>
+<td class="org-left"><code>C-c</code> <code>Return</code></td>
+<td class="org-left">下方插入分隔行</td>
 </tr>
 </tbody>
 </table>
@@ -449,52 +549,53 @@ for the JavaScript code in this tag.
 
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="left"><code>C-c</code> <code>~</code></th>
-<th scope="col" class="left">创建表格、识别表格</th>
+<th scope="col" class="org-left"><code>C-c</code> <code>~</code></th>
+<th scope="col" class="org-left">创建表格、识别表格</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="left"><code>C-c</code> <code>&#39;</code></td>
-<td class="left">编辑表格</td>
+<td class="org-left"><code>C-c</code> <code>&#39;</code></td>
+<td class="org-left">编辑表格</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div id="outline-container-sec-2-4" class="outline-3">
-<h3 id="sec-2-4"><span class="section-number-3">2.4</span> 文本</h3>
+
+<div id="outline-container-orgf06cf14" class="outline-3">
+<h3 id="orgf06cf14"><span class="section-number-3">2.4</span> 文本</h3>
 <div class="outline-text-3" id="text-2-4">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 <caption class="t-above"><span class="table-number">Table 1:</span> 文本块</caption>
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="left"><code>&lt;s</code> <code>Tab</code></th>
-<th scope="col" class="left"><code>#+BEGIN_SRC ... #+END_SRC</code></th>
+<th scope="col" class="org-left"><code>&lt;s</code> <code>Tab</code></th>
+<th scope="col" class="org-left"><code>#+BEGIN_SRC ... #+END_SRC</code></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="left"><code>&lt;e</code> <code>Tab</code></td>
-<td class="left"><code>#+BEGIN_EXAMPLE ... #+END_EXAMPLE</code></td>
+<td class="org-left"><code>&lt;e</code> <code>Tab</code></td>
+<td class="org-left"><code>#+BEGIN_EXAMPLE ... #+END_EXAMPLE</code></td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="left"><code>&lt;q</code> <code>Tab</code></td>
-<td class="left"><code>#+BEGIN_QUOTE ... #+END_QUOTE</code></td>
+<td class="org-left"><code>&lt;q</code> <code>Tab</code></td>
+<td class="org-left"><code>#+BEGIN_QUOTE ... #+END_QUOTE</code></td>
 </tr>
 </tbody>
 </table>
@@ -503,99 +604,101 @@ for the JavaScript code in this tag.
 <caption class="t-above"><span class="table-number">Table 2:</span> 文本行</caption>
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 </colgroup>
 <tbody>
 <tr>
-<td class="left"><code>C-S-Backspace</code></td>
-<td class="left">删除整行</td>
+<td class="org-left"><code>C-S-Backspace</code></td>
+<td class="org-left">删除整行</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div id="outline-container-sec-2-5" class="outline-3">
-<h3 id="sec-2-5"><span class="section-number-3">2.5</span> 搜索</h3>
+
+<div id="outline-container-orgb8b61e8" class="outline-3">
+<h3 id="orgb8b61e8"><span class="section-number-3">2.5</span> 搜索</h3>
 <div class="outline-text-3" id="text-2-5">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 </colgroup>
 <tbody>
 <tr>
-<td class="left"><code>C-s</code></td>
-<td class="left">开始搜索，到下一处</td>
+<td class="org-left"><code>C-s</code></td>
+<td class="org-left">开始搜索，到下一处</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 </div>
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> 特殊格式</h2>
+
+<div id="outline-container-org99bfdf7" class="outline-2">
+<h2 id="org99bfdf7"><span class="section-number-2">3</span> Formatting</h2>
 <div class="outline-text-2" id="text-3">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="left">HTML</th>
-<th scope="col" class="left"><code>@@html:</code> &#x2026; <code>@@</code></th>
+<th scope="col" class="org-left">HTML</th>
+<th scope="col" class="org-left"><code>@@html:</code> &#x2026; <code>@@</code></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="left">链接</td>
-<td class="left"><code>[[&lt;link&gt;][&lt;label&gt;]]</code></td>
+<td class="org-left">链接</td>
+<td class="org-left"><code>[[&lt;link&gt;][&lt;label&gt;]]</code></td>
 </tr>
 
 <tr>
-<td class="left">&#xa0;</td>
-<td class="left"><code>[[file:&lt;targer&gt;.org::&lt;anchor&gt;][&lt;label&gt;]]</code></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>[[file:&lt;targer&gt;.org::&lt;anchor&gt;][&lt;label&gt;]]</code></td>
 </tr>
 
 <tr>
-<td class="left">&#xa0;</td>
-<td class="left"><code>[[file:&lt;target&gt;.html#&lt;anchor&gt;][&lt;label&gt;]]</code></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>[[file:&lt;target&gt;.html#&lt;anchor&gt;][&lt;label&gt;]]</code></td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="left">锚点</td>
-<td class="left"><code>&lt;&lt;anchor&gt;&gt;</code></td>
+<td class="org-left">锚点</td>
+<td class="org-left"><code>&lt;&lt;anchor&gt;&gt;</code></td>
 </tr>
 
 <tr>
-<td class="left">&#xa0;</td>
-<td class="left"><code>[[&lt;anchor&gt;][&lt;label&gt;]]</code></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>[[&lt;anchor&gt;][&lt;label&gt;]]</code></td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="left">代码</td>
-<td class="left"><code>=code=</code></td>
+<td class="org-left">代码</td>
+<td class="org-left"><code>=code=</code></td>
 </tr>
 
 <tr>
-<td class="left">&#xa0;</td>
-<td class="left"><code>~code~</code></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>~code~</code></td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="left">定义列表</td>
-<td class="left"><code>- name :: definition</code></td>
+<td class="org-left">定义列表</td>
+<td class="org-left"><code>- name :: definition</code></td>
 </tr>
 </tbody>
 </table>
@@ -604,20 +707,26 @@ for the JavaScript code in this tag.
 
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="left">表格中转义 <code>&#124;</code></th>
-<th scope="col" class="left"><code>@@html:&lt;code&gt;&amp;#124;&lt;/code&gt;@@</code></th>
+<th scope="col" class="org-left">表格中转义 <code>&#124;</code></th>
+<th scope="col" class="org-left"><code>@@html:&lt;code&gt;&amp;#124;&lt;/code&gt;@@</code></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="left">段落内换行</td>
-<td class="left"><code>\\</code></td>
+<td class="org-left">表格列左对齐</td>
+<td class="org-left"><code>&lt;l&gt;</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">段落内换行</td>
+<td class="org-left"><code>\\</code></td>
 </tr>
 </tbody>
 </table>
@@ -626,64 +735,66 @@ for the JavaScript code in this tag.
 
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="left">图片、表格标题</th>
-<th scope="col" class="left"><code>#+CAPTION: &lt;text&gt;</code></th>
+<th scope="col" class="org-left">图片、表格标题</th>
+<th scope="col" class="org-left"><code>#+CAPTION: &lt;text&gt;</code></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="left">HTML 属性</td>
-<td class="left"><code>#+ATTR_HTML: :&lt;attr&gt; &lt;value&gt; ...</code></td>
+<td class="org-left">HTML 属性</td>
+<td class="org-left"><code>#+ATTR_HTML: :&lt;attr&gt; &lt;value&gt; ...</code></td>
 </tr>
 
 <tr>
-<td class="left">&#xa0;</td>
-<td class="left">e.g. <code>#+ATTR_HTML: :class special</code></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">e.g. <code>#+ATTR_HTML: :class special</code></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> 代码块</h2>
+
+<div id="outline-container-orgcc5d195" class="outline-2">
+<h2 id="orgcc5d195"><span class="section-number-2">4</span> Code Blocks</h2>
 <div class="outline-text-2" id="text-4">
+<p>
+不输出代码块（直接嵌入生成的文件，不用每次输出时重新生成）：
+</p>
+
 <div class="org-src-container">
-<label class="org-src-name">不输出代码块（直接嵌入生成的文件，不用每次输出时重新生成）</label>
 <pre class="src src-code">\#+BEGIN_SRC ... :exports none
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> MathJax</h2>
+
+<div id="outline-container-org6433f98" class="outline-2">
+<h2 id="org6433f98"><span class="section-number-2">5</span> MathJax</h2>
 <div class="outline-text-2" id="text-5">
 <div class="org-src-container">
-<label class="org-src-name">行内</label>
-<pre class="src src-text">$ ... $
+<label class="org-src-name"><span class="listing-number">Listing 1: </span>行内</label><pre class="src src-text">$ ... $
 \( ... \)
 </pre>
 </div>
 
 <div class="org-src-container">
-<label class="org-src-name">段落</label>
-<pre class="src src-text">\begin{equation} ... \end{equation}
+<label class="org-src-name"><span class="listing-number">Listing 2: </span>段落</label><pre class="src src-text">\begin{equation} ... \end{equation}
 $$ ... $$
 \[ ... \]
 </pre>
 </div>
 </div>
 
-<div id="outline-container-sec-5-1" class="outline-3">
-<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Debug</h3>
+<div id="outline-container-org0577c96" class="outline-3">
+<h3 id="org0577c96"><span class="section-number-3">5.1</span> Debug</h3>
 <div class="outline-text-3" id="text-5-1">
 <div class="org-src-container">
-
 <pre class="src src-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">site-lisp/org/lisp/ox-html.el</span>
 <span class="org-comment-delimiter">;; </span><span class="org-comment">line 1031</span>
 tex2jax: {
@@ -695,22 +806,28 @@ tex2jax: {
 </div>
 </div>
 </div>
-<div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> PlantUML</h2>
+
+<div id="outline-container-org0b2f0db" class="outline-2">
+<h2 id="org0b2f0db"><span class="section-number-2">6</span> PlantUML</h2>
 <div class="outline-text-2" id="text-6">
-</div><div id="outline-container-sec-6-1" class="outline-3">
-<h3 id="sec-6-1"><span class="section-number-3">6.1</span> 安装</h3>
+</div><div id="outline-container-org8cce242" class="outline-3">
+<h3 id="org8cce242"><span class="section-number-3">6.1</span> 安装</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
-1 - 安装 Graphviz 和 PlantUML
-</p>
-
-<p>
-2 - 将 plantuml.jar 放置到 <code>emacs/etc/</code>
+安装 Graphviz 和 PlantUML：
 </p>
 
 <div class="org-src-container">
-<label class="org-src-name">3 - 修改 <code>config/.emacs</code></label>
+<pre class="src src-sh">brew install graphviz
+brew install plantuml
+</pre>
+</div>
+
+<p>
+将 <code>plantuml.jar</code> 放置到 <code>emacs/etc/</code> 。修改 <code>config/.emacs</code> ：
+</p>
+
+<div class="org-src-container">
 <pre class="src src-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">PlantUML, active Org-babel languages</span>
 (org-babel-do-load-languages
   'org-babel-load-languages
@@ -722,104 +839,81 @@ tex2jax: {
 </div>
 </div>
 </div>
-<div id="outline-container-sec-6-2" class="outline-3">
-<h3 id="sec-6-2"><span class="section-number-3">6.2</span> 使用</h3>
+
+<div id="outline-container-orgcc1274e" class="outline-3">
+<h3 id="orgcc1274e"><span class="section-number-3">6.2</span> 示例</h3>
 <div class="outline-text-3" id="text-6-2">
 <div class="org-src-container">
-
-<pre class="src src-code">\#+BEGIN_SRC plantuml :file ../images/.svg
-!include ../styles/plantuml-style
+<pre class="src src-code">\#+BEGIN_SRC plantuml :file ../images/01.svg
+@startuml
+!include ../../styles/plantuml-style
 ...
+@enduml
 \#+END_SRC
 </pre>
 </div>
 
-<div class="org-src-container">
-<label class="org-src-name">示例</label>
-<pre class="src src-code">\#+BEGIN_SRC plantuml :file ../images/工作日志_0505_01.svg
-!include ../styles/plantuml-style
-
-start
-:读 Redis 经验值
-换算为旧等级;
-:读 MCQ 经验值
-换算为新等级;
-if (新等级 &gt; 旧等级) then (Y)
-  :写新等级到平台;
-else (N)
-endif
-stop
-\#+END_SRC
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-sec-6-3" class="outline-3">
-<h3 id="sec-6-3"><span class="section-number-3">6.3</span> <code>skinparam</code></h3>
-<div class="outline-text-3" id="text-6-3">
 <p>
-<a href="http://plantuml.com/skinparam.html">skinparam</a>
+In newer versions, the start and end tags can be omitted:
 </p>
 
 <div class="org-src-container">
-<label class="org-src-name">示例</label>
-<pre class="src src-sh">@startuml
-skinparam monochrome true
-skinparam shadowing false
+<pre class="src src-code">\#+BEGIN_SRC plantuml :file ../images/01.svg
+!include ../../styles/plantuml-style
 ...
-@enduml
+\#+END_SRC
 </pre>
 </div>
+</div>
+</div>
 
+<div id="outline-container-orgdc188a4" class="outline-3">
+<h3 id="orgdc188a4"><span class="section-number-3">6.3</span> <code>skinparam</code></h3>
+<div class="outline-text-3" id="text-6-3">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="left"><code>monochrome</code></th>
-<th scope="col" class="left">Boolean</th>
-<th scope="col" class="left">单色主题</th>
+<th scope="col" class="org-left"><code>monochrome</code></th>
+<th scope="col" class="org-left">Boolean</th>
+<th scope="col" class="org-left">单色主题</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="left"><code>shadowing</code></td>
-<td class="left">Boolean</td>
-<td class="left">显示阴影</td>
-</tr>
-</tbody>
-<tbody>
-<tr>
-<td class="left">&#xa0;</td>
-<td class="left">&#xa0;</td>
-<td class="left">&#xa0;</td>
+<td class="org-left"><code>shadowing</code></td>
+<td class="org-left">Boolean</td>
+<td class="org-left">显示阴影</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div id="outline-container-sec-6-4" class="outline-3">
-<h3 id="sec-6-4"><span class="section-number-3">6.4</span> 资源</h3>
+
+<div id="outline-container-org5342c86" class="outline-3">
+<h3 id="org5342c86"><span class="section-number-3">6.4</span> Links</h3>
 <div class="outline-text-3" id="text-6-4">
-<p>
-<a href="http://sdntutorials.com/steps-to-install-plantuml-on-windows-7/">Steps To Install PlantUML On Windows 7</a> <br  />
-<a href="http://plantuml.com/">PlantUML in a nutshell</a> <br  />
-</p>
+<ol class="org-ol">
+<li><a href="http://sdntutorials.com/steps-to-install-plantuml-on-windows-7/">Steps To Install PlantUML On Windows 7</a></li>
+<li><a href="http://plantuml.com/">PlantUML in a nutshell</a></li>
+<li><a href="https://plantuml.com/skinparam">PlantUML | <code>skinparam</code></a></li>
+</ol>
 </div>
 </div>
 </div>
-<div id="outline-container-sec-7" class="outline-2">
-<h2 id="sec-7"><span class="section-number-2">7</span> Ditaa</h2>
+
+<div id="outline-container-orgebad33c" class="outline-2">
+<h2 id="orgebad33c"><span class="section-number-2">7</span> Ditaa</h2>
 <div class="outline-text-2" id="text-7">
 <div class="org-src-container">
-<label class="org-src-name">使用</label>
 <pre class="src src-code">\#+BEGIN_SRC ditaa :file &lt;path&gt; :cmdline &lt;options&gt;
 ...
 \#+END_SRC
@@ -830,36 +924,37 @@ skinparam shadowing false
 <caption class="t-above"><span class="table-number">Table 3:</span> Options</caption>
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="left"><code>-E</code></th>
-<th scope="col" class="left">Prevents the separation of common edges of shapes</th>
+<th scope="col" class="org-left"><code>-E</code></th>
+<th scope="col" class="org-left">Prevents the separation of common edges of shapes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="left"><code>-S</code></td>
-<td class="left">Turns off the drop-shadow effect</td>
+<td class="org-left"><code>-S</code></td>
+<td class="org-left">Turns off the drop-shadow effect</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="left"><code>-s &lt;float&gt;</code></td>
-<td class="left">Scale</td>
+<td class="org-left"><code>-s &lt;float&gt;</code></td>
+<td class="org-left">Scale</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div id="outline-container-sec-8" class="outline-2">
-<h2 id="sec-8"><span class="section-number-2">8</span> Latex</h2>
+
+<div id="outline-container-org07e5d3d" class="outline-2">
+<h2 id="org07e5d3d"><span class="section-number-2">8</span> Latex</h2>
 <div class="outline-text-2" id="text-8">
-</div><div id="outline-container-sec-8-1" class="outline-3">
-<h3 id="sec-8-1"><span class="section-number-3">8.1</span> 安装</h3>
+</div><div id="outline-container-orgd770c1c" class="outline-3">
+<h3 id="orgd770c1c"><span class="section-number-3">8.1</span> 安装</h3>
 <div class="outline-text-3" id="text-8-1">
 <p>
 1 - 安装 <a href="http://miktex.org/download">MikTEX</a> ，注意安装路径中不能有空格
@@ -870,8 +965,7 @@ skinparam shadowing false
 </p>
 
 <div class="org-src-container">
-<label class="org-src-name">4 - 测试代码</label>
-<pre class="src src-text">\#+BEGIN_SRC latex :file ../images/test.png
+<label class="org-src-name"><span class="listing-number">Listing 3: </span>4 - 测试代码</label><pre class="src src-text">\#+BEGIN_SRC latex :file ../images/test.png
 \LaTeX
 \#+END_SRC
 </pre>
@@ -886,12 +980,12 @@ skinparam shadowing false
 </p>
 </div>
 </div>
-<div id="outline-container-sec-8-2" class="outline-3">
-<h3 id="sec-8-2"><span class="section-number-3">8.2</span> 配置</h3>
+
+<div id="outline-container-orgf139cd2" class="outline-3">
+<h3 id="orgf139cd2"><span class="section-number-3">8.2</span> 配置</h3>
 <div class="outline-text-3" id="text-8-2">
 <div class="org-src-container">
-<label class="org-src-name">使用 Latex</label>
-<pre class="src src-text">(load "auctex.el" nil t t)
+<label class="org-src-name"><span class="listing-number">Listing 4: </span>使用 Latex</label><pre class="src src-text">(load "auctex.el" nil t t)
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((latex . t)))
@@ -899,8 +993,7 @@ skinparam shadowing false
 </div>
 
 <div class="org-src-container">
-<label class="org-src-name">默认样式</label>
-<pre class="src src-text">(setq org-format-latex-options
+<label class="org-src-name"><span class="listing-number">Listing 5: </span>默认样式</label><pre class="src src-text">(setq org-format-latex-options
  '(:foreground "Black"
    :background "Transparent"
    :scale 2.0
@@ -912,8 +1005,7 @@ skinparam shadowing false
 </div>
 
 <div class="org-src-container">
-<label class="org-src-name">使用 TikZ</label>
-<pre class="src src-text">(add-to-list 'org-latex-packages-alist '("" "tikz" "") t)
+<label class="org-src-name"><span class="listing-number">Listing 6: </span>使用 TikZ</label><pre class="src src-text">(add-to-list 'org-latex-packages-alist '("" "tikz" "") t)
 (setq
  org-format-latex-header
  (concat
@@ -923,8 +1015,9 @@ skinparam shadowing false
 </div>
 </div>
 </div>
-<div id="outline-container-sec-8-3" class="outline-3">
-<h3 id="sec-8-3"><span class="section-number-3">8.3</span> 使用</h3>
+
+<div id="outline-container-orgb77aa80" class="outline-3">
+<h3 id="orgb77aa80"><span class="section-number-3">8.3</span> 使用</h3>
 <div class="outline-text-3" id="text-8-3">
 <p>
 遇到错误信息 <code>Failed to create dvi file from c:/.../*.tex</code> ，执行该文件，会使用 MikTEX 编辑器打开，尝试手动输出，会提示安装缺失的包。
@@ -934,19 +1027,17 @@ skinparam shadowing false
 遇到错误信息 <code>Failed to create png file from c:/.../*.tex</code> ，在命令行执行 <code>dvipng c:/.../*.dvi</code> （注意后缀变为 =dvi=），会提示安装缺失的包。
 </p>
 
-<hr  />
+<hr />
 
 <div class="org-src-container">
-<label class="org-src-name">加载包</label>
-<pre class="src src-text">#+LATEX_HEADER: \usepackage{...}
+<label class="org-src-name"><span class="listing-number">Listing 7: </span>加载包</label><pre class="src src-text">#+LATEX_HEADER: \usepackage{...}
 </pre>
 </div>
 
-<hr  />
+<hr />
 
 <div class="org-src-container">
-<label class="org-src-name">使用 imagemagick 输出 svg</label>
-<pre class="src src-text">#+HEADER: :imagemagick yes :iminoptions -density 600 :imoutoptions -geometry 400
+<label class="org-src-name"><span class="listing-number">Listing 8: </span>使用 imagemagick 输出 svg</label><pre class="src src-text">#+HEADER: :imagemagick yes :iminoptions -density 600 :imoutoptions -geometry 400
 #+HEADER: :file ../images/.../.svg
 \#+BEGIN_SRC latex
 \begin{tikzpicture}
@@ -956,11 +1047,10 @@ skinparam shadowing false
 </pre>
 </div>
 
-<hr  />
+<hr />
 
 <div class="org-src-container">
-<label class="org-src-name">使用 dvisvgm 输出 svg</label>
-<pre class="src src-text">#+HEADER: :file ../images/.../.svg
+<label class="org-src-name"><span class="listing-number">Listing 9: </span>使用 dvisvgm 输出 svg</label><pre class="src src-text">#+HEADER: :file ../images/.../.svg
 \#+BEGIN_SRC latex
 \begin{tikzpicture}
 ...
@@ -974,8 +1064,7 @@ skinparam shadowing false
 </p>
 
 <div class="org-src-container">
-<label class="org-src-name">修改 <code>site-lisp/org/lisp/ob-latex.el</code></label>
-<pre class="src src-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Line 95</span>
+<label class="org-src-name"><span class="listing-number">Listing 10: </span>修改 <code>site-lisp/org/lisp/ob-latex.el</code></label><pre class="src src-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Line 95</span>
 ((and (string-match <span class="org-string">"\\.svg$"</span> out-file) (not imagemagick))
  (org-create-formula-image
   body out-file org-format-latex-options in-buffer))
@@ -983,9 +1072,8 @@ skinparam shadowing false
 </div>
 
 <div class="org-src-container">
-<label class="org-src-name">修改 <code>site-lisp/org/lisp/org.el</code></label>
-<pre class="src src-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Line 18623</span>
-(<span class="org-keyword">if</span> (<span class="org-keyword">featurep</span> '<span class="org-constant">xemacs</span>)
+<label class="org-src-name"><span class="listing-number">Listing 11: </span>修改 <code>site-lisp/org/lisp/org.el</code></label><pre class="src src-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Line 18623</span>
+(<span class="org-keyword">if</span> (featurep 'xemacs)
     (call-process <span class="org-string">"dvisvgm"</span> nil nil nil
           <span class="org-comment-delimiter">;;</span><span class="org-comment">"-fg" fg "-bg" bg</span>
           <span class="org-comment-delimiter">;;</span><span class="org-comment">"-T" "tight"</span>
@@ -1007,18 +1095,20 @@ skinparam shadowing false
 </div>
 </div>
 </div>
-
-<div id="outline-container-sec-9" class="outline-2">
-<h2 id="sec-9"><span class="section-number-2">9</span> 修改</h2>
+<div id="outline-container-orgd0155c9" class="outline-2">
+<h2 id="orgd0155c9"><span class="section-number-2">9</span> 修改</h2>
 <div class="outline-text-2" id="text-9">
+<p>
+<code>&lt;blockquote&gt;</code> 输出标题：
+</p>
+
 <div class="org-src-container">
-<label class="org-src-name"><code>&lt;blockquote&gt;</code> 输出标题：</label>
 <pre class="src src-lisp"><span class="org-comment-delimiter">; </span><span class="org-comment">\site-lisp\org\lisp\ox-html.el line 2979</span>
 (<span class="org-keyword">defun</span> <span class="org-function-name">org-html-quote-block</span> (quote-block contents info)
   <span class="org-doc">"Transcode a QUOTE-BLOCK element from Org to HTML.</span>
 <span class="org-doc">CONTENTS holds the contents of the block.  INFO is a plist</span>
 <span class="org-doc">holding contextual information."</span>
-  <span class="org-comment-delimiter">; </span><span class="org-comment">(format "&lt;blockquote&gt;\n%s&lt;/blockquote&gt;" contents))</span>
+  <span class="org-comment">; (format "&lt;blockquote&gt;\n%s&lt;/blockquote&gt;" contents))</span>
   (<span class="org-keyword">let</span> ((caption (org-export-get-caption quote-block)))
    (format
     <span class="org-string">"&lt;div class=\"org-quote-container\"&gt;\n%s%s\n&lt;/div&gt;"</span>
@@ -1030,62 +1120,63 @@ skinparam shadowing false
 </div>
 </div>
 </div>
-<div id="outline-container-sec-10" class="outline-2">
-<h2 id="sec-10"><span class="section-number-2">10</span> 链接</h2>
+
+<div id="outline-container-orgb676f71" class="outline-2">
+<h2 id="orgb676f71"><span class="section-number-2">10</span> 安装</h2>
 <div class="outline-text-2" id="text-10">
+</div><div id="outline-container-orgac39d25" class="outline-3">
+<h3 id="orgac39d25"><span class="section-number-3">10.1</span> MacOS</h3>
+<div class="outline-text-3" id="text-10-1">
+<div class="org-src-container">
+<pre class="src src-sh">brew cask install emacs
+ln -s ~/Dropbox/portable/orgmode/config/.emacs ~/.emacs
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgad70cf1" class="outline-2">
+<h2 id="orgad70cf1"><span class="section-number-2">11</span> Links</h2>
+<div class="outline-text-2" id="text-11">
 <ol class="org-ol">
-<li><a href="http://home.fnal.gov/~neilsen/notebook/orgExamples/org-examples.html">Emacs org-mode examples and cookbook</a>
-</li>
-<li><a href="http://orgmode.org/worg/org-tutorials/index.html">Org tutorials</a>
-</li>
-<li><a href="http://orgmode.org/manual/index.html">The Org Manual</a>
-</li>
-<li><a href="http://orgmode.org/orgcard.txt">Org-Mode Reference Card</a>
-</li>
-<li><a href="http://orgmode.org/worg/org-faq.html">Org-mode Frequently Asked Questions</a>
-</li>
-<li><a href="http://doc.norang.ca/org-mode.html">Org Mode - Organize Your Life In Plain Text!</a>
-</li>
-<li><a href="http://www.cnblogs.com/holbrook/archive/2012/04/12/2444992.html">Org-mode: 最好的文档编辑利器</a>
-</li>
-<li><a href="http://aaronbedra.com/emacs.d/">Aaron Bedra's Emacs 24 Configuration</a>
-</li>
+<li><a href="http://home.fnal.gov/~neilsen/notebook/orgExamples/org-examples.html">Emacs org-mode examples and cookbook</a></li>
+<li><a href="http://orgmode.org/worg/org-tutorials/index.html">Org tutorials</a></li>
+<li><a href="http://orgmode.org/manual/index.html">The Org Manual</a></li>
+<li><a href="http://orgmode.org/orgcard.txt">Org-Mode Reference Card</a></li>
+<li><a href="http://orgmode.org/worg/org-faq.html">Org-mode Frequently Asked Questions</a></li>
+<li><a href="http://doc.norang.ca/org-mode.html">Org Mode - Organize Your Life In Plain Text!</a></li>
+<li><a href="http://www.cnblogs.com/holbrook/archive/2012/04/12/2444992.html">Org-mode: 最好的文档编辑利器</a></li>
+<li><a href="http://aaronbedra.com/emacs.d/">Aaron Bedra's Emacs 24 Configuration</a></li>
 </ol>
 
-<hr  />
+<hr />
 
 <ol class="org-ol">
-<li><a href="http://orgmode.org/worg/org-symbols.html">Symbols in Org-mode</a>
-</li>
-<li><a href="http://www.yann-ollivier.org/latex/texsymbols.pdf">The Comprehensive LaTeX Symbol List</a>
-</li>
-<li><a href="http://detexify.kirelabs.org/classify.html">Detexify</a>
-</li>
+<li><a href="http://orgmode.org/worg/org-symbols.html">Symbols in Org-mode</a></li>
+<li><a href="http://www.yann-ollivier.org/latex/texsymbols.pdf">The Comprehensive LaTeX Symbol List</a></li>
+<li><a href="http://detexify.kirelabs.org/classify.html">Detexify</a></li>
 </ol>
 
-<hr  />
+<hr />
 
 <ol class="org-ol">
-<li><a href="http://www.martinkeefe.com/math/mathjax3">MATHJAX GUIDE - MATH SYMBOLS AND MATH FONTS</a>
-</li>
-<li><a href="http://www.suluclac.com/Wiki+MathJax+Syntax">Wiki MathJax Syntax</a>
-</li>
-<li><a href="http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference">MathJax basic tutorial and quick reference</a>
-</li>
+<li><a href="http://www.martinkeefe.com/math/mathjax3">MATHJAX GUIDE - MATH SYMBOLS AND MATH FONTS</a></li>
+<li><a href="http://www.suluclac.com/Wiki+MathJax+Syntax">Wiki MathJax Syntax</a></li>
+<li><a href="http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference">MathJax basic tutorial and quick reference</a></li>
 </ol>
 
-<hr  />
+<hr />
 
 <ol class="org-ol">
-<li><a href="http://ditaa.sourceforge.net/">Ditaa</a>
-</li>
+<li><a href="http://ditaa.sourceforge.net/">Ditaa</a></li>
 </ol>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2017-04-03 Mon 13:43</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2020-02-15 Sat 21:26</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

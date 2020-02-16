@@ -182,7 +182,84 @@ file:../images/system_design/03.png
 
 1. [[http://www.palantir.com/2011/10/how-to-rock-a-systems-design-interview/][How to Ace a System Design Interview]]
 
-* Messenger Service
+* Design a Parking Lot
+** Handling Ambiguity
+
+Ask clarifying questions before going into any detail.
+
+#+ATTR_HTML: :class no-border
+| *Question-related* | What problem area the question is about?                            |
+|                    | What is the expected output? E.g. class hierarchy, database schema. |
+|--------------------+---------------------------------------------------------------------|
+| *System-related*   | The nature of the system.                                           |
+|                    | - Is the parking lot an open space or in a building?                |
+|                    | The scope of the system.                                            |
+|                    | - How many spots are in the parking lot?                            |
+|                    | - Are there multiple entrances?                                     |
+|                    | The business model of the system.                                   |
+|                    | - Do the spots have different sizes and prices?                     |
+|                    | - Can smaller cars park in bigger spots?                            |
+|                    | - Should the spots be filled in a certain order?                    |
+|                    | - Are there daily or monthly passes?                                |
+|                    | - Are there premium spots?                                          |
+
+** Class Design
+
+#+BEGIN_SRC plantuml :file ../images/system_design/04.svg
+!include ../../styles/plantuml-style
+
+class AbstractVehicle {
+  string licensePlate
+}
+AbstractVehicle <|-- Car
+AbstractVehicle <|-- Motorcycle
+AbstractVehicle <|-- Bus
+
+class ParkingLot {
+  string location
+  + ParkingSpot parkVehicle()
+}
+
+class ParkingSpot {
+  long id
+  enum size
+}
+
+ParkingLot *-- ParkingSpot : contains
+#+END_SRC
+
+** Implementation
+
+Implement some of the key functions, e.g.
+
+- finding an available spot of specified size
+- parking a vehicle
+- locating a vehicle
+- calculating cost
+
+** Performance
+
+Think about performace, and try to optimize with special data structures if necessary. Examples:
+
+*** Find Spot
+
+To find a spot of certain size: instead of iterating through a list of spots (O(n) time), store all available spots in a stack (O(1) time).
+
+To enable switching between different implementations of a core function, abstract that function to an interface. E.g. instead of maintaining the available spots inside =ParkingLot= class, use a =ParkingLotSpotPool= (each =ParkingLot= object holds several =ParkingLotSpotPool= objects) to maintain it, and expose interfaces such as =occupySpot()= and =releaseSpot()=.
+
+*** Find Vehicle
+
+To find the parking spot of a vehicle, e.g. in order to release the spot when the car leaves, the vehicle parking info can be stored in a hash map, keyed by the vechicle's license number.
+
+** Take Hints
+
+The interviewer probably has a list of key topics he wants to be covered, so don't force your way through the process, instead take hints from the interviewer and let hims guides you.
+
+** Links
+
+1. [[https://www.youtube.com/watch?v=DSGsa0pu8-k][Design a Parking Lot]]
+
+* Design a Messenger Service
 ** Features
 
 Talk about features needed, from basic to advanced, e.g.
@@ -244,4 +321,4 @@ There can be a layer of servers that are dedicated to push notification processi
 
 ** Links
 
-1. [[https://www.youtube.com/watch?v=5m0L0k8ZtEs][System Design: Messenger service like Whatsapp or WeChat]]
+1. [[https://www.youtube.com/watch?v=5m0L0k8ZtEs][Design a Messenger Service]]

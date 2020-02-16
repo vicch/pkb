@@ -6,7 +6,7 @@ title: "System Design"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-08 Sat 18:32 -->
+<!-- 2020-02-15 Sat 22:18 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>System Design</title>
@@ -244,66 +244,81 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0a37275">1 System Design Cheatsheet</a>
+<li><a href="#org9b42f12">1 System Design Cheatsheet</a>
 <ul>
-<li><a href="#org06417cf">1.1 Basic Steps</a>
+<li><a href="#orgfd89288">1.1 Basic Steps</a>
 <ul>
-<li><a href="#org2da090d">1.1.1 Scoping</a></li>
-<li><a href="#org2f14e0d">1.1.2 Abstract Design</a></li>
-<li><a href="#org4f80a48">1.1.3 Component Design</a></li>
-<li><a href="#org58b7ad9">1.1.4 Bottlenecks</a></li>
-<li><a href="#org926fb1a">1.1.5 Scaling</a></li>
+<li><a href="#org3e1e96e">1.1.1 Scoping</a></li>
+<li><a href="#org5a7e7c8">1.1.2 Abstract Design</a></li>
+<li><a href="#org28110f1">1.1.3 Component Design</a></li>
+<li><a href="#org0d1bdaf">1.1.4 Bottlenecks</a></li>
+<li><a href="#org8e542e5">1.1.5 Scaling</a></li>
 </ul>
 </li>
-<li><a href="#org5e8acee">1.2 Key Topics</a>
+<li><a href="#org52a24e4">1.2 Key Topics</a>
 <ul>
-<li><a href="#org6575f45">1.2.1 Platform</a></li>
-<li><a href="#org26f0d67">1.2.2 Load Balancing</a></li>
-<li><a href="#org1b2a08b">1.2.3 Caching</a></li>
-<li><a href="#org39f41ba">1.2.4 Database</a></li>
+<li><a href="#org64bdc53">1.2.1 Platform</a></li>
+<li><a href="#org4ed1c7c">1.2.2 Load Balancing</a></li>
+<li><a href="#orgef6ff83">1.2.3 Caching</a></li>
+<li><a href="#orga0ed596">1.2.4 Database</a></li>
 </ul>
 </li>
-<li><a href="#org00a18cd">1.3 Web System Design Topics</a></li>
-<li><a href="#org49b461e">1.4 Links</a></li>
+<li><a href="#orgc65f823">1.3 Web System Design Topics</a></li>
+<li><a href="#orgabf8c80">1.4 Links</a></li>
 </ul>
 </li>
-<li><a href="#orgcab1921">2 How to Ace a System Design Interview</a>
+<li><a href="#org8f695f8">2 How to Ace a System Design Interview</a>
 <ul>
-<li><a href="#orgf0f666c">2.1 Focus on Thought Process</a></li>
-<li><a href="#orgea29170">2.2 Topics</a>
+<li><a href="#orgcc2a037">2.1 Focus on Thought Process</a></li>
+<li><a href="#org486acec">2.2 Topics</a>
 <ul>
-<li><a href="#org012ab06">2.2.1 Concurrency</a></li>
-<li><a href="#org2232bbe">2.2.2 Networking</a></li>
-<li><a href="#orgf2b508a">2.2.3 Real-World Performance</a></li>
-<li><a href="#orgc334644">2.2.4 Availability &amp; Reliability</a></li>
+<li><a href="#orge104f5b">2.2.1 Concurrency</a></li>
+<li><a href="#org333a6d6">2.2.2 Networking</a></li>
+<li><a href="#org01c9e86">2.2.3 Real-World Performance</a></li>
+<li><a href="#org0aaa9c5">2.2.4 Availability &amp; Reliability</a></li>
 </ul>
 </li>
-<li><a href="#orge89cfbe">2.3 Links</a></li>
+<li><a href="#org97374d0">2.3 Links</a></li>
 </ul>
 </li>
-<li><a href="#orga6c161d">3 Messenger Service</a>
+<li><a href="#orgdccc731">3 Design a Parking Lot</a>
 <ul>
-<li><a href="#org3b543d1">3.1 Features</a></li>
-<li><a href="#org71d8699">3.2 High-level Architecture</a></li>
-<li><a href="#org0c90c3c">3.3 Low-level Architecture</a></li>
-<li><a href="#org29c3252">3.4 States</a></li>
-<li><a href="#org502cb7d">3.5 Push Notification</a></li>
-<li><a href="#orgbe5acd9">3.6 More Topics</a></li>
-<li><a href="#org64ed4ed">3.7 Links</a></li>
+<li><a href="#orgbcc57dd">3.1 Handling Ambiguity</a></li>
+<li><a href="#org64aec88">3.2 Class Design</a></li>
+<li><a href="#org7e7b91c">3.3 Implementation</a></li>
+<li><a href="#org3d1ffa8">3.4 Performance</a>
+<ul>
+<li><a href="#org043a4ef">3.4.1 Find Spot</a></li>
+<li><a href="#org137615e">3.4.2 Find Vehicle</a></li>
+</ul>
+</li>
+<li><a href="#org8ea29dd">3.5 Take Hints</a></li>
+<li><a href="#orgfc263f9">3.6 Links</a></li>
+</ul>
+</li>
+<li><a href="#org129f70d">4 Design a Messenger Service</a>
+<ul>
+<li><a href="#org28fd1fe">4.1 Features</a></li>
+<li><a href="#org4834d07">4.2 High-level Architecture</a></li>
+<li><a href="#org5e7670a">4.3 Low-level Architecture</a></li>
+<li><a href="#org27519fb">4.4 States</a></li>
+<li><a href="#orge29e961">4.5 Push Notification</a></li>
+<li><a href="#org1283e48">4.6 More Topics</a></li>
+<li><a href="#org6822c1d">4.7 Links</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org0a37275" class="outline-2">
-<h2 id="org0a37275"><span class="section-number-2">1</span> System Design Cheatsheet</h2>
+<div id="outline-container-org9b42f12" class="outline-2">
+<h2 id="org9b42f12"><span class="section-number-2">1</span> System Design Cheatsheet</h2>
 <div class="outline-text-2" id="text-1">
-</div><div id="outline-container-org06417cf" class="outline-3">
-<h3 id="org06417cf"><span class="section-number-3">1.1</span> Basic Steps</h3>
+</div><div id="outline-container-orgfd89288" class="outline-3">
+<h3 id="orgfd89288"><span class="section-number-3">1.1</span> Basic Steps</h3>
 <div class="outline-text-3" id="text-1-1">
-</div><div id="outline-container-org2da090d" class="outline-4">
-<h4 id="org2da090d"><span class="section-number-4">1.1.1</span> Scoping</h4>
+</div><div id="outline-container-org3e1e96e" class="outline-4">
+<h4 id="org3e1e96e"><span class="section-number-4">1.1.1</span> Scoping</h4>
 <div class="outline-text-4" id="text-1-1-1">
 <p>
 Clarify and agree on the scope of the system.
@@ -348,8 +363,8 @@ Clarify and agree on the scope of the system.
 </div>
 </div>
 
-<div id="outline-container-org2f14e0d" class="outline-4">
-<h4 id="org2f14e0d"><span class="section-number-4">1.1.2</span> Abstract Design</h4>
+<div id="outline-container-org5a7e7c8" class="outline-4">
+<h4 id="org5a7e7c8"><span class="section-number-4">1.1.2</span> Abstract Design</h4>
 <div class="outline-text-4" id="text-1-1-2">
 <p>
 Sktech high level architecture of important components and connections between them. For example:
@@ -365,8 +380,8 @@ Sktech high level architecture of important components and connections between t
 </div>
 </div>
 
-<div id="outline-container-org4f80a48" class="outline-4">
-<h4 id="org4f80a48"><span class="section-number-4">1.1.3</span> Component Design</h4>
+<div id="outline-container-org28110f1" class="outline-4">
+<h4 id="org28110f1"><span class="section-number-4">1.1.3</span> Component Design</h4>
 <div class="outline-text-4" id="text-1-1-3">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
 
@@ -403,8 +418,8 @@ Sktech high level architecture of important components and connections between t
 </div>
 </div>
 
-<div id="outline-container-org58b7ad9" class="outline-4">
-<h4 id="org58b7ad9"><span class="section-number-4">1.1.4</span> Bottlenecks</h4>
+<div id="outline-container-org0d1bdaf" class="outline-4">
+<h4 id="org0d1bdaf"><span class="section-number-4">1.1.4</span> Bottlenecks</h4>
 <div class="outline-text-4" id="text-1-1-4">
 <p>
 Identify and mitigate bottlenecks. E.g.
@@ -417,8 +432,8 @@ Identify and mitigate bottlenecks. E.g.
 </div>
 </div>
 
-<div id="outline-container-org926fb1a" class="outline-4">
-<h4 id="org926fb1a"><span class="section-number-4">1.1.5</span> Scaling</h4>
+<div id="outline-container-org8e542e5" class="outline-4">
+<h4 id="org8e542e5"><span class="section-number-4">1.1.5</span> Scaling</h4>
 <div class="outline-text-4" id="text-1-1-5">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
 
@@ -455,11 +470,11 @@ Identify and mitigate bottlenecks. E.g.
 </div>
 </div>
 
-<div id="outline-container-org5e8acee" class="outline-3">
-<h3 id="org5e8acee"><span class="section-number-3">1.2</span> Key Topics</h3>
+<div id="outline-container-org52a24e4" class="outline-3">
+<h3 id="org52a24e4"><span class="section-number-3">1.2</span> Key Topics</h3>
 <div class="outline-text-3" id="text-1-2">
-</div><div id="outline-container-org6575f45" class="outline-4">
-<h4 id="org6575f45"><span class="section-number-4">1.2.1</span> Platform</h4>
+</div><div id="outline-container-org64bdc53" class="outline-4">
+<h4 id="org64bdc53"><span class="section-number-4">1.2.1</span> Platform</h4>
 <div class="outline-text-4" id="text-1-2-1">
 <p>
 Separating the backend into application layer and platform layer. The platform layer provides low-level services, such as caching and APIs, to the application layer. Advantages:
@@ -478,8 +493,8 @@ Separating the backend into application layer and platform layer. The platform l
 </div>
 </div>
 
-<div id="outline-container-org26f0d67" class="outline-4">
-<h4 id="org26f0d67"><span class="section-number-4">1.2.2</span> Load Balancing</h4>
+<div id="outline-container-org4ed1c7c" class="outline-4">
+<h4 id="org4ed1c7c"><span class="section-number-4">1.2.2</span> Load Balancing</h4>
 <div class="outline-text-4" id="text-1-2-2">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
 
@@ -511,8 +526,8 @@ Separating the backend into application layer and platform layer. The platform l
 </div>
 </div>
 
-<div id="outline-container-org1b2a08b" class="outline-4">
-<h4 id="org1b2a08b"><span class="section-number-4">1.2.3</span> Caching</h4>
+<div id="outline-container-orgef6ff83" class="outline-4">
+<h4 id="orgef6ff83"><span class="section-number-4">1.2.3</span> Caching</h4>
 <div class="outline-text-4" id="text-1-2-3">
 <p>
 Caching generally refers to in-memory caches, such as Memcached and Redis.
@@ -578,8 +593,8 @@ Caching strategies:
 </div>
 </div>
 
-<div id="outline-container-org39f41ba" class="outline-4">
-<h4 id="org39f41ba"><span class="section-number-4">1.2.4</span> Database</h4>
+<div id="outline-container-orga0ed596" class="outline-4">
+<h4 id="orga0ed596"><span class="section-number-4">1.2.4</span> Database</h4>
 <div class="outline-text-4" id="text-1-2-4">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
 
@@ -617,8 +632,8 @@ Caching strategies:
 </div>
 </div>
 
-<div id="outline-container-org00a18cd" class="outline-3">
-<h3 id="org00a18cd"><span class="section-number-3">1.3</span> Web System Design Topics</h3>
+<div id="outline-container-orgc65f823" class="outline-3">
+<h3 id="orgc65f823"><span class="section-number-3">1.3</span> Web System Design Topics</h3>
 <div class="outline-text-3" id="text-1-3">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
 
@@ -689,8 +704,8 @@ Caching strategies:
 </div>
 </div>
 
-<div id="outline-container-org49b461e" class="outline-3">
-<h3 id="org49b461e"><span class="section-number-3">1.4</span> Links</h3>
+<div id="outline-container-orgabf8c80" class="outline-3">
+<h3 id="orgabf8c80"><span class="section-number-3">1.4</span> Links</h3>
 <div class="outline-text-3" id="text-1-4">
 <ol class="org-ol">
 <li><a href="https://gist.github.com/vasanthk/485d1c25737e8e72759f">System Design Cheatsheet</a></li>
@@ -699,11 +714,11 @@ Caching strategies:
 </div>
 </div>
 
-<div id="outline-container-orgcab1921" class="outline-2">
-<h2 id="orgcab1921"><span class="section-number-2">2</span> How to Ace a System Design Interview</h2>
+<div id="outline-container-org8f695f8" class="outline-2">
+<h2 id="org8f695f8"><span class="section-number-2">2</span> How to Ace a System Design Interview</h2>
 <div class="outline-text-2" id="text-2">
-</div><div id="outline-container-orgf0f666c" class="outline-3">
-<h3 id="orgf0f666c"><span class="section-number-3">2.1</span> Focus on Thought Process</h3>
+</div><div id="outline-container-orgcc2a037" class="outline-3">
+<h3 id="orgcc2a037"><span class="section-number-3">2.1</span> Focus on Thought Process</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 What sets it apart from a coding or an algorithms interview, is that whatever solution you come up with during the interview is just a side effect. What we actually care about is the <del>thought process behind the design choices</del>.
@@ -715,11 +730,11 @@ As engineers we have a tremendous amount of freedom. We aren’t asked to implem
 </div>
 </div>
 
-<div id="outline-container-orgea29170" class="outline-3">
-<h3 id="orgea29170"><span class="section-number-3">2.2</span> Topics</h3>
+<div id="outline-container-org486acec" class="outline-3">
+<h3 id="org486acec"><span class="section-number-3">2.2</span> Topics</h3>
 <div class="outline-text-3" id="text-2-2">
-</div><div id="outline-container-org012ab06" class="outline-4">
-<h4 id="org012ab06"><span class="section-number-4">2.2.1</span> Concurrency</h4>
+</div><div id="outline-container-orge104f5b" class="outline-4">
+<h4 id="orge104f5b"><span class="section-number-4">2.2.1</span> Concurrency</h4>
 <div class="outline-text-4" id="text-2-2-1">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
 
@@ -768,8 +783,8 @@ As engineers we have a tremendous amount of freedom. We aren’t asked to implem
 </div>
 </div>
 
-<div id="outline-container-org2232bbe" class="outline-4">
-<h4 id="org2232bbe"><span class="section-number-4">2.2.2</span> Networking</h4>
+<div id="outline-container-org333a6d6" class="outline-4">
+<h4 id="org333a6d6"><span class="section-number-4">2.2.2</span> Networking</h4>
 <div class="outline-text-4" id="text-2-2-2">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
 
@@ -807,8 +822,8 @@ As engineers we have a tremendous amount of freedom. We aren’t asked to implem
 </div>
 </div>
 
-<div id="outline-container-orgf2b508a" class="outline-4">
-<h4 id="orgf2b508a"><span class="section-number-4">2.2.3</span> Real-World Performance</h4>
+<div id="outline-container-org01c9e86" class="outline-4">
+<h4 id="org01c9e86"><span class="section-number-4">2.2.3</span> Real-World Performance</h4>
 <div class="outline-text-4" id="text-2-2-3">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -884,8 +899,8 @@ As engineers we have a tremendous amount of freedom. We aren’t asked to implem
 </div>
 </div>
 
-<div id="outline-container-orgc334644" class="outline-4">
-<h4 id="orgc334644"><span class="section-number-4">2.2.4</span> Availability &amp; Reliability</h4>
+<div id="outline-container-org0aaa9c5" class="outline-4">
+<h4 id="org0aaa9c5"><span class="section-number-4">2.2.4</span> Availability &amp; Reliability</h4>
 <div class="outline-text-4" id="text-2-2-4">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
 
@@ -906,8 +921,8 @@ As engineers we have a tremendous amount of freedom. We aren’t asked to implem
 </div>
 </div>
 
-<div id="outline-container-orge89cfbe" class="outline-3">
-<h3 id="orge89cfbe"><span class="section-number-3">2.3</span> Links</h3>
+<div id="outline-container-org97374d0" class="outline-3">
+<h3 id="org97374d0"><span class="section-number-3">2.3</span> Links</h3>
 <div class="outline-text-3" id="text-2-3">
 <ol class="org-ol">
 <li><a href="http://www.palantir.com/2011/10/how-to-rock-a-systems-design-interview/">How to Ace a System Design Interview</a></li>
@@ -916,12 +931,179 @@ As engineers we have a tremendous amount of freedom. We aren’t asked to implem
 </div>
 </div>
 
-<div id="outline-container-orga6c161d" class="outline-2">
-<h2 id="orga6c161d"><span class="section-number-2">3</span> Messenger Service</h2>
+<div id="outline-container-orgdccc731" class="outline-2">
+<h2 id="orgdccc731"><span class="section-number-2">3</span> Design a Parking Lot</h2>
 <div class="outline-text-2" id="text-3">
-</div><div id="outline-container-org3b543d1" class="outline-3">
-<h3 id="org3b543d1"><span class="section-number-3">3.1</span> Features</h3>
+</div><div id="outline-container-orgbcc57dd" class="outline-3">
+<h3 id="orgbcc57dd"><span class="section-number-3">3.1</span> Handling Ambiguity</h3>
 <div class="outline-text-3" id="text-3-1">
+<p>
+Ask clarifying questions before going into any detail.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>Question-related</b></th>
+<th scope="col" class="org-left">What problem area the question is about?</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">What is the expected output? E.g. class hierarchy, database schema.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b>System-related</b></td>
+<td class="org-left">The nature of the system.</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">- Is the parking lot an open space or in a building?</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">The scope of the system.</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">- How many spots are in the parking lot?</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">- Are there multiple entrances?</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">The business model of the system.</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">- Do the spots have different sizes and prices?</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">- Can smaller cars park in bigger spots?</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">- Should the spots be filled in a certain order?</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">- Are there daily or monthly passes?</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">- Are there premium spots?</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org64aec88" class="outline-3">
+<h3 id="org64aec88"><span class="section-number-3">3.2</span> Class Design</h3>
+<div class="outline-text-3" id="text-3-2">
+
+<div class="figure">
+<p><object type="image/svg+xml" data="../images/system_design/04.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7e7b91c" class="outline-3">
+<h3 id="org7e7b91c"><span class="section-number-3">3.3</span> Implementation</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+Implement some of the key functions, e.g.
+</p>
+
+<ul class="org-ul">
+<li>finding an available spot of specified size</li>
+<li>parking a vehicle</li>
+<li>locating a vehicle</li>
+<li>calculating cost</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org3d1ffa8" class="outline-3">
+<h3 id="org3d1ffa8"><span class="section-number-3">3.4</span> Performance</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+Think about performace, and try to optimize with special data structures if necessary. Examples:
+</p>
+</div>
+
+<div id="outline-container-org043a4ef" class="outline-4">
+<h4 id="org043a4ef"><span class="section-number-4">3.4.1</span> Find Spot</h4>
+<div class="outline-text-4" id="text-3-4-1">
+<p>
+To find a spot of certain size: instead of iterating through a list of spots (O(n) time), store all available spots in a stack (O(1) time).
+</p>
+
+<p>
+To enable switching between different implementations of a core function, abstract that function to an interface. E.g. instead of maintaining the available spots inside <code>ParkingLot</code> class, use a <code>ParkingLotSpotPool</code> (each <code>ParkingLot</code> object holds several <code>ParkingLotSpotPool</code> objects) to maintain it, and expose interfaces such as <code>occupySpot()</code> and <code>releaseSpot()</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org137615e" class="outline-4">
+<h4 id="org137615e"><span class="section-number-4">3.4.2</span> Find Vehicle</h4>
+<div class="outline-text-4" id="text-3-4-2">
+<p>
+To find the parking spot of a vehicle, e.g. in order to release the spot when the car leaves, the vehicle parking info can be stored in a hash map, keyed by the vechicle's license number.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8ea29dd" class="outline-3">
+<h3 id="org8ea29dd"><span class="section-number-3">3.5</span> Take Hints</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+The interviewer probably has a list of key topics he wants to be covered, so don't force your way through the process, instead take hints from the interviewer and let hims guides you.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfc263f9" class="outline-3">
+<h3 id="orgfc263f9"><span class="section-number-3">3.6</span> Links</h3>
+<div class="outline-text-3" id="text-3-6">
+<ol class="org-ol">
+<li><a href="https://www.youtube.com/watch?v=DSGsa0pu8-k">Design a Parking Lot</a></li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org129f70d" class="outline-2">
+<h2 id="org129f70d"><span class="section-number-2">4</span> Design a Messenger Service</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-org28fd1fe" class="outline-3">
+<h3 id="org28fd1fe"><span class="section-number-3">4.1</span> Features</h3>
+<div class="outline-text-3" id="text-4-1">
 <p>
 Talk about features needed, from basic to advanced, e.g.
 </p>
@@ -972,9 +1154,9 @@ Talk about features needed, from basic to advanced, e.g.
 </div>
 </div>
 
-<div id="outline-container-org71d8699" class="outline-3">
-<h3 id="org71d8699"><span class="section-number-3">3.2</span> High-level Architecture</h3>
-<div class="outline-text-3" id="text-3-2">
+<div id="outline-container-org4834d07" class="outline-3">
+<h3 id="org4834d07"><span class="section-number-3">4.2</span> High-level Architecture</h3>
+<div class="outline-text-3" id="text-4-2">
 <p>
 In the most basic scenario, there are 2 clients and 1 server.
 </p>
@@ -993,9 +1175,9 @@ When there are multiple servers, clients should be able to connect to different 
 </div>
 </div>
 
-<div id="outline-container-org0c90c3c" class="outline-3">
-<h3 id="org0c90c3c"><span class="section-number-3">3.3</span> Low-level Architecture</h3>
-<div class="outline-text-3" id="text-3-3">
+<div id="outline-container-org5e7670a" class="outline-3">
+<h3 id="org5e7670a"><span class="section-number-3">4.3</span> Low-level Architecture</h3>
+<div class="outline-text-3" id="text-4-3">
 <p>
 <del>Once the high-level architecture is clear, drill down to the design and functions of a single server node.</del>
 </p>
@@ -1010,9 +1192,9 @@ Because each time a client sends a message, it may connect to different servers 
 </div>
 </div>
 
-<div id="outline-container-org29c3252" class="outline-3">
-<h3 id="org29c3252"><span class="section-number-3">3.4</span> States</h3>
-<div class="outline-text-3" id="text-3-4">
+<div id="outline-container-org27519fb" class="outline-3">
+<h3 id="org27519fb"><span class="section-number-3">4.4</span> States</h3>
+<div class="outline-text-3" id="text-4-4">
 <ol class="org-ol">
 <li>Sender sends a message to a server.</li>
 <li>Server responds with a <code>sent</code> message.</li>
@@ -1025,9 +1207,9 @@ Because each time a client sends a message, it may connect to different servers 
 </div>
 </div>
 
-<div id="outline-container-org502cb7d" class="outline-3">
-<h3 id="org502cb7d"><span class="section-number-3">3.5</span> Push Notification</h3>
-<div class="outline-text-3" id="text-3-5">
+<div id="outline-container-orge29e961" class="outline-3">
+<h3 id="orge29e961"><span class="section-number-3">4.5</span> Push Notification</h3>
+<div class="outline-text-3" id="text-4-5">
 <p>
 Push notification is usually platform-dependent, and there are existing services that can be used directly, such as Google Cloud Messenging. Push notifications usually work in fire-and-forget manners.
 </p>
@@ -1038,9 +1220,9 @@ There can be a layer of servers that are dedicated to push notification processi
 </div>
 </div>
 
-<div id="outline-container-orgbe5acd9" class="outline-3">
-<h3 id="orgbe5acd9"><span class="section-number-3">3.6</span> More Topics</h3>
-<div class="outline-text-3" id="text-3-6">
+<div id="outline-container-org1283e48" class="outline-3">
+<h3 id="org1283e48"><span class="section-number-3">4.6</span> More Topics</h3>
+<div class="outline-text-3" id="text-4-6">
 <ul class="org-ul">
 <li>Other features: group chat, message history etc.</li>
 <li>Scaling</li>
@@ -1051,11 +1233,11 @@ There can be a layer of servers that are dedicated to push notification processi
 </div>
 </div>
 
-<div id="outline-container-org64ed4ed" class="outline-3">
-<h3 id="org64ed4ed"><span class="section-number-3">3.7</span> Links</h3>
-<div class="outline-text-3" id="text-3-7">
+<div id="outline-container-org6822c1d" class="outline-3">
+<h3 id="org6822c1d"><span class="section-number-3">4.7</span> Links</h3>
+<div class="outline-text-3" id="text-4-7">
 <ol class="org-ol">
-<li><a href="https://www.youtube.com/watch?v=5m0L0k8ZtEs">System Design: Messenger service like Whatsapp or WeChat</a></li>
+<li><a href="https://www.youtube.com/watch?v=5m0L0k8ZtEs">Design a Messenger Service</a></li>
 </ol>
 </div>
 </div>
@@ -1063,7 +1245,7 @@ There can be a layer of servers that are dedicated to push notification processi
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Victor Chen</p>
-<p class="date">Created: 2020-02-08 Sat 18:32</p>
+<p class="date">Created: 2020-02-15 Sat 22:18</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
