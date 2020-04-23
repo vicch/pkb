@@ -1,0 +1,745 @@
+---
+title: "Java"
+---
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-03-14 Sat 17:53 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Java</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Victor Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Java</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgc021074">1 Type</a>
+<ul>
+<li><a href="#org09e7a6d">1.1 Numeric</a>
+<ul>
+<li><a href="#orge4e0b35">1.1.1 Integer</a></li>
+<li><a href="#org55c2eac">1.1.2 Float</a></li>
+<li><a href="#org4b85aed">1.1.3 Suffix</a></li>
+<li><a href="#org044c773">1.1.4 Underscore</a></li>
+</ul>
+</li>
+<li><a href="#orgcf6593d">1.2 Character</a></li>
+<li><a href="#org396e500">1.3 String</a></li>
+<li><a href="#org9cf41b1">1.4 Array</a></li>
+<li><a href="#orgabf7ed7">1.5 Enum</a></li>
+</ul>
+</li>
+<li><a href="#org45ae62e">2 Type Usage</a>
+<ul>
+<li><a href="#orgbaea9c4">2.1 Casting</a></li>
+<li><a href="#org3bad649">2.2 Conversion</a></li>
+</ul>
+</li>
+<li><a href="#org0fdf916">3 Variable</a>
+<ul>
+<li><a href="#orgaaeddfb">3.1 Syntax</a></li>
+<li><a href="#org5d95e27">3.2 <code>final</code></a></li>
+</ul>
+</li>
+<li><a href="#orga6eb791">4 Control</a>
+<ul>
+<li><a href="#org274dffa">4.1 <code>for</code></a></li>
+<li><a href="#orgec15cb9">4.2 <code>break</code></a></li>
+</ul>
+</li>
+<li><a href="#orgd205987">5 Method</a>
+<ul>
+<li><a href="#orga594274">5.1 <code>main()</code></a></li>
+</ul>
+</li>
+<li><a href="#org8873d95">6 OOP</a>
+<ul>
+<li><a href="#org807c66f">6.1 Constructor</a>
+<ul>
+<li><a href="#orgcbb87da">6.1.1 <code>this()</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org23d2cdd">7 Package</a>
+<ul>
+<li><a href="#orgab2c1a0">7.1 <code>import</code></a></li>
+</ul>
+</li>
+<li><a href="#orgd6439c4">8 Module</a></li>
+<li><a href="#orgf4fe416">9 Links</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc021074" class="outline-2">
+<h2 id="orgc021074"><span class="section-number-2">1</span> Type</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-org09e7a6d" class="outline-3">
+<h3 id="org09e7a6d"><span class="section-number-3">1.1</span> Numeric</h3>
+<div class="outline-text-3" id="text-1-1">
+</div><div id="outline-container-orge4e0b35" class="outline-4">
+<h4 id="orge4e0b35"><span class="section-number-4">1.1.1</span> Integer</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Integer.html">java.base | java.land.Integer</a>
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>Type</b></th>
+<th scope="col" class="org-right"><b>Byte</b></th>
+<th scope="col" class="org-right"><b>Min</b></th>
+<th scope="col" class="org-right"><b>Max</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>byte</code></td>
+<td class="org-right">1</td>
+<td class="org-right">-128</td>
+<td class="org-right">127</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>short</code></td>
+<td class="org-right">2</td>
+<td class="org-right">-32,768</td>
+<td class="org-right">32,767</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>int</code></td>
+<td class="org-right">4</td>
+<td class="org-right">-2,147,483,648</td>
+<td class="org-right">2,147,483,647</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>long</code></td>
+<td class="org-right">8</td>
+<td class="org-right">-9,223,372,036,854,775,808</td>
+<td class="org-right">9,223,372,036,854,775,807</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org55c2eac" class="outline-4">
+<h4 id="org55c2eac"><span class="section-number-4">1.1.2</span> Float</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<p>
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Float.html">java.base | java.lang.Float</a>
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>Type</b></th>
+<th scope="col" class="org-right"><b>Byte</b></th>
+<th scope="col" class="org-right"><b>Min</b></th>
+<th scope="col" class="org-right"><b>Max</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>float</code></td>
+<td class="org-right">4</td>
+<td class="org-right">\(2^{-149}\)</td>
+<td class="org-right">\((2-2^{-23}) \times 2^{127}\)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-right">&#xa0;</td>
+<td class="org-right"><code>0x0.000002P-126f</code></td>
+<td class="org-right"><code>0x1.fffffeP+127f</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>double</code></td>
+<td class="org-right">8</td>
+<td class="org-right">\(2^{-1074}\)</td>
+<td class="org-right">\((2-2^{-52}) \times 2^{1023}\)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-right">&#xa0;</td>
+<td class="org-right"><code>0x0.0000000000001P-1022</code></td>
+<td class="org-right"><code>0x1.fffffffffffffP+1023</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org4b85aed" class="outline-4">
+<h4 id="org4b85aed"><span class="section-number-4">1.1.3</span> Suffix</h4>
+<div class="outline-text-4" id="text-1-1-3">
+<p>
+Integer values are treated as <code>int</code> by default, unless suffixed by <code>L</code> for <code>long</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-type">long</span> <span class="org-variable-name">foo</span> = 100000L;
+</pre>
+</div>
+
+<p>
+Floating point values are treated as <code>double</code> by default, unless suffixed by <code>F</code> or <code>f</code> for <code>float</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-type">float</span> <span class="org-variable-name">foo</span> = 234.5F;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org044c773" class="outline-4">
+<h4 id="org044c773"><span class="section-number-4">1.1.4</span> Underscore</h4>
+<div class="outline-text-4" id="text-1-1-4">
+<p>
+<a href="https://docs.oracle.com/javase/8/docs/technotes/guides/language/underscores-literals.html">Java Documentation | Underscores in Numeric Literals</a>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcf6593d" class="outline-3">
+<h3 id="orgcf6593d"><span class="section-number-3">1.2</span> Character</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+16-bit unsigned integer value used to store Unicode character.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-type">char</span> <span class="org-variable-name">foo</span> = <span class="org-string">'A'</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org396e500" class="outline-3">
+<h3 id="org396e500"><span class="section-number-3">1.3</span> String</h3>
+<div class="outline-text-3" id="text-1-3">
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-type">String</span> <span class="org-variable-name">foo</span> = <span class="org-string">"bar"</span>;
+<span class="org-type">String</span> <span class="org-variable-name">foo</span> = <span class="org-string">"bar"</span> + <span class="org-string">" "</span> + <span class="org-string">"bar"</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9cf41b1" class="outline-3">
+<h3 id="org9cf41b1"><span class="section-number-3">1.4</span> Array</h3>
+<div class="outline-text-3" id="text-1-4">
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-type">int</span>[] <span class="org-variable-name">foo</span> = <span class="org-keyword">new</span> <span class="org-type">int</span>[10];      <span class="org-comment-delimiter">// </span><span class="org-comment">Size must be decided</span>
+<span class="org-type">String</span> <span class="org-variable-name">bar</span>[] = <span class="org-keyword">new</span> <span class="org-type">String</span>[5]; <span class="org-comment-delimiter">// </span><span class="org-comment">[] can be after type or var name</span>
+
+<span class="org-type">int</span>[] <span class="org-variable-name">foo</span> = <span class="org-keyword">new</span> <span class="org-type">int</span>[]{1, 2, 3};
+<span class="org-type">String</span>[] <span class="org-variable-name">bar</span> = <span class="org-keyword">new</span> <span class="org-type">String</span>[]{<span class="org-string">"a"</span>, <span class="org-string">"b"</span>, <span class="org-string">"c"</span>};
+
+<span class="org-type">int</span>[] <span class="org-variable-name">foo</span> = {1, 2, 3};
+<span class="org-type">String</span> <span class="org-variable-name">bar</span>[] = {<span class="org-string">"a"</span>, <span class="org-string">"b"</span>, <span class="org-string">"c"</span>};
+
+<span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 0; i &lt; foo.<span class="org-type">length</span>; i++) {}
+<span class="org-keyword">for</span> (<span class="org-type">String</span> <span class="org-variable-name">i</span> : bar) {}
+
+<span class="org-type">int</span>[] <span class="org-function-name">foo</span>() {
+    <span class="org-keyword">return</span> <span class="org-keyword">new</span> <span class="org-type">int</span>[]{1, 2, 3};
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgabf7ed7" class="outline-3">
+<h3 id="orgabf7ed7"><span class="section-number-3">1.5</span> Enum</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+<a href="https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html">Java Documentation | Enum Types</a>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org45ae62e" class="outline-2">
+<h2 id="org45ae62e"><span class="section-number-2">2</span> Type Usage</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-orgbaea9c4" class="outline-3">
+<h3 id="orgbaea9c4"><span class="section-number-3">2.1</span> Casting</h3>
+<div class="outline-text-3" id="text-2-1">
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-type">int</span> <span class="org-variable-name">foo</span> = (<span class="org-type">int</span>) bar;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3bad649" class="outline-3">
+<h3 id="org3bad649"><span class="section-number-3">2.2</span> Conversion</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Conversion methods exist for different types, e.g.:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-type">int</span> <span class="org-variable-name">foo</span> = Integer.parseInt(<span class="org-string">"123"</span>);
+<span class="org-type">String</span> <span class="org-variable-name">bar</span> = Integer.toString(123);
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0fdf916" class="outline-2">
+<h2 id="org0fdf916"><span class="section-number-2">3</span> Variable</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-orgaaeddfb" class="outline-3">
+<h3 id="orgaaeddfb"><span class="section-number-3">3.1</span> Syntax</h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-type">int</span> <span class="org-variable-name">foo</span>;
+<span class="org-type">int</span> <span class="org-variable-name">foo</span>, <span class="org-variable-name">bar</span>;
+<span class="org-type">int</span> <span class="org-variable-name">foo</span> = 1;
+<span class="org-type">int</span> <span class="org-variable-name">foo</span> = 1, <span class="org-variable-name">bar</span> = 2;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5d95e27" class="outline-3">
+<h3 id="org5d95e27"><span class="section-number-3">3.2</span> <code>final</code></h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Final variables can't be reassigned.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">final</span> <span class="org-type">int</span> <span class="org-variable-name">foo</span>;
+
+<span class="org-keyword">final</span> <span class="org-type">int</span> <span class="org-variable-name">bar</span>;
+bar = 1; <span class="org-comment-delimiter">// </span><span class="org-comment">Can be intialized after definition</span>
+
+<span class="org-type">String</span> <span class="org-variable-name">s</span>;
+<span class="org-keyword">final</span> <span class="org-type">int</span> <span class="org-variable-name">l</span> = s.length(); <span class="org-comment-delimiter">// </span><span class="org-comment">Use "final" to indicate the value is immutable</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga6eb791" class="outline-2">
+<h2 id="orga6eb791"><span class="section-number-2">4</span> Control</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-org274dffa" class="outline-3">
+<h3 id="org274dffa"><span class="section-number-3">4.1</span> <code>for</code></h3>
+<div class="outline-text-3" id="text-4-1">
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 0; i &lt; 10; i++) {
+    ...
+}
+
+<span class="org-type">int</span>[] <span class="org-variable-name">nums</span> = {1, 2, 3};
+<span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">n</span> : nums) {
+    ...
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgec15cb9" class="outline-3">
+<h3 id="orgec15cb9"><span class="section-number-3">4.2</span> <code>break</code></h3>
+<div class="outline-text-3" id="text-4-2">
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-constant">outer</span>:
+<span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">i</span> = 0; i &lt; 10; i++) {
+    <span class="org-keyword">for</span> (<span class="org-type">int</span> <span class="org-variable-name">j</span> = 0; j &lt; 10; j++) {
+        <span class="org-keyword">if</span> (i == 5 &amp;&amp; j == 5) {
+            <span class="org-keyword">break</span> <span class="org-constant">outer</span>;
+        }
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd205987" class="outline-2">
+<h2 id="orgd205987"><span class="section-number-2">5</span> Method</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-orga594274" class="outline-3">
+<h3 id="orga594274"><span class="section-number-3">5.1</span> <code>main()</code></h3>
+<div class="outline-text-3" id="text-5-1">
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">static</span> <span class="org-type">void</span> <span class="org-function-name">main</span>(<span class="org-type">String</span>[] <span class="org-variable-name">args</span>) {}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8873d95" class="outline-2">
+<h2 id="org8873d95"><span class="section-number-2">6</span> OOP</h2>
+<div class="outline-text-2" id="text-6">
+</div><div id="outline-container-org807c66f" class="outline-3">
+<h3 id="org807c66f"><span class="section-number-3">6.1</span> Constructor</h3>
+<div class="outline-text-3" id="text-6-1">
+</div><div id="outline-container-orgcbb87da" class="outline-4">
+<h4 id="orgcbb87da"><span class="section-number-4">6.1.1</span> <code>this()</code></h4>
+<div class="outline-text-4" id="text-6-1-1">
+<p>
+Explicit constructor invocation: inside one constructor, calling another constructor (of the same class) using <code>this()</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">public</span> <span class="org-keyword">class</span> <span class="org-type">Rectangle</span> {
+    <span class="org-keyword">private</span> <span class="org-type">int</span> <span class="org-variable-name">x</span>, <span class="org-variable-name">y</span>;
+    <span class="org-keyword">private</span> <span class="org-type">int</span> <span class="org-variable-name">width</span>, <span class="org-variable-name">height</span>;
+
+    <span class="org-keyword">public</span> <span class="org-function-name">Rectangle</span>() {
+        <span class="org-keyword">this</span>(0, 0, 1, 1);
+    }
+    <span class="org-keyword">public</span> <span class="org-function-name">Rectangle</span>(<span class="org-type">int</span> <span class="org-variable-name">width</span>, <span class="org-type">int</span> <span class="org-variable-name">height</span>) {
+        <span class="org-keyword">this</span>(0, 0, width, height);
+    }
+    <span class="org-keyword">public</span> <span class="org-function-name">Rectangle</span>(<span class="org-type">int</span> <span class="org-variable-name">x</span>, <span class="org-type">int</span> <span class="org-variable-name">y</span>, <span class="org-type">int</span> <span class="org-variable-name">width</span>, <span class="org-type">int</span> <span class="org-variable-name">height</span>) {
+        <span class="org-keyword">this</span>.x = x;
+        <span class="org-keyword">this</span>.y = y;
+        <span class="org-keyword">this</span>.width = width;
+        <span class="org-keyword">this</span>.height = height;
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org23d2cdd" class="outline-2">
+<h2 id="org23d2cdd"><span class="section-number-2">7</span> Package</h2>
+<div class="outline-text-2" id="text-7">
+</div><div id="outline-container-orgab2c1a0" class="outline-3">
+<h3 id="orgab2c1a0"><span class="section-number-3">7.1</span> <code>import</code></h3>
+<div class="outline-text-3" id="text-7-1">
+<div class="org-src-container">
+<pre class="src src-java"><span class="org-keyword">import</span> <span class="org-constant">foo</span>.<span class="org-type">Bar</span>; <span class="org-comment-delimiter">// </span><span class="org-comment">Import specific class inside package</span>
+<span class="org-keyword">import</span> <span class="org-constant">foo</span>.*;   <span class="org-comment-delimiter">// </span><span class="org-comment">Import all classes inside package</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd6439c4" class="outline-2">
+<h2 id="orgd6439c4"><span class="section-number-2">8</span> Module</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+A module is one or more packages that belong together.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf4fe416" class="outline-2">
+<h2 id="orgf4fe416"><span class="section-number-2">9</span> Links</h2>
+<div class="outline-text-2" id="text-9">
+<ol class="org-ol">
+<li><a href="https://docs.oracle.com/javase/tutorial/java/index.html">Oracle | The Java Tutorials</a></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Victor Chen</p>
+<p class="date">Created: 2020-03-14 Sat 17:53</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

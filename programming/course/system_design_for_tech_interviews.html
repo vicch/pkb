@@ -1,15 +1,15 @@
 ---
-title: "Japanese Sentence"
+title: "System Design for Tech Interviews"
 ---
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-03-03 Tue 17:50 -->
+<!-- 2020-02-20 Thu 21:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Japanese Sentence</title>
+<title>System Design for Tech Interviews</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Victor Chen" />
 <style type="text/css">
@@ -239,21 +239,93 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">Japanese Sentence</h1>
+<h1 class="title">System Design for Tech Interviews</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgfed8b3f">1 Wanikani</a></li>
-<li><a href="#org5b5632d">2 Tatoeba</a></li>
-<li><a href="#org36dc450">3 旭文</a></li>
+<li><a href="#orgc4b26ac">1 Introduction</a></li>
+<li><a href="#org78a497c">2 The System Design Process</a>
+<ul>
+<li><a href="#org0effc3c">2.1 Step 1: Constraints and Use Cases</a>
+<ul>
+<li><a href="#org0eeacf3">2.1.1 Example</a></li>
+</ul>
+</li>
+<li><a href="#org045044b">2.2 Step 2: Abstract Design</a>
+<ul>
+<li><a href="#org1cee2e8">2.2.1 Example</a></li>
+</ul>
+</li>
+<li><a href="#orgb72a737">2.3 Step 3: Understanding Bottlenecks</a></li>
+<li><a href="#org5304ace">2.4 Step 4: Scaling Abstract Design</a></li>
+</ul>
+</li>
+<li><a href="#orgf6364f7">3 Links</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgfed8b3f" class="outline-2">
-<h2 id="orgfed8b3f"><span class="section-number-2">1</span> Wanikani</h2>
+<div id="outline-container-orgc4b26ac" class="outline-2">
+<h2 id="orgc4b26ac"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
+<p>
+The idea of these questions is to have a discussion about the problem at hand. There is no one right answer. What’s important for the interviewer is <span class="underline">the process which you use to tackle the problem</span>. The important thing is to be able to <span class="underline">justify your ideas</span>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org78a497c" class="outline-2">
+<h2 id="org78a497c"><span class="section-number-2">2</span> The System Design Process</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-org0effc3c" class="outline-3">
+<h3 id="org0effc3c"><span class="section-number-3">2.1</span> Step 1: Constraints and Use Cases</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+System design questions will likely be weakly defined. The very first thing you should do is to <span class="underline">clarify the system's constraints</span> and to <span class="underline">identify the use cases</span> the system needs to satisfy. Never assume things that were not explicitly stated.
+</p>
+
+<p>
+System constraints usually include:
+</p>
+
+<ul class="org-ul">
+<li>volume of traffic (different request per second)</li>
+<li>volume of data (incremental and total)</li>
+</ul>
+</div>
+
+<div id="outline-container-org0eeacf3" class="outline-4">
+<h4 id="org0eeacf3"><span class="section-number-4">2.1.1</span> Example</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+Consider a URL-shortening service, it could be meant to
+</p>
+
+<ul class="org-ul">
+<li>serve thousands of users, but each could be sharing millions of URLs, or the opposite</li>
+<li>handle millions of clicks on the shortened URLs, or dozens</li>
+<li>provide extensive statistics about each shortened URL, or statistics may not be a requirement at all</li>
+</ul>
+
+<p>
+Use cases:
+</p>
+
+<ul class="org-ul">
+<li>Shortening</li>
+<li>Redirection</li>
+<li>Custom URL</li>
+<li>Automatic expiration</li>
+<li>Manual removal</li>
+<li>UI and/or API</li>
+<li>Analytics</li>
+</ul>
+
+<p>
+Constraints estimation:
+</p>
+
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
 
 
@@ -261,226 +333,172 @@ for the JavaScript code in this tag.
 <col  class="org-left" />
 
 <col  class="org-left" />
-
-<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="org-left"><b>大人</b></th>
-<th scope="col" class="org-left">大人は三人だけです。</th>
-<th scope="col" class="org-left">There are only three adults.</th>
-</tr>
-
-<tr>
-<th scope="col" class="org-left">&#xa0;</th>
-<th scope="col" class="org-left">これは、大人の料金です。</th>
-<th scope="col" class="org-left">This is the adult price.</th>
-</tr>
-
-<tr>
-<th scope="col" class="org-left">&#xa0;</th>
-<th scope="col" class="org-left">大人たちは居酒屋に行った。</th>
-<th scope="col" class="org-left">The adults went to an izakaya.</th>
+<th scope="col" class="org-left">New URLs per month</th>
+<th scope="col" class="org-left">100 mil</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="org-left"><b>一人</b></td>
-<td class="org-left">一人はアメリカ人です。</td>
-<td class="org-left">One of them is American.</td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">一人でカラオケに行きました。</td>
-<td class="org-left">(I) went to karaoke alone.</td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">娘は、今日初めて一人でお<ruby>使<rp>(</rp><rt>つか</rt><rp>)</rp></ruby>いに行きました。</td>
-<td class="org-left">My daughter did the errands by herself for the first time today.</td>
+<td class="org-left">Clicks per URL per day</td>
+<td class="org-left">1</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><b>人工</b></td>
-<td class="org-left">この川は、人工の川です。</td>
-<td class="org-left">This river is man-made.</td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">* 庭に人工芝を敷いてみました。</td>
-<td class="org-left">* (I) put artificial turf in the garden.</td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">あなたの脳は、本当に人工の脳何ですか？</td>
-<td class="org-left">Is your brain really artificial?</td>
+<td class="org-left">URL life span</td>
+<td class="org-left">10 days</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><b>大きい</b></td>
-<td class="org-left">この帽子は大きすぎます。</td>
-<td class="org-left">This hat is too big.</td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">その大きい桃を二つください。</td>
-<td class="org-left">Can I get those two big peaches?</td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">私の赤ちゃんは、子牛と同じくらい大きい。</td>
-<td class="org-left">My baby is about as big as a calf.</td>
+<td class="org-left">Total clicks per month</td>
+<td class="org-left">100 mil x 1 x 10 days = 1 bil</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><b>下</b></td>
-<td class="org-left">下に<ruby>下<rp>(</rp><rt>お</rt><rp>)</rp></ruby>りてきてください。</td>
-<td class="org-left">Please come down.</td>
+<td class="org-left"><b>All requests per second</b></td>
+<td class="org-left">(100 mil + 1 bil) / 30 / 24 / 3600 = 424</td>
 </tr>
 
 <tr>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">机の下には何がありますか。</td>
-<td class="org-left">What’s under the desk?</td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">僕はオフィスの下の階に住んでいる。</td>
-<td class="org-left">I live on the floor below the office.</td>
+<td class="org-left">About 10% is shortening request</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><b>八</b></td>
-<td class="org-left">八時？本当に、八時？</td>
-<td class="org-left">Eight o’clock? Are you sure it’s eight o’clock?</td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left"><ruby>飴<rp>(</rp><rt>あめ</rt><rp>)</rp></ruby>を八<ruby>個<rp>(</rp><rt>こ</rt><rp>)</rp></ruby>カバンに入れました。</td>
-<td class="org-left">(I) put eight candies in (my) purse.</td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">学生は、今日うちで、八ページを勉強します。</td>
-<td class="org-left">Students will study page eight at home today.</td>
+<td class="org-left">URL length</td>
+<td class="org-left">500B</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><b>八つ</b></td>
-<td class="org-left">八つしかありませんよ。</td>
-<td class="org-left">There are only eight (of them).</td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left"><ruby>袋<rp>(</rp><rt>ふくろ</rt><rp>)</rp></ruby>には、じゃがいもが八つ入っています。</td>
-<td class="org-left">There are eight potatoes in a bag.</td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">八つの顔と六つの腕があるもの、なーんだ。</td>
-<td class="org-left">What has eight faces and six arms?</td>
+<td class="org-left"><b>Data write per second</b></td>
+<td class="org-left">424 x 10% x 500B = 20KB</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><b>入り口</b></td>
-<td class="org-left">入り口にＸがいるよ。</td>
-<td class="org-left">X is at the entrance.</td>
+<td class="org-left"><b>Data read per second</b></td>
+<td class="org-left">424 x 90% x 500B = 180KB</td>
 </tr>
-
+</tbody>
+<tbody>
 <tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">入り口が三つあります。</td>
-<td class="org-left">There are three entrances.</td>
+<td class="org-left"><b>Data in memory</b></td>
+<td class="org-left">100 mil / 30 * 10 days * 500B = 16.7GB</td>
 </tr>
-
+</tbody>
+<tbody>
 <tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">入り口の所で待っています。</td>
-<td class="org-left">(I) will wait (for you) at the entrance.</td>
+<td class="org-left">Total URLs in 5 years</td>
+<td class="org-left">100 mil x 12 x 5 = 60 bil</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><b>Total URLs data in 5 years</b></td>
+<td class="org-left">500B x 60 bil = 3TB</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org5b5632d" class="outline-2">
-<h2 id="org5b5632d"><span class="section-number-2">2</span> Tatoeba</h2>
-<div class="outline-text-2" id="text-2">
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<div id="outline-container-org045044b" class="outline-3">
+<h3 id="org045044b"><span class="section-number-3">2.2</span> Step 2: Abstract Design</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Outline the important components of the architecture. Sketch the main components and the connections between them. Justify your ideas and try to address every constraint and use case.
+</p>
+</div>
+
+<div id="outline-container-org1cee2e8" class="outline-4">
+<h4 id="org1cee2e8"><span class="section-number-4">2.2.1</span> Example</h4>
+<div class="outline-text-4" id="text-2-2-1">
+<p>
+Still considering the URL shortening service, abstract design:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
 
 
 <colgroup>
 <col  class="org-left" />
 
 <col  class="org-left" />
-
-<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="org-left"><a href="https://tatoeba.org/eng/sentences/show/1487218">Link</a></th>
-<th scope="col" class="org-left">私たちは彼のことを何も知りません。</th>
-<th scope="col" class="org-left">他的事情我们什么都不知道。</th>
+<th scope="col" class="org-left">Application layer</th>
+<th scope="col" class="org-left">Shortening service</th>
+</tr>
+
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">Redirection service</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="org-left"><a href="https://tatoeba.org/eng/sentences/show/2129219">Link</a></td>
-<td class="org-left">春は私しが<ruby>一番<rp>(</rp><rt>いちばん</rt><rp>)</rp></ruby>好きな<ruby>季節<rp>(</rp><rt>きせつ</rt><rp>)</rp></ruby>だ。</td>
-<td class="org-left">春天是我最喜欢的季节。</td>
+<td class="org-left">Storage layer</td>
+<td class="org-left">Hash type of storage</td>
 </tr>
 </tbody>
 </table>
+
+<p>
+Shortening (hashing) logic:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-variable-name">shortened_url</span> = convert_to_base62(md5(original_url + salt))[:6]
+</pre>
+</div>
+</div>
 </div>
 </div>
 
-<div id="outline-container-org36dc450" class="outline-2">
-<h2 id="org36dc450"><span class="section-number-2">3</span> 旭文</h2>
+<div id="outline-container-orgb72a737" class="outline-3">
+<h3 id="orgb72a737"><span class="section-number-3">2.3</span> Step 3: Understanding Bottlenecks</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+You need to be able to identify the bottlenecks (weak spots) in a system and be able to resolve them. You are not expected to design a system from the ground up, which immediately handles all the load. It needs to be scalable, in order to be improvable using some standard tools and techniques.
+</p>
+
+<p>
+Usually each solution is a trade-off of some kind. The important thing is to <span class="underline">talk about the trade-offs, and to measure their impact on the system</span> given the constraints and use cases defined.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5304ace" class="outline-3">
+<h3 id="org5304ace"><span class="section-number-3">2.4</span> Step 4: Scaling Abstract Design</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+Once the high-level design is done, you can dive into making it more detailed. Usually, this means making the system scale.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf6364f7" class="outline-2">
+<h2 id="orgf6364f7"><span class="section-number-2">3</span> Links</h2>
 <div class="outline-text-2" id="text-3">
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">外を歩くときは、車に気を付けてください。</th>
-<th scope="col" class="org-left">在外面走路时，请小心汽车。</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-</tbody>
-</table>
+<ol class="org-ol">
+<li><a href="https://www.hiredintech.com/courses/system-design">System Design for Tech Interviews</a></li>
+</ol>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Victor Chen</p>
-<p class="date">Created: 2020-03-03 Tue 17:50</p>
+<p class="date">Created: 2020-02-20 Thu 21:30</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

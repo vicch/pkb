@@ -1134,7 +1134,7 @@ If session state is small, you can embed all information inside cookie, but cook
 
 If you use wide tables (each field or property is a column), when it comes to upgrade the database schema, for example, adding a new column, the system will need to lock the table while the schema change is implemented. When operating at scale this would mean a large database outage.
 
-A narrow table stores each property of an object as a single row. Therefore when you want to add a new column to the database, all you need to do is =INSERT= records, which is a non-locking operation.
+A narrow table _stores each property of an object as a single row_. Therefore when you want to add a new column to the database, all you need to do is =INSERT= records, which is a non-locking operation.
 
 For example, to load the last 10 journal entries of blog, and each journal entry has 10 properties:
 
@@ -1151,7 +1151,7 @@ How on earth can that be more scalable? The answer to that question relies entir
 
 ** Use Memcache
 
-Memcache is a distributed, stateless, low latency, network based caching system. It was invented partially to help offset the database overhead inherent in a narrow table database design.
+Memcache is a distributed, stateless, low latency, network based caching system. _It was invented partially to help offset the database overhead inherent in a narrow table database design._
 
 The first time a user visits a page and nothing is in the cache:
 

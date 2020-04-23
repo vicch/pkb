@@ -3,13 +3,15 @@
 
 * Keys
 
-| =C-=  | =Ctrl=   |
-|-------+----------|
-| =M-=  | =Alt=    |
-|-------+----------|
-| =S-=  | =Shift=  |
-|-------+----------|
-| =RET= | =Return= |
+|       | *Windows* | *Mac*     |
+|-------+-----------+-----------|
+| =C-=  | =Ctrl=    | =Control= |
+|-------+-----------+-----------|
+| =M-=  | =Alt=     | =Option=  |
+|-------+-----------+-----------|
+| =S-=  | =Shift=   | =Shift=   |
+|-------+-----------+-----------|
+| =RET= | =Return=  | =Return=  |
 
 * Shortcuts
 ** 控制
@@ -45,24 +47,22 @@
 
 ** 表格
 
-| =M-S-Up=          | 删除行                     |
-| =M-S-Down=        | 添加行                     |
-| =M-S-Left=        | 删除列                     |
-| =M-S-Right=       | 添加列                     |
-|-------------------+----------------------------|
-| =M-Up=            | 上移一行                   |
-| =M-Down=          | 下移一行                   |
-| =M-Left=          | 左移一列                   |
-| =M-Right=         | 右移一列                   |
-|-------------------+----------------------------|
-| =C-c= =C-x= =M-w= | 复制单元格                 |
-| =C-c= =C-x= =C-w= | 剪切单元格                 |
-| =C-c= =C-x= =C-y= | 粘贴单元格                 |
-|-------------------+----------------------------|
-| =M-Return=        | 光标之后内容移到下方单元格 |
-|-------------------+----------------------------|
-| =C-c= =-=         | 下方插入分隔行             |
-| =C-c= =Return=    | 下方插入分隔行             |
+| =M-S-Up/Down=          | 删除/添加行                |
+| =M-S-Left/Right=       | 删除/添加列                |
+|------------------------+----------------------------|
+| =M-Up/Down=            | 上/下移一行                |
+| =M-Left/Right=         | 左/右移一列                |
+|------------------------+----------------------------|
+| =S-Up/Down/Left/Right= | 上/下/左/右移单元格        |
+|------------------------+----------------------------|
+| =C-c= =-=              | 下方插入分隔行             |
+| =C-c= =RET=            | 下方插入分隔行             |
+|------------------------+----------------------------|
+| =C-c= =C-x= =M-w=      | 复制单元格                 |
+| =C-c= =C-x= =C-w=      | 剪切单元格                 |
+| =C-c= =C-x= =C-y=      | 粘贴单元格                 |
+|------------------------+----------------------------|
+| =M-RET=                | 光标之后内容移到下方单元格 |
 
 | =C-c= =~=                         | 创建表格、识别表格 |
 |-----------------------------------+--------------------|
@@ -100,11 +100,11 @@
 |----------+------------------------|
 | 定义列表 | =- name :: definition= |
 
-| 表格中转义 @@html:<code>&#124;</code>@@ | =@@html:<code>&#124;</code>@@= |
-|-----------------------------------------+--------------------------------|
-| 表格列左对齐                            | =<l>=                          |
-|-----------------------------------------+--------------------------------|
-| 段落内换行                              | =\\=                           |
+| 表格中转义 \vert   | =\vert= |
+|--------------------+--------------------------------|
+| 表格列左对齐       | =<l>=                          |
+|--------------------+--------------------------------|
+| 段落内换行         | =\\=                           |
 
 | 图片、表格标题 | =#+CAPTION: <text>=                |
 |----------------+------------------------------------|
@@ -195,8 +195,8 @@ In newer versions, the start and end tags can be omitted:
 
 ** Links
 
-1. [[http://sdntutorials.com/steps-to-install-plantuml-on-windows-7/][Steps To Install PlantUML On Windows 7]]
 1. [[http://plantuml.com/][PlantUML in a nutshell]]
+1. [[https://www.planttext.com/][PlantText UML Editor]]
 1. [[https://plantuml.com/skinparam][PlantUML | =skinparam=]]
 
 * Ditaa
@@ -333,6 +333,17 @@ In newer versions, the start and end tags can be omitted:
           "--no-fonts"
           dvifile))
 #+END_SRC
+* MELPA
+
+#+BEGIN_SRC sh
+# Refresh package lists from sources
+M-x package-refresh-contents
+
+# Install pacakge
+M-x package-install
+<package_name>
+#+END_SRC
+
 * 修改
 
 =<blockquote>= 输出标题：
@@ -362,28 +373,33 @@ ln -s ~/Dropbox/portable/orgmode/config/.emacs ~/.emacs
 #+END_SRC
 
 * Links
+** Org-mode
 
-1. [[http://home.fnal.gov/~neilsen/notebook/orgExamples/org-examples.html][Emacs org-mode examples and cookbook]]
-1. [[http://orgmode.org/worg/org-tutorials/index.html][Org tutorials]]
+1. [[http://orgmode.org/worg/org-tutorials/index.html][Org-mode Tutorials]]
+1. [[https://orgmode.org/worg/org-symbols.html][Symbols in Org-mode]]
 1. [[http://orgmode.org/manual/index.html][The Org Manual]]
+1. [[http://home.fnal.gov/~neilsen/notebook/orgExamples/org-examples.html][Emacs Org-mode Examples and Cookbook]]
 1. [[http://orgmode.org/orgcard.txt][Org-Mode Reference Card]]
 1. [[http://orgmode.org/worg/org-faq.html][Org-mode Frequently Asked Questions]]
-1. [[http://doc.norang.ca/org-mode.html][Org Mode - Organize Your Life In Plain Text!]]
-1. [[http://www.cnblogs.com/holbrook/archive/2012/04/12/2444992.html][Org-mode: 最好的文档编辑利器]]
+1. [[http://doc.norang.ca/org-mode.html][Org-mode - Organize Your Life In Plain Text!]]
 1. [[http://aaronbedra.com/emacs.d/][Aaron Bedra's Emacs 24 Configuration]]
 
------
+** Package
+
+1. [[https://melpa.org/#/][MELPA]]
+
+** LaTex
 
 1. [[http://orgmode.org/worg/org-symbols.html][Symbols in Org-mode]]
 1. [[http://www.yann-ollivier.org/latex/texsymbols.pdf][The Comprehensive LaTeX Symbol List]]
 1. [[http://detexify.kirelabs.org/classify.html][Detexify]]
 
------
+** MathJax
 
 1. [[http://www.martinkeefe.com/math/mathjax3][MATHJAX GUIDE - MATH SYMBOLS AND MATH FONTS]]
 1. [[http://www.suluclac.com/Wiki+MathJax+Syntax][Wiki MathJax Syntax]]
 1. [[http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference][MathJax basic tutorial and quick reference]]
 
------
+** Other
 
 1. [[http://ditaa.sourceforge.net/][Ditaa]]

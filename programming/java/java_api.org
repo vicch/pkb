@@ -1,0 +1,482 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Java API
+
+* =java.io=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/package-summary.html][java.base | java.io]]
+
+** =PrintStream=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/PrintStream.html][java.base | java.io.PrintStream]]
+
+| =print()​=   | Print                    |
+|-------------+--------------------------|
+| =println()= | Print and terminate line |
+|-------------+--------------------------|
+| =printf()​=  | Print formatted string   |
+
+*** =printf()=
+
+#+BEGIN_SRC java
+printf​(String format, Object... args)
+#+END_SRC
+
+#+BEGIN_SRC java
+System.out.printf("pi = %.5f", Math.PI);
+#+END_SRC
+
+* =java.lang=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/package-summary.html][java.base | java.lang]]
+
+** Classes
+
+| *Types*   | =Integer=   | Wraps value of primitive type =int= in object.   |
+|-----------+-------------+--------------------------------------------------|
+|           | =Character= | Wraps value of primitive type =char= in object.  |
+|-----------+-------------+--------------------------------------------------|
+|           | =String=    | Represents character strings.                    |
+|-----------+-------------+--------------------------------------------------|
+| *Helpers* | =Math=      | Methods for performing basic numeric operations. |
+
+** =Character=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Character.html][java.base | java.lang.Character]]
+
+| *Checking* | =isAlphabetic​()= |   |
+|------------+------------------+---|
+|            | =isDigit​()=      |   |
+|------------+------------------+---|
+|            | =isLetter​()=     |   |
+|------------+------------------+---|
+|            | =isWhitespace​()= |   |
+
+** =Integer=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Integer.html][java.base | java.lang.Integer]]
+
+| *Conversion* | =parseInt()= | Parses string argument as signed decimal integer.       |
+|--------------+--------------+---------------------------------------------------------|
+|              | =toString()= | Returns =String= object representing specified integer. |
+
+** =Math=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Math.html][java.base | java.lang.Math]]
+
+| =floor()=    |   |
+|--------------+---|
+| =floorDiv()= |   |
+|--------------+---|
+| =floorMod()= |   |
+
+*** =floor=
+
+#+BEGIN_SRC java
+public static double floor​(double a);
+#+END_SRC
+
+*** =floorDiv()=
+
+#+BEGIN_SRC java
+public static int floorDiv​(int x, int y);
+#+END_SRC
+
+#+BEGIN_SRC java
+floorDiv(10, 3); // 3 = floor(10 / 3);
+floorDiv(10, 4); // 2 = floor(10 / 4);
+#+END_SRC
+
+*** =floorMod()=
+
+#+BEGIN_SRC java
+public static int floorMod​(int x, int y);
+#+END_SRC
+
+#+BEGIN_SRC java
+floorMod(10, 3); // 1 = 10 % 3
+floorMod(10, 4); // 2 = 10 % 4
+#+END_SRC
+
+** =String=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html][java.base | java.lang.String]]
+
+| *Capacity*   | =length()=      |                                                                |
+|--------------+-----------------+----------------------------------------------------------------|
+|              | =isBlank()=     | Returns =true= if empty or contains only white space.          |
+|--------------+-----------------+----------------------------------------------------------------|
+|              | =isEmpty()=     | Returns =true= if empty.                                       |
+|--------------+-----------------+----------------------------------------------------------------|
+| *Formatting* | =format()=      | Returns formatted string.                                      |
+|--------------+-----------------+----------------------------------------------------------------|
+|              | =toLowerCase()= |                                                                |
+|--------------+-----------------+----------------------------------------------------------------|
+|              | =toUpperCase()= |                                                                |
+|--------------+-----------------+----------------------------------------------------------------|
+| *Conversion* | =valueOf()=     | Returns string representation of the argument.                 |
+|--------------+-----------------+----------------------------------------------------------------|
+| *Characters* | =toCharArray()= | Converts to character array.                                   |
+|--------------+-----------------+----------------------------------------------------------------|
+|              | =chars()=       | Returns =IntStream= of =int= zero-extending the =char= values. |
+|--------------+-----------------+----------------------------------------------------------------|
+|              | =charAt()=      | Returns =char= value at specified index.                       |
+
+*** =format()=
+
+#+BEGIN_SRC java
+String foo = "foo";
+String bar = String.format("foo = %s", foo);
+#+END_SRC
+
+** =StringBuilder=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/StringBuilder.html][java.base | java.lang.StringBuilder]]
+
+| =append()=  | Appends string representation of input argument. |
+|-------------+------------------------------------------------|
+| =reverse()= | Reverses character sequence.                   |
+
+*** =append()=
+
+#+BEGIN_SRC java
+StringBuilder builder = new StringBuilder();
+builder.append("foo");
+builder.append("bar");
+System.out.println(builder.toString());
+#+END_SRC
+
+** =System=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/System.html][java.base | java.lang.System]]
+
+| =in=  | Standard input stream        |
+|-------+------------------------------|
+| =out= | Standard output stream       |
+|-------+------------------------------|
+| =err= | Standard error output stream |
+
+* =java.math=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/math/package-summary.html][java.base | java.math]]
+
+** =BigInteger=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/math/BigInteger.html][java.base | java.math.BigInteger]]
+
+| *Field*          | =ZERO= =ONE= =TWO= =TEN= | =BigInteger= constants. |
+|------------------+--------------------------+-------------------------|
+| *Math Operation* | =add()=                  |                         |
+|------------------+--------------------------+-------------------------|
+|                  | =substract()=            |                         |
+|------------------+--------------------------+-------------------------|
+|                  | =multiply()=             |                         |
+|------------------+--------------------------+-------------------------|
+|                  | =divide()=               |                         |
+|------------------+--------------------------+-------------------------|
+|                  | =mod()=                  |                         |
+|------------------+--------------------------+-------------------------|
+|                  | =pow()=                  |                         |
+|------------------+--------------------------+-------------------------|
+| *Bit Operation*  | =shiftLeft()=            |                         |
+|------------------+--------------------------+-------------------------|
+|                  | =shiftRight()=           |                         |
+
+*** =BigInteger()=
+
+#+BEGIN_SRC java
+public BigInteger​(String val); // Translates decimal String representation into BigInteger
+#+END_SRC
+
+* =java.time=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/time/package-summary.html][java.base | java.time]]
+
+** =LocalDate=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/time/LocalDate.html][java.base | java.time.LocalDate]]
+
+|   | =atTime()=       | Combines this date with a time to create a =LocalDateTime=.                              |
+|---+------------------+------------------------------------------------------------------------------------------|
+|   | =atStartOfDay()= | Combines this date with time of midnight (start of the day) to create a =LocalDateTime=. |
+|---+------------------+------------------------------------------------------------------------------------------|
+|   | =plusDays()=     | Returns copy of date with specified number of periods added.                             |
+|   | =plusWeeks()=    |                                                                                          |
+|   | =plusMonths()=   |                                                                                          |
+|   | =plusYears()=    |                                                                                          |
+
+** =LocalDateTime=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/time/LocalDateTime.html][java.base | java.time.LocalDateTime]]
+
+|   | =plusNanos()=   | Returns copy of =LocalDateTime= with specified number of periods added. |
+|   | =plusSeconds()= |                                                                         |
+|   | =plusMinutes()= |                                                                         |
+|   | =plusHours()=   |                                                                         |
+|   | =plusDays()=    |                                                                         |
+|   | =plusWeeks()=   |                                                                         |
+|   | =plusMonths()=  |                                                                         |
+|   | =plusYears()=   |                                                                         |
+|---+-----------------+-------------------------------------------------------------------------|
+|   |                 |                                                                         |
+
+* =java.util=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/package-summary.html][java.base | java.util]]
+
+** Classes
+
+| *Helper* | =Arrays=       | Methods that manipulate arrays, such as sorting, searching.                     |
+|----------+----------------+---------------------------------------------------------------------------------|
+|          | =Collections=  | Methods that operate on or return collections.                                  |
+|----------+----------------+---------------------------------------------------------------------------------|
+| *List*   | =List<E>=      | Ordered collection, also known as sequence.                                     |
+|----------+----------------+---------------------------------------------------------------------------------|
+|          | =ArrayList<E>= | Resizable-array implementation of =List= interface.                             |
+|----------+----------------+---------------------------------------------------------------------------------|
+| *Map*    | =Map<K,​V>=     | Mapping from keys to values.                                                    |
+|----------+----------------+---------------------------------------------------------------------------------|
+|          | =HashMap<K,V>= | Hash table based implementation of =Map= interface.                             |
+|----------+----------------+---------------------------------------------------------------------------------|
+|          | =TreeMap<K,V>= | Red-Black tree based implementation of =NavigableMap= interface.                |
+|----------+----------------+---------------------------------------------------------------------------------|
+| *Set*    | =Set<E>=       | Collection that contains no duplicate elements.                                 |
+|----------+----------------+---------------------------------------------------------------------------------|
+|          | =HashSet<E>=   | Implements =Set= interface, backed by hash table (actually =HashMap= instance). |
+|----------+----------------+---------------------------------------------------------------------------------|
+| *Other*  | =Random=       | Generates stream of pseudorandom numbers.                                       |
+
+** =ArrayList<E>=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ArrayList.html][java.base | java.util.ArrayList<E>]]
+
+** =Arrays=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Arrays.html][java.base | java.util.Arrays]]
+
+|           | =asList()= | Returns a fixed-size list backed by the specified array. |
+|-----------+------------+----------------------------------------------------------|
+| *Sorting* | =sort​()=   | Sorts specified array into ascending numerical order.    |
+
+*** =asList()=
+
+#+BEGIN_SRC java
+@SafeVarargs public static <T> List<T> asList​(T... a)
+#+END_SRC
+
+#+BEGIN_SRC java
+String[] foo = {"a", "b", "c"};
+List<String> bar = Arrays.asList(foo);
+int i = bar.indexOf("a"); // 0
+
+List<String> bar = Arrays.asList("a", "b", "c");
+int i = bar.indexOf("a"); // 0
+
+String[] foo = {"a", "b", "c"};
+int i = Arrays.asList(foo).indexOf("a"); // 0
+#+END_SRC
+
+*** =sort()=
+
+#+BEGIN_SRC java
+public static void sort​(int[] a);
+public static void sort​(int[] a, int fromIndex, int toIndex);
+#+END_SRC
+
+** =Collection<E>=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Collection.html][java.base | java.util.Collection<E>]]
+
+file:../images/java_api/01.jpg
+
+** =HashMap<K,V>=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/HashMap.html][java.base | java.util.HashMap<K,V>]]
+
+| =get()= | Returns value to which the specified key is mapped. |
+|---------+-----------------------------------------------------|
+| =put()= | Associates specified value with specified key.      |
+
+*** =get()=
+
+#+BEGIN_SRC java
+public V get​(Object key)
+#+END_SRC
+
+*** =put()=
+
+#+BEGIN_SRC java
+public V put​(K key, V value)
+#+END_SRC
+
+#+BEGIN_SRC java
+HashMap<String, Integer> foo = new HashMap<String, Integer>();
+foo.put("bar", 1);
+#+END_SRC
+
+** =Map<K,V>=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html][java.base | java.util.Map<K,V>]]
+
+| *Accessor*  | =put()=           | Associates specified value with specified key in this map.                        |
+|-------------+-------------------+-----------------------------------------------------------------------------------|
+|             | =get()=           | Returns value to which the specified key is mapped, or null if not found.         |
+|-------------+-------------------+-----------------------------------------------------------------------------------|
+| *Entry*     | =entry​()=         | Returns unmodifiable =Map.Entry= containing given key and value.                  |
+|-------------+-------------------+-----------------------------------------------------------------------------------|
+|             | =ofEntries​()=     | Returns unmodifiable map containing keys and values extracted from given entries. |
+|-------------+-------------------+-----------------------------------------------------------------------------------|
+| *Searching* | =containsKey​()=   |                                                                                   |
+|-------------+-------------------+-----------------------------------------------------------------------------------|
+|             | =containsValue()= |                                                                                   |
+
+*** =ofEntries()=
+
+#+BEGIN_SRC java
+@SafeVarargs static <K,​V> Map<K,​V> ofEntries​(Map.Entry<? extends K,​? extends V>... entries)
+#+END_SRC
+
+#+BEGIN_SRC java
+Map<Character, Integer> foo = Map.ofEntries(
+    Map.entry('A', 1),
+    Map.entry('B', 2),
+    Map.entry('C', 3)
+);
+#+END_SRC
+
+** =List<E>=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html][java.base | java.util.List<E>]]
+
+| *Manipulation* | =add()=         |                                                                               |
+|----------------+-----------------+-------------------------------------------------------------------------------|
+|                | =remove()=      |                                                                               |
+|----------------+-----------------+-------------------------------------------------------------------------------|
+| *Searching*    | =indexOf()=     | Returns index of first occurrence of specified element, or =-1= if not exist. |
+|----------------+-----------------+-------------------------------------------------------------------------------|
+|                | =lastIndexOf​()= | Returns index of last occurrence of specified element, or =-1= if not exist.  |
+
+** =Random=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Random.html][jave.base | java.util.Random]]
+
+| =ints()=    | Returns stream of pseudorandom =int= values.                                                     |
+|-------------+--------------------------------------------------------------------------------------------------|
+| =nextInt()= | Returns pseudorandom, uniformly distributed =int= value between 0 (inclusive) and N (exclusive). |
+
+*** =ints()=
+
+#+BEGIN_SRC java
+public IntStream ints();
+public IntStream ints​(long streamSize);
+public IntStream ints​(int randomNumberOrigin, int randomNumberBound);
+public IntStream ints​(long streamSize, int randomNumberOrigin, int randomNumberBound);
+#+END_SRC
+
+#+BEGIN_SRC java
+ints(4, 1, 7); // Generate 4 random ints between 1 and 6
+#+END_SRC
+
+*** =nextInt()=
+
+#+BEGIN_SRC java
+public int nextInt​(int bound)
+#+END_SRC
+
+#+BEGIN_SRC java
+Random rand = new Random();
+int foo = rand.nextInt(6); // Random int between 0 and 5
+#+END_SRC
+
+** =Set<E>=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Set.html][java.base | java.util.Set<E>]]
+
+| *Operation* | =add()=    | Adds specified element to this set if it is not already present. |
+|-------------+------------+------------------------------------------------------------------|
+|             | =remove()= | Removes specified element from this set if it is present.        |
+|-------------+------------+------------------------------------------------------------------|
+|             | =clear()=  | Removes all elements from this set.                              |
+|-------------+------------+------------------------------------------------------------------|
+| *Capacity*  | =size()=   | Returns number of elements in this set (its cardinality).        |
+
+** =TreeMap<K,V>=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/TreeMap.html][java.base | java.util.TreeMap<K,V>]]
+
+* =java.util.function=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/package-summary.html][java.base | java.util.function]]
+
+** =Predicate<T>=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/Predicate.html][java.base | java.util.function.Predicate<T>]]
+
+* =java.util.stream=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/stream/package-summary.html][java.base | java.util.stream]]
+
+** =IntStream=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/stream/IntStream.html][java.base | java.util.IntStream]]
+
+| *Generation*  | =range()=       | Returns sequential ordered =IntStream= from start (inclusive) to end (exclusive) by step of 1. |
+|---------------+-----------------+------------------------------------------------------------------------------------------------|
+|               | =rangeClosed()= | Returns sequential ordered =IntStream= from start (inclusive) to end (inclusive) by step of 1. |
+|---------------+-----------------+------------------------------------------------------------------------------------------------|
+| *Sorting*     | =sorted()=      | Returns a stream consisting of elements of this stream in sorted order.                        |
+|---------------+-----------------+------------------------------------------------------------------------------------------------|
+|               | =min()=         | Returns =OptionalInt= describing the minimum element of this stream.                           |
+|               |                 | Returns empty optional if this stream is empty.                                                |
+|---------------+-----------------+------------------------------------------------------------------------------------------------|
+|               | =max()=         | Returns =OptionalInt= describing the maximum element of this stream.                           |
+|               |                 | Returns empty optional if this stream is empty.                                                |
+|---------------+-----------------+------------------------------------------------------------------------------------------------|
+| *Aggregation* | =count()=       | Returns count of elements in this stream.                                                      |
+|---------------+-----------------+------------------------------------------------------------------------------------------------|
+|               | =sum()=         | Returns sum of elements in this stream.                                                        |
+|---------------+-----------------+------------------------------------------------------------------------------------------------|
+|               | =average()=     | Returns =OptionalDouble= describing the arithmetic mean of elements of this stream.            |
+|               |                 | Returns empty optional if this stream is empty.                                                |
+|---------------+-----------------+------------------------------------------------------------------------------------------------|
+|               | =distinct()=    | Returns stream consisting of distinct elements of this stream.                                 |
+|---------------+-----------------+------------------------------------------------------------------------------------------------|
+| *Iteration*   | =filter()=      | Returns stream consisting of elements of this stream that match given predicate.               |
+|---------------+-----------------+------------------------------------------------------------------------------------------------|
+|               | =allMatch()=    | Returns whether all elements of this stream match provided predicate.                          |
+|---------------+-----------------+------------------------------------------------------------------------------------------------|
+|               | =anyMatch()=    | Returns whether any elements of this stream match provided predicate.                          |
+|---------------+-----------------+------------------------------------------------------------------------------------------------|
+|               | =noneMatch()=   | Returns whether no elements of this stream match provided predicate.                           |
+|---------------+-----------------+------------------------------------------------------------------------------------------------|
+| *Other*       | =skip()=        | Returns stream consisting of elements of this stream after discarding first =n= elements.      |
+
+*** =filter=
+
+#+BEGIN_SRC java
+IntStream filter​(IntPredicate predicate);
+#+END_SRC
+
+#+BEGIN_SRC java
+String foo = "a1b2c3";
+IntStream bar = foo.chars().filter(Characters::isAlphabetic); // IntStream of chars a, b, c
+
+String foo = "a1b2c3";
+IntStream bar = foo.chars().filter(c -> c == 'a' || c == 'b'); // IntStream of chars a, b
+
+IntPredicate isEven = i -> i % 2 == 0;
+IntStream bar = IntStream.range(0, 100).filter(isEven); // IntStream of 0, 2, 4, ...
+#+END_SRC
+
+*** =range=
+
+#+BEGIN_SRC java
+static IntStream range​(int startInclusive, int endExclusive);
+#+END_SRC
+
+#+BEGIN_SRC java
+IntStream foo = IntStream.range(0, 10); // 0, 1, ..., 9
+#+END_SRC
+
+* Links
+
+1. [[https://docs.oracle.com/en/java/javase/11/docs/api/index.html][JavaSE & JDK 11 API Specification]]

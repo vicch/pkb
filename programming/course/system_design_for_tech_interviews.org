@@ -1,18 +1,94 @@
 #+SETUPFILE: ../../styles/readtheorg.setup
 #+TITLE: System Design for Tech Interviews
 
-[[https://www.hiredintech.com/courses/system-design][System Design for Tech Interviews]]
-
 * Introduction
 
-The idea of these questions is to have a discussion about the problem at hand. There is no one right answer. What’s important for the interviewer is the process, which you use to tackle the problem. The important thing is to be able to justify your ideas.
-
-System design questions require a combination of the right strategy and knowledge. By strategy we mean a way to approach the problem at an interview. There are two major challenges most candidates face when it comes to system design questions. Candidates either:
-
-- Approach questions in a chaotic way and get ratholed, or
-- Lack solid understanding of how to properly design architectures that scale.
+The idea of these questions is to have a discussion about the problem at hand. There is no one right answer. What’s important for the interviewer is _the process which you use to tackle the problem_. The important thing is to be able to _justify your ideas_.
 
 * The System Design Process
 ** Step 1: Constraints and Use Cases
 
-Just like algorithm design, system design questions will also most likely be weakly defined. The very first thing you should do is to clarify the system's constraints and to identify what use cases the system needs to satisfy. Never assume things that were not explicitly stated.
+System design questions will likely be weakly defined. The very first thing you should do is to _clarify the system's constraints_ and to _identify the use cases_ the system needs to satisfy. Never assume things that were not explicitly stated.
+
+System constraints usually include:
+
+- volume of traffic (different request per second)
+- volume of data (incremental and total)
+
+*** Example
+
+Consider a URL-shortening service, it could be meant to
+
+- serve thousands of users, but each could be sharing millions of URLs, or the opposite
+- handle millions of clicks on the shortened URLs, or dozens
+- provide extensive statistics about each shortened URL, or statistics may not be a requirement at all
+
+Use cases:
+
+- Shortening
+- Redirection
+- Custom URL
+- Automatic expiration
+- Manual removal
+- UI and/or API
+- Analytics
+
+Constraints estimation:
+
+#+ATTR_HTML: :class no-border
+| New URLs per month           | 100 mil                                  |
+|------------------------------+------------------------------------------|
+| Clicks per URL per day       | 1                                        |
+|------------------------------+------------------------------------------|
+| URL life span                | 10 days                                  |
+|------------------------------+------------------------------------------|
+| Total clicks per month       | 100 mil x 1 x 10 days = 1 bil            |
+|------------------------------+------------------------------------------|
+| *All requests per second*    | (100 mil + 1 bil) / 30 / 24 / 3600 = 424 |
+|                              | About 10% is shortening request          |
+|------------------------------+------------------------------------------|
+| URL length                   | 500B                                     |
+|------------------------------+------------------------------------------|
+| *Data write per second*      | 424 x 10% x 500B = 20KB                  |
+|------------------------------+------------------------------------------|
+| *Data read per second*       | 424 x 90% x 500B = 180KB                 |
+|------------------------------+------------------------------------------|
+| *Data in memory*             | 100 mil / 30 * 10 days * 500B = 16.7GB   |
+|------------------------------+------------------------------------------|
+| Total URLs in 5 years        | 100 mil x 12 x 5 = 60 bil                |
+|------------------------------+------------------------------------------|
+| *Total URLs data in 5 years* | 500B x 60 bil = 3TB                      |
+
+** Step 2: Abstract Design
+
+Outline the important components of the architecture. Sketch the main components and the connections between them. Justify your ideas and try to address every constraint and use case.
+
+*** Example
+
+Still considering the URL shortening service, abstract design:
+
+#+ATTR_HTML: :class no-border
+| Application layer | Shortening service   |
+|                   | Redirection service  |
+|-------------------+----------------------|
+| Storage layer     | Hash type of storage |
+
+Shortening (hashing) logic:
+
+#+BEGIN_SRC sh
+shortened_url = convert_to_base62(md5(original_url + salt))[:6]
+#+END_SRC
+
+** Step 3: Understanding Bottlenecks
+
+You need to be able to identify the bottlenecks (weak spots) in a system and be able to resolve them. You are not expected to design a system from the ground up, which immediately handles all the load. It needs to be scalable, in order to be improvable using some standard tools and techniques.
+
+Usually each solution is a trade-off of some kind. The important thing is to _talk about the trade-offs, and to measure their impact on the system_ given the constraints and use cases defined.
+
+** Step 4: Scaling Abstract Design
+
+Once the high-level design is done, you can dive into making it more detailed. Usually, this means making the system scale.
+
+* Links
+
+1. [[https://www.hiredintech.com/courses/system-design][System Design for Tech Interviews]]

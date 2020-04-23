@@ -1,0 +1,1120 @@
+Master Microservices with Spring Boot and Spring Cloud
+
+* Introduction to Web Services
+** What is a Web Service?
+
+A web service should:
+
+- be for machine-to-machine (application-to-application) interaction
+- be interoperable (platform-independent)
+- allow communication over network (components are deployed on different machines)
+
+** Important Questions Related to Web Services
+
+How does a consumer know how to use a web service? A web service should offer a service definition (e.g. WSDL, Swagger) which specifies:
+
+- endpoints
+- request/response format (e.g. JSON)
+- request/response structure
+
+** Introduction to SOAP Web Services
+
+file:../images/master_microservices_with_spring_boot_and_spring_cloud/01.gif
+
+** Introduction to RESTful Web Services
+
+The core idea of REST is the abstraction called "resource", which is some kind of entity available for consumption. Resources are identified by URIs, and the actions to perform on the resources are indicated by the HTTP methods:
+
+nob
+| =GET /users=  | Get all users |
+|-
+| =GET /users/1= | Get a user |
+|-
+| =GET /users/1/posts= | Get a user's posts |
+|-
+| =POST /users= | Create a user |
+|-
+| =DELETE /users/1= | Delete a user |
+
+* Introduction to Spring Boot
+** Goals and Important Features
+
+Spring Boot provides built-in features such as:
+
+- embedded Web server (e.g. Tomcat, Jetty)
+- external config
+- health check
+- metrics
+
+** Developping Spring Applications Before Spring Boot
+
+The configs needed to get a Spring application up and running:
+
+- dependencies (e.g. data binding, logging) and versions
+- Spring config (e.g. component scan, view resolver, security filter)
+- Web config (e.g. dispatcher, context config)
+- I18n config (e.g. message source, locale resolver)
+- default exception handler
+
+All these are provided by Spring Boot via starter projects.
+
+** Use Spring Initializr to Create Project
+
+Generate a project using Spring Initializr:
+
+nob
+| Project | Maven |
+|-
+| Language | Java |
+|-
+| Spring Boot | 2.0.0 up |
+|-
+| Group | =com.example= |
+|-
+| Artifact | =spring-boot= |
+|-
+| Dependencies | Spring Web |
+
+Download the project files and import into Eclipse as existing Maven project.
+
+Open =spring-boot/src/main/java/com/example/springboot/Application.java=, start the applilcation by right click > Run As > Java Application.
+
+Confirm success message `Tomcat started on port(s): 8080 (http)` in the console.
+
+** Create Simple REST Controller
+
+- [[https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/bind/annotation/GetMapping.html][Spring Framework API | Annotation Type GetMapping]]
+
+Create =Book= class under `com.example.springboot` and add some props:
+
+cap =spring-boot/src/main/java/com/example/springboot/Book.java=
+<s java
+public class Book {
+    long id;
+    String title;
+    String author;
+}
+<s
+
+Generate boilerplate methods by right click > Source >
+
+- Generate Constructor Using Fields
+- Generate Getters and Setters > Select Getters
+- Generate =toString()=
+
+Create =BooksController= class under `com.example.springboot` and add annotation:
+
+cap =spring-boot/src/main/java/com/example/springboot/BooksController.java=
+<s java
+@RestController
+public class BooksController {
+}
+<s
+
+Add mapping to controller to serve URL =/books= and return hardcoded books:
+
+cap =spring-boot/src/main/java/com/example/springboot/BooksController.java=
+<s java
+public class BooksController {
+    @GetMapping("/books")
+    // Or @RequestMapping(method = RequestMethod.GET, path = "/books")
+    public List<Book> getAllBooks() {
+        return Arrays.asList(new Book(1l, "Example Book", "Example Author"));
+    }
+}
+<s
+
+Start the application again, browse [[http://localhost:8080/books]] and confirm the hardcoded book's info is displayed.
+
+** What is Spring Boot Auto Configuration?
+
+- [[https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/SpringBootApplication.html][Spring Boot Docs | Annotation Type SpringBootApplication]]
+- [[https://www.springboottutorial.com/spring-boot-auto-configuration][What is Spring Boot Auto Configuration?]]
+
+Auto-configuration is a core feature of Spring Boot.
+
+The =Application= class contains an annotation =@SpringBootApplication= which:
+
+- indicates the context of the class is Spring
+- triggers auto-configuration (= @EnableAutoConfiguration=)
+- triggers component scan (=@ComponentScan=) of classes of the current package, e.g. =BooksController=
+
+Auto-configuration is provided by dependency =spring-boot-autoconfigure=. It examines the classes/jars available on the =CLASSPATH= and tries to auto-configure them.
+
+To see the Beans auto-configured by Spring, add debug output to the =Application= class:
+
+cap =spring-boot/src/main/java/com/example/springboot/Application.java=
+<s java
+public static void main(String[] args) {
+    ApplicationContext context = SpringApplication.run(Application.class, args);
+    for (String name : context.getBeanDefinitionNames()) {
+        System.out.println(name);
+    }
+}
+<s
+
+To see full report of auto-configuration, enable debug mode:
+
+cap =spring-boot/src/main/resources/application.properties=
+<s
+logging.level.org.springframework = DEBUG
+<s
+
+Run the application, and report in the console will contain all positive and negative matches. Some noticeable components being auto-configured:
+
+- =DispatcherServletAutoConfiguration= on class =org.springframework.web.servlet.DispatcherServlet=
+- =ErrorMvcAutoConfiguration#basicErrorController= on class =org.springframework.boot.web.servlet.error.ErrorController=
+- =HttpMessageConvertersAutoConfiguration= on class =org.springframework.http.converter.HttpMessageConverter=
+
+** Spring vs Spring MVC vs Spring Boot
+*** Spring
+
+The core feature of Spring is dependency injection (or IoC, Inversion of Control), which is essential for developping and testing loosely coupled components.
+
+Example without dependency injection:
+
+<s java
+@RestController
+public class WelcomeController {
+    private WelcomeService service = new WelcomeService(); // Hardcoded dependency
+
+    @RequestMapping("/welcome")
+    public String welcome() {
+        return service.retrieveWelcomeMessage();
+    }
+}
+<s
+
+Example with dependency injection:
+
+<s java
+@Component
+public class WelcomeService {
+}
+
+@RestController
+public class WelcomeController {
+    @Autowired
+    private WelcomeService service;
+
+    @RequestMapping("/welcome")
+    public String welcome() {
+        return service.retrieveWelcomeMessage();
+    }
+}
+<s
+
+Spring also reduces boilerplate and duplication code with built-in modules, e.g. Spring JDBC.
+
+*** Spring MVC
+
+Spring MVC simplifies development of web applications and RESTful services. It provides decoupled components such as =DispatcherServlet=, =ModelAndView= and =ViewResolver=.
+
+*** Spring Boot
+
+The core feature of Spring Boot auto-configuration of existing jars, e.g. =DispatcherServlet=, =DataSource=.
+
+** Spring Boot Starter Projects
+
+When creating the project with Spring Initializr, Spring Web was selected as dependency, which in turn includes other dependencies providing the common functions. The dependencies can be checked by drilling down the dependency hierarchy in =spring-boot/pom.xml= (open the file in Eclipse and click Dependency Hierarchy on bottom):
+
+<s
+spring-boot-starter-web
+    spring-boot-starter
+        spring-boot
+        spring-boot-autoconfigure
+        spring-boot-starter-logging
+        ...
+    spring-boot-starter-json
+    spring-boot-starter-tomcat
+    spring-boot-starter-validation
+    spring-web
+    spring-webmvc
+<s
+
+Spring JPA (Java Persistence API) is used for data storage with Hibernate. Add the starter project for JPA as a new dependency:
+
+cap =spring-boot/pom.xml=
+<s xml
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-data-jpa</artifactId>
+</dependency>
+<s
+
+** Spring Boot Actuator
+
+Spring Boot Actuator provides monitoring of the application. It can access various metadata, such as the Beans configured, number of success/failure service calls. Actuator also exposes REST services in HAL (Hypertext Application Language) format.
+
+*** Actuator
+
+Add Actuator starter project as dependency:
+
+cap =spring-boot/pom.xml=
+<s xml
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+<s
+
+Start the application and browse [[http://localhost:8080/actuator]], which provides URLs to access other Actuator endpoints.
+
+To enable more management info provided by Actuator:
+
+cap =spring-boot/src/main/resources/application.properties=
+<s
+management.endpoints.web.exposure.include = *
+<s
+
+*** HAL Browser
+
+Add HAL browser starter project as dependency:
+
+cap =spring-boot/pom.xml=
+<s xml
+<dependency>
+	<groupId>org.springframework.data</groupId>
+	<artifactId>spring-data-rest-hal-browser</artifactId>
+</dependency>
+<s
+
+Start the application and browse [[http://localhost:8080/browser/index.html]] to use the HAL browser. For example:
+
+- Request =http://localhost:8080/actuator/metrics= to get list of metrics.
+- Request =http://localhost:8080/actuator/metrics/jvm.memory.used= to get memory usage.
+
+** Spring Boot Developer Tools
+
+Normally for any code change to take effect, the application needs to be recompiled and restarted manually. Developer tools can save time by auto recompiling only the updated class. Add developer tools as dependency to enable it:
+
+cap =spring-boot/pom.xml=
+<s xml
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-devtools</artifactId>
+</dependency>
+<s
+
+* Introduction to JPA
+** Introduction to JPA
+
+Essentially, JPA maps Java classes to RDB tables via entities and relationships.
+
+* RESTful Web Services with Spring Boot
+** Initialize a RESTful web services Project with Spring Boot
+
+Generate a project using Spring Initializr:
+
+nob
+| Project | Maven |
+|-
+| Language | Java |
+|-
+| Spring Boot | 2.0.0 up |
+|-
+| Group | =com.example= |
+|-
+| Artifact | =restful-web-services= |
+|-
+| Dependencies | Spring Web |
+| | Spring Boot DevTools |
+| | Spring Data JPA |
+| | H2 Database |
+
+Download the project files and import into Eclipse as existing Maven project.
+
+** Create a Hello World Service
+
+Create a simple controller that returns a hardcoded message:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/HelloWorldController.java=
+<s java
+@RestController
+public class HelloWorldController {
+	@GetMapping("/greet")
+	public String greet() {
+		return "Hello World";
+	}
+}
+<s
+
+** Enhance Hello World Service to Return a Bean
+
+Create a simple JavaBean:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/HelloWorldBean.java=
+<s java
+public class HelloWorldBean {
+	private String message;
+
+	public HelloWorldBean(String message) {
+		super();
+		this.message = message;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	@Override
+	public String toString() {
+		return "HelloWorldBean [message=" + message + "]";
+	}
+}
+<s
+
+Add a method in controller to return this Bean:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/HelloWorldController.java=
+<s java
+@GetMapping("/greet-bean")
+public HelloWorldBean greetBean() {
+	return new HelloWorldBean("Test");
+}
+<s
+
+** Quick Review of Spring Boot Auto-Configuration and Dispatcher Servlet
+
+Spring's request dispatching follows the front controller pattern. Dispatcher servlet is the front controller which handles all incoming requests and dispatches the corresponding controller method based on the mapping auto-configured by Spring Boot on application startup, e.g.
+
+|*Request*|*Handler*|
+|-
+|=/=|=dispatcherServlet=|
+|-
+|=/error=|=org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.error()=|
+|-
+|=GET /hello-world=|=com.example.restfulwebservices.HelloWorldController.helloWorld()=|
+
+** Enhance Hello World Service with Path Variable
+
+Add a method to Hello World controller to serve requests with path variables:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/HelloWorldController.java=
+<s java
+@GetMapping("/greet/{name}")
+public String greetName(@PathVariable String name) {
+    return String.format("Hello, %s", name);
+}
+<s
+
+** Create User Bean and User Service
+
+Create a new package =com.example.restfulwebservices.user=. To show package hierarchy in Eclipse, select Project Explorer > View Menu > Package Presentation > Hierarchical.
+
+Create a simple =User= bean:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/user/User.java=
+<s java
+public class User {
+    private Integer id;
+    private String name;
+    private Date birthDate;
+    // Constructor
+    // Getters and Setters
+    // toString()
+}
+<s
+
+Create a DAO (Data Access Object) service for =User=:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/user/UserService.java=
+<s java
+@Component
+public class UserService {
+    private static List<User> users = new ArrayList<User>();
+    
+    private static Integer nextUserId = 1;
+    
+    static {
+        users.add(new User(1, "Foo", new Date()));
+        users.add(new User(2, "Bar", new Date()));
+        nextUserId = 3;
+    }
+    
+    public User save(User user) {
+        if (user.getId() == null) {
+            user.setId(nextUserId++);
+        }
+        users.add(user);
+        return user;
+    }
+    
+    public User find(Integer id) {
+        for (User user : users) {
+            if (user.getId() == id) {
+                return user;
+            }
+        }
+        return null;
+    }
+    
+    public List<User> findAll() {
+        return users;
+    }
+}
+<s
+
+** Implement =GET= Methods for User Resource
+
+Add a resource (controller) class for =User=:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/user/UserResource.java=
+<s java
+@RestController // This is a controller class, it can be named UserController to
+                // comply with MVC convention, here it's named UserResource to
+                // comply with RESTful convention
+public class UserResource {
+    @Autowired
+    private UserService service; // Service object will be auto-created
+    
+    @GetMapping("/users")
+    public List<User> getAllUsers() {
+        return service.findAll();
+    }
+    
+    @GetMapping("/users/{id}")
+    public User getUser(@PathVariable Integer id) {
+        return service.find(id);
+    }
+}
+<s
+
+Start the application and try the URLs:
+
+- [[http://localhost:8080/users]]
+- [[http://localhost:8080/users/1]]
+
+** Implement =POST= Method for User Resource
+
+Add a method in =UserResource= to handle =POST= request to create a new user:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/user/UserResource.java=
+<s java
+@PostMapping("/users")
+public void addUser(@RequestBody User user) { // Request body (JSON) will be mapped to User object
+    service.save(user);
+}
+<s
+
+User Postman app to send a =POST= request to =http://localhost:8080/users= with a body of raw text in JSON (=application/json=) format:
+
+<s js
+{
+    "name": "New User",
+    "birthDate": "2020-04-01T00:00:00.000+0000"
+}
+<s
+
+And confirm the user is created by getting all users.
+
+** Enhance =POST= Method to Return HTTP Status Code and Location
+
+A RESTful web service should take advantage of HTTP semantics as much as possible. In terms of handling resource creation requests, the response (assuming it's successful) should contain the HTTP status code =201 Created=, and should the URI of the newly created resource.
+
+Update =UserResource=:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/user/UserResource.java=
+<s java
+@PostMapping("/users")
+public ResponseEntity<Object> addUser(@RequestBody User user) {
+    User savedUser = service.save(user);
+
+    URI location = ServletUriComponentsBuilder
+        .fromCurrentRequest()              // Curret request URL:    /users
+        .path("/{id}")                     // Attach path variable:  /users/{id}
+        .buildAndExpand(savedUser.getId()) // Resolve path variable: /users/<new_id>
+        .toUri();
+    
+    return ResponseEntity.created(location).build();
+}
+<s
+
+Use Postman Chrome app to send a =POST= request to [[http://localhost:8080/users]] with raw text body in JSON format:
+
+<s js
+{
+    "name": "New User",
+    "birthDate": "2020-04-01T00:00:00.000+0000"
+}
+<s
+
+Confirm the response has status code =201 Created= and =location= header of the URL of the newly created user.
+
+** Implement Exception Handling for Resource Not Found
+
+Currently =GET /users/{id}= returns =200= and an empty response body when the user is not found. Ideally it should return =404 Not Found= and useful info.
+
+Update =UserResource=:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/user/UserResource.java=
+<s java
+@GetMapping("/users/{id}")
+public User getUser(@PathVariable Integer id) {
+    User user = service.find(id);
+    if (user == null) {
+        throw new UserNotFoundException("id=" + id); // Dedicated exception
+    }
+    return user;
+}
+<s
+
+Implement the exception class:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/user/UserNotFoundException.java=
+<s java
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class UserNotFoundException extends RuntimeException {
+    public UserNotFoundException(String message) {
+        super(message);
+    }
+}
+<s
+
+Start the application and browse [[http://localhost:8080/users/10]], confirm the response status code is =404 Not Found= and the response body is:
+
+<s js
+{
+    "timestamp": ...,
+    "status": 404,
+    "error": "Not Found",
+    "message": "id=10",
+    "path": "/users/10"
+}
+<s
+
+** Implement Custom Exception Handling
+
+Currently the response body of error (exception) is in standard Spring format. This can be customized with a custom exception handler for the application.
+
+First create a class to represent the custom exception format:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/exception/CustomException.java=
+<s java
+public class CustomException {
+    private Date timestamp;
+    private String message;
+    private String details;
+    // Constructor
+    // Getters
+}
+<s
+
+Spring provides a base class which can be implemented for custom exception handling, which is =ResponseEntityExceptionHandler=. Extend the class to create the custom exception handler which will respond an exception in our custom format:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/exception/CustomExceptionHandler.java=
+<s java
+@RestController // Because it generates a response (when there is an exception)
+@ControllerAdvice // To be applied to all controller
+public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
+    @ExceptionHandler(UserNotFoundException.class) // Handles specific exception type
+    public final ResponseEntity<Object> handleUserNotFoundExceptions(Exception ex, WebRequest request) throws Exception {
+        // Creates custom exception object
+        CustomException exception = new CustomException(new Date(), ex.getMessage(), request.getDescription(false));
+        // Specifies status code and wraps in a response entity
+        return new ResponseEntity(exception, HttpStatus.NOT_FOUND);
+    }
+    
+    @ExceptionHandler(Exception.class) // Catches all other exceptions
+    public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) throws Exception {
+        CustomException exception = new CustomException(new Date(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity(exception, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+<s
+
+** Implement =DELETE= Method to Delete User Resource
+
+Implement a method in the service class to delete a user by ID:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/user/UserService.java=
+<s js
+public User delete(Integer id) { // Return the deleted user when success
+    Iterator<User> it = users.iterator(); // Cannot delete from list within foreach, needs iterator
+    while (it.hasNext()) {
+        User user = it.next();
+        if (user.getId() == id) {
+            it.remove();
+            return user;
+        }
+    }
+    return null; // Return null if not found
+}
+<s
+
+Implement the request handler in resource class:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/user/UserResource.java=
+<s js
+@DeleteMapping("/users/{id}")
+public void deleteUser(@PathVariable Integer id) { // Return void which is treated as success
+    User user = service.delete(id);
+    if (user == null) {
+        throw new UserNotFoundException("id=" + id);
+    }
+}
+<s
+
+Start the application and send a =DELETE /users/1= request, confirm the response to be =200 OK= and the user is deleted.
+
+** Implement Validations
+
+Java provides validation via =javax.validation=.
+
+Define the validation rules in the user entity class:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/user/User.java=
+<s java
+@Size(min = 1, message = "Name cannot be empty")
+private String name;
+
+@Past(message = "Birth date should be in the past")
+private Date birthDate;
+<s
+
+Bind validation to the user creation request handler:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/user/UserResource.java=
+<s java
+@PostMapping("/users")
+public ResponseEntity<Object> addUser(@Valid @RequestBody User user) { // @Valid annotation indicates input validation
+    ...
+}    
+<s
+
+Now a =POST /users= request with an empty name will receive =400 Bad Request=, which is not very informative. This can be customized in exception handling, and =ResponseEntityExceptionHandler= provides a =handleMethodArgumentNotValid()= method for this purpose. Override this method in the custom exception handler:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/exception/CustomExceptionHandler.java=
+<s java
+@Override
+protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    CustomException exception = new CustomException(
+        new Date(), "Validation failed",
+        ex.getBindingResult().getFieldError().getDefaultMessage() // Return the validation message defined in User class
+    );
+    return new ResponseEntity(exception, HttpStatus.BAD_REQUEST);
+}
+<s
+
+Start the application and send a =POST /users= request with raw text body in JSON format:
+
+<s js
+{
+    "name": "",
+    "birthDate": "2020-04-01T00:00:00.000+0000"
+}
+<s
+
+Confirm the response is =400 Bad Request= with body:
+
+<s js
+{
+    "timestamp": ...,
+    "message": "Validation failed",
+    "details": "Name cannot be empty"
+}
+<s
+
+** Implement HATEOAS
+
+HATEOAS (Hypermedia as the Engine of Application State) is a RESTful style which sends hypermedia links in the response contents, to enable the client to dynamically navigate to the related resources. E.g. when responding =GET /users/{id}= request, send a link to let client know how to get all users, which is through =GET /users=.
+
+Add dependency =spring-boot-starter-hateoas= to the application. Then update request handler for =GET /users/{id}=:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/user/UserResource.java=
+<s java
+@GetMapping("/users/{id}")
+public EntityModel<User> getUser(@PathVariable Integer id) { // Return type is changed to entity model
+    User user = service.find(id);
+    
+    if (user == null) {
+        throw new UserNotFoundException("id=" + id);
+    }
+    
+    // Wrap user object in entity model
+    EntityModel<User> model = new EntityModel<User>(user);
+    // Create a link based on request mapping of getAllUsers()
+    WebMvcLinkBuilder link = WebMvcLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(this.getClass()).getAllUsers());
+    // Insert link into entity model
+    model.add(link.withRel("all_users"));
+    
+    return model;
+}
+<s
+
+Start the application and send request =GET /users/1=, confirm the response body contains hypermedia links:
+
+<s js
+{
+    ...
+    "_links": {
+        "all_users": {
+            "href": "http://localhost:8080/users"
+        }
+    }
+}
+<s
+
+** Implement I18n
+
+To make the service support i18n, we need to:
+
+- Add =LocaleResolver= which specifies a default locale
+- Add =MessageSource= which provides messages via resource files for different locales.
+- Auto-wire the message source to controller.
+- Make request handler resolve the locale from request header and return the corresponding message.
+
+Add =LocaleResolver= and =MessageSource= to application:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/RestfulWebServicesApplication.java=
+<s java
+@Bean
+public LocaleResolver localeResolver() {
+    SessionLocaleResolver localeResolver = new SessionLocaleResolver();
+    // Defaults locale to US
+    localeResolver.setDefaultLocale(Locale.US);
+    return localeResolver;
+}
+
+@Bean
+public ResourceBundleMessageSource messageSource() {
+    ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+    // Messages are stored in resource files named as <base_name>_<locale>.properties
+    // E.g. with base name "messages", the messages for locale "fr" is stored in "messages_fr.properties"
+    messageSource.setBasename("messages");
+    return messageSource;
+}
+<s
+
+Add resource files for default and =fr= locale:
+
+cap =restful-web-services/src/main/resources/messages.properties=
+<s text
+greeting = Good morning
+<s
+
+cap =restful-web-services/src/main/resources/messages_fr.properties=
+<s text
+greeting = Bonjour
+<s
+
+Auto-wire message source to controller, and add a request handler which checks header for locale and returns corresponding message:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/HelloWorldController.java=
+<s java
+@Autowired
+private MessageSource messageSource;
+
+@GetMapping("/greet-locale")
+public String greetLocale(@RequestHeader(name = "Accept-Language") Locale locale) { // Determine locale from "Accept-Language" header
+    return messageSource.getMessage("greeting", null, locale);
+}
+<s
+
+In Postman, send =GET /greet-locale= request with =Accept-Language= header of value =us= and =fr=, confirm the correct message is returned.
+
+Currently we need to explicitly specify the =Accept-Language= header in the request handler, this can be simplified by making the application's =LocaleResolver= resolve the locale directly from header, and request handlers can read the locale from context:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/RestfulWebServicesApplication.java=
+<s java
+@Bean
+public LocaleResolver localeResolver() {
+    AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
+    localeResolver.setDefaultLocale(Locale.US);
+    return localeResolver;
+}
+<s
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/HelloWorldController.java=
+<s java
+@GetMapping("/greet-locale")
+public String greetLocale() {
+    return messageSource.getMessage("greeting", null, LocaleContextHolder.getLocale());
+}
+<s
+
+=MessageSource= can also be simplified by specifying the base name in application properties, instead of in =com.example.restfulwebservices.RestfulWebServicesApplication.messageSource()=:
+
+cap =restful-web-services/src/main/resources/application.properties=
+<s text
+spring.messages.basename = messages
+<s
+
+** Content Negociation - Implement Support for XML
+
+By default, =jackson-*= dependencies handle data bindings (request parsing, response building) using JSON format. To support XML, add dependency =jackson-dataformat-xml= to the application. 
+
+Client can negociate the format with server via =Accept= header, by setting its value as =application/xml= in the request, the response will be in XML format. For POST request, add =Content-Type= header with value =application/xml=.
+
+** Configure Auto Generation of Swagger Documentation
+
+Swagger is a popular documentation format for RESTful web services. To enable Swagger for the application, add dependencies:
+
+- =springfox-swagger2=
+- =springfox-swagger-ui=
+
+Add Swagger config:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/SwaggerConfiguration.java=
+<s java
+@Configuration
+@EnableSwagger2
+public class SwaggerConfiguration {
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2);
+    }
+}
+<s
+
+Start the application, these Swagger endpoints will be available:
+
+- API doc as JSON: [[http://localhost:8080/v2/api-docs]]
+- API doc UI: [[http://localhost:8080/swagger-ui.html]]
+
+** Enhance Swagger Documentation with Custom Annotations
+
+Update the API info in Swagger config:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/SwaggerConfiguration.java=
+<s java
+public static final Contact DEFAULT_CONTACT = new Contact("Author", "http://example.com", "author@example.com");
+public static final ApiInfo DEFAULT_API_INFO = new ApiInfo(
+        "API Title", "API Description", "1.0", "urn:tos",
+        DEFAULT_CONTACT, "Apache 2.0", "http://www.apache.org/licenses/LICENSE-2.0",
+        new ArrayList<VendorExtension>());
+
+@Bean
+public Docket api() {
+    return new Docket(DocumentationType.SWAGGER_2)
+            .apiInfo(DEFAULT_API_INFO);
+}
+<s
+
+The JSON API doc provided by Swagger will be updated:
+
+<s js
+{
+    "info": {
+        "description": "API Description",
+        "version": "1.0",
+        "title": "API Title",
+        "termsOfService": "urn:tos",
+        "contact": {
+            "name": "Author",
+            "url": "http://example.com",
+            "email": "author@example.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0"
+        }
+    },
+    ...
+}
+<s
+
+The application accepts and responds both JSON and XML. To convey this support in the API doc:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/SwaggerConfiguration.java=
+<s java
+public static final Set<String> DEFAULT_PRODUCES_CONSUMES =
+        new HashSet<String>(Arrays.asList("application/json", "application/xml"));
+
+@Bean
+public Docket api() {
+    return new Docket(DocumentationType.SWAGGER_2)
+            .apiInfo(DEFAULT_API_INFO)
+            .produces(DEFAULT_PRODUCES_CONSUMES)
+            .consumes(DEFAULT_PRODUCES_CONSUMES);
+}
+<s
+
+This will be exported in the JSON API doc as:
+
+<s js
+{
+    ...
+    "consumes": [
+        "application/xml",
+        "application/json"
+    ],
+    "produces": [
+        "application/xml",
+        "application/json"
+    ],
+    ...
+}
+<s
+
+To add info about =User= resource and validation rules of the props:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/user/User.java=
+<s java
+@ApiModel(description = "The user resource")
+public class User {
+
+    @Size(min=1, message="Name cannot be empty")
+    @ApiModelProperty(notes = "Name cannot be empty")
+    private String name;
+    
+    @Past(message="Birth date should be in the past")
+    @ApiModelProperty(notes = "Birth date should be in the past")
+    private Date birthDate;
+}
+<s
+
+=swagger-annotations= dependency contains all the available annotations.
+
+** Implement Static Filtering
+
+Resource props can be excluded in response by using static filtering:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/user/User.java=
+<s js
+@JsonIgnore
+private Date birthDate;
+<s
+
+Static filtering can also be defined on the resource class:
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/user/User.java=
+<s js
+@JsonIgnoreProperties(value = {"birthDate"})
+public class User {
+	private Date birthDate;
+}
+<s
+
+** Implement Dynamic Filtering
+
+Static filtering is defined in the resouce class, and is consistent across all requests. To dynamically apply different filterings on different requests, the filtering needs to be defined in the controller class:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/user/UserResource.java=
+<s java
+@GetMapping("/users/{id}")
+public MappingJacksonValue getUser(@PathVariable Integer id) { // Return type is changed
+	User user = service.find(id);
+	
+	if (user == null) {
+		throw new UserNotFoundException("id=" + id);
+	}
+	
+	// Create filter of whitelisted props
+	SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("id", "name");
+	// Create filter provider and insert the filter (ID needs to match annotation in resource class)
+	FilterProvider filterProvider = new SimpleFilterProvider().addFilter("UserFilter", filter);
+	
+	// Wrap resource object in mapping, and apply the filter
+	MappingJacksonValue mapping = new MappingJacksonValue(user);
+	mapping.setFilters(filterProvider);
+	
+	// Return filtered mapping
+	return mapping;
+}
+
+@GetMapping("/users")
+public MappingJacksonValue getAllUsers() {
+	List<User> users = service.findAll();
+	
+	// Create filter of blacklisted props
+	SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.serializeAllExcept("birthDate");
+	FilterProvider filterProvider = new SimpleFilterProvider().addFilter("UserFilter", filter);
+	
+	MappingJacksonValue mapping = new MappingJacksonValue(users);
+	mapping.setFilters(filterProvider);
+	
+	return mapping;
+}
+<s
+
+The filter ID needs to be defined in the resource class:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/user/User.java=
+<s js
+@JsonFilter("UserFilter")
+public class User {
+}
+<s
+
+** Implement Versioning
+
+Versioning by using different URLs:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/VersioningController.java=
+<s java
+@GetMapping("/v1/versioning")
+public String urlVersioningV1() {
+	return "This is v1";
+}
+
+@GetMapping("/v2/versioning")
+public String urlVersioningV2() {
+	return "This is v2";
+}
+<s
+
+Versioning by using URL param:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/VersioningController.java=
+<s java
+@GetMapping(value = "/versioning", params = "v=1") // Request URL: /versioning?v=1
+public String paramVersioningV1() {
+	return "This is v1";
+}
+
+@GetMapping(value = "/versioning", params = "v=2")
+public String paramVersioningV2() {
+	return "This is v2";
+}
+<s
+
+Versioning using header:
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/VersioningController.java=
+<s java
+@GetMapping(value = "/versioning", headers = "Version=1")
+public String headerVersioningV1() {
+	return "This is v1";
+}
+
+@GetMapping(value = "/versioning", headers = "Version=2")
+public String headerVersioningV2() {
+	return "This is v2";
+}
+<s
+
+Versioning using MIME type (=Accept= header):
+
+cap =restful-web-services/src/main/java/com/example/restfulwebservices/VersioningController.java=
+<s java
+@GetMapping(value = "/versioning", produces = "application/vnd.company.app-v1+json")
+public User mimeVersioningV1() { // Somehow only works with resource class
+	return new User(1, "v1", new Date());
+}
+
+@GetMapping(value = "/versioning", produces = "application/vnd.company.app-v2+json")
+public User mimeVersioningV2() {
+	return new User(2, "v2", new Date());
+}
+<s
+
+The request should contain an =Accept= header with value =application/vnd.company.app-v1+json= for version 1.
+
+** Implement Basic Authentication
+
+Dependency =spring-boot-starter-security= provides basic authentication, e.g. user name and password.
+
+Include the dependency, and configure the user name and password (if not configured, a default password will be generated and output in the console when starting the applicaiton):
+
+cap =restful-web-services/src/main/resources/application.properties=
+<s text
+spring.security.user.name = username
+spring.security.user.password = password
+<s
+
+In Postman, use basic authentication and set the user name and password for the requests. Requests missing the credential will get =401 Unauthorized= response.
+
+* Links
+
+1. [[https://start.spring.io/][Spring Initializr]]
+2. [[https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en][Postman Chrome App]]

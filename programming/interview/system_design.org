@@ -322,3 +322,125 @@ There can be a layer of servers that are dedicated to push notification processi
 ** Links
 
 1. [[https://www.youtube.com/watch?v=5m0L0k8ZtEs][Design a Messenger Service]]
+
+* Design Twitter
+** Features
+
+Think about the core features:
+
+- Post tweet
+- Display timeline
+- Follow and unfollow
+
+** Naive Solution
+
+Start with an RDB approach of 2 tables:
+
+- user table
+- tweet table
+
+#+BEGIN_SRC plantuml :file ../images/system_design/05.svg
+!include ../../styles/plantuml-style
+
+class User {
+  long id
+  string name
+}
+
+class Tweet {
+  long id
+  long user_id
+  string content
+}
+
+User "1" *-- "n" Tweet
+#+END_SRC
+
+As the number of tweet records grow, the table will need to be sharded.
+
+** Optimization
+
+Analyze the characteristics of the service:
+
+- Reading request is more frequent (and expected to be more responsive) than posting request.
+- Availability is more important than consistency, i.e. the timeline can be eventually consistent, with a certain amount of delay.
+
+Because user's home timeline is hot data, it should be optimized by being pre-generated and stored in in-memory caches, whenver one of the users he follows posts a tweet. This is a tradeoff of time vs. space, we store duplicates of the tweet to achieve faster reading.
+
+As it's an expensive operation (in terms of calculation and storage), the pre-generation and caching of timelines can be limited to users who are active within a certain period of time. For inactive user, generate histimeline (which will be less responsive compared with an active user's timeline) only when he becomes active again.
+
+** Edge Case
+
+For a user who has millions of followers, it takes time for a new tweet to be propogated to all followers, meanwhile, reactions (by users who received the new tweet faster) to that tweet may be propogated faster.
+
+** Searching
+
+Searching needs to access tweets from all users. There can be a process (parallel to propogation of a tweet to followers) which adds the tweet to a search index.
+
+** More Topics
+
+- Push notification
+- Advertisement
+
+** Links
+
+1. [[https://www.youtube.com/watch?v=KmAyPUv9gOY][Design Twitter]]
+
+* Design Uber and Lyft
+** Features
+
+Start with 2 to 3 core features and build the system around them. As for Uber, the core features are:
+
+- Matching customer and driver
+- Mapping and routing
+
+** Links
+
+1. [[https://www.youtube.com/watch?v=J3DY3Te3A_A][Design Uber and Lyft]]
+* Design Shopify
+** Keywords
+
+Common words of e-commerce websites:
+
+- Customers
+- Products
+- Orders
+- Payments
+- Shipments
+
+Think about things that make a service like Shopify special and valuable:
+
+- Shop owners: a platform of many stores
+- Isolation: how to guarantee data of different stores don't get mixed up
+- Plugins: additional features that shop owners could choose to (purchase and) use
+- Customization: storefront can be customized by shop owners
+- Admin: friendly UI to handle all management tasks of the stores
+- APIs: supports external tools
+
+** Key Features
+
+Choose some key features to dig into:
+
+- Automated storefront creation
+- Backend (admin)
+- Hosting and networking
+
+** Links
+
+1. [[Design Shopify][https://www.youtube.com/watch?v=lEL4F_0J3l8]]
+
+* How Load Balancers Work?
+
+Application layer (layer 7) load balancing is aware of HTTP protocal, it examines HTTP headers in the request, and makes decisions based on the content, e.g. routing requests to a certain server specifically. A device that performs Layer 7 load balancing is often referred to as a reverse-proxy server.
+
+DNS load balancing happens when URL is translated to IP address. This can be used to route traffic to different data centers by large-scale services, e.g. Google.
+
+-----
+
+For stateful service, to be able to route one user's request to the same server, the load balancer can use a hash map which maps from the user's IP (or higher layer data such as HTTP headers) to a list of servers.
+
+This can only guarantee for a short period of time, because the user's IP may change, and the server may shut down. By using _consistent hashing_, the number of requests that are affected in the case of re-hashing can be minimized.
+
+** Links
+
+1. [[https://www.youtube.com/watch?v=escR-07yVAs][How Load Balancers Work?]]

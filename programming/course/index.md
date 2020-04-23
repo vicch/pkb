@@ -12,6 +12,7 @@ title: ""
 - [Go: The Complete Developer's Guide](/pkb/programming/course/go_complete_developers_guide.html)
 - [Learv DevOps: The Complete Kubernetes Course](/pkb/programming/course/learn_devops_the_complete_kubernetes_course.html)
 - [Machine Learning](/pkb/programming/course/machine_learning.html)
+- [](/pkb/programming/course/master_microservices_with_spring_boot_and_spring_cloud.html)
 - [Modern React with Redux](/pkb/programming/course/modern_react_with_redux.html)
 - [The Python Mega Course](/pkb/programming/course/python_mega_course.html)
 - [System Design for Tech Interviews](/pkb/programming/course/system_design_for_tech_interviews.html)

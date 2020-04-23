@@ -6,12 +6,12 @@ title: "Org-mode"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-02-15 Sat 21:26 -->
+<!-- 2020-04-22 Wed 11:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Org-mode</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="Victor Chen" />
+<meta name="author" content="Chen" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -71,6 +71,7 @@ title: "Org-mode"
   pre.src-fortran:before { content: 'Fortran'; }
   pre.src-gnuplot:before { content: 'gnuplot'; }
   pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
   pre.src-java:before { content: 'Java'; }
   pre.src-js:before { content: 'Javascript'; }
   pre.src-latex:before { content: 'LaTeX'; }
@@ -163,6 +164,19 @@ title: "Org-mode"
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -195,7 +209,7 @@ title: "Org-mode"
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -244,52 +258,61 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgfa61d99">1 Keys</a></li>
-<li><a href="#orgab9339e">2 Shortcuts</a>
+<li><a href="#orgc2afa4a">1. Keys</a></li>
+<li><a href="#orgee64ff7">2. Shortcuts</a>
 <ul>
-<li><a href="#org6fc07e9">2.1 控制</a></li>
-<li><a href="#orge2f9419">2.2 大纲</a></li>
-<li><a href="#org5cacf49">2.3 表格</a></li>
-<li><a href="#orgf06cf14">2.4 文本</a></li>
-<li><a href="#orgb8b61e8">2.5 搜索</a></li>
+<li><a href="#org72381c2">2.1. 控制</a></li>
+<li><a href="#orgc898acc">2.2. 大纲</a></li>
+<li><a href="#org18dbfae">2.3. 表格</a></li>
+<li><a href="#org127bc85">2.4. 文本</a></li>
+<li><a href="#org488c8cc">2.5. 搜索</a></li>
 </ul>
 </li>
-<li><a href="#org99bfdf7">3 Formatting</a></li>
-<li><a href="#orgcc5d195">4 Code Blocks</a></li>
-<li><a href="#org6433f98">5 MathJax</a>
+<li><a href="#orgf013547">3. Formatting</a></li>
+<li><a href="#orgf543052">4. Code Blocks</a></li>
+<li><a href="#org788b089">5. MathJax</a>
 <ul>
-<li><a href="#org0577c96">5.1 Debug</a></li>
+<li><a href="#orga8149e4">5.1. Debug</a></li>
 </ul>
 </li>
-<li><a href="#org0b2f0db">6 PlantUML</a>
+<li><a href="#org3cb6d9f">6. PlantUML</a>
 <ul>
-<li><a href="#org8cce242">6.1 安装</a></li>
-<li><a href="#orgcc1274e">6.2 示例</a></li>
-<li><a href="#orgdc188a4">6.3 <code>skinparam</code></a></li>
-<li><a href="#org5342c86">6.4 Links</a></li>
+<li><a href="#org3466343">6.1. 安装</a></li>
+<li><a href="#org9a3cb68">6.2. 示例</a></li>
+<li><a href="#org2cb33e2">6.3. <code>skinparam</code></a></li>
+<li><a href="#org76f4243">6.4. Links</a></li>
 </ul>
 </li>
-<li><a href="#orgebad33c">7 Ditaa</a></li>
-<li><a href="#org07e5d3d">8 Latex</a>
+<li><a href="#org05b6a01">7. Ditaa</a></li>
+<li><a href="#org67b8679">8. Latex</a>
 <ul>
-<li><a href="#orgd770c1c">8.1 安装</a></li>
-<li><a href="#orgf139cd2">8.2 配置</a></li>
-<li><a href="#orgb77aa80">8.3 使用</a></li>
+<li><a href="#orgff17360">8.1. 安装</a></li>
+<li><a href="#orgfd32d7d">8.2. 配置</a></li>
+<li><a href="#orgb335d2f">8.3. 使用</a></li>
 </ul>
 </li>
-<li><a href="#orgd0155c9">9 修改</a></li>
-<li><a href="#orgb676f71">10 安装</a>
+<li><a href="#org73bca37">9. MELPA</a></li>
+<li><a href="#org29b3b0a">10. 修改</a></li>
+<li><a href="#org68488ee">11. 安装</a>
 <ul>
-<li><a href="#orgac39d25">10.1 MacOS</a></li>
+<li><a href="#org80bf9be">11.1. MacOS</a></li>
 </ul>
 </li>
-<li><a href="#orgad70cf1">11 Links</a></li>
+<li><a href="#org268e803">12. Links</a>
+<ul>
+<li><a href="#org76f38fa">12.1. Org-mode</a></li>
+<li><a href="#orgb4ee3aa">12.2. Package</a></li>
+<li><a href="#orge3a20f5">12.3. LaTex</a></li>
+<li><a href="#org28a19a9">12.4. MathJax</a></li>
+<li><a href="#org9b54725">12.5. Other</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgfa61d99" class="outline-2">
-<h2 id="orgfa61d99"><span class="section-number-2">1</span> Keys</h2>
+<div id="outline-container-orgc2afa4a" class="outline-2">
+<h2 id="orgc2afa4a"><span class="section-number-2">1</span> Keys</h2>
 <div class="outline-text-2" id="text-1">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -298,22 +321,34 @@ for the JavaScript code in this tag.
 <col  class="org-left" />
 
 <col  class="org-left" />
+
+<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="org-left"><code>C-</code></th>
-<th scope="col" class="org-left"><code>Ctrl</code></th>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><b>Windows</b></th>
+<th scope="col" class="org-left"><b>Mac</b></th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td class="org-left"><code>C-</code></td>
+<td class="org-left"><code>Ctrl</code></td>
+<td class="org-left"><code>Control</code></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
 <td class="org-left"><code>M-</code></td>
 <td class="org-left"><code>Alt</code></td>
+<td class="org-left"><code>Option</code></td>
 </tr>
 </tbody>
 <tbody>
 <tr>
 <td class="org-left"><code>S-</code></td>
+<td class="org-left"><code>Shift</code></td>
 <td class="org-left"><code>Shift</code></td>
 </tr>
 </tbody>
@@ -321,17 +356,19 @@ for the JavaScript code in this tag.
 <tr>
 <td class="org-left"><code>RET</code></td>
 <td class="org-left"><code>Return</code></td>
+<td class="org-left"><code>Return</code></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 
-<div id="outline-container-orgab9339e" class="outline-2">
-<h2 id="orgab9339e"><span class="section-number-2">2</span> Shortcuts</h2>
+<div id="outline-container-orgee64ff7" class="outline-2">
+<h2 id="orgee64ff7"><span class="section-number-2">2</span> Shortcuts</h2>
 <div class="outline-text-2" id="text-2">
-</div><div id="outline-container-org6fc07e9" class="outline-3">
-<h3 id="org6fc07e9"><span class="section-number-3">2.1</span> 控制</h3>
+</div>
+<div id="outline-container-org72381c2" class="outline-3">
+<h3 id="org72381c2"><span class="section-number-3">2.1</span> 控制</h3>
 <div class="outline-text-3" id="text-2-1">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -397,8 +434,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orge2f9419" class="outline-3">
-<h3 id="orge2f9419"><span class="section-number-3">2.2</span> 大纲</h3>
+<div id="outline-container-orgc898acc" class="outline-3">
+<h3 id="orgc898acc"><span class="section-number-3">2.2</span> 大纲</h3>
 <div class="outline-text-3" id="text-2-2">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -457,8 +494,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org5cacf49" class="outline-3">
-<h3 id="org5cacf49"><span class="section-number-3">2.3</span> 表格</h3>
+<div id="outline-container-org18dbfae" class="outline-3">
+<h3 id="org18dbfae"><span class="section-number-3">2.3</span> 表格</h3>
 <div class="outline-text-3" id="text-2-3">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -470,44 +507,41 @@ for the JavaScript code in this tag.
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="org-left"><code>M-S-Up</code></th>
-<th scope="col" class="org-left">删除行</th>
+<th scope="col" class="org-left"><code>M-S-Up/Down</code></th>
+<th scope="col" class="org-left">删除/添加行</th>
 </tr>
 
 <tr>
-<th scope="col" class="org-left"><code>M-S-Down</code></th>
-<th scope="col" class="org-left">添加行</th>
-</tr>
-
-<tr>
-<th scope="col" class="org-left"><code>M-S-Left</code></th>
-<th scope="col" class="org-left">删除列</th>
-</tr>
-
-<tr>
-<th scope="col" class="org-left"><code>M-S-Right</code></th>
-<th scope="col" class="org-left">添加列</th>
+<th scope="col" class="org-left"><code>M-S-Left/Right</code></th>
+<th scope="col" class="org-left">删除/添加列</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="org-left"><code>M-Up</code></td>
-<td class="org-left">上移一行</td>
+<td class="org-left"><code>M-Up/Down</code></td>
+<td class="org-left">上/下移一行</td>
 </tr>
 
 <tr>
-<td class="org-left"><code>M-Down</code></td>
-<td class="org-left">下移一行</td>
+<td class="org-left"><code>M-Left/Right</code></td>
+<td class="org-left">左/右移一列</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>S-Up/Down/Left/Right</code></td>
+<td class="org-left">上/下/左/右移单元格</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>C-c</code> <code>-</code></td>
+<td class="org-left">下方插入分隔行</td>
 </tr>
 
 <tr>
-<td class="org-left"><code>M-Left</code></td>
-<td class="org-left">左移一列</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>M-Right</code></td>
-<td class="org-left">右移一列</td>
+<td class="org-left"><code>C-c</code> <code>RET</code></td>
+<td class="org-left">下方插入分隔行</td>
 </tr>
 </tbody>
 <tbody>
@@ -528,19 +562,8 @@ for the JavaScript code in this tag.
 </tbody>
 <tbody>
 <tr>
-<td class="org-left"><code>M-Return</code></td>
+<td class="org-left"><code>M-RET</code></td>
 <td class="org-left">光标之后内容移到下方单元格</td>
-</tr>
-</tbody>
-<tbody>
-<tr>
-<td class="org-left"><code>C-c</code> <code>-</code></td>
-<td class="org-left">下方插入分隔行</td>
-</tr>
-
-<tr>
-<td class="org-left"><code>C-c</code> <code>Return</code></td>
-<td class="org-left">下方插入分隔行</td>
 </tr>
 </tbody>
 </table>
@@ -569,8 +592,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgf06cf14" class="outline-3">
-<h3 id="orgf06cf14"><span class="section-number-3">2.4</span> 文本</h3>
+<div id="outline-container-org127bc85" class="outline-3">
+<h3 id="org127bc85"><span class="section-number-3">2.4</span> 文本</h3>
 <div class="outline-text-3" id="text-2-4">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 <caption class="t-above"><span class="table-number">Table 1:</span> 文本块</caption>
@@ -618,8 +641,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb8b61e8" class="outline-3">
-<h3 id="orgb8b61e8"><span class="section-number-3">2.5</span> 搜索</h3>
+<div id="outline-container-org488c8cc" class="outline-3">
+<h3 id="org488c8cc"><span class="section-number-3">2.5</span> 搜索</h3>
 <div class="outline-text-3" id="text-2-5">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -640,8 +663,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org99bfdf7" class="outline-2">
-<h2 id="org99bfdf7"><span class="section-number-2">3</span> Formatting</h2>
+<div id="outline-container-orgf013547" class="outline-2">
+<h2 id="orgf013547"><span class="section-number-2">3</span> Formatting</h2>
 <div class="outline-text-2" id="text-3">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -713,8 +736,8 @@ for the JavaScript code in this tag.
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="org-left">表格中转义 <code>&#124;</code></th>
-<th scope="col" class="org-left"><code>@@html:&lt;code&gt;&amp;#124;&lt;/code&gt;@@</code></th>
+<th scope="col" class="org-left">表格中转义 &vert;</th>
+<th scope="col" class="org-left"><code>\vert</code></th>
 </tr>
 </thead>
 <tbody>
@@ -760,8 +783,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgcc5d195" class="outline-2">
-<h2 id="orgcc5d195"><span class="section-number-2">4</span> Code Blocks</h2>
+<div id="outline-container-orgf543052" class="outline-2">
+<h2 id="orgf543052"><span class="section-number-2">4</span> Code Blocks</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 不输出代码块（直接嵌入生成的文件，不用每次输出时重新生成）：
@@ -774,8 +797,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org6433f98" class="outline-2">
-<h2 id="org6433f98"><span class="section-number-2">5</span> MathJax</h2>
+<div id="outline-container-org788b089" class="outline-2">
+<h2 id="org788b089"><span class="section-number-2">5</span> MathJax</h2>
 <div class="outline-text-2" id="text-5">
 <div class="org-src-container">
 <label class="org-src-name"><span class="listing-number">Listing 1: </span>行内</label><pre class="src src-text">$ ... $
@@ -791,8 +814,8 @@ $$ ... $$
 </div>
 </div>
 
-<div id="outline-container-org0577c96" class="outline-3">
-<h3 id="org0577c96"><span class="section-number-3">5.1</span> Debug</h3>
+<div id="outline-container-orga8149e4" class="outline-3">
+<h3 id="orga8149e4"><span class="section-number-3">5.1</span> Debug</h3>
 <div class="outline-text-3" id="text-5-1">
 <div class="org-src-container">
 <pre class="src src-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">site-lisp/org/lisp/ox-html.el</span>
@@ -807,11 +830,12 @@ tex2jax: {
 </div>
 </div>
 
-<div id="outline-container-org0b2f0db" class="outline-2">
-<h2 id="org0b2f0db"><span class="section-number-2">6</span> PlantUML</h2>
+<div id="outline-container-org3cb6d9f" class="outline-2">
+<h2 id="org3cb6d9f"><span class="section-number-2">6</span> PlantUML</h2>
 <div class="outline-text-2" id="text-6">
-</div><div id="outline-container-org8cce242" class="outline-3">
-<h3 id="org8cce242"><span class="section-number-3">6.1</span> 安装</h3>
+</div>
+<div id="outline-container-org3466343" class="outline-3">
+<h3 id="org3466343"><span class="section-number-3">6.1</span> 安装</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 安装 Graphviz 和 PlantUML：
@@ -840,8 +864,8 @@ brew install plantuml
 </div>
 </div>
 
-<div id="outline-container-orgcc1274e" class="outline-3">
-<h3 id="orgcc1274e"><span class="section-number-3">6.2</span> 示例</h3>
+<div id="outline-container-org9a3cb68" class="outline-3">
+<h3 id="org9a3cb68"><span class="section-number-3">6.2</span> 示例</h3>
 <div class="outline-text-3" id="text-6-2">
 <div class="org-src-container">
 <pre class="src src-code">\#+BEGIN_SRC plantuml :file ../images/01.svg
@@ -867,8 +891,8 @@ In newer versions, the start and end tags can be omitted:
 </div>
 </div>
 
-<div id="outline-container-orgdc188a4" class="outline-3">
-<h3 id="orgdc188a4"><span class="section-number-3">6.3</span> <code>skinparam</code></h3>
+<div id="outline-container-org2cb33e2" class="outline-3">
+<h3 id="org2cb33e2"><span class="section-number-3">6.3</span> <code>skinparam</code></h3>
 <div class="outline-text-3" id="text-6-3">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -898,20 +922,20 @@ In newer versions, the start and end tags can be omitted:
 </div>
 </div>
 
-<div id="outline-container-org5342c86" class="outline-3">
-<h3 id="org5342c86"><span class="section-number-3">6.4</span> Links</h3>
+<div id="outline-container-org76f4243" class="outline-3">
+<h3 id="org76f4243"><span class="section-number-3">6.4</span> Links</h3>
 <div class="outline-text-3" id="text-6-4">
 <ol class="org-ol">
-<li><a href="http://sdntutorials.com/steps-to-install-plantuml-on-windows-7/">Steps To Install PlantUML On Windows 7</a></li>
 <li><a href="http://plantuml.com/">PlantUML in a nutshell</a></li>
+<li><a href="https://www.planttext.com/">PlantText UML Editor</a></li>
 <li><a href="https://plantuml.com/skinparam">PlantUML | <code>skinparam</code></a></li>
 </ol>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgebad33c" class="outline-2">
-<h2 id="orgebad33c"><span class="section-number-2">7</span> Ditaa</h2>
+<div id="outline-container-org05b6a01" class="outline-2">
+<h2 id="org05b6a01"><span class="section-number-2">7</span> Ditaa</h2>
 <div class="outline-text-2" id="text-7">
 <div class="org-src-container">
 <pre class="src src-code">\#+BEGIN_SRC ditaa :file &lt;path&gt; :cmdline &lt;options&gt;
@@ -950,11 +974,12 @@ In newer versions, the start and end tags can be omitted:
 </div>
 </div>
 
-<div id="outline-container-org07e5d3d" class="outline-2">
-<h2 id="org07e5d3d"><span class="section-number-2">8</span> Latex</h2>
+<div id="outline-container-org67b8679" class="outline-2">
+<h2 id="org67b8679"><span class="section-number-2">8</span> Latex</h2>
 <div class="outline-text-2" id="text-8">
-</div><div id="outline-container-orgd770c1c" class="outline-3">
-<h3 id="orgd770c1c"><span class="section-number-3">8.1</span> 安装</h3>
+</div>
+<div id="outline-container-orgff17360" class="outline-3">
+<h3 id="orgff17360"><span class="section-number-3">8.1</span> 安装</h3>
 <div class="outline-text-3" id="text-8-1">
 <p>
 1 - 安装 <a href="http://miktex.org/download">MikTEX</a> ，注意安装路径中不能有空格
@@ -981,8 +1006,8 @@ In newer versions, the start and end tags can be omitted:
 </div>
 </div>
 
-<div id="outline-container-orgf139cd2" class="outline-3">
-<h3 id="orgf139cd2"><span class="section-number-3">8.2</span> 配置</h3>
+<div id="outline-container-orgfd32d7d" class="outline-3">
+<h3 id="orgfd32d7d"><span class="section-number-3">8.2</span> 配置</h3>
 <div class="outline-text-3" id="text-8-2">
 <div class="org-src-container">
 <label class="org-src-name"><span class="listing-number">Listing 4: </span>使用 Latex</label><pre class="src src-text">(load "auctex.el" nil t t)
@@ -1016,8 +1041,8 @@ In newer versions, the start and end tags can be omitted:
 </div>
 </div>
 
-<div id="outline-container-orgb77aa80" class="outline-3">
-<h3 id="orgb77aa80"><span class="section-number-3">8.3</span> 使用</h3>
+<div id="outline-container-orgb335d2f" class="outline-3">
+<h3 id="orgb335d2f"><span class="section-number-3">8.3</span> 使用</h3>
 <div class="outline-text-3" id="text-8-3">
 <p>
 遇到错误信息 <code>Failed to create dvi file from c:/.../*.tex</code> ，执行该文件，会使用 MikTEX 编辑器打开，尝试手动输出，会提示安装缺失的包。
@@ -1095,9 +1120,24 @@ In newer versions, the start and end tags can be omitted:
 </div>
 </div>
 </div>
-<div id="outline-container-orgd0155c9" class="outline-2">
-<h2 id="orgd0155c9"><span class="section-number-2">9</span> 修改</h2>
+<div id="outline-container-org73bca37" class="outline-2">
+<h2 id="org73bca37"><span class="section-number-2">9</span> MELPA</h2>
 <div class="outline-text-2" id="text-9">
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Refresh package lists from sources</span>
+M-x package-refresh-contents
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Install pacakge</span>
+M-x package-install
+&lt;package_name&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org29b3b0a" class="outline-2">
+<h2 id="org29b3b0a"><span class="section-number-2">10</span> 修改</h2>
+<div class="outline-text-2" id="text-10">
 <p>
 <code>&lt;blockquote&gt;</code> 输出标题：
 </p>
@@ -1121,12 +1161,13 @@ In newer versions, the start and end tags can be omitted:
 </div>
 </div>
 
-<div id="outline-container-orgb676f71" class="outline-2">
-<h2 id="orgb676f71"><span class="section-number-2">10</span> 安装</h2>
-<div class="outline-text-2" id="text-10">
-</div><div id="outline-container-orgac39d25" class="outline-3">
-<h3 id="orgac39d25"><span class="section-number-3">10.1</span> MacOS</h3>
-<div class="outline-text-3" id="text-10-1">
+<div id="outline-container-org68488ee" class="outline-2">
+<h2 id="org68488ee"><span class="section-number-2">11</span> 安装</h2>
+<div class="outline-text-2" id="text-11">
+</div>
+<div id="outline-container-org80bf9be" class="outline-3">
+<h3 id="org80bf9be"><span class="section-number-3">11.1</span> MacOS</h3>
+<div class="outline-text-3" id="text-11-1">
 <div class="org-src-container">
 <pre class="src src-sh">brew cask install emacs
 ln -s ~/Dropbox/portable/orgmode/config/.emacs ~/.emacs
@@ -1136,47 +1177,70 @@ ln -s ~/Dropbox/portable/orgmode/config/.emacs ~/.emacs
 </div>
 </div>
 
-<div id="outline-container-orgad70cf1" class="outline-2">
-<h2 id="orgad70cf1"><span class="section-number-2">11</span> Links</h2>
-<div class="outline-text-2" id="text-11">
+<div id="outline-container-org268e803" class="outline-2">
+<h2 id="org268e803"><span class="section-number-2">12</span> Links</h2>
+<div class="outline-text-2" id="text-12">
+</div>
+<div id="outline-container-org76f38fa" class="outline-3">
+<h3 id="org76f38fa"><span class="section-number-3">12.1</span> Org-mode</h3>
+<div class="outline-text-3" id="text-12-1">
 <ol class="org-ol">
-<li><a href="http://home.fnal.gov/~neilsen/notebook/orgExamples/org-examples.html">Emacs org-mode examples and cookbook</a></li>
-<li><a href="http://orgmode.org/worg/org-tutorials/index.html">Org tutorials</a></li>
+<li><a href="http://orgmode.org/worg/org-tutorials/index.html">Org-mode Tutorials</a></li>
+<li><a href="https://orgmode.org/worg/org-symbols.html">Symbols in Org-mode</a></li>
 <li><a href="http://orgmode.org/manual/index.html">The Org Manual</a></li>
+<li><a href="http://home.fnal.gov/~neilsen/notebook/orgExamples/org-examples.html">Emacs Org-mode Examples and Cookbook</a></li>
 <li><a href="http://orgmode.org/orgcard.txt">Org-Mode Reference Card</a></li>
 <li><a href="http://orgmode.org/worg/org-faq.html">Org-mode Frequently Asked Questions</a></li>
-<li><a href="http://doc.norang.ca/org-mode.html">Org Mode - Organize Your Life In Plain Text!</a></li>
-<li><a href="http://www.cnblogs.com/holbrook/archive/2012/04/12/2444992.html">Org-mode: 最好的文档编辑利器</a></li>
+<li><a href="http://doc.norang.ca/org-mode.html">Org-mode - Organize Your Life In Plain Text!</a></li>
 <li><a href="http://aaronbedra.com/emacs.d/">Aaron Bedra's Emacs 24 Configuration</a></li>
 </ol>
+</div>
+</div>
 
-<hr />
+<div id="outline-container-orgb4ee3aa" class="outline-3">
+<h3 id="orgb4ee3aa"><span class="section-number-3">12.2</span> Package</h3>
+<div class="outline-text-3" id="text-12-2">
+<ol class="org-ol">
+<li><a href="https://melpa.org/#/">MELPA</a></li>
+</ol>
+</div>
+</div>
 
+<div id="outline-container-orge3a20f5" class="outline-3">
+<h3 id="orge3a20f5"><span class="section-number-3">12.3</span> LaTex</h3>
+<div class="outline-text-3" id="text-12-3">
 <ol class="org-ol">
 <li><a href="http://orgmode.org/worg/org-symbols.html">Symbols in Org-mode</a></li>
 <li><a href="http://www.yann-ollivier.org/latex/texsymbols.pdf">The Comprehensive LaTeX Symbol List</a></li>
 <li><a href="http://detexify.kirelabs.org/classify.html">Detexify</a></li>
 </ol>
+</div>
+</div>
 
-<hr />
-
+<div id="outline-container-org28a19a9" class="outline-3">
+<h3 id="org28a19a9"><span class="section-number-3">12.4</span> MathJax</h3>
+<div class="outline-text-3" id="text-12-4">
 <ol class="org-ol">
 <li><a href="http://www.martinkeefe.com/math/mathjax3">MATHJAX GUIDE - MATH SYMBOLS AND MATH FONTS</a></li>
 <li><a href="http://www.suluclac.com/Wiki+MathJax+Syntax">Wiki MathJax Syntax</a></li>
 <li><a href="http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference">MathJax basic tutorial and quick reference</a></li>
 </ol>
+</div>
+</div>
 
-<hr />
-
+<div id="outline-container-org9b54725" class="outline-3">
+<h3 id="org9b54725"><span class="section-number-3">12.5</span> Other</h3>
+<div class="outline-text-3" id="text-12-5">
 <ol class="org-ol">
 <li><a href="http://ditaa.sourceforge.net/">Ditaa</a></li>
 </ol>
 </div>
 </div>
 </div>
+</div>
 <div id="postamble" class="status">
-<p class="author">Author: Victor Chen</p>
-<p class="date">Created: 2020-02-15 Sat 21:26</p>
+<p class="author">Author: Chen</p>
+<p class="date">Created: 2020-04-22 Wed 11:27</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

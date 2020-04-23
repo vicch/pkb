@@ -1,0 +1,205 @@
+#+SETUPFILE: ../../styles/readtheorg.setup
+#+TITLE: Java
+
+* Type
+** Numeric
+*** Integer
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Integer.html][java.base | java.land.Integer]]
+
+| *Type*  | *Byte* |                      *Min* |                     *Max* |
+|         |        |                        <r> |                       <r> |
+|---------+--------+----------------------------+---------------------------|
+| =byte=  |      1 |                       -128 |                       127 |
+|---------+--------+----------------------------+---------------------------|
+| =short= |      2 |                    -32,768 |                    32,767 |
+|---------+--------+----------------------------+---------------------------|
+| =int=   |      4 |             -2,147,483,648 |             2,147,483,647 |
+|---------+--------+----------------------------+---------------------------|
+| =long=  |      8 | -9,223,372,036,854,775,808 | 9,223,372,036,854,775,807 |
+
+*** Float
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Float.html][java.base | java.lang.Float]]
+
+| *Type*   | *Byte* |                     *Min* |                         *Max* |
+|          |        |                       <r> |                           <r> |
+|----------+--------+---------------------------+-------------------------------|
+| =float=  |      4 |                $2^{-149}$ |  $(2-2^{-23}) \times 2^{127}$ |
+|          |        |        =0x0.000002P-126f= |            =0x1.fffffeP+127f= |
+|----------+--------+---------------------------+-------------------------------|
+| =double= |      8 |               $2^{-1074}$ | $(2-2^{-52}) \times 2^{1023}$ |
+|          |        | =0x0.0000000000001P-1022= |     =0x1.fffffffffffffP+1023= |
+
+*** Suffix
+
+Integer values are treated as =int= by default, unless suffixed by =L= for =long=:
+
+#+BEGIN_SRC java
+long foo = 100000L;
+#+END_SRC
+
+Floating point values are treated as =double= by default, unless suffixed by =F= or =f= for =float=:
+
+#+BEGIN_SRC java
+float foo = 234.5F;
+#+END_SRC
+
+*** Underscore
+
+[[https://docs.oracle.com/javase/8/docs/technotes/guides/language/underscores-literals.html][Java Documentation | Underscores in Numeric Literals]]
+
+** Character
+
+16-bit unsigned integer value used to store Unicode character.
+
+#+BEGIN_SRC java
+char foo = 'A';
+#+END_SRC
+
+** String
+
+#+BEGIN_SRC java
+String foo = "bar";
+String foo = "bar" + " " + "bar";
+#+END_SRC
+
+** Array
+
+#+BEGIN_SRC java
+int[] foo = new int[10];      // Size must be decided
+String bar[] = new String[5]; // [] can be after type or var name
+
+int[] foo = new int[]{1, 2, 3};
+String[] bar = new String[]{"a", "b", "c"};
+
+int[] foo = {1, 2, 3};
+String bar[] = {"a", "b", "c"};
+
+for (int i = 0; i < foo.length; i++) {}
+for (String i : bar) {}
+
+int[] foo() {
+    return new int[]{1, 2, 3};
+}
+#+END_SRC
+
+** Enum
+
+[[https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html][Java Documentation | Enum Types]]
+
+* Type Usage
+** Casting
+
+#+BEGIN_SRC java
+int foo = (int) bar;
+#+END_SRC
+
+** Conversion
+
+Conversion methods exist for different types, e.g.:
+
+#+BEGIN_SRC java
+int foo = Integer.parseInt("123");
+String bar = Integer.toString(123);
+#+END_SRC
+
+* Variable
+** Syntax
+
+#+BEGIN_SRC java
+int foo;
+int foo, bar;
+int foo = 1;
+int foo = 1, bar = 2;
+#+END_SRC
+
+** =final=
+
+Final variables can't be reassigned.
+
+#+BEGIN_SRC java
+final int foo;
+
+final int bar;
+bar = 1; // Can be intialized after definition
+
+String s;
+final int l = s.length(); // Use "final" to indicate the value is immutable
+#+END_SRC
+
+* Control
+** =for=
+
+#+BEGIN_SRC java
+for (int i = 0; i < 10; i++) {
+    ...
+}
+
+int[] nums = {1, 2, 3};
+for (int n : nums) {
+    ...
+}
+#+END_SRC
+
+** =break=
+
+#+BEGIN_SRC java
+outer:
+for (int i = 0; i < 10; i++) {
+    for (int j = 0; j < 10; j++) {
+        if (i == 5 && j == 5) {
+            break outer;
+        }
+    }
+}
+#+END_SRC
+
+* Method
+** =main()=
+
+#+BEGIN_SRC java
+public static void main(String[] args) {}
+#+END_SRC
+
+* OOP
+** Constructor
+*** =this()=
+
+Explicit constructor invocation: inside one constructor, calling another constructor (of the same class) using =this()=.
+
+#+BEGIN_SRC java
+public class Rectangle {
+    private int x, y;
+    private int width, height;
+
+    public Rectangle() {
+        this(0, 0, 1, 1);
+    }
+    public Rectangle(int width, int height) {
+        this(0, 0, width, height);
+    }
+    public Rectangle(int x, int y, int width, int height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+}
+#+END_SRC
+
+* Package
+** =import=
+
+#+BEGIN_SRC java
+import foo.Bar; // Import specific class inside package
+import foo.*;   // Import all classes inside package
+#+END_SRC
+
+* Module
+
+A module is one or more packages that belong together.
+
+* Links
+
+1. [[https://docs.oracle.com/javase/tutorial/java/index.html][Oracle | The Java Tutorials]]
