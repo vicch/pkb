@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Programming Scrap
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Programming Scrap
 
 * 代码的抽象三原则
 
@@ -77,7 +77,7 @@ file:../images/programming_scrap/01.gif
 
 通过第一轮测试，代码就可以合并进主干，可以交付了。交付后，就先进行构建（build），再进入第二轮测试。所谓 _构建，指的是将源码转换为可以运行的实际代码，比如安装依赖、配置资源（CSS、JS、图片）等。_
 
-#+CAPTION: 常用的构建工具
+#+caption: 常用的构建工具
 | [[https://jenkins.io/index.html][Jenkins]]    | 开源 |
 |------------+------|
 | [[https://travis-ci.com/][Travis CI]]  | 收费 |
@@ -98,7 +98,7 @@ file:../images/programming_scrap/01.gif
 
 通过第二轮测试，当前代码就是一个 _可以直接部署的版本（artifact），将这个版本的文件打包存档，发到生产服务器。生产服务器将文件解包成一个目录，再将运行路径的符号链接（symlink）指向这个目录，然后重新启动应用。_
 
-#+CAPTION: 部署工具
+#+caption: 部署工具
 | [[https://www.ansible.com/][Ansible]] |   |
 |---------+---|
 | [[https://www.chef.io/chef/][Chef]]    |   |
@@ -245,9 +245,9 @@ public void Method1()
 
 In 2011 John D. Cook wrote the following [[http://www.johndcook.com/blog/2011/11/22/norris-number/][blog post]]:
 
-#+BEGIN_QUOTE
+#+begin_quote
 My friend Clift Norris has identified a fundamental constant that I call Norris's number, the average amount of code an untrained programmer can write before he or she hits a wall. Clift estimates this as 1,500 lines. Beyond that the code becomes so tangled that the author cannot debug or modify it without herculean effort.
-#+END_QUOTE
+#+end_quote
 
 I don't know enough novice programmers to confirm this effect, but I had independently noticed the next wall in the programmer's journey, which happens at 20,000 lines. I'll change Norris's number to 2,000 to get a nice power of ten jump.
 
@@ -259,9 +259,9 @@ What's particularly hard is having technical discussions with someone who hasn't
 
 Edsger Dijkstra [[http://www.cs.utexas.edu/users/EWD/ewd02xx/EWD249.PDF][wrote in 1969]]:
 
-#+BEGIN_QUOTE
+#+begin_quote
 A one-year old child will crawl on all fours with a speed of, say, one mile per hour. But a speed of a thousand miles per hour is that of a supersonic jet. Considered as objects with moving ability the child and the jet are incomparable, for whatever one can do the other cannot and vice versa.
-#+END_QUOTE
+#+end_quote
 
 A novice programmer, the kind Clift Norris is referring to, learns to crawl, then toddle, then walk, then jog, then run, then sprint, and he thinks, "At this rate of acceleration I can reach the speed of a supersonic jet!" But he runs into the 2,000 line limit because his skills don't scale up. He must move differently, using a car, to go faster. Then he learns to drive, first slowly, then faster, but runs into the 20,000 line limit. Driving skills don't transfer to flying a jet plane.
 
@@ -269,9 +269,9 @@ My friend [[http://www.plunk.org/~grantham/][Brad Grantham]] explains this by sa
 
 What's the key to breaking past that? For me, it was keeping things simple. Absolutely refuse to add any feature or line of code unless you need it right now, and need it badly. I already touched on this in [[https://www.teamten.com/lawrence/writings/every_line_is_a_potential_bug.html][Every Line Is a Potential Bug]] (and sophomorically before that in [[https://www.teamten.com/lawrence/writings/plan03.html][Simple is Good]]). The chief architect of effects at DreamWorks phrased it this way:
 
-#+BEGIN_QUOTE
+#+begin_quote
 To me, the genius of [the lighting tool] was in selecting a small set of features which were tractable to write and maintain and strong enough to make a great lighting tool.
-#+END_QUOTE
+#+end_quote
 
 As a tech lead I see my primary contribution as saying "no" to features that co-workers think are important but can't justify. _The real trick is knowing when a new feature adds linear complexity (its own weight only) or geometric complexity (interacts with other features)._ Both should be avoided, but the latter requires extra-convincing justification.
 
@@ -283,9 +283,9 @@ I don't know what I'll have to change to get past the 200,000 line wall. I've be
 
 And I'm really curious to see what the 2-million line barrier is all about.
 
-#+BEGIN_QUOTE
+#+begin_quote
 It seems like there's a wall at around 3-4M LOC, and really, after 3M LOC, the growth rate seems to slow down significantly no matter how many people (hundreds) or years are involved (decades). – [[https://plus.google.com/u/0/107919048662113456495/posts/AyGGqF9mLdB][Dan Wexler]]
-#+END_QUOTE
+#+end_quote
 * Don't Call Yourself A Programmer, And Other Career Advice
 
 [[https://www.kalzumeus.com/2011/10/28/dont-call-yourself-a-programmer/][Source]]

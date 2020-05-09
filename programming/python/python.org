@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Python
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Python
 
 * 语法
 
@@ -16,7 +16,7 @@
 
 - 文档字符串（DocString） :: 函数（类、模块）的第一行开始的多行字符串。\\
                              第一行是简要说明，第二行是空行，第三行开始时详细说明。
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 def function():
     '''Short introduction.
@@ -26,7 +26,7 @@ def function():
     '''
 #+end_src
 
-#+CAPTION: 显示文档字符串
+#+caption: 显示文档字符串
 #+begin_src python
 function.__doc__
 help(function)
@@ -34,7 +34,7 @@ help(function)
 
 ** 声明
 
-#+CAPTION: 声明编码
+#+caption: 声明编码
 #+begin_src python
 # -*- coding: utf-8 -*-
 #+end_src
@@ -61,12 +61,12 @@ help(function)
 
 不可变性提供了完整性的约束，在复杂程序中传递对象数据时，可以确保数据不会改变。
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *可变（mutable）类型*     | 列表，字典         |
 |---------------------------+--------------------|
 | *不可变（immutable）类型* | 数字，字符串，元组 |
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 a = 3
 a = a + 2 # a 会指向新的对象（值为 5 的整数对象）
@@ -137,7 +137,7 @@ False
 
 序列类型包含 =str= =unicode= =list= =tuple= =bytearray= =buffer= =xrange= 。
 
-#+CAPTION: 表达式
+#+caption: 表达式
 | =x in s=     | 检验元素存在       |
 | =x not in s= |                    |
 |--------------+--------------------|
@@ -226,7 +226,7 @@ u"" # Unicode 字符串
 
 三个连续的引号（单或双），可以包围多行字符串。
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 var = """line1
 line2
@@ -282,19 +282,19 @@ c = l[2]
 lst = [<expr> for <elem> in <seq> if <cond>]
 #+end_src
 
-#+CAPTION: 示例：对元素进行计算
+#+caption: 示例：对元素进行计算
 #+begin_src python
 doubles = [char * 2 for char in string]
 squares = [x ** 2 for x in lst]
 #+end_src
 
-#+CAPTION: 示例：从多维列表的每一行中取出固定的列
+#+caption: 示例：从多维列表的每一行中取出固定的列
 #+begin_src python
 col = [row[n] for row in lst]
 col = [row[1] for row in lst if row[1] % 2 == 0]
 #+end_src
 
-#+CAPTION: 示例：嵌套列表
+#+caption: 示例：嵌套列表
 #+begin_src python
 lst = [' '.join([a, b]) for a in ['1', '2', '3']
                         for b in ['apple', 'banana']]
@@ -360,13 +360,13 @@ dct[99] = 'value' # {99: 'value'}
 
 元组不支持方法调用，只支持操作符 =+= =*= 等。
 
-#+CAPTION: 构造方式
+#+caption: 构造方式
 #+begin_src python
 tpl = (1,2,3)
 tpl = (1,) # 只有一个元素时，需要加 , 以区分元组和括号中的一个对象
 #+end_src
 
-#+CAPTION: 值和长度不可变
+#+caption: 值和长度不可变
 #+begin_src python
 tpl = (1,2)
 tpl[0] = 2    # TypeError
@@ -398,7 +398,7 @@ foo = set([1, 2, 1]) # 从列表初始化
 
 *** 示例
 
-#+CAPTION: 列表去重
+#+caption: 列表去重
 #+begin_src python
 unique = list(set([2, 1, 2]))
 #+end_src
@@ -421,7 +421,7 @@ unique = list(set([2, 1, 2]))
 
 ** 引用传递
 
-#+CAPTION: 两个变量指向同一个对象的内存空间
+#+caption: 两个变量指向同一个对象的内存空间
 #+begin_src python
 a = 3
 b = a
@@ -429,7 +429,7 @@ b = a
 
 file:../images/python/01.png
 
-#+CAPTION: 引用传递后重新赋值，变量指向不同的对象
+#+caption: 引用传递后重新赋值，变量指向不同的对象
 #+begin_src python
 a = 3
 b = a
@@ -440,7 +440,7 @@ file:../images/python/02.png
 
 ** 原处修改
 
-#+CAPTION: 修改可变类型的对象，变量之间会相互影响
+#+caption: 修改可变类型的对象，变量之间会相互影响
 #+begin_src python
 l1 = [1, 2, 3]
 l2 = l1
@@ -451,12 +451,12 @@ l1[0] = 4 # 此时 l2 = [4, 2, 3]
 
 避免变量相互影响的复制方式。
 
-#+CAPTION: 可变非序列类型，使用 =copy= 模块
+#+caption: 可变非序列类型，使用 =copy= 模块
 #+begin_src python
 y = copy.copy(x)
 #+end_src
 
-#+CAPTION: 可变序列类型，使用分片赋值
+#+caption: 可变序列类型，使用分片赋值
 #+begin_src python
 l2 = l1[:]
 #+end_src
@@ -470,7 +470,7 @@ X == Y # True，检查值的相等性
 X is Y # False，检查对象的同一性
 #+end_src
 
-#+CAPTION: 整数和字符串对象有缓存和复用
+#+caption: 整数和字符串对象有缓存和复用
 #+begin_src python
 X = 42
 Y = 42
@@ -482,7 +482,7 @@ X is Y # True
 
 脚本中不需要考虑释放内存空间，当对象的引用数降为零，内存空间就会自动被回收。
 
-#+CAPTION: 查询对象被引用的次数
+#+caption: 查询对象被引用的次数
 #+begin_src python
 sys.getrefcount()
 #+end_src
@@ -490,7 +490,7 @@ sys.getrefcount()
 * 运算符
 ** 赋值
 
-#+CAPTION: 多个变量赋值
+#+caption: 多个变量赋值
 #+begin_src python
 a, b = int(input()), int(input())
 #+end_src
@@ -523,7 +523,7 @@ b == a # True
 
 ** 逻辑
 
-#+CAPTION: 逻辑表达式的值
+#+caption: 逻辑表达式的值
 |       |          | 表达式的值 |
 |-------+----------+------------|
 | =and= | 左值为假 | 左值       |
@@ -532,7 +532,7 @@ b == a # True
 | =or=  | 左值为假 | 右值       |
 |       | 左值为真 | 左值       |
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 print True  and 1 # 1
 print True  or  1 # True
@@ -572,7 +572,7 @@ a = (2, 1)[b == 3]
 
 声明某个表达式为真。表达式非真时，会抛出 =AssertionError= 。
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 assert len(lst) >= 1
 #+end_src
@@ -584,7 +584,7 @@ assert len(lst) >= 1
 - 删除一个变量，或列表中的一部分。
 - 引用已删除的变量名会导致错误。
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 a = [1,2,3,4,5]
 del a[0]   # [2,3,4,5] 
@@ -596,7 +596,7 @@ del a      # print(a): NameError
 
 计算存储在字符串中的 Python 表达式。
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 eval('2*3')
 #+end_src
@@ -605,7 +605,7 @@ eval('2*3')
 
 执行字符串或文件中的 Python 语句。
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 exec 'print "Hello world"'
 #+end_src
@@ -616,7 +616,7 @@ exec 'print "Hello world"'
 for <var> in <seq>:
 #+end_src
 
-#+CAPTION: Python 不支持 C 风格的 =for= ，替代实现方式：
+#+caption: Python 不支持 C 风格的 =for= ，替代实现方式：
 #+begin_src python
 # 由 while 实现
 i = 0
@@ -679,7 +679,7 @@ def <func>(<arg>=<default>, ...):
 
 ** 参数
 
-#+CAPTION: 不定数量参数
+#+caption: 不定数量参数
 #+begin_src python
 def function(*args): # *args  将参数存储在元组中
                      # **args 将参数存储在字典中
@@ -691,7 +691,7 @@ def function(*args): # *args  将参数存储在元组中
 
 ** 返回值
 
-#+CAPTION: 多个返回值
+#+caption: 多个返回值
 #+begin_src python
 def foo():
     return 1, 2, 3
@@ -707,7 +707,7 @@ lambda <arg>: <expr>
 
 =lambda= 语句创建函数对象， =:= 后的表达式为函数体。
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 def repeat(n)
     return lambda s: s*n
@@ -729,7 +729,7 @@ class <Class>(<Parent>, ...):
 
 ** 成员
 
-#+CAPTION: 命名规则
+#+caption: 命名规则
 | 类变量    | =<Class>.<var>= |
 |-----------+-----------------|
 | 对象变量  | =self.<var>=    |
@@ -766,7 +766,7 @@ super (
 ])
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 class Parent(object):
     def foo(self):
@@ -795,7 +795,7 @@ from <module> import <prop> as <alias>
 
 ** =__name__=
 
-#+CAPTION: 区分运行状态
+#+caption: 区分运行状态
 #+begin_src python
 if __name__ == '__main__':
     # 单独运行
@@ -808,14 +808,14 @@ else:
 
 - PEP :: Python Enhancement Proposal
 
-#+CAPTION: 命名
+#+caption: 命名
 | 函数 | =my_function()= |
 |------+-----------------|
 |      |                 |
 
 * 实现
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *CPython* | - the most popular Python implementation written in C |
 |           | - source code interpreter                             |
 |-----------+-------------------------------------------------------|

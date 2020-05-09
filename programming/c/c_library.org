@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: C Library
+#+setupfile: ../../styles/readtheorg.setup
+#+title: C Library
 
 * =assert.h=
 ** =assert()=
@@ -8,7 +8,7 @@
 void assert(int expression);
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 int i;
 
@@ -24,7 +24,7 @@ for (i = 0; i < 9; i++) {
 // Aborted
 #+end_src
 
-#+CAPTION: 示例：输入参数验证
+#+caption: 示例：输入参数验证
 #+begin_src c
 int foo(int a)
 {
@@ -71,7 +71,7 @@ int foo(int a)
 
 ** 判断
 
-#+CAPTION: 所有判断函数签名一致
+#+caption: 所有判断函数签名一致
 #+begin_src c
 int is*(int c);
 #+end_src
@@ -80,14 +80,14 @@ int is*(int c);
 
 ** 转换
 
-#+CAPTION: 转换函数签名一致
+#+caption: 转换函数签名一致
 #+begin_src c
 int to*(int c);
 #+end_src
 
 * =float.h=
 
-#+CAPTION: Macro
+#+caption: Macro
 | =FLT_MAX=  |   |
 | =FLT_MIN=  |   |
 |------------+---|
@@ -99,7 +99,7 @@ int to*(int c);
 
 * =limits.h=
 
-#+CAPTION: Macro
+#+caption: Macro
 | =CHAR_BIT=   |                          8 | 字符位数           |
 |--------------+----------------------------+--------------------|
 | =MB_LEN_MAX= |                         16 | 多字节字符最大位数 |
@@ -130,7 +130,7 @@ int to*(int c);
 * =math.h=
 * =stdio.h=
 
-#+CAPTION: 变量
+#+caption: 变量
 |          | *类型*         |                     |
 |----------+----------------+---------------------|
 | =size_t= | =unsigned int= | =sizeof()= 的返回值 |
@@ -139,14 +139,14 @@ int to*(int c);
 |----------+----------------+---------------------|
 | =FILE=   | =object=       | 文件流信息          |
 
-#+CAPTION: Macro
+#+caption: Macro
 | =NULL= | 空（null）指针常量的值 |
 |--------+------------------------|
 | =EOF=  | 文件结束符             |
 |--------+------------------------|
 |        |                        |
 
-#+CAPTION: 函数
+#+caption: 函数
 | *格式化*     |                                      |
 |--------------+--------------------------------------|
 | [[stdio_printf][=printf()=]]   |                                      |
@@ -245,12 +245,12 @@ int to*(int c);
 
 ** 格式化
 
-#+CAPTION: 格式字符串
+#+caption: 格式字符串
 #+begin_src text
 %<sign><width>.<precision><type>
 #+end_src
 
-#+CAPTION: 占位符
+#+caption: 占位符
 | *数字*    |                  |
 |-----------+------------------|
 | =%d= =%i= | =int= 有符号     |
@@ -296,7 +296,7 @@ size_t fread(
 )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 FILE *fp;
 char buffer[100];
@@ -310,7 +310,7 @@ fclose(fp);
 
 结束符 =EOF= 不在 =char= 类型可表示的范围内，所以接收 =getchar()= 返回值的变量需要是 =int= 类型。
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 int c;
 while ((c = getchar()) != EOF)
@@ -334,7 +334,7 @@ void printf (
 );
 #+end_src
 
-#+CAPTION: 格式化字符串可以是表达式
+#+caption: 格式化字符串可以是表达式
 #+begin_src c
 printf((n > 1) ? "%d > 1" : "%d < 1", n);
 // 等价于
@@ -348,7 +348,7 @@ printf("%d %c 1", n, (n > 1) ? '>' : '<');
 int puts(const char *str);
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 puts("Hello, world!");
 #+end_src
@@ -362,7 +362,7 @@ void rewind(FILE *stream);
 
 * =stdlib.h=
 
-#+CAPTION: 变量
+#+caption: 变量
 |           | *类型*         |                     |
 |-----------+----------------+---------------------|
 | =size_t=  | =unsigned int= | =sizeof()= 的返回值 |
@@ -373,7 +373,7 @@ void rewind(FILE *stream);
 |-----------+----------------+---------------------|
 | =ldiv_t=  | =struct=       | =ldiv()= 的返回值   |
 
-#+CAPTION: Macro
+#+caption: Macro
 | =NULL=         | 空（null）指针常量的值   |
 |----------------+--------------------------|
 | =EXIT_FAILURE= | 失败时 =exit()= 的返回值 |
@@ -384,7 +384,7 @@ void rewind(FILE *stream);
 |----------------+--------------------------|
 | =MB_CUR_MAX=   | 多字节字符的最大字节数   |
 
-#+CAPTION: 函数
+#+caption: 函数
 | *内存分配*   |                                    |
 |--------------+------------------------------------|
 | [[stdlib_calloc][=calloc()=]]   |                                    |
@@ -464,7 +464,7 @@ void rewind(FILE *stream);
 void abort(void);
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 FILE *fp;
 
@@ -492,7 +492,7 @@ int abs(int x);
 int atexit(void (*func)(void));
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 void callback_exit()
 {
@@ -548,7 +548,7 @@ void *bsearch(
 )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 int cmpfunc(const void * a, const void * b)
 {
@@ -570,7 +570,7 @@ item = (int*)bsearch(&key, values, 5, sizeof(int), cmpfunc);
 void *calloc(size_t nitems, size_t size);
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 int i, *a;
 
@@ -588,7 +588,7 @@ for (i = 0; i < 10; i++) {
 div_t div(int numer, int denom);
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 div_t output = div(27, 4);
 
@@ -603,7 +603,7 @@ div_t output = div(27, 4);
 void exit(int status);
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 exit(0);
 #+end_src
@@ -615,7 +615,7 @@ exit(0);
 void free(void *ptr);
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 char *str; 
 
@@ -631,7 +631,7 @@ free(str);
 char *getenv(const char *name);
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 printf("PATH : %s\n", getenv("PATH"));
 // PATH : /sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin
@@ -651,7 +651,7 @@ long int labs(long int x);
 ldiv_t ldiv(long int numer, long int denom);
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 ldiv_t output = ldiv(100000L, 30000L);
 // output.quot -> 3
@@ -665,7 +665,7 @@ ldiv_t output = ldiv(100000L, 30000L);
 void *malloc(size_t size);
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 int i;
 char *a;
@@ -708,7 +708,7 @@ void qsort(
 )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 int cmpfunc(const void * a, const void * b)
 {
@@ -726,7 +726,7 @@ qsort(values, 5, sizeof(int), cmpfunc);
 int rand(void);
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 int i, n;
 time_t t;
@@ -766,12 +766,12 @@ strcat(str, ".com");
 void srand(unsigned int seed);
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 srand(time(NULL));
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 int i, n;
 time_t t;
@@ -795,7 +795,7 @@ double strtod(
 );
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 char str[30] = "20.30300_This is test.";
 char *ptr;
@@ -834,7 +834,7 @@ unsigned long int strtoul(const char *str, char **endptr, int base);
 int system(const char *string);
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 system("ls -l");
 // drwxr-xr-x ...
@@ -842,15 +842,15 @@ system("ls -l");
 
 * =string.h=
 
-#+CAPTION: 变量
+#+caption: 变量
 |           | *类型*         |                     |
 |-----------+----------------+---------------------|
 | =size_t=  | =unsigned int= | =sizeof()= 的返回值 |
 
-#+CAPTION: Macro
+#+caption: Macro
 | =NULL= | 空（null）指针常量的值 |
 
-#+CAPTION: 函数
+#+caption: 函数
 | *字符串读*  |                              |
 |-------------+------------------------------|
 | [[string_strlen][=strlen()=]]  |                              |
@@ -900,7 +900,7 @@ void *memchr(
 );
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 const char *s = "http://www.sample.com";
 char *r = memchr(s, '.', strlen(s));
@@ -934,7 +934,7 @@ void *memcpy(
 );
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 const char *f = "Sample string";
 char *t;
@@ -955,7 +955,7 @@ void *memmove(
 );
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 const char *f = "New string etc.";
 char t[] = "Old string";
@@ -974,14 +974,14 @@ void *memset(
 );
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 char str[] = "Test string";
 memset(str, '$', 4);
 // $$$$ string
 #+end_src
 
-#+CAPTION: 示例：用于整数数组
+#+caption: 示例：用于整数数组
 #+begin_src c
 int seq[10];
 memset(seq, 0, sizeof(seq)); // 因为整数占用多字节，而 memset() 是按字节设置值，
@@ -995,7 +995,7 @@ memset(seq, 0, sizeof(seq)); // 因为整数占用多字节，而 memset() 是按字节设置值，
 char *strcat(char *dest, const char *src);
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 char str1[] = "Some string";
 char str2[] = " and more";
@@ -1010,7 +1010,7 @@ strcat(str1, str2);
 char *strchr(const char *str, int c);
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 char str[] = "foo bar baz";
 char *sub = strchr(str, 'b');
@@ -1028,7 +1028,7 @@ int strcmp(const char *str1, const char *str2);
 |        |       | => 0= ： =str1= 大于 =str2= |
 |        |       | ~= 0~ ： 相等               |
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 char *str1 = "foo bar baz";
 char *str2 = "foo bar caz";
@@ -1052,7 +1052,7 @@ int strcoll(const char *str1, const char *str2);
 char *strcpy(char *dest, const char *src);
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 char *str1 = "Sample string";
 char *str2;
@@ -1078,7 +1078,7 @@ char *strncat(
 );
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 char str1[] = "Some string";
 char str2[] = " and more";
@@ -1101,7 +1101,7 @@ int strncmp(
 |        |       | => 0= ： =str1= 大于 =str2= |
 |        |       | ~= 0~ ： 相等               |
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 char *str1 = "foo bar baz";
 char *str2 = "foo bar faz";
@@ -1120,7 +1120,7 @@ char *strncpy(
 );
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src c
 char *str1 = "Sample string";
 char str2[] = "Other string";

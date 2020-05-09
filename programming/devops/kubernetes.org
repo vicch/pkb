@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Kubernetes
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Kubernetes
 
 * Kubernetes
 
@@ -7,7 +7,7 @@ Kubernetes 是用于部署容器化应用的系统。Kubernetes 不构建，而�
 
 Kubernetes 包含两种机器（实体或虚拟）：
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Master* | 运行管理程序，根据配置文件定义的目标状态，管理（启动、重启等）在其他机器上运行的容器。 |
 |----------+----------------------------------------------------------------------------------------|
 | *Node*   | 运行容器。                                                                             |
@@ -16,7 +16,7 @@ file:../images/kubernetes/01.png
 
 * Config
 
-#+CAPTION: 配置文件格式
+#+caption: 配置文件格式
 #+begin_src yaml
 apiVersion: <string>   # v1
 kind: <string>         # E.g. Deployment
@@ -48,7 +48,7 @@ selector:
 * Container
 ** Container
 
-#+CAPTION: =Container=
+#+caption: =Container=
 #+begin_src yaml
 name: <string>
 image: <string>
@@ -73,7 +73,7 @@ volumeMounts:
 
 Pod 用于运行一个或一组相关的容器。
 
-#+CAPTION: =PodSpec=
+#+caption: =PodSpec=
 #+begin_src yaml
 containers:
   - <Container>
@@ -87,7 +87,7 @@ Deployment 用于描述一组 Pod 的理想状态（desired state），Deploymen
 
 Deployment 可以定义一个 Pod 模版，根据此模版生成一组相同的 Pod。
 
-#+CAPTION: =DeploymentSpec=
+#+caption: =DeploymentSpec=
 #+begin_src yaml
 replicas: <integer>       # 理想状态 Pod 数量
 selector: <LabelSelector> # 只影响符合此 selector 的 Pod
@@ -125,7 +125,7 @@ spec:
       targetPort: <integer> # Pod 目标端口
 #+end_src
 
-#+CAPTION: =ClusterIP= 的 =name= 将作为 Pod 的主机名
+#+caption: =ClusterIP= 的 =name= 将作为 Pod 的主机名
 #+begin_src yaml
 # Foo Deployment
 kind: Deployment
@@ -189,7 +189,7 @@ Volume 使容器能在 Pod 级别存储数据，以解决两个问题：
 
 Volume 的生命周期与 Pod 一致，Pod 关闭后，Volume 也被清空。
 
-#+CAPTION: =Volume=
+#+caption: =Volume=
 #+begin_src yaml
 name: <string>
 persistentVolumeClaim:
@@ -208,7 +208,7 @@ file:../images/kubernetes/02.png
 
 Persistent Volume Claim (PVC) 是 Pod 对于它所需要的 Persistent Volume 的声明。
 
-#+CAPTION: =PersistentVolumeClaimSpec=
+#+caption: =PersistentVolumeClaimSpec=
 #+begin_src yaml
 accessModes:
   - <string> # ReadWriteOnce，单个节点读写
@@ -269,7 +269,7 @@ Account is for identification. Accounts include:
 
 Role is for authorization, it contains a set of permissions. A role can be bound to an account by using "role binding" to authorize the account to perform the allowed actions.
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | =Role=               | A namespaced role               |
 |----------------------+---------------------------------|
 | =ClusterRole=        | A cluster-wide role             |
@@ -311,7 +311,7 @@ helm init --service-account tiller --upgrade
 
 ** 命令
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *操作* | =apply=        | 应用配置 |
 |        | =create=       | 创建     |
 |        | =delete=       | 删除     |
@@ -417,7 +417,7 @@ kubectl set <command>
 kubectl set image <type>/<name> <container>=<image>
 #+end_src
 
-#+CAPTION: =foo-deployment.yml=
+#+caption: =foo-deployment.yml=
 #+begin_src yaml
 ...
 kind: Deployment
@@ -432,7 +432,7 @@ spec:
           image: project/bar-image
 #+end_src
 
-#+CAPTION: 指定镜像
+#+caption: 指定镜像
 #+begin_src sh
 kubectl set image deployment/foo-deployment bar=project/bar-image:v1
 #+end_src
@@ -443,7 +443,7 @@ Minikube 是用于开发环境的 Kubernetes 集群配置和管理工具。Minik
 
 ** 命令
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *控制* | =start=      |                 |
 |--------+--------------+-----------------|
 | *状态* | =status=     |                 |

@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Hive
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Hive
 
 * Hive
 
@@ -18,7 +18,7 @@ Hive ÊÊºÏÓ¦ÓÃÔÚ´ó¹æÄ£µÄÖ»Ôö£¨append-only£©Êı¾İµÄÅú´¦Àí×÷Òµ£¬±ÈÈçÈÕÖ¾ÎÄ¼ş¡£
 
 ÒòÎªÊı¾İ²Ö¿âµÄÌØµãÊÇ¶Á¶àĞ´ÉÙ£¬ËùÒÔ Hive ²»Ö§³Ö¶ÔÊı¾İµÄ¸ÄĞ´¡¢Ìí¼Ó£¬ËùÓĞµÄÊı¾İ¼ÓÔØÖ®ºó²»ÔÙ¸Ä±ä¡£
 
-#+CAPTION: Hive µÄÖØµã
+#+caption: Hive µÄÖØµã
 | ¿ÉÉìËõĞÔ£¨scalability£©   | Í¨¹ıÏò Hadoop ÖĞÔö¼Ó½ÚµãÀ©´ó¹æÄ£    |
 |---------------------------+-------------------------------------|
 | ¿ÉÀ©Õ¹ĞÔ£¨extensibility£© | Í¨¹ı MapReduce ¿ò¼ÜºÍ UDF/UDAF/UDTF |
@@ -108,7 +108,7 @@ Hive Ö»ĞèÅäÖÃÔÚ Hadoop µÄ master ½ÚµãÉÏ¡£
 * Êı¾İ
 ** Êı¾İÀàĞÍ
 
-#+CAPTION: Ô­×ÓÊı¾İÀàĞÍ
+#+caption: Ô­×ÓÊı¾İÀàĞÍ
 |            | ×Ö½Ú | ÄÚÈİ                                    |
 |------------+------+-----------------------------------------|
 | =TINYINT=  |    1 | ÓĞ·ûºÅÕûÊı                              |
@@ -127,7 +127,7 @@ Hive Ö»ĞèÅäÖÃÔÚ Hadoop µÄ master ½ÚµãÉÏ¡£
 |------------+------+-----------------------------------------|
 | =STRING=   |      | Ïàµ±ÓÚÊı¾İ¿âµÄ =varchar= ÀàĞÍ£¬³¤¶È¿É±ä |
 
-#+CAPTION: ¸´ÔÓÊı¾İÀàĞÍ
+#+caption: ¸´ÔÓÊı¾İÀàĞÍ
 | =ARRAY=  | Ò»×éÓĞĞò×Ö¶Î£¬×Ö¶ÎÀàĞÍ±ØĞëÏàÍ¬                          |
 |----------+---------------------------------------------------------|
 | =MAP=    | Ò»×éÎŞĞò¼üÖµ¶Ô£¬¼ü±ØĞëÊÇÔ­×ÓÀàĞÍ£¬Öµ¿ÉÒÔÊÇÈÎºÎÀàĞÍ      |
@@ -135,7 +135,7 @@ Hive Ö»ĞèÅäÖÃÔÚ Hadoop µÄ master ½ÚµãÉÏ¡£
 |----------+---------------------------------------------------------|
 | =STRUCT= | Ò»×éÃüÃû×Ö¶Î£¬×Ö¶ÎÀàĞÍ¿ÉÒÔ²»Í¬£¬eg. =Struct('a',1,1,0)= |
 
-#+CAPTION: ÉùÃ÷
+#+caption: ÉùÃ÷
 #+begin_src sql
 CREATE TABLE complex(
     col1 ARRAY<INT>,
@@ -144,7 +144,7 @@ CREATE TABLE complex(
 );
 #+end_src
 
-#+CAPTION: ²éÑ¯
+#+caption: ²éÑ¯
 #+begin_src sql
 SELECT col1[0],col2['b'],col3.c FROM complex;
 #+end_src
@@ -153,7 +153,7 @@ Hive ²»Ö§³ÖÈÕÆÚÀàĞÍ£¬ÈÕÆÚÓÃ×Ö·û´®À´±íÊ¾£¬³£ÓÃµÄÈÕÆÚ¸ñÊ½×ª»¯²Ù×÷ÊÇÍ¨¹ı×Ô¶¨Òåº¯Êı½
 
 ** Êı¾İÄ£ĞÍ
 
-#+CAPTION: ±íµÄ´æ´¢Â·¾¶£º =/[warehouse_dir]/[table]/[par]=[value]/.../part-[hash]=
+#+caption: ±íµÄ´æ´¢Â·¾¶£º =/[warehouse_dir]/[table]/[par]=[value]/.../part-[hash]=
 | Database                 | Ïàµ±ÓÚ¹ØÏµÊı¾İ¿âÀïµÄÃüÃû¿Õ¼ä                                                     |
 |                          | ½«ÓÃ»§ºÍÊı¾İ¿âµÄÓ¦ÓÃ¸ôÀëµ½²»Í¬µÄÊı¾İ¿â¡¢Ä£Ê½ÖĞ                                   |
 |--------------------------+----------------------------------------------------------------------------------|
@@ -173,7 +173,7 @@ Hive ²»Ö§³ÖÈÕÆÚÀàĞÍ£¬ÈÕÆÚÓÃ×Ö·û´®À´±íÊ¾£¬³£ÓÃµÄÈÕÆÚ¸ñÊ½×ª»¯²Ù×÷ÊÇÍ¨¹ı×Ô¶¨Òåº¯Êı½
 |                          | eg. Í°ÊıÎª 2£¬hash Öµ³ıÒÔ 2 µÄÓàÊıÎª 1 µÄ¼ÇÂ¼´æ´¢ÔÚÎÄ¼ş =000001_0=               |
 
 
-#+CAPTION: ±í vs. Íâ²¿±í
+#+caption: ±í vs. Íâ²¿±í
 |          | Table                                | External Table                                     |
 |----------+--------------------------------------+----------------------------------------------------|
 | =CREATE= | ´´½¨ÓëÊı¾İ¼ÓÔØ·Ö¿ª£¨Ò²¿ÉÒÔÍ¬Ê±Íê³É£© | ´´½¨¡¢¼ÓÔØÊı¾İÍ¬Ê±Íê³É                             |
@@ -268,7 +268,7 @@ FROM <table>
 |-----------------+------------------------------------------------------------------|
 | =CLUSTER BY=    | = =SORT BY= + =DISTRIBUTE BY=                                    |
 
-#+CAPTION: =SELECT= ¿ÉÒÔÊ¹ÓÃÕıÔò±í´ïÊ½×öÁĞÑ¡Ôñ
+#+caption: =SELECT= ¿ÉÒÔÊ¹ÓÃÕıÔò±í´ïÊ½×öÁĞÑ¡Ôñ
 #+begin_src sql
 ## eg. ²éÑ¯³ıÁË ds ºÍ hr Ö®ÍâµÄËùÓĞÁĞ£º
 SELECT `(ds|hr)?+.+` FROM sales
@@ -289,7 +289,7 @@ SELECT `(ds|hr)?+.+` FROM sales
 SELECT col1 FROM t1 GROUP BY col1 HAVING SUM(col2) > 10;
 #+end_src
 
-#+CAPTION: ×ª»¯Îª
+#+caption: ×ª»¯Îª
 #+begin_src sql
 SELECT col1 FROM (
     SELECT col1, SUM(col2) AS col2sum
@@ -313,7 +313,7 @@ DROP TABLE [IF EXISTS] <table> [PURGE];
 
 ** Ê¾Àı
 
-#+CAPTION: Í¨¹ıÁÙÊ±±í =JOIN= ·½Ê½ÊµÏÖ =IN= Ìõ¼şÉ¸Ñ¡£º
+#+caption: Í¨¹ıÁÙÊ±±í =JOIN= ·½Ê½ÊµÏÖ =IN= Ìõ¼şÉ¸Ñ¡£º
 #+begin_src sql
 CREATE TABLE IF NOT EXISTS tmp_filter_ (col STRING);
 LOAD DATA LOCAL INPATH '' OVERWRITE INTO TABLE tmp_filter_;
@@ -332,7 +332,7 @@ DROP TABLE IF EXISTS tmp_filter_;
 |-------------------------------------------+---|
 |                                           |   |
 
-#+CAPTION: Ê¾Àı£º´Ó =sample= ÁĞµÄÖµ =key1=>val1;...keyN=>valN,...= ÖĞÌáÈ¡ =valN= £¬¸ñÊ½ÎªÊı×Ö
+#+caption: Ê¾Àı£º´Ó =sample= ÁĞµÄÖµ =key1=>val1;...keyN=>valN,...= ÖĞÌáÈ¡ =valN= £¬¸ñÊ½ÎªÊı×Ö
 #+begin_src sql
 regexp_extract(sample, 'keyN=>(\\d*)\;', 1)
 #+end_src
@@ -347,12 +347,12 @@ hive <options>
     -S, --silent # ²»°ÑÔËĞĞĞÅÏ¢´òÓ¡µ½±ê×¼´íÎóÊä³ö£¬Ö»´òÓ¡²éÑ¯½á¹û
 #+end_src
 
-#+CAPTION: ²éÑ¯½á¹û·ÅÈëÎÄ¼ş
+#+caption: ²éÑ¯½á¹û·ÅÈëÎÄ¼ş
 #+begin_src sh
 hive -S -e "SELECT ..." > <file>
 #+end_src
 
-#+CAPTION: ÖÕÖ¹ÈÎÎñ
+#+caption: ÖÕÖ¹ÈÎÎñ
 #+begin_src sh
 hadoop job -kill <job_id>
 #+end_src

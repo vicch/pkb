@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: C Scrap
+#+setupfile: ../../styles/readtheorg.setup
+#+title: C Scrap
 
 * 编译器的工作过程
 
@@ -7,7 +7,7 @@
 
 源码要运行，必须先转成二进制的机器码，这是编译器的任务。
 
-#+CAPTION: 源码：
+#+caption: 源码：
 #+begin_src c
 // test.c
 #include <stdio.h>
@@ -19,14 +19,14 @@ int main(void)
 }
 #+end_src
 
-#+CAPTION: 编译和运行：
+#+caption: 编译和运行：
 #+begin_src sh
 $ gcc test.c
 $ ./a.out
 Hello, world!
 #+end_src
 
-#+CAPTION: 对于复杂的项目，编译过程分成三步：
+#+caption: 对于复杂的项目，编译过程分成三步：
 #+begin_src sh
 $ ./configure
 $ make  
@@ -43,7 +43,7 @@ file:../images/c_scrap/01.png
 
 这些 _配置信息保存在一个配置文件之中，通常是 =configure= 脚本文件，由 +autoconf+ 工具生成。_ 编译器通过运行这个脚本，获知编译参数。 _=configure= 脚本已经尽量考虑到不同系统的差异，对各种编译参数给出了默认值。_ 如果用户的系统环境比较特别，或者有一些特定的需求，就需要手动向 =configure= 脚本提供编译参数。
 
-#+CAPTION: PHP 的一种编译配置，指定安装后的文件保存在 =www= 目录，并且编译时加入 mysql 模块的支持：
+#+caption: PHP 的一种编译配置，指定安装后的文件保存在 =www= 目录，并且编译时加入 mysql 模块的支持：
 #+begin_src sh
 $ ./configure --prefix=/www --with-mysql
 #+end_src
@@ -91,7 +91,7 @@ int main(void)
 
 预处理之后，编译器就开始生成机器码。对于某些编译器来说，还存在一个中间步骤，会先把源码转为汇编码（assembly），再把汇编码转为机器码。转码后的文件称为 _对象文件（object file）_ 。
 
-#+CAPTION: 示例源码转换成的汇编码：
+#+caption: 示例源码转换成的汇编码：
 #+begin_src c
     .file   "test.c"
     .section    .rodata
@@ -175,7 +175,7 @@ $ make a.txt
 
 ** 规则
 
-#+CAPTION: 假设文件 =a.txt= 依赖于 =b.txt= 和 =c.txt= ，是两个文件连接的产物，Make 规则：
+#+caption: 假设文件 =a.txt= 依赖于 =b.txt= 和 =c.txt= ，是两个文件连接的产物，Make 规则：
 #+begin_src sh
 a.txt: b.txt c.txt
     cat b.txt c.txt > a.txt
@@ -190,7 +190,7 @@ a.txt: b.txt c.txt
 
 Make 命令的规则都写在 Makefile（ 默认为 =makefile= ）中，Make 命令依赖 Makefile 进行构建。
 
-#+CAPTION: Makefile 可以用命令行参数指定为其他文件名：
+#+caption: Makefile 可以用命令行参数指定为其他文件名：
 #+begin_src sh
 $ make -f rules.txt
 $ make --file=rules.txt
@@ -217,7 +217,7 @@ Makefile 文件由一系列规则构成，每条规则的形式如下：
 
 *** 伪目标
 
-#+CAPTION: 目标还可以是某个操作的名字，这称为「伪目标」（phony target）：
+#+caption: 目标还可以是某个操作的名字，这称为「伪目标」（phony target）：
 #+begin_src sh
 clean:
     rm *.o
@@ -225,7 +225,7 @@ clean:
 
 如果当前目录正好有一个文件 =clean= ，那么这个命令不会执行，因为 Make 发现 =clean= 已经存在，认为没有必要重新构建。
 
-#+CAPTION: 为避免这种情况，可以显式声明 =clean= 是伪目标：
+#+caption: 为避免这种情况，可以显式声明 =clean= 是伪目标：
 #+begin_src sh
 .PHONY: clean
 clean:
@@ -238,7 +238,7 @@ clean:
 
 前置条件通常是一组文件名，之间用空格分隔。它指定了 _目标需要重新构建的判断标准：当一个前置文件不存在，或者有过修改（比较前置条件与目标的修改时间戳）时，_ 目标就需要重新构建，否则， Make 命令不执行任何操作，目标也不会重新生成。
 
-#+CAPTION: 如果前置条件不存在，通常需要另一条规则来生成前置条件：
+#+caption: 如果前置条件不存在，通常需要另一条规则来生成前置条件：
 #+begin_src sh
 result.txt: source.txt
     cp source.txt result.txt
@@ -247,7 +247,7 @@ source.txt:
     echo "Hello world" > source.txt
 #+end_src
 
-#+CAPTION: 使用命令为空的伪目标一次生成多个文件：
+#+caption: 使用命令为空的伪目标一次生成多个文件：
 #+begin_src code
 source: file_1 file_2 file_3
 #+end_src
@@ -256,7 +256,7 @@ source: file_1 file_2 file_3
 
 命令表示如何更新目标文件，由一行或多行 Shell 命令组成，运行结果通常是生成目标文件。
 
-#+CAPTION: 命令之前必须有一个 tab 字符，可以通过内置变量进行修改：
+#+caption: 命令之前必须有一个 tab 字符，可以通过内置变量进行修改：
 #+begin_src sh
 .RECIPEPREFIX = >
 all:
@@ -265,27 +265,27 @@ all:
 
 -----
 
-#+CAPTION: 每行命令默认在一个单独的 Shell 中执行，这些 Shell 之间没有继承关系：
+#+caption: 每行命令默认在一个单独的 Shell 中执行，这些 Shell 之间没有继承关系：
 #+begin_src sh
 var-lost:
     export foo=bar
     echo "foo=[$$foo]" # 取不到 foo 的值
 #+end_src
 
-#+CAPTION: 解决办法一：将两行命令写在一行，中间用分号分隔：
+#+caption: 解决办法一：将两行命令写在一行，中间用分号分隔：
 #+begin_src sh
 var-kept:
     export foo=bar; echo "foo=[$$foo]"
 #+end_src
 
-#+CAPTION: 解决办法二：换行符前加反斜杠：
+#+caption: 解决办法二：换行符前加反斜杠：
 #+begin_src sh
 var-kept:
     export foo=bar; \
     echo "foo=[$$foo]"
 #+end_src
 
-#+CAPTION: 解决办法三：使用 =.ONESHELL:= 命令：
+#+caption: 解决办法三：使用 =.ONESHELL:= 命令：
 #+begin_src sh
 .ONESHELL:
 var-kept:
@@ -304,7 +304,7 @@ result.txt: source.txt
 
 *** 输出
 
-#+CAPTION: Make 命令默认会在执行前打印每条命令，称为回声（echoing）：
+#+caption: Make 命令默认会在执行前打印每条命令，称为回声（echoing）：
 #+begin_src sh
 target:
     # Comment
@@ -313,13 +313,13 @@ $ make target
 # Comment
 #+end_src
 
-#+CAPTION: 使用 =@= 关闭回声：
+#+caption: 使用 =@= 关闭回声：
 #+begin_src sh
 target:
     @# Comment
 #+end_src
 
-#+CAPTION: 由于在构建过程中，需要了解当前执行的命令，所以通常只在注释和 =echo= 命令前面加 =@= ：
+#+caption: 由于在构建过程中，需要了解当前执行的命令，所以通常只在注释和 =echo= 命令前面加 =@= ：
 #+begin_src sh
 target:
     @# Comment
@@ -330,7 +330,7 @@ target:
 
 Make 命令允许对文件名进行匹配，使用匹配符 =%= 可以使大量同类型的文件只用一条规则就完成构建。
 
-#+CAPTION: 假设需要将 =f1.c= 和 =f2.c= 两个源文件编译为对象文件：
+#+caption: 假设需要将 =f1.c= 和 =f2.c= 两个源文件编译为对象文件：
 #+begin_src sh
 %.o: %.c
 # 等同于
@@ -342,20 +342,20 @@ f2.o: f2.c
 
 Makefile 允许使用自定义变量，语法为 =$(<var>)= 。
 
-#+CAPTION: 示例：
+#+caption: 示例：
 #+begin_src sh
 txt = Hello World
 target:
     @echo $(txt)
 #+end_src
 
-#+CAPTION: 使用 Shell 变量名需要两个 =$= ，因为 Make 命令会对 =$= 转义：
+#+caption: 使用 Shell 变量名需要两个 =$= ，因为 Make 命令会对 =$= 转义：
 #+begin_src sh
 target:
     @echo $$HOME
 #+end_src
 
-#+CAPTION: 变量的值可能指向另一个变量：
+#+caption: 变量的值可能指向另一个变量：
 #+begin_src sh
 v1 = $(v2)
 #+end_src
@@ -436,7 +436,7 @@ a.txt: b.txt c.txt
 
 *** 判断
 
-#+CAPTION: 根据编译器指定不同的库文件
+#+caption: 根据编译器指定不同的库文件
 #+begin_src sh
 ifeq ($(CC), gcc)
   libs = $(libs_for_gcc)
@@ -457,7 +457,7 @@ all:
 
 *** 函数
 
-#+CAPTION: Makefile 可以使用函数：
+#+caption: Makefile 可以使用函数：
 #+begin_src sh
 $(<func> <args>)
 ${<func> <args>}
@@ -491,12 +491,12 @@ srcfiles := $(wildcard src/*.txt)
 $(subst <from>,<to>,<text>)
 #+end_src
 
-#+CAPTION: 示例 1
+#+caption: 示例 1
 #+begin_src sh
 $(subst ee,EE,feet on the street) # fEEt on the strEEt
 #+end_src
 
-#+CAPTION: 示例 2
+#+caption: 示例 2
 #+begin_src sh
 comma := ,
 empty :=                   # 空变量
@@ -511,7 +511,7 @@ bar := $(subst $(space),$(comma),$(foo)) # bar = a,b,c
 $(patsubst <pattern>,<replace>,<text>)
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sh
 $(patsubst %.c,%.o,f1.c f2.c) # f1.o f2.o
 #+end_src
@@ -524,14 +524,14 @@ $(patsubst %.c,%.o,f1.c f2.c) # f1.o f2.o
 <var>:<from>=<to>
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sh
 min: $(OUTPUT:.js=.min.js) # 将变量 OUTPUT 中的后缀名 .js 替换为 .min.js
 #+end_src
 
 ** Makefile 实例
 
-#+CAPTION: 执行多个目标
+#+caption: 执行多个目标
 #+begin_src sh
 .PHONY: cleanall cleanobj cleandiff
 
@@ -545,7 +545,7 @@ cleandiff:
     rm *.diff
 #+end_src
 
-#+CAPTION: 编译 C 项目
+#+caption: 编译 C 项目
 #+begin_src sh
 edit: main.o kbd.o command.o display.o 
     cc -o edit main.o kbd.o command.o display.o

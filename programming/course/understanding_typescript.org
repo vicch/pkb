@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Understanding TypeScript
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Understanding TypeScript
 
 * Get Started
 ** Install TypeScript
@@ -12,7 +12,7 @@ npm install -g typescript
 
 Create a simple TypeScript script:
 
-#+CAPTION: =script.ts=
+#+caption: =script.ts=
 #+begin_src typescript
 class Greeter {
   greeting: string;
@@ -57,7 +57,7 @@ npm install --save-dev lite-server
 
 Add an npm command to start lite-server:
 
-#+CAPTION: =package.json=
+#+caption: =package.json=
 #+begin_src js
 {
   "scripts": {
@@ -168,7 +168,7 @@ When the application grow, dependencies become less maintainable by using namesp
 
 The config file specifies the module standard to be used by the compiler:
 
-#+CAPTION: =tsconfig.json=
+#+caption: =tsconfig.json=
 #+begin_src js
 {
   "compilerOptions": {
@@ -183,13 +183,13 @@ Regardless of the module standard, module importing won't work directly in brows
 
 Module usage example:
 
-#+CAPTION: =/foo/bar.ts=
+#+caption: =/foo/bar.ts=
 #+begin_src typescript
 export const name = 'bar';
 export const bar = () => 'This is bar.';
 #+end_src
 
-#+CAPTION: =/app.ts=
+#+caption: =/app.ts=
 #+begin_src typescript
 import { name, bar } from './foo/bar';
 console.log(name);
@@ -206,7 +206,7 @@ $ npm install --save-dev rollup
 
 Update compiler config to use ES2015 module standard:
 
-#+CAPTION: =tsconfig.json=
+#+caption: =tsconfig.json=
 #+begin_src js
 {
   "compilerOptions": {
@@ -217,7 +217,7 @@ Update compiler config to use ES2015 module standard:
 
 Add an npm script to invoke rollup.js after compiling TypeScript:
 
-#+CAPTION: =package.json=
+#+caption: =package.json=
 #+begin_src js
 {
   "scripts": {
@@ -277,7 +277,7 @@ $('...'); // OK
 
 TypeScript compiler loads automatically declaration files with =.d.ts= extensions. Declaration files are similar to header files, where global variables and functions can be defined and shared among all TypeScript files.
 
-#+CAPTION: =jquery.d.ts=
+#+caption: =jquery.d.ts=
 #+begin_src typescript
 declare var $: any;
 #+end_src
@@ -312,7 +312,7 @@ $ npm install --save-dev gulp gulp-typescript typescript
 
 Create gulp config file:
 
-#+CAPTION: =gulpfile.js=
+#+caption: =gulpfile.js=
 #+begin_src js
 var gulp = require('gulp');
 var ts = require('gulp-typescript');
@@ -335,7 +335,7 @@ gulp.task('default', gulp.series('watch')); // Run "watch" task by default
 
 Add an npm script to run gulp:
 
-#+CAPTION: =package.json=
+#+caption: =package.json=
 #+begin_src js
 {
   "scripts": {
@@ -357,7 +357,7 @@ $ npm install --save-dev webpack webpack-cli ts-loader
 
 Create webpack config file:
 
-#+CAPTION: =webpack.config.js=
+#+caption: =webpack.config.js=
 #+begin_src js
 module.exports = {
   entry: './app.ts',
@@ -374,7 +374,7 @@ module.exports = {
 
 Add an npm script to run webpack:
 
-#+CAPTION: =package.json=
+#+caption: =package.json=
 #+begin_src js
 {
   "scripts": {
@@ -410,7 +410,7 @@ $ npm start
 
 Create a functional component:
 
-#+CAPTION: =src/Counter.tsx=
+#+caption: =src/Counter.tsx=
 #+begin_src typescript
 import * as React from 'react';
 
@@ -425,7 +425,7 @@ export default counter;
 
 Use the component:
 
-#+CAPTION: =src/App.tsx=
+#+caption: =src/App.tsx=
 #+begin_src typescript
 import Counter from './Counter';
 
@@ -440,7 +440,7 @@ class App extends React.Component {
 
 Make the counter more functional by adding states and event handlers to the app:
 
-#+CAPTION: =src/App.tsx=
+#+caption: =src/App.tsx=
 #+begin_src typescript
 interface IAppState {
   counter: number;

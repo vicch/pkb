@@ -1,9 +1,9 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: C Snippet
+#+setupfile: ../../styles/readtheorg.setup
+#+title: C Snippet
 
 * 数据结构
 
-#+CAPTION: 堆栈
+#+caption: 堆栈
 #+begin_src c
 #define MAXVAL 100 // Max depth of stack
 
@@ -86,7 +86,7 @@ void swap(int v[], int i, int j)
 
 * 计算
 
-#+CAPTION: 乘方
+#+caption: 乘方
 #+begin_src c
 int power(int base, int power)
 {
@@ -100,14 +100,14 @@ int power(int base, int power)
 * 文本
 ** IO
 
-#+CAPTION: 输入字符复制到输出
+#+caption: 输入字符复制到输出
 #+begin_src c
 int c;
 while ((c = getchar()) != EOF)
     putchar(c);
 #+end_src
 
-#+CAPTION: 输入中获取一行，写入字符数组，返回长度
+#+caption: 输入中获取一行，写入字符数组，返回长度
 #+begin_src c
 int getline(char s[], int lim) // 因为不确定输入的长度，需要设置溢出检查
 {
@@ -121,7 +121,7 @@ int getline(char s[], int lim) // 因为不确定输入的长度，需要设置溢出检查
 }
 #+end_src
 
-#+CAPTION: 字符缓冲，支持将暂时不读取的字符退回
+#+caption: 字符缓冲，支持将暂时不读取的字符退回
 #+begin_src c
 #define BUFSIZE 100
 
@@ -143,7 +143,7 @@ void ungetch(int c)
 }
 #+end_src
 
-#+CAPTION: 十进制数按位输出（递归）
+#+caption: 十进制数按位输出（递归）
 #+begin_src c
 void printd(int n)
 {
@@ -159,7 +159,7 @@ void printd(int n)
 
 ** 统计
 
-#+CAPTION: 返回字符串长度
+#+caption: 返回字符串长度
 #+begin_src c
 // 写法 1
 int strlen(char* s)
@@ -178,20 +178,20 @@ int strlen(char* s)
 }
 #+end_src
 
-#+CAPTION: 统计输入字符数
+#+caption: 统计输入字符数
 #+begin_src c
 int nc;
 for (nc = 0; getchar() != EOF; ++nc);
 #+end_src
 
-#+CAPTION: 统计输入行数
+#+caption: 统计输入行数
 #+begin_src c
 int c, nl = 0;
 while ((c = getchar()) != EOF)
     if (c == '\n') nl++;
 #+end_src
 
-#+CAPTION: 统计行数、单词数、字符数
+#+caption: 统计行数、单词数、字符数
 #+begin_src c
 #define IN  1 // 单词内
 #define OUT 0 // 单词外
@@ -214,7 +214,7 @@ while ((c = getchar()) != EOF) {
 
 ** 转换
 
-#+CAPTION: 字符串转换为整数
+#+caption: 字符串转换为整数
 #+begin_src c
 int atoi(char s[])
 {
@@ -235,7 +235,7 @@ int atoi(char s[])
 }
 #+end_src
 
-#+CAPTION: 整数转换为字符串
+#+caption: 整数转换为字符串
 #+begin_src c
 void itoa(int n, char s[])
 {
@@ -251,7 +251,7 @@ void itoa(int n, char s[])
 }
 #+end_src
 
-#+CAPTION: 字符串转换为浮点数
+#+caption: 字符串转换为浮点数
 #+begin_src c
 double atof(char s[])
 {
@@ -282,7 +282,7 @@ double atof(char s[])
 
 ** 操作
 
-#+CAPTION: 复制字符串
+#+caption: 复制字符串
 #+begin_src c
 // 指针形式 1
 void copy(char* t, char* f)
@@ -302,7 +302,7 @@ void copy(char* t, char* f)
 }
 #+end_src
 
-#+CAPTION: 字符串倒序
+#+caption: 字符串倒序
 #+begin_src c
 void reverse(char* s)
 {
@@ -312,7 +312,7 @@ void reverse(char* s)
 }
 #+end_src
 
-#+CAPTION: 删除末尾的空白字符
+#+caption: 删除末尾的空白字符
 #+begin_src c
 int trim(char s[])
 {
@@ -327,7 +327,7 @@ int trim(char s[])
 
 ** 查找
 
-#+CAPTION: 查找子字符串，返回起始位置
+#+caption: 查找子字符串，返回起始位置
 #+begin_src c
 int strindex(char s[], char t[])
 {
@@ -365,7 +365,7 @@ int strcmp(char *s, char *t)
 
 * 位运算
 
-#+CAPTION: 计数二进制位中 =1= 的个数
+#+caption: 计数二进制位中 =1= 的个数
 #+begin_src c
 int bitcount(unsigned x)
 {
@@ -376,7 +376,7 @@ int bitcount(unsigned x)
 }
 #+end_src
 
-#+CAPTION: 从比特位 =p= （索引值，最右一位为 =0=）开始取 =n= 位
+#+caption: 从比特位 =p= （索引值，最右一位为 =0=）开始取 =n= 位
 #+begin_src c
 unsigned getbits(unsigned x, int p, int n)
 {
@@ -386,7 +386,7 @@ unsigned getbits(unsigned x, int p, int n)
 
 * 日期
 
-#+CAPTION: 输入年月日，计算该日期是当年的第几天
+#+caption: 输入年月日，计算该日期是当年的第几天
 #+begin_src c
 static int monthDays[2][13] = {
     {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
@@ -402,7 +402,7 @@ int dayOfYear(int year, int month, int day)
 }
 #+end_src
 
-#+CAPTION: 输入年和当年的第几天，计算月和日
+#+caption: 输入年和当年的第几天，计算月和日
 #+begin_src c
 static int monthDays[2][13] = {
     {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
@@ -421,7 +421,7 @@ void monthDay(int year, int nthDay, int* month, int* day)
 
 * 命令行
 
-#+CAPTION: 读取命令行参数
+#+caption: 读取命令行参数
 #+begin_src c
 int main(int argc, char* argv[])
 {

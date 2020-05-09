@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Terraform
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Terraform
 
 * Configuration
 ** 文件
@@ -79,7 +79,7 @@ resource "<provider_resource>" "<name>" {
 
 ** =variable=
 
-#+CAPTION: 定义变量
+#+caption: 定义变量
 #+begin_src terraform
 variable "<name>" {
   description = "<desc>"
@@ -91,7 +91,7 @@ variable "<name>" {
 }
 #+end_src
 
-#+CAPTION: 引用变量
+#+caption: 引用变量
 #+begin_src terraform
 "${var.<variable_name>}"
 #+end_src
@@ -229,7 +229,7 @@ resource "aws_elb" "<name>" {
 }
 #+end_src
 
-#+CAPTION: 健康检查需要实例或 ASG 包含发送规则：
+#+caption: 健康检查需要实例或 ASG 包含发送规则：
 #+begin_src terraform
 egress {
   from_port   = 0
@@ -325,7 +325,7 @@ resource "aws_security_group" "<name>" {
 }
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src terraform
 resource "aws_security_group" "test" {
   name = "test"
@@ -367,7 +367,7 @@ resource "aws_security_group_rule" "<name>" {
 ** =data=
 *** =aws_availability_zones=
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src terraform
 availability_zones = "${data.aws_availability_zones.all.names}"
 #+end_src
@@ -382,7 +382,7 @@ Terraform 支持将状态文件加密存储到远程，每次运行时自动获�
 
 远程状态存储可以解决共享和明文保存敏感数据的问题，但是不支持锁机制，无法避免竞态问题。
 
-#+CAPTION: 状态存储
+#+caption: 状态存储
 #+begin_src terraform
 terraform {
   backend "s3" {
@@ -401,7 +401,7 @@ output "<output_name>" {
 使用数据源 =terraform_remote_state= 可以以只读方式获取其他 Terraform 模板的状态文件。
 <<terraform_remote_state>>
 
-#+CAPTION: 状态读取
+#+caption: 状态读取
 #+begin_src terraform
 data "terraform_remote_state" "<data_name>" {
   backend = "s3"
@@ -422,7 +422,7 @@ file:../images/terraform_up_and_running/04.png
 
 任一目录下的一组 Terraform 模板都可以认为是一个模块（module），一个模块可以复用其他模块的代码。
 
-#+CAPTION: 使用模块
+#+caption: 使用模块
 #+begin_src terraform
 module "<name>" {
   source = "<source>" # 相对路径，e.g. ../../modules/<service>
@@ -431,7 +431,7 @@ module "<name>" {
 }
 #+end_src
 
-#+CAPTION: 模块变量
+#+caption: 模块变量
 #+begin_src terraform
 # /modules/<service>/vars.tf
 # 声明变量
@@ -485,7 +485,7 @@ terrform output [<name>]
 
 ** =plan=
 
-#+CAPTION: 资源 diff
+#+caption: 资源 diff
 | =+=   | 增加 |
 |-------+------|
 | =-=   | 删除 |
@@ -496,7 +496,7 @@ terrform output [<name>]
 
 * Environment
 
-#+CAPTION: 环境变量
+#+caption: 环境变量
 | =AWS_ACCESS_KEY_ID=     |              |
 |-------------------------+--------------|
 | =AWS_SECRET_ACCESS_KEY= |              |

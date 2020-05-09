@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Amazon Web Services
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Amazon Web Services
 
 * Services
 
@@ -31,7 +31,7 @@ API Gateway 用于创建 REST API，以调用 Lambda 函数或访问其他资源
 
 file:../images/amazon_web_services/01.png
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *APIs*                | 定义路径、HTTP 方法、动作等 |
 |-----------------------+-----------------------------|
 | *Usage Plans*         | 限制使用频率                |
@@ -44,7 +44,7 @@ file:../images/amazon_web_services/01.png
 
 ** APIs
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Resources*      | Define API paths and actions      |
 |------------------+-----------------------------------|
 | *Stages*         | API snapshots that are deployed   |
@@ -61,7 +61,7 @@ file:../images/amazon_web_services/01.png
 
 *** Resources
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Configure as Proxy Resource* | Create a catch-all resource that forwards all requests to backend                                    |
 |-------------------------------+------------------------------------------------------------------------------------------------------|
 | *Enable API Gateway CORS*     | Create an =OPTIONS= method that receives preflight requests, and responds HTTP headers to allow CORS |
@@ -85,7 +85,7 @@ Automatically enabling CORS:
 
 *** Method Execution
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Method Request*       | Request validation and authorization             |
 |------------------------+--------------------------------------------------|
 | *Integration Request*  | Request data transformation and backend settings |
@@ -102,7 +102,7 @@ Mapping templates are used in "Integration Request" and "Integration Response" t
 
 **** Integration Request
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Use Lambda Proxy Integration* | Instead of a payload, pass the entire request object to the Lambda function |
 |                                | "Integration Response" is disabled when this is enabled                     |
 |--------------------------------+-----------------------------------------------------------------------------|
@@ -110,7 +110,7 @@ Mapping templates are used in "Integration Request" and "Integration Response" t
 
 **** Integration Response
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Mapping Templates* | Transform response data before sending to client |
 
 * ASG
@@ -146,7 +146,7 @@ NoSQL database service, which is provided as a pool, there is no server setup or
 
 ** Capacity
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Provisioned* | Estimate capacity beforehand, fixed limits, cheaper |
 |---------------+-----------------------------------------------------|
 | *On-demand*   | No estimation, pay per request                      |
@@ -155,7 +155,7 @@ NoSQL database service, which is provided as a pool, there is no server setup or
 
 [[https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.Partitions.html][Amazon DynamoDB | Partitions and Data Distribution]]
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Partition key* | A key that each item must have, determining which partition the item will be stored in |
 |-----------------+----------------------------------------------------------------------------------------|
 | *Sort key*      | A key to sort items within the same partition                                          |
@@ -219,7 +219,7 @@ file:../images/amazon_web_services/02.png
 
 ** Event Sources
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *S3*          | e.g. file uploaded         |
 |---------------+----------------------------|
 | *CloudWatch*  | e.g. EC2 instance launched |

@@ -1,10 +1,10 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Linux
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Linux
 
 * 内核
 ** 运行级别
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *用户态* | 执行一般任务，如数学计算                         |
 |----------+--------------------------------------------------|
 | *内核态* | 对硬件外设进行操作，如读取磁盘文件、发送网络数据 |
@@ -56,7 +56,7 @@ file:../images/linux/04.png
 
 ** 系统调用
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *fork* |                                                          |
 |--------+----------------------------------------------------------|
 | *exec* | 通知内核执行一个程序，这个程序将会替代正在被调用的程序。 |
@@ -67,31 +67,31 @@ file:../images/linux/04.png
 
 Shell 通过简单模式匹配文件和目录名的方式称为 globbing，Shell 将包含 glob 的参数替换为匹配的文件和目录名，这个过程称为扩展（expansion）。Shell 进行扩展是在运行具体命令之前，即 Shell 将扩展的结果作为参数传递给命令。
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sh
 $ echo .bash*
 .bash_history  .bash_logout  .bashrc
 #+end_src
 
-#+CAPTION: 使用引号包围 glob 可以避免 Shell 进行扩展。
+#+caption: 使用引号包围 glob 可以避免 Shell 进行扩展。
 #+begin_src sh
 $ echo .bash'*'
 .bash*
 #+end_src
 
-#+CAPTION: 当 glob 无法匹配到任何结果时，Shell 直接输出 glob 字符串。
+#+caption: 当 glob 无法匹配到任何结果时，Shell 直接输出 glob 字符串。
 #+begin_src sh
 $ echo notfound*
 notfound*
 #+end_src
 
-#+CAPTION: Glob 不匹配 =.= 字符，需要显式使用 =.= 。
+#+caption: Glob 不匹配 =.= 字符，需要显式使用 =.= 。
 #+begin_src sh
 $ echo .*
 . .. .file
 #+end_src
 
-#+CAPTION: 避免匹配 =.= 和 =..= 。
+#+caption: 避免匹配 =.= 和 =..= 。
 #+begin_src sh
 $ echo .[^.]*
 .file
@@ -195,7 +195,7 @@ ubuntu:x:1001:1001:Ubuntu:/home/ubuntu:/bin/bash
 |-----+------------+------------+------------|
 | =7= |            |            |            |
 
-#+CAPTION: 执行权限只赋予新建的目录，不赋予新建的文件
+#+caption: 执行权限只赋予新建的目录，不赋予新建的文件
 #+begin_src sh
 $ umask
 0002
@@ -244,14 +244,14 @@ $ touch bar
 
 ** 开机运行
 
-#+CAPTION: 系统开机运行脚本（发行版之间不同）
+#+caption: 系统开机运行脚本（发行版之间不同）
 #+begin_src sh
 /etc/rc<n>.d # n 为运行级，rc = run commands
 /etc/init.d
 /etc/init.d/rc.d
 #+end_src
 
-#+CAPTION: 本地自定义开机运行脚本（发行版之间不同）
+#+caption: 本地自定义开机运行脚本（发行版之间不同）
 #+begin_src sh
 /etc/init.d/rc.local
 /etc/init.d/boot.local
@@ -299,7 +299,7 @@ endif
 
 ** 变量
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Shell 变量* | 专属于 Shell 的临时变量，不能被 Shell 运行的命令使用。 |
 |--------------+--------------------------------------------------------|
 | *环境变量*   | 操作系统将 Shell 环境变量传递给 Shell 运行的命令。     |
@@ -349,7 +349,7 @@ $ export <NAME>
 
 *** =.bashrc=
 
-#+CAPTION: 示例：SSH 连接时显示账号过期时间
+#+caption: 示例：SSH 连接时显示账号过期时间
 #+begin_src sh
 if [ "x${SSH_TTY}" != "x" ]; then
     chage -l <account> | grep "Account expires" | tr -d "\t"

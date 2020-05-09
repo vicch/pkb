@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Git
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Git
 
 * 概念
 
@@ -93,7 +93,7 @@ file:../images/git/06.png
 
 ** 切换
 
-#+CAPTION: 切换分支
+#+caption: 切换分支
 #+begin_src sh
 git checkout <branch>
 #+end_src
@@ -117,7 +117,7 @@ file:../images/git/08.png
 
 ** 合并
 
-#+CAPTION: 将 A 合并入 B 时，先检出 B，然后运行 =merge= 命令
+#+caption: 将 A 合并入 B 时，先检出 B，然后运行 =merge= 命令
 #+begin_src sh
 git checkout branch_b
 git merge branch_a
@@ -168,7 +168,7 @@ git pull          # 如果只有一个追踪分支，远程仓库名也可省略
 
 =git clone= 时所有本地分支默认与远程仓库的同名分支建立追踪关系，比如本地的 =master= 分支自动追踪 =origin/master= 分支。
 
-#+CAPTION: 手动建立追踪
+#+caption: 手动建立追踪
 #+begin_src sh
 git branch --set-upstream <branch> <remote>/<branch>
 #+end_src
@@ -199,7 +199,7 @@ file:../images/git/05.png
 - 用 Glob 格式表示文件名。
 - 一般包括开发环境文件、临时文件、缓存、日志、第三方库。
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sh
 *.[oa]       # 忽略以 .o 或 .a 结尾的文件
 !lib.a       # 忽略排除条件，上一条规则的特例
@@ -374,14 +374,14 @@ git config <options>
     -e <scope> <name> <value> # 修改配置
 #+end_src
 
-#+CAPTION: =<scope>=
+#+caption: =<scope>=
 | =--global= |   |
 |------------+---|
 | =--system= |   |
 |------------+---|
 | =--local=  |   |
 
-#+CAPTION: =<name>=
+#+caption: =<name>=
 | =user.email=        |                                              |
 |---------------------+----------------------------------------------|
 | =user.name=         |                                              |
@@ -507,7 +507,7 @@ git push <remote> :refs/tags/<tag>  # 删除远程标签
 - Simple 方式：不带参数的 =git push= 只推送当前分支，Git 2.0 之后默认采用。
 - Matching 方式：不带参数的 =git push= 推送所有有对应的远程分支的本地分支，Git 2.0 之前默认采用。
 
-#+CAPTION: 修改 =push= 方式：
+#+caption: 修改 =push= 方式：
 #+begin_src sh
 git config --global push.default matching
 git config --global push.default simple
@@ -652,14 +652,14 @@ git whatchanged <file>
 * 常用
 ** 创建仓库
 
-#+CAPTION: 将已有项目加入到 Git
+#+caption: 将已有项目加入到 Git
 #+begin_src sh
 git init              # 在项目目录下生成 .git/ 子目录和初始文件
 git add <files>       # 加入文件到 Git 并初始提交                       
 git commit -m "..."
 #+end_src
 
-#+CAPTION: 从远程 clone 仓库到本地
+#+caption: 从远程 clone 仓库到本地
 #+begin_src sh
 git clone <url> <dir>
 #+end_src
@@ -691,7 +691,7 @@ git log -c -S "<deleted_text>" /path/to/file
 
 ** 撤销修改
 
-#+CAPTION: 撤销一个文件的修改到 =HEAD= 。
+#+caption: 撤销一个文件的修改到 =HEAD= 。
 #+begin_src sh
 git checkout /path/to/file
 #+end_src

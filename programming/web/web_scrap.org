@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Web Scrap
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Web Scrap
 
 * HTTP 协议入门
 
@@ -24,7 +24,7 @@ GET /index.html
 
 *** 请求格式
 
-#+CAPTION: HTTP/1.0 请求示例
+#+caption: HTTP/1.0 请求示例
 #+begin_src code
 GET / HTTP/1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5)
@@ -54,7 +54,7 @@ Server: Apache 0.84
 
 关于字符的编码，HTTP/1.0 规定， _头信息必须是 ASCII 编码，后面的数据可以是任何格式。_ 服务器响应的时候，必须告诉客户端，数据是什么格式，这就是 =Content-Type= 字段的作用。这些数据类型总称为 _MIME 类型_ ，每个值包括一级类型和二级类型，之间用斜杠分隔。
 
-#+CAPTION: 一些常见的 =Content-Type= 字段的值：
+#+caption: 一些常见的 =Content-Type= 字段的值：
 #+begin_src code
 text/plain
 text/html
@@ -70,22 +70,22 @@ application/zip
 application/atom+xml
 #+end_src
 
-#+CAPTION: 除了预定义的类型，厂商也可以自定义类型：
+#+caption: 除了预定义的类型，厂商也可以自定义类型：
 #+begin_src code
 application/vnd.debian.binary-package
 #+end_src
 
-#+CAPTION: MIME 类型还可以在尾部使用分号，添加参数：
+#+caption: MIME 类型还可以在尾部使用分号，添加参数：
 #+begin_src code
 Content-Type: text/html; charset=utf-8
 #+end_src
 
-#+CAPTION: 客户端请求的时候，可以使用 =Accept= 字段声明可以接受的数据格式：
+#+caption: 客户端请求的时候，可以使用 =Accept= 字段声明可以接受的数据格式：
 #+begin_src code
 Accept: */*
 #+end_src
 
-#+CAPTION: MIME 类型还可以写在 HTML 中：
+#+caption: MIME 类型还可以写在 HTML 中：
 #+begin_src html
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <!-- 等同于 -->
@@ -96,14 +96,14 @@ Accept: */*
 
 发送的数据可以经过压缩的， =Content-Encoding= 字段说明 _数据的压缩方法_ 。
 
-#+CAPTION: =Content-Encoding= 的值：
+#+caption: =Content-Encoding= 的值：
 #+begin_src code
 gzip
 compress
 deflate
 #+end_src
 
-#+CAPTION: 客户端请求时可以用 =Accept-Encoding= 字段声明可以接受的压缩方法：
+#+caption: 客户端请求时可以用 =Accept-Encoding= 字段声明可以接受的压缩方法：
 #+begin_src code
 Accept-Encoding: gzip, deflate
 #+end_src
@@ -112,7 +112,7 @@ Accept-Encoding: gzip, deflate
 
 HTTP/1.0 的主要缺点是， _每个 TCP 连接只能发送一个请求，发送数据完毕连接就关闭，_ 如果还要请求其他资源，必须再新建一个连接。 _TCP 连接的新建成本很高，因为需要客户端和服务器三次握手，并且开始时发送速率较慢（slow start），所以 HTTP/1.0 的性能比较差。_ 随着网页加载的外部资源越来越多，这个问题就愈发突出了。
 
-#+CAPTION: 为了解决这个问题，有些浏览器在请求时，使用了非标准的 =Connection= 字段：
+#+caption: 为了解决这个问题，有些浏览器在请求时，使用了非标准的 =Connection= 字段：
 #+begin_src code
 Connection: keep-alive
 #+end_src
@@ -181,7 +181,7 @@ sequence
 
 HTTP/1.1 新增了许多动词方法： =PUT= 、 =PATCH= 、 =HEAD= 、 =OPTIONS= 、 =DELETE= 。
 
-#+CAPTION: 客户端请求的头信息新增了 =Host= 字段，用来指定服务器的域名：
+#+caption: 客户端请求的头信息新增了 =Host= 字段，用来指定服务器的域名：
 #+begin_src code
 Host: www.example.com
 #+end_src
@@ -323,9 +323,9 @@ _客户端发送的信息之中不包括服务器的域名，_ 也就是说，�
 
 第一项随机数是整个握手阶段出现的第三个随机数，又称 pre-master key。有了它以后，客户端和服务器就同时有了三个随机数，接着双方就用事先商定的加密方法，各自生成本次会话所用的同一把「会话密钥」。至于为什么一定要用三个随机数来生成「会话密钥」，[[http://blog.csdn.net/dog250/article/details/5717162][dog250]] 解释得很好：
 
-#+BEGIN_QUOTE
+#+begin_quote
 pre-master 的存在在于 SSL 协议不信任每个主机都能产生完全随机的随机数，如果随机数不随机，那么 pre-master key 就有可能被猜出来，那么仅使用 pre-master key 作为密钥就不合适，因此必须引入新的随机因素。客户端和服务器加上 pre-master key 三个随机数一同生成的密钥就不容易被猜出了，一个伪随机可能完全不随机，而三个伪随机就十分接近随机了，每增加一个自由度，随机性增加的可不是一。
-#+END_QUOTE
+#+end_quote
 
 此外，如果前一步服务器要求客户端证书，客户端会在这一步发送证书及相关信息。
 
@@ -452,7 +452,7 @@ SSL 证书还分为三种覆盖范围：
 
 网页加载的 HTTP 资源要全部改成 HTTPS 链接，因为 _加密网页内如果有非加密的资源，浏览器是不会加载的。_
 
-#+CAPTION: 两种改法：
+#+caption: 两种改法：
 #+begin_src html
 <script src="https://foo.com/jquery.js"></script>
 <script src="//foo.com/jquery.js"></script>
@@ -460,7 +460,7 @@ SSL 证书还分为三种覆盖范围：
 
 改法二会根据当前网页的协议，加载相同协议的外部资源，更灵活一些。
 
-#+CAPTION: 如果页面头部用到了 ~rel="canonical"~ ，也要改成 HTTPS 网址：
+#+caption: 如果页面头部用到了 ~rel="canonical"~ ，也要改成 HTTPS 网址：
 #+begin_src html
 <link rel="canonical" href="https://foo.com/bar.html" />
 #+end_src
@@ -469,7 +469,7 @@ SSL 证书还分为三种覆盖范围：
 
 修改 Web 服务器的配置文件，使用 301 重定向，将 HTTP 请求导向 HTTPS。
 
-#+CAPTION: Nginx（[[https://serverfault.com/questions/67316/in-nginx-how-can-i-rewrite-all-http-requests-to-https-while-maintaining-sub-dom][In Nginx, how can I rewrite all http requests to https while maintaining sub-domain?]]）：
+#+caption: Nginx（[[https://serverfault.com/questions/67316/in-nginx-how-can-i-rewrite-all-http-requests-to-https-while-maintaining-sub-dom][In Nginx, how can I rewrite all http requests to https while maintaining sub-domain?]]）：
 #+begin_src code
 server {
     listen 80;
@@ -478,7 +478,7 @@ server {
 }
 #+end_src
 
-#+CAPTION: Apache =.htaccess= （[[https://httpd.apache.org/docs/2.4/rewrite/remapping.html#canonicalhost][Canonical Hostnames]]）：
+#+caption: Apache =.htaccess= （[[https://httpd.apache.org/docs/2.4/rewrite/remapping.html#canonicalhost][Canonical Hostnames]]）：
 #+begin_src code
 RewriteEngine On
 RewriteCond %{HTTPS} off
@@ -521,9 +521,9 @@ Set-Cookie: LSID=DQAAAK...Eaem_vYg; Secure
 
 许多人以为，出于安全考虑，浏览器不会在本地保存 HTTPS 缓存。实际上，只要在 HTTP 头中使用特定命令，HTTPS 是可以缓存的。微软的 IE 项目经理 Eric Lawrence 写道（[[https://blogs.msdn.microsoft.com/ieinternals/2010/04/21/https-caching-and-internet-explorer/][HTTPS Caching and Internet Explorer]]）：
 
-#+BEGIN_QUOTE
+#+begin_quote
 说来也许令人震惊，只要 HTTP 头允许这样做，所有版本的 IE 都缓存 HTTPS 内容。比如，如果头命令是 =Cache-Control: max-age=600= ，那么这个网页就将被 IE 缓存 10 分钟。IE 的缓存策略，与是否使用 HTTPS 协议无关。（其他浏览器在这方面的行为不一致，取决于你使用的版本，所以这里不加以讨论。）
-#+END_QUOTE
+#+end_quote
 
 Firefox 默认只在内存中缓存 HTTPS。但是，只要头命令中有 =Cache-Control: Public= ，缓存就会被写到硬盘上。
 
@@ -629,12 +629,12 @@ file:../images/web_scrap/02.png
 
 值为空时，表示默认允许任何值。
 
-#+CAPTION: 多个值并列时用空格分隔：
+#+caption: 多个值并列时用空格分隔：
 #+begin_src code
 Content-Security-Policy: script-src 'self' https://apis.google.com
 #+end_src
 
-#+CAPTION: 选项重复时，只有第一次会生效：
+#+caption: 选项重复时，只有第一次会生效：
 #+begin_src code
 script-src https://host1.com; script-src https://host2.com
 script-src https://host1.com https://host2.com
@@ -642,7 +642,7 @@ script-src https://host1.com https://host2.com
 
 ** =Content-Security-Policy=
 
-#+CAPTION: 资源加载选项
+#+caption: 资源加载选项
 | =connect-src=  | HTTP 连接（通过 XHR、WebSockets、EventSource 等）                          |
 |----------------+----------------------------------------------------------------------------|
 | =font-src=     |                                                                            |
@@ -663,14 +663,14 @@ script-src https://host1.com https://host2.com
 |----------------+----------------------------------------------------------------------------|
 | =worker-src=   | Worker 脚本                                                                |
 
-#+CAPTION: URL 选项
+#+caption: URL 选项
 | =base-uri=        | 限制 =<base#href>=   |
 |-------------------+----------------------|
 | =form-action=     | 限制 =<form#action>= |
 |-------------------+----------------------|
 | =frame-ancestors= | 限制嵌入框架的网页   |
 
-#+CAPTION: 其他选项
+#+caption: 其他选项
 | =block-all-mixed-content=   | HTTPS 网页不得加载 HTTP 资源（浏览器默认开启）          |
 |-----------------------------+---------------------------------------------------------|
 | =plugin-types=              | 限制可以使用的插件格式                                  |
@@ -713,7 +713,7 @@ default-src 'self';
 
 -----
 
-#+CAPTION: 除了常规值， =script-src= 还可以设置一些特殊值（需要加单引号）：
+#+caption: 除了常规值， =script-src= 还可以设置一些特殊值（需要加单引号）：
 | =unsafe-inline= | 允许执行页面内嵌的 =<script>= 标签和事件监听函数                                  |
 |-----------------+-----------------------------------------------------------------------------------|
 | =unsafe-eval=   | 允许将字符串当作代码执行，比如使用 =eval= 、 =setTimeout= 、 =setInterval= 等函数 |
@@ -722,14 +722,14 @@ default-src 'self';
 |-----------------+-----------------------------------------------------------------------------------|
 | hash 值         | 出许执行的脚本代码的 hash，页面内嵌脚本的 hash 值吻合时才会被执行                 |
 
-#+CAPTION: nonce 值示例：
+#+caption: nonce 值示例：
 #+begin_src html
 Content-Security-Policy: script-src 'nonce-EDNnf03nceIOfn39fn3e9h3sdfa'
 
 <script nonce="EDNnf03nceIOfn39fn3e9h3sdfa"></script>
 #+end_src
 
-#+CAPTION: hash 值示例，计算 hash 值时 =<script>= 标签不算在内：
+#+caption: hash 值示例，计算 hash 值时 =<script>= 标签不算在内：
 #+begin_src html
 Content-Security-Policy: script-src 'sha256-qznLcsROx4GACP2dm0UCKCzCG-HiZ1guq6ZZDob_Tng='
 
@@ -740,7 +740,7 @@ Content-Security-Policy: script-src 'sha256-qznLcsROx4GACP2dm0UCKCzCG-HiZ1guq6ZZ
 
 =script-src= 不能使用 =unsafe-inline= 值（除非伴随一个 nonce 值），也不能设置 =data:URL= 。
 
-#+CAPTION: 恶意攻击的例子：
+#+caption: 恶意攻击的例子：
 #+begin_src html
 <img src="x" onerror="evil()">
 <script src="data:text/javascript,evil()"></script>
@@ -775,9 +775,9 @@ Content-Security-Policy: script-src 'sha256-qznLcsROx4GACP2dm0UCKCzCG-HiZ1guq6ZZ
 
 URL 只能使用英文字母、数字和某些符号，不能使用其他文字和符号。[[http://www.ietf.org/rfc/rfc1738.txt][RFC 1738]] 规定：
 
-#+BEGIN_QUOTE
+#+begin_quote
 Only alphanumerics =0-9a-zA-Z=, the special characters @@html:<code>$-_.+!*'(),</code>@@, and reserved characters used for their reserved purposes may be used unencoded within a URL.
-#+END_QUOTE
+#+end_quote
 
 如果 URL 中有汉字，就必须进行编码。但是麻烦的是，RFC 1738 没有规定具体的编码方法，而是交给应用程序（浏览器）决定。这导致「URL 编码」成为了一个混乱的领域。
 
@@ -827,12 +827,12 @@ http_request.open('GET', url, true);
 
 =#= 代表网页中的一个位置，其右面的字符，就是该位置的标识符，浏览器读取 URL 后，会自动将指定位置滚动至可视区域。为网页位置指定标识符，有两种方法。
 
-#+CAPTION: 使用锚点
+#+caption: 使用锚点
 #+begin_src html
 <a name="print"></a>
 #+end_src
 
-#+CAPTION: 使用 =id= 属性
+#+caption: 使用 =id= 属性
 #+begin_src html
 <div id="print"></div>
 #+end_src
@@ -841,18 +841,18 @@ http_request.open('GET', url, true);
 
 _=#= 是用来指导浏览器动作的，对服务器端完全无用，HTTP 请求中不包括 =#= 。_
 
-#+CAPTION: 访问网址
+#+caption: 访问网址
 #+begin_src code
 http://www.example.com/index.html#print
 #+end_src
 
-#+CAPTION: 浏览器实际发出的请求
+#+caption: 浏览器实际发出的请求
 #+begin_src code
 GET /index.html HTTP/1.1
 Host: www.example.com
 #+end_src
 
-#+CAPTION: 用 GET 参数指定一个颜色时，只有将 =#= 转码，浏览器才会将其作为实义字符处理
+#+caption: 用 GET 参数指定一个颜色时，只有将 =#= 转码，浏览器才会将其作为实义字符处理
 #+begin_src code
 http://example.com/?color=%23fff
 #+end_src
@@ -873,7 +873,7 @@ _改变 =#= 后的部分，会在浏览器的访问历史中增加一个记录�
 
 这是一个 HTML 5 新增的事件，当 =#= 值发生变化时，就会触发这个事件。IE 8+、Firefox 3.6+、Chrome 5+、Safari 4.0+ 支持该事件。
 
-#+CAPTION: 使用方法有三种
+#+caption: 使用方法有三种
 #+begin_src js
 window.onhashchange = func;
 window.addEventListener("hashchange", func, false);
@@ -886,12 +886,12 @@ window.addEventListener("hashchange", func, false);
 
 默认情况下，Google 的网络爬虫会忽略 URL 的 =#= 部分。但是，Google 还规定，如果希望 Ajax 生成的内容被浏览引擎抓取，那么 URL 中可以使用 =#!= ，Google 会自动将其后面的内容转成查询字符串 =_escaped_fragment_= 的值。
 
-#+CAPTION: 比如 Twitter 的 URL
+#+caption: 比如 Twitter 的 URL
 #+begin_src code
 http://twitter.com/#!/username
 #+end_src
 
-#+CAPTION: Google 会自动抓取另一个 URL
+#+caption: Google 会自动抓取另一个 URL
 #+begin_src code
 http://twitter.com/?_escaped_fragment_=/username
 #+end_src
@@ -916,11 +916,11 @@ the Design of Network-based Software Architectures]] 中提出的。Fielding 是
 
 他介绍论文的写作目的：
 
-#+BEGIN_QUOTE
+#+begin_quote
 本文研究计算机科学两大前沿——软件和网络——的交叉点。长期以来，软件研究主要关注软件设计的分类、设计方法的演化，很少客观地评估不同的设计选择对系统行为的影响。而相反地，网络研究主要关注系统之间通信行为的细节、如何改进特定通信机制的表现，常常忽视了一个事实，那就是改变应用程序的互动风格比改变互动协议，对整体表现有更大的影响。这篇文章的写作目的，就是在符合架构原理的前提下，理解和评估以网络为基础的应用软件的架构设计，得到一个功能强、性能好、适宜通信的架构。
 
 This dissertation explores a junction on the frontiers of two research disciplines in computer science: software and networking. Software research has long been concerned with the categorization of software designs and the development of design methodologies, but has rarely been able to objectively evaluate the impact of various design choices on system behavior. Networking research, in contrast, is focused on the details of generic communication behavior between systems and improving the performance of particular communication techniques, often ignoring the fact that changing the interaction style of an application can have more impact on performance than the communication protocols used for that interaction. My work is motivated by the desire to understand and evaluate the architectural design of network-based application software through principled use of architectural constraints, thereby obtaining the functional, performance, and social properties desired of an architecture.
-#+END_QUOTE
+#+end_quote
 
 Fielding 将他对互联网软件的架构原则定名为 REST，即 Representational State Transfer。如果一个架构符合 REST 原则，就称它为 RESTful 架构。
 
@@ -1003,19 +1003,19 @@ API 与用户的通信协议应该使用 HTTPS。
 
 ** 域名
 
-#+CAPTION: 应该尽量将 API 部署在专用域名下：
+#+caption: 应该尽量将 API 部署在专用域名下：
 #+begin_src code
 https://api.example.com
 #+end_src
 
-#+CAPTION: 如果确定 API 很简单，不会有进一步扩展，可以考虑放在主域名下：
+#+caption: 如果确定 API 很简单，不会有进一步扩展，可以考虑放在主域名下：
 #+begin_src code
 https://example.com/api/
 #+end_src
 
 ** 版本
 
-#+CAPTION: 应该将 API 的版本号放入 URL：
+#+caption: 应该将 API 的版本号放入 URL：
 #+begin_src code
 https://api.example.com/v1/
 #+end_src
@@ -1026,7 +1026,7 @@ https://api.example.com/v1/
 
 路径又称「终点」（endpoint），表示 API 的具体地址。在 RESTful 架构中，每个地址代表一种资源，所以地址中不能有动词，只能有名词，而且所用的名词往往与数据库的表名对应。一般来说，数据库中的表都是同种记录的集合（collection），所以 API 中的名词也应该使用复数。
 
-#+CAPTION: 例如，一个提供动物园、各种动物和雇员的信息的 API：
+#+caption: 例如，一个提供动物园、各种动物和雇员的信息的 API：
 #+begin_src sh
 https://api.example.com/v1/zoos
 https://api.example.com/v1/animals
@@ -1106,7 +1106,7 @@ https://api.example.com/v1/employees
 
 ** 错误处理
 
-#+CAPTION: 如果状态码是 =4XX= ，应该返回出错信息。一般来说将 =error= 作为键名，出错信息作为键值：
+#+caption: 如果状态码是 =4XX= ，应该返回出错信息。一般来说将 =error= 作为键名，出错信息作为键值：
 #+begin_src code
 {
     error: "Invalid API key"
@@ -1135,7 +1135,7 @@ https://api.example.com/v1/employees
 
 RESTful API 最好做到 _hypermedia，即返回结果中提供链接，指向其他 API 方法，_ 使用户可以不查文档也知道下一步应该做什么。
 
-#+CAPTION: 比如，当用户向 api.example.com 的根目录发出请求，返回结果：
+#+caption: 比如，当用户向 api.example.com 的根目录发出请求，返回结果：
 #+begin_src js
 {
     "link": { // 下一步调用的 API

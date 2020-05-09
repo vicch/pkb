@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: PHP Scrap
+#+setupfile: ../../styles/readtheorg.setup
+#+title: PHP Scrap
 
 * 在 2016 年做 PHP 开发
 
@@ -115,7 +115,7 @@ PHP-FPM features:
 
 当使用 =mod_php= 模式时，Apache 将 PHP 作为模块来运行，配置如下：
 
-#+CAPTION: =httpd.conf=
+#+caption: =httpd.conf=
 #+begin_src xml
 LoadModule phpX_module modules/mod_php.so
 AddType application/x-httpd-php .php
@@ -157,7 +157,7 @@ FastCGI 本身是语言无关的接口，PHP-FPM 是 PHP 自带的 FastCGI 实�
 
 file:../images/php_scrap/03.png
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *CGI*     | Web Server 与 Web Application 之间进行数据交换的协议。                 |
 |-----------+------------------------------------------------------------------------|
 | *FastCGI* | 同 CGI，但在性能上进行了优化。SCGI 协议与 FastCGI 类似。               |
@@ -310,7 +310,7 @@ pm.max_spare_servers = 4
 pm.max_requests = 200
 #+end_src
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | =static=   | Number of child processes is fixed to =pm.max_children=.                              |
 |------------+---------------------------------------------------------------------------------------|
 | =dynamic=  | Number of child processes is set dynamically based on:                                |
@@ -342,7 +342,7 @@ Check if you’re using any of PHP’s [[https://www.php.net/manual/en/ref.apach
 
 If you’re currently changing any [[https://www.php.net/manual/en/configuration.changes.php][PHP settings in Apache configuration files]], move these to [[https://www.php.net/manual/en/configuration.file.per-user.php][=.user.ini= files]] which are picked up by PHP-FPM. For example, move:
 
-#+CAPTION: =.htaccess=
+#+caption: =.htaccess=
 #+begin_src sh
 php_value include_path ".:/php_lib"
 php_value auto_prepend_file "autoload.php"
@@ -350,7 +350,7 @@ php_value auto_prepend_file "autoload.php"
 
 To an equivalent:
 
-#+CAPTION: =.user.ini=
+#+caption: =.user.ini=
 #+begin_src sh
 include_path = '.:/php_lib'
 auto_prepend_file = 'autoload.php'
@@ -371,7 +371,7 @@ systemctl enable php-fpm
 
 To avoid PHP-FPM gets called for files that don't exist (httpd logs like =AH01071: Got error ‘Primary script unknown=):
 
-#+CAPTION: =/etc/httpd/conf.d/php.conf=
+#+caption: =/etc/httpd/conf.d/php.conf=
 #+begin_src xml
 <FilesMatch \.php$>
   <If "-f %{SCRIPT_FILENAME}">
@@ -382,7 +382,7 @@ To avoid PHP-FPM gets called for files that don't exist (httpd logs like =AH0107
 
 ** Switch MPM
 
-#+CAPTION: =/etc/httpd/conf.modules.d/00-mpm.conf=
+#+caption: =/etc/httpd/conf.modules.d/00-mpm.conf=
 #+begin_src sh
 # LoadModule mpm_prefork_module modules/mod_mpm_prefork.so
 LoadModule mpm_event_module modules/mod_mpm_event.so
@@ -413,7 +413,7 @@ sudo a2dismod mpm_worker mpm_prefork # Disable conflicting modules
 sudo a2enmod actions fastcgi alias rewrite mpm_event # Enable required modules
 #+end_src
 
-#+CAPTION: =/etc/apache2/conf-available/php7.0-fpm.conf=
+#+caption: =/etc/apache2/conf-available/php7.0-fpm.conf=
 #+begin_src xml
 <IfModule mod_fastcgi.c>
     SetHandler php7-fcgi .php
@@ -443,7 +443,7 @@ service php7.0-fpm restart
 
 PHP 是 Zend 引擎提供的一组标准交互接口（如初始化、析构、输入、输出），供应用（如 web server）和 PHP 内核之间进行数据交互。
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *命令行调用 PHP*  | Shell 通过 SAPI 传入参数 -> Zend 引擎执行 PHP 代码 -> 结果返回给 Shell -> Shell 输出结果到 stdout    |
 |-------------------+------------------------------------------------------------------------------------------------------|
 | *Apache 调用 PHP* | Web 服务器 通过 SAPI传入数据 -> Zend 引擎执行 PHP 代码 -> 结果返回给 Apache -> Apache 输出结果到页面 |

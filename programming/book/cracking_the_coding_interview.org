@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Cracking the Coding Interview
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Cracking the Coding Interview
 
 * The Interview Process
 
@@ -65,7 +65,7 @@ Walk through the brute force solution and look for areas to optimize.
 
 Learn to distinguish between "I'm stuck and have no idea what to do" and "I'm thinking in silence".
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Sanity Check*         | - easy problem-solving or design questions                       |
 |                        | - assess a minimum degree of competence in problem-solving       |
 |                        | - used early in the process (to filter out the worst candidates) |
@@ -112,7 +112,7 @@ Do not include age, marital status, or nationality. Personal information is not 
 
 *** What questions should you ask the interviewer?
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Genuine Questions*    | - What is the ratio of testers to developers to program managers?      |
 |                        | - What is the interaction like?                                        |
 |                        | - How does project planning happen on the team?                        |
@@ -141,14 +141,14 @@ Be specific to make yourself sound good without being arrogant. Specifcity means
 
 Stay light on details and just state the key points. Explain the impact. Offer the interviewer the opportunity to drill in further: "I can go into more details if you'd like".
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Nugget First* | Start with a "nugget" that succinctly describes what the response will be about. |
 |----------------+----------------------------------------------------------------------------------|
 | *S.A.R*        | _Situation, Action, Result_                                                      |
 
 Analyze the actions you took and how you reacted. What personality attributes does your reaction demonstrate?
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Less Clear Attribute*  | - "I called up the client and told him what happened."   |
 |-------------------------+----------------------------------------------------------|
 | *More Clear Attribute*  | - "I made sure to call the client myself, because I knew |
@@ -173,14 +173,14 @@ Sometimes hobbies can be useful:
 
 A one-terabyte (1 TB) fle could take more than a day to transfer electronically. It would be much faster to just fly it across the country.
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Electronic Transfer:* | The time to transfer the file increases linearly with the size of the file.       |
 |------------------------+-----------------------------------------------------------------------------------|
 | *Airplane Transfer:*   | As the size of the file increases, it won't take any longer to transfer the file. |
 
 ** Time Complexity
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *$O$ (big O)*          | - the upper bound on runtime                                                        |
 |                        | - An algorithm that prints all the values in an array could be described as $O(N)$, |
 |                        | but it could also be described as $O(N^2)$, $O(N^3)$, or $O(2^N)$. It's technically |
@@ -205,7 +205,7 @@ _Stack space in recursive calls counts, too._
 
 Big O just describes the rate of increase. For this reason, we drop the constants in runtime.
 
-#+CAPTION: Min and Max 1
+#+caption: Min and Max 1
 #+begin_src java
 int min = Integer.MAX_VALUE;
 int max = Integer.MIN_VALUE;
@@ -215,7 +215,7 @@ for (int x : array) {
 }
 #+end_src
 
-#+CAPTION: Min and Max 2
+#+caption: Min and Max 2
 #+begin_src java
 int min = Integer.MAX_VALUE;
 int max = Integer.MIN_VALUE;
@@ -250,7 +250,7 @@ Let $s$ be the length of the longest string. Let $a$ be the length of the array.
 
 *** Example 12
 
-#+CAPTION: This code counts all permutations of a string.
+#+caption: This code counts all permutations of a string.
 #+begin_src java
 void permutation(String str) {
     permutation(str, "");
@@ -274,7 +274,7 @@ void permutation(String str, String prefix) {
 
 *** Example 13
 
-#+CAPTION: The following code computes the Nth Fibonacci number.
+#+caption: The following code computes the Nth Fibonacci number.
 #+begin_src java
 int fib(int n) {
     if (n <= 0) return 0;
@@ -314,7 +314,7 @@ An approach of runtime is to think about _how the runtime changes as N gets bigg
 |           40 | 1,099,511,627,776 | 1 trillion      | 1 TB    |
 ** Walking Through a Problem
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *1. Listen*       |                                                                                |
 |-------------------+--------------------------------------------------------------------------------|
 | *2. Example*      | Use examples that are big enough and are not special cases.                    |
@@ -396,27 +396,27 @@ These are three of the most common things that an algorithm can "waste" time doi
 
 A two-step algorithm: first sort an array, and then look for elements with a particular property. The first step is $O(N \log{N})$. The second step to $O(\log{N})$ or $O(1)$, but it's not a priority, as the $O(N \log{N})$ is the bottleneck.
 
-#+BEGIN_QUOTE
+#+begin_quote
 Example: Given an array of distinct integer values, count the number of pairs of integers that have difference =k=. For example, given the array ={1, 7, 5, 9, 2, 12, 3}= and ~k = 2~, there are four pairs: =(1, 3), (3, 5), (5, 7), (7, 9)=.
 
 $O(N \log{N})$ 算法：将数组排序，按照以 =k= 为除数的余数分组，遍历每一组，相邻两个数的差为 =k= 时就是一组结果。
 
 Sorting is the bottleneck. How _to find things quickly in an unsorted array? With a hash table._ Throw everything in the array into the hash table. Then look up if =x + k= or =x - k= exists for each element. We can do this in $O(N)$ time.
-#+END_QUOTE
+#+end_quote
 
 *** Unnecessary Work
 
-#+BEGIN_QUOTE
+#+begin_quote
 Example: Print all positive integer solutions to the equation $a^3 + b^3 = c^3 + d^3$ where $a, b, c, d$ are integers between 1 and 1000.
 
 $O(N^2)$ 算法：两层循环遍历所有两个（不重复）数字组合，将立方和作为键、数字组合作为值存入哈希表，如果一个立方和在哈希表中已存在，表示找到一组解。
-#+END_QUOTE
+#+end_quote
 
 ** DIY (Do It Yourself)
 
 Our brains are funny like this. Throw the phrase "Design an algorithm" in there and people often get all jumbled up. But give people an actual example, their intuition gives them a very nice algorithm. When you get a question, try working it through intuitively on a real example.
 
-#+BEGIN_QUOTE
+#+begin_quote
 Example: Given a smaller string =s= and a bigger string =b=, design an algorithm to find all permutations of =a= within =b=.
 
 $O(N)$ 算法：Maintain a "char map" while iterating string =b=, each value indicates if the char in current substring is in excess (positive value) or in short (negative value) comparing with string =a=. Use a =diff= value to check if all values in map are 0 at current index. When a value in map becomes 0, diff value minus 1, otherwise plus 1. If ~diff = 0~, then current index is the starting position of a substring permutation.
@@ -426,17 +426,17 @@ E.g. ~string a = abc, string b = abdbca~ \\
 ~idx = 1, substring = "bdb", map = { a = -1, b = 1, c = -1, d = 1 }, diff = 4~ \\
 ~idx = 2, substring = "dbc", map = { a = -1, b = 0, c = 0,  d = 1 }, diff = 2~ \\
 ~idx = 3, substring = "bca", map = { a = 0,  b = 0, c = 0,  d = 0 }, diff = 0~ \\
-#+END_QUOTE
+#+end_quote
 
 ** Base Case and Build
 
 Solve the problem first for a base case (e.g., ~n = 1~) and then try to build up from there. Base Case and Build algorithms often lead to natural recursive algorithms.
 
-#+BEGIN_QUOTE
+#+begin_quote
 Example: Print all permutations of a string. For simplicity, assume all characters are unique.
 
 $O(N! + (N-1)! + ... 1)$ 算法：递归计算，遍历每个字符分别作为前缀，剩余字符的置换作为后缀。 ~permute("abc") = concat('a', permute("bc")) + concat('b', permute("ac")) + concat('c', permute("ab"))~ 。
-#+END_QUOTE
+#+end_quote
 
 ** Data Structure Brainstorm
 
@@ -444,11 +444,11 @@ Run through a list of data structures and try to apply each one.
 
 _A heap is really good at basic ordering and keeping track of max and mins._
 
-#+BEGIN_QUOTE
+#+begin_quote
 Example: Numbers are randomly generated and stored into an (expanding) array. How to keep track of the median?
 
 Iterate the numbers and use 2 heaps to store the bigger half and smaller half of the numbers. The bigger half is kept in a min heap, and the smaller half in a max heap. If the heaps are not of the same size, balance them by popping one number from a heap and pushing it into the other. At the end, the potential median numbers are the roots of both heaps.
-#+END_QUOTE
+#+end_quote
 ** Best Conceivable Runtime (BCR)
 
 Best Conceivable Runtime (BCR) is _the best runtime that could be conceived_ of any solution to a problem. BCR is not necessarily achievable, what it means is that _it is impossible to do better_.
@@ -461,7 +461,7 @@ BCR The Best Conceivable Runtime is for a problem. It has no particular connecti
 
 For example, looking for the optimal algorithm when you have BCR and a brute force solution:
 
-#+ATTR_HTML: :class no-border dense
+#+attr_html: :class no-border dense
 | Brute Force:       | $O(N^2)$ |
 |--------------------+----------|
 | Optimal Algorithm: | ?        |
@@ -496,9 +496,9 @@ Constant factors might get dropped when computing the big O time, but in real li
 
 *** Appropriate Code Reuse
 
-#+BEGIN_QUOTE
+#+begin_quote
 Example: Write a function to check if the value of a binary number (passed as a string) equals the hexadecimal representation of a string.
-#+END_QUOTE
+#+end_quote
 
 #+begin_src java
 boolean compareBinToHex(String binary, String hex) {
@@ -600,9 +600,9 @@ To concatenate a list of strings, assume that the strings are all the same lengt
 =StringBuilder= simply creates a resizable array of all the strings, copying them back to a string only when necessary.
 ** Question: Is Unique
 
-#+BEGIN_QUOTE
+#+begin_quote
 Implement an algorithm to determine if a string has all unique characters. What if you cannot use additional data structures?
-#+END_QUOTE
+#+end_quote
 
 - Ask if the charset is ASCII or a Unicode.
 - Immediately return =false= if the string length exceeds the number of unique characters in the charset.
@@ -622,9 +622,9 @@ If it's not allowed to use additional data structures:
 
 ** Question: Check Permutation
 
-#+BEGIN_QUOTE
+#+begin_quote
 Given two strings, write a method to decide if one is a permutation of the other.
-#+END_QUOTE
+#+end_quote
 
 - Ask if the comparison is case sensitive.
 - Ask if whitespace is signifcant.
@@ -632,15 +632,15 @@ Given two strings, write a method to decide if one is a permutation of the other
 Comparing the sorted versions of the strings is not optimal, but it's clean, simple and easy to understand. In a practical sense, this may be a superior way.
 ** Question: Palindrome Permutation
 
-#+BEGIN_QUOTE
+#+begin_quote
 Check if a string is a permutation of a palindrome. A palindrome is a word or phrase that is the same forwards and backwards.
-#+END_QUOTE
+#+end_quote
 
 To be a permutation of a palindrome, a string can have no more than one character that is odd. Instead of checking the number of odd counts at the end, we can check as we go along.
 
 We don't actually need to know the counts. We just need to know if the count is even or odd. Given this, we can use a single integer (as a bit vector). At the end of the iteration, we _check that at most one bit in the integer is set to =1=._
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | If 0 bit is =1=: | Equals to 0.                                  |
 |------------------+-----------------------------------------------|
 | If 1 bit is =1=: | Subtract 1 and do bit =AND=, the result is 0. |
@@ -651,9 +651,9 @@ _Generating all permutations requires factorial time_ (worse than exponential ti
 
 ** Question: Zero Matrix
 
-#+BEGIN_QUOTE
+#+begin_quote
 If an element in an $M \times N$ matrix is 0, change its entire row and column to 0.
-#+END_QUOTE
+#+end_quote
 
 *** Space
 
@@ -679,9 +679,9 @@ _Recursive algorithms take at least $O(n)$ space_, where $n$ is the depth of the
 
 ** Question: Delete Middle Node
 
-#+BEGIN_QUOTE
+#+begin_quote
 Delete a node in the middle (could be anyone but the first or the last node, not necessarily the exact middle) of a singly linked list, given only access to that node.
-#+END_QUOTE
+#+end_quote
 
 Copy the data from the next node over to the current node, and then to delete the next node. （不需要把删除节点之后的所有节点向前移动。）
 
@@ -689,13 +689,13 @@ This problem cannot be solved if the node to be deleted is the last node in the 
 
 ** Question: Partition
 
-#+BEGIN_QUOTE
+#+begin_quote
 Partition a linked list around a value =x=, such that all nodes less than =x= come before all nodes greater than or equal to =x=.
 
 E.g., ~x = 5~ \\
 Input:  =3 -> 5 -> 8 -> 5 -> 10 -> 2 -> 1= \\
 Output: =3 -> 1 -> 2 -> 10 -> 5 -> 5 -> 8=
-#+END_QUOTE
+#+end_quote
 
 _Array shifts are very expensive._ Shifting elements in linked list is much easier.
 
@@ -703,9 +703,9 @@ Create 2 linked lists: one for elements less than =x=, and one for elements grea
 
 ** Question: Palindrome
 
-#+BEGIN_QUOTE
+#+begin_quote
 Check if a linked list is a palindrome.
-#+END_QUOTE
+#+end_quote
 
 *** Reverse
 
@@ -732,9 +732,9 @@ _Queues are often used in breadth-first search or in implementing a cache._
 
 ** Question: Stack Min
 
-#+BEGIN_QUOTE
+#+begin_quote
 Design a stack which, in addition to =push= and =pop=, has a function =min= which returns the minimum element. =push=, =pop= and =min= should all operate in $O(1)$ time.
-#+END_QUOTE
+#+end_quote
 
 Keep track of the minimum at each state, having each node record what the minimum beneath itself is.
 
@@ -746,9 +746,9 @@ It may waste a lot of space if it is a large stack. An improvement is using an a
 
 ** Question: Queue via Stack
 
-#+BEGIN_QUOTE
+#+begin_quote
 Implement a queue using two stacks.
-#+END_QUOTE
+#+end_quote
 
 Use =s2= to reverse the order of the elements from =s1=. On each =peek()= and =pop()= operation, pop everything from =s1= onto =s2=, and then push everything back.
 
@@ -756,10 +756,10 @@ Improvement: implement a "lazy" approach where the elements sit in =s2= until th
 
 ** Question: Animal Shelter
 
-#+BEGIN_QUOTE
+#+begin_quote
 An animal shelter, which holds only dogs andcats, operates on a strictly "first in, first
 out" basis. People must adopt either the "oldest" (based on arrival time) of all animals at the shelter, or they can select whether they would prefer a dog or a cat (and will receive the oldest animal of that type). They cannot select which specifc animal they would like. Create the data structures to maintain this system and implement operations such as =enqueue=, =dequeueAny=, =dequeueDog=, and =dequeueCat=. You may use the built-in =LinkedList= data structure.
-#+END_QUOTE
+#+end_quote
 
 Use separate queues for dogs and cats. Store a timestamp in each node to mark when each animal was enqueued. =dequeueAny= will peek at the heads of both the dog and cat queue and return the oldest.
 * Trees and Graphs
@@ -792,7 +792,7 @@ A perfect binary tree is one that is both full and complete.
 
 ** Binary Tree Traversal
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *In-order traversal:*   | Left branch \rightarrow Root \rightarrow Right branch |
 |-------------------------+-------------------------------------------------------|
 | *Pre-order traversal:*  | Root \rightarrow Left branch \rightarrow Right branch |
@@ -926,9 +926,9 @@ Consider a graph where every node has at most $k$ adjacent nodes and the shortes
 - In bidirectional search, the 2 searches collide after $\frac{d}{2}$ levels, so the runtime is $O(k^{\frac{d}{2}})$.
 ** Question: Check Balanced
 
-#+BEGIN_QUOTE
+#+begin_quote
 Check if a binary tree is balanced. A balanced tree is defined to be a tree such that the heights of the two subtrees of any node never differ by more than one.
-#+END_QUOTE
+#+end_quote
 
 We can recurse through the entire tree, and for each node, compute the heights of each subtree. The algorithm is $O(N \log{N})$ since each node is "touched" once per node above it.
 
@@ -959,9 +959,9 @@ boolean isBalanced(TreeNode root) {
 
 ** Question: Validate BST
 
-#+BEGIN_QUOTE
+#+begin_quote
 Check if a binary tree is a binary search tree.
-#+END_QUOTE
+#+end_quote
 
 *** Solution: In-Order Traversal
 
@@ -995,43 +995,43 @@ boolean checkBST(TreeNode n) {
 
 ** Question: Build Order (Incomplete)
 
-#+BEGIN_QUOTE
+#+begin_quote
 There is a list of projects and a list of dependencies (pairs of projects, where the second project is dependent on the first project). All of a project's dependencies must be built before the project is. Find a build order that will allow the projects to be built. If there is no valid build order, return an error.
 
 Projects: =a, b, c, d, e, f= \\
 Dependencies: =(a, d), (f, b), (b, d), (f, a), (d, c)= \\
 Output: =f, e, a, b, d, c=
-#+END_QUOTE
+#+end_quote
 
 ** Question: First Common Ancestor (Incomplete)
 
-#+BEGIN_QUOTE
+#+begin_quote
 Find the first common ancestor of 2 nodes in a binary tree. Avoid storing additional nodes in a data structure. NOTE: This is not necessarily a binary search tree.
-#+END_QUOTE
+#+end_quote
 
 ** Question: BST Sequences (Incomplete)
 
-#+BEGIN_QUOTE
+#+begin_quote
 A binary search tree was created by traversing through an array from left to right and inserting each element. Given a binary search tree with distinct elements, print all possible arrays that could have led to this tree.
-#+END_QUOTE
+#+end_quote
 
 ** Question: Check Subtree (Incomplete)
 
-#+BEGIN_QUOTE
+#+begin_quote
 T1 and T2 are two very large binary trees, with T1 much bigger than T2. Create an algorithm to determine if T2 is a subtree of T1. A tree T2 is a subtree of T1 if there exists a node =n= in T1 such that the subtree of =n= is identical to T2.
-#+END_QUOTE
+#+end_quote
 
 ** Question: Random Node (Incomplete)
 
-#+BEGIN_QUOTE
+#+begin_quote
 Implement a binary search tree from scratch, which, in addition to =insert=, =find=, and =delete=, has a method =getRandomNode()= which returns a random node from the tree. All nodes should be equally likely to be chosen.
-#+END_QUOTE
+#+end_quote
 
 ** Question: Paths with Sum (Incomplete)
 
-#+BEGIN_QUOTE
+#+begin_quote
 Given a binary tree in which each node contains an integer value (positive or negative). Count the number of paths that sum to a given value. The path does not need to start or end at the root or a leaf, but it must go downwards (traveling only from parent nodes to child nodes).
-#+END_QUOTE
+#+end_quote
 * Bit Manipulation
 ** Bit Facts and Tricks
 
@@ -1065,12 +1065,12 @@ The two's complement of an N-bit number is the complement of the number with res
 
 _The arithmetic right shift (=>>=) essentially divides by 2._ After shifting a bit to the right, fill in the left most bit with the value of the sign bit.
 
-#+CAPTION: Arithmetic right shift
+#+caption: Arithmetic right shift
 file:../images/cracking_the_coding_interview/09.png
 
 _The logical right shift (=>>>=) simply shifts the bits_ and put =0= in the most signifcant bits.
 
-#+CAPTION: Logical right shift
+#+caption: Logical right shift
 file:../images/cracking_the_coding_interview/08.png
 
 ** Common Bit Tasks
@@ -1099,9 +1099,9 @@ file:../images/cracking_the_coding_interview/08.png
 
 ** Question: Binary to String
 
-#+BEGIN_QUOTE
+#+begin_quote
 Given a real number between 0 and 1 that is passed in as a double, print the binary representation. If the number cannot be represented accurately in binarywith at most 32 characters, print "ERROR".
-#+END_QUOTE
+#+end_quote
 
 To represent a non-integer number in binary:
 
@@ -1111,27 +1111,27 @@ To print the decimal part, multiply by 2 and check if 2n is greater than or equa
 
 ** Question: Flip Bit to Win (Incomplete)
 
-#+BEGIN_QUOTE
+#+begin_quote
 There is an integer and you can flip exactly one bit from a =O= to a =1=. Find the length of the longest sequence of =1= could be created.
 
 Input: 1775 (=11011101111=) \\
 Output: 8
-#+END_QUOTE
+#+end_quote
 
 ** Question: Next Number (Incomplete)
 
-#+BEGIN_QUOTE
+#+begin_quote
 Given a positive integer, print the 2 numbers (1 bigger and 1 smaller) closest to it with the same number of =1= in their binary representation.
-#+END_QUOTE
+#+end_quote
 
 ** Question: Conversion
 
-#+BEGIN_QUOTE
+#+begin_quote
 Determine the number of bits needed to flip to convert integer A to integer B.
 
 Input: 29 (=11101=), 15 (=01111=)
 Output: 2
-#+END_QUOTE
+#+end_quote
 
 _Each =1= in the result of =XOR= represents a bit that is different between A and B._
 
@@ -1139,9 +1139,9 @@ _~c = c & (c - 1)~ will clear the least significant bit in =c=._
 
 ** Question: Pairwise Swap
 
-#+BEGIN_QUOTE
+#+begin_quote
 Write a program to swap odd and even bits in an integer with as few instructions as possible (e.g., bit 0 and bit =1= are swapped, bit 2 and bit 3 are swapped, and so on).
-#+END_QUOTE
+#+end_quote
 
 Get all the odd bits by a mask, then shift them right by 1 to put them in the even spots. Then do the opposite for all the even bits.
 
@@ -1153,10 +1153,10 @@ int swap(int x) {
 
 ** Question: Draw Line (Incomplete)
 
-#+BEGIN_QUOTE
+#+begin_quote
 A monochrome screen is stored as a single array of bytes, allowing 8 consecutive pixels to be stored in 1 byte. The screen has width =w=, where =w= is divisible by 8. The height of the screen can be derived from the length of the array and the width. Implement a function that draws a horizontal line from =(x1, y)= to =(x2, y)=. The method signature should look something like: \\
 =drawLine(byte[] screen, int width, int x1, int x2, int y)=
-#+END_QUOTE
+#+end_quote
 * Math and Logic Puzzles
 ** Prime Numbers
 *** Divisibility
@@ -1199,21 +1199,21 @@ file:../images/cracking_the_coding_interview/10.jpg
 
 ** Question: The Egg Drop Problem (Incomplete)
 
-#+BEGIN_QUOTE
+#+begin_quote
 There is a building of 100 floors. If an egg drops from the N-th floor or above, it will break. If it's dropped from any floor below, it will not break.You're given two eggs. Find N, while minimizing the number of drops for the worst case.
-#+END_QUOTE
+#+end_quote
 
 ** Question: 100 Lockers
 
-#+BEGIN_QUOTE
+#+begin_quote
 There are 100 closed lockers in a hallway. First opening all 100 lockers. Next, close every second locker. Then, toggle every third locker (closes it if it is open or opens it if it is closed). This process continues for 100 passes, such that on each pass =i=, toggle every =i=-th locker. After 100th pass, how many lockers are open?
-#+END_QUOTE
+#+end_quote
 
 Pair a number's factors by their complements, For example, 36's factors are =(1, 36), (2, 18), (3, 12), (4, 9), (6, 6)=. Note that =(6, 6)= only contributes one factor, therefore _the number of distinct factors is odd only when the number is square._
 * Object-Oriented Design (Incomplete)
 ** How to Approach
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Step 1: Handle Ambiguity*      | Object-oriented design questions are often intentionally vague in order to test |
 |                                 | whether the interviewee makes assumptions or asks clarifing questions.          |
 |                                 | -- Who is going to use it?                                                      |
@@ -1276,14 +1276,14 @@ int fibonacci(int i) {
 }
 #+end_src
 
-#+CAPTION: Recursion tree
+#+caption: Recursion tree
 file:../images/cracking_the_coding_interview/11.png
 
 $O(2^n)$ nodes gives a runtime of roughly $O(2^n)$.
 
 **** Top-down Dynamic Programming (Memoization)
 
-#+CAPTION: Each time computing $fib(i)$, cache the result and use it later.
+#+caption: Each time computing $fib(i)$, cache the result and use it later.
 #+begin_src java
 int fibonacci(int n) {
     return fibonacci(n, new int[n + 1]);
@@ -1303,7 +1303,7 @@ Each node has one other child, resulting in roughly $2n$ children in the tree. T
 
 **** Bottom-Up Dynamic Programming
 
-#+CAPTION: The same things as the recursive memoized approach, but in reverse: start from the base cases up.
+#+caption: The same things as the recursive memoized approach, but in reverse: start from the base cases up.
 #+begin_src java
 int fibonacci(int n) {
     if (n == 0) return 0;
@@ -1320,7 +1320,7 @@ int fibonacci(int n) {
 }
 #+end_src
 
-#+CAPTION: Actually only the last 2 values are being used, so it can get rid of the memo table andjust store a few variables.
+#+caption: Actually only the last 2 values are being used, so it can get rid of the memo table andjust store a few variables.
 #+begin_src java
 int fibinacci(int n) {
     if (n == 0) return 0;
@@ -1338,9 +1338,9 @@ int fibinacci(int n) {
 #+end_src
 ** Question: Recursive Multiply
 
-#+BEGIN_QUOTE
+#+begin_quote
 Multiply two positive integers without using the =*= or =/= operator. =+=, =-= and bit shifting can be used, but minimize the number of those operations.
-#+END_QUOTE
+#+end_quote
 
 $a \times b = a / 2 \times b \times 2$, therefore the calculation can be done recursively by halve one of the numbers and double the result. If $a$ is odd, $a \times b = \lfloor a / 2 \rfloor \times b \times 2 + b$. This algorithm will run in $O(\log{s})$ time, where $s$ is the smaller of the two numbers.
 
@@ -1367,9 +1367,9 @@ int minProductHelper(int smaller, int bigger) {
 
 ** Question: Permutations without Dups
 
-#+BEGIN_QUOTE
+#+begin_quote
 Generate all permutations of a string of unique characters.
-#+END_QUOTE
+#+end_quote
 
 *** Solution 1
 
@@ -1401,15 +1401,15 @@ void getPerms(String prefix, String remainder, Arraylist<String> result) {
 
 ** Question: Permutations with Duplicates (Incomplete)
 
-#+BEGIN_QUOTE
+#+begin_quote
 Generate all permutations of a string whose characters are not necessarily unique.
-#+END_QUOTE
+#+end_quote
 
 ** Question: Paren
 
-#+BEGIN_QUOTE
+#+begin_quote
 Print all valid (i.e., properly opened and closed) combinations of $n$ pairs of parentheses.
-#+END_QUOTE
+#+end_quote
 
 *** Solution 1
 
@@ -1452,9 +1452,9 @@ ArrayList<String> generateParens(int count) {
 #+end_src
 ** Question: Coins
 
-#+BEGIN_QUOTE
+#+begin_quote
 Given an infinite number of quarters (25 cents), dimes (1O cents), nickels (5 cents), and pennies (1 cent),  calculate the number of ways of representing $n$ cents.
-#+END_QUOTE
+#+end_quote
 
 #+begin_src code
 makeChange(100, [25, 10, 5, 1]) = makeChange(100, [10, 5, 1]) +
@@ -1492,27 +1492,27 @@ int makeChange(int amount, int[] denoms, int index, int[][] map) {
 
 ** Question: Stack of Boxes (Incomplete)
 
-#+BEGIN_QUOTE
+#+begin_quote
 Given a stack of $n$ boxes, with widths $w_i$, heights $h_i$, and depths $d_i$. The boxes cannot be rotated and can only be stacked on top of one another if each box in the stack is strictly larger than the box above it in width, height, and depth. Compute the height of the tallest possible stack.
-#+END_QUOTE
+#+end_quote
 
 *** Solution 1
 
 ** Question: Boolean Evaluation (Incomplete)
 
-#+BEGIN_QUOTE
+#+begin_quote
 Given a boolean expression consisting of the symbols =0= (false), =1= (true), =&= (AND), =|= (OR), and =^= (XOR), and a desired boolean result value result, count the number of ways of parenthesizing the expression such that it evaluates to result. The expression should be fully parenthesized (e.g., =(0)^(1)=) but not extraneously (e.g., =(((0))^(1)))=.
 
 =countEval("1^0|0|1", false)= \to 2 \\
 =countEval("0&0&0&1^1|0", true)= \to 10
-#+END_QUOTE
+#+end_quote
 * System Design and Scalability (Incomplete)
 ** Handling the Questions
 
 -- These questions are designed to see how you would perfrm in the real world. \\
 -- These questions are largely about _the process rather than the ultimate design_.
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Communicate*                  |                                                                                    |
 |--------------------------------+------------------------------------------------------------------------------------|
 | *Go broad first*               | Don't dive straight into the algorithm part or get excessively fcused on one part. |
@@ -1526,7 +1526,7 @@ Given a boolean expression consisting of the symbols =0= (false), =1= (true), =&
 
 ** Design
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *1. Scope the Problem*           | Make a list of major features or use cases.                |
 |----------------------------------+------------------------------------------------------------|
 | *2. Make Reasonable Assumptions* | -- Users per day                                           |
@@ -1545,7 +1545,7 @@ Given a boolean expression consisting of the symbols =0= (false), =1= (true), =&
 
 To design a single feature or algorithm, but to do it in a scalable way.
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *1. Ask Questions*  | Make sure you really understand the question. There might be details the interviewer  |
 |                     | left out.                                                                             |
 |---------------------+---------------------------------------------------------------------------------------|
@@ -1562,7 +1562,7 @@ The goal is not to re-architect a complex system that companies have spent milli
 ** Key Concepts
 *** Horizontal vs. Vertical Scaling
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Horizontal scaling* | Increasing the number of nodes, e.g. add additional servers.                         |
 |----------------------+--------------------------------------------------------------------------------------|
 | *Vertical scaling*   | Increasing the resources of a specific node, e.g. add additional memory to a server. |
@@ -1582,7 +1582,7 @@ _NoSQL databases are designed to scale better._ It does not support =JOIN= and s
 
 _Sharding means splitting data across multiple machines_ while ensuring a way of figuring out which data is on which machine.
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Vertical Partitioning*                  | Partition data by feature, data for different functions are separated.  |
 |------------------------------------------+-------------------------------------------------------------------------|
 | *Key-Based (or Hash-Based) Partitioning* | Allocate =n= servers and put the data on =mod(key, n)=.                 |
@@ -1603,7 +1603,7 @@ Slow operations should ideally be done asynchronously. In some cases, _the proce
 
 *** Networking Metrics
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Bandwidth*  | The maximum amount of data that can be transferred in a unit of time.           |
 |--------------+---------------------------------------------------------------------------------|
 | *Throughput* | The actual amount of data that is transferred.                                  |
@@ -1626,7 +1626,7 @@ Unlike throughput where there is the option of speeding things up through data c
 - _Allows processing in parallel, which makes processing huge amounts of data more scalable._
 - Requires a Map step and a Reduce step. The rest is handled by the system.
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Map*    | Rakes in data and emits a =<key, value>= pair.                                                           |
 |----------+----------------------------------------------------------------------------------------------------------|
 | *Reduce* | Takes a key and a set of associated values and "reduces" them in some way, emitting a new key and value. |
@@ -1634,7 +1634,7 @@ Unlike throughput where there is the option of speeding things up through data c
 
 ** Considerations
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Failures*     | Plan for one or many parts of a system failing.                            |
 |----------------+----------------------------------------------------------------------------|
 | *Availability* | The percentage of time the system is operational.                          |
@@ -1649,15 +1649,15 @@ Unlike throughput where there is the option of speeding things up through data c
 
 ** Example: Search Keywords in Documents
 
-#+BEGIN_QUOTE
+#+begin_quote
 Given a list of millions of documents, how to find all documents that contain a list of words? The words can appear in any order, but they must be complete words. That is, "book" does not match "bookkeeper".
-#+END_QUOTE
+#+end_quote
 * Sorting and Searching
 ** Question: Sorted Merge
 
-#+BEGIN_QUOTE
+#+begin_quote
 Given two sorted arrays, A and B, where A has a large enough buffer at the end to hold B. Write a method to merge B into A in sorted order.
-#+END_QUOTE
+#+end_quote
 
 *** Solution 1
 
@@ -1669,9 +1669,9 @@ Iterating A and B elements backwards, and merge to the end of A.
 
 ** Question: Group Anagrams
 
-#+BEGIN_QUOTE
+#+begin_quote
 Write a method to sort an array ot strings so that all tne anagrnms are next to each other.
-#+END_QUOTE
+#+end_quote
 
 *** Solution 1
 
@@ -1683,9 +1683,9 @@ Use a hash table, where key is sorted version of each word, and value is list of
 
 ** Question: Search in Rotated Array
 
-#+BEGIN_QUOTE
+#+begin_quote
 Given a sorted array of n integers that has been rotated an unknown number of times, write code to fnd an element in the array. Assume that the array was originally sorted in increasing order.
-#+END_QUOTE
+#+end_quote
 
 *** Solution 1
 
@@ -1696,9 +1696,9 @@ Find the length of the array and the offset where the smallest number is. Use le
 Half of the array is sorted. Check either half by comparing the first and last number to see if it is sorted, and if the number being searched in withing the range, and decide which half to continue the recursive process.
 ** Question: Sorted Matrix Search
 
-#+BEGIN_QUOTE
+#+begin_quote
 Given an M x N matrix in which each row and each column is sorted in ascending order, write a method to fnd an element.
-#+END_QUOTE
+#+end_quote
 
 *** Solution 1
 
@@ -1729,13 +1729,13 @@ Searching along the diagonal from top left to bottom right, when one of 2 adjace
 
 ** Question: Peaks and Valleys
 
-#+BEGIN_QUOTE
+#+begin_quote
 In an array of integers, a "peak" is an element which is greater than or equal to the adjacent integers and a "valley" is an element which is less than or equal to the adjacent integers. Given an array of integers, sort the array into an alternating sequence of peaks and valleys.
 
 Example: \\
 Input: {5, 3, 1, 2, 3} \\
 Output: {5, 1, 3, 2, 3}
-#+END_QUOTE
+#+end_quote
 
 *** Solution 1
 
@@ -1771,8 +1771,8 @@ Testing problems usually fall under 4 categories:
 
 Do not make assumption of the input. _Expect abuse and plan for it._
 
-#+CAPTION: Interviewers want to test:
-#+ATTR_HTML: :class no-border
+#+caption: Interviewers want to test:
+#+attr_html: :class no-border
 | *Big picture understanding* | How the test cases are prioritized.            |
 |-----------------------------+------------------------------------------------|
 | *Interrelation*             | How the components fit together.               |
@@ -1784,7 +1784,7 @@ Do not make assumption of the input. _Expect abuse and plan for it._
 
 ** Testing a Real World Object
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *User and purpose*          | Who is using the product and for what purpose.     |
 |-----------------------------+----------------------------------------------------|
 | *Use cases*                 | Make a list of the _use cases_.                    |
@@ -1799,7 +1799,7 @@ Do not make assumption of the input. _Expect abuse and plan for it._
 
 ** Testing a Piece of Software
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Black box or white box*    |                                              |
 |-----------------------------+----------------------------------------------|
 | *User and purpose*          | Identify different user roles.               |
@@ -1819,14 +1819,14 @@ Manual and automated tests are both essential. Sometimes manual testing is bette
 
 *** Black Box vs. White Box
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Black box testing* | Have access to the software as-is.                     |
 |---------------------+--------------------------------------------------------|
 | *White box testing* | Have programmatic access to test individual functions. |
 
 ** Testing a Function
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Test cases*      | -- Normal input                                                |
 |                   | -- Extremes, e.g. empty, very small, very large                |
 |                   | -- Nulls and illegal input                                     |
@@ -1839,7 +1839,7 @@ Manual and automated tests are both essential. Sometimes manual testing is bette
 
 ** Troubleshooting
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Understand the Scenario* | -- How long has the user been experiencing this issue?        |
 |                           | -- What operating system and version of the software is used? |
 |                           | -- How often and when does it happen?                         |
@@ -1849,11 +1849,11 @@ Manual and automated tests are both essential. Sometimes manual testing is bette
 |                           | Iterate through the elements to diagnose the problem.         |
 ** Question: Random Crashes
 
-#+BEGIN_QUOTE
+#+begin_quote
 You are given the source to an application which crashes when it is run. After running it 10 times in a debugger, you find it never crashes in the same place. The application is single threaded, and uses only the C standard library. What programming errors could be causing this crash? How would you test each one?
-#+END_QUOTE
+#+end_quote
 
-#+CAPTION: Some general causes of random crashes
+#+caption: Some general causes of random crashes
 | *Random variable*        | -- User input                                     |
 |                          | -- Random number generator                        |
 |                          | -- Timestamp                                      |
@@ -1873,9 +1873,9 @@ Approach the problem by elimination:
 
 ** Question: No Test Tools
 
-#+BEGIN_QUOTE
+#+begin_quote
 How would you load test a webpage without using any test tools?
-#+END_QUOTE
+#+end_quote
 
 Identify the performance critical scenarios and metrics:
 
@@ -1888,12 +1888,12 @@ Write a multi-threaded program, with each thread acts as a real-world user loadi
 
 ** Question: Test a Pen
 
-#+BEGIN_QUOTE
+#+begin_quote
 How would you test a pen?
-#+END_QUOTE
+#+end_quote
 
-#+CAPTION: Different components to check
-#+ATTR_HTML: :class no-border
+#+caption: Different components to check
+#+attr_html: :class no-border
 | *Fact check*     | If it fulfills the descriptions. |
 |------------------+----------------------------------|
 | *Intended use*   |                                  |
@@ -1904,19 +1904,19 @@ How would you test a pen?
 * C and C++
 ** Question: Last K Lines
 
-#+BEGIN_QUOTE
+#+begin_quote
 Write a method to print the last K lines of an input file.
-#+END_QUOTE
+#+end_quote
 
 While iterating the file, use a circular array (size = K) to constantly add lines and overwrite old lines to always keep the last K lines.
 
 ** Question: Shallow vs Deep Copy
 
-#+BEGIN_QUOTE
+#+begin_quote
 What is the difference between deep copy and shallow copy?
-#+END_QUOTE
+#+end_quote
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Shallow copy* | Copies only member values from one object to another.                |
 |                | May cause runtime errors with deletion of objects.                   |
 |----------------+----------------------------------------------------------------------|
@@ -1940,9 +1940,9 @@ void deep_copy(Test& src, Test& dest) {
 
 ** Question: Copy Node
 
-#+BEGIN_QUOTE
+#+begin_quote
 Write a method that takes a pointer to a Node structure as a parameter and returns a complete copy of the passed in data structure. The Node data structure contains two pointers to other Nodes.
-#+END_QUOTE
+#+end_quote
 
 Maintain a mapping from a node address in the original structure to the copied node in the new structure, to avoid re-copy nodes during a depth-first recursive copy.
 
@@ -1971,9 +1971,9 @@ Node* copy_structure(Node* root) {
 #+end_src
 ** Question: Smart Pointer
 
-#+BEGIN_QUOTE
+#+begin_quote
 Write a smart pointer class. A smart pointer is a data type, usually implemented with templates, that simulates a pointer while also providing automatic garbage collection. It automatically counts the number of references to a =SmartPointer<T*>= object and frees the object of type =T= when the reference count hits zero.
-#+END_QUOTE
+#+end_quote
 
 One useful way to approach the problem is to divide the problem into two parts: (1) _outline the pseudocode_ and approach and then (2) implement the detailed code. In terms of the approach, we need a reference count variable that is incremented when we add a new reference to the object and decremented when we remove a reference.
 
@@ -2035,12 +2035,12 @@ protected:
 #+end_src
 ** Question: Malloc
 
-#+BEGIN_QUOTE
+#+begin_quote
 Write an aligned malloc and free function that supports allocating memory such that the memory address returned is divisible by a specifc power of two.
 
 Example:\\
 =aligned_malloc(1000, 128)= will return a memory address that is a multiple of 128 and that points to memory of size 1000 bytes. =aligned_free()= will free memory allocated by =aligned_malloc()=.
-#+END_QUOTE
+#+end_quote
 
 To guarantee the address allocated can be divided by $2^n$ , it would need to allocate an extra $2^n-1$ bytes, besides the memory length required. And to correctly free the allocated memory, the actual initial address of the block needs to be stored. It can be stored just before the returned memory location, which means it needs another extra =sizeof(void*)= bytes to guarantee there is space to store the address.
 
@@ -2071,7 +2071,7 @@ void aligned_free(void* p2) {
 * Databases
 ** Database Design
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *1. Handle ambiguity*      |                                                                   |
 |----------------------------+-------------------------------------------------------------------|
 | *2. Define core objects*   | Typically each core object translates into a table.               |
@@ -2083,20 +2083,20 @@ void aligned_free(void* p2) {
 * Moderate
 ** Number Swapper
 
-#+BEGIN_QUOTE
+#+begin_quote
 Write a function to swap 2 numbers in place (without temporary variables).
-#+END_QUOTE
+#+end_quote
 
 *** Number Manipulation
 
-#+CAPTION: By sum
+#+caption: By sum
 #+begin_src cpp
 a = a + b;
 b = a - b;
 a = a - b;
 #+end_src
 
-#+CAPTION: By diff
+#+caption: By diff
 #+begin_src cpp
 a = a - b;
 b = a + b;

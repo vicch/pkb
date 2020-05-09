@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Linux Scrap
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Linux Scrap
 
 * Linux 服务器初步配置
 
@@ -7,39 +7,39 @@
 
 ** 登录
 
-#+CAPTION: 使用 =root= 用户登录远程主机
+#+caption: 使用 =root= 用户登录远程主机
 #+begin_src sh
 $ ssh root@128.199.209.242
 #+end_src
 
-#+CAPTION: 修改 =root= 用户密码
+#+caption: 修改 =root= 用户密码
 #+begin_src sh
 $ passwd
 #+end_src
 
 ** 添加用户
 
-#+CAPTION: 添加用户组
+#+caption: 添加用户组
 #+begin_src sh
 $ addgroup admin
 #+end_src
 
-#+CAPTION: 添加用户
+#+caption: 添加用户
 #+begin_src sh
 $ useradd -d /home/foo -s /bin/bash -m foo
 #+end_src
 
-#+CAPTION: 设置密码
+#+caption: 设置密码
 #+begin_src sh
 $ passwd foo
 #+end_src
 
-#+CAPTION: 将用户添加到组
+#+caption: 将用户添加到组
 #+begin_src sh
 $ usermod -a -G admin foo
 #+end_src
 
-#+CAPTION: 设置 sudo 权限
+#+caption: 设置 sudo 权限
 #+begin_src sh
 $ visudo
 
@@ -47,7 +47,7 @@ foo    ALL=(ALL:ALL) ALL
 foo    ALL=(ALL) NOPASSWD: ALL # sudo 时不需要输入密码，不安全
 #+end_src
 
-#+CAPTION: 退出 =root= 用户登录，用新用户身份登录
+#+caption: 退出 =root= 用户登录，用新用户身份登录
 #+begin_src sh
 $ exit
 $ ssh foo@128.199.209.242
@@ -57,22 +57,22 @@ $ ssh foo@128.199.209.242
 
 首先，确定本地有 SSH 公钥，一般是 =~/.ssh/id_rsa.pub= ，如果没有的话，使用 =ssh-keygen= 命令生成一个。
 
-#+CAPTION: 将本地的公钥拷贝到服务器的 =authorized_keys= 文件
+#+caption: 将本地的公钥拷贝到服务器的 =authorized_keys= 文件
 #+begin_src sh
 $ cat ~/.ssh/id_rsa.pub | ssh foo@128.199.209.242 'mkdir -p .ssh && cat - >> ~/.ssh/authorized_keys'
 #+end_src
 
-#+CAPTION: 或者在服务器端直接写入文件
+#+caption: 或者在服务器端直接写入文件
 #+begin_src sh
 $ echo "ssh-rsa <public key>" > ~/.ssh/authorized_keys
 #+end_src
 
-#+CAPTION: 修改 =authorized_keys= 文件权限
+#+caption: 修改 =authorized_keys= 文件权限
 #+begin_src sh
 $ sudo chmod 600 ~/.ssh/authorized_keys && chmod 700 ~/.ssh/
 #+end_src
 
-#+CAPTION: 修改 SSH 配置文件 =/etc/ssh/sshd_config=
+#+caption: 修改 SSH 配置文件 =/etc/ssh/sshd_config=
 #+begin_src sh
 $ sudo cp /etc/ssh/sshd_config ~
 $ sudo nano /etc/ssh/sshd_config
@@ -93,14 +93,14 @@ UseDNS no
 AllowUsers foo            # 指定允许登录的用户
 #+end_src
 
-#+CAPTION: 重启 sshd
+#+caption: 重启 sshd
 #+begin_src sh
 $ sudo service ssh restart
 # 或
 $ sudo /etc/init.d/ssh restart
 #+end_src
 
-#+CAPTION: （可选）在本地创建 SSH 连接配置文件 =~/.ssh/config=
+#+caption: （可选）在本地创建 SSH 连接配置文件 =~/.ssh/config=
 #+begin_src sh
 Host h1
 HostName 128.199.209.242
@@ -108,25 +108,25 @@ User foo
 Port 25000
 #+end_src
 
-#+CAPTION: 测试 SSH 连接
+#+caption: 测试 SSH 连接
 #+begin_src sh
 $ ssh h1
 #+end_src
 
 ** 运行环境
 
-#+CAPTION: 检查区域设置
+#+caption: 检查区域设置
 #+begin_src sh
 $ locale
 #+end_src
 
-#+CAPTION: 如果不是 =en_US.UTF-8= ，建议修改
+#+caption: 如果不是 =en_US.UTF-8= ，建议修改
 #+begin_src sh
 $ sudo locale-gen en_US en_US.UTF-8 en_CA.UTF-8
 $ sudo dpkg-reconfigure locales
 #+end_src
 
-#+CAPTION: 更新软件
+#+caption: 更新软件
 #+begin_src sh
 $ sudo apt-get update
 $ sudo apt-get upgrade
@@ -161,12 +161,12 @@ _init 进程的一大任务，就是运行开机启动的程序。_ 但是，不
 - 2 ~ 5：多用户模式（正常模式）
 - 6：重启
 
-#+CAPTION: init 进程首先读取 _运行级别的设置文件 =/etc/inittab=_ 第一行：
+#+caption: init 进程首先读取 _运行级别的设置文件 =/etc/inittab=_ 第一行：
 #+begin_src sh
 id:2:initdefault: # 系统启动时的默认运行级别为 2
 #+end_src
 
-#+CAPTION: _每个运行级别在 =/etc= 目录下有对应的子目录，指定要加载的程序_ ：
+#+caption: _每个运行级别在 =/etc= 目录下有对应的子目录，指定要加载的程序_ ：
 #+begin_src sh
 /etc/rc0.d # rc = run command, d = directory
 /etc/rc1.d
@@ -177,7 +177,7 @@ id:2:initdefault: # 系统启动时的默认运行级别为 2
 /etc/rc6.d
 #+end_src
 
-#+CAPTION: 查看 =/etc/rc2.d= 下指定的程序：
+#+caption: 查看 =/etc/rc2.d= 下指定的程序：
 #+begin_src sh
 $ ls  /etc/rc2.d
 
@@ -218,7 +218,7 @@ S18acpid -> ../init.d/acpid
 
 这样做的另一个好处，就是如果要 _手动关闭或重启某个进程，直接到目录 =/etc/init.d= 中寻找启动脚本_ 即可。
 
-#+CAPTION: 比如，重启 Apache 服务器：
+#+caption: 比如，重启 Apache 服务器：
 #+begin_src sh
 $ sudo /etc/init.d/apache2 restart
 #+end_src
@@ -317,7 +317,7 @@ inode 包含文件的元信息，具体来说有以下内容：
 - 链接数，即有多少文件名指向这个 inode
 - 文件数据 block 的位置
 
-#+CAPTION: 可以用 =stat= 命令查看某个文件的 inode 信息：
+#+caption: 可以用 =stat= 命令查看某个文件的 inode 信息：
 #+begin_src sh
 $ stat foo.bar
 
@@ -337,7 +337,7 @@ _硬盘格式化的时候，操作系统自动将硬盘分成两个区域：一�
 
 inode 也会消耗硬盘空间。每个 inode 节点的大小，一般是 128 字节或 256 字节。 _inode 节点的总数，在格式化时就给定，一般是每 1KB 或每 2KB 就设置一个 inode。_ 假定在一块 1GB 的硬盘中，每个 inode 节点的大小为 128 字节，每 1KB 就设置一个 inode，那么 inode table 的大小就会达到 128MB，占整块硬盘的 12.8%。
 
-#+CAPTION: 查看每个硬盘分区的 inode 总数和已经使用的数量，可以使用 =df= 命令：
+#+caption: 查看每个硬盘分区的 inode 总数和已经使用的数量，可以使用 =df= 命令：
 #+begin_src sh
 $ df -i
 
@@ -349,7 +349,7 @@ tmpfs           1001351    568  1000783    1% /run
 ...
 #+end_src
 
-#+CAPTION: 查看每个 inode 节点的大小：
+#+caption: 查看每个 inode 节点的大小：
 #+begin_src sh
 $ sudo dumpe2fs -h /dev/hda | grep "Inode size"
 
@@ -367,7 +367,7 @@ Inode size:               256
 2. 通过 inode 编号，获取 inode 信息。
 3. 根据 inode 信息找到文件数据所在的 block，读出数据。
 
-#+CAPTION: 使用 =ls -i= 命令，可以查看文件名对应的 inode 编号：
+#+caption: 使用 =ls -i= 命令，可以查看文件名对应的 inode 编号：
 #+begin_src sh
 $ ls -i foo.bar
 
@@ -380,7 +380,7 @@ Unix/Linux 系统中，目录（directory）也是一种文件。打开目录，
 - 所包含文件的文件名
 - 文件名对应的 inode 编号
 
-#+CAPTION: =ls -i= 命令列出整个目录文件，即文件名和 inode 编号：
+#+caption: =ls -i= 命令列出整个目录文件，即文件名和 inode 编号：
 #+begin_src sh
 $ ls -i foo
 
@@ -422,7 +422,7 @@ systemd 是 Linux 系统工具，用来启动守护进程，已成为大多数�
 
 历史上，Linux 的启动一直采用 init 进程。
 
-#+CAPTION: 启动服务命令
+#+caption: 启动服务命令
 #+begin_src sh
 $ sudo /etc/init.d/apache2 start
 $ service apache2 start
@@ -529,7 +529,7 @@ Unix（包含 Linux）初学者常常会很困惑目录结构的含义。举例�
 
 从此，这种目录结构就延续了下来。随着硬盘容量越来越大，各个目录的含义进一步得到明确。
 
-#+ATTR_HTML: :class no-border dense
+#+attr_html: :class no-border dense
 | =/=          | 存放系统程序，也就是 AT&T 开发的 Unix 程序                      |
 |--------------+-----------------------------------------------------------------|
 | =/usr=       | 存放 Unix 系统商（比如 IBM 和 HP）开发的程序                    |
@@ -628,7 +628,7 @@ file:../images/linux_scrap/05.png
 
 内核态可以执行任意命令，调用系统的一切资源。 _用户态只能执行简单的运算，不能直接调用系统资源，必须通过系统调用（system call），才能向内核发出指令。_
 
-#+CAPTION: 代码示例
+#+caption: 代码示例
 #+begin_src python
 str = "my string" # 用户态
 x = x + 2
@@ -636,7 +636,7 @@ file.write(str)   # 切换到内核态（写文件必须通过内核）
 y = x + 4         # 切换回用户态
 #+end_src
 
-#+CAPTION: 使用 =top= 命令查看 CPU 时间分配：
+#+caption: 使用 =top= 命令查看 CPU 时间分配：
 #+begin_src sh
 $ top
 %Cpu(s): 19.7 us,  2.4 sy,  0.0 ni, 77.4 id,  0.1 wa,  0.0 hi,  0.3 si,  0.0 st
@@ -645,7 +645,7 @@ $ top
 #        +----------- CPU 消耗在用户态的时间百分比
 #+end_src
 
-#+CAPTION: 使用 =time= 查看单个程序的耗时：
+#+caption: 使用 =time= 查看单个程序的耗时：
 #+begin_src sh
 $ time ./test.sh
 real    0m0.018s # 程序运行的全部时间，包括 CPU 切换去执行其他任务的时间，是用户能感知到的时间
@@ -850,7 +850,7 @@ his shows it reading "test + linefeed" from standard in, and writing it back out
 
 One way is to check for the existence of three directories:
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | =/etc/init.d=        | SysV based system    |
 |----------------------+----------------------|
 | =/usr/lib/systemd=   | Systemd based system |
@@ -884,7 +884,7 @@ A library is a file that contains compiled code and data. Libraries in general a
 
 The main file of the executable just calls a function from a =random= library.
 
-#+CAPTION: =main.cpp=
+#+caption: =main.cpp=
 #+begin_src cpp
 #include "random.h"
 
@@ -895,14 +895,14 @@ int main() {
 
 The =random= library defines a function in its header file.
 
-#+CAPTION: =random.h=
+#+caption: =random.h=
 #+begin_src cpp
 int get_random_number();
 #+end_src
 
 And implementation in its source file.
 
-#+CAPTION: =random.cpp=
+#+caption: =random.cpp=
 #+begin_src cpp
 #include "random.h"
 
@@ -913,9 +913,9 @@ int get_random_number(void) {
 
 ** Compiling Shared Library
 
-#+BEGIN_QUOTE
+#+begin_quote
 This example uses LLVM (clang) compiler instead of GCC to compile C++ code.
-#+END_QUOTE
+#+end_quote
 
 #+begin_src sh
 # Create object file from source file
@@ -977,13 +977,13 @@ This error means a dependency can’t be located. It is thrown before the execut
 
 ** ELF (Executable and Linkable Format)
 
-#+BEGIN_QUOTE
+#+begin_quote
 Executable file format under Mac OS is Mach-O, instead of ELF under Linux, so the tool =readelf= doesn't exist under Mac OS. [[https://en.wikipedia.org/wiki/Comparison_of_executable_file_formats][Wikipedia | Comparison of executable file formats]]
-#+END_QUOTE
+#+end_quote
 
 The shared library and executable file format is called [[https://en.wikipedia.org/wiki/Executable_and_Linkable_Format][ELF (Executable and Linkable Format)]]. In summary, an ELF file contains:
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *ELF header*           | Specifies the size and number of segments/sections in the program/section header table |
 |------------------------+----------------------------------------------------------------------------------------|
 | *Program header table* | Contains a list of segment headers                                                     |
@@ -1080,7 +1080,7 @@ $ objdump -p librandom.so | grep NEEDED
 
 These libraries are:
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | =libstdc++= | Standard C++ library                                                                             |
 |-------------+--------------------------------------------------------------------------------------------------|
 | =libm=      | Library of basic math functions                                                                  |
@@ -1108,7 +1108,7 @@ Note =librandom.so='s location is =not found=, but not the others.
 
 Each shared library in an executable's dependencies is searched in the following locations in order:
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | 1. =rpath=               | Directories listed in the executable’s =rpath=                        |
 |--------------------------+-----------------------------------------------------------------------|
 | 2. =LD_LIBRARY_PATH=     | Directories in the =LD_LIBRARY_PATH= environment variable             |
@@ -1192,7 +1192,7 @@ An easy way to solve this is to copy =librandom.so= to a directory that is on th
 
 Paths in =rpath= and =runpath= can be:
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | Absolute                                | E.g. =/path/to/my/libs= |
 |-----------------------------------------+-------------------------|
 | Relative to current working directory   | E.g. =.=                |

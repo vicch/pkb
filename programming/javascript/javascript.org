@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Javascript
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Javascript
 
 * Type
 ** String
@@ -107,7 +107,7 @@ import { foo1, foo2, ... } from 'foo'; // Named import
 import Foo, { foo1 } from 'foo';       // Default and named import
 #+end_src
 
-#+CAPTION: Default export 和 named export 区别
+#+caption: Default export 和 named export 区别
 #+begin_src js
 import ReactDOM from 'react-dom';
 ReactDOM.render(...);
@@ -339,7 +339,7 @@ getBar(); // Error: Cannot read propery of 'bar' of undefined
 
 *** Bound instance
 
-#+CAPTION: ES2016 之前
+#+caption: ES2016 之前
 #+begin_src js
 class Foo {
   constructor(value) {
@@ -354,7 +354,7 @@ const getBar = foo.getBar;
 getBar();
 #+end_src
 
-#+CAPTION: ES2016 之后（并使用 babel stage-2 以上 preset）
+#+caption: ES2016 之后（并使用 babel stage-2 以上 preset）
 #+begin_src js
 class Foo {
   constructor(value) { this.bar = value; }
@@ -413,12 +413,12 @@ var bar = foo.map(function({ key }) { // Destructing assignment
 
 *** Named Import
 
-#+CAPTION: =foo/bar.js=
+#+caption: =foo/bar.js=
 #+begin_src js
 export const exec = () => 'bar';
 #+end_src
 
-#+CAPTION: =index.js=
+#+caption: =index.js=
 #+begin_src js
 import { exec } from './foo/bar';
 console.log(exec());
@@ -426,13 +426,13 @@ console.log(exec());
 
 *** All Import
 
-#+CAPTION: =foo/bar.js=
+#+caption: =foo/bar.js=
 #+begin_src js
 export const name = 'bar';
 export const exec = () => 'bar';
 #+end_src
 
-#+CAPTION: =index.js=
+#+caption: =index.js=
 #+begin_src js
 import * as Bar from './foo/bar';
 console.log(Bar.name);
@@ -441,13 +441,13 @@ console.log(Bar.exec());
 
 *** Default Import
 
-#+CAPTION: =foo/bar.js=
+#+caption: =foo/bar.js=
 #+begin_src js
 const exec = () => 'bar';
 export default exec;
 #+end_src
 
-#+CAPTION: =index.js=
+#+caption: =index.js=
 #+begin_src js
 import exec from './foo/bar';
 console.log(exec());

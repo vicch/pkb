@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Smarty
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Smarty
 
 * Smarty
 
@@ -36,12 +36,12 @@
 
 ** 配置
 
-#+CAPTION: 加载配置文件（路径为实例化 Smarty 对象时设置的 =config_dir= ）：
+#+caption: 加载配置文件（路径为实例化 Smarty 对象时设置的 =config_dir= ）：
 #+begin_src smarty
 {config_load file="site.conf"}
 #+end_src
 
-#+CAPTION: 读取配置文件中的变量：
+#+caption: 读取配置文件中的变量：
 #+begin_src smarty
 {#var#}
 {$smarty.config.var}
@@ -110,7 +110,7 @@ Hello {$name}, welcome to Smarty!
 |--------+--------+----------------------|
 | =name= | String | =foreach= 遍历的名称 |
 
-#+CAPTION: =foreach= 变量
+#+caption: =foreach= 变量
 | =$smarty.foreach.<name>.index=     | 当前索引，起始为 0                 |
 |------------------------------------+------------------------------------|
 | =$smarty.foreach.<name>.iteration= | 当前循环，起始为 1                 |
@@ -138,7 +138,7 @@ Hello {$name}, welcome to Smarty!
 {continue}
 #+end_src
 
-#+CAPTION: =foreach= 变量
+#+caption: =foreach= 变量
 | =$item@index=     |   |
 |-------------------+---|
 | =$item@iteration= |   |
@@ -153,7 +153,7 @@ Hello {$name}, welcome to Smarty!
 
 * 示例
 
-#+CAPTION: 目录结构
+#+caption: 目录结构
 #+begin_src sh
 project/
     cache/
@@ -175,7 +175,7 @@ project/
         yui_styles.css      # YUI 包文件
 #+end_src
 
-#+CAPTION: =includ/config.php=
+#+caption: =includ/config.php=
 #+begin_src php
 define('SITE_ROOT', dirname(dirname(__FILE__)));
 define('PRESENTATION_DIR', SITE_ROOT . '/presentation/');
@@ -186,12 +186,12 @@ define('COMPILE_DIR', PRESENTATION_DIR . 'templates_c');
 define('CONFIG_DIR', SITE_ROOT . '/include/configs');
 #+end_src
 
-#+CAPTION: =include/configs/site.conf=
+#+caption: =include/configs/site.conf=
 #+begin_src code
 site_title = "Site Title"
 #+end_src
 
-#+CAPTION: =presentation/application.php=
+#+caption: =presentation/application.php=
 #+begin_src php
 require_once SMARTY_DIR . 'Smarty.class.php';
 class Application extends Smarty
@@ -206,7 +206,7 @@ class Application extends Smarty
 }
 #+end_src
 
-#+CAPTION: =index.php=
+#+caption: =index.php=
 #+begin_src php
 require_once 'include/config.php';
 require_once PRESENTATION_DIR . 'application.php';
@@ -214,7 +214,7 @@ $application = new Application();
 $application->display('store_front.tpl');
 #+end_src
 
-#+CAPTION: =presentation/templates/store_front.tpl=
+#+caption: =presentation/templates/store_front.tpl=
 #+begin_src html
 {* smarty *}
 {config_load file="site.conf"}
@@ -224,7 +224,7 @@ $application->display('store_front.tpl');
         <title>{#site_title#}</title>
 #+end_src
 
-#+CAPTION: =styles/styles.css=
+#+caption: =styles/styles.css=
 #+begin_src css
 @import "reset-min.css";
 @import "base-min.css";
@@ -236,22 +236,22 @@ $application->display('store_front.tpl');
 
 1 - 下载 Smarty 库，将文件放入项目根目录或公用目录下的 =libs/smarty= 。
 
-#+CAPTION: 2 - 将 Smarty 文件加入 =php.ini= 的包含路径：
+#+caption: 2 - 将 Smarty 文件加入 =php.ini= 的包含路径：
 #+begin_src code
 include_path = ".:/usr/share/php:/usr/local/lib/Smarty-v.e.r/libs/smarty/"
 #+end_src
 
-#+CAPTION: 或定义常量 =SMARTY_DIR= ：
+#+caption: 或定义常量 =SMARTY_DIR= ：
 #+begin_src php
 define('SMARTY_DIR', '/usr/local/lib/Smarty-v.e.r/libs/smarty/');
 #+end_src
 
-#+CAPTION: 或直接以绝对路径加载文件：
+#+caption: 或直接以绝对路径加载文件：
 #+begin_src php
 require_once('/usr/local/lib/Smarty-v.e.r/libs/smarty/Smarty.class.php');
 #+end_src
 
-#+CAPTION: 3 - 根目录下建立：
+#+caption: 3 - 根目录下建立：
 #+begin_src sh
 templates/
 templates_c/ # 需要写权限
@@ -261,7 +261,7 @@ cache/       # 需要写权限
 
 4 - =.tpl= 文件放置在 =templates/= 目录下。
 
-#+CAPTION: 5 - =index.php= 中初始化 Smarty，显示模板：
+#+caption: 5 - =index.php= 中初始化 Smarty，显示模板：
 #+begin_src php
 require_once(SMARTY_DIR . 'Smarty.class.php');
 $smarty = new Smarty();

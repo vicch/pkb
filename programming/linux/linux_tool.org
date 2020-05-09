@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Linux Tool
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Linux Tool
 
 * 分类
 
@@ -67,7 +67,7 @@ $ apt-get install -y redis-server
 
 ** 配置
 
-#+CAPTION: =/etc/apt/=
+#+caption: =/etc/apt/=
 | =sources.list=                   | 源（source）列表 |
 |----------------------------------+------------------|
 | =sources.list.d/*=               |                  |
@@ -78,7 +78,7 @@ $ apt-get install -y redis-server
 
 *** =periodic=
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sh
 APT::Periodic::Update-Package-Lists "1";
 APT::Periodic::Download-Upgradeable-Packages "1";
@@ -91,7 +91,7 @@ APT::Periodic::Unattended-Upgrade "1";
 - 需要安装包 =unattended-upgrades= 。
 - 自动更新信息记录在 =/var/log/unattended-upgrades= 。
 
-#+CAPTION: 配置示例
+#+caption: 配置示例
 #+begin_src sh
 Unattended-Upgrade::Allowed-Origins {
     "${distro_id}:${distro_codename}-security";  # 安全更新，建议打开
@@ -119,7 +119,7 @@ awk <options> <script> <file>
 
 *** 示例
 
-#+CAPTION: 统计某个字符在每行出现的次数（将其作为分割符，然后统计字段数）
+#+caption: 统计某个字符在每行出现的次数（将其作为分割符，然后统计字段数）
 #+begin_src sh
 awk -F <char> '{print NR, '\t', NF-1}' <file>
 #+end_src
@@ -139,24 +139,24 @@ awk -F <char> '{print NR, '\t', NF-1}' <file>
 |--------------------------------------------------+--------------------|
 | =match(<field>, /<pattern>/, <result>); {<cmd>}= | 字段匹配，提取结果 |
 
-#+CAPTION: 打印匹配行
+#+caption: 打印匹配行
 #+begin_src sh
 awk '/<pattern>/ {print FILENAME, '\t', NR, '\t', $0}' <file>
 #+end_src
 
-#+CAPTION: 打印匹配部分
+#+caption: 打印匹配部分
 #+begin_src sh
 awk '{match($0, /<pattern>/, a); {print a[1]}}' <file>
 #+end_src
 
-#+CAPTION: 匹配电话号码 =xxx-xxx-xxxx= 和 =(xxx) xxx-xxxx=
+#+caption: 匹配电话号码 =xxx-xxx-xxxx= 和 =(xxx) xxx-xxxx=
 #+begin_src sh
 awk '/^([0-9]{3}-|\([0-9]{3}\) )[0-9]{3}-[0-9]{4}$/' <file>
 #+end_src
 
 *** 遍历
 
-#+CAPTION: 计算所有行（数值）的平均值
+#+caption: 计算所有行（数值）的平均值
 #+begin_src sh
 awk '{sum += $1} END {print "Average = ", sum / NR}' <file>
 #+end_src
@@ -173,7 +173,7 @@ awk '{sum += $1} END {print "Average = ", sum / NR}' <file>
 |------------+------------|
 | =$<n>=     | 第 n 列    |
 
-#+CAPTION: =NR=
+#+caption: =NR=
 #+begin_src sh
 awk 'NR == 10' <file>    # 输出第 10 行
 awk 'NR % 2 == 0' <file> # 输出偶数行
@@ -209,7 +209,7 @@ iptables <options>
 
 ** 规则链
 
-#+CAPTION: 默认规则链
+#+caption: 默认规则链
 | =INPUT=   |   |
 |-----------+---|
 | =OUTPUT=  |   |
@@ -218,7 +218,7 @@ iptables <options>
 
 ** 目标
 
-#+CAPTION: 默认目标
+#+caption: 默认目标
 | =ACCEPT= | 接受数据包               |
 |----------+--------------------------|
 | =REJECT= | 拒绝数据包，并告知客户端 |
@@ -227,7 +227,7 @@ iptables <options>
 
 *** 默认目标
 
-#+CAPTION: 一般配置方式
+#+caption: 一般配置方式
 | *规则链*  | *目标*   |
 |-----------+----------|
 | =INPUT=   | =DROP=   |
@@ -236,7 +236,7 @@ iptables <options>
 |-----------+----------|
 | =FORWARD= | =DROP=   |
 
-#+CAPTION: 查看和修改规则链的默认目标
+#+caption: 查看和修改规则链的默认目标
 #+begin_src sh
 $ iptables -L -v
 Chain INPUT (policy ACCEPT ...)
@@ -295,14 +295,14 @@ sudo iptables -D INPUT -p tcp --dport 22 -j ACCEPT
 
 ** =iptables-save=
 
-#+CAPTION: 输出规则，可用于保存或备份：
+#+caption: 输出规则，可用于保存或备份：
 #+begin_src sh
 iptables-save > iptables-backup.rules
 #+end_src
 
 ** =iptables-restore=
 
-#+CAPTION: 从备份文件恢复规则：
+#+caption: 从备份文件恢复规则：
 #+begin_src sh
 iptables-restore < iptables-backup.rules
 #+end_src
@@ -333,13 +333,13 @@ sed <options> <script> <file>
 
 *** 示例
 
-#+CAPTION: 行数
+#+caption: 行数
 #+begin_src sh
 # 输出第 10 行
 sed -n 10p <file>
 #+end_src
 
-#+CAPTION: 模式匹配
+#+caption: 模式匹配
 #+begin_src sh
 # 匹配电话号码 xxx-xxx-xxxx 和 (xxx) xxx-xxxx
 sed -n -r '/^([0-9]{3}-|\([0-9]{3}\) )[0-9]{3}-[0-9]{4}$/p' <file>
@@ -361,12 +361,12 @@ sed -n -r '/^([0-9]{3}-|\([0-9]{3}\) )[0-9]{3}-[0-9]{4}$/p' <file>
 
 *** 示例
 
-#+CAPTION: 去除空白字符
+#+caption: 去除空白字符
 #+begin_src sh
 sed 's/[[:space:]]//g'
 #+end_src
 
-#+CAPTION: 修改 PHP-FPM 配置
+#+caption: 修改 PHP-FPM 配置
 #+begin_src sh
 sed -i "s/listen =.*/listen = 127.0.0.1:9000/" /etc/php5/fpm/pool.d/www.conf
 #+end_src
@@ -383,7 +383,7 @@ Systemd is considered a "polyglot", taking over a lot of services such as loggin
 
 ** 命令
 
-#+CAPTION: 服务控制
+#+caption: 服务控制
 #+begin_src sh
 systemctl <command> <service>
     enable
@@ -395,7 +395,7 @@ systemctl <command> <service>
     status
 #+end_src
 
-#+CAPTION: 
+#+caption: 
 #+begin_src sh
 systemctl list-unit-files
 #+end_src

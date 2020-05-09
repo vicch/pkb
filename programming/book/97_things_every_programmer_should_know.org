@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: 97 Things Every Programmer Should Know
+#+setupfile: ../../styles/readtheorg.setup
+#+title: 97 Things Every Programmer Should Know
 
 * API
 ** Convenience Is Not an -ility
@@ -48,7 +48,7 @@ RDBMS will optimize SQL commands, allowing you to concentrate on the application
 
 Floating-point numbers have limited precision. They are approximations of real numbers. Floating-point numbers are intended for efficient scientific computation.
 
-#+CAPTION: Floating-point numbers are not evenly spaced throughout their range:
+#+caption: Floating-point numbers are not evenly spaced throughout their range:
 #+begin_src c
 float a = 2147483647;   // Largest 32-bit signed integer
 printf("%f\n", a);      // 2147483648.000000
@@ -76,12 +76,12 @@ A linker does:
 - pull unresolved symbols out of the library
 - write out an executable
 
-#+CAPTION: Declarations (normally in header files) generate external references to the symbols:
+#+caption: Declarations (normally in header files) generate external references to the symbols:
 #+begin_src c
 extern int foo; // Generates an external reference to the symbol "foo"
 #+end_src
 
-#+CAPTION: Definitions (usually in implementation files) set aside storage for the symbols:
+#+caption: Definitions (usually in implementation files) set aside storage for the symbols:
 #+begin_src c
 int foo = 3;
 #+end_src
@@ -133,7 +133,7 @@ _Tests can demonstrate the presence of features, but tests cannot prove the abse
 
 A mathematical function can be understood as a set, some subset of the Cartesian product of the sets that are its domain (all possible arguments) and range (all possible results).
 
-#+CAPTION: In the game of Go there is a condition called atari in which a player's stones may be captured by opponent: a stone with 2 or more free spaces adjacent to it (called liberties) is not in atari.
+#+caption: In the game of Go there is a condition called atari in which a player's stones may be captured by opponent: a stone with 2 or more free spaces adjacent to it (called liberties) is not in atari.
 #+begin_src c
 boolean atari(int libertyCount)
     libertyCount < 2
@@ -141,7 +141,7 @@ boolean atari(int libertyCount)
 
 If argument =int= can have 2^32 = 4,294,976,296 different values, and result =boolean= can have 2 values, then there are 8,589,934,592 members in the Cartesian product of the sets, and half of these belong to the subset which is the function. To provide complete evidence that the function is correct, it will need to check around 4.3E9 examples.
 
-#+CAPTION: The nature of Go means that the number of liberties of a stone is not any =int=, but exactly one of ={1,2,3,4}=. So it can be alternatively wrote:
+#+caption: The nature of Go means that the number of liberties of a stone is not any =int=, but exactly one of ={1,2,3,4}=. So it can be alternatively wrote:
 #+begin_src c
 LibertyCount = {1,2,3,4}
 boolean atari(LibertyCount libertyCount)
@@ -483,7 +483,7 @@ For achievable $n$, all complexity classes amount to near-constant, near-linear,
 
 Modern computer systems are organized as hierarchies of physical and virtual machines, including language runtimes, operating systems, CPUs, cache memory, random-access memory, disk drives, and networks.
 
-#+CAPTION: _Random access time and storage capacity for a typical networked server:_
+#+caption: _Random access time and storage capacity for a typical networked server:_
 |          | *Access time* | *Capacity* |
 |----------+---------------+------------|
 | Register | < 1 ns        | 64 b       |
@@ -510,7 +510,7 @@ Algorithms and data structures vary in how effectively they use caches:
 - Binary search of a sorted array requires only $O(\log{n})$ comparisons.
 - Search of a van Emde Boas tree is $O(\log{n})$ and cache-oblivious. van Emde Boas tree is fastest for searching, thanks to its predictable access pattern.
 
-#+CAPTION: Time (ns) required to search arrays of 64-bit integers:
+#+caption: Time (ns) required to search arrays of 64-bit integers:
 |       | *Linear* | *Binary* | *vEB* |
 |-------+----------+----------+-------|
 |     8 | 50       | 90       | 40    |
@@ -656,9 +656,9 @@ Customers generally don't lie, but they speak in customer speak, not developer s
 - Have multiple people tell the same topic in separate conversations to uncover separate yet related facts.
 - Using visual aids helps lengthen our attention span and increases the retention rate of the information.
 
-#+BEGIN_QUOTE
+#+begin_quote
 When she saw the product, her exact words about the background color were, "When I said black, I meant white."
-#+END_QUOTE
+#+end_quote
 
 ** Read the Humanities
 

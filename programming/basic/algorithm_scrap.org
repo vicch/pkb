@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Algorithm Scrap
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Algorithm Scrap
 
 * KMP 字符串匹配算法
 
@@ -37,7 +37,7 @@ file:../images/algorithm_scrap/06.png
 
 首先，要了解两个概念：「前缀」和「后缀」。 「前缀」指除了最后一个字符以外，一个字符串的全部头部组合；「后缀」指除了第一个字符以外，一个字符串的全部尾部组合。 _「部分匹配值」就是「前缀」和「后缀」的最长的共有元素的长度。_
 
-#+CAPTION: 以 =ABCDABD= 为例：
+#+caption: 以 =ABCDABD= 为例：
 |           | 前缀                                | 后缀                                | 共有元素长度 |
 |-----------+-------------------------------------+-------------------------------------+--------------|
 | =A=       | 空集                                | 空集                                |            0 |
@@ -127,7 +127,7 @@ file:../images/algorithm_scrap/16.jpg
 
 $$ P(A \mid B) = \frac{P(A \bigcap B)}{P(B)} $$
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | 因此： | $P(A \bigcap B) = P(A \mid B)P(B)$  |
 |--------+-------------------------------------|
 | 同理： | $P(B \bigcap A) = P(B \mid A)P(A)$  |
@@ -144,7 +144,7 @@ $$ P(A \mid B) = P(B \mid A) \frac{P(A)}{P(B)} $$
 
 file:../images/algorithm_scrap/17.png
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | 即：             | $P(B) = P(B \bigcap A) + P(B \bigcap A')$      |
 |------------------+------------------------------------------------|
 | 前面已经推导出： | $P(B \bigcap A) = P(B \mid A)P(A)$             |
@@ -184,7 +184,7 @@ $$ P(A \mid B) = P(A) \frac{P(B \mid A)}{P(B)} $$
 
 用事件 $E$ 表示取出水果糖，在事件 $E$ 发生后再判断 $H_1$ 发生的概率，即求 $P(H_1 \mid E)$，这个概率就是后验概率，即在事件 $E$ 发生之后对 $P(H_1)$ 的修正。
 
-#+ATTR_HTML: :class no-border middle
+#+attr_html: :class no-border middle
 | 根据条件概率公式，得到： | $P(H_1 \mid E) = P(H_1) \frac{P(E \mid H_1)}{P(E)}$   |
 |--------------------------+-------------------------------------------------------|
 | 已知：                   | $P(H_1) = P(H_2) = 0.5$                               |
@@ -205,7 +205,7 @@ $$ P(A \mid B) = P(A) \frac{P(B \mid A)}{P(B)} $$
 
 用事件 $A$ 表示得病，即 $P(A) = 0.001$，这就是先验概率，即没有做试验之前预计的发病率。用事件 $B$ 表示检测结果为阳性，那么要计算的就是 $P(A \mid B)$，这就是后验概率，即做了试验以后，对发病率的估计。
 
-#+ATTR_HTML: :class no-border middle
+#+attr_html: :class no-border middle
 | 根据条件概率公式：        | $P(A \mid B) = P(A) \frac{P(B \mid A)}{P(B)}$                                                 |
 |---------------------------+-----------------------------------------------------------------------------------------------|
 | 用全概率公式替换 $P(B)$： | $P(A \mid B) = P(A) \frac{P(B \mid A)}{P(B \mid A)P(A) + P(B \mid \bar{A})P(\bar{A})}$        |
@@ -248,7 +248,7 @@ $$ P(S \mid W) = P(S) \frac{P(W \mid S)}{P(W \mid S)P(S) + P(W \mid H)P(H)} = 0.
 |-------------------------+---------------------+---------------------+------------|
 | $E_2$（是普通邮件）概率 | $1 - P(S \mid W_1)$ | $1 - P(S \mid W_2)$ | $1 - P(S)$ |
 
-#+ATTR_HTML: :class no-border middle
+#+attr_html: :class no-border middle
 | 假设所有事件都是独立事件：                                  | $P(E_1) = P(S \mid W_1)P(S \mid W_2)P(S)$                                                                                      |
 | （严格地说这个假设不成立，但是可以忽略）                    | $P(E_2) = (1 - P(S \mid W_1))(1 - P(S \mid W_2))(1 - P(S))$                                                                    |
 |-------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------|
@@ -270,17 +270,17 @@ $$ P = \frac{P_1 P_2 \ldots P_{15}}{P_1 P_2 \ldots P_{15} + (1 - P_1)(1 - P_2) \
 
 [[http://mindhacks.cn/2008/09/21/the-magical-bayesian-method/][Source]]
 
-#+BEGIN_QUOTE
+#+begin_quote
 概率论只不过是把常识用数学公式表达了出来。—— 拉普拉斯
-#+END_QUOTE
+#+end_quote
 
 ** 历史
 
 托马斯·贝叶斯（[[https://en.wikipedia.org/wiki/Thomas_Bayes][Thomas Bayes]]）Wikipedia 上的一段简介：
 
-#+BEGIN_QUOTE
+#+begin_quote
 所谓的贝叶斯方法源于他生前为解决一个「逆概」问题写的一篇文章，而这篇文章是在他死后才由他的一位朋友发表出来的。在贝叶斯写这篇文章之前，人们已经能够计算「正向概率」，如「假设袋子里面有 N 个白球，M 个黑球，你伸手进去摸一把，摸出黑球的概率是多大」。而一个自然而然的问题是反过来：「如果我们事先并不知道袋子里面黑白球的比例，而是闭着眼睛摸出一个（或好几个）球，观察这些取出来的球的颜色之后，那么我们可以就此对袋子里面的黑白球的比例作出什么样的推测」。这个问题，就是所谓的逆概问题。
-#+END_QUOTE
+#+end_quote
 
 实际上，贝叶斯当时的论文只是对这个问题的一个直接的求解尝试，并不清楚他当时是不是已经意识到这里面包含着的深刻的思想。后来， _贝叶斯方法席卷了概率论，并将应用延伸到各个问题领域，所有需要作出概率预测的地方都可以见到贝叶斯方法的影子，_ 特别地，贝叶斯是机器学习的核心方法之一。 _这背后的深刻原因在于，现实世界本身就是不确定的，人类的观察能力是有局限性的，_ 我们日常所观察到的只是事物表面上的结果，沿用刚才那个袋子里面取球的比方， _我们往往只能知道从里面取出来的球是什么颜色，而并不能直接看到袋子里面实际的情况。_
 
@@ -293,9 +293,9 @@ $$ P = \frac{P_1 P_2 \ldots P_{15}}{P_1 P_2 \ldots P_{15} + (1 - P_1)(1 - P_2) \
 
 一个自然语言的不确定性的例子：
 
-#+BEGIN_QUOTE
+#+begin_quote
 The girl saw the boy with a telescope.
-#+END_QUOTE
+#+end_quote
 
 平常人肯定会说：那个女孩拿望远镜看见了那个男孩（即对这个句子的实际语法结构的猜测是：The girl saw-with-a-telescope the boy ）。然而，仔细一想，你会发现这个句子完全可以解释成：那个女孩看见了那个拿着望远镜的男孩（即：The girl saw the-boy-with-a-telescope ）。那为什么平常生活中每个人能够迅速地对这种二义性进行消解呢？这背后到底隐藏着什么样的思维法则？我们留到后面解释。
 
@@ -303,9 +303,9 @@ The girl saw the boy with a telescope.
 
 贝叶斯公式是怎么来的？还是使用 Wikipedia 上的一个例子：
 
-#+BEGIN_QUOTE
+#+begin_quote
 一所学校里面有 60% 的男生，40% 的女生。男生总是穿长裤，女生则一半穿长裤一半穿裙子。有了这些信息之后我们可以容易地计算「随机选取一个学生，他（她）穿长裤的概率和穿裙子的概率是多大」，这个就是前面说的「正向概率」的计算。然而，假设你走在校园中，迎面走来一个穿长裤的学生，你能够推断出他（她）是男生的概率是多大吗？
-#+END_QUOTE
+#+end_quote
 
 一些认知科学的研究表明（《决策与判断》以及《[[http://www.douban.com/subject/3199621/][Rationality for Mortals]]》第 12 章：小孩也可以解决贝叶斯问题），我们对形式化的贝叶斯问题不擅长，但对于以频率形式呈现的等价问题却很擅长。在这里，不妨把问题重新叙述成：你在校园里面随机游走，遇到了 N 个穿长裤的人，这里面有多少个女生多少个男生。你说，这还不简单：算出学校里面有多少穿长裤的，然后在这些人里面再算出有多少女生，不就行了？
 
@@ -356,7 +356,7 @@ $$ P(B \mid A) = \frac{P(A \bigcap B)}{P(A)}$$
 
 得到指纹后，就可以对比不同的图片，计算 64 位中有多少位是不一样的，理论上等于计算 +汉明距离（[[https://en.wikipedia.org/wiki/Hamming_distance][Hamming distance]]）+ 。如果不相同的位不超过 5，就说明两张图片很相似；如果大于 10，就说明这是两张不同的图片。
 
-#+CAPTION: 具体的代码实现 =imgHash.py=
+#+caption: 具体的代码实现 =imgHash.py=
 #+begin_src python
 #!/usr/bin/python
 

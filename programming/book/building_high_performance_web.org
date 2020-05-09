@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: 构建高性能 Web 站点
+#+setupfile: ../../styles/readtheorg.setup
+#+title: 构建高性能 Web 站点
 
 * 绪论
 ** 等待的真相
@@ -207,7 +207,7 @@ Linux 2.6 的进程调度器更偏爱 I/O 操作密集型的进程，因为它�
 
 系统负载是单位时间内运行队列中就绪等待的进程数平均值，就绪进程不需要等待就可以马上获得 CPU 时，系统负载就很低，比如 0.00。
 
-#+CAPTION: =/proc/loadavg= 可以用于查看进程调度器维护的运行队列的情况，和系统负载
+#+caption: =/proc/loadavg= 可以用于查看进程调度器维护的运行队列的情况，和系统负载
 #+begin_src sh
 $ cat /proc/loadavg 
 1.63 0.48 0.21 10/200 17145
@@ -218,7 +218,7 @@ $ cat /proc/loadavg
 # +---------------------- 最近 1、5、15 分钟内的系统负载
 #+end_src
 
-#+CAPTION: =top= 和 =w= 也可以用于查看系统负载，其数据都来源于 =/proc/loadavg=
+#+caption: =top= 和 =w= 也可以用于查看系统负载，其数据都来源于 =/proc/loadavg=
 #+begin_src sh
 $ top
 top - 14:13:17 up 2 min, 1 user, load average: 0.15, 0.11, 0.04
@@ -229,7 +229,7 @@ $ w
 ...
 #+end_src
 
-#+CAPTION: 要模拟提高系统负载，可以使用没有 I/O 操作并且长时间占用 CPU 的代码，如循环累加器
+#+caption: 要模拟提高系统负载，可以使用没有 I/O 操作并且长时间占用 CPU 的代码，如循环累加器
 #+begin_src cpp
 int main() {
     unsigned long long sum = 0;
@@ -245,7 +245,7 @@ int main() {
 
 为了让进程轮流使用系统资源， _进程调度器会挂起正在运行的进程，同时恢复之前挂起的某个进程，这种行为称为进程切换，或 +上下文切换+ （[[https://en.wikipedia.org/wiki/Context_switch][context switch]]）。当硬件上下文频繁地装入和移出时，所消耗的时间是非常可观的。_
 
-#+CAPTION: 使用 =nmon= 监视上下文切换
+#+caption: 使用 =nmon= 监视上下文切换
 #+begin_src sh
 $ nmon
 k # 切换 kernel 模式
@@ -255,17 +255,17 @@ Forks               0.0
 Interrupts         79.4
 #+end_src
 
-#+BEGIN_QUOTE
+#+begin_quote
 *测试* ：Apache 使用 prefork 模式，lighttpd 使用单进程单线程模式，处理并发请求。\\
 *结果* ：Apache 因为使用多进程，上下文切换次数远高于 lighttpd，导致每秒处理请求数低于 lighttpd。\\
 *结论* ：要支持较大的并发数，需要 _减少上下文切换次数，最简单的做法是减少进程数，使用线程并配合其他 I/O 模型来设计并发策略。_
-#+END_QUOTE
+#+end_quote
 
 *** IOWait
 
 IOWait 是 _CPU 空闲并且等待 I/O 操作完成的时间比例_ 。它的出发点是衡量 CPU 的性能，并不能代表 I/O 的性能或者工作量（了解当前 I/O 的性能可以进行磁盘 I/O 测试或者查看网络 I/O 流量）：IOWait 为 100% 不一定代表 I/O 出现性能问题或瓶颈，IOWait 为 0 时 I/O 操作也可能很繁忙，但是 _高 IOWait 至少说明当前任务的 CPU 时间开销相对于 I/O 操作时间来说比较少_ ，对于依赖磁盘 I/O 的应用来说这比较正常，因为 CPU 的速度比磁盘 I/O 快，而且在随机的磁盘 I/O 操作中，大量的寻址时间无法避免。
 
-#+BEGIN_QUOTE
+#+begin_quote
 *测试* ：使用 Nginx 提供文件下载服务，开启 128 个进程。\\
 *结果* ：Nmon 显示 IOWait 平均在 50% 以上。\\
 *分析* ：下载服务使用 =sendfile= 系统调用传送数据，几乎不需要用户空间的 CPU 时间。
@@ -273,7 +273,7 @@ IOWait 是 _CPU 空闲并且等待 I/O 操作完成的时间比例_ 。它的出
 *测试* ：将进程数降到 8，重复以上测试。\\
 *结果* ：发现 IOWait 大幅下降，网络 I/O 大幅提升。\\
 *分析* ：Nginx 进程减少后，花费在进程上下文切换的 CPU 时间也减少，更多的 CPU 时间可以发起 =sendfile= 系统调用，CPU 使用率提高，网络 I/O 流量也大幅度提高，而磁盘由于存在高速缓存，所以实际 I/O 时间并没有明显提高，所以 IOWait 减少。
-#+END_QUOTE
+#+end_quote
 
 *** 锁竞争
 
@@ -283,12 +283,12 @@ IOWait 是 _CPU 空闲并且等待 I/O 操作完成的时间比例_ 。它的出
 
 用户态和内核态是进程的两种运行级别。进程通常运行在用户态，使用 CPU 和内存来完成一些任务（如数学计算），而当进程需要对硬件外设进行操作时（如读取磁盘文件、发送网络数据），就必须切换到内核态。进程在两种模式之间切换会导致内存空间交换，也是一定程度的上下文切换，产生的开销通常认为比较昂贵，因此应该 _减少不必要的系统调用_ 。
 
-#+BEGIN_QUOTE
+#+begin_quote
 *测试* ：在 Apache 中将网站根目录设置为 =AllowOverride all= ，并启用 =mod_status= ，使用 =strace= 跟踪子进程处理请求的过程。\\
 *结果* ：请求处理过程涉及多次 =open= 、 =times= 、 =gettimeofday= 系统调用，吞吐量下降。\\
 *分析* ： =open= 用于查找各级目录下的 =.htaccess= 文件（局部参数设置）是否存在， =mode_status= 使用 =times= 和 =gettimeofday= 获取系统时间，以监控请求处理时间。\\
 *结论* ：尽量减少不必要的系统调用，可以降低请求处理时间。
-#+END_QUOTE
+#+end_quote
 
 ** 内存分配
 
@@ -300,7 +300,7 @@ Apache 多进程模型的内存使用量很大，Apache 使用了基于内存池
 
 ** 持久连接
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *短连接* | TCP 连接建立后只发送一份数据就断开连接      |
 |----------+---------------------------------------------|
 | *长连接* | 持久（keep-alive）连接                      |
@@ -312,7 +312,7 @@ HTTP 长连接的实现需要浏览器和 Web 服务器共同协作：浏览器�
 
 关于超时的设置，对于多进程模型，如果超时时间过长，在没有任何后续请求时，Web 服务器仍然需要为当前连接维持空闲的子进程，影响性能。对于多线程模型，超时时间过长同样会导致资源无效占有，开销甚至会超过重复连接。长连接超时时间取决于浏览器和 Web 服务器的设置，双方都可以主动关闭长连接，如 Apache 通过 =KeepAliveTimeout= 指令设置超时时间。
 
-#+CAPTION: 长连接示例
+#+caption: 长连接示例
 #+begin_src sh
 # 浏览器发起长连接请求
 GET /index.html HTTP/1.1
@@ -325,14 +325,14 @@ Connection: Keep-Alive
 Keep-Alive: timeout=5, max=100
 #+end_src
 
-#+BEGIN_QUOTE
+#+begin_quote
 *测试* ：Nginx 开启和关闭长连接，接收并发请求，使用 =strace= 统计系统调用。\\
 *结果* ：使用长连接时，总系统调用数减少一半， =accept= 和 =close= 数量大幅减少。
-#+END_QUOTE
+#+end_quote
 
 ** I/O 模型
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *内存 I/O* | 速度最快                                   |
 |------------+--------------------------------------------|
 | *网络 I/O* | 瓶颈往往在于带宽最低的交换节点             |
@@ -354,7 +354,7 @@ I/O 操作由内核系统调用完成，而系统调用需要由 CPU 调度，�
 
 造成 I/O 等待的原因很多：
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *网络 I/O 等待* | 等待用户请求。                                                    |
 |                 | 用户发出请求，服务器与浏览器建立 TCP 连接后，等待 HTTP 请求数据。 |
 |                 | 等待请求数据在网络传输。                                          |
@@ -371,9 +371,9 @@ I/O 操作由内核系统调用完成，而系统调用需要由 CPU 调度，�
 
 _同步阻塞 I/O 是指当进程调用涉及 I/O 操作的系统调用或库函数时，_ 如 =accept()= 、 =send()= 、 =recv()= ， _进程便暂停，等待 I/O 操作完成后再继续运行。_ 比如 Apache prefork 模型，某个子进程在等待请求时，会阻塞在 =accept()= 调用。同步阻塞 I/O 简单有效， _可以结合多进程，有效地利用 CPU 资源，但是代价是多进程的大量内存开销。_
 
-#+BEGIN_QUOTE
+#+begin_quote
 类比：逛街途中去餐馆点菜，由于不知道什么时候能做好，只能暂停逛街，在餐馆等待（阻塞），吃完（I/O 操作）之后再继续逛街。
-#+END_QUOTE
+#+end_quote
 
 *** 同步非阻塞 I/O
 
@@ -383,9 +383,9 @@ _同步非阻塞 I/O 不等待数据的就绪，如果数据不可读或者不�
 
 非阻塞 I/O 一般只针对网络 I/O，比如在使用 socket 时加上 =O_NONBLOCK= flag，该 socket 的 =send()= 或 =recv()= 便采用非阻塞方式。对于磁盘 I/O，非阻塞 I/O 并不产生效果（补充：因为磁盘文件通常始终是就绪的，不需要等待）。
 
-#+BEGIN_QUOTE
+#+begin_quote
 类比：逛街途中去餐馆点菜，但不在餐馆等待，而是继续逛街，同时频繁地回餐馆查看是否做好，这样可以不耽误逛街和吃饭，但是耗费大量体力往返查看。
-#+END_QUOTE
+#+end_quote
 
 *** 多路 I/O 就绪通知
 
@@ -393,9 +393,9 @@ Web 服务器经常需要同时处理大量的文件描述符，比如同时接�
 
 _多路 I/O 就绪通知提供了对大量文件描述符就绪检查的方案，它允许进程同时监视所有文件描述符，并可以快速获得就绪的文件描述符，然后只针对这些文件描述符进行数据访问。_ I/O 就绪通知只是允许快速获得就绪的文件描述符，得知数据就绪后，访问数据本身仍然需要选择阻塞或非阻塞，一般选择非阻塞方式，以防止任何意外的等待阻塞整个进程。
 
-#+BEGIN_QUOTE
+#+begin_quote
 类比：逛街途中去几个不同餐馆点了菜，通过电子屏幕可以快速获知已经做好的菜，同时可以继续逛街，而不需要轮流到每家店询问。select 和 poll 显示所有菜的状态，包括正在制作的和已经做好的，不方便阅读。 =/dev/poll= 只显示已经做好的菜。使用电子屏幕只能在附近才能看到通知，epoll 提供了短信通知。
-#+END_QUOTE
+#+end_quote
 
 多路 I/O 就绪通知有很多不同的实现，在检查大量文件描述符时的性能也存在一定的差异。
 
@@ -443,7 +443,7 @@ FreeBSD 提供的实现，性能和 epoll 非常接近，可以设置水平触�
 
 Linux 内核提供一种访问磁盘文件的特殊方式，使用 =mmap()= 系统调用， _将内存中的地址空间和指定的磁盘文件相关联，从而把对内存的访问转换为对磁盘文件的访问，这种技术称为内存映射（memory mapping），可以提高磁盘 I/O 的性能_ （Wiki：访问内存映射文件比直接文件读写要快几个数量级）。
 
-#+CAPTION: 向 Apache 请求较小的静态文件时的系统调用
+#+caption: 向 Apache 请求较小的静态文件时的系统调用
 #+begin_src sh
 open("/data/www/site/htdocs/test.htm", O_RDONLY|O_LARGEFILE) = 20      # 打开文件，获得文件描述符
 mmap2(NULL, 151, PROT_READ, MAP_SHARED, 20, 0) = 0xb7f8f000            # 进行内存映射关联
@@ -476,19 +476,19 @@ Web 服务器处理静态文件请求的过程中，磁盘文件的数据先要�
 
 Linux 2.4 引入了称为 khttpd 的内核级 Web 服务器，只处理静态文件的请求，使 _请求的处理尽量在内核完成，减少内核态的切换以及用户态数据复制的开销。_ Linux通过 =sendfile()= 系统调用将这种机制提供给开发者，它可以 _将磁盘文件的特定部分直接传送到代表客户端的 socket 描述符，加快静态文件的请求速度，减少 CPU 和内存的开销。_
 
-#+CAPTION: Apache 可以配置是否使用 sendfile
+#+caption: Apache 可以配置是否使用 sendfile
 #+begin_src sh
 EnableSendfile off
 #+end_src
 
-#+BEGIN_QUOTE
+#+begin_quote
 *测试* ：不使用 sendfile，通过 =strace= 跟踪 Apache 处理较大的静态文件的过程，并进行压力测试。
 *结果* ：使用 =read()= 和 =write()= 系统调用读取和发送数据，每次 8192 字节，吞吐量 ~300/s。
 
 *测试* ：使用 sendfile，进行同样的测试。
 *结果* ：使用 =poll()= 和 =sendfile64()= 系统调用读取和发送数据，每次 49152 字节，吞吐量 ~600/s。
 *结论* ：使用 sendfile 处理较大文件的请求，需要较少的系统调用和发送次数。
-#+END_QUOTE
+#+end_quote
 
 但请求较小的静态文件， sendfile 的作用便不那么重要，因为在处理小文件请求时，发送数据的环节在整个过程中所占时间的比例，相比于大文件请求时要小很多，所以 sendfile 的优化效果自然不十分明显。
 
@@ -513,7 +513,7 @@ prefork 模式由主进程预先创建一定数量的子进程，每个请求由
 - 主进程使用非阻塞 =accept()= ，建立连接后，主进程将任务分配给空闲的子进程。
 - 所有子进程使用阻塞 =accept()= 竞争接收连接。大多数 TCP 栈的实现方法是，当一个请求连接到达时，内核激活所有阻塞在 =accept()= 的子进程，但只有一个能够成功获得连接并返回到用户空间，其余的子进程继续回到休眠状态，这种「抖动」造成一定的额外开销。
 
-#+CAPTION: Apache 接收 HTTP 请求数据的系统调用
+#+caption: Apache 接收 HTTP 请求数据的系统调用
 #+begin_src sh
 accept(3, ...) = 19 <0.004843>                      # 获得 socket 文件描述符
 fcntl64(19, ..., O_RDWR|O_NONBLOCK) = 0 <0.000005>  # 将文件描述符设置为非阻塞
@@ -524,7 +524,7 @@ read(19, "", 512) = 0 <0.000008> # 接收数据，结果为空，视为客户端
 close(19) = 0 <0.000009>         # 关闭连接
 #+end_src
 
-#+CAPTION: 系统调用汇总
+#+caption: 系统调用汇总
 #+begin_src sh
 % time     seconds  usecs/call     calls    errors syscall
 ------ ----------- ----------- --------- --------- ----------------
@@ -537,13 +537,13 @@ close(19) = 0 <0.000009>         # 关闭连接
 100.00    0.022064                126919     26922 total
 #+end_src
 
-#+CAPTION: 使用长连接，Apache 接收 HTTP 请求数据的系统调用
+#+caption: 使用长连接，Apache 接收 HTTP 请求数据的系统调用
 #+begin_src sh
 poll([{fd=19, ..., revents=POLLIN}], 1, 30000) = 1 <0.000040> # 有新数据时返回，等待时间比短连接大大缩短
 read(19, "GET /test.htm ...", 8000) = 109 <0.000007>          # 接收数据
 #+end_src
 
-#+CAPTION: 系统调用汇总
+#+caption: 系统调用汇总
 #+begin_src sh
 % time     seconds  usecs/call     calls    errors syscall
 ------ ----------- ----------- --------- --------- ----------------
@@ -564,13 +564,13 @@ _多进程模型的开销限制了并发连接数，但是优势是稳定性，�
 
 Apache 的 worker 多路处理模块采用一个进程包含多个线程、每个线程处理一个连接的方式，可以减少 prefork 模式的进程开销，支持更多的并发连接。Worker 的 _线程实际上是由内核进程调度器管理的轻量级进程，其上下文切换开销依然存在，表现并不比 prefork 有太大优势，_ 优点并不明显，因此 worker 模型的处境尴尬，通常在服务器并发量达到瓶颈时，会改用其他的轻量级服务器。
 
-#+CAPTION: Prefork 模式下压力测试
+#+caption: Prefork 模式下压力测试
 #+begin_src sh
 Requests per second: 5861.53 [/sec] (mean) # 吞吐量
 ContextSwitch 15919.8                      # 上下文切换
 #+end_src
 
-#+CAPTION: Worker 模式下压力测试
+#+caption: Worker 模式下压力测试
 #+begin_src sh
 Requests per second: 6886.08 [/sec] (mean) # 吞吐量
 ContextSwitch 43237.6                      # 上下文切换
@@ -582,7 +582,7 @@ ContextSwitch 43237.6                      # 上下文切换
 
 处理多个连接的进程通常称为 worker 进程，有些 Web 服务器使用 worker 线程来代替 worker 进程，但这种线程通常是内核级线程，在处理多路 I/O 的方式上基本相同，可以看成是迷你的 worker 进程。
 
-#+CAPTION: lighttpd 支持的多路 I/O 就需通知方法
+#+caption: lighttpd 支持的多路 I/O 就需通知方法
 #+begin_src sh
 OS           Method      Config Value
 ============ =========== ===============
@@ -594,7 +594,7 @@ Solaris      /dev/poll   solaris-devpoll
 FreeBSD      kqueue      freebsd-kqueue
 #+end_src
 
-#+CAPTION: 使用 select 时检查数据就绪到接收请求的系统调用
+#+caption: 使用 select 时检查数据就绪到接收请求的系统调用
 #+begin_src sh
 select(4, [3], [], [3], {1, 0}) = 0 (Timeout)
 select(4, [3], [], [3], {1, 0}) = 1 (in [3], left {0, 164000})
@@ -604,7 +604,7 @@ select(4, [3], [], [3], {1, 0}) = 1 (in [3], left {0, 164000})
 accept(3, {sa_family=AF_INET, sin_port=htons(46160), sin_addr=inet_ addr("127.0.0.1")}, [16]) = 6
 #+end_src
 
-#+CAPTION: 使用 poll 时检查数据就绪到接收请求的系统调用
+#+caption: 使用 poll 时检查数据就绪到接收请求的系统调用
 #+begin_src sh
 poll([{fd=3, events=POLLIN}], 1, 1000) = 0
 poll([{fd=3, events=POLLIN, revents=POLLIN}], 1, 1000) = 1
@@ -614,7 +614,7 @@ poll([{fd=3, events=POLLIN, revents=POLLIN}], 1, 1000) = 1
 accept(3, {sa_family=AF_INET, sin_port=htons(35332), sin_addr=inet_ addr("127.0.0.1")}, [16]) = 6
 #+end_src
 
-#+CAPTION: 使用 epoll 时检查数据就绪到接收请求的系统调用
+#+caption: 使用 epoll 时检查数据就绪到接收请求的系统调用
 #+begin_src sh
 epoll_wait(6, {}, 2049, 1000) = 0
 epoll_wait(6, {{EPOLLIN, {u32=3, u64=3}}}, 2049, 1000) = 1
@@ -625,35 +625,35 @@ accept(3, {sa_family=AF_INET, sin_port=htons(35333), sin_addr=inet_ addr("127.0.
 
 从内核的角度看，这三种方式非常相似，都是通过各自的系统调用不断地轮询，获得就绪的 socket，然后使用 =accept()= 接收请求。
 
-#+BEGIN_QUOTE
+#+begin_quote
 *测试* ：用 =ab= 模拟 100 至 20,000 个并发用户（需要通过 =ulimit -n= 修改进程的最大文件描述符限制），使用 151 字节静态文件，分别对 select、poll、epoll 进行压力测试。\\
 *结果* ：三种方式的结果基本相同，epoll 没有体现出优势，反而略低于 select 和 poll，select 没有因为并发连接数拒绝服务。\\
 *分析 1* ：151 字节的静态文件请求的处理时间在 0.1ms 左右，远小于进程的时间片，所以进程可以连续处理多个连接。另外由于 lighttpd 对于连接队列的良好控制，并不需要打开 20,000 个并发连接，通过 server-status 监视发现，它的连接数保持在 300 以内，因此没有超过 select 的并发连接数上限。\\
 *分析 2* ： _Web 服务器通常维护着大量空闲连接，_ 包括在等待超时的长连接，或者网络传输的延时，或者是黑客制造的死连接。 _epoll 只关注活跃连接，而 select 和 poll 会扫描所有文件描述符。_ \\
 *结论* ： _在请求处理时间很短，且不存在空闲连接的情况下，体现不出 epoll 和另外两种方式的区别。_
-#+END_QUOTE
+#+end_quote
 
-#+BEGIN_QUOTE
+#+begin_quote
 *测试* ：使用 15KB 和 224KB 静态文件，对 select 重复以上测试。\\
 *结果* ：15KB 文件在 20,000 并发时，224KB 文件在 1,000 并发时，lighttpd 就拒绝访问。\\
 *分析* ：请求的处理时间增加，达到了 select 的并发连接数上限（1,024 个文件描述符）。
-#+END_QUOTE
+#+end_quote
 
-#+BEGIN_QUOTE
+#+begin_quote
 *测试* ：使用脚本模拟 5,000 个空闲连接（建立连接后每 10 秒发送一个字符串，避免连接超时关闭），再对 select、poll、epoll 进行以上测试，并观察系统调用。\\
 *结果* ：select 无法建立 5,000 空闲连接，而 poll 的吞吐率低于 epoll 三分之一，poll 的系统调用 =poll()= 花费的时间是 =epoll_wait()= 的 30 倍。\\
 *分析* ：由于只关注活跃连接，空闲连接不对 epoll 造成干扰。\\
 *结论* ： _当服务器存在大量非活跃长连接的时（如图片连续下载），epoll 具有优势。_
-#+END_QUOTE
+#+end_quote
 
-#+BEGIN_QUOTE
+#+begin_quote
 *测试* ：使用 Nginx 提供文件下载服务，将 worker 进程数量设为 8，监视并发连接数。\\
 *结果* ：并发连接数为 2600，网络 I/O 流量高。
 
 *测试* ：将进程数设为 128，重复以上测试。\\
 *结果* ：并发连接数为 7900，网络 I/O 流量低。\\
 *分析* ： _大量的 worker 进程可以维持更多的活跃连接数，但每个连接的下载速度变小，worker 进程数取决于服务的类型，是为更多的用户同时提供慢速下载，还是为有限的用户提供快速的下载。_
-#+END_QUOTE
+#+end_quote
 
 对于动态内容（如 PHP 脚本），worker 进程通常只负责转发请求给独立的 fastcgi 进程，或者作为反向代理服务器将请求转发给后端服务器，并不依赖太多的本地资源，可以提高 worker 进程数以增加并发连接。但 _一般动态内容本身的吞吐率是相当有限的，由于存在脚本解释器的开销，通常不会超过 2000reqs/s 的吞吐率，所以 worker 进程的压力不大。如果作为基于反向代理的负载均衡调度器，多台后端服务器扩展了动态内容计算能力，worker 进程数会逐渐成为整体性能的瓶颈。_ 太多 worker 进程又会带来更多的上下文切换开销和内存开销，从而整体上使所有连接的响应时间变长。所以，没有一个绝对的公式，必须根据站点的实际情况来进行分析和调整。
 
@@ -675,7 +675,7 @@ _缓冲的目的在于协调各部件之间不同的速度，将快速设备和�
 ** 页面缓存
 *** Smarty 缓存
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 // 初始化
 require 'Smarty.class.php';
@@ -695,11 +695,11 @@ if ($smarty->is_cached($template, $cachekey)) {
 $smarty->display($template, $cachekey);
 #+end_src
 
-#+BEGIN_QUOTE
+#+begin_quote
 *测试* ：使用 =strace= 跟踪 Smarty 使用和不使用缓存时的系统调用。\\
 *结果* ：未使用缓存时， =read()= 占用 90% 以上时间，使用缓存时接近 0。\\
 *分析* ： =read()= 调用的途径包括与数据库通信时接收数据、读取 PHP 文件、页面模板等，使用缓存可以避免这些操作。
-#+END_QUOTE
+#+end_quote
 
 *** 目录分级
 
@@ -716,7 +716,7 @@ cache/12882/%%E6/E6C/E6C210ED%%place_posts.htm # 目录分级后
 
 *** 过期检查
 
-#+CAPTION: Smarty 缓存文件中的过期时间信息
+#+caption: Smarty 缓存文件中的过期时间信息
 #+begin_src js
 {
     'timestamp' => int(1236035506), // 缓存创建时间
@@ -738,7 +738,7 @@ cache/12882/%%E6/E6C/E6C210ED%%place_posts.htm # 目录分级后
 
 在缓存命中、读取缓存文件、终止程序之前，不要加载直接输出缓存时不需要的 PHP 库文件（如数据库访问相关的库），只加载必要的文件，可以减少磁盘 I/O 开销。
 
-#+CAPTION: 更进一步，如果使用最简化的页面缓存替代 Smarty
+#+caption: 更进一步，如果使用最简化的页面缓存替代 Smarty
 #+begin_src php
 $path = '../cache/' . $template . '/' . $id;
 if (file_exists($path)) {
@@ -753,7 +753,7 @@ file_put_contents($path, $html);
 echo $html;
 #+end_src
 
-#+CAPTION: 可以消除加载和实例化 Smarty 的开销
+#+caption: 可以消除加载和实例化 Smarty 的开销
 #+begin_src php
 require 'Smarty.class.php'; // 磁盘 I/O 开销
 $smarty = new Smarty();     // 脚本解释器开销（CPU 计算、内存交换等）
@@ -763,18 +763,18 @@ $smarty = new Smarty();     // 脚本解释器开销（CPU 计算、内存交换
 
 当缓存数据存储在磁盘文件，缓存加载和过期检查都存在磁盘 I/O 开销，同时缓存性能也受到磁盘负载和其他磁盘 I/O 密集型应用（如数据库）的影响。使用内存型缓存，可以提升性能。
 
-#+BEGIN_QUOTE
+#+begin_quote
 *测试* ：使用 APC、XCache、memcache 作为缓存，进行压力测试。\\
 *结果* ：各种缓存的性能比较：APC = XCache = 最简磁盘缓存 > memcache > Smarty > 无缓存。\\
 *分析* ：虽然页面进行了缓存，但是动态网页的处理仍然需要加载大量磁盘文件，缓存的部分对整体性能影响不大，相比磁盘缓存性能提升很小。与 memcache 进程需要 TCP socket 开销，如果运行在其他主机还有网络通信的延迟，因此性能略差。
-#+END_QUOTE
+#+end_quote
 
 本地内存缓存虽然速度最快，但是 Web 服务器本身的内存相当宝贵，它要满足 HTTP 进程和脚本解释器的开销，没有大量的内存空间用于缓存。实际中，动态网页缓存会消耗大量内存空间，如果 _内存空间不足，缓存命中率会大幅下降，吞吐率随之降低。而单机的内存很容易达到上限，无法继续扩展，使用 memcached 实现分布式缓存使得扩展成为可能。_
 ** 局部无缓存
 
 有些页面的某一区域需要及时更新，比如阅读量和评论，为了这一区域的更新，将整个页面重新创建缓存的话，又会浪费资源。为此，模板框架一般支持局部无缓存，允许在页面中指定一块包含动态数据的代码，每次请求时，这段代码都会实时计算，然后和其余部分的缓存合成为最终的网页。
 
-#+CAPTION: Smarty 局部无缓存示例
+#+caption: Smarty 局部无缓存示例
 #+begin_src php
 $smarty->register_block('dynamic', 'block_dynamic', false);
 function block_dynamic($param, $content, &$smarty) {
@@ -794,18 +794,18 @@ $user->user_nick
 
 *** 直接访问缓存
 
-#+BEGIN_QUOTE
+#+begin_quote
 *测试* ：将 Smarty 生成的页面缓存 =.htm= 复制到 =.php= 文件目录下，作为静态页面文件，进行压力测试。\\
 *结果* ：吞吐率为 11,700/s，比使用 Smarty 页面缓存快 100 倍，需要带宽为 1.2Gbps。\\
 *分析* ： _服务器直接用静态文件响应请求，可以省去执行脚本生成动态页面或读取缓存的开销。_
-#+END_QUOTE
+#+end_quote
 
-#+BEGIN_QUOTE
+#+begin_quote
 *测试* ：从另一台通过局域网连接的服务器上重复以上测试。\\
 *结果* ：吞吐率为 860/s，需要带宽为 90Mbps。\\
 *分析* ：之前的测试在同一台服务器上进行，不存在出口带宽限制的问题，而 _实际中，吞吐率往往受限于服务器的出口带宽，_ 比如 100Mbps 独享带宽，以 13KB 的网页来计算（只考虑正文），理论上最大的吞吐率为：100 Mbps / 8 / 13KB = 961.53/s，而加上 IP 包正文以外的数据，和网络 I/O 的开销，达到 860/s 的吞吐率属于正常现象。\\
 *结论* ：购买更多的独享带宽，为服务器安装千兆网卡，为服务器所在网络安装千兆交换机，这样静态化页面的性能才可以发挥到极限。
-#+END_QUOTE
+#+end_quote
 
 *** 更新策略
 
@@ -828,12 +828,12 @@ $user->user_nick
 
 -----
 
-#+CAPTION: PHP 的 Parsekit 扩展提供的运行时 API 支持查看任何 PHP 文件或者代码段的 opcode。
+#+caption: PHP 的 Parsekit 扩展提供的运行时 API 支持查看任何 PHP 文件或者代码段的 opcode。
 #+begin_src php
 var_dump(parsekit_compile_string('print 1+1;'));
 #+end_src
 
-#+CAPTION: opcode 操作列表
+#+caption: opcode 操作列表
 | =opcode= | =opcode_name=           | =op1=         | =op2=         | =result=     |
 |----------+-------------------------+---------------+---------------+--------------|
 |        1 | =ZEND_ADD=              | =IS_CONST(1)= | =IS_CONST(1)= | =IS_TMP_VAR= |
@@ -856,7 +856,7 @@ op op1
 
 三地址码与汇编指令在结构上非常接近，所以从三地址码生成目标文件非常容易，只需要将抽象的操作指令（如 =ZEND_ADD= ），结合机器硬件以及操作系统平台等实际环境，翻译成底层的操作指令即可。
 
-#+CAPTION: opcode 在 PHP 源代码中的宏定义：
+#+caption: opcode 在 PHP 源代码中的宏定义：
 #+begin_src c
 // Zend/zend_vm_opcodes.h
 #define ZEND_ADD                       1
@@ -870,7 +870,7 @@ op op1
 
 PHP 代码可以看成是一系列单词的集合，包括关键字、标识符、运算符等。解析器首先对所有单词进行分类，并打上记号（token），这个过程称为词法分析。
 
-#+CAPTION: PHP 源代码中的解释器的词法规则文件：
+#+caption: PHP 源代码中的解释器的词法规则文件：
 #+begin_src c
 // Zend/zend_language_scanner.l
 <ST_IN_SCRIPTING>"print" {
@@ -878,13 +878,13 @@ PHP 代码可以看成是一系列单词的集合，包括关键字、标识符�
 }
 #+end_src
 
-#+CAPTION: 代码通过词法分析后，解释器要对记号进行语法分析：
+#+caption: 代码通过词法分析后，解释器要对记号进行语法分析：
 #+begin_src c
 // Zend/zend_language_parser.y
 T_PRINT expr { zend_do_print(&$$, &$2 TSRMLS_CC); } // 将 T_PRINT 标记及上下文替换为 zend_do_print()
 #+end_src
 
-#+CAPTION: Zend 函数的实现代码：
+#+caption: Zend 函数的实现代码：
 #+begin_src c
 // Zend/zend_compile.c
 void zend_do_print(znode *result, znode *arg TSRMLS_DC)

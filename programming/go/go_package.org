@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Go Package
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Go Package
 
 * =builtin=
 
@@ -21,7 +21,7 @@ func append(
 ) []Type
 #+end_src
 
-#+CAPTION: 超出分片容量时，会为分片分配新的（更大的）数组
+#+caption: 超出分片容量时，会为分片分配新的（更大的）数组
 #+begin_src go
 var s []int            // len = 0, cap = 0, []
 s = append(s, 0)       // len = 1, cap = 2, [0]
@@ -29,7 +29,7 @@ s = append(s, 1)       // len = 2, cap = 2, [0 1]
 s = append(s, 2, 3, 4) // len = 5, cap = 8, [0 1 2 3 4]
 #+end_src
 
-#+CAPTION: =append()= 返回新的分片，原分片保持不变
+#+caption: =append()= 返回新的分片，原分片保持不变
 #+begin_src go
 a := []int{1, 2, 3}
 b := append(a, 4)
@@ -46,7 +46,7 @@ copy (
 )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src go
 a := []int{1, 2, 3}
 b := make([]int, len(a))
@@ -81,7 +81,7 @@ func make(
 ) Type
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src go
 a := make([]int, 5)    // len = 5, [0 0 0 0 0]
 b := make([]int, 0, 5) // len = 0, cap = 5, []
@@ -99,7 +99,7 @@ func new(Type) *Type
 
 实例初始化为零值。
 
-#+CAPTION: =new()= 等价于声明变量并获取其地址：
+#+caption: =new()= 等价于声明变量并获取其地址：
 #+begin_src go
 p = new(int)
 *p = 1
@@ -141,7 +141,7 @@ fmt.Printf(
 )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src go
 type Entity struct {
     key, value string
@@ -177,7 +177,7 @@ fmt.Scan(
 ) (n int, err error)
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src go
 var n int
 _, err := fmt.Scan(&n)
@@ -192,7 +192,7 @@ fmt.Scanf(
 ) (n int, err error)
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src go
 var a, b, c int
 _, err := fmt.Scanf("%d %d %d", &a, &b, &c)
@@ -208,7 +208,7 @@ func Copy(
 ) (written int64, err error)
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src go
 resp, _ := http.Get("http://golang.org")
 io.Copy(os.Stdout, resp.Body)
@@ -222,7 +222,7 @@ type Reader interface {
 }
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src go
 resp, _ := http.Get("http://golang.org")
 
@@ -320,7 +320,7 @@ var (
 )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src go
 resp, _ := http.Get("http://golang.org")
 io.Copy(os.Stdout, resp.Body)

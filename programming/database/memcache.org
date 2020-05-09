@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Memcache
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Memcache
 
 * 原理
 ** 数据结构
@@ -23,14 +23,14 @@ file:../images/memcache/02.jpg
 
 ** 过期
 
-#+CAPTION: 过期时间
+#+caption: 过期时间
 | 0                 | 永远不过期         |
 |-------------------+--------------------|
 | <= 30 * 24 * 3600 | 解读为秒数         |
 |-------------------+--------------------|
 | > 30 * 24 * 3600  | 解读为 UNIX 时间戳 |
 
-#+CAPTION: 过期机制
+#+caption: 过期机制
 | *Lazy expiration* | 不主动将数据标为过期，只有查询到这个数据时，才会检查是否过期。 |
 * 命令
 ** 命令行
@@ -120,7 +120,7 @@ get <key>
 * PHP
 ** 客户端
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *pecl/memcache*  | 直接使用 memcache daemon。                       |
 |                  | 只支持基本功能。                                 |
 |------------------+--------------------------------------------------|
@@ -131,7 +131,7 @@ http://blackbe.lt/php-memcache-vs-memcached/
 
 ** Session
 
-#+CAPTION: =php.ini=
+#+caption: =php.ini=
 | =session.save_handler= | 设为 =memcached= 以用于存储会话数据                  |
 |------------------------+------------------------------------------------------|
 | =session.save_path=    | 存储路径，eg. =tcp://host1:11211, tcp://host2:11211= |
@@ -142,7 +142,7 @@ http://blackbe.lt/php-memcache-vs-memcached/
 
 ** 示例
 
-#+CAPTION: 缓存数据库查询结果
+#+caption: 缓存数据库查询结果
 #+begin_src php
 $servers = array(
     "10.1.1.1", // web1

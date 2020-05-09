@@ -1,15 +1,15 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Data Structure and Algorithm Analysis C++
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Data Structure and Algorithm Analysis C++
 
 * Preface
 
-#+BEGIN_QUOTE
+#+begin_quote
 Why must programs be efficient when new computers are faster every year? The reason is that our ambitions grow with our capabilities. ... the modern revolution in computing power and storage capability merely raises the efficiency stakes as we attempt more complex tasks.
-#+END_QUOTE
+#+end_quote
 
-#+BEGIN_QUOTE
+#+begin_quote
 The quest for program efficiency need not and should not conflict with sound design and clear coding. Creating efficient programs ... is based on good organization of information and good algorithms. ... Generality in design can and should be achieved without sacrificing performance.
-#+END_QUOTE
+#+end_quote
 
 -----
 
@@ -32,15 +32,15 @@ Common practice:
 
 -----
 
-#+BEGIN_QUOTE
+#+begin_quote
 ... features such as classes, private class members, constructors, and destructors ... support the crucial concept of separating logical design, as embodied in the abstract data type, from physical implementation as embodied in the data structure.
-#+END_QUOTE
+#+end_quote
 
 * Chapter 1: Data Structures and Algorithms
 
-#+BEGIN_QUOTE
+#+begin_quote
 (To solve problems,) it is not enough to have the necessary information. We must organize that information in a way that allows us to find the answers in time to satisfy our needs. ... The primarypurpose of most computer programs is not to perform calculations, but to store and retrieve information — usually as fast as possible.
-#+END_QUOTE
+#+end_quote
 
 2 goals of computer program design: to design an algorithm that
 - is easy to understand, code, and debug
@@ -53,25 +53,25 @@ Asymptotic analysis（渐进分析）
 ** A Philosophy of Data Structures
 *** The Need for Data Structures
 
-#+BEGIN_QUOTE
+#+begin_quote
 As we develop more powerful computers, our history so far has always been to use that additional computing power to tackle more complex problems, be it in the form of more sophisticated user interfaces, bigger problem sizes, or new problems previously deemed computationally infeasible.
-#+END_QUOTE
+#+end_quote
 
-#+BEGIN_QUOTE
+#+begin_quote
 As tasks become more complex, they become less like our everyday experience.
-#+END_QUOTE
+#+end_quote
 
 In the most general sense, a data structure is:
 - data representation
 - its associated operations
 
-#+BEGIN_QUOTE
+#+begin_quote
 A solution is said to be *efficient* if it solves the problem within the required *resource constraints*. ... Most often, cost is measured in terms of one key resource such as *time*, with the implied assumption that the solution meets the other resource constraints.
-#+END_QUOTE
+#+end_quote
 
-#+BEGIN_QUOTE
+#+begin_quote
 Only by first analyzing the problem to determine the performance goals that must be achieved can there be any hope of selecting the right data structure for the job.
-#+END_QUOTE
+#+end_quote
 
 Steps to select a data structure:
 1. Analyze the problem to determine the basic operations. \\
@@ -97,17 +97,17 @@ A data structure requires a certain amount of:
 - time to perform a single basic operation
 - programming effort
 
-#+BEGIN_QUOTE
+#+begin_quote
 The typical customer opens and closes accounts far less often than he or she accesses the account. Customers are willing to wait many minutes while accounts are created or deleted but are typically not willing to wait more than a brief time for individual account transactions such as a deposit or withdrawal. 
 
 Considering the choice of data structure ... little concern for the cost of deletion, but is highly efficient for search and moderately efficient for insertion. Records are accessible by unique account number (*exact-match query*). One data structure that meets these requirements is the *hash table*.
 
 The hash table can be reorganized periodically to restore the system to peak efficiency. Such reorganization can occur offline.
-#+END_QUOTE
+#+end_quote
 
-#+BEGIN_QUOTE
+#+begin_quote
 Hash table cannot perform efficient *range queries*. *B^{+}-tree* supports large databases, insertion and deletion of data records, and range queries. However, a simple *linear index* would be more appropriate if the database is created once, and then never changed.
-#+END_QUOTE
+#+end_quote
 
 ** Abstract Data Types and Data Structures
 
@@ -124,7 +124,7 @@ Data types have both a logical and a physical form.
 - The definition of the data type in terms of an ADT is its logical form.
 - The implementation of the data type as a data structure is its physical form. 
 
-#+CAPTION: The relationship between data items, abstract data types, and data structures.
+#+caption: The relationship between data items, abstract data types, and data structures.
 file:../images/data_structure_and_algorithm_analysis_c++/01.png
 
 -----
@@ -142,15 +142,15 @@ An ADT might be supported by more than one implementation.
 
 - File structure :: Often refers to the organization of data on peripheral storage.
 
-#+BEGIN_QUOTE
+#+begin_quote
 Most drivers can operate many different cars because the ADT presents a uniform method of operation that does not require the driver to understand the specifics of any particular engine or drive design.
-#+END_QUOTE
+#+end_quote
 
-#+BEGIN_QUOTE
+#+begin_quote
 The concept of an ADT is one instance of an important principle: managing complexity through abstraction.
 
 Humans deal with complexity by assigning a label to an assembly of objects or concepts and then manipulating the label in place of the assembly. Cognitive psychologists call such a label a *metaphor*. Labels allows us to focus on important issues while ignoring unnecessary details.
-#+END_QUOTE
+#+end_quote
 
 -----
 
@@ -181,27 +181,27 @@ Large disk-based database implementations
 - Design pattern :: Abstractions describing the design of programs, i.e. the interactions of objects and classes. \\
                     Higher level abstractions than ADTs.
 
-#+BEGIN_QUOTE
+#+begin_quote
 A design pattern embodies and generalizes important design concepts for a recurring problem.
 
 A primary goal of design patterns is to quickly transfer the knowledge gained by expert designers to newer programmers. Another goal is to allow for efficient communication between programmers. 
-#+END_QUOTE
+#+end_quote
 
 *** Flyweight
 
 When there is duplication of the same information, to reduce memory cost by sharing space.
 
-#+BEGIN_QUOTE
+#+begin_quote
 We do not want to create a separate "C" object everywhere in the document that a "C" appears. The solution is to allocate a single copy of the shared representation for "C" objects. The various instances of references to a specific form of "C" are called *flyweights*.
-#+END_QUOTE
+#+end_quote
 
 *** Visitor
 
 A generic traversal function, and pass in the activity to be performed at each node.
 
-#+BEGIN_QUOTE
+#+begin_quote
 The visitor design pattern is focused on encapsulating an activity that will be performed on all members of a collection so that completely different activities can be substituted within a generic method that accesses all of the collection members.
-#+END_QUOTE
+#+end_quote
 
 *** Composite
 
@@ -216,27 +216,27 @@ Composite design pattern
 - each object subclass in the hierarchy embody the action for each of the various activities that might be performed
 - adding a new activity requires that we modify each subclass
 
-#+BEGIN_QUOTE
+#+begin_quote
 The composite design pattern is about whether to give control of the traversal process to the nodes of the tree or to the tree itself.
-#+END_QUOTE
+#+end_quote
 
 *** Strategy
 
 To encapsulate and make interchangeable a set of alternative actions.
 
-#+BEGIN_QUOTE
+#+begin_quote
 The strategy design pattern is focused on encapsulating an activity that is part of a larger process, so that different ways of performing that activity can be substituted.
-#+END_QUOTE
+#+end_quote
 ** Problems, Algorithms, and Programs
 
 - Problem :: A task to be performed. \\
              A function or a mapping of inputs to outputs.
 
-#+BEGIN_QUOTE
+#+begin_quote
 The solution method should be developed only after the problem is precisely defined and thoroughly understood.
 
 A problem definition should include constraints, whether stated or implied, on the resources that may be consumed by any acceptable solution.
-#+END_QUOTE
+#+end_quote
 
 - Function (in the mathematical sense) :: A matching between inputs (the domain) and outputs (the range).
 
@@ -244,21 +244,21 @@ A problem definition should include constraints, whether stated or implied, on t
 
 - Instance (of the problem) :: A specific selection of values for the parameters.
 
-#+BEGIN_QUOTE
+#+begin_quote
 For all computer programs, the output is completely determined by the program's full set of inputs. Even a "random number generator" is completely determined by its inputs ( some random number generating systems appear to get around this by accepting a random input from a physical process beyond the user's control).
-#+END_QUOTE
+#+end_quote
 
 -----
 
 - Algorithm :: A method or a process followed to solve a problem.
 
-#+BEGIN_QUOTE
+#+begin_quote
 A problem can be solved by many different algorithms. A given algorithm solves only one problem.
-#+END_QUOTE
+#+end_quote
 
-#+BEGIN_QUOTE
+#+begin_quote
 One solution might be more efficient than another solution for a specific variation of the problem, or for a specific class of inputs to the problem.
-#+END_QUOTE
+#+end_quote
 
 Properties of an algorithm
 - It is composed of a series of concrete steps.
@@ -267,26 +267,26 @@ Properties of an algorithm
 - It must be composed of a finite number of steps.
 - It must terminate.
 
-#+BEGIN_QUOTE
+#+begin_quote
 An algorithm must provide sufficient detail that it can be converted into a program when needed.
-#+END_QUOTE
+#+end_quote
 
 -----
 
 - Program :: An instance, or instantiation of an algorithm in a programming language.
 
-#+BEGIN_QUOTE
+#+begin_quote
 The requirement that an algorithm must terminate means that not all computer programs meet the technical definition of an algorithm. Your operating system is one such program.
-#+END_QUOTE
+#+end_quote
 * Chapter 2: Mathematical Preliminaries
 
-#+BEGIN_QUOTE
+#+begin_quote
 Estimation is not a mathematical technique, but rather a general engineering skill.
-#+END_QUOTE
+#+end_quote
 
-#+BEGIN_QUOTE
+#+begin_quote
 Any proposed solution whose estimated resource requirements fall well outside the problem's resource constraints can be discarded immediately, allowing time for greater analysis of more promising solutions.
-#+END_QUOTE
+#+end_quote
 
 ** Sets and Relations
 
@@ -317,7 +317,7 @@ Any proposed solution whose estimated resource requirements fall well outside th
               e.g., $S = \{a, b, c\}$, then $\{ \langle a, c \rangle, \langle b, c \rangle, \langle c, b \rangle \}$ is a relation. \\
               If tuple $\langle x, y \rangle$ is in relation $R$, we may use the infix notation $xRy$.
 
-#+CAPTION: Relation types
+#+caption: Relation types
 |               |                                           |
 |---------------+-------------------------------------------|
 | Reflexive     | if $aRa$                                  |
@@ -329,7 +329,7 @@ Any proposed solution whose estimated resource requirements fall well outside th
 |---------------+-------------------------------------------|
 | Transitive    | if $aRb$ and $bRc$, then $aRc$            |
 
-#+CAPTION: Relation examples
+#+caption: Relation examples
 |                 | Reflexive | Symmetric | Antisymmetric | Transitive |
 |-----------------+-----------+-----------+---------------+------------|
 | $<$             |           |           | Yes           | Yes        |
@@ -375,7 +375,7 @@ Thus $n!$ grows slower than $n^{n}$, but faster than $c^{n}$ for any positive in
 
 - Permutation :: A permutation of a sequence $S$ is the members of $S$ arranged in some order.
 
-#+CAPTION: A simple C++ function for generating a random permutation
+#+caption: A simple C++ function for generating a random permutation
 #+begin_src cpp
 // Randomly permute the "n" values of array "A"
 template<typename E>
@@ -387,7 +387,7 @@ void permute(E A[], int n) {
 
 -----
 
-#+CAPTION: Logic notations
+#+caption: Logic notations
 | $A \Rightarrow B$          | A implies B          |
 |                            | if A then B          |
 |----------------------------+----------------------|
@@ -403,7 +403,7 @@ void permute(E A[], int n) {
 
 -----
 
-#+CAPTION: Floor and ceiling
+#+caption: Floor and ceiling
 | $\lfloor x \rfloor$ | floor of $x$   | $\lfloor -3.4 \rfloor = -4$ |
 |---------------------+----------------+-----------------------------|
 | $\lceil x \rceil$   | ceiling of $x$ |                             | 
@@ -416,13 +416,13 @@ The most common mathematical definition computes the mod function as $n\ mod\ m 
 
 On many computers this is done by truncating the resulting fraction, meaning $n\ mod\ m = n ∐ m(trunc(n/m))$, and $-3\ mod\ 5 = -3$.
 
-#+BEGIN_QUOTE
+#+begin_quote
 Many hash systems will perform some computation on a record's key value and then take the result modulo the hash table size. The expectation here would be that the result is a legal index into the hash table, not a negative number.
 
 Implementers of hash functions must either
 - insure that the result of the computation is always positive
 - add the hash table size to the result of the modulo function when that result is negative
-#+END_QUOTE
+#+end_quote
 ** Logarithms
 
 The minimum number of bits needed to represent $n$ distinct code values is $\lceil \log_2 n \rceil$ bits.
@@ -484,7 +484,7 @@ A recursive algorithm must have two parts:
 - the *base case*, which handles a simple input that can be solved without resorting to a recursive call
 - the recursive part which contains one or more recursive calls to the algorithm where the parameters are in some sense "closer" to the base case
 
-#+CAPTION: A recursive C++ function to compute the factorial of $n$
+#+caption: A recursive C++ function to compute the factorial of $n$
 #+begin_src cpp
 long fact(int n) {        // Compute n! recursively
     Assert((n >= 0) && (n <= 12), "Input out of range"); // Require n <= 12
@@ -495,20 +495,20 @@ long fact(int n) {        // Compute n! recursively
 
 Recursion solves problems by combining the results of one or more smaller — but similar — subproblems.
 
-#+BEGIN_QUOTE
+#+begin_quote
 Recursion has no counterpart in everyday, physical-world problem solving.
 
 To use recursion effectively, it is necessary to train yourself to stop analyzing the recursive process beyond the recursive call. The subproblems will take care of themselves. You just worry about the base cases and how to recombine the subproblems.
-#+END_QUOTE
+#+end_quote
 
-#+CAPTION: Towers of Hanoi example. (a) The initial conditions for a problem with six rings. (b) A necessary intermediate step on the road to a solution.
+#+caption: Towers of Hanoi example. (a) The initial conditions for a problem with six rings. (b) A necessary intermediate step on the road to a solution.
 file:../images/data_structure_and_algorithm_analysis_c++/02.png
 
-#+BEGIN_QUOTE
+#+begin_quote
 Assume that a function $X$ is available to solve the problem of moving the top $n - 1$ rings from Pole 1 to Pole 2. \\
 Then move the bottom ring from Pole 1 to Pole 3. \\
 Finally, again use function $X$ to move the remaining $n - 1$ rings from Pole 2 to Pole 3.
-#+END_QUOTE
+#+end_quote
 
 #+begin_src cpp
 void TOH(int n, Pole start, Pole goal, Pole temp) {
@@ -519,19 +519,19 @@ void TOH(int n, Pole start, Pole goal, Pole temp) {
 }
 #+end_src
 
-#+BEGIN_QUOTE
+#+begin_quote
 A recursive algorithm usually does not yield the most efficient computer program for solving the problem because recursion involves function calls, which are typically more expensive than other alternatives such as a =while= loop.
 
 If necessary, the clear, recursive solution can later be modified to yield a faster implementation.
-#+END_QUOTE
+#+end_quote
 
-#+BEGIN_QUOTE
+#+begin_quote
 Many data structures are naturally recursive, in that they can be defined as being made up of self-similar parts. Tree structures are an example of this. Thus, the algorithms to manipulate such data structures are often presented recursively.
-#+END_QUOTE
+#+end_quote
 
-#+BEGIN_QUOTE
+#+begin_quote
 Many searching and sorting algorithms are based on a strategy of *divide and conquer*. That is, a solution is found by breaking the problem into smaller (similar) subproblems, solving the subproblems, then combining the subproblem solutions to form the solution to the original problem. This process is often implemented using recursion. 
-#+END_QUOTE
+#+end_quote
 ** Mathematical Proof Techniques
 
 Solving any problem has two distinct parts:
@@ -569,9 +569,9 @@ A related proof technique is proving the contrapositive: prove that $P \Rightarr
 
 ** Estimation
 
-#+BEGIN_QUOTE
+#+begin_quote
 One of the most useful life skills that you can gain from your computer science training is the ability to perform quick estimates. 
-#+END_QUOTE
+#+end_quote
 
 Estimation is no substitute for rigorous, detailed analysis of a problem, but it can serve to indicate when a rigorous analysis is warranted: If the initial estimate indicates that the solution is unworkable, then further analysis is probably unnecessary.
 

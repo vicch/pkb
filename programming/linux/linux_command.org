@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Linux Command
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Linux Command
 
 * 系统信息
 
@@ -57,7 +57,7 @@ free <options>
 nmon <options>
 #+end_src
 
-#+CAPTION: 模式
+#+caption: 模式
 | =c= | cpu     |                    |
 |-----+---------+--------------------|
 | =d= | disk    |                    |
@@ -99,7 +99,7 @@ nmonchart <nmon> <html>
 top
 #+end_src
 
-#+CAPTION: 输出
+#+caption: 输出
 #+begin_src sh
 top - _ up _ min, _ user, load average: _, _, _            # 系统运行时间、用户数、系统负载（1、5、15 分钟）
 Tasks: _ total, _ running, _ sleeping, _ stopped, _ zombie
@@ -205,12 +205,12 @@ shutdown <options> <time> <message>
 
 ** =bg= =fg=
 
-#+CAPTION: 后台重启
+#+caption: 后台重启
 #+begin_src sh
 bg <job>
 #+end_src
 
-#+CAPTION: 前台重启
+#+caption: 前台重启
 #+begin_src sh
 fg <job>
 #+end_src
@@ -226,7 +226,7 @@ jobs <options>
     -s # 只列出已停止的作业
 #+end_src
 
-#+CAPTION: 输出符号
+#+caption: 输出符号
 | =+= | 作业控制命令要操作的默认作业       |
 |-----+------------------------------------|
 | =-= | 当前默认作业完成后的下一个默认作业 |
@@ -244,13 +244,13 @@ kill <options> <pids>
 
 *** 示例
 
-#+CAPTION: 强制终止
+#+caption: 强制终止
 #+begin_src sh
 ## 强制终止
 kill -KILL <pids>
 #+end_src
 
-#+CAPTION: 批量终止
+#+caption: 批量终止
 #+begin_src sh
 for pid in $(ps -ef | awk '/<keyword>/ {print $2}'); do sudo kill -9 $pid; done
 #+end_src
@@ -269,7 +269,7 @@ nice -n -10 ./script > file &
 
 ** =nohup=
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sh
 nohup ./script &
 #+end_src
@@ -384,7 +384,7 @@ cut <options> <file>
     [<from>]-[<to>]  # 范围，包含端点
 #+end_src
 
-#+CAPTION: 分割行并取第一列
+#+caption: 分割行并取第一列
 #+begin_src sh
 val=$(echo $line | cut -f1)
 #+end_src
@@ -430,7 +430,7 @@ grep "<pattern>\|<pattern>" <file>
 grep "\([0-9]\)\1"
 #+end_src
 
-#+CAPTION: =-P= 正则
+#+caption: =-P= 正则
 #+begin_src sh
 # 包含 tab
 grep -P "\t0$"
@@ -441,17 +441,17 @@ grep -P '^(\d{3}-|\(\d{3}\) )\d{3}-\d{4}$'
 
 *** 示例
 
-#+CAPTION: 遍历目录下文件
+#+caption: 遍历目录下文件
 #+begin_src sh
 grep -R <pattern> *
 #+end_src
 
-#+CAPTION: 保留数字行
+#+caption: 保留数字行
 #+begin_src sh
 cat <file> | grep -o '^[0-9.]\+$'
 #+end_src
 
-#+CAPTION: 统计文本中某字符串出现的次数（假设一行最多出现一次）
+#+caption: 统计文本中某字符串出现的次数（假设一行最多出现一次）
 #+begin_src sh
 grep -o <str> <file> | wc -l
 #+end_src
@@ -483,7 +483,7 @@ less <file>
 
 =less= 是加强版的 =more= 。
 
-#+CAPTION: 在 =less= 中进行检索
+#+caption: 在 =less= 中进行检索
 | =/word= | 向前检索   |
 |---------+------------|
 | =?word= | 向后检索   |
@@ -500,7 +500,7 @@ paste <options> <file1> [<file2> ...]
     -s, --serial           # 每个文件占据一行，而不是左右并列
 #+end_src
 
-#+CAPTION: 单个文件每两行合并为一行
+#+caption: 单个文件每两行合并为一行
 #+begin_src sh
 paste -d '<char>' - -
 #+end_src
@@ -539,7 +539,7 @@ split <options> <file> <prefix>
     -l, --lines= <number>  # 按固定行数拆分
 #+end_src
 
-#+CAPTION: 合并文件
+#+caption: 合并文件
 #+begin_src sh
 cat <files> > <file>
 #+end_src
@@ -580,7 +580,7 @@ tr <options> '<from>' '<to>'
 |-------------+--------------------|
 | =[:punct:]= | 标点               |
 
-#+CAPTION: 小写转换为大写
+#+caption: 小写转换为大写
 #+begin_src sh
 upper=`echo $lower | tr '[:lower:]' '[:upper:]'`
 #+end_src
@@ -693,7 +693,7 @@ find <path> <cond> <action>
     -!, -not
 #+end_src
 
-#+CAPTION: =find= 支持通配符，但必须用引号包围，避免 Shell 进行 glob 扩展
+#+caption: =find= 支持通配符，但必须用引号包围，避免 Shell 进行 glob 扩展
 #+begin_src sh
 $ find . -name .bash*
 find: paths must precede expression ...
@@ -705,12 +705,12 @@ $ find . -name '.bash*'
 
 *** 示例
 
-#+CAPTION: 查找过去 10 分钟修改过的文件
+#+caption: 查找过去 10 分钟修改过的文件
 #+begin_src sh
 $ find . -type f -mmin -10
 #+end_src
 
-#+CAPTION: 查找近期修改过的文件，按修改时间倒序
+#+caption: 查找近期修改过的文件，按修改时间倒序
 #+begin_src sh
 $ find . -mtime -90 -printf "%T+\t%p\n" | sort -r
 #+end_src
@@ -735,7 +735,7 @@ locate <options> <name>
 - 在路径名数据库（ =/var/lib/locatedb= ）中查找路径名包含输入字符串的文件。
 - 路径名数据库由 cron 每天自动更新。
 
-#+CAPTION: 强制更新数据库
+#+caption: 强制更新数据库
 #+begin_src sh
 $ sudo updatedb
 #+end_src
@@ -917,7 +917,7 @@ chmod <options> <type>[+-=]<perm> <path>
     t # Sticky bit (用户只可以删除属于他的文件、目录)
 #+end_src
 
-#+CAPTION: 示例：为拥有者添加执行权限，组和全局的权限设为读和执行
+#+caption: 示例：为拥有者添加执行权限，组和全局的权限设为读和执行
 #+begin_src sh
 chmod u+x,go=rx file
 #+end_src
@@ -953,7 +953,7 @@ setfacl <options> <acl> <file/dir>
     [d(efault):]m(ask)::<perm>
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sh
 setfacl -m u:www1:rxw web_data/
 setfacl -m d:www1:rxw web_data/
@@ -967,7 +967,7 @@ umask <umask>
 
 ** =visudo=
 
-#+CAPTION: =/etc/sudoers= 语法
+#+caption: =/etc/sudoers= 语法
 #+begin_src sh
 <user>|%<group> <from>[=(<as_user>:<as_group>)] [<option>:]<command>, ...
 
@@ -976,7 +976,7 @@ umask <umask>
     PASSWD
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sh
 %admin ALL NOPASSWD:/bin/mkdir, PASSWD:/bin/rm
 #+end_src
@@ -1037,21 +1037,21 @@ curl <options> <url>
     --trace-ascii <file>     # 显示更详细的通信过程（可以保存到文件）
 #+end_src
 
-#+CAPTION: URL 语法
+#+caption: URL 语法
 | =<url>{<a>,<b>,...}=   | URL 的一部分被一个集合中的值替换   |
 |------------------------+------------------------------------|
 | =[<from>-<to>:<step>]= | 连续的字母、数字序列，可以指定步长 |
 
 *** 示例
 
-#+CAPTION: 上传文件
+#+caption: 上传文件
 #+begin_src sh
 ## <input type="file" name="upload">
 ## <input type="submit" name="press" value="OK">
 $ curl --form upload=@<file> --form press=OK <URL>
 #+end_src
 
-#+CAPTION: 显示 TCP 握手和 SSL 握手的耗时
+#+caption: 显示 TCP 握手和 SSL 握手的耗时
 #+begin_src sh
 $ curl -w "TCP handshake: %{time_connect}, SSL handshake: %{time_appconnect}\n" -so /dev/null https://domain.com
 
@@ -1100,18 +1100,18 @@ rsync <options> <src> <dest>
 --specials # 保留特殊文件
 #+end_src
 
-#+CAPTION: 本地同步
+#+caption: 本地同步
 #+begin_src sh
 rsync <options> <src> [<dest>]
 #+end_src
 
-#+CAPTION: 使用远程 Shell 同步
+#+caption: 使用远程 Shell 同步
 #+begin_src sh
 rsync <options> [<user>@]<host>::<path> [<local_path>] # 拉
 rsync <options> <local_path> [<user>@]<host>::<path>   # 推
 #+end_src
 
-#+CAPTION: 使用 rsync daemon（通过 TCP 连接）同步
+#+caption: 使用 rsync daemon（通过 TCP 连接）同步
 #+begin_src sh
 rsync <options> [<user>@]<host>::<path> [<local_path>]                 # 拉
 rsync <options> rsync://[<user>@]<host>[:<port>]/<path> [<local_path>] # 拉
@@ -1123,7 +1123,7 @@ rsync <options> <local_path> rsync://[<user>@]<host>[:<port>]/<path>   # 推
 
 如果源目录末尾加 /，表示复制其下的文件，而不复制这一层目录，但是目录的特性总是被复制到目的地目录上。
 
-#+CAPTION: 以下两种用法等效
+#+caption: 以下两种用法等效
 #+begin_src sh
 rsync -av /src/foo /dest
 rsync -av /src/foo/ /dest/foo
@@ -1135,7 +1135,7 @@ rsync -av /src/foo/ /dest/foo
 |------+-----------------------|
 | 日志 | =/var/log/rsyncd.log= | 
 
-#+CAPTION: 配置文件示例
+#+caption: 配置文件示例
 #+begin_src text
 max connections=500
 log file=/var/log/rsyncd.log
@@ -1150,19 +1150,19 @@ path=/data2/rsync_receive
 hosts allow=
 #+end_src
 
-#+CAPTION: 启动 rsync daemon
+#+caption: 启动 rsync daemon
 #+begin_src sh
 /usr/bin/rsync --daemon --config=/etc/rsyncd.conf
 #+end_src
 
 *** 示例
 
-#+CAPTION: 将当前目录下匹配 =*.c= 的文件同步到 =foo= 服务器 =path= 目录下
+#+caption: 将当前目录下匹配 =*.c= 的文件同步到 =foo= 服务器 =path= 目录下
 #+begin_src sh
 rsync -t *.c foo:path/
 #+end_src
 
-#+CAPTION: 复制多个文件
+#+caption: 复制多个文件
 #+begin_src sh
 rsync -av host:file1 :file2 host:file{3,4} /dest/
 rsync -av host::modname/file{1,2} host::modname/file3 /dest/
@@ -1189,7 +1189,7 @@ ssh <options> <user>@<host>
 
 *** 配置
 
-#+CAPTION: =/etc/ssh/sshd_config=
+#+caption: =/etc/ssh/sshd_config=
 #+begin_src sh
 AllowUsers <user> ...
 AllowGroups <group> ...
@@ -1202,7 +1202,7 @@ Port <port>                     # 指定端口号，默认为 22
 
 *** 服务
 
-#+CAPTION: 重启
+#+caption: 重启
 #+begin_src sh
 sudo service ssh restart  # Debian, Ubuntu
 sudo service sshd restart # RedHat, CentOS, Fedora
@@ -1218,7 +1218,7 @@ ssh-keygen <options>
     -t <type>     # 密钥类型，
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sh
 ssh-keygen -t rsa -b 4096 -C your@email.com -f id_myidentity
 #+end_src
@@ -1265,7 +1265,7 @@ dig <options> <domain>
 
 *** 输出
 
-#+CAPTION: 查询参数和统计
+#+caption: 查询参数和统计
 #+begin_src sh
 ; <<>> DiG 9.9.4-RedHat-9.9.4-38.el7_3 <<>> math.stackexchange.com
 ;; global options: +cmd
@@ -1274,13 +1274,13 @@ dig <options> <domain>
 ;; flags: qr rd ra; QUERY: 1, ANSWER: 4, AUTHORITY: 4, ADDITIONAL: 5
 #+end_src
 
-#+CAPTION: 查询内容
+#+caption: 查询内容
 #+begin_src sh
 ;; QUESTION SECTION:
 ;math.stackexchange.com.        IN      A # 查询 A 记录，A = Address
 #+end_src
 
-#+CAPTION: DNS 服务器答复
+#+caption: DNS 服务器答复
 #+begin_src sh
 ;; ANSWER SECTION:
 math.stackexchange.com. 300     IN      A       151.101.65.69  # 300 是 TTL 值，表示缓存时间
@@ -1289,7 +1289,7 @@ math.stackexchange.com. 300     IN      A       151.101.193.69
 math.stackexchange.com. 300     IN      A       151.101.1.69
 #+end_src
 
-#+CAPTION: NS（Name Server，域名服务器）记录，即哪些服务器负责管理以上 DNS 记录
+#+caption: NS（Name Server，域名服务器）记录，即哪些服务器负责管理以上 DNS 记录
 #+begin_src sh
 ;; AUTHORITY SECTION:
 stackexchange.com.      3024    IN      NS      ns-925.awsdns-51.net.
@@ -1298,7 +1298,7 @@ stackexchange.com.      3024    IN      NS      ns-1832.awsdns-37.co.uk.
 stackexchange.com.      3024    IN      NS      ns-463.awsdns-57.com.
 #+end_src
 
-#+CAPTION: NS 的 IP 地址
+#+caption: NS 的 IP 地址
 #+begin_src sh
 ;; ADDITIONAL SECTION:
 ns-463.awsdns-57.com.   80192   IN      A       205.251.193.207
@@ -1307,7 +1307,7 @@ ns-1029.awsdns-00.org.  3003    IN      A       205.251.196.5
 ns-1832.awsdns-37.co.uk. 2987   IN      A       205.251.199.40
 #+end_src
 
-#+CAPTION: DNS 服务器和传输信息
+#+caption: DNS 服务器和传输信息
 #+begin_src sh
 ;; Query time: 30 msec
 ;; SERVER: 129.173.1.100\#53(129.173.1.100) # 本机 DNS 服务器和端口号
@@ -1317,18 +1317,18 @@ ns-1832.awsdns-37.co.uk. 2987   IN      A       205.251.199.40
 
 *** 参数
 
-#+CAPTION: =+= 参数
+#+caption: =+= 参数
 #+begin_src sh
 dig +short <domain> # 简化输出，只返回 IP 地址（A 记录）
 dig +trace <domain> # 输出分级查询过程
 #+end_src
 
-#+CAPTION: 查询指定 DNS 服务器
+#+caption: 查询指定 DNS 服务器
 #+begin_src sh
 dig @<ip> <domain>
 #+end_src
 
-#+CAPTION: 记录参数
+#+caption: 记录参数
 #+begin_src sh
 dig a <domain>  # A 记录
 dig ns <domain> # NS 记录
@@ -1336,7 +1336,7 @@ dig mx <domain> # MX 记录
 dig -x <ip>     # PTR 记录
 #+end_src
 
-#+CAPTION: 查看每一级域名的 NS 记录
+#+caption: 查看每一级域名的 NS 记录
 #+begin_src sh
 dig ns com
 dig ns stackexchange.com
@@ -1359,7 +1359,7 @@ hostname <options>
 
 ** =ifconfig=
 
-#+CAPTION: 输出
+#+caption: 输出
 #+begin_src sh
 eth0 # 私有网络
 eth1 # 其他网络
@@ -1380,7 +1380,7 @@ netstat <options>
 
 ** =nslookup=
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sh
 nslookup
 
@@ -1441,7 +1441,7 @@ Time per request:       _ [ms] (mean, across all concurrent requests) # 服务�
 Transfer rate:          _ [Kbytes/sec] received # 单位时间从服务器获取的数据长度
 #+end_src
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | =Failed requests=                  | 连接服务器、发送、接收数据出错，或超时无响应 |
 |------------------------------------+----------------------------------------------|
 | =Transfer rate=                    | = 响应数据总长度 / 测试总时间                |
@@ -1577,7 +1577,7 @@ strace <options> <command>
 
 *** 示例
 
-#+CAPTION: 查看 PHP 加载的配置文件
+#+caption: 查看 PHP 加载的配置文件
 #+begin_src sh
 strace -e open php 2>&1 | grep php.ini
 #+end_src
@@ -1682,14 +1682,14 @@ date <options> +<format>
     -d @<stamp> # 时间戳
 #+end_src
 
-#+CAPTION: =<format>=
+#+caption: =<format>=
 | =%Y= |   |
 |------+---|
 | =%m= |   |
 |------+---|
 | =%d= |   |
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sh
 date -d "2 days ago" +"%Y%m%d"
 #+end_src
@@ -1751,7 +1751,7 @@ seq <option> <first> <incr> <last>
 
 * 常用
 
-#+CAPTION: 只复制目录结构
+#+caption: 只复制目录结构
 #+begin_src sh
 cd /path/to/directories &&
 find . -type d -exec mkdir -p -- /path/to/backup/{} \;

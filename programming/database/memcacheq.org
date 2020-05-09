@@ -1,9 +1,9 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: MemcacheQ
+#+setupfile: ../../styles/readtheorg.setup
+#+title: MemcacheQ
 
 * 安装
 
-#+CAPTION: 安装 libevent
+#+caption: 安装 libevent
 #+begin_src sh
 wget https://sourceforge.net/projects/levent/files/libevent/libevent-2.0/libevent-2.0.22-stable.tar.gz
 tar -xvzf libevent-2.0.22-stable.tar.gz
@@ -13,7 +13,7 @@ make
 make install
 #+end_src
 
-#+CAPTION: 安装 BerkeleyDB
+#+caption: 安装 BerkeleyDB
 #+begin_src sh
 wget http://fossies.org/linux/misc/db-6.1.23.tar.gz
 tar -xvzf db-6.1.23.tar.gz
@@ -23,7 +23,7 @@ make
 make install
 #+end_src
 
-#+CAPTION: 配置动态链接库查找路径
+#+caption: 配置动态链接库查找路径
 #+begin_src sh
 vim /etc/ld.so.conf
 ## 添加两行
@@ -33,7 +33,7 @@ vim /etc/ld.so.conf
 ldconfig
 #+end_src
 
-#+CAPTION: 安装 memcacheq
+#+caption: 安装 memcacheq
 #+begin_src sh
 wget https://memcacheq.googlecode.com/files/memcacheq-0.2.0.tar.gz
 tar -xvzf memcacheq-0.2.0.tar.gz
@@ -41,7 +41,7 @@ cd memcacheq-0.2.0
 ./configure --with-bdb=/usr/local/BerkeleyDB.6.1 --with-libevent=/usr/local/lib --enable-threads
 #+end_src
 
-#+CAPTION: 运行 memcacheq
+#+caption: 运行 memcacheq
 #+begin_src sh
 mkdir /var/mcq/data
 mkdir /var/mcq/logs
@@ -51,7 +51,7 @@ memcacheq -d -l 192.168.0.105 -r -H /var/mcq/data -N -R -v -L 1024 -B 1024 > /va
 netstat -tlnp
 #+end_src
 
-#+CAPTION: 连接测试
+#+caption: 连接测试
 #+begin_src sh
 telnet 192.168.0.105 22201
 set ...
@@ -80,13 +80,13 @@ memcacheq <options>
     -N         # 激活 DB_TXN_NOSYN 提升性能
 #+end_src
 
-#+CAPTION: 示例（微博等级队列）
+#+caption: 示例（微博等级队列）
 #+begin_src sh
 memcacheq -drNvR -uroot -A8192 -B4096 -L1024 -m64 -c8000 -T16 -H/data2/mcq/6825 -p6825
 #+end_src
 ** 操作
 
-#+CAPTION: 写入
+#+caption: 写入
 #+begin_src sh
 set <queue> <flags> 0 <msg_len>
 <msg_body>
@@ -95,7 +95,7 @@ set <queue> <flags> 0 <msg_len>
 STORED
 #+end_src
 
-#+CAPTION: 读取
+#+caption: 读取
 #+begin_src sh
 get <queue>
 
@@ -105,12 +105,12 @@ VALUE <queue> <flags> <msg_len>
 END
 #+end_src
 
-#+CAPTION: 删除队列
+#+caption: 删除队列
 #+begin_src sh
 delete <queue>
 #+end_src
 
-#+CAPTION: 查看所有队列状态
+#+caption: 查看所有队列状态
 #+begin_src sh
 stats queue
 
@@ -118,7 +118,7 @@ stats queue
 STAT <queue> <all_msg_cnt>/<consumed_msg_cnt>
 #+end_src
 
-#+CAPTION: 查看当前队列中消息数量
+#+caption: 查看当前队列中消息数量
 #+begin_src sh
 db_stat
 #+end_src

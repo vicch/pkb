@@ -1,10 +1,10 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Nginx
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Nginx
 
 * 配置
 ** 示例
 
-#+CAPTION: 最简
+#+caption: 最简
 #+begin_src sh
 server {
     listen      80;
@@ -67,14 +67,14 @@ server {
 * 模块
 ** =ngx_http_stub_status_module=
 
-#+CAPTION: 查看模块是否编译
+#+caption: 查看模块是否编译
 #+begin_src sh
 nginx -V 2>&1 | grep -o with-http_stub_status_module
 #+end_src
 
 *** 配置
 
-#+CAPTION: 设置状态页面
+#+caption: 设置状态页面
 #+begin_src sh
 location /server-status {
     stub_status on;

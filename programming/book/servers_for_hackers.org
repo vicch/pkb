@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Servers for Hackers
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Servers for Hackers
 
 * Security
 ** Users and Access
@@ -10,7 +10,7 @@ Think of servers as disposable or prone to fail is always a pertinent thing to d
 
 ** Iptables
 
-#+CAPTION: 创建规则链用于记录异常数据包
+#+caption: 创建规则链用于记录异常数据包
 #+begin_src sh
 iptables -N LOGGING
 iptables -D INPUT -j DROP    # 删除当前默认目标
@@ -52,8 +52,8 @@ It is recommended to not use DNS provided by hosting, in case the DNS servers of
 DNS records need to be added to point the domain names to web servers.
 ** Hosting Web Applications
 
-#+CAPTION: Hosting a web application requires 3 actors
-#+ATTR_HTML: :class no-border
+#+caption: Hosting a web application requires 3 actors
+#+attr_html: :class no-border
 | *Application* | Accept requests from gateway                       |
 |               | Return valid responses                             |
 |---------------+----------------------------------------------------|
@@ -98,7 +98,7 @@ Gateways aren't necessarily language-specific. For example, uWSGI, Gunicorn and 
 
 **** Specifications
 
-#+CAPTION: Gateway support for specifications
+#+caption: Gateway support for specifications
 | *Gateway*         | *FastCGI* | *WSGI (Python)* | *Rack (Ruby)* |
 |-------------------+-----------+-----------------+---------------|
 | PHP-FPM           | Yes       |                 |               |
@@ -163,7 +163,7 @@ Some languages speak HTTP directly, which means the web server can be skipped al
 
 Apache's =proxy= module is handy for proxying requests to HTTP listeners, which include gateways listening on HTTP, and applications written in NodeJS or Golang.
 
-#+CAPTION: Configure Apache to proxy HTTP requests to a NodeJS application listening at port 9000 of local host
+#+caption: Configure Apache to proxy HTTP requests to a NodeJS application listening at port 9000 of local host
 #+begin_src sh
 # Enable modules
 $ sudo a2enmod proxy proxy_http
@@ -190,7 +190,7 @@ Apache should handle requests for static assets. This is easy with PHP, whose fi
 
 **** Proxy to load balancer
 
-#+CAPTION: Configure Apache to proxy HTTP requests and load balance between multiple backends
+#+caption: Configure Apache to proxy HTTP requests and load balance between multiple backends
 #+begin_src sh
 # Enable modules
 $ sudo a2enmod proxy_balancer lbmethod_byrequests
@@ -222,7 +222,7 @@ $ sudo vim /etc/apache2/sites-available/example.com.conf
 
 **** Match file name with =ProxyPassMatch=
 
-#+CAPTION: Proxy to PHP-FPM using =ProxyPassMatch= directive
+#+caption: Proxy to PHP-FPM using =ProxyPassMatch= directive
 #+begin_src sh
 <VirtualHost *:80>
     ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/example/$1
@@ -234,7 +234,7 @@ $ sudo vim /etc/apache2/sites-available/example.com.conf
 
 **** Match file name with =FilesMatch=
 
-#+CAPTION: Handle PHP requests with =FilesMatch= and =SetHandler= directives
+#+caption: Handle PHP requests with =FilesMatch= and =SetHandler= directives
 #+begin_src sh
 <VirtualHost *:80>
     <FilesMatch \.php$> # Match files ending in .php
@@ -249,7 +249,7 @@ $ sudo vim /etc/apache2/sites-available/example.com.conf
 - No need to pass document root to handler. Configuration can be more dynamic and reusable.
 - Can use TCP or Unix domain socket.
 
-#+CAPTION: Make as a global configuration and include in vhost configuration
+#+caption: Make as a global configuration and include in vhost configuration
 #+begin_src sh
 $ vim /etc/apache2/php-fpm.conf
 <FilesMatch \.php$>
@@ -269,7 +269,7 @@ $ vim /etc/apache2/sites-available/example.com.conf
 
 The problem of matching files with =ProxyPassMatch= or =FilesMatch= is that for PHP contained in non =.php= files, for example =.html=, it takes more work to handle. And for other languages who don't have a file-based point of entry like PHP's =index.php= to which all requests can be routed, URIs can't be matched to files. In these cases, =<Location>= is used to match against directory-style URIs.
 
-#+CAPTION: Configure =proxy_fcgi= similar to =proxy_http=
+#+caption: Configure =proxy_fcgi= similar to =proxy_http=
 #+begin_src sh
 <VirtualHost *:80>
     <Directory /var/www/example.com/public>
@@ -292,7 +292,7 @@ The problem of matching files with =ProxyPassMatch= or =FilesMatch= is that for 
 #+end_src
 **** Proxy to load balancer
 
-#+CAPTION: Configure to proxy requests and load balance between multiple FastCGI backends
+#+caption: Configure to proxy requests and load balance between multiple FastCGI backends
 #+begin_src sh
 # Enable modules
 $ sudo a2enmod proxy_balancer lbmethod_byrequests
@@ -358,7 +358,7 @@ $ vim /etc/apache2/site-available/example.com.conf
 
 Usually there is no need to load balance uWSGI, as uWSGI  manages and load balances by itself multiple processes and threads for Python application.
 
-#+CAPTION: Configure to proxy requests and load balance between multiple uWSGI backends
+#+caption: Configure to proxy requests and load balance between multiple uWSGI backends
 #+begin_src sh
 # Enable modules
 $ sudo a2enmod proxy_balancer lbmethod_byrequests

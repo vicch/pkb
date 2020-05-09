@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: PHP Extension
+#+setupfile: ../../styles/readtheorg.setup
+#+title: PHP Extension
 
 * PEAR & PECL
 
@@ -43,7 +43,7 @@ Bytecode cache extension
 * Date/Time
 ** =DateTime=
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 $datetime = new DateTime(); // 默认为当前日期、时间
 $datetime = new DateTime('2014-04-27 5:03 AM');
@@ -56,7 +56,7 @@ $datetime = DateTime::createFromFormat('M j, Y H:i:s', 'Jan 2, 2014 23:04:12');
 
 时间长度为绝对（e.g. "2 days"）或相对（e.g. "yesterday"）。
 
-#+CAPTION: 时间长度语法
+#+caption: 时间长度语法
 #+begin_src sh
 P<n><unit>...[T<n><unit>...]
     P      # Period
@@ -64,13 +64,13 @@ P<n><unit>...[T<n><unit>...]
     <unit> # Y, M, W, D, H, M, S
 #+end_src
 
-#+CAPTION: 时间长度示例
+#+caption: 时间长度示例
 #+begin_src sh
 P2D      # 2 天
 P2DT5H2M # 2 天 5 小时 2 分
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 $datetime = new DateTime('2014-01-01 14:00:00');
 $interval = new DateInterval('P2W');
@@ -84,7 +84,7 @@ $datetime->add($interval);
 - 设置服务器时区和 PHP 默认时区为 UTC，代码和存储始终使用 UTC 时区。
 - 显示时将 UTC 时区时间转换为需要的时区时间。
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 $timezone = new DateTimeZone('America/New_York');
 $datetime = new DateTime('2014-08-20', $timezone);
@@ -95,7 +95,7 @@ $datetime->setTimezone(new DateTimeZone('Asia/Hong_Kong'));
 
 指定间隔的日期时间序列。实例是迭代器，每个元素是一个 =DateTime= 实例。
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 $start = new DateTime();
 $interval = new DateInterval('P2W');
@@ -197,14 +197,14 @@ mixed filter_var (
 | 返回值 | 输入数据 | 验证成功时 |
 |        | =false=  | 验证失败时 |
 
-#+CAPTION: 示例 1
+#+caption: 示例 1
 #+begin_src php
 <?php
 $email = 'john@example.com';
 $emailSafe = filter_var($email, FILTER_SANITIZE_EMAIL);
 #+end_src
 
-#+CAPTION: 示例 2
+#+caption: 示例 2
 #+begin_src php
 $input = 'john@example.com';
 $isEmail = filter_var($input, FILTER_VALIDATE_EMAIL);
@@ -215,7 +215,7 @@ if ($isEmail !== false) {
 }
 #+end_src
 
-#+CAPTION: 示例 3
+#+caption: 示例 3
 #+begin_src php
 $string = "\nIñtërnâtiônàlizætiøn\t";
 $safeString = filter_var(
@@ -237,7 +237,7 @@ mixed filter_input (
 ]] )
 #+end_src
 
-#+CAPTION: =$type=
+#+caption: =$type=
 | =INPUT_GET=    |   |
 |----------------+---|
 | =INPUT_POST=   |   |
@@ -274,12 +274,12 @@ string password_hash (
 | 返回值     | =string= | 使用的算法、cost、salt 也包含在其中 |
 |            | =false=  |                                     |
 
-#+CAPTION: =$algo=
+#+caption: =$algo=
 | =PASSWORD_BCRYPT=  |                                  |
 |--------------------+----------------------------------|
 | =PASSWORD_DEFAULT= | PHP 5.5 此值为 =PASSWORD_BCRYPT= |
 
-#+CAPTION: =$options=
+#+caption: =$options=
 | =salt= |                     |
 |--------+---------------------|
 | =cost= | bycrypt work factor |
@@ -432,7 +432,7 @@ string json_encode (
 ]] )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 function ajaxAction()
 {
@@ -546,7 +546,7 @@ opcache.fast_shutdown = 1
 - DSN ::  Data Source Name \\
           数据库连接信息。
 
-#+CAPTION: 语法
+#+caption: 语法
 #+begin_src sh
 <driver>:<key>=<value>;...
     <driver>    # database driver name, eg. mysql, sqlite
@@ -559,12 +559,12 @@ opcache.fast_shutdown = 1
 
 ** =PDO=
 
-#+CAPTION: 方法
+#+caption: 方法
 | =__construct()=      |                                    |
 |----------------------+------------------------------------|
 | =prepare()=          | 准备声明，返回 =PDOStatement= 对象 |
 
-#+CAPTION: 事务方法
+#+caption: 事务方法
 | =beginTransaction()= |                                    |
 |----------------------+------------------------------------|
 | =inTransaction()=    | 判断是否在事务中                   |
@@ -620,7 +620,7 @@ public PDO::__construct (
 ]]] )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 try {
     $pdo = new PDO(
@@ -655,7 +655,7 @@ bool PDO::beginTransaction ( )
 bool PDO::commit ( )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 $dbh->beginTransaction();
 $sth = $dbh->exec("DROP TABLE fruit");
@@ -668,7 +668,7 @@ $dbh->commit();
 bool PDO::rollBack ( )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 $dbh->beginTransaction();
 $sth = $dbh->exec("DROP TABLE fruit");
@@ -713,7 +713,7 @@ bool PDOStatement::bindParam (
 
 | =$data_type= | =int= | [[pdo_param_][=PDO::PARAM_=]] |
 
-#+CAPTION: 示例 1
+#+caption: 示例 1
 #+begin_src php
 $calories = 150;
 $colour = 'red';
@@ -724,7 +724,7 @@ $sth->bindParam(':colour', $colour, PDO::PARAM_STR, 12);
 $sth->execute();
 #+end_src
 
-#+CAPTION: 示例 2
+#+caption: 示例 2
 #+begin_src php
 $calories = 150;
 $colour = 'red';
@@ -735,7 +735,7 @@ $sth->bindParam(2, $colour, PDO::PARAM_STR, 12);
 $sth->execute();
 #+end_src
 
-#+CAPTION: 示例 3
+#+caption: 示例 3
 #+begin_src php
 $colour = 'red';
 $sth = $dbh->prepare('CALL puree_fruit(?)');
@@ -755,7 +755,7 @@ bool PDOStatement::bindValue (
 
 | =$data_type= | =int= | [[pdo_param_][=PDO::PARAM_=]] |
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 $sql = 'SELECT id FROM users WHERE email = :email AND id = :id';
 $statement = $pdo->prepare($sql);
@@ -788,7 +788,7 @@ mixed PDOStatement::fetch (
 | 返回值         | =mixed= | 取决于 =$fetch_style=                   |
 |                | =false= | 失败，eg. 结果集为空                    |
 
-#+CAPTION: 迭代结果集
+#+caption: 迭代结果集
 #+begin_src php
 while (($result = $statement->fetch(PDO::FETCH_ASSOC)) !== false) {
     echo $result['email'];
@@ -796,7 +796,7 @@ while (($result = $statement->fetch(PDO::FETCH_ASSOC)) !== false) {
 #+end_src
 
 <<pdo_fetch_example>>
-#+CAPTION: =$fetch_style= 示例
+#+caption: =$fetch_style= 示例
 #+begin_src php
 $sth = $dbh->prepare("SELECT name, colour FROM fruit");
 $sth->execute();
@@ -850,7 +850,7 @@ array PDOStatement::fetchAll (
 
 在不确定结果集是否能放入内存的情况下，避免使用 =fetchAll()= 。
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 foreach ($results as $result) {
@@ -864,7 +864,7 @@ foreach ($results as $result) {
 mixed PDOStatement::fetchColumn ( [ int $column_number = 0 ] )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 while (($email = $statement->fetchColumn(1)) !== false) {
     echo $email;
@@ -880,7 +880,7 @@ mixed PDOStatement::fetchObject (
 ]] )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 while (($result = $statement->fetchObject()) !== false) {
     echo $result->name;
@@ -1065,7 +1065,7 @@ void spl_autoload (
 
 =spl_autoload()= 由 C 实现，比一般 PHP 实现的 autoload 函数速度快。
 
-#+CAPTION: 支持命名空间映射为目录层级。
+#+caption: 支持命名空间映射为目录层级。
 #+begin_src php
 // ./lib/Foo/Bar/Object.class.php
 namespace Foo\Bar;
@@ -1117,7 +1117,7 @@ bool spl_autoload_register (
 
 支持注册多个自动加载函数，需要加载类文件时，将按注册顺序依次调用，直到类可以实例化。
 
-#+CAPTION: 自定义自动加载函数。
+#+caption: 自定义自动加载函数。
 #+begin_src php
 // ./Foo/Bar.class.php
 class Foo_Bar {}
@@ -1134,7 +1134,7 @@ spl_autoload_register('autoload');
 $foo = new Foo_Bar(); // 加载 Foo/Bar.class.php
 #+end_src
 
-#+CAPTION: 支持命名空间的自动加载函数。
+#+caption: 支持命名空间的自动加载函数。
 #+begin_src php
 // ./Foo/Bar/Object.class.php
 namespace Foo\Bar;
@@ -1232,7 +1232,7 @@ array class_uses (
 ])
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 trait foo {}
 class bar {
@@ -1337,7 +1337,7 @@ resource stream_context_create (
 ]] )
 #+end_src  
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 $requestBody = '{"username":"josh"}';
 $context = stream_context_create(array(
@@ -1375,7 +1375,7 @@ http://php.net/manual/en/wrappers.php
 *** =php://stdin=
 <<php_stdin>>
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 $handleIn  = fopen('php://stdin', 'r');
 $handleOut = fopen('output.txt', 'w+');
@@ -1386,12 +1386,12 @@ while ($line = fgets($handleIn)) {
 
 ** Stream filter
 
-#+CAPTION: Stream filter 函数
+#+caption: Stream filter 函数
 | [[stream_filter_append][=stream_filter_append()=]]   | Attach a filter to a stream           |
 |----------------------------+---------------------------------------|
 | [[stream_filter_register][=stream_filter_register()=]] | Register a user defined stream filter |
 
-#+CAPTION: Stream filter 列表
+#+caption: Stream filter 列表
 | =string.toupper=    |   |
 |---------------------+---|
 | =string.tolower=    |   |
@@ -1413,7 +1413,7 @@ resource stream_filter_append (
 ]] )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 $handle = fopen('data.txt', 'rb');
 stream_filter_append($handle, 'string.toupper');
@@ -1437,7 +1437,7 @@ bool stream_filter_register (
 
 自定义 stream filter 必须扩展 =php_user_filter= 类并实现 =filter()= 方法。
 
-#+CAPTION: 自定义 stream filter 示例
+#+caption: 自定义 stream filter 示例
 #+begin_src php
 class DirtyWordsFilter extends php_user_filter
 {
@@ -1518,7 +1518,7 @@ foreach ($datePeriod as $date) {
 
 ** 安装
 
-#+CAPTION: 安装 XHProf
+#+caption: 安装 XHProf
 #+begin_src sh
 wget http://pecl.php.net/get/xhprof-0.9.4.tgz
 tar zxf xhprof-0.9.4.tgz
@@ -1529,12 +1529,12 @@ make
 make install
 #+end_src
 
-#+CAPTION: 移动 =lib= 和 =html= 目录
+#+caption: 移动 =lib= 和 =html= 目录
 #+begin_src sh
 cp -r xhprof_lib xhprof_html <app_root>
 #+end_src
 
-#+CAPTION: 安装 Graphviz
+#+caption: 安装 Graphviz
 #+begin_src sh
 wget https://graphviz.gitlab.io/pub/graphviz/stable/SOURCES/graphviz.tar.gz
 tar zxf graphviz*.tar.gz
@@ -1544,7 +1544,7 @@ make
 make install
 #+end_src
 
-#+CAPTION: 修改 =php.ini=
+#+caption: 修改 =php.ini=
 #+begin_src sh
 [xhprof]
 extension=xhprof.so
@@ -1553,7 +1553,7 @@ xhprof.output_dir=<dir_path>
 ;disable_functions = ...
 #+end_src
 
-#+CAPTION: 重启 php-fpm
+#+caption: 重启 php-fpm
 #+begin_src sh
 cat /usr/local/php/var/run/php-fpm.pid
 kill -USR2 <ps_num>
@@ -1561,7 +1561,7 @@ kill -USR2 <ps_num>
 
 ** 使用
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 // 代码之前
 xhprof_enable(XHPROF_FLAGS_CPU + XHPROF_FLAGS_MEMORY);

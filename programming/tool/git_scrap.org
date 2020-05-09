@@ -1,11 +1,11 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Git Scrap
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Git Scrap
 
 * Oh shit, git!
 
 [[http://ohshitgit.com/][Source]]
 
-#+CAPTION: I did something terribly wrong, please tell me git has a magic time machine.
+#+caption: I did something terribly wrong, please tell me git has a magic time machine.
 #+begin_src sh
 git reflog
 # a list of everything done in git across all branches, each one has an index HEAD@{index}
@@ -18,7 +18,7 @@ git reset HEAD@{index}
 
 -----
 
-#+CAPTION: I committed and immediately realized I need to make one small change.
+#+caption: I committed and immediately realized I need to make one small change.
 #+begin_src sh
 # make the changes
 git add .
@@ -31,14 +31,14 @@ You can also make the change as a new commit and then =rebase -i= to squash them
 
 -----
 
-#+CAPTION: I need to change the message on my last commit.
+#+caption: I need to change the message on my last commit.
 #+begin_src sh
 git commit --amend
 #+end_src
 
 -----
 
-#+CAPTION: I accidentally committed something to master that should have been on a brand new branch.
+#+caption: I accidentally committed something to master that should have been on a brand new branch.
 #+begin_src sh
 # create a new branch from the current state of master
 git branch new-branch
@@ -52,7 +52,7 @@ This doesn't work if it's already pushed to origin. And if you tried other thing
 
 -----
 
-#+CAPTION: I accidentally committed to the wrong branch.
+#+caption: I accidentally committed to the wrong branch.
 #+begin_src sh
 # undo the last commit, but leave the changes available
 git reset HEAD~ --soft
@@ -65,7 +65,7 @@ git commit -m "message"
 # continue to work on correct branch
 #+end_src
 
-#+CAPTION: Another way is to use cherry-pick.
+#+caption: Another way is to use cherry-pick.
 #+begin_src sh
 git checkout correct-branch
 # grab the last commit to master
@@ -77,7 +77,7 @@ git reset HEAD~ --hard
 
 -----
 
-#+CAPTION: I tried to run a diff but nothing happened.
+#+caption: I tried to run a diff but nothing happened.
 #+begin_src sh
 git diff --staged
 #+end_src
@@ -86,7 +86,7 @@ Git won't do a diff of files that have been =add=-ed to staging area without thi
 
 -----
 
-#+CAPTION: I give up.
+#+caption: I give up.
 #+begin_src sh
 cd ..
 sudo rm -r git-repo

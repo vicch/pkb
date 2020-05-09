@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: PHP
+#+setupfile: ../../styles/readtheorg.setup
+#+title: PHP
 
 * 类型
 
@@ -17,7 +17,7 @@
 
 PHP 是弱类型（loosely typed）语言，即：变量使用前不需要声明类型，变量使用时根据上下文自动转换（cast）类型。
 
-#+CAPTION: 字符串中的数字在数学表达式中被转换为整数、浮点数。
+#+caption: 字符串中的数字在数学表达式中被转换为整数、浮点数。
 #+begin_src php
 $a = '5';
 $b = 6;
@@ -26,14 +26,14 @@ $c = $a + $b; // 11
 
 ** 字符串
 
-#+CAPTION: 字符串作为字符数组进行读写
+#+caption: 字符串作为字符数组进行读写
 #+begin_src php
 $s = 'test';
 $c = $str[0];
 $s[0] = 'n'; 
 #+end_src
 
-#+CAPTION: 字符串自增
+#+caption: 字符串自增
 #+begin_src php
 $a = 'A';
 echo ++$a; // B
@@ -50,7 +50,7 @@ echo ++$b; // A01
 - 双引号可以方便地将字符串和变量值连接，避免重复使用连接符和引号。
 - 如果已知字符串中没有变量，最好使用单引号，节约搜索可替换变量的时间。
 
-#+CAPTION: 使用大括号将变量名与前后连接的字符隔离开
+#+caption: 使用大括号将变量名与前后连接的字符隔离开
 #+begin_src php
 $foo = 'bar';
 echo "get{$foo}function()";
@@ -95,13 +95,13 @@ echo "get{$foo}function()";
 |----------+-------------------------------------------|
 | =array=  | 类名、方法名， =array(<class>, <method>)= |
 
-#+CAPTION: 普通函数
+#+caption: 普通函数
 #+begin_src php
 function foo() {}
 call_user_func('foo');
 #+end_src
 
-#+CAPTION: 类函数
+#+caption: 类函数
 #+begin_src php
 class Foo {
     public static function bar() {}
@@ -114,7 +114,7 @@ call_user_func([new Foo(), 'bar']);
 call_user_func([$foo, 'bar']);
 #+end_src
 
-#+CAPTION: 子类函数
+#+caption: 子类函数
 #+begin_src php
 class A {
     public static function who() {}
@@ -184,7 +184,7 @@ incr(); // 1
 incr(); // 2
 #+end_src
 
-#+CAPTION: 静态变量不能用表达式为静态变量赋值，只能用确定的值。
+#+caption: 静态变量不能用表达式为静态变量赋值，只能用确定的值。
 #+begin_src php
 static $int = 1 + 2;     // 错误
 static $int = sqrt(144); // 错误
@@ -228,7 +228,7 @@ PHP 预定义的全局变量。
 |-------------+----------------------------------------------------|
 | =$_ENV=     | 通过 =environment= 方法传递的变量                  |
 
-#+CAPTION: 为避免通过 =$_GET= 和 =$_POST= 向服务器发送恶意代码，使用前需要转义
+#+caption: 为避免通过 =$_GET= 和 =$_POST= 向服务器发送恶意代码，使用前需要转义
 #+begin_src php
 $came_from = htmlentities($_SERVER['HTTP_REFERER']);
 #+end_src
@@ -336,7 +336,7 @@ $came_from = htmlentities($_SERVER['HTTP_REFERER']);
 
 常量名不能加 =$= 前缀，通常用大写字母命名。
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 define('ROOT_LOCATION', '/usr/local/www/'); // 定义
 $directory = ROOT_LOCATION;                 // 引用
@@ -377,7 +377,7 @@ if ($result == false) {}  // 错误，返回值为 0 时条件也成立
 if ($result === false) {} // 正确
 #+end_src
 
-#+CAPTION: 数组比较
+#+caption: 数组比较
 | @@html:<code>==</code>@@  | 比较键值（即排序后完全一致） |
 |---------------------------+------------------------------|
 | @@html:<code>===</code>@@ | 比较键值和顺序               |
@@ -386,7 +386,7 @@ if ($result === false) {} // 正确
 
 判断对象是否属于指定类型。
 
-#+CAPTION: 子类的对象属于基类的类型。
+#+caption: 子类的对象属于基类的类型。
 #+begin_src php
 class Foo {}
 class Bar extends Foo {}
@@ -401,7 +401,7 @@ $bar instanceof Bar; // true
 - 保留一段文本中的换行、空格和缩进。
 - 可以输出整段 HTML，但浏览器会按自己的方式处理换行（显示为空格）。
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 $author = "Alfred E Newman";
 echo <<<_FOO          // 开头标示符后不能加分号，否则产生解析错误
@@ -456,7 +456,7 @@ bar($bar); // OK
 
 *** 类型转换
 
-#+CAPTION: PHP 默认会对标量类型的参数进行必要的类型转换。
+#+caption: PHP 默认会对标量类型的参数进行必要的类型转换。
 #+begin_src php
 function foo(float $arg) {}
 foo('123'); // OK
@@ -512,7 +512,7 @@ function output($prefix) {
 call_user_func(output('Foo: '), 'bar');
 #+end_src
 
-#+CAPTION: 闭包修改外部变量的值
+#+caption: 闭包修改外部变量的值
 #+begin_src php
 class Foo {
     public static function add($first) {
@@ -598,7 +598,7 @@ $app->dispatch('/users/josh');
 
 匿名函数可以被赋值给变量，或进行传递，也可用作回调函数。
 
-#+CAPTION: 函数赋值给变量
+#+caption: 函数赋值给变量
 #+begin_src php
 // 内置函数赋值给变量
 $func = 'time';
@@ -612,7 +612,7 @@ $func('test');
 call_user_func($func, 'test');
 #+end_src
 
-#+CAPTION: 函数作为参数和返回值
+#+caption: 函数作为参数和返回值
 #+begin_src php
 function twice($func) {
     return function ($arg) use ($func) { // 闭包
@@ -627,7 +627,7 @@ echo $func(3); // 12 = 3 * 2 * 2;
 
 ** 回调函数
 
-#+CAPTION: 二维数组的元素使用指定键值进行排序
+#+caption: 二维数组的元素使用指定键值进行排序
 #+begin_src php
 $array = array(
     array('a' => 3),
@@ -640,7 +640,7 @@ usort($array, function ($a, $b) use ($column) {
 });
 #+end_src
 
-#+CAPTION: 二维数组提取指定键值
+#+caption: 二维数组提取指定键值
 #+begin_src php
 $data = array(
     array('value' => 'a'),
@@ -653,7 +653,7 @@ $values = array_map(function ($a) {
 // array('a', 'b', 'c');
 #+end_src
 
-#+CAPTION: 数组元素累加
+#+caption: 数组元素累加
 #+begin_src php
 $nums = array(1, 2, 3);
 $sum = array_reduce($nums, function ($carry, $item) {
@@ -678,7 +678,7 @@ var_dump($bar);
 
 *** 打印对象
 
-#+CAPTION: PHP 5.2 之前可以直接打印对象。
+#+caption: PHP 5.2 之前可以直接打印对象。
 #+begin_src php
 class Bar {}
 $bar = new Bar();
@@ -686,7 +686,7 @@ print $bar;
 // Object id #1
 #+end_src
 
-#+CAPTION: PHP 5.2 之后类必须实现 =__toString()= 方法才可以打印对象。
+#+caption: PHP 5.2 之后类必须实现 =__toString()= 方法才可以打印对象。
 #+begin_src php
 class Bar {
     public function __toString() {
@@ -710,7 +710,7 @@ print $bar;
 
 ** 属性
 
-#+CAPTION: 未声明的属性可以动态添加，但不是良好的习惯，发生拼写错误时不会得到警告。
+#+caption: 未声明的属性可以动态添加，但不是良好的习惯，发生拼写错误时不会得到警告。
 #+begin_src php
 class Foo {
     public $bar;
@@ -755,7 +755,7 @@ Foo::one();     // 引用静态方法
 
 *** 静态方法
 
-#+CAPTION: 静态方法可以作为工厂方法，生成不同的示例。
+#+caption: 静态方法可以作为工厂方法，生成不同的示例。
 #+begin_src php
 class Foo {
     public static function getFoo(int $type = 1) {
@@ -819,7 +819,7 @@ class Concrete implements Foo, Bar {}
 
 一个类只能继承一个父类，但可以实现多个接口（只要接口中没有与此类重名的方法）。实现接口的类必须实现接口定义的方法，或被声明为抽象类。
 
-#+CAPTION: 实现了接口的类就具有了接口的类型。
+#+caption: 实现了接口的类就具有了接口的类型。
 #+begin_src php
 interface Foo {}
 interface Bar {}
@@ -867,7 +867,7 @@ class Hego {
 }
 #+end_src
 
-#+CAPTION: 含有同名方法时，类中的方法会覆盖 trait 的方法。
+#+caption: 含有同名方法时，类中的方法会覆盖 trait 的方法。
 #+begin_src php
 trait Foo {
     public function run() {
@@ -886,7 +886,7 @@ $bar = new Bar();
 $bar->run(); // bar
 #+end_src
 
-#+CAPTION: Trait 可以访问宿主的属性和方法，但是无法保证宿主类含有指定的属性和方法，所以应该避免。
+#+caption: Trait 可以访问宿主的属性和方法，但是无法保证宿主类含有指定的属性和方法，所以应该避免。
 #+begin_src php
 trait Foo {
     public function foo() {
@@ -908,7 +908,7 @@ $bar->foo(); // 123-456
 
 *** =as=
 
-#+CAPTION: 为 trait 方法指定别名。
+#+caption: 为 trait 方法指定别名。
 #+begin_src php
 trait Foo {
     public function run() {}
@@ -926,7 +926,7 @@ $bar->fooRun(); // Foo::run()
 $bar->run();    // Bar::run()
 #+end_src
 
-#+CAPTION: 修改 trait 方法的可见性。
+#+caption: 修改 trait 方法的可见性。
 #+begin_src php
 trait Foo {
     private function foo() {}
@@ -980,7 +980,7 @@ $bar::run();
 
 *** 抽象方法
 
-#+CAPTION: 通过定义抽象方法，trait 可以确保包含它的类一定会实现指定方法。
+#+caption: 通过定义抽象方法，trait 可以确保包含它的类一定会实现指定方法。
 #+begin_src php
 trait Foo {
     abstract function getText(): string;
@@ -1066,7 +1066,7 @@ class Foo {
 }
 #+end_src
 
-#+CAPTION: =self= 得解析不依赖于调用时的上下文，而是定义位置。
+#+caption: =self= 得解析不依赖于调用时的上下文，而是定义位置。
 #+begin_src php
 abstract class Foo {
     public static function create() {
@@ -1186,13 +1186,13 @@ echo $b->name; // This is a clone of bar
 
 ** 配置
 
-#+CAPTION: 显示错误
+#+caption: 显示错误
 #+begin_src php
 error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
 ini_set('display_errors', '1');
 #+end_src
 
-#+CAPTION: 记录错误日志
+#+caption: 记录错误日志
 #+begin_src php
 error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
 ini_set('log_errors', '1');
@@ -1324,7 +1324,7 @@ try {
 |--------------------------+-----------------------------------+-----------+--------+---------------|
 | =error_log=              | 错误日志文件路径                  | =string=  | =null= | =PHP_INI_ALL= |
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 ini_set('display_errors', '0');
 ini_set('log_errors', '1');
@@ -1372,14 +1372,14 @@ ini_set('error_log', ROOT . '/log/error.log');
 * 环境
 ** 环境变量
 
-#+CAPTION: Apache 设置环境变量
+#+caption: Apache 设置环境变量
 #+begin_src sh
 <VirtualHost ...>
     SetEnv <NAME> "<value>"
 </VirtualHost>
 #+end_src
 
-#+CAPTION: Nginx 设置环境变量
+#+caption: Nginx 设置环境变量
 #+begin_src sh
 # fastcgi_params 文件
 fastcgi_param <NAME> '<value>';
@@ -1390,7 +1390,7 @@ server {
 }
 #+end_src
 
-#+CAPTION: PHP 读取环境变量
+#+caption: PHP 读取环境变量
 #+begin_src php
 $var = getenv('NAME');
 #+end_src
@@ -1409,7 +1409,7 @@ namespace Symfony\Component\HttpFoundation;
 // 此文件中的类、接口、函数、常量，都属于此命名空间
 #+end_src
 
-#+CAPTION: 可以在一个文件中声明多个命名空间，但不是良好习惯。
+#+caption: 可以在一个文件中声明多个命名空间，但不是良好习惯。
 #+begin_src php
 namespace Foo {
 }
@@ -1450,7 +1450,7 @@ echo CONST_NAME;
 
 没有命名空间的类、接口、函数、常量，属于全局命名空间。
 
-#+CAPTION: 引用全局命名空间的类
+#+caption: 引用全局命名空间的类
 #+begin_src php
 namespace My\App;
 class Foo {
@@ -1461,7 +1461,7 @@ class Foo {
 }
 #+end_src
 
-#+CAPTION: 引用全局命名空间的函数
+#+caption: 引用全局命名空间的函数
 #+begin_src php
 namespace A\B\C;
 function fopen() {  // A\B\C 命名空间下的 fopen()
@@ -1483,7 +1483,7 @@ PHP 组件和框架通常将其代码放在全局唯一的 vendor 命名空间�
 - used for iterating large or numerically sequenced data sets using less system memory
 - forward-only, impossible to rewind or fast-forward
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 // Generator
 function generator() {
@@ -1563,7 +1563,7 @@ foreach (getRows('data.csv') as $row) { // allocate memory for one row at a time
 
 * 框架
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *CakePHP*     | 受 RoR 启发，坚持至简的原则（Keep It Simple Stupid） |
 |               | 优点：社区活跃，比 Zend 和 Symfony 简单              |
 |               | 缺点：编程方式有一些特殊要求                         |
@@ -1646,7 +1646,7 @@ php -r '$foo = get_defined_constants(); var_dump($foo);' # 使用单引号避免
 
 *** 内置服务器
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sh
 $ php -S localhost:4000
 $ php -S 0.0.0.0:4000                         # 监听所有端口

@@ -1,15 +1,15 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Database
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Database
 
 * SQL
 ** =DISTINCT=
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sql
 SELECT COUNT(DISTINCT city) FROM address;
 #+end_src
 
-#+CAPTION: =SELECT= 多列时， =DISTINCT= 作用于所有列的整合结果
+#+caption: =SELECT= 多列时， =DISTINCT= 作用于所有列的整合结果
 #+begin_src sql
 # | a |  b  |
 # |---+-----|
@@ -28,7 +28,7 @@ SELECT DISTINCT a, b FROM test;
 
 =WHERE= 不能用于聚合函数， =HAVING= 可以聚合函数的条件。
 
-#+CAPTION: 示例：查询租住的公寓多于一间的房客
+#+caption: 示例：查询租住的公寓多于一间的房客
 #+begin_src sql
 SELECT tenant_id
 FROM tenant_apartment
@@ -56,7 +56,7 @@ file:../images/database/01.jpg
 - 可以加快查找、排序的速度。
 - 但需要更多的存储空间，插入、修改数据时要花费更多的时间。
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *唯一索引*       |   |
 |------------------+---|
 | *主键索引*       |   |
@@ -65,7 +65,7 @@ file:../images/database/01.jpg
 |------------------+---|
 | *多列索引*       |   | 
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *适合创建索引的列*   | 主键（强调唯一性）。             |
 |                      | 外键（加快连接表速度）。         |
 |                      | 经常用于 =WHERE= 条件的列。      |
@@ -76,7 +76,7 @@ file:../images/database/01.jpg
 
 ** 聚集
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *聚集索引*   | Clustered index                                                                      |
 |              | 索引中键值的逻辑顺序与数据的物理存储顺序一致，因此每个表只有唯一的聚集索引。         |
 |              | 如按照拼音查字，由于字典正文本身就是按照拼音顺序排列的，因此不需要再去查其他目录。   |
@@ -87,7 +87,7 @@ file:../images/database/01.jpg
 |              | 如按照部首查字，偏旁部首的目录与正文的顺序不相关，需要先查到页码，再去找正文的位置。 |
 |              | 叶子结点包含索引字段值及指向数据页数据行的逻辑指针。                                 |
 
-#+CAPTION: 使用场景
+#+caption: 使用场景
 |                  | *聚集索引* | *非聚集索引* |
 |------------------+------------+--------------|
 | 主键列           | Y          | Y            |
@@ -110,7 +110,7 @@ file:../images/database/01.jpg
 
 * 事务
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Atomicity*   | 一个事务中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。 |
 |---------------+------------------------------------------------------------------------------|
 | *Consistency* | 在事务开始之前和事务结束以后，数据库的完整性没有被破坏。                     |
@@ -122,7 +122,7 @@ file:../images/database/01.jpg
 * 优化
 ** Denormalization
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Normalization*   | 减少冗余                         |
 |                   | =JOIN= 查询耗时较多              |
 |-------------------+----------------------------------|
@@ -135,7 +135,7 @@ file:../images/database/01.jpg
 ** Sharding
 * NoSQL
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *关系型数据库* | 保证数据的一致性，读写操作都是事务的（ACID），适合于对一致性有要求的系统，如银行系统。 |
 |                | 维护数据一致性的代价是读写性能比较差。                                                 |
 |                | 有固定的表结构，扩展性差，不能应付数据结构的巨大改动。                                 |
@@ -150,6 +150,6 @@ file:../images/database/01.jpg
 
 * Quote
 
-#+BEGIN_QUOTE
+#+begin_quote
 The key challenge in data modeling is balancing the needs of the application, the performance characteristics of the database engine, and the data retrieval patterns. When designing data models, always consider the application usage of the data (i.e. queries, updates, and processing of the data) as well as the inherent structure of the data itself. [[https://docs.mongodb.com/v3.0/core/data-modeling-introduction/][(source)]]
-#+END_QUOTE
+#+end_quote

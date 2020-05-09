@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: MySQL Scrap
+#+setupfile: ../../styles/readtheorg.setup
+#+title: MySQL Scrap
 
 * MySQL 开发规范
 
@@ -9,7 +9,7 @@
 
 *库名、表名、字段名使用小写字母，并采用下划线分割。* 如果大小写混合使用，可能存在 =abc= ， =Abc= ， =ABC= 等多个表共存，容易导致混乱。字段名显式区分大小写，但实际使用不区分，即不可以建立两个名字一样但大小写不一样的字段。
 
-#+CAPTION: 配置参数 =lower_case_table_names=
+#+caption: 配置参数 =lower_case_table_names=
 | =0= | （Linux 默认）以实际情况存储，大小写敏感 |
 |-----+------------------------------------------|
 | =1= | 以小写存储，大小写不敏感                 |
@@ -54,7 +54,7 @@ SELECT INET_NTOA(3520061480);       # 209.207.224.40
 
 *存储年使用 =YEAR= 类型。存储日期使用 =DATE= 类型。 存储时间（精确到秒）使用 =TIMESTAMP= 类型。* =DATETIME= 和 =TIMESTAMP= 都是精确到秒，但优先选择 =TIMESTAMP= ，因为 =TIMESTAMP= 只有 4 字节，而 =DATETIME= 8 字节。同时 =TIMESTAMP= 具有自动赋值以及自动更新的特性。注意：在 5.5 和之前的版本中，如果一个表中有多个 =TIMESTAMP= 列，那么最多只能有一列能具有自动更新功能。
 
-#+CAPTION: =TIMESTAMP= 初始化与自动更新
+#+caption: =TIMESTAMP= 初始化与自动更新
 #+begin_src sql
 COLUMN foo TIMESTAMP DEFAULT 0;
 COLUMN foo TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
@@ -83,7 +83,7 @@ COLUMN foo TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
 
 *减少与数据库交互次数，尽量采用批量 SQL 语句。*
 
-#+CAPTION: 减少交互次数示例
+#+caption: 减少交互次数示例
 #+begin_src sql
 INSERT ON DUPLICATE KEY UPDATE # UNIQUE 索引列或主键值重复时，改为 UPDATE 现有行
 REPLACE INTO                   # 等价于 INSERT，但 UNIQUE 索引列或主键值重复时，先 DELETE 现有行再插入新行
@@ -113,14 +113,14 @@ ALTER TABLE foo ADD COLUMN bar VARCHAR(10), ADD INDEX idx_baz(baz);
 
 ** 分页
 
-#+CAPTION: 分页方式一
+#+caption: 分页方式一
 #+begin_src sql
 SELECT * FROM thread
 WHERE thread_id = 771025 AND deleted = 0
 ORDER BY gmt_create ASC LIMIT 0, 15;
 #+end_src
 
-#+ATTR_HTML: :class no-border dense
+#+attr_html: :class no-border dense
 | *原理* | 一次性根据过滤条件取出所有字段进行排序返回。                                               |
 |        | 数据访问开销 = 索引 IO + 索引全部记录结果对应的表数据 IO                                   |
 |--------+--------------------------------------------------------------------------------------------|
@@ -128,7 +128,7 @@ ORDER BY gmt_create ASC LIMIT 0, 15;
 |--------+--------------------------------------------------------------------------------------------|
 | *适用* | 中间结果集很小（10000 行以下），或者查询条件复杂（涉及多个不同查询字段，或者多表连接）时。 |
 
-#+CAPTION: 分页方式二
+#+caption: 分页方式二
 #+begin_src sql
 SELECT thread.* FROM (
     SELECT id FROM thread
@@ -138,7 +138,7 @@ SELECT thread.* FROM (
 WHERE a.id = thread.id;
 #+end_src
 
-#+ATTR_HTML: :class no-border dense
+#+attr_html: :class no-border dense
 | *前提* | 假设 =thread= 表主键是 =id= 列，且有覆盖索引 =secondary key:(thread_id, deleted, gmt_create)=         |
 |--------+-------------------------------------------------------------------------------------------------------|
 | *原理* | 先根据过滤条件，利用覆盖索引取出主键 =id= 进行排序，再进行 =JOIN= 操作取出其他字段。                  |

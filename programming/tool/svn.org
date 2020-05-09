@@ -1,25 +1,25 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: SVN
+#+setupfile: ../../styles/readtheorg.setup
+#+title: SVN
 
 * 命令
 ** 信息
 
-#+CAPTION: 基本信息：分支、版本号、最近一次提交等
+#+caption: 基本信息：分支、版本号、最近一次提交等
 #+begin_src sh
 svn info
 #+end_src
 
-#+CAPTION: 文件修改状态
+#+caption: 文件修改状态
 #+begin_src sh
 svn status
 #+end_src
 
-#+CAPTION: 提交日志
+#+caption: 提交日志
 #+begin_src sh
 svn log
 #+end_src
 
-#+CAPTION: 文件差异
+#+caption: 文件差异
 #+begin_src sh
 svn diff <options> <path>
     -r, --revision # 一个或两个版本号：<rev>:<rev>
@@ -27,24 +27,24 @@ svn diff <options> <path>
 
 ** 操作
 
-#+CAPTION: 检出
+#+caption: 检出
 #+begin_src sh
 svn checkout <url> <path>
 svn checkout <repo>/branches/<branch>/<path>
 #+end_src
 
-#+CAPTION: 提交
+#+caption: 提交
 #+begin_src sh
 svn commit <options>
     -m, --message "" #
 #+end_src
 
-#+CAPTION: 合并
+#+caption: 合并
 #+begin_src sh
 svn merge
 #+end_src
 
-#+CAPTION: 重置
+#+caption: 重置
 #+begin_src sh
 svn revert <options> <path>
     -R, --recursive # 路径为目录时递归操作
@@ -52,7 +52,7 @@ svn revert <options> <path>
 
 ** 示例
 
-#+CAPTION: 已提交后进行回滚
+#+caption: 已提交后进行回滚
 #+begin_src sh
 svn update                      # 确认代码最新
 svn log <path>                  # 确认要回滚到的版本号

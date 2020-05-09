@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Docker
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Docker
 
 * Docker
 
@@ -40,7 +40,7 @@ Dockerfile 是构建镜像的指令列表。
 
 ** 指令列表
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *镜像* | =FROM=    | Base 镜像          |
 |--------+-----------+--------------------|
 | *配置* | =WORKDIR= | 指定工作目录       |
@@ -70,7 +70,7 @@ COPY <options> <host_path> <container_path>
 
 镜像中已存在的文件会被覆盖。
 
-#+CAPTION: =--from= 示例
+#+caption: =--from= 示例
 #+begin_src sh
 FROM alpine AS foo
 WORKDIR /usr
@@ -113,7 +113,7 @@ Docker Compose 用于同时运行多个容器，通过 YAML 文件配置容器�
 * Compose File
 ** 示例
 
-#+CAPTION: =docker-compose.yml=
+#+caption: =docker-compose.yml=
 #+begin_src yaml
 version: "3"
 services:
@@ -135,7 +135,7 @@ services:
 
 ** 配置列表
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 |   | =version=     | Compose 文件版本                              |
 |   | =services=    |                                               |
 |---+---------------+-----------------------------------------------|
@@ -210,7 +210,7 @@ volumes:
 * =docker=
 ** 命令列表
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *镜像*   | =build=   | 从 =Dockerfile= 构建镜像 |
 |          | =commit=  | 从容器构建镜像           |
 |          | =image=   |                          |
@@ -376,7 +376,7 @@ docker push <options> <name>:<tag>
 docker rm <options> <container>
 #+end_src
 
-#+CAPTION: =docker ps= 获取容器 ID 列表
+#+caption: =docker ps= 获取容器 ID 列表
 #+begin_src sh
 docker rm $(docker ps -aq -f status=exited)
 #+end_src
@@ -410,7 +410,7 @@ docker run <options> <image> <command> <args>
 # <command> 覆盖镜像的默认命令
 #+end_src
 
-#+CAPTION: 确认 Docker 安装
+#+caption: 确认 Docker 安装
 #+begin_src sh
 $ docker run hello-world
 #+end_src

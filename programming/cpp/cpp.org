@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: C++
+#+setupfile: ../../styles/readtheorg.setup
+#+title: C++
 
 * 类型
 ** 类型列表
@@ -67,7 +67,7 @@ int foo[10] = {0};       // 全部元素初始化为 0
 
 *** 语法
 
-#+CAPTION: =char*=
+#+caption: =char*=
 #+begin_src cpp
 char* <name>;
 char* <name> = "<string>";
@@ -80,7 +80,7 @@ char* foo(char* str) {
 cout << foo("input") << endl;
 #+end_src
 
-#+CAPTION: =string=
+#+caption: =string=
 #+begin_src cpp
 string <name>;
 string <name> = "<string>";
@@ -142,7 +142,7 @@ When using a list, instead of an array, there is no need to anticipate how many 
 
 从头部插入元素的列表。
 
-#+CAPTION: 定义
+#+caption: 定义
 #+begin_src cpp
 template <class element_param>
 class element {
@@ -185,7 +185,7 @@ class list {
 }
 #+end_src
 
-#+CAPTION: 使用
+#+caption: 使用
 #+begin_src cpp
 list my_list;
 my_list.add(new foo());
@@ -219,7 +219,7 @@ else
 (<type>) <expr>
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src cpp
 a = (double) b;
 #+end_src
@@ -227,7 +227,7 @@ a = (double) b;
 * 变量
 ** 声明 vs 定义
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *声明* | 告知编译器一个标识符（变量、函数、参数）占用的内存（数据类型的长度），但不分配内存。 |
 |        | 可以多次声明，比如通过 =extern= 。                                                   |
 |--------+--------------------------------------------------------------------------------------|
@@ -261,7 +261,7 @@ int foo = 1, bar = 2;
 
 ** 类型
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *本地变量*     | 在函数内定义的变量。             |
 |----------------+----------------------------------|
 | *全局变量*     | 在（所有）函数外定义的变量。     |
@@ -307,7 +307,7 @@ int main() {
 
 使用 =extern= 声明全局变量时不能有初始值，因为初始值将迫使编译器为变量分配内存，使得变量在此处被定义（变量的定义只能有一次），而不是原本定义变量的位置。
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src cpp
 // foo.h
 int var;
@@ -333,14 +333,14 @@ const <type> <name> = <expr>;
 
 ** 枚举常量
 
-#+CAPTION: 定义
+#+caption: 定义
 #+begin_src cpp
 enum {<name>, <name>, ...};         // 默认值从 0 开始依次递增 1
 enum {<name>, <name> = <int>, ...}; // 指定值之后的常量值从此指定值开始继续递增 1
 enum {<name> = '<char>', ...};      // 可以使用字符编码指定值
 #+end_src
 
-#+CAPTION: 枚举类型
+#+caption: 枚举类型
 #+begin_src cpp
 enum <type_name> {<name>, <name>, ...}; // 定义枚举类型
 enum <type_name> <var>;                 // 使用枚举类型声明变量
@@ -403,20 +403,20 @@ enum <type_name> <var>;                 // 使用枚举类型声明变量
 
 ** 数学运算符
 
-#+CAPTION: 整数进行除法时，结果会被截断（truncate），而不是四舍五入。
+#+caption: 整数进行除法时，结果会被截断（truncate），而不是四舍五入。
 #+begin_src cpp
 5 / 3 // == 1
 #+end_src
 
 ** 逻辑运算符
 
-#+CAPTION: =&&= 可以替代 =if=
+#+caption: =&&= 可以替代 =if=
 #+begin_src cpp
 if (<expr>) <statement>;
 (expr) && <statement>; 
 #+end_src
 
-#+CAPTION: =||= 可以替代 =if ... else=
+#+caption: =||= 可以替代 =if ... else=
 #+begin_src cpp
 if (<expr>); else <statement>;
 (<expr>) || <statement>;
@@ -438,7 +438,7 @@ if (<expr>); else <statement>;
 |----------------------------+--------------------------------------------|
 | 值可以为 =NULL=            | 值不可以为 =NULL=                          |
 
-#+CAPTION: =*= 示例
+#+caption: =*= 示例
 #+begin_src cpp
 int* a = new int;
 int* b = new int;
@@ -448,7 +448,7 @@ c = a, *c = 2; // *a == 2
 c = b, *c = 3; // *b == 3
 #+end_src
 
-#+CAPTION: =&= 示例
+#+caption: =&= 示例
 #+begin_src cpp
 int a;
 int& b = a;
@@ -456,7 +456,7 @@ a = 1;
 b = 2; // a == 2
 #+end_src
 
-#+CAPTION: 可以将引用声明为常量，称为 free-standing 引用。
+#+caption: 可以将引用声明为常量，称为 free-standing 引用。
 #+begin_src cpp
 const int& b = 1;
 #+end_src
@@ -465,7 +465,7 @@ const int& b = 1;
 
 从 free store 内存空间分配内存用于指定的对象，并返回地址。
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src cpp
 int* a = new int[10];
 #+end_src
@@ -474,13 +474,13 @@ int* a = new int[10];
 
 清理对象，回收内存空间，防止内存泄漏。
 
-#+CAPTION: 语法
+#+caption: 语法
 #+begin_src cpp
 delete <obj>;      // 回收单个对象
 delete [] <array>; // 回收对象数组
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src cpp
 char *foo;
 foo = new char[10];
@@ -492,7 +492,7 @@ delete [] foo;
 - 获得类型（变量）的实际长度。
 - 可以加或不加 =()= 。
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src cpp
 struct Empty {};
 struct Base { int a; };
@@ -521,7 +521,7 @@ std::cout << sizeof a                 << '\n' // 40
 
 *** 重载 =<<=
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src cpp
 class Foo {
   private:
@@ -536,7 +536,7 @@ class Foo {
 
 *** 重载 =<=
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src cpp
 class Foo {
   private:
@@ -606,12 +606,12 @@ file:../images/c++/03.png
 
 ** 语法
 
-#+CAPTION: 定义
+#+caption: 定义
 #+begin_src cpp
 <type> *<pointer>;
 #+end_src
 
-#+CAPTION: 赋值
+#+caption: 赋值
 #+begin_src cpp
 <pointer> = new <type>; // new 表达式返回的是分配的地址
 // 等于：
@@ -619,7 +619,7 @@ file:../images/c++/03.png
 <pointer> = &<var>;
 #+end_src
 
-#+CAPTION: 类对象
+#+caption: 类对象
 #+begin_src cpp
 <Class> *<pointer>;
 <pointer> = new <Class>;
@@ -633,12 +633,12 @@ file:../images/c++/03.png
 
 ** 指针数组
 
-#+CAPTION: 定义
+#+caption: 定义
 #+begin_src cpp
 <type> *<pointer>[<n>]; // 指针运算符 * 优先级高于 []，因此定义的是 n 个指针的数组
 #+end_src
 
-#+CAPTION: 类对象
+#+caption: 类对象
 #+begin_src cpp
 <Class> *<pointer>[<n>];
 <pointer>[<idx>] = new <Class>;
@@ -663,7 +663,7 @@ for (<init>; <expr>; <incr>) {
 
 当 =<expr>= 的值为 =0= 或 =NULL= 时，循环中止。
 
-#+CAPTION: 循环体的内容可以合并到条件中
+#+caption: 循环体的内容可以合并到条件中
 #+begin_src cpp
 int counter, result = 1;
 for (counter = n; counter; --counter) {
@@ -685,7 +685,7 @@ for (<type> <elem> : <range>) {
 }
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src cpp
 int nums[] = {1, 2, 3};
 for (int num : nums) {
@@ -756,7 +756,7 @@ and on ...
 * 函数
 ** 定义
 
-#+CAPTION: 定义
+#+caption: 定义
 #+begin_src cpp
 <type> <name> (<type> <param>, ...) {
     // Declarations
@@ -861,7 +861,7 @@ class object argument             |      class object parameter
 
 为避免对象被作为传值参数（被复制），可以将类的复制构造函数声明为 =private= ，当类对象以传值方式作为函数参数时，编译会报错。、
 
-#+CAPTION: 可以只在基类中声明为原型：
+#+caption: 可以只在基类中声明为原型：
 #+begin_src cpp
 class Foo {
   private: Foo(Foo&);
@@ -876,12 +876,12 @@ class Foo {
 - 函数需要对传入参数本身进行修改。
 - 参数类型是基类，而传入值是多态的子类对象，长度可能不同。
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src cpp
 void foo(int& bar) {}
 #+end_src
 
-#+CAPTION: 示例：传数组引用
+#+caption: 示例：传数组引用
 #+begin_src cpp
 void foo(int bar[]) {}
 void foo(int bar[10]) {}
@@ -890,7 +890,7 @@ void foo(int* bar) {}
 
 *** 默认值
 
-#+CAPTION: 带有默认值的参数必须在最右：
+#+caption: 带有默认值的参数必须在最右：
 #+begin_src cpp
 int foo(int a, int b = 1) {}
 #+end_src
@@ -917,7 +917,7 @@ int foo(int a, int b = 1) {}
 - 普通函数原型是为了解决「相互调用的函数定义顺序」的问题。
 - 类函数原型是为了将类函数的定义移动到类定义之外。
 
-#+CAPTION: 示例：斐波那契数列（兔子繁殖问题）
+#+caption: 示例：斐波那契数列（兔子繁殖问题）
 #+begin_src cpp
 // Function prototype
 int rabbits (int);
@@ -934,14 +934,14 @@ int rabbits (int n) {
 }
 #+end_src
 
-#+CAPTION: 原型可以加参数名
+#+caption: 原型可以加参数名
 #+begin_src cpp
 int rabbits (int n);
 #+end_src
 
 ** 模板
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src cpp
 template <typename t> void print_vector(vector<t> v) {
   for (t elem: v)
@@ -985,7 +985,7 @@ Foo::~Foo() {}
 
 模板是一种代码重用方式，使同一个类可以用于不同的数据类型。
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src cpp
 template <class Type> class Foo {
   Type t;
@@ -1028,15 +1028,15 @@ class <ClassA> {
 
 -----
 
-#+CAPTION: 继承时通过声明基类的可见性，批量改变基类中成员的可见性：
-#+ATTR_HTML: :class no-border
+#+caption: 继承时通过声明基类的可见性，批量改变基类中成员的可见性：
+#+attr_html: :class no-border
 | =protected= | 基类中的 =public= 成员在子类中为 =protected= 。              |
 |             | =protected= 和 =private= 成员不变。                          |
 |-------------+--------------------------------------------------------------|
 | =private=   | 基类中的 =public= 和 =protected= 成员在子类中为 =private= 。 |
 |             | =private= 成员不变。                                         |
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src cpp
 class First {
   public: double var1, var2;
@@ -1060,7 +1060,7 @@ class <Class> {
 }
 #+end_src
 
-#+CAPTION: 访问对象的成员变量
+#+caption: 访问对象的成员变量
 #+begin_src cpp
 <Class> <obj>;
 <obj>.<var> = <value>;
@@ -1106,7 +1106,7 @@ class <Class> {
 
 继承关系中，子类与基类有同名函数时，除非指定，否则默认调用子类中定义的函数。
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src cpp
 class <Parent> {
     public: <function>() { ... }
@@ -1123,7 +1123,7 @@ class <Child> : public <Parent> {
 
 =this= 用于在一个成员函数中（使用当前的对象）调用另一个成员函数。
 
-#+CAPTION: 语法
+#+caption: 语法
 #+begin_src cpp
 foo() {
   cout << (*this).bar();
@@ -1136,7 +1136,7 @@ bar() {
 
 ** 虚拟函数
 
-#+CAPTION: C++ 在编译时就决定将调用的成员函数，称为静态绑定（static binding），使得子类无法实现多态。
+#+caption: C++ 在编译时就决定将调用的成员函数，称为静态绑定（static binding），使得子类无法实现多态。
 #+begin_src cpp
 class Person {
     public:
@@ -1155,7 +1155,7 @@ Person* p = new Student;
 p->about(); // I'm a person.
 #+end_src
 
-#+CAPTION: 虚拟成员函数（virtual member function）使得程序在运行时，而不是编译时，选择将调用的函数。
+#+caption: 虚拟成员函数（virtual member function）使得程序在运行时，而不是编译时，选择将调用的函数。
 #+begin_src cpp
 class Person {
     public:
@@ -1195,7 +1195,7 @@ class Foo {
 - 没有返回值类型。
 - 默认构造函数没有参数。
 
-#+CAPTION: 定义
+#+caption: 定义
 #+begin_src cpp
 class Foo {
     int bar;
@@ -1210,7 +1210,7 @@ Foo foo;    // 调用默认构造函数
 Foo foo(v); // 调用自定义构造函数
 #+end_src
 
-#+CAPTION: 调用基类构造函数
+#+caption: 调用基类构造函数
 #+begin_src cpp
 class Person {
 protected:
@@ -1239,7 +1239,7 @@ public:
                  {}
 #+end_src 
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src cpp
 // 基类
 class box : public container {
@@ -1284,7 +1284,7 @@ class box_car : public railroad_car {
 *** 复制构造函数
 <<copy_constructor>>
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src cpp
 class Foo {
   private:
@@ -1305,7 +1305,7 @@ class Foo {
 
 *** 虚拟析构函数
 
-#+CAPTION: 当使用多态，使用基类指针声明子类对象时，子类的析构函数无法被调用：
+#+caption: 当使用多态，使用基类指针声明子类对象时，子类的析构函数无法被调用：
 #+begin_src cpp
 class Person {
     public:
@@ -1321,7 +1321,7 @@ Person* p = new Student;
 delete p; // Deleting person.
 #+end_src
 
-#+CAPTION: 将基类中的析构函数声明为 =virtual= ，可以使基类和子类的析构函数都被调用：
+#+caption: 将基类中的析构函数声明为 =virtual= ，可以使基类和子类的析构函数都被调用：
 #+begin_src cpp
 class Person {
     public:
@@ -1344,14 +1344,14 @@ delete p; // Deleting student.
                         Similar to a function definition but without a body. \\
                         The function can be defined elsewhere, outside of the class definition.
 
-#+CAPTION: 声明
+#+caption: 声明
 #+begin_src cpp
 class <Class> {
     public: <type> <function>(<type>);
 };
 #+end_src
 
-#+CAPTION: 定义
+#+caption: 定义
 #+begin_src cpp
 <type> <Class>::<function>(<type> <param>) { // :: are called the class-scope operator
     ...
@@ -1378,7 +1378,7 @@ A good program
 
 头文件只包含声明，不包含定义（内存分配操作），因为头文件可能被多个文件加载，而变量和函数定义只能有一次。
 
-#+CAPTION: 示例：=class.h=
+#+caption: 示例：=class.h=
 #+begin_src cpp
 // Description: ...
 #include <iostream>
@@ -1408,7 +1408,7 @@ Many C++ compilers bring every function mentioned in a header file into the prog
 
 ** 源码文件
 
-#+CAPTION: =class.cpp=
+#+caption: =class.cpp=
 #+begin_src cpp
 #include "class.h"
 
@@ -1420,7 +1420,7 @@ void Class::foo() {...}
 
 ** 客户文件
 
-#+CAPTION: 示例：=main.cpp=
+#+caption: 示例：=main.cpp=
 #+begin_src cpp
 #include "class.h"
 
@@ -1484,7 +1484,7 @@ Header file         |
 
 当一个头文件被修改时，必须重新编译所有加载这个头文件的源码文件。
 
-#+CAPTION: 当一个源码文件被修改时，只需要重新编译这个文件，并重新链接所有对象文件：
+#+caption: 当一个源码文件被修改时，只需要重新编译这个文件，并重新链接所有对象文件：
 #+begin_src sh
 g++ -c foo.cpp
 g++ -o exe foo.o bar.o baz.o
@@ -1503,12 +1503,12 @@ g++ <options> <file>
     -v
 #+end_src
 
-#+CAPTION: 直接编译
+#+caption: 直接编译
 #+begin_src sh
 $ g++ -Wall -W -Werror <file> -o <file>
 #+end_src
 
-#+CAPTION: 脚本编译
+#+caption: 脚本编译
 #+begin_src sh
 ## /bin/gccp
 #/bin/sh
@@ -1542,7 +1542,7 @@ make [<options>] [<target>]
 - 依赖：目标依赖的文件
 - 命令：编译目标的命令
 
-#+CAPTION: 语法
+#+caption: 语法
 #+begin_src sh
 # Comment                  # 注释
 <target>: <dependency> ... # 依赖文件更新后（通过比较时间戳），才重新编译这个目标
@@ -1551,13 +1551,13 @@ make [<options>] [<target>]
 
 -----
 
-#+CAPTION: =target= 为可执行文件（通常是 =makefile= 中第一个目标）
+#+caption: =target= 为可执行文件（通常是 =makefile= 中第一个目标）
 #+begin_src sh
 exe: alpha.o beta.o gamma.o
     g++ -Wall alpha.o beta.o gamma.o -o exe
 #+end_src
 
-#+CAPTION: =target= 为 =.o= 文件
+#+caption: =target= 为 =.o= 文件
 #+begin_src sh
 alpha.o: alpha.cpp alpha.h beta.h # alpha.cpp 依赖于（#include） beta.h
     g++ -Wall -c alpha.cpp        # 使用 -c 选项只生成 .o 文件
@@ -1568,7 +1568,7 @@ beta.h: gamma.h # beta.h 依赖于 gamma.h，因此 alpha.o 也依赖于 gamma.h
 
 -----
 
-#+CAPTION: macros
+#+caption: macros
 #+begin_src sh
 OBJS = src1.o src2.o
 CC = g++
@@ -1585,19 +1585,19 @@ p1: $(OBJS)
 Dummy targets
 - used to run commands without creating targets
 
-#+CAPTION: =make clean=
+#+caption: =make clean=
 #+begin_src sh
 clean:
     \rm *.o *~ exe # 删除所有 .o 文件、emacs 备份文件、指定可执行文件
 #+end_src
 
-#+CAPTION: =make tar=
+#+caption: =make tar=
 #+begin_src sh
 tar:
     tar cvf project.tar alpha.h alpha.cpp beta.h ...
 #+end_src
 
-#+CAPTION: =make all=
+#+caption: =make all=
 #+begin_src sh
 all: exe1 exe2 ... # 一次生成多个可执行文件
 #+end_src

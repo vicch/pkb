@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Org-mode
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Org-mode
 
 * Keys
 
@@ -73,7 +73,7 @@
 
 | =<s= =Tab=      | =#+begin_src ... #+end_src=         |
 |-----------------+-------------------------------------|
-| =<q= =Tab=      | =#+BEGIN_QUOTE ... #+END_QUOTE=     |
+| =<q= =Tab=      | =#+begin_quote ... #+end_quote=     |
 |-----------------+-------------------------------------|
 | =<e= =Tab=      | =#+BEGIN_EXAMPLE ... #+END_EXAMPLE= |
 |-----------------+-------------------------------------|
@@ -96,12 +96,12 @@
 |-----------+--------------------------------------------|
 | 定义列表  | =- name :: definition=                     |
 |-----------+--------------------------------------------|
-| 标题      | =#+CAPTION: <text>=                        |
+| 标题      | =#+caption: <text>=                        |
 |-----------+--------------------------------------------|
 | HTML      | =@@html:= ... =@@=                         |
 |-----------+--------------------------------------------|
-| HTML 属性 | =#+ATTR_HTML: :<attr> <value> ...=         |
-|           | e.g. =#+ATTR_HTML: :class special=         |
+| HTML 属性 | =#+attr_html: :<attr> <value> ...=         |
+|           | e.g. =#+attr_html: :class special=         |
 
 | 表格中转义 \vert | =\vert=                            |
 |------------------+------------------------------------|
@@ -119,13 +119,13 @@
 
 * MathJax
 
-#+CAPTION: 行内
+#+caption: 行内
 #+begin_src text
 $ ... $
 \( ... \)
 #+end_src
 
-#+CAPTION: 段落
+#+caption: 段落
 #+begin_src text
 \begin{equation} ... \end{equation}
 $$ ... $$
@@ -205,7 +205,7 @@ In newer versions, the start and end tags can be omitted:
 \#+end_src
 #+end_src
 
-#+CAPTION: Options
+#+caption: Options
 | =-E=         | Prevents the separation of common edges of shapes |
 |--------------+---------------------------------------------------|
 | =-S=         | Turns off the drop-shadow effect                  |
@@ -219,7 +219,7 @@ In newer versions, the start and end tags can be omitted:
 
 2 - 将 AUCTex 文件覆盖到 emacs 文件夹下
 
-#+CAPTION: 4 - 测试代码
+#+caption: 4 - 测试代码
 #+begin_src text
 \#+begin_src latex :file ../images/test.png
 \LaTeX
@@ -232,7 +232,7 @@ In newer versions, the start and end tags can be omitted:
 
 ** 配置
 
-#+CAPTION: 使用 Latex
+#+caption: 使用 Latex
 #+begin_src text
 (load "auctex.el" nil t t)
 (org-babel-do-load-languages
@@ -240,7 +240,7 @@ In newer versions, the start and end tags can be omitted:
  '((latex . t)))
 #+end_src
 
-#+CAPTION: 默认样式
+#+caption: 默认样式
 #+begin_src text
 (setq org-format-latex-options
  '(:foreground "Black"
@@ -252,7 +252,7 @@ In newer versions, the start and end tags can be omitted:
    :matchers ("begin" "$1" "$$" "\\(" "\\[")))
 #+end_src
 
-#+CAPTION: 使用 TikZ
+#+caption: 使用 TikZ
 #+begin_src text
 (add-to-list 'org-latex-packages-alist '("" "tikz" "") t)
 (setq
@@ -270,14 +270,14 @@ In newer versions, the start and end tags can be omitted:
 
 -----
 
-#+CAPTION: 加载包
+#+caption: 加载包
 #+begin_src text
 #+LATEX_HEADER: \usepackage{...}
 #+end_src
 
 -----
 
-#+CAPTION: 使用 imagemagick 输出 svg
+#+caption: 使用 imagemagick 输出 svg
 #+begin_src text
 #+HEADER: :imagemagick yes :iminoptions -density 600 :imoutoptions -geometry 400
 #+HEADER: :file ../images/.../.svg
@@ -290,7 +290,7 @@ In newer versions, the start and end tags can be omitted:
 
 -----
 
-#+CAPTION: 使用 dvisvgm 输出 svg
+#+caption: 使用 dvisvgm 输出 svg
 #+begin_src text
 #+HEADER: :file ../images/.../.svg
 \#+begin_src latex
@@ -302,7 +302,7 @@ In newer versions, the start and end tags can be omitted:
 
 使用 dvisvgm 输出 svg，需要先修改 Org-mode 代码。
 
-#+CAPTION: 修改 =site-lisp/org/lisp/ob-latex.el=
+#+caption: 修改 =site-lisp/org/lisp/ob-latex.el=
 #+begin_src lisp
 ;; Line 95
 ((and (string-match "\\.svg$" out-file) (not imagemagick))
@@ -310,7 +310,7 @@ In newer versions, the start and end tags can be omitted:
   body out-file org-format-latex-options in-buffer))
 #+end_src
 
-#+CAPTION: 修改 =site-lisp/org/lisp/org.el=
+#+caption: 修改 =site-lisp/org/lisp/org.el=
 #+begin_src lisp
 ;; Line 18623
 (if (featurep 'xemacs)

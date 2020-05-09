@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Python Function
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Python Function
 
 * 内置
 
@@ -28,7 +28,7 @@
 any ( iterable )
 #+end_src
 
-#+CAPTION: 检查字符串中是否存在数字字符
+#+caption: 检查字符串中是否存在数字字符
 #+begin_src python
 hasdigit = any(map(str.isdigit, string))
 #+end_src
@@ -61,7 +61,7 @@ map (
 )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 s = list(map(abs, [-1, 0, 1]))
 n, m = map(int, raw_input().split())
@@ -79,7 +79,7 @@ open(
 
 以指定权限打开文件，返回 =file= 类型示例。
 
-#+CAPTION: =mode=
+#+caption: =mode=
 | =r=  | 读默认值   |
 |------+------------|
 | =w=  | 覆盖写    |
@@ -109,7 +109,7 @@ range(      # 指定开始和结束
 ])
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 range(10)         # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 range(0, 30, 5)   # [0, 5, 10, 15, 20, 25]
@@ -132,7 +132,7 @@ sum (
 reversed ( seq )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 list(reversed(lst)) # 返回值是一个迭代器，需要包含在 list() 中
 #+end_src
@@ -148,7 +148,7 @@ sorted (
 ]]])
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 new = sorted(lst, key=str.lower, reverse=True)
 new = sorted(lst, key=lambda i: i[1])
@@ -231,13 +231,13 @@ eval (
 print <expr>, <expr>, ...
 #+end_src
 
-#+CAPTION: 用 @@html:<code>,</code>@@ 连接时，会自动使用空格分隔。
+#+caption: 用 @@html:<code>,</code>@@ 连接时，会自动使用空格分隔。
 #+begin_src python
 print 'Foo bar', 1 + 2
 # Foo bar 3
 #+end_src
 
-#+CAPTION: 以 @@html:<code>,</code>@@ 结尾，避免自动换行。
+#+caption: 以 @@html:<code>,</code>@@ 结尾，避免自动换行。
 #+begin_src python
 print 'Foo bar',
 ...
@@ -254,17 +254,17 @@ print (
 )
 #+end_src
 
-#+CAPTION: 在 Python 2 中使用 =print()=
+#+caption: 在 Python 2 中使用 =print()=
 #+begin_src python
 from __future__ import print_function
 #+end_src
 
-#+CAPTION: 打印多个对象
+#+caption: 打印多个对象
 #+begin_src python
 print(a + b, a - b, sep = '\n')
 #+end_src
 
-#+CAPTION: 打印序列
+#+caption: 打印序列
 #+begin_src python
 print([1, 2, 3])  # 作为单个对象打印：[1, 2, 3]
 print(*[1, 2, 3]) # 作为多个对象打印：1 2 3
@@ -316,7 +316,7 @@ value = raw_input('Input a value: ')
 * 类型
 ** =complex()=
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 a = complex('1+2j')
 #+end_src
@@ -330,14 +330,14 @@ class dict (
 )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 dct = dict(name='test', type='file') # 键（字面量）必须是字符串
 print dct
 # {'name': 'test', 'type': 'file'}
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 dct = dict([('name', 'test'), ('type', 'file')])
 print dct
@@ -378,7 +378,7 @@ bool isinstance (
 class list([iterable])
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 lst = list('abc') # ['a', 'b', 'c']
 #+end_src
@@ -488,7 +488,7 @@ str.format(
 )
 #+end_src
 
-#+CAPTION: 格式化字符串
+#+caption: 格式化字符串
 #+begin_src python
 '{<index>:<fill><align><width>.<precision><type>}'
     <index>     # 数字，从 0 开始，对应参数
@@ -507,17 +507,17 @@ str.format(
         c       # 字符
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 "The sum of 1 + 2 is {0}".format(1 + 2)
 #+end_src
 
-#+CAPTION: 示例：打印十进制、八进制、十六进制、二进制形式
+#+caption: 示例：打印十进制、八进制、十六进制、二进制形式
 #+begin_src python
 print('{0:{1}d} {0:{1}o} {0:{1}X} {0:{1}b}'.format(number, width))
 #+end_src
 
-#+CAPTION: 示例：参数为序列
+#+caption: 示例：参数为序列
 #+begin_src python
 print('{s[0]}, {s[1]}, {s}'.format(s = [1, 2]))
 # 1, 2, [1, 2]
@@ -529,7 +529,7 @@ print('{s[0]}, {s[1]}, {s}'.format(s = [1, 2]))
 str.join(iterable)
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 lst = ['foo', 'bar']
 ' '.join(lst) # foo bar
@@ -611,7 +611,7 @@ list.sort(
 )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 # l = [['a', 2], ['b', 1], ['c', 3]]
 # 按每个元素第二项倒序排序
@@ -634,7 +634,7 @@ l.remove(2) # [1, 3, 2, 1]
 
 * 字典
 
-#+CAPTION: 内置
+#+caption: 内置
 | =zip()= | 将多个列表的元素合成为元组列表 |
 |---------+--------------------------------|
 |         |                                |
@@ -656,7 +656,7 @@ l.remove(2) # [1, 3, 2, 1]
 zip([iterable, ...])
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 foo = ['a', 'b']
 bar = [1, 2]
@@ -679,7 +679,7 @@ dict.fromkeys (
 ])
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 dct = dict.fromkeys(['name', 'type'])
 print dct
@@ -725,7 +725,7 @@ dict.get (
 
 ** =set.add()=
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 foo = {1, 2, 3}
 foo.add(4)
@@ -734,7 +734,7 @@ foo.add('a')
 
 ** =set.update()=
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 foo = {1, 2, 3}
 foo.update([4, 5])
@@ -776,7 +776,7 @@ file.seek (
 |          | =os.SEEK_CUR= 相对（当前位置）位置 |
 |          | =os.SEEK_END= 相对（文件末尾）位置 |
 
-#+CAPTION: 读取文件之后使指针回到文件开头
+#+caption: 读取文件之后使指针回到文件开头
 #+begin_src python
 f = open('foo.txt')
 print f.read()
@@ -795,7 +795,7 @@ dir([object])
     # 参数为对象时，返回对象所属类的标示符列表
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 dir()
 # ['__builtins__', '__doc__', '__name__', ...] 当前模块
@@ -816,7 +816,7 @@ dir()
 
 * 特殊
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Special methods* | - invoked by interpreter to perform basic object operations |
 |                   | - always named in =__<method>__= format                     |
 |                   | - also known as "dunder" methods                            |
@@ -859,7 +859,7 @@ If a collection has no =__contains__()= method, the =in= operator does a sequent
 
 Because =__getitem__()= delegates to the =[]= operator, the object automatically supports slicing and iteration.
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 class Foo:
     def __init__(self):
@@ -882,7 +882,7 @@ for i in foo: # 1, 4, 9, ...
 ** =__len__()=
 <<__len__>>
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src python
 class Foo:
     def __init__(self):

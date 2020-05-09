@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: MySQL
+#+setupfile: ../../styles/readtheorg.setup
+#+title: MySQL
 
 * 概念
 ** 引擎
@@ -10,7 +10,7 @@
 |--------+--------+----------+----------+----------+------|
 | InnoDB | 行级   | 支持     | 不支持   | 支持     |      |
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *MyISAM* | =SELECT= 执行速度更快。                                 |
 |          | 相对简单，维护成本低，适合小型应用。                    |
 |----------+---------------------------------------------------------|
@@ -46,7 +46,7 @@ create_specification:
   | [DEFAULT] COLLATE [=] collation_name
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sql
 CREATE DATABASE `foo`
 DEFAULT CHARACTER SET utf8
@@ -173,7 +173,7 @@ data_type:
 
 http://dev.mysql.com/doc/refman/5.7/en/create-table.html
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sql
 CREATE TABLE `data` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -223,7 +223,7 @@ ALTER TABLE `table` DROP COLUMN `column`;
 ALTER TABLE <table> CHANGE COLUMN <old_column> <new_column> [<options>];
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sql
 ALTER TABLE month_report CHANGE COLUMN value value (varchar(50) NOT NULL);
 #+end_src
@@ -244,7 +244,7 @@ ALTER TABLE month_report CHANGE COLUMN value value (varchar(50) NOT NULL);
 
 *** =REGEXP=
 
-#+CAPTION: 示例：查询（非）元音字母开头的城市名称
+#+caption: 示例：查询（非）元音字母开头的城市名称
 #+begin_src sql
 SELECT DISTINCT city FROM station WHERE city REGEXP '^[AEIOU]';
 SELECT DISTINCT city FROM station WHERE city NOT REGEXP '^[AEIOU]';
@@ -260,12 +260,12 @@ SELECT DISTINCT city FROM station WHERE city NOT REGEXP '^[AEIOU]';
 DATE_ADD(<date>, INTERVAL <expr> <type>)
 #+end_src
 
-#+CAPTION: 示例 1
+#+caption: 示例 1
 #+begin_src sql
 SELECT id, DATE_ADD(curr_date, INTERVAL 30 DAY) AS future_date;
 #+end_src
 
-#+CAPTION: 示例 2：在天气记录中查找所有气温高于前一天气温的日期
+#+caption: 示例 2：在天气记录中查找所有气温高于前一天气温的日期
 #+begin_src sql
 SELECT w1.id
 FROM weather w1, weather w2
@@ -285,7 +285,7 @@ AND w1.temperature > w2.temperature;
 
 *** =CASE=
 
-#+CAPTION: 示例：通过三角形三边判断类型
+#+caption: 示例：通过三角形三边判断类型
 #+begin_src sql
 SELECT CASE
     WHEN A >= B + C OR B >= A + C OR C >= A + B THEN 'Not A Triangle'
@@ -311,14 +311,14 @@ mysql <options>
     -N, --skip-column-names # 不输出列名
 #+end_src
 
-#+CAPTION: 数据库导入
+#+caption: 数据库导入
 #+begin_src sh
 mysql -h <host> -u <user> -p <password> <database> < <file>
 #+end_src
 
 ** =mysqldump=
 
-#+CAPTION: 数据库备份
+#+caption: 数据库备份
 #+begin_src sh
 mysqldump <options> <database> <tables> > <file>
     -h, --host=
@@ -346,7 +346,7 @@ service mysql <action>
 
 * 配置
 
-#+CAPTION: =/etc/mysql/=
+#+caption: =/etc/mysql/=
 | =mysql.cnf=      |   |
 |------------------+---|
 | =conf.d/*=       |   |
@@ -381,7 +381,7 @@ SHOW VARIABLES LIKE 'innodb%';
 
 *** 其他
 
-#+CAPTION: 列出所有表的行数、占用空间等
+#+caption: 列出所有表的行数、占用空间等
 #+begin_src sql
 SELECT TABLE_NAME, table_rows, data_length, index_length, round(((data_length + index_length) / 1024 / 1024),2) "Size in MB"
 FROM information_schema.TABLES

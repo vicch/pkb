@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Apache
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Apache
 
 * 概念
 ** 虚拟主机
@@ -11,7 +11,7 @@
 
 基于 IP 地址的虚拟主机很少见，服务器通常只有一个公网地址，特殊情况是使用 SSL 证书要求每个域名有独立的 IP 地址。
 
-#+CAPTION: 每一个 IP 地址和端口组合能且只能对应一个 =<VirtualHost>=
+#+caption: 每一个 IP 地址和端口组合能且只能对应一个 =<VirtualHost>=
 #+begin_src sh
 <VirtualHost 0.0.0.0:80>
 </VirtualHost>
@@ -26,7 +26,7 @@ Apache 按照虚拟主机在配置文件中的顺序，将被 HTTP header 的 =H
 - Multi-Processing Modules
 - 控制 Apache 的运行模式和并发策略。
 
-#+CAPTION: 查看 MPM 模式
+#+caption: 查看 MPM 模式
 #+begin_src sh
 $ apachectl status | grep "MPM"
 Server MPM: event
@@ -39,7 +39,7 @@ Server MPM: event
 - 比 worker 和 event 模式消耗更多（内存）资源。
 - 需要使用非线程安全（non-thread safe）的库，如 =mod_php= 时，或需要进程隔离时，选用此模式。
 
-#+CAPTION: 配置
+#+caption: 配置
 #+begin_src sh
 <IfModule mpm_prefork_module>
     StartServers            5
@@ -62,7 +62,7 @@ Server MPM: event
 * 配置
 ** 文件
 
-#+CAPTION: =/etc/apache2/=
+#+caption: =/etc/apache2/=
 |            | =apache2.conf=  | 主配置       |
 |------------+-----------------+--------------|
 |            | =envvars=       | 环境变量     |
@@ -119,7 +119,7 @@ Red Hat 下主配置文件为 =/etc/httpd/conf/httpd.conf= 。
 <DirectoryMatch <regex>>
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sh
 <DirectoryMatch "/\.git">
     Require all denied
@@ -140,7 +140,7 @@ Red Hat 下主配置文件为 =/etc/httpd/conf/httpd.conf= 。
     # <addr> 为 * 表示匹配所有 IP 地址
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sh
 # /etc/apache2/sites-available/foo.com.conf
 <VirtualHost *:80>
@@ -214,7 +214,7 @@ Options [+|-]<option> ...
     # + enables option, - disables option
 #+end_src
 
-#+CAPTION: 选项
+#+caption: 选项
 | =All=            | 除 =MultiViews= 外所有选项                          |
 |------------------+-----------------------------------------------------|
 | =FollowSymLinks= | 是否跟踪软链接                                      |
@@ -326,7 +326,7 @@ CustomLog <file> <nickname>|<format>
 ** =mod_status=
 *** 配置
 
-#+CAPTION: 设置状态页面
+#+caption: 设置状态页面
 #+begin_src sh
 <Location "/server-status">
     SetHandler server-status
@@ -373,7 +373,7 @@ CPU Usage: u1 s8.32 cu0 cs0 - 5.07% CPU load
 
 * 日志
 
-#+CAPTION: =/var/log/apache2/=
+#+caption: =/var/log/apache2/=
 | =access.log= |   |
 |--------------+---|
 | =error.log=  |   |
@@ -381,7 +381,7 @@ CPU Usage: u1 s8.32 cu0 cs0 - 5.07% CPU load
 * 命令
 ** 安装
 
-#+CAPTION: Add repository for latest stable release
+#+caption: Add repository for latest stable release
 #+begin_src sh
 add-apt-repository -y ppa:ondrej/apache2
 #+end_src

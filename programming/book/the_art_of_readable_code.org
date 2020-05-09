@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: The Art of Readable Code
+#+setupfile: ../../styles/readtheorg.setup
+#+title: The Art of Readable Code
 
 * Preface
 
@@ -17,7 +17,7 @@ Code should be easy to understand.
 
 ** Is Smaller Always Better?
 
-#+CAPTION: Fewer lines isn't always better
+#+caption: Fewer lines isn't always better
 #+begin_src java
 assert((!(bucket = FindBucket(key))) || !bucket->IsOccupied());
 // ->
@@ -60,7 +60,7 @@ It's better to be clear and precise than to be cute.
 
 +Pick a name that describes the entity's value or purpose.+
 
-#+CAPTION: Announce the purpose of the variable upfront might help catch a bug.
+#+caption: Announce the purpose of the variable upfront might help catch a bug.
 #+begin_src java
 retval += v[i];
 // ->
@@ -71,7 +71,7 @@ The name =tmp= should be used only in cases when being short-lived and temporary
 
 Names like =i=, =j=, =iter=, and =it= are commonly used as indices and loop iterators.
 
-#+CAPTION: Sometimes more precise names are better for spotting bugs.
+#+caption: Sometimes more precise names are better for spotting bugs.
 #+begin_src java
 for (int i = 0; i < clubs.size(); i++)
     for (int j = 0; j < clubs[i].members.size(); j++)
@@ -86,7 +86,7 @@ if (clubs[ci].members[mi] == users[ui]) // OK. First letters match.
 
 Describe functions, variables concretely rather than abstractly.
 
-#+CAPTION: In C++, to disallow default copy constructor and assignment operator of a class:
+#+caption: In C++, to disallow default copy constructor and assignment operator of a class:
 #+begin_src cpp
 #define DISALLOW_EVIL_CONSTRUCTORS(ClassName) ...
 // The word "evil" is not clear
@@ -94,7 +94,7 @@ Describe functions, variables concretely rather than abstractly.
 #define DISALLOW_COPY_AND_ASSIGN(ClassName) ...
 #+end_src
 
-#+CAPTION: A command-line flag that prints debugging information but runs slowly, used when testing on a local machine:
+#+caption: A command-line flag that prints debugging information but runs slowly, used when testing on a local machine:
 #+begin_src sh
 --run_locally
 # To print debugging information remotely, Passing --run_locally is confusing
@@ -139,7 +139,7 @@ Attach extra information whenever there's something dangerous or surprising abou
 
 ** How Long Should a Name Be?
 
-#+CAPTION: Shorter names can be used for shorter scopes, where all information (variable type, initial value, how it's destroyed) is easy to see.
+#+caption: Shorter names can be used for shorter scopes, where all information (variable type, initial value, how it's destroyed) is easy to see.
 #+begin_src java
 if (debug) {
     map<string,int> m;
@@ -152,7 +152,7 @@ If an identifier has a large scope, it needs to carry enough information to make
 
 Project-specific abbreviations are usually a bad idea. If a new teammate understands what the name means, then it's probably OK.
 
-#+CAPTION: Throw out unneeded words:
+#+caption: Throw out unneeded words:
 | =ConvertToString()= | =ToString()=   |
 
 ** Use Name Formatting to Convey Meaning
@@ -161,7 +161,7 @@ Follow naming conventions and be consistent. Use =UPPERCASE=, =CamelCase= and =_
 
 * Chapter 3: Names That Can't Be Misconstrued
 
-#+CAPTION: =filter()= is an ambiguous name:
+#+caption: =filter()= is an ambiguous name:
 | *Intended action* | *Better name* |
 |-------------------+---------------|
 | To pick out       | =select()=    |
@@ -170,7 +170,7 @@ Follow naming conventions and be consistent. Use =UPPERCASE=, =CamelCase= and =_
 
 -----
 
-#+CAPTION: Rename a function that clips the contents of a paragraph:
+#+caption: Rename a function that clips the contents of a paragraph:
 #+begin_src python
 def Clip(text, length):
 # If it removes length from the end:
@@ -186,7 +186,7 @@ def Truncate(text, max_chars):
 |----------------------------+----------------|
 | Inclusive/exclusive limits | =begin= =end=  |
 
-#+CAPTION: Inclusive/exclusive limits example
+#+caption: Inclusive/exclusive limits example
 #+begin_src python
 # To print events that happened on October 16
 PrintEventsInRange("OCT 16 12:00am", "OCT 17 12:00am") # Inclusive/exclusive limits
@@ -200,13 +200,13 @@ The word "end" is a still little ambiguous. Unfortunately, English doesn't have 
 
 Be sure it's clear what =true= and =false= really mean for a boolean.
 
-#+CAPTION: Adding words like =is= , =has= , =can= , or =should= can make booleans more clear.
+#+caption: Adding words like =is= , =has= , =can= , or =should= can make booleans more clear.
 #+begin_src python
 def SpaceLeft():    # Implying return a number
 def HasSpaceLeft(): # Implying return a boolean
 #+end_src
 
-#+CAPTION: Avoid negated terms in a name.
+#+caption: Avoid negated terms in a name.
 #+begin_src python
 disable_ssl = false; # Needs thinking
 use_ssl = true;      # Easier to read
@@ -222,7 +222,7 @@ The method =list.size()= of C++ Standard Library seems to be a constant time ope
 
 Imagine a config file for many objects. In a the "prototype inheritance" pattern, one object could reuse another object by referencing its =id=. This field could be named in multiple ways.
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | =template:<id>= | Not clear whether it's "a template" or "using this other template".                      |
 |                 | A "template" is often something abstract that must be "filled in" before it is concrete. |
 |-----------------+------------------------------------------------------------------------------------------|

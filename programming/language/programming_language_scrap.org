@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Programming Language Scrap
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Programming Language Scrap
 
 * 几种计算机语言的评价
 
@@ -77,9 +77,9 @@ Java 的缺点是某些部分过于复杂，比如内部类和匿名类的运用
 
 [[http://mp.weixin.qq.com/s?__biz=MzIwMDgyNzUzNw==&mid=2247483658&idx=1&sn=2dde89033d2fef0cba307db9b8b5489e&scene=0#wechat_redirect][Source]]
 
-#+BEGIN_QUOTE
+#+begin_quote
 符号常常比发明它们的数学家更能推广。— F·克莱茵
-#+END_QUOTE
+#+end_quote
 
 ** 前言
 
@@ -182,19 +182,19 @@ _函数的返回值也可以是一个函数_ ，这样不同函数的层次问�
 
 简单说，「函数式编程」是一种编程范式"（programming paradigm），也就是如何编写程序的方法论。它 _属于「结构化编程」的一种，主要思想是把运算过程尽量写成一系列嵌套的函数调用。_
 
-#+CAPTION: 举例来说，现在有一个数学表达式：
+#+caption: 举例来说，现在有一个数学表达式：
 #+begin_src code
 (1 + 2) * 3 - 4
 #+end_src
 
-#+CAPTION: 传统的过程式编程，可能这样写：
+#+caption: 传统的过程式编程，可能这样写：
 #+begin_src js
 var a = 1 + 2;
 var b = a * 3;
 var c = b - 4;
 #+end_src
 
-#+CAPTION: 函数式编程要求使用函数，我们可以把运算过程定义（[[https://lostechies.com/derickbailey/2012/01/24/some-thoughts-on-functional-javascript/][Some Thoughts On Functional JavaScript]]）为不同的函数，然后写成这样：
+#+caption: 函数式编程要求使用函数，我们可以把运算过程定义（[[https://lostechies.com/derickbailey/2012/01/24/some-thoughts-on-functional-javascript/][Some Thoughts On Functional JavaScript]]）为不同的函数，然后写成这样：
 #+begin_src js
 var result = subtract(multiply(add(1, 2), 3), 4);
 #+end_src
@@ -207,7 +207,7 @@ var result = subtract(multiply(add(1, 2), 3), 4);
 
 所谓「第一等公民」（[[https://en.wikipedia.org/wiki/First-class_function][first-class function]]），指的是 _函数与其他数据类型地位平等，可以赋值给其他变量，也可以作为参数、传入另一个函数，或者作为其他函数的返回值。_
 
-#+CAPTION: 举例来说，下面的 =print= 变量就是一个函数，可以作为另一个函数的参数。
+#+caption: 举例来说，下面的 =print= 变量就是一个函数，可以作为另一个函数的参数。
 #+begin_src js
 var print = function(i) { console.log(i); };
 [1, 2, 3].forEach(print);
@@ -252,17 +252,17 @@ Paul Graham 在《黑客与画家》一书中写道：同样功能的程序，�
 
 *** 接近自然语言，易于理解
 
-#+CAPTION: 前文将表达式 =(1 + 2) * 3 - 4= 写成函数式语言：
+#+caption: 前文将表达式 =(1 + 2) * 3 - 4= 写成函数式语言：
 #+begin_src js
 subtract(multiply(add(1, 2), 3), 4)
 #+end_src
 
-#+CAPTION: 对它进行变形，基本就是自然语言的表达了：
+#+caption: 对它进行变形，基本就是自然语言的表达了：
 #+begin_src js
 add(1, 2).multiply(3).subtract(4)
 #+end_src
 
-#+CAPTION: 另外的例子：
+#+caption: 另外的例子：
 #+begin_src js
 merge([1, 2], [3, 4]).sort().search("2")
 #+end_src
@@ -292,19 +292,19 @@ var s3 = concat(s1, s2);
 
 [[http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html][Source]]
 
-#+CAPTION: A simple value:
+#+caption: A simple value:
 #+begin_src code
 2
 #+end_src
 
-#+CAPTION: To apply a function to this value:
+#+caption: To apply a function to this value:
 #+begin_src code
 2 -> (+3)2 -> 5
 #+end_src
 
 Let's extend this by saying that any _value can be in a context_ .
 
-#+CAPTION: Think of a context as a box that you can put a value in:
+#+caption: Think of a context as a box that you can put a value in:
 #+begin_src code
 [2] = Just 2 <- Value and context
 #+end_src
@@ -328,7 +328,7 @@ file:../images/programming_language_scrap/01.png
 
 When a value is wrapped in a context, you can't apply a normal function to it. This is where =fmap= comes in. _=fmap= knows how to apply functions to values that are wrapped in a context._
 
-#+CAPTION: For example, to apply =(+3)= to =Just 2=:
+#+caption: For example, to apply =(+3)= to =Just 2=:
 #+begin_src haskell
 > fmap (+3) (Just 2)
 Just 5
@@ -336,7 +336,7 @@ Just 5
 
 file:../images/programming_language_scrap/03.png
 
-#+CAPTION: To apply =(+3)= to =Nothing=:
+#+caption: To apply =(+3)= to =Nothing=:
 #+begin_src haskell
 > fmap (+3) Nothing
 Nothing
@@ -346,19 +346,19 @@ file:../images/programming_language_scrap/04.png
 
 *** =Maybe=
 
-#+CAPTION: The =Maybe= data type defines two related contexts:
+#+caption: The =Maybe= data type defines two related contexts:
 #+begin_src haskell
 data Maybe a = Nothing | Just a
 #+end_src
 
-#+CAPTION: =Maybe= specifies how =fmap= applies to =Just= and =Nothing=:
+#+caption: =Maybe= specifies how =fmap= applies to =Just= and =Nothing=:
 #+begin_src haskell
 instance Functor Maybe where
     fmap func (Just val) = Just (func val)
     fmap func Nothing = Nothing
 #+end_src
 
-#+CAPTION: How to work with a database record in a language without =Maybe=:
+#+caption: How to work with a database record in a language without =Maybe=:
 #+begin_src python
 post = Post.find_by_id(1)
 if post:
@@ -367,18 +367,18 @@ else
     return nil
 #+end_src
 
-#+CAPTION: In Haskell:
+#+caption: In Haskell:
 #+begin_src haskell
 fmap (getPostTitle) (findPost 1)
 #+end_src
 
-#+CAPTION: =<$>= is the infix version of =fmap=:
+#+caption: =<$>= is the infix version of =fmap=:
 #+begin_src haskell
 getPostTitle <$> (findPost 1)
 #+end_src
 *** List
 
-#+CAPTION: Lists are functors too. The definition:
+#+caption: Lists are functors too. The definition:
 #+begin_src haskell
 instance Functor [] where
     fmap = map
@@ -388,13 +388,13 @@ file:../images/programming_language_scrap/05.png
 
 *** Function
 
-#+CAPTION: Functions are Functors too:
+#+caption: Functions are Functors too:
 #+begin_src haskell
 instance Functor ((->) r) where
     fmap f g = f . g
 #+end_src
 
-#+CAPTION: To apply a function to another function:
+#+caption: To apply a function to another function:
 #+begin_src haskell
 > import Control.Applicative
 > let foo = fmap (+3) (+2)

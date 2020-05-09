@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: PHP Objects, Patterns and Practice
+#+setupfile: ../../styles/readtheorg.setup
+#+title: PHP Objects, Patterns and Practice
 
 * PHP and Objects
 ** The Accidental Success of PHP Objects
@@ -166,7 +166,7 @@ $processor->process(new Item());
 
 Until PHP 5.3, developers were forced to name their files in a global context.
 
-#+CAPTION: The most damaging problem was the possibility of naming collisions.
+#+caption: The most damaging problem was the possibility of naming collisions.
 #+begin_src php
 // Foo.php
 class Dummy {}
@@ -175,7 +175,7 @@ include 'Foo.php';
 class Dummy {} // Fatal error:  Cannot declare class Dummy ...
 #+end_src
 
-#+CAPTION: A conventional workaround was to prepend package names to class names.
+#+caption: A conventional workaround was to prepend package names to class names.
 #+begin_src php
 // Foo.php
 class Foo_Dummy {}
@@ -211,12 +211,12 @@ Freeze the library file into a particular context. It will work for a single ins
 
 If must manually include files, the neatest approach is to decouple the invoking code from the library =business/User.php=.
 
-#+CAPTION: This can be achieved by adding the directory to =include_path=.
+#+caption: This can be achieved by adding the directory to =include_path=.
 #+begin_src sh
 include_path = ".:/usr/local/lib/php-libraries"
 #+end_src
 
-#+CAPTION: Or with Apache, set =include_path= in =httpd.conf= or per-directory configuration file =.htaccess=.
+#+caption: Or with Apache, set =include_path= in =httpd.conf= or per-directory configuration file =.htaccess=.
 #+begin_src sh
 php_value include_path value .:/usr/local/lib/php-libraries
 #+end_src 
@@ -232,7 +232,7 @@ To use autoload, classes should be organized so that each sits in its own file. 
 =spl_autoload_register()= stacks the autoload functions. When PHP encounters an unknown class, it will invoke the autoload functions in turn, stopping when instantiation is possible, or when the all options have been exhausted. There is obviously an overhead to this kind of stacking. It is still supported because components in large systems and in third-party libraries may need to register their own autoload mechanisms. Stacking allows multiple parts of a system to register autoload strategies independently, without overwriting one another.
 ** The Class and Object Functions
 
-#+CAPTION: PHP allows you to use strings to refer to classes dynamically:
+#+caption: PHP allows you to use strings to refer to classes dynamically:
 #+begin_src php
 class Foo {}
 $class = 'Foo';
@@ -247,7 +247,7 @@ In procedure programming, the controlling code tends to take responsibility for 
 
 *** Responsibility
 
-#+CAPTION: Placing a static method for generating child objects in the parent class.
+#+caption: Placing a static method for generating child objects in the parent class.
 #+begin_src php
 abstract class ParamHandler {
     public static function getInstance(string $filename) {
@@ -283,9 +283,9 @@ The combination of components with tightly defined responsibilities that are als
 
 It can seem straightforward when you are modeling the real world. This is not a bad starting point, but it does have its dangers. You may find it bloating as ongoing development and requirement changes call for it to do more and more things.
 
-#+BEGIN_QUOTE
+#+begin_quote
 A =ShopProduct= class manages product data. It may provide a mechanism for outputting summary information for invoices and delivery notes with a =write()= method. But when the client asks for product summaries in different formats, there are 2 options: create =writeXML()= and =writeHTML()= methods in addition, or add conditional code to =write()= to output different formats, according to an option flag. Either way, the problem here is that the =ShopProduct= class is now trying to do too much.
-#+END_QUOTE
+#+end_quote
 
 The best approach is to think of a class as having a primary responsibility and to make that responsibility as singular and focused as possible. Describe a class's responsibility in 25 words or less, rarely using the words "and" or "or". 
 

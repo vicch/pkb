@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Chef Fundamentals
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Chef Fundamentals
 
 * Welcome to Chef Fundamentals
 ** Install ChefDK
@@ -81,7 +81,7 @@ chef --version
 
 Create a simple recipe:
 
-#+CAPTION: =hello.rb=
+#+caption: =hello.rb=
 #+begin_src ruby
 file '/hello.txt' do # Create a file
   content 'Hello, world!' # Specify content of the file
@@ -99,7 +99,7 @@ sudo chef-client --local-mode hello.rb
 
 Create a recipe to install 2 services and 1 file:
 
-#+CAPTION: =setup.rb=
+#+caption: =setup.rb=
 #+begin_src ruby
 package 'tree' do
   action :install
@@ -133,7 +133,7 @@ chef generate recipe cookbooks/apache server
 
 Edit the recipe:
 
-#+CAPTION: =cookbooks/apache/recipes/server.rb=
+#+caption: =cookbooks/apache/recipes/server.rb=
 #+begin_src ruby
 package 'httpd' do
   action :install
@@ -172,7 +172,7 @@ sudo chef-client -z --runlist "recipe[apache::server],recipe[workstation::setup]
 
 Include a recipe from the default recipe:
 
-#+CAPTION: =cookbooks/apache/recipes/default.rb=
+#+caption: =cookbooks/apache/recipes/default.rb=
 #+begin_src ruby
 include_recipe 'apache::server'
 #+end_src
@@ -192,7 +192,7 @@ The command =ohai= returns the same info.
 
 ** Access Node Attributes
 
-#+CAPTION: =cookbooks/workstation/recipes/setup.rb=
+#+caption: =cookbooks/workstation/recipes/setup.rb=
 #+begin_src ruby
 file '/etc/motd' do
   content "
@@ -216,7 +216,7 @@ chef generate template cookbooks/workstation motd
 
 Edit the template file:
 
-#+CAPTION: =cookbooks/workstation/templates/motd.erb=
+#+caption: =cookbooks/workstation/templates/motd.erb=
 #+begin_src erb
 This is the property of ...
 Hostname: <%= node['hostname'] %>
@@ -228,7 +228,7 @@ Name: <%= @name %>
 
 Add a =template= resource to use the template in the recipe:
 
-#+CAPTION: =cookbooks/workstation/recipes/setup.rb=
+#+caption: =cookbooks/workstation/recipes/setup.rb=
 #+begin_src ruby
 template '/etc/motd' do
   action :create
@@ -250,7 +250,7 @@ chef generate file cookbooks/apache index.html
 
 Add a =cookbook_file= resource in the recipe:
 
-#+CAPTION: =cookbooks/apache/recipes/server.rb=
+#+caption: =cookbooks/apache/recipes/server.rb=
 #+begin_src ruby
 cookbook_file '/var/www/html/index.html' do
   action :create
@@ -262,7 +262,7 @@ end
 
 Add a =remote_file= resource in the recipe, and pass the file path as variable to the template file:
 
-#+CAPTION: =cookbooks/apache/recipes/server.rb=
+#+caption: =cookbooks/apache/recipes/server.rb=
 #+begin_src ruby
 remote_file '/var/www/html/image.jpg' do
   action :create
@@ -280,7 +280,7 @@ end
 
 Edit the template:
 
-#+CAPTION: =cookbooks/apache/templates/index.html.erb=
+#+caption: =cookbooks/apache/templates/index.html.erb=
 #+begin_src html
 <h1>Here is an image.</h1>
 <img src="<%= @image %>" />
@@ -289,7 +289,7 @@ Edit the template:
 
 3 different ways to create a directory and set the owner as =apache=:
 
-#+CAPTION: =cookbooks/apache/recipes/server.rb=
+#+caption: =cookbooks/apache/recipes/server.rb=
 #+begin_src ruby
 bash 'mysites' do
   user 'root'
@@ -316,7 +316,7 @@ end
 
 Create a user and a group, and assign the user to the group:
 
-#+CAPTION: =cookbooks/workstation/recipes/setup.rb=
+#+caption: =cookbooks/workstation/recipes/setup.rb=
 #+begin_src ruby
 user 'user1' do
   home '/home/user1'
@@ -333,7 +333,7 @@ end
 
 2 ways to restart =httpd= when a =template= resource is updated:
 
-#+CAPTION: =cookbooks/apache/recipes/server.rb=
+#+caption: =cookbooks/apache/recipes/server.rb=
 #+begin_src ruby
 template '/var/www/html/index.html' do
   source 'index.html.erb'
@@ -345,7 +345,7 @@ service 'httpd' do
 end
 #+end_src
 
-#+CAPTION: =cookbooks/apache/recipes/server.rb=
+#+caption: =cookbooks/apache/recipes/server.rb=
 #+begin_src ruby
 template '/var/www/html/index.html' do
   source 'index.html.erb'
@@ -389,7 +389,7 @@ RSpec 3.8
 
 Update the Test Kitchen config file:
 
-#+CAPTION: =cookbooks/apache/.kitchen.yml=
+#+caption: =cookbooks/apache/.kitchen.yml=
 #+begin_src yaml
 provisioner:
   name: chef_zero
@@ -401,7 +401,7 @@ provisioner:
 
 Write integration tests by following [[https://www.inspec.io/docs/reference/resources/][InSpec Resources Reference]]:
 
-#+CAPTION: =cookbooks/apache/test/integration/default/server_test.rd=
+#+caption: =cookbooks/apache/test/integration/default/server_test.rd=
 #+begin_src ruby
 describe port(80) do
   it { should be_listening }
@@ -439,7 +439,7 @@ Running integration tests with InSpec needs external dependencies (driver etc.) 
 
 Write unit test:
 
-#+CAPTION: =cookbooks/apache/spec/unit/recipes/server_spec.rb=
+#+caption: =cookbooks/apache/spec/unit/recipes/server_spec.rb=
 #+begin_src ruby
 require 'spec_helper'
 
@@ -471,7 +471,7 @@ end
 
 Add unit test coverage:
 
-#+CAPTION: =cookbooks/apache/spec/spec_helper.rb=
+#+caption: =cookbooks/apache/spec/spec_helper.rb=
 #+begin_src ruby
 ChefSpec::Coverage.start!
 #+end_src
@@ -504,7 +504,7 @@ Without using Chef Server, provisioning multiple nodes will be:
 
 NOTE: There is a special recipe to include into the =workstation= cookbook:
 
-#+CAPTION: =chef-repo/cookbooks/workstation/recipes/vagrant.rb=
+#+caption: =chef-repo/cookbooks/workstation/recipes/vagrant.rb=
 #+begin_src ruby
 # if you found this recipe you're probably wondering what it's for!
 # we do not cover ohai plugins in this class, but it's the process of modifying
@@ -600,7 +600,7 @@ Go to [[https://api.chef.io][Chef Manage]] and confirm the cookbooks show up und
 
 Start 3 Vagrant nodes of 2 web servers and 1 load balancer with config:
 
-#+CAPTION: =chef-repo/Vagrantfile=
+#+caption: =chef-repo/Vagrantfile=
 #+begin_src ruby
 unless Vagrant.has_plugin?("vagrant-ohai")
   raise "vagrant-ohai plugin is not installed! Install with 'vagrant plugin install vagrant-ohai'"
@@ -723,14 +723,14 @@ chef generate cookbook myhaproxy
 
 Add =haproxy= cookbook as dependency:
 
-#+CAPTION: =chef-repo/cookbooks/myhaproxy/metadata.rb=
+#+caption: =chef-repo/cookbooks/myhaproxy/metadata.rb=
 #+begin_src ruby
 depends 'haproxy', '~> 7.1.0'
 #+end_src
 
 =haproxy= provides [[https://github.com/sous-chefs/haproxy/tree/master/test/fixtures/cookbooks/test/recipes][example recipes]] to get started with. Copy the recipe =config_array.rb= to the cookbook (but remove the unneeded parts):
 
-#+CAPTION: =chef-repo/cookbooks/myhaproxy/recipes/default.rb=
+#+caption: =chef-repo/cookbooks/myhaproxy/recipes/default.rb=
 #+begin_src ruby
 haproxy_install 'package'
 
@@ -764,7 +764,7 @@ IP: 192.168.10.43 # As defined in Vagrantfile
 
 Update IP address in the =haproxy= recipe:
 
-#+CAPTION: =chef-repo/cookbooks/myhaproxy/recipes/default.rb=
+#+caption: =chef-repo/cookbooks/myhaproxy/recipes/default.rb=
 #+begin_src ruby
 haproxy_backend 'servers' do
   server [
@@ -844,14 +844,14 @@ chef generate cookbook cookbooks/mychefclient
 
 Add =chef-client= as dependency:
 
-#+CAPTION: =chef-repo/cookbooks/mychefclient/metadata.rb=
+#+caption: =chef-repo/cookbooks/mychefclient/metadata.rb=
 #+begin_src ruby
 depends 'chef-client', '~> 11.2.0'
 #+end_src
 
 Update default recipe to run Chef Client periodically:
 
-#+CAPTION: =chef-repo/cookbooks/mychefclient/recipes/default.rb=
+#+caption: =chef-repo/cookbooks/mychefclient/recipes/default.rb=
 #+begin_src ruby
 node.default['chef_client']['interval'] = '300' # Run every 300 seconds
 node.default['chef_client']['splay'] = '60'     # Random delay of 0-60 seconds before running Chef Client
@@ -881,7 +881,7 @@ sudo chef-client
 
 Create a role file:
 
-#+CAPTION: =chef-repo/roles/web.rb=
+#+caption: =chef-repo/roles/web.rb=
 #+begin_src ruby
 name 'web'
 description 'web server'
@@ -943,7 +943,7 @@ $ knife search node "role:web AND recipes:apache" # Nodes with role "web" and re
 
 Previously the =haproxy= load balancer was configures with hard-coded web nodes. By using Chef Server's search indices, the load balancer can be configures to query and update the web nodes automatically.
 
-#+CAPTION: =chef-repo/cookbooks/myhaproxy/recipes/default.rb=
+#+caption: =chef-repo/cookbooks/myhaproxy/recipes/default.rb=
 #+begin_src ruby
 # The hard-coded server list
 # haproxy_backend 'servers' do
@@ -980,7 +980,7 @@ Environment: _default
 
 Create a new environment file:
 
-#+CAPTION: =chef-repo/environments/production.rb=
+#+caption: =chef-repo/environments/production.rb=
 #+begin_src ruby
 name 'production'
 description 'Production environment'
@@ -1009,7 +1009,7 @@ By setting the node to the environment, only Chef Server knows about it, the nod
 
 The load balancer cookbook needs to be updated to avoid routing traffic to web nodes of different environments:
 
-#+CAPTION: =chef-repo/cookbooks/myhaproxy/recipes/default.rb=
+#+caption: =chef-repo/cookbooks/myhaproxy/recipes/default.rb=
 #+begin_src ruby
 web_nodes = search('node', 'role:web')
 # Update to:
@@ -1035,7 +1035,7 @@ $ knife data bag list
 
 Create JSON files for data bag items:
 
-#+CAPTION: =chef-repo/databags/users/user1.json=
+#+caption: =chef-repo/databags/users/user1.json=
 #+begin_src js
 {
   "id": "user1",
@@ -1048,7 +1048,7 @@ Create JSON files for data bag items:
 }
 #+end_src
 
-#+CAPTION: =chef-repo/databags/groups/group1.json=
+#+caption: =chef-repo/databags/groups/group1.json=
 #+begin_src js
 {
   "id": "group1",
@@ -1082,7 +1082,7 @@ Create a cookbook to use the data bag to create users:
 $ chef generate cookbook cookbooks/users
 #+end_src
 
-#+CAPTION: =chef-repo/cookbooks/users/recipes/default.rb=
+#+caption: =chef-repo/cookbooks/users/recipes/default.rb=
 #+begin_src ruby
 search('users', 'platform:centos').each do |user_data|
   user user_data['id'] do
@@ -1097,7 +1097,7 @@ end
 
 Update the role file:
 
-#+CAPTION: =chef-repo/roles/web.rb=
+#+caption: =chef-repo/roles/web.rb=
 #+begin_src ruby
 run_list 'recipe[users]','recipe[workstation]','recipe[apache]'
 #+end_src

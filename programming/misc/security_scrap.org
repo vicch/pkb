@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Security Scrap
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Security Scrap
 
 * 密码学笔记
 
@@ -63,9 +63,9 @@ RSA 算法并不难，只需要一点数论知识（[[http://jeremykun.com/2011/
 
 ** 欧拉函数
 
-#+BEGIN_QUOTE
+#+begin_quote
 任意正整数 n，在小于等于 n 的正整数之中，有多少个与 n 构成互质关系？
-#+END_QUOTE
+#+end_quote
 
 计算这个值的方法就叫做 +欧拉函数+ ，以 $\varphi(n)$ 表示。在 1 到 8 之中，与 8 形成互质关系的是 1、3、5、7，所以 $\varphi(8) = 4$。$\varphi(n)$ 的计算方法并不复杂，但是为了得到最后那个公式，需要一步步讨论。
 
@@ -175,11 +175,11 @@ $$ex + \varphi(n)y = 1$$
 
 可是， _大整数的因数分解，是一件非常困难的事情。目前除了暴力破解，还没有发现别的有效方法。_ 维基百科这样写道：
 
-#+BEGIN_QUOTE
+#+begin_quote
 对极大整数做因数分解的难度决定了 RSA 算法的可靠性。换言之，对一极大整数做因数分解愈困难，RSA 算法愈可靠。假如有人找到一种快速因数分解的算法，那么 RSA 的可靠性就会极度下降。但找到这样的算法的可能性是非常小的。今天只有短的 RSA 密钥才可能被暴力破解。到 2008 年为止，世界上还没有任何可靠的攻击 RSA 算法的方式。 _只要密钥长度足够长，用 RSA 加密的信息实际上是不能被解破的。_
-#+END_QUOTE
+#+end_quote
 
-#+CAPTION: 举例来说，可以对 3233 进行因数分解，但是没法对下面这个整数进行因数分解：
+#+caption: 举例来说，可以对 3233 进行因数分解，但是没法对下面这个整数进行因数分解：
 #+begin_src code
 12301866845301177551304949
 58384962720772853569595334
@@ -192,7 +192,7 @@ $$ex + \varphi(n)y = 1$$
 351419597459856902143413
 #+end_src
 
-#+CAPTION: 它等于这样两个质数的乘积：
+#+caption: 它等于这样两个质数的乘积：
 #+begin_src code
 33478071698956898786044169
 84821269081770479498371376
@@ -237,7 +237,7 @@ $$c^d \equiv m \pmod{n}$$
 
 为什么用私钥解密，一定可以正确地得到 m，需要证明 $c^d \equiv m \pmod{n}$。
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | 根据加密规则：          | $m^e \equiv c \pmod{n}$                    |
 |-------------------------+--------------------------------------------|
 | 于是，c 可以写成：      | $c = m^e - kn$                             |
@@ -256,7 +256,7 @@ $$c^d \equiv m \pmod{n}$$
 
 *** m 与 n 互质
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | 根据欧拉定理，此时： | $m^{\varphi(n)} \equiv 1 \pmod{n}$                |
 |----------------------+---------------------------------------------------|
 | 得到：               | $(m^{\varphi(n)})^h \times m \equiv m \pmod{n}$   |
@@ -267,7 +267,7 @@ $$c^d \equiv m \pmod{n}$$
 
 由于 n 等于质数 p 和 q 的乘积，所以 m 必然等于 kp 或 kq。以 m = kp 为例，考虑到这时 k 与 q 必然互质，则：
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | 根据欧拉定理可得：  | $(kp)^{q-1} \equiv 1 \pmod{q}$                         |
 |---------------------+--------------------------------------------------------|
 | 进一步得到：        | $((kp)^{q-1})^{h(p-1)} \times kp \equiv kp \pmod{q}$   |
@@ -309,9 +309,9 @@ Finally, in order to avoid further issues with other nihilists who would not be 
 
 [[http://www.pcgamer.com/why-are-ddos-attacks-so-hard-to-stop/][Source]]
 
-#+BEGIN_QUOTE
+#+begin_quote
 I saw that Quake Live was down because of a DDoS attack. It seems like this happens to games all the time... so I don't understand why it can't be stopped. Will this madness ever end? ĄŞ Tom
-#+END_QUOTE
+#+end_quote
 
 It is madness, Tom, and it ought to end... but it isn't likely to anytime soon. _Distributed denial-of-service attacks can be mitigated, sometimes without any downtime, but they're really hard to beat altogether._
 

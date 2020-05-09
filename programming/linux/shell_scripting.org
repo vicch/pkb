@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Shell Scripting
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Shell Scripting
 
 * 脚本
 
@@ -26,17 +26,17 @@ sh <script> # sh 命令执行
 
 ** 退出状态码
 
-#+CAPTION: 查看上一个命令（脚本）的退出状态码
+#+caption: 查看上一个命令（脚本）的退出状态码
 #+begin_src sh
 echo $?
 #+end_src
 
-#+CAPTION: 设定脚本的退出状态码
+#+caption: 设定脚本的退出状态码
 #+begin_src sh
 exit <code>
 #+end_src
 
-#+CAPTION: 退出状态码参考值
+#+caption: 退出状态码参考值
 | =0=   | 成功结束           |
 |-------+--------------------|
 | =1=   | 通用未知错误       |
@@ -73,7 +73,7 @@ echo $<VAR>            # 输出环境变量值
 export <VAR>[=<value>] # 设置或显示环境变量
 #+end_src
 
-#+CAPTION: 默认环境变量
+#+caption: 默认环境变量
 | =CDPATH=   | 由 =:= 分隔的目录列表，作为 =cd= 的搜多路径 |
 |------------+---------------------------------------------|
 | =HOME=     | 当前用户的主目录                            |
@@ -100,7 +100,7 @@ export <VAR>[=<value>] # 设置或显示环境变量
 
 Internal Field Separator (IFS)，默认为：空格、制表符、换行符。
 
-#+CAPTION: 更改 IFS
+#+caption: 更改 IFS
 #+begin_src sh
 IFS.OLD=$IFS # 更改之前保存当前设置
 IFS=$'\n'    # 指定一个分隔符
@@ -108,7 +108,7 @@ IFS=$'\n:;'  # 指定多个分隔符
 IFS=$IFS.OLD # 设置回原值
 #+end_src
 
-#+CAPTION: 更改 IFS 用于遍历特殊字符分隔的字符串
+#+caption: 更改 IFS 用于遍历特殊字符分隔的字符串
 #+begin_src sh
 IFS.OLD=$IFS
 IFS=":"
@@ -120,7 +120,7 @@ IFS=$IFS.OLD
 
 *** =PATH=
 
-#+CAPTION: 在登录脚本里设置自定义脚本的查找路径
+#+caption: 在登录脚本里设置自定义脚本的查找路径
 #+begin_src sh
 # ~/.bashrc
 export PATH="$PATH:$HOME/.rvm/bin" # Ruby 脚本路径
@@ -129,25 +129,25 @@ export PATH="$PATH:$HOME/.rvm/bin" # Ruby 脚本路径
 * 类型
 ** 数组
 
-#+CAPTION: 定义
+#+caption: 定义
 #+begin_src sh
 array=(val1 val2 ...) # 枚举
 array=($(cat))        # 使用命令输出
 #+end_src
 
-#+CAPTION: 遍历
+#+caption: 遍历
 #+begin_src sh
 for value in ${array[@]}; do
     ...
 done
 #+end_src
 
-#+CAPTION: 分片
+#+caption: 分片
 #+begin_src sh
 ${array[@]:<start>:<count>}
 #+end_src
 
-#+CAPTION: 替换字符
+#+caption: 替换字符
 #+begin_src sh
 ${array[@]/<pattern>/<replacement>}
 #+end_src
@@ -156,17 +156,17 @@ ${array[@]/<pattern>/<replacement>}
 
 字符串实际上是字符数组。
 
-#+CAPTION: 子字符串
+#+caption: 子字符串
 #+begin_src sh
 ${<string>:<start>:<length>}
 #+end_src
 
-#+CAPTION: 示例：替换指定位置的字符
+#+caption: 示例：替换指定位置的字符
 #+begin_src sh
 foo="${foo:0:9}x${foo:10}"
 #+end_src
 
-#+CAPTION: 示例：删除最后一个字符
+#+caption: 示例：删除最后一个字符
 #+begin_src sh
 foo=${foo%?}
 #+end_src
@@ -199,13 +199,13 @@ if [ ! <cond> ]             # 非
 |-------+---|
 | =-le= |   |
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sh
 while [ $i -lt 100 ]
 ...
 #+end_src
 
-#+CAPTION: 数值比较无法处理变量中存储的浮点值，需要用 =bc= ，示例：
+#+caption: 数值比较无法处理变量中存储的浮点值，需要用 =bc= ，示例：
 #+begin_src sh
 if [ $(echo "$var >= 0.1" | bc) -eq 1 ]; then
 #+end_src
@@ -258,7 +258,7 @@ $[ <expr> ] # 括号内两侧可以无空格
             # 运算符不需要转义
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sh
 var1=1
 var2=2
@@ -267,7 +267,7 @@ var3=$[ $var1 + $var2 ]
 
 ** =${}= 数组
 
-#+CAPTION: 数组分片
+#+caption: 数组分片
 #+begin_src sh
 
 #+end_src
@@ -301,7 +301,7 @@ if (( <expr> ))
 [[ <expr> ]]
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sh
 if [[ $USER == r* ]]
 #+end_src
@@ -335,7 +335,7 @@ else
 fi
 #+end_src
 
-#+CAPTION: 简写
+#+caption: 简写
 #+begin_src sh
 if [ <cond> ]; then
     ...
@@ -361,7 +361,7 @@ do
 done
 #+end_src
 
-#+CAPTION: 简写
+#+caption: 简写
 #+begin_src sh
 for <var> in <list>; do
     <cmd>
@@ -370,24 +370,24 @@ done
 
 *** 列表
 
-#+CAPTION: 直接输入
+#+caption: 直接输入
 #+begin_src sh
 for var in a b c d # 默认分隔符为空格
                    # 单引号需要转义，或用双引号分隔
 #+end_src
 
-#+CAPTION: 从变量读取
+#+caption: 从变量读取
 #+begin_src sh
 list='a b c d'
 for var in $list
 #+end_src
 
-#+CAPTION: 从输出读取
+#+caption: 从输出读取
 #+begin_src sh
 for var in `cat file`
 #+end_src
 
-#+CAPTION: 遍历目录
+#+caption: 遍历目录
 #+begin_src sh
 for file in path/*; do      # 目录（文件）列表使用 glob 表达式
     if [ -d "$file" ]; then # 文件名中可能有空格，需用引号分隔
@@ -407,14 +407,14 @@ for (( i=1; i<=10; i++ ))
 - 条件中的变量不以 =$= 开头。
 - 迭代过程不是 =expr= 表达式格式。
 
-#+CAPTION: 可以使用多个变量，但条件只能有一个：
+#+caption: 可以使用多个变量，但条件只能有一个：
 #+begin_src sh
 for (( a=1, b=10; a<=10; a++, b-- ))
 #+end_src
 
 *** 重定向输出
 
-#+CAPTION: 结果重定向到文件：
+#+caption: 结果重定向到文件：
 #+begin_src sh
 for ...
 ...
@@ -423,7 +423,7 @@ done > file
 
 *** 示例
 
-#+CAPTION: 数值补齐，0 到 10 补齐两位：
+#+caption: 数值补齐，0 到 10 补齐两位：
 #+begin_src sh
 for i in $(seq -f "%02g" 0 10)
 #+end_src
@@ -437,7 +437,7 @@ do
 done
 #+end_src
 
-#+CAPTION: 使用多个测试
+#+caption: 使用多个测试
 #+begin_src sh
 while [<cond>]
     <cond> # 每个测试单独一行
@@ -457,7 +457,7 @@ done
 
 可以使用多个测试，规则同 =while= 。
 
-#+CAPTION: 逻辑对比
+#+caption: 逻辑对比
 |         | *条件成立* | *条件不成立* |
 |---------+------------+--------------|
 | =while= | 运行命令   | 不运行命令   |
@@ -744,13 +744,13 @@ read <options> <var> ...
     -s          # 隐藏用户输入（实际上是文本和背景色一样）
 #+end_src
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *指定多个变量名：* | 输入（空格分隔）和变量一一对应 |
 |                    | 剩余的输入保存在最后一个变量中 |
 |--------------------+--------------------------------|
 | *不指定变量名：*   | 输入保存在 =REPLY= 环境变量中  |
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sh
 echo "Enter your name: "
 read name
@@ -776,7 +776,7 @@ esac
 
 ** 文件输入
 
-#+CAPTION: 每次读取一行
+#+caption: 每次读取一行
 #+begin_src sh
 cat file | while read line
 do
@@ -824,7 +824,7 @@ printf "<pattern>" <value>
 expr <expr>
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sh
 expr 1 + 1
 #+end_src
@@ -839,7 +839,7 @@ Bash 数学运算符只支持整数运算，浮点运算需要使用内建计算
 echo "<options>; <expr>" | bc <options>
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src sh
 var=`echo "scale=4; 3.44 / 5" | bc`
 var=`printf ".0f" $(echo "scale=2; $a * $b / 100" | bc)`
@@ -1007,7 +1007,7 @@ trap - EXIT
 
 * 示例
 
-#+CAPTION: 批量替换文件前缀
+#+caption: 批量替换文件前缀
 #+begin_src sh
 ## Usage: rpl_pfix.sh <from_prefix> <to_prefix>
 prefix1=$1
@@ -1019,7 +1019,7 @@ do
 done
 #+end_src
 
-#+CAPTION: 随机抽取文件内容
+#+caption: 随机抽取文件内容
 #+begin_src sh
 ## Usage: rand_line.sh <src_file> <number_of_lines>
 ## Result: random lines saved in <src_file>_rand
@@ -1030,7 +1030,7 @@ for (( i=1; i<=$2; i++ )); do
 done
 #+end_src
 
-#+CAPTION: 豆瓣计算书籍权重
+#+caption: 豆瓣计算书籍权重
 #+begin_src sh
 ## 权重 = log10(点评人数) * 点评平均分
 ## 输入文件：点评人数\t点评平均分

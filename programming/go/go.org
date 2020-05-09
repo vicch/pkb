@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Go
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Go
 
 * Type
 
@@ -94,7 +94,7 @@ file:../images/go/02.png
 
 file:../images/go/03.png
 
-#+CAPTION: 分片作参数时传递引用
+#+caption: 分片作参数时传递引用
 #+begin_src go
 func Foo(a []int) {
 	a[0] += 10
@@ -239,7 +239,7 @@ bar := list{"a", "b"}
 <name>.(Type)
 #+end_src
 
-#+CAPTION: 类型断言用于类型判断
+#+caption: 类型断言用于类型判断
 #+begin_src go
 switch foo.(type) {
     case int:
@@ -251,7 +251,7 @@ switch foo.(type) {
 }
 #+end_src
 
-#+CAPTION: 类型断言用于读取接口变量的实际（基础类型）值
+#+caption: 类型断言用于读取接口变量的实际（基础类型）值
 #+begin_src go
 var i interface{} = "hello"
 
@@ -268,19 +268,19 @@ f, ok := i.(float64) // f = 0, ok = false
 Type(<name>)
 #+end_src
 
-#+CAPTION: 定义指定类型变量
+#+caption: 定义指定类型变量
 #+begin_src go
 foo := uint8(99)
 bar := string("test")
 #+end_src
 
-#+CAPTION: 类型转换
+#+caption: 类型转换
 #+begin_src go
 foo := "test"
 bar := []byte(foo)
 #+end_src
 
-#+CAPTION: 不同类型变量的赋值必须进行显式类型转换
+#+caption: 不同类型变量的赋值必须进行显式类型转换
 #+begin_src go
 var i int = 1
 f := float64(i)
@@ -564,7 +564,7 @@ if i := 10; i < 10 { // 进行判断之前可执行语句
 
 ** =range=
 
-#+CAPTION: 字符串
+#+caption: 字符串
 #+begin_src go
 for k, v := range "foo" {
     fmt.Printf("%d %c\n", k, v)
@@ -574,7 +574,7 @@ for k, v := range "foo" {
 // 2 o
 #+end_src
 
-#+CAPTION: 数组
+#+caption: 数组
 #+begin_src go
 pow := []int{1, 2, 4, 8}
 for k, v := range pow {
@@ -586,7 +586,7 @@ for k, v := range pow {
 // 2^3 = 8
 #+end_src
 
-#+CAPTION: Map
+#+caption: Map
 #+begin_src go
 m := map[int]string{10: "ten", 11: "eleven"}
 for k, v := range m {
@@ -643,7 +643,7 @@ func foo (x int) {
 
 *** Variadic Parameter
 
-#+CAPTION: 同一类型
+#+caption: 同一类型
 #+begin_src go
 func foo(args ...int) int {
     sum := 0
@@ -656,7 +656,7 @@ x := foo(1, 2, 3)           // 6
 y := foo([]int{1, 2, 3}...) // 6
 #+end_src
 
-#+CAPTION: 任意类型
+#+caption: 任意类型
 #+begin_src go
 func foo(args ...interface{}) {
     for _, arg := range args {
@@ -783,7 +783,7 @@ fmt.Println(v.Abs()) // 调用方法
 
 方法的 receiver 传递的是值而不是引用，需要修改 receiver 的值时，将 receiver 定义为指针。
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src go
 type Vertex struct {
     X, Y float64
@@ -842,7 +842,7 @@ package <name>
 
 可执行程序必须有 =main= 包，其中定义 =main()= 函数。
 
-#+CAPTION: 一个包可以跨越多个文件
+#+caption: 一个包可以跨越多个文件
 #+begin_src go
 // main_one.go
 package main
@@ -880,7 +880,7 @@ foo_test.go # 测试文件
 $ go test   # 运行测试
 #+end_src
 
-#+CAPTION: =foo_test.go=
+#+caption: =foo_test.go=
 #+begin_src go
 func TestFoo(t *testing.T) {
 }

@@ -1,12 +1,12 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: React
+#+setupfile: ../../styles/readtheorg.setup
+#+title: React
 
 * React
 ** Performance Model
 
 [[http://www.react.express/performance_model][Performance Model | React Express]]
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Operation*               | *Cost*    | *Descrption*                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 |---------------------------+-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | DOM manipulation          | Slow      | Modifying the DOM is slow. React is built to modify that DOM as little as possible. React builds anin-memory representation of the components rendered, and then syncs this representation to the DOM. As components are updated, React will update the in-memory representation, and then make the least amount of changes to the DOM possible. This is what keeps the application fast. React does this automatically most of the time - however, hints can be given about when and how to update the DOM to improve performance. This is especially relevant when dealing with hundreds or thousands of components, in the case of large lists.                                                                     |
@@ -38,7 +38,7 @@ ReactDOM provides built-in DOM-node components with same names as the correspond
 
 ** ={}=
 
-#+CAPTION: 使用 ={}= 嵌入变量或表达式
+#+caption: 使用 ={}= 嵌入变量或表达式
 #+begin_src js
 const buttonText = 'Foo';
 return <button>{buttonText}</button>
@@ -53,7 +53,7 @@ return <button>{foo || 'Default'}</button>
 return <button onClick={e => console.log(e.target.value)}>Submit</button>
 #+end_src
 
-#+CAPTION: 不同类型值转换为字符串输出
+#+caption: 不同类型值转换为字符串输出
 #+begin_src js
 const buttonText = 'Foo';          // Foo
 const buttonText = 1234;           // 1234
@@ -64,7 +64,7 @@ return <button>{buttonText}</button>
 
 ** =${}=
 
-#+CAPTION: 使用 =${}= 在字符串中嵌入变量
+#+caption: 使用 =${}= 在字符串中嵌入变量
 #+begin_src js
 const text = 'foo bar';
 return <div>{`Some text: ${text}`}</div>
@@ -86,7 +86,7 @@ return <div>{`Some text: ${text}`}</div>
 return <tag style={{ <attr>: <value>; ... }}></tag>
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src js
 // CSS 属性名可以使用 camelcase，或者直接使用字符串
 return <div style={{ backgroundColor: 'grey' }}></div>
@@ -230,7 +230,7 @@ file:../images/react/01.png
 
 ** Event Handler
 
-#+CAPTION: 使用箭头函数
+#+caption: 使用箭头函数
 #+begin_src js
 class Foo extends React.Component {
   handleSubmit = (event) => { // 箭头函数自动 bind
@@ -242,7 +242,7 @@ class Foo extends React.Component {
 }
 #+end_src
 
-#+CAPTION: 使用普通函数
+#+caption: 使用普通函数
 #+begin_src js
 class Foo extends React.Component {
   handleSubmit(event) {
@@ -302,7 +302,7 @@ Action 对象表示发生的事件，如用户动作。
 
 Action creator 函数返回一个 action 对象。
 
-#+CAPTION: Synchronous action creator
+#+caption: Synchronous action creator
 #+begin_src js
 const fooAction = (param, ...) => {
   return {
@@ -312,7 +312,7 @@ const fooAction = (param, ...) => {
 }
 #+end_src
 
-#+CAPTION: Asynchronous action creator
+#+caption: Asynchronous action creator
 #+begin_src js
 const fooAction = (param, ...) => async (dispatch) => {
   const response = await ...
@@ -369,7 +369,7 @@ const singleReducer = combineReducers({
 
 *** State mutation
 
-#+CAPTION: Array
+#+caption: Array
 #+begin_src js
 const fooReducer(state, action) => {
   return [...state, <v>];                         // Add
@@ -378,7 +378,7 @@ const fooReducer(state, action) => {
 }
 #+end_src
 
-#+CAPTION: Object
+#+caption: Object
 #+begin_src js
 const fooReducer(state, action) => {
   return {...state, <k>: <v>};       // Add
@@ -504,7 +504,7 @@ bank.dispatch(withdrawAction('Bar', 30)); // bank.getState() = {balance: {Foo: 1
 
 ** 示例 2
 
-#+CAPTION: =index.js=
+#+caption: =index.js=
 #+begin_src js
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -521,7 +521,7 @@ ReactDOM.render((
 ), document.querySelector('#root'));
 #+end_src
 
-#+CAPTION: =actions/index.js=
+#+caption: =actions/index.js=
 #+begin_src js
 export const fooAction = () => {
   return {
@@ -531,7 +531,7 @@ export const fooAction = () => {
 }
 #+end_src
 
-#+CAPTION: =reducers/index.js=
+#+caption: =reducers/index.js=
 #+begin_src js
 import { combineReducers } from 'redux';
 
@@ -549,7 +549,7 @@ export default combineReducers({
 });
 #+end_src
 
-#+CAPTION: =components/App.js=
+#+caption: =components/App.js=
 #+begin_src js
 import React from 'react';
 import FooComponent from './FooComponent';
@@ -561,7 +561,7 @@ const App = () => {
 export default App;
 #+end_src
 
-#+CAPTION: =components/FooComponent.js=
+#+caption: =components/FooComponent.js=
 #+begin_src js
 import React from 'react';
 import { connect } from 'react-redux';
@@ -596,7 +596,7 @@ Middleware 是在调用 =store.dispatch(action)= 时被调用的函数，可以�
 
 *** 示例
 
-#+CAPTION: =index.js=
+#+caption: =index.js=
 #+begin_src js
 ...
 import { crateStore, applyMiddleware } from 'redux';
@@ -610,7 +610,7 @@ const store = createStore(reducers, applyMiddleware(thunk));
 ...
 #+end_src
 
-#+CAPTION: =actions/index.js=
+#+caption: =actions/index.js=
 #+begin_src js
 export const fooAction = () => { // 异步 action creator
   return async (dispatch, getState) => { // action 函数的参数为 dispatch 和 getState 函数

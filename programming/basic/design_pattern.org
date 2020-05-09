@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Design Pattern
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Design Pattern
 
 * 原则
 ** 开闭原则
@@ -120,7 +120,7 @@ public class Test {
 
 file:../images/design_pattern/02.png
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *应用场景：* | 大量的对象需要创建，并且具有共同的接口，可以被多态调用                |
 |--------------+-----------------------------------------------------------------------|
 | *例子：*     | 内存池、线程池、连接池等池化技术                                      |
@@ -128,7 +128,7 @@ file:../images/design_pattern/02.png
 
 -----
 
-#+CAPTION: 普通工厂方法
+#+caption: 普通工厂方法
 #+begin_src java
 // 产品接口
 public interface Sender {
@@ -175,7 +175,7 @@ public class FactoryTest {
 
 -----
 
-#+CAPTION: 多个工厂方法：定义多个而不是一个工厂方法，每个工厂方法只返回一个特定的类的实例
+#+caption: 多个工厂方法：定义多个而不是一个工厂方法，每个工厂方法只返回一个特定的类的实例
 #+begin_src java
 // 工厂类
 public class SendFactory {
@@ -199,7 +199,7 @@ public class FactoryTest {
 
 -----
 
-#+CAPTION: 静态工厂方法：将多个工厂方法定义为静态方法，不需要创建工厂实例就可以调用
+#+caption: 静态工厂方法：将多个工厂方法定义为静态方法，不需要创建工厂实例就可以调用
 #+begin_src java
 // 工厂类
 public class SendFactory {
@@ -224,7 +224,7 @@ public class FactoryTest {
 
 file:../images/design_pattern/04.png
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *应用场景：* | 需要保证某个类只有一个实例存在           |
 |              | 减少某些大型的类的对象创建产生的系统开销 |
 |--------------+------------------------------------------|
@@ -332,7 +332,7 @@ public class Test {
 
 file:../images/design_pattern/06.png
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *应用场景：* | 将一个对象作为原型，对其进行复制、克隆，产生一个类似的新对象 |
 |--------------+--------------------------------------------------------------|
 | *例子：*     | Unix fork 进程                                               |
@@ -396,7 +396,7 @@ file:../images/design_pattern/09.png
 
 *** 示例
 
-#+CAPTION: =LegacyRectangle= uses coordinates while client expects to use coordinates and dimensions.
+#+caption: =LegacyRectangle= uses coordinates while client expects to use coordinates and dimensions.
 #+begin_src cpp
 typedef int Coordinate;
 typedef int Dimension;
@@ -442,7 +442,7 @@ file:../images/design_pattern/10.png
 - _Decouple an abstraction from its implementation_ so that the two can vary independently.
 - Publish interface in an inheritance hierarchy, and bury implementation in its own inheritance hierarchy.
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *例子* | 连接数据库的扩展，对外提供统一接口，内部为每个数据库提供各自的实现。 |
 
 *** 问题
@@ -679,7 +679,7 @@ To achieve the same flexibility with Decorator pattern:
 
 file:../images/design_pattern/19.svg
 
-#+CAPTION: Client has the ability to specify whatever combination of "features" is desired.
+#+caption: Client has the ability to specify whatever combination of "features" is desired.
 #+begin_src java
 Widget* widget = new BorderDecorator(
   new HorizontalScrollBarDecorator(
@@ -865,7 +865,7 @@ DataProxy dp3(4); cout << dp3.read(2) << endl; // 5
 
 ** 外观
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *应用场景：* | 将相关类（和依赖关系）包装在一个类中，降低相关的类之间的依赖关系，解耦合 |
 |--------------+--------------------------------------------------------------------------|
 | *例子：*     | IT 公司将主机、存储、OS、J2EE、DB、网络、流程打包成为企业级解决方案      |
@@ -873,7 +873,7 @@ DataProxy dp3(4); cout << dp3.read(2) << endl; // 5
 
 *** Java 示例
 
-#+CAPTION: 实现类
+#+caption: 实现类
 #+begin_src java
 public class CPU {
     public void startup() {
@@ -892,7 +892,7 @@ public class Disk {
 }
 #+end_src
 
-#+CAPTION: 外观类
+#+caption: 外观类
 #+begin_src java
 public class Computer {
     private CPU cpu;
@@ -915,7 +915,7 @@ public class Computer {
 }
 #+end_src
 
-#+CAPTION: 使用
+#+caption: 使用
 #+begin_src java
 public class User {
     public static void main(String[] args) {
@@ -1141,7 +1141,7 @@ int main() {
 
 ** 命令
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *应用场景：* | 把对象的行为封装成相同接口的命令，由命令执行器执行或管理                                      |
 |              | 命令、命令发出者、命令执行者之间相互解耦                                                      |
 |--------------+-----------------------------------------------------------------------------------------------|
@@ -1149,14 +1149,14 @@ int main() {
 
 *** Java 示例
 
-#+CAPTION: 抽象命令
+#+caption: 抽象命令
 #+begin_src java
 public interface Command {
     void execute();
 }
 #+end_src
 
-#+CAPTION: 具体命令：定义接收者和行为之间的弱耦合，调用接收者
+#+caption: 具体命令：定义接收者和行为之间的弱耦合，调用接收者
 #+begin_src java
 public class ConcreteCommand implements Command {
     private Receiver receiver = null;
@@ -1172,7 +1172,7 @@ public class ConcreteCommand implements Command {
 }
 #+end_src
 
-#+CAPTION: 请求者
+#+caption: 请求者
 #+begin_src java
 public class Invoker {
     private Command command = null;
@@ -1187,7 +1187,7 @@ public class Invoker {
 }
 #+end_src
 
-#+CAPTION: 接收者
+#+caption: 接收者
 #+begin_src java
 public class Receiver {
     public void action() {
@@ -1196,7 +1196,7 @@ public class Receiver {
 }
 #+end_src
 
-#+CAPTION: 使用
+#+caption: 使用
 #+begin_src java
 public class Client {
     public static void main(String[] args) {
@@ -1210,21 +1210,21 @@ public class Client {
 
 ** 观察者
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *应用场景：* | 多个观察者同时监听一个主题，主题对象在状态上发生变化时，会通知所有观察者对象 |
 |--------------+------------------------------------------------------------------------------|
 | *例子：*     |                                                                              |
 
 *** Java 实现
 
-#+CAPTION: 观察者接口
+#+caption: 观察者接口
 #+begin_src java
 public interface Observer {
     public void update(String state);
 }
 #+end_src
 
-#+CAPTION: 观察者实现
+#+caption: 观察者实现
 #+begin_src java
 public class ConcreteObserver implements Observer {
     private String observerState;
@@ -1236,7 +1236,7 @@ public class ConcreteObserver implements Observer {
 }
 #+end_src
 
-#+CAPTION: 主题接口
+#+caption: 主题接口
 #+begin_src java
 public interface Subject {
     public void attach(Observer observer);
@@ -1245,7 +1245,7 @@ public interface Subject {
 }
 #+end_src
 
-#+CAPTION: 主题抽象类
+#+caption: 主题抽象类
 #+begin_src java
 public abstract class AbstractSubject implements Subject {
     private List<Observer> list = new ArrayList<Observer>();
@@ -1266,7 +1266,7 @@ public abstract class AbstractSubject implements Subject {
 }
 #+end_src
 
-#+CAPTION: 主题实现
+#+caption: 主题实现
 #+begin_src java
 public class ConcreteSubject {
     private String subjectState;
@@ -1278,7 +1278,7 @@ public class ConcreteSubject {
 }
 #+end_src
 
-#+CAPTION: 使用
+#+caption: 使用
 #+begin_src java
 public class Client {
     public static void main(String[] args) {
@@ -1292,21 +1292,21 @@ public class Client {
 
 ** 策略
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *应用场景：* | 一组相关但不同的算法，分别封装起来，使它们可以相互替换 |
 |--------------+--------------------------------------------------------|
 | *例子：*     |                                                        |
 
 *** Java 示例
 
-#+CAPTION: 抽象策略类
+#+caption: 抽象策略类
 #+begin_src java
 interface Strategy {
     void execute();
 }
 #+end_src
 
-#+CAPTION: 具体策略类：封装不同的算法或行为
+#+caption: 具体策略类：封装不同的算法或行为
 #+begin_src java
 class FirstStrategy implements Strategy {
     public void execute() {
@@ -1320,7 +1320,7 @@ class SecondStrategy implements Strategy {
 }
 #+end_src
 
-#+CAPTION: 环境类
+#+caption: 环境类
 #+begin_src java
 class Context {
     Strategy strategy;
@@ -1335,7 +1335,7 @@ class Context {
 }
 #+end_src
 
-#+CAPTION: 使用
+#+caption: 使用
 #+begin_src java
 class StrategyExample {
     public static void main(String[] args) {
@@ -1359,7 +1359,7 @@ file:../images/design_pattern/07.png
 - Dependency Injection (DI)
 - 从硬编码的依赖中解耦，在运行、编译时能够修改的设计模式。
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 // Before
 class Database {
@@ -1382,7 +1382,7 @@ class Database {
 - Inversion of Control (IoC)
 - 对接口编程，依赖于抽象而不是具体，即依赖于约定、接口、抽象类，而不是具体实现。
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 // Before
 class Database {
@@ -1404,17 +1404,17 @@ class MySqlAdapter implements AdapterInterface {}
 
 * Quote
 
-#+BEGIN_QUOTE
+#+begin_quote
 设计模式就三个准则：1）中意于组合而不是继承，2）依赖于接口而不是实现，3）高内聚，低耦合。[[http://coolshell.cn/articles/8745.html][Source]]
-#+END_QUOTE
+#+end_quote
 
-#+BEGIN_QUOTE
+#+begin_quote
 桥接（Bridge）和策略（Strategy）模式对应 OO 设计模式里的「Favor Composition Over Inheritance」，实现了接口与实现分离的。……把程序分为前端和后端，通过 socket 专用应用协议进行通讯，前端实现策略，后端实现机制。……makefile 把编译器和源代码的解耦……大量的编程框架都多少采用这样的思想，可以像更换汽车零件一样方便地更换具体实现。[[http://coolshell.cn/articles/8961.html][Source]]
-#+END_QUOTE
+#+end_quote
 
-#+BEGIN_QUOTE
+#+begin_quote
 开发软件采用 top-down 或 bottom-up 的模式，都有优缺点。顶层一般是应用逻辑层，底层一般是原语层（技术沉淀层）。自顶向下的开发，可能会发现底层被很多业务逻辑所侵入，如果自底向上的开发，又可能会发现下层的基础工作有很多用不上。最好的方式是同时进行，在开发中不断的重构，边开发，边理解，边沉淀。……需要胶合层，来胶合业务层和技术层。……策略（业务逻辑）和机制（基础技术或原语）的分离。……OO 用抽象接口来做分离，……但 OO 鼓励了「厚重地胶合和复杂层次」，反而增加了程序的复杂度。而 Unix 采用的是薄的胶合层，薄地相当的优雅。[[http://coolshell.cn/articles/8961.html][Source]]
-#+END_QUOTE
+#+end_quote
 
 * 链接
 

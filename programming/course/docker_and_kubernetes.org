@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Docker and Kubernetes
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Docker and Kubernetes
 
 * Dive into Docker
 ** Namespacing and Control Group
@@ -173,7 +173,7 @@ There are two projects called "Nginx Ingress Controller": =ingress-nginx= and =k
 
 Using =ingress-nginx= on Google Cloud involves these components:
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | Google Cloud load balancer | Provided by Google Cloud, directs traffic to Kubernetes cluster's =LoadBalancer= =Service= |
 |----------------------------+--------------------------------------------------------------------------------------------|
 | =LoadBalander= =Service=   | Directs traffic to Nginx =Deployment=                                                      |
@@ -194,12 +194,12 @@ The reason of using =ingress-nginx= instead of a simple Nginx =Pod= for load bal
 
 Follow =ingress-nginx= [[https://kubernetes.github.io/ingress-nginx/deploy/][Installation Guide]]:
 
-#+CAPTION: Run generic deployment command to applies a yaml config to create the =Ingress= controller and other objects
+#+caption: Run generic deployment command to applies a yaml config to create the =Ingress= controller and other objects
 #+begin_src sh
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
 #+end_src
 
-#+CAPTION: Run setup commands for minikube.
+#+caption: Run setup commands for minikube.
 #+begin_src sh
 minikube addons enable ingress
 #+end_src
@@ -289,7 +289,7 @@ The Travis config file will:
 
 ** Install Google Cloud SDK
 
-#+CAPTION: =.travis.yml=
+#+caption: =.travis.yml=
 #+begin_src yaml
 env:
   global:
@@ -321,7 +321,7 @@ gem install travis
 
 ** Encrypt Service Account File
 
-#+CAPTION: (Following last section inside Docker)
+#+caption: (Following last section inside Docker)
 #+begin_src sh
 # Go to the mounted dir where the service account JSON file is
 # Assuming the file is named as service-account.json
@@ -338,7 +338,7 @@ Commit the generated =service-account.json.enc= into Git repo, but DO NOT commit
 
 ** More Google Cloud CLI Config
 
-#+CAPTION: =.travis.yml=
+#+caption: =.travis.yml=
 #+begin_src yaml
 before_install:
   - ...
@@ -350,7 +350,7 @@ before_install:
 
 ** Run Tests with Travis
 
-#+CAPTION: =.travis.yml=
+#+caption: =.travis.yml=
 #+begin_src yaml
 before_install:
   - ...
@@ -367,7 +367,7 @@ script:
 
 Travis CI doesn's support Kubernetes as deployment provider, so a custom script is needed to perform the deployment.
 
-#+CAPTION: =.travis.yml=
+#+caption: =.travis.yml=
 #+begin_src yaml
 deploy:
   provider: script
@@ -378,7 +378,7 @@ deploy:
 
 ** Unique Deployment Images
 
-#+CAPTION: =deploy.sh=
+#+caption: =deploy.sh=
 #+begin_src sh
 # Build images and push to Docker Hub
 docker build ...
@@ -401,7 +401,7 @@ The Git commit's SHA hash can be used as the tag:
 
 ** Updating Deployment Script
 
-#+CAPTION: =.travis.yml=
+#+caption: =.travis.yml=
 #+begin_src yaml
 env:
   global:
@@ -409,7 +409,7 @@ env:
     - SHA=$(git rev-parse HEAD)
 #+end_src
 
-#+CAPTION: =deploy.sh=
+#+caption: =deploy.sh=
 #+begin_src sh
 # Set Git SHA as image tag
 docker build ... -t ...:$SHA ...
@@ -424,7 +424,7 @@ The Postgres =Deployment= of the cluster needs a Kubernetes =Secret= object to h
 
 To do this on Google Cloud, on [[https://console.cloud.google.com/kubernetes/list][Google Cloud Platform | Kubernetes Engine]] click "Activate Cloud Shell" to open a console, where =kubectl= commands can be executed to configure the cluster.
 
-#+CAPTION: Environment setup for using =kubectl=
+#+caption: Environment setup for using =kubectl=
 #+begin_src sh
 gcloud config set project <project_id>
 gcloud config set compute/zone <location>
@@ -435,7 +435,7 @@ kubectl get all
 
 ** Create Secret on Google Cloud
 
-#+CAPTION: Create =Secret= in Cloud Shell
+#+caption: Create =Secret= in Cloud Shell
 #+begin_src sh
 kubectl create secret generic pg-password --from-literal PG_PASSWORD=123456
 #+end_src
@@ -544,7 +544,7 @@ helm install --name cert-manager --namespace cert-manager --version v0.7.2 --set
 
 file:../images/docker_and_kubernetes/31.png
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Cert Manager* | Objects (deployment, role) that manipulate the cluster to manage certificates       |
 |----------------+-------------------------------------------------------------------------------------|
 | *Issuer*       | Object describing how to obtain a certificate from an authority, e.g. Let's Encrypt |
@@ -557,7 +557,7 @@ The Issuer and Certificate objects need to be setup by yaml config files and dep
 
 [[https://docs.cert-manager.io/en/latest/reference/issuers.html][cert-manager Documentation | Issuers]]
 
-#+CAPTION: =issuer.yaml=
+#+caption: =issuer.yaml=
 #+begin_src yaml
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: ClusterIssuer
@@ -576,7 +576,7 @@ spec:
 
 [[https://docs.cert-manager.io/en/latest/reference/certificates.html][cert-manager Documentation | Certificates]]
 
-#+CAPTION: =certificate.yaml=
+#+caption: =certificate.yaml=
 #+begin_src yaml
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
@@ -617,7 +617,7 @@ kubectl get secrets
 
 The Ingress Service needs to be updated to serve HTTPS.
 
-#+CAPTION: =ingress-service.yaml=
+#+caption: =ingress-service.yaml=
 #+begin_src sh
 ...
 metadata:

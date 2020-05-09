@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: PHP Function
+#+setupfile: ../../styles/readtheorg.setup
+#+title: PHP Function
 
 * 输出
 
@@ -399,7 +399,7 @@ int extract (
 ]] )
 #+end_src
 
-#+CAPTION: =$flags=
+#+caption: =$flags=
 | =EXTR_OVERWRITE=        | 覆盖，默认值                                    |
 |-------------------------+-------------------------------------------------|
 | =EXTR_SKIP=             | 跳过                                            |
@@ -826,7 +826,7 @@ string strstr (
 ] )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 $email  = 'name@example.com';
 $domain = strstr($email, '@');       // @example.com
@@ -858,7 +858,7 @@ string strtr (
 )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 $a = 'AbCdE';
 $b = strtr($a, 'b', 'B');                      // ABCdE
@@ -890,7 +890,7 @@ mixed str_replace (
 ])
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 $a = 'AbCdE';
 $b = 0;
@@ -994,7 +994,7 @@ int strtotime (
 ] )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 strtotime("now");
 strtotime("-1 day");
@@ -1169,7 +1169,7 @@ mixed preg_replace (
 | =$subject=     | =string= |                                                                          |
 |                | =array=  |                                                                          |
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 // $ 1,000.00 -> 1000.00
 $money = preg_replace(array('/\\$/', '/\s/', '/,/'), '', $money);
@@ -1191,14 +1191,14 @@ mixed preg_replace_callback (
 ]])
 #+end_src
 
-#+CAPTION: 示例 1
+#+caption: 示例 1
 #+begin_src php
 function handler(array $matches) {  // 参数是匹配结果
     return strtolower($matches[0]); // 返回用于替换的字符串
 }
 #+end_src
 
-#+CAPTION: 示例 2
+#+caption: 示例 2
 #+begin_src php
 // 使用匿名函数，可以使逻辑在同一位置，避免污染函数命名空间
 $line = preg_replace_callback(
@@ -1261,7 +1261,7 @@ array get_included_files ( void )
 array error_get_last ( void )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 $a = 1 / 0;
 $b = error_get_last();
@@ -1284,7 +1284,7 @@ bool error_log (
 ]]] )
 #+end_src
 
-#+CAPTION: =$message_type=
+#+caption: =$message_type=
   | 0 | 使用操作系统的日志机制，或写入文件               |
 |   | 具体行为依赖配置中的 =error_log= 指令            |
 |---+--------------------------------------------------|
@@ -1302,7 +1302,7 @@ int error_reporting ( // 返回修改前的 error_reporting 值
 ])
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
 #+end_src
@@ -1316,7 +1316,7 @@ mixed set_error_handler (
 ] )
 #+end_src
 
-#+CAPTION: 自定义错误处理函数
+#+caption: 自定义错误处理函数
 #+begin_src php
 bool handler (
     int    $errno      // 错误级别，对应 E_* 常量
@@ -1327,7 +1327,7 @@ bool handler (
 ]]] )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 function foo($errno, $errmsg) {
     echo 'Error handled by foo: ' . $errmsg . "\n";
@@ -1345,12 +1345,12 @@ callable set_exception_handler (
 )
 #+end_src
 
-#+CAPTION: 自定义异常捕捉函数
+#+caption: 自定义异常捕捉函数
 #+begin_src php
 void handler ( Exception $exception )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 function foo($exception) {
     echo 'Uncaught exception: ', $exception->getMessage(), "\n";
@@ -1369,7 +1369,7 @@ bool trigger_error (
 ] )
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 if ($divisor == 0) {
     trigger_error("Cannot divide by zero", E_USER_ERROR);
@@ -1401,7 +1401,7 @@ bool define (
 ])
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 define("CONSTANT", "Hello world.");
 echo CONSTANT; // outputs "Hello world."
@@ -1449,7 +1449,7 @@ bool is_callable (
 bool empty ( mixed $var ) // 变量不存在，或值为零值、空值时返回 true
 #+end_src
 
-#+CAPTION: 零值、空值
+#+caption: 零值、空值
 | =int=    | =0=                       |
 |----------+---------------------------|
 | =float=  | =0.0=                     |
@@ -1471,7 +1471,7 @@ bool empty ( mixed $var ) // 变量不存在，或值为零值、空值时返回
 void unset ( mixed $var , ... )
 #+end_src  
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 unset($foo);
 unset($bar['qux']);
@@ -1502,7 +1502,7 @@ unset($foo1, $foo2, $foo3);
 array get_class_methods ( mixed $class_name )
 #+end_src
 
-#+CAPTION: =protected= 和 =private= 方法在类之外不可见。
+#+caption: =protected= 和 =private= 方法在类之外不可见。
 #+begin_src php
 class Foo {
     private function bar() {}
@@ -1514,7 +1514,7 @@ Foo::baz();               // bar, baz
 get_class_methods('Foo'); // baz
 #+end_src
 
-#+CAPTION: 用于在调用方法前确认是否存在。
+#+caption: 用于在调用方法前确认是否存在。
 #+begin_src php
 if (in_array('bar', get_class_methods($foo))) {
     $foo->bar();
@@ -1528,7 +1528,7 @@ if (in_array('bar', get_class_methods($foo))) {
 array get_class_vars ( string $class_name )
 #+end_src
 
-#+CAPTION: =protected= 和 =private= 属性在类之外不可见
+#+caption: =protected= 和 =private= 属性在类之外不可见
 #+begin_src php
 class Foo {
     public $hoge;
@@ -1589,7 +1589,7 @@ bool method_exists (
 )
 #+end_src
 
-#+CAPTION: 存在的方法不一定可以调用， =protected= 和 =private= 方法都返回 =true= 。
+#+caption: 存在的方法不一定可以调用， =protected= 和 =private= 方法都返回 =true= 。
 #+begin_src php
 class Foo {
     private function bar() {}
@@ -1620,7 +1620,7 @@ function foo($arg1, $arg2) {}
 call_user_func('foo', 'one', 'two');
 #+end_src
 
-#+CAPTION: 动态调用时的参数是传值。
+#+caption: 动态调用时的参数是传值。
 #+begin_src php
 function increment(&$var) {}
 $a = 0;
@@ -1646,7 +1646,7 @@ call_user_func_array('foo', ['one', 'two']);
 call_user_func_array([new Foo(), 'bar'], ['one', 'two']);
 #+end_src
 
-#+CAPTION: 用于 =__call()= 处理未知个数的参数。
+#+caption: 用于 =__call()= 处理未知个数的参数。
 #+begin_src php
 class Foo {
     private $bar;
@@ -1846,12 +1846,12 @@ void header (
 
 必须在产生任何输出（HTML 标签、空格、空行）之前使用。当已产生输出时，PHP 会自动发送 header，此时调用 =header()= 会产生警告信息。
 
-#+CAPTION: HTTP 跳转
+#+caption: HTTP 跳转
 #+begin_src php
 header('Location: http://www.domain.com/new_home_page.html');
 #+end_src
 
-#+CAPTION: HTTP 身份验证
+#+caption: HTTP 身份验证
 #+begin_src php
 if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) {
 	...
@@ -1862,7 +1862,7 @@ if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) {
 }
 #+end_src
 
-#+CAPTION: 内容类型
+#+caption: 内容类型
 #+begin_src php
 header('Content-Type: image/png');
 #+end_src
@@ -1944,7 +1944,7 @@ mixed parse_url (
 ])
 #+end_src
 
-#+CAPTION: 示例
+#+caption: 示例
 #+begin_src php
 $array = parse_url('http://foo.com:8080/bar/index.php?key=value#anchor');
 // array(
@@ -2056,7 +2056,7 @@ string phpversion ( [ string $extension ] )
 string set_include_path ( string $new_include_path )
 #+end_src
 
-#+CAPTION: 添加查找路径。
+#+caption: 添加查找路径。
 #+begin_src php
 set_include_path(get_include_path() . PATH_SEPARATOR . "/home/foobar/phplib/");
 #+end_src

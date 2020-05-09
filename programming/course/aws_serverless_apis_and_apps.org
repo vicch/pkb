@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: AWS Serverless APIs and Apps
+#+setupfile: ../../styles/readtheorg.setup
+#+title: AWS Serverless APIs and Apps
 
 * Get Started
 ** What is Serverless Development?
@@ -97,7 +97,7 @@ Create a Lambda function:
 
 Change the entry point script:
 
-#+CAPTION: =cy-store-data/index.js=
+#+caption: =cy-store-data/index.js=
 #+begin_src js
 exports.handler = (event, context, callback) => {
   callback(null, {message: 'This is Lambda.'});
@@ -144,7 +144,7 @@ Re-deploy =compare-yourself= to =dev= stage. Re-run the script on CodePen and co
 
 Update Lambda function =cy-store-data=:
 
-#+CAPTION: =cy-store-data/index.js=
+#+caption: =cy-store-data/index.js=
 #+begin_src js
 exports.handler = (event, context, callback) => {
   callback(null, event);
@@ -159,7 +159,7 @@ Go to Amazon API Gateway > APIs > =compare-yourself= > Resources > =/compare-you
 
 Update the Lambda function to return a custom header and log the request object:
 
-#+CAPTION: =cy-compare-yourself/index.js=
+#+caption: =cy-compare-yourself/index.js=
 #+begin_src js
 exports.handler = (event, context, callback) => {
   console.log(event);
@@ -189,7 +189,7 @@ Go to Amazon API Gateway > APIs > =compare-yourself= > Resources > =/compare-you
 
 Update the Lambda function to extract an =age= value out of the request data and return a calculated value:
 
-#+CAPTION: =cy-compare-yourself/index.js=
+#+caption: =cy-compare-yourself/index.js=
 #+begin_src js
 exports.handler = (event, context, callback) => {
   const age = event.personData.age;
@@ -228,7 +228,7 @@ Go to Amazon API Gateway > APIs > =compare-yourself= > Resources > =/compare-you
 
 Update the Lambda function:
 
-#+CAPTION: =cy-store-data/index.js=
+#+caption: =cy-store-data/index.js=
 #+begin_src js
 exports.handler = (event, context, callback) => {
   const age = event.age;
@@ -351,7 +351,7 @@ Go to Amazon API Gateway > APIs > =compare-yourself= > Resources > =/compare-you
 
 Create a Lambda function =cy-get-data= with code:
 
-#+CAPTION: =cy-get-data/index.js=
+#+caption: =cy-get-data/index.js=
 #+begin_src js
 exports.handler = (event, context, callback) => {
   const type = event.type;
@@ -468,7 +468,7 @@ To access DynamoDB (and other AWS services in general) from an external applicat
 
 Update the Lambda function code:
 
-#+CAPTION: =cy-store-data/index.js=
+#+caption: =cy-store-data/index.js=
 #+begin_src js
 // Best practice of Lambda: init global/static/singleton variables
 // outside of any function, because Lambda functions are cached
@@ -530,7 +530,7 @@ Go to Amazon API Gateway > APIs > =compare-yourself= > Resources > =/compare-you
 
 Update the Lambda function to read params from the =event= object:
 
-#+CAPTION: =cy-store-data/index.js=
+#+caption: =cy-store-data/index.js=
 #+begin_src js
 ...
 const params = {
@@ -581,7 +581,7 @@ Run the script and confirm the response is successful, and the item is created i
 
 Update the Lambda function to scan data from DynamoDB:
 
-#+CAPTION: =cy-get-data/index.js=
+#+caption: =cy-get-data/index.js=
 #+begin_src js
 const AWS = require('aws-sdk');
 const dynamodb = new AWS.DynamoDB({
@@ -653,7 +653,7 @@ Create a policy =compare-yourself-write= for =cy-store-data= in the same manner 
 
 Update the Lambda function to get a single item from DynamoDB:
 
-#+CAPTION: =cy-get-data/index.js=
+#+caption: =cy-get-data/index.js=
 #+begin_src js
 ...
 } else if (type === 'single') {
@@ -717,7 +717,7 @@ Lambda functions need the =AWSLambdaBasicExecutionRole= policy to be able to wri
 
 Update the Lambda function to delete a single item from DynamoDB:
 
-#+CAPTION: =cy-delete-data/index.js=
+#+caption: =cy-delete-data/index.js=
 #+begin_src js
 const AWS = require('aws-sdk');
 const dynamodb = new AWS.DynamoDB({
@@ -824,7 +824,7 @@ A custom authorizer is a Lambda function which takes input from API Gateway, and
 
 Create a new Lambda function =cy-custom-auth=:
 
-#+CAPTION: =cy-custom-auth/index.js=
+#+caption: =cy-custom-auth/index.js=
 #+begin_src js
 exports.handler = (event, context, callback) => {
   const token = event.authorizationToken; // Provided by API Gateway
@@ -907,7 +907,7 @@ Add user ID as input to Lambda function at Amazon API Gateway > APIs > =compare-
 
 Update Lambda function =cy-store-data= to use this field:
 
-#+CAPTION: =cy-store-data/index.js=
+#+caption: =cy-store-data/index.js=
 #+begin_src js
 ...
 Item: {
@@ -977,7 +977,7 @@ Credentials the app needs to access the Cognito user pool:
 
 Setup Cognito user pool, which is the entry point of Cognito service:
 
-#+CAPTION: =src/app/user/auth.service.ts=
+#+caption: =src/app/user/auth.service.ts=
 #+begin_src typescript
 import { CognitoUserPool } from 'amazon-cognito-identity-js';
 
@@ -992,7 +992,7 @@ const cognitoUserPool = new CognitoUserPool(COGNITO_DATA);
 
 Prepare the user attributes and call Cognito signup function:
 
-#+CAPTION: =src/app/user/auth.service.ts=
+#+caption: =src/app/user/auth.service.ts=
 #+begin_src typescript
 import { CognitoUserAttribute, CognitoUser } from 'amazon-cognito-identity-js';
 
@@ -1023,7 +1023,7 @@ Run the app and sign up as a new user, confirm the verification email is sent to
 
 Call Cognito to confirm a registered user with code:
 
-#+CAPTION: =src/app/user/auth.service.ts=
+#+caption: =src/app/user/auth.service.ts=
 #+begin_src typescript
 export class AuthService {
   confirmUser(username: string, code: string) {
@@ -1049,7 +1049,7 @@ Sign up in the frontend app, and confirm user with the verification code, and co
 
 Call Cognito to sign in a user:
 
-#+CAPTION: =src/app/user/auth.service.ts=
+#+caption: =src/app/user/auth.service.ts=
 #+begin_src typescript
 import { AuthenticationDetails, CognitoUserSession } from 'amazon-cognito-identity-js';
 
@@ -1080,7 +1080,7 @@ export class AuthService {
 
 Cognito SDK provides helper functions to get the user's auth state:
 
-#+CAPTION: =src/app/user/auth.service.ts=
+#+caption: =src/app/user/auth.service.ts=
 #+begin_src typescript
 export class AuthService {
   // Return current user
@@ -1130,7 +1130,7 @@ Set the authorizer also for =/compare-yourself= > =DELETE=, and =/compare-yourse
 
 With the API endpoints using the Cognito authorizer, frontend app needs to send the token via the =Authorization= header. Update the =POST= request logic of the app:
 
-#+CAPTION: =src/app/compare/compare.service.ts=
+#+caption: =src/app/compare/compare.service.ts=
 #+begin_src typescript
 export class CompareService {
   onStoreData(data: CompareData) {
@@ -1188,7 +1188,7 @@ Add the same parameter and body mapping for the =DELETE= method.
 
 Update Lambda function to get user ID from the access token, by using the AWS SDK =CognitoIdentityServiceProvider=:
 
-#+CAPTION: =cy-get-data/index.js=
+#+caption: =cy-get-data/index.js=
 #+begin_src js
 const cisp = new AWS.CognitoIdentityServiceProvider({apiVersion: '2016-04-18'});
 exports.handler = (event, context, callback) => {
@@ -1229,7 +1229,7 @@ exports.handler = (event, context, callback) => {
 
 Update the Angular app to pass the query param =accessToken= to the API endpoints:
 
-#+CAPTION: =src/app/compare/compare.service.ts=
+#+caption: =src/app/compare/compare.service.ts=
 #+begin_src typescript
 export class CompareService {
   onRetrieveData(all = true) {
@@ -1251,7 +1251,7 @@ Confirm in frontend that the data associated with the user can be retrieved.
 
 Update the frontend's delete action to pass access token as param to =DELETE= endpoint, and then update Lambda function to get the user ID from access token.
 
-#+CAPTION: =src/app/compare/compare.service.ts=
+#+caption: =src/app/compare/compare.service.ts=
 #+begin_src typescript
 export class CompareService {
   onDeleteData() {
@@ -1266,7 +1266,7 @@ export class CompareService {
 }
 #+end_src
 
-#+CAPTION: =cy-delete-data/index.js=
+#+caption: =cy-delete-data/index.js=
 #+begin_src js
 
 #+end_src
@@ -1293,7 +1293,7 @@ The static website needs to be built before being uploaded to S3.
 
 Optimize the build command:
 
-#+CAPTION: =package.json=
+#+caption: =package.json=
 #+begin_src js
 {
   "scripts": {
@@ -1466,7 +1466,7 @@ Save the =express-serverless= project locally, and start the Node server with =n
 
 The routes are setup in =app.js=:
 
-#+CAPTION: =app.js=
+#+caption: =app.js=
 #+begin_src js
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -1485,7 +1485,7 @@ npm install --save aws-serverless-express
 
 The generated =lambda.js= file creates a request handler which passes requests to a server:
 
-#+CAPTION: =lambda.js=
+#+caption: =lambda.js=
 #+begin_src js
 'use strict'
 const awsServerlessExpress = require('aws-serverless-express')
@@ -1535,7 +1535,7 @@ The Express application via Lambda is stateless, because Lambda functions can't 
 ** Serverless Apps and Security
 *** Application-Related Issues
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Unauthorized access*   | Protect API endpoints with Cognito or other auth             |
 |                         | Restrict API usage with API keys                             |
 |-------------------------+--------------------------------------------------------------|
@@ -1553,7 +1553,7 @@ This protection depends on the browser's respect of CORS headers.
 
 *** Infrastructure-Related Issues
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *DDos attacks*           | API Gateway has built-in throttling            |
 |--------------------------+------------------------------------------------|
 | *DB injection*           | AWS SDK has built-in sanitation                |
@@ -1594,7 +1594,7 @@ LocalStack is a framework used to build and test Cloud application locally, by r
 
 - [[https://aws.amazon.com/step-functions/][AWS Step Functions]]
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Step Functions* | Coordinate AWS services into workflows |
 |------------------+----------------------------------------|
 | *Kinesis*        | Collect and process data streams       |

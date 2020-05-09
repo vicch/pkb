@@ -1,5 +1,5 @@
-#+SETUPFILE: ../../styles/readtheorg.setup
-#+TITLE: Architecture Scrap
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Architecture Scrap
 
 * 软件架构入门
 ** 分层架构
@@ -18,7 +18,7 @@
 
 有的软件在业务层和持久层之间加了一个服务层（service），提供不同业务逻辑需要的通用接口。
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *开发* | （优）结构简单，容易理解和开发。                                     |
 |        | （优）团队可以分工负责不同的层，适合大多数软件公司的组织架构。       |
 |--------+----------------------------------------------------------------------|
@@ -48,7 +48,7 @@ file:../images/architecture_scrap/26.png
 
 file:../images/architecture_scrap/27.png
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *开发* | （缺）涉及异步编程（要考虑远程通信、失去响应等情况），开发相对复杂。 |
 |        | （优）适用性广，各种类型的项目都可以用。                             |
 |--------+----------------------------------------------------------------------|
@@ -64,7 +64,7 @@ file:../images/architecture_scrap/27.png
 
 微核架构（microkernel architecture）又称为「插件架构」（plug-in architecture），指的是 _软件的内核（core）相对较小，通常只包含系统运行的最小功能，主要功能和业务逻辑都通过插件实现。_ 插件则是互相独立的，插件之间的通信应该尽量减少，避免出现互相依赖的问题。
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *开发* | （优）可定制性高，适应不同的开发需要。                                       |
 |        | （优）可以渐进式地开发，逐步增加功能。                                       |
 |        | （缺）开发难度相对较高，因为涉及到插件与内核的通信，以及内部的插件登记机制。 |
@@ -90,7 +90,7 @@ file:../images/architecture_scrap/28.png
 | 集中消息模式     | 采用消息代理（message broker），可以实现消息队列、负载均衡、统一日志和异常处理。 |
 |                  | 缺点是会出现单点失败，消息代理可能要做成集群。                                   |
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *开发* | （优）容易开发，每个组件可以进行持续集成式的开发，可以实时部署，不间断地升级。     |
 |--------+------------------------------------------------------------------------------------|
 | *测试* | （优）容易测试，可以单独测试每一个服务。                       |
@@ -125,7 +125,7 @@ file:../images/architecture_scrap/28.png
 
 file:../images/architecture_scrap/29.png
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *开发* | （缺）实现复杂，成本较高。                               |
 |        | 主要适合网站类应用，不适合大量数据吞吐的大型数据库应用。 |
 |--------+----------------------------------------------------------|
@@ -147,9 +147,9 @@ file:../images/architecture_scrap/29.png
 
 Martin Fowler & James Lewis 的文章 [[http://martinfowler.com/articles/microservices.html][Microservices]] 给出了微服务架构的一个定义：
 
-#+BEGIN_QUOTE
+#+begin_quote
 _微服务架构即是采用一组小服务来构建应用的方法。每个服务运行在独立的进程中，不同服务通过一些轻量级交互机制来通信，例如 RPC、HTTP 等。服务围绕业务能力来构建，并依赖自动部署机制来独立部署。_
-#+END_QUOTE
+#+end_quote
 
 这个定义相对模糊，但还是勾勒出了微服务的关键概念： _小，独立进程，自动化_ 。
 
@@ -157,7 +157,7 @@ _微服务架构即是采用一组小服务来构建应用的方法。每个服�
 
 从微服务的定义，我们感觉似曾相识。早在 1994 年 Mike Gancarz 曾提出了 9 条著名原则（[[https://en.wikipedia.org/wiki/Unix_philosophy#Mike_Gancarz%3a_The_UNIX_Philosophy][The UNIX Philosophy]]），其中前 4 条和微服务架构理念特别接近。微服务就像把 UNIX 哲学应用到分布式系统（[[https://vanilla-java.github.io/2016/03/22/Micro-services-for-performance.html][Micro-services for performance]]）。
 
-#+ATTR_HTML: :class no-border dense
+#+attr_html: :class no-border dense
 | *小即是美：*             | 代码少，bug 就少，易测试和维护，也更容易不断迭代、完善。                     |
 |--------------------------+------------------------------------------------------------------------------|
 | *一个程序只做好一件事：* | 一个服务也只需要做好一件好，专注才能做好。                                   |
@@ -168,9 +168,9 @@ _微服务架构即是采用一组小服务来构建应用的方法。每个服�
 
 而在微服务之前的十年，大家经常谈论的是一个叫 +SOA+ 的架构模式，它和微服务又是什么关系？在 Sam Newman 的 [[https://book.douban.com/subject/25881698/][Building Microservices]] 一书中，作者对 SOA 和 Micorservices 的区别给出了定义：
 
-#+BEGIN_QUOTE
+#+begin_quote
 You should instead think of Microservices as a specific approach for SOA in the same way that XP or Scrum are specific approaches for Agile software development.
-#+END_QUOTE
+#+end_quote
 
 可以把微服务想成是 SOA 的一种实践方式，正如 XP 或 Scrum 是敏捷软件开发的实践方式。我对这个定义是认同的， _面向服务架构（SOA）的概念已有十多年，它提出了一种架构设计思想，但没有给出标准的参考实现，_ 而早期软件业界自己摸索了一套实践方式 —— +企业服务总线（ESB）+ 。 但历史证明 ESB 的实现方案甚至在传统企业软件行业也未取得成功，Martin Fowler 在文中说正是 _因为 ESB 当年搞砸了很多项目，投入几百万美金，产出几乎为零，因此 SOA 这个概念也蒙上了不详的标签，所以当微服务架构出现时，其拥护者开始拒绝使用包裹着失败阴影的 SOA 这个标签，而直接称其为微服务架构（Microservices Architecture Style），让人以为是一套全新的架构思想，但事实上它的本质依然是 SOA 的一种实践方式。_
 
@@ -190,9 +190,9 @@ file:../images/architecture_scrap/05.png
 
 Melvin Conway 在 1967 年观察到一个现象并总结出了一条著名的康威定律（[[https://en.wikipedia.org/wiki/Conway%27s_law][Conway's law]]）：
 
-#+BEGIN_QUOTE
+#+begin_quote
 Organizations which design systems are constrained to produce designs which are copies of the communication structures of these organizations.
-#+END_QUOTE
+#+end_quote
 
 _一个组织设计的系统，总是等价于这个组织的沟通结构。_ 传统开发方式中，我们将工程师按技能专长分层为前端层、中间层、数据层，前端对应的角色为 UI、页面构建师等，中间层对应的角色为后端开发工程师，数据层对应着 DBA 等角色。
 
@@ -206,9 +206,9 @@ file:../images/architecture_scrap/07.png
 
 传统的应用开发是基于项目模式的，开发团队根据功能列表开发出一个软件应用，并交付给客户后，该软件应用就进入维护模式，由另一个维护团队负责，开发团队的职责结束。而微服务架构建议避免采用这种项目模式，更倾向于让 _开发团队负责整个产品的全部生命周期。_ Amazon 对此提出了一个观点：
 
-#+BEGIN_QUOTE
+#+begin_quote
 You build it, you run it.
-#+END_QUOTE
+#+end_quote
 
 _开发团队对软件在生产环境的运行负全部责任，让服务的开发者与服务的使用者（客户）形成每日的交流反馈，_ 来自直接客户的反馈有助于开发者提升服务的品质。
 
@@ -241,9 +241,9 @@ file:../images/architecture_scrap/08.png
 
 一旦采用了微服务架构模式，在服务需要变更时要特别小心， _服务提供者的变更可能引发服务消费者的兼容性破坏，时刻谨记保持服务契约（接口）的兼容性。_ 一条普适的健壮性原则「伯斯塔尔法则」（[[https://en.wikipedia.org/wiki/Robustness_principle][Robustness principle]]）给出了很好的建议：
 
-#+BEGIN_QUOTE
+#+begin_quote
 _Be conservative in what you send, be liberal in what you accept._
-#+END_QUOTE
+#+end_quote
 
 按照伯斯塔尔法则的思想来设计和实现服务时， _发送的数据要更保守，意味着最小化地传送必要的信息，接收时更开放，意味着要最大限度地容忍冗余数据，保证兼容性。_
 
@@ -256,9 +256,9 @@ file:../images/architecture_scrap/09.png
 
 图上标明了复杂度和生产率拐点的存在，但并没有量化复杂度的拐点到底是多少。或者换种说法系统或代码库的规模多大时，才适合开始进行微服务化的拆分。在一篇有趣的文章 [[http://blog.jobbole.com/76139/][程序员职业生涯中的 Norris 常数]] 中提到大部分普通程序员成长生涯的瓶颈在 2 万行代码左右。
 
-#+BEGIN_QUOTE
+#+begin_quote
 _当代码在 2,000 行以下，你可以写任何混乱肮脏的代码并依靠你的记忆拯救你。深思熟虑的类和包分解会让你的代码规模达到 20,000 行。_ 初级程序员，学会了爬行，接着蹒跚学步，然后行走，然后慢跑，然后再跑步，最后冲刺，他认为，「以这样加速度前进我可以赶上超音速喷气式飞机的速度！」但他跑进了 2,000 行的极限，因为他的技能不会再按比例增加。他必须改变移动方式，比如开车去获得更快的速度。然后，他就学会了开车，开始很慢，然后越来越快，但又进入到了 20,000 行的极限。驾驶汽车的技术不会让你能够开喷气式飞机。
-#+END_QUOTE
+#+end_quote
 
 每一个瓶颈的突破需要新的技能和技巧，结合我自己的经历和经验， _微服务的合适拆分拐点可能就在两万行代码规模附近，而每个微服务的规模大小最好能控制在一个普通程序员的舒适维护区范围内。_ 借用前面的比喻，一个受过职业训练的普通程序员就像一个拿到驾照的司机，一般司机都能轻松驾驭 100 公里左右的时速，但很少有能轻松驾驭 200 公里或以上时速的司机，即使能够风险也是很高的。而能开喷气式飞机的飞行员级别的程序员恐怕在大部分的团队里一个也没有。
 
@@ -280,7 +280,7 @@ file:../images/architecture_scrap/10.png
 
 每一个服务都提供了一份契约文档，发布到公开的内部 wiki，方便服务干系人获取查看。契约文档要求至少对服务的几个基本方面作出说明：
 
-#+ATTR_HTML: :class no-border dense
+#+attr_html: :class no-border dense
 | API：  | API 接入技术说明                 |
 |--------+----------------------------------|
 | 能力： | 服务能力的描述                   |
@@ -664,7 +664,7 @@ As more cells are added, cells can be placed into a cell group that reads from t
 
 Teams: infrastructure, platform, SRE (Site Reliability Engineer), product, web ops, service.
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | Infrastructure: | Layer 5 and below. IP address and below, DNS, hardware provisioning.       |
 |-----------------+----------------------------------------------------------------------------|
 | Platform:       | Core app development, SQL sharding, services, web operations.              |
@@ -901,7 +901,7 @@ HAProxy manages healthchecks, by removing and returning machines to those pools 
 
 Cachine consists of:
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | Precalculating results                               | E.g. number of visits for the previous day             |
 |------------------------------------------------------+--------------------------------------------------------|
 | Pre-generating expensive indexes                     | E.g. suggested stories based on a user's click history |
@@ -953,7 +953,7 @@ Using caches require you to maintain consistency between caches and database (th
 
 It is straightforward to deal with a single database:
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Write-through cache* | Each time a value changes, write the new value into the cache.                        |
 |-----------------------+---------------------------------------------------------------------------------------|
 | *Read-through cache*  | Delete current value from cache, and allow a read-through cache to populate it later. |
@@ -1090,7 +1090,7 @@ Analyze the memory usage patterns. Determine where new objects are created and w
 
 A classic large scale web site typically has multiple data centers in geographically distributed locations. Each data center typically has the following tiers in its architecture:
 
-#+ATTR_HTML: :class no-border
+#+attr_html: :class no-border
 | *Web tier*         | Serves static contents, e.g. static pages, photos, videos.                 |
 |--------------------+----------------------------------------------------------------------------|
 | *Application tier* | Serves dynamic contents, e.g. dynamic pages.                               |
