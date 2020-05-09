@@ -208,7 +208,7 @@ Linux 2.6 的进程调度器更偏爱 I/O 操作密集型的进程，因为它�
 系统负载是单位时间内运行队列中就绪等待的进程数平均值，就绪进程不需要等待就可以马上获得 CPU 时，系统负载就很低，比如 0.00。
 
 #+CAPTION: =/proc/loadavg= 可以用于查看进程调度器维护的运行队列的情况，和系统负载
-#+BEGIN_SRC sh
+#+begin_src sh
 $ cat /proc/loadavg 
 1.63 0.48 0.21 10/200 17145
 # |            |  |   |
@@ -216,10 +216,10 @@ $ cat /proc/loadavg
 # |            |  +------ 进程总数
 # |            +--------- 运行队列中的进程数
 # +---------------------- 最近 1、5、15 分钟内的系统负载
-#+END_SRC
+#+end_src
 
 #+CAPTION: =top= 和 =w= 也可以用于查看系统负载，其数据都来源于 =/proc/loadavg=
-#+BEGIN_SRC sh
+#+begin_src sh
 $ top
 top - 14:13:17 up 2 min, 1 user, load average: 0.15, 0.11, 0.04
 ...
@@ -227,17 +227,17 @@ top - 14:13:17 up 2 min, 1 user, load average: 0.15, 0.11, 0.04
 $ w
 14:13:25 up 2 min, 1 user, load average: 0.20, 0.13, 0.05
 ...
-#+END_SRC
+#+end_src
 
 #+CAPTION: 要模拟提高系统负载，可以使用没有 I/O 操作并且长时间占用 CPU 的代码，如循环累加器
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int main() {
     unsigned long long sum = 0;
     for (int i = 0; i < 100000; i++)
         sum += i;
     return 0;
 }
-#+END_SRC
+#+end_src
 
 *** 进程切换
 
@@ -246,14 +246,14 @@ int main() {
 为了让进程轮流使用系统资源， _进程调度器会挂起正在运行的进程，同时恢复之前挂起的某个进程，这种行为称为进程切换，或 +上下文切换+ （[[https://en.wikipedia.org/wiki/Context_switch][context switch]]）。当硬件上下文频繁地装入和移出时，所消耗的时间是非常可观的。_
 
 #+CAPTION: 使用 =nmon= 监视上下文切换
-#+BEGIN_SRC sh
+#+begin_src sh
 $ nmon
 k # 切换 kernel 模式
 RunQueue              1
 ContextSwitch     138.4 # 每秒上下文切换次数
 Forks               0.0
 Interrupts         79.4
-#+END_SRC
+#+end_src
 
 #+BEGIN_QUOTE
 *测试* ：Apache 使用 prefork 模式，lighttpd 使用单进程单线程模式，处理并发请求。\\
@@ -313,7 +313,7 @@ HTTP 长连接的实现需要浏览器和 Web 服务器共同协作：浏览器�
 关于超时的设置，对于多进程模型，如果超时时间过长，在没有任何后续请求时，Web 服务器仍然需要为当前连接维持空闲的子进程，影响性能。对于多线程模型，超时时间过长同样会导致资源无效占有，开销甚至会超过重复连接。长连接超时时间取决于浏览器和 Web 服务器的设置，双方都可以主动关闭长连接，如 Apache 通过 =KeepAliveTimeout= 指令设置超时时间。
 
 #+CAPTION: 长连接示例
-#+BEGIN_SRC sh
+#+begin_src sh
 # 浏览器发起长连接请求
 GET /index.html HTTP/1.1
 Connection: Keep-Alive
@@ -323,7 +323,7 @@ Connection: Keep-Alive
 HTTP/1.1 200 OK
 Connection: Keep-Alive
 Keep-Alive: timeout=5, max=100
-#+END_SRC
+#+end_src
 
 #+BEGIN_QUOTE
 *测试* ：Nginx 开启和关闭长连接，接收并发请求，使用 =strace= 统计系统调用。\\
@@ -444,13 +444,13 @@ FreeBSD 提供的实现，性能和 epoll 非常接近，可以设置水平触�
 Linux 内核提供一种访问磁盘文件的特殊方式，使用 =mmap()= 系统调用， _将内存中的地址空间和指定的磁盘文件相关联，从而把对内存的访问转换为对磁盘文件的访问，这种技术称为内存映射（memory mapping），可以提高磁盘 I/O 的性能_ （Wiki：访问内存映射文件比直接文件读写要快几个数量级）。
 
 #+CAPTION: 向 Apache 请求较小的静态文件时的系统调用
-#+BEGIN_SRC sh
+#+begin_src sh
 open("/data/www/site/htdocs/test.htm", O_RDONLY|O_LARGEFILE) = 20      # 打开文件，获得文件描述符
 mmap2(NULL, 151, PROT_READ, MAP_SHARED, 20, 0) = 0xb7f8f000            # 进行内存映射关联
 # 读取文件内容（内存地址空间），因为属于用户态行为，不在此输出
 writev(19, [{"HTTP/1.1 200 OK"..., 278}, {"<html>"..., 151}], 2) = 429 # 发送 HTTP header 和正文数据
 munmap(0xb7f8f000, 151) = 0                                            # 撤销内存映射关联
-#+END_SRC
+#+end_src
 
 *** 直接 I/O
 
@@ -464,11 +464,11 @@ munmap(0xb7f8f000, 151) = 0                                            # 撤销�
 - Linux 支持在 =open()= 系统调用中增加参数选项 =O_DIRECT= ，便可以绕过内核缓冲区，直接访问文件。
 - MySQL 的 Innodb 存储引擎自身可以进行数据和索引的缓存管理，所以对内核缓冲区的依赖不重。MySQL 通过在 =my.cnf= 配置中分配 Innodb 数据空间文件时，使用 raw 分区跳过内核缓冲区，实现直接 I/O。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 innodb_data_file_path = /dev/sda5:100Gnewraw
 # 另一种实现直接 I/O 的方式
 innodb_flush_method = O_DIRECT
-#+END_SRC
+#+end_src
 
 *** sendfile
 
@@ -477,9 +477,9 @@ Web 服务器处理静态文件请求的过程中，磁盘文件的数据先要�
 Linux 2.4 引入了称为 khttpd 的内核级 Web 服务器，只处理静态文件的请求，使 _请求的处理尽量在内核完成，减少内核态的切换以及用户态数据复制的开销。_ Linux通过 =sendfile()= 系统调用将这种机制提供给开发者，它可以 _将磁盘文件的特定部分直接传送到代表客户端的 socket 描述符，加快静态文件的请求速度，减少 CPU 和内存的开销。_
 
 #+CAPTION: Apache 可以配置是否使用 sendfile
-#+BEGIN_SRC sh
+#+begin_src sh
 EnableSendfile off
-#+END_SRC
+#+end_src
 
 #+BEGIN_QUOTE
 *测试* ：不使用 sendfile，通过 =strace= 跟踪 Apache 处理较大的静态文件的过程，并进行压力测试。
@@ -514,7 +514,7 @@ prefork 模式由主进程预先创建一定数量的子进程，每个请求由
 - 所有子进程使用阻塞 =accept()= 竞争接收连接。大多数 TCP 栈的实现方法是，当一个请求连接到达时，内核激活所有阻塞在 =accept()= 的子进程，但只有一个能够成功获得连接并返回到用户空间，其余的子进程继续回到休眠状态，这种「抖动」造成一定的额外开销。
 
 #+CAPTION: Apache 接收 HTTP 请求数据的系统调用
-#+BEGIN_SRC sh
+#+begin_src sh
 accept(3, ...) = 19 <0.004843>                      # 获得 socket 文件描述符
 fcntl64(19, ..., O_RDWR|O_NONBLOCK) = 0 <0.000005>  # 将文件描述符设置为非阻塞
 read(19, "GET /test.htm ...", 8000) = 85 <0.000008> # 读取请求数据
@@ -522,10 +522,10 @@ read(19, "GET /test.htm ...", 8000) = 85 <0.000008> # 读取请求数据
 poll([{fd=19, ..., revents=POLLIN|POLLHUP}], 1, 2000) = 1 <0.013797> # 有新数据或连接关闭时返回
 read(19, "", 512) = 0 <0.000008> # 接收数据，结果为空，视为客户端关闭了连接
 close(19) = 0 <0.000009>         # 关闭连接
-#+END_SRC
+#+end_src
 
 #+CAPTION: 系统调用汇总
-#+BEGIN_SRC sh
+#+begin_src sh
 % time     seconds  usecs/call     calls    errors syscall
 ------ ----------- ----------- --------- --------- ----------------
  74.55    0.016449           4      3846           poll   # 等待数据就绪
@@ -535,16 +535,16 @@ close(19) = 0 <0.000009>         # 关闭连接
   0.49    0.000109           0     11538      3846 read   # 读取请求数据
 ------ ----------- ----------- --------- --------- ----------------
 100.00    0.022064                126919     26922 total
-#+END_SRC
+#+end_src
 
 #+CAPTION: 使用长连接，Apache 接收 HTTP 请求数据的系统调用
-#+BEGIN_SRC sh
+#+begin_src sh
 poll([{fd=19, ..., revents=POLLIN}], 1, 30000) = 1 <0.000040> # 有新数据时返回，等待时间比短连接大大缩短
 read(19, "GET /test.htm ...", 8000) = 109 <0.000007>          # 接收数据
-#+END_SRC
+#+end_src
 
 #+CAPTION: 系统调用汇总
-#+BEGIN_SRC sh
+#+begin_src sh
 % time     seconds  usecs/call     calls    errors syscall
 ------ ----------- ----------- --------- --------- ----------------
  64.30    0.001052           0     10332      8856 open   # 打开磁盘文件
@@ -554,7 +554,7 @@ read(19, "GET /test.htm ...", 8000) = 109 <0.000007>          # 接收数据
   0.00    0.000000           0        15           accept # 接收连接
 ------ ----------- ----------- --------- --------- ----------------
 100.00    0.001636                 34101     10335 total
-#+END_SRC
+#+end_src
 
 使用长连接时， =accept()= 和 =poll()= 的阻塞时间和开销基本为 0，时间主要消耗在 =open()= 和 =writev()= 。
 
@@ -565,16 +565,16 @@ _多进程模型的开销限制了并发连接数，但是优势是稳定性，�
 Apache 的 worker 多路处理模块采用一个进程包含多个线程、每个线程处理一个连接的方式，可以减少 prefork 模式的进程开销，支持更多的并发连接。Worker 的 _线程实际上是由内核进程调度器管理的轻量级进程，其上下文切换开销依然存在，表现并不比 prefork 有太大优势，_ 优点并不明显，因此 worker 模型的处境尴尬，通常在服务器并发量达到瓶颈时，会改用其他的轻量级服务器。
 
 #+CAPTION: Prefork 模式下压力测试
-#+BEGIN_SRC sh
+#+begin_src sh
 Requests per second: 5861.53 [/sec] (mean) # 吞吐量
 ContextSwitch 15919.8                      # 上下文切换
-#+END_SRC
+#+end_src
 
 #+CAPTION: Worker 模式下压力测试
-#+BEGIN_SRC sh
+#+begin_src sh
 Requests per second: 6886.08 [/sec] (mean) # 吞吐量
 ContextSwitch 43237.6                      # 上下文切换
-#+END_SRC
+#+end_src
 
 *** 一个进程处理多个连接
 
@@ -583,7 +583,7 @@ ContextSwitch 43237.6                      # 上下文切换
 处理多个连接的进程通常称为 worker 进程，有些 Web 服务器使用 worker 线程来代替 worker 进程，但这种线程通常是内核级线程，在处理多路 I/O 的方式上基本相同，可以看成是迷你的 worker 进程。
 
 #+CAPTION: lighttpd 支持的多路 I/O 就需通知方法
-#+BEGIN_SRC sh
+#+begin_src sh
 OS           Method      Config Value
 ============ =========== ===============
 all          select      select
@@ -592,36 +592,36 @@ Linux 2.4+   rt-signals  linux-rtsig
 Linux 2.6+   epoll       linux-sysepoll
 Solaris      /dev/poll   solaris-devpoll
 FreeBSD      kqueue      freebsd-kqueue
-#+END_SRC
+#+end_src
 
 #+CAPTION: 使用 select 时检查数据就绪到接收请求的系统调用
-#+BEGIN_SRC sh
+#+begin_src sh
 select(4, [3], [], [3], {1, 0}) = 0 (Timeout)
 select(4, [3], [], [3], {1, 0}) = 1 (in [3], left {0, 164000})
 #                        |               |
 #                        |               +-- socket
 #                        +------------------ 超时时间
 accept(3, {sa_family=AF_INET, sin_port=htons(46160), sin_addr=inet_ addr("127.0.0.1")}, [16]) = 6
-#+END_SRC
+#+end_src
 
 #+CAPTION: 使用 poll 时检查数据就绪到接收请求的系统调用
-#+BEGIN_SRC sh
+#+begin_src sh
 poll([{fd=3, events=POLLIN}], 1, 1000) = 0
 poll([{fd=3, events=POLLIN, revents=POLLIN}], 1, 1000) = 1
 #         |                                      |
 #         |                                      +-- 超时时间
 #         +----------------------------------------- socket
 accept(3, {sa_family=AF_INET, sin_port=htons(35332), sin_addr=inet_ addr("127.0.0.1")}, [16]) = 6
-#+END_SRC
+#+end_src
 
 #+CAPTION: 使用 epoll 时检查数据就绪到接收请求的系统调用
-#+BEGIN_SRC sh
+#+begin_src sh
 epoll_wait(6, {}, 2049, 1000) = 0
 epoll_wait(6, {{EPOLLIN, {u32=3, u64=3}}}, 2049, 1000) = 1
 #                                                |
 #                                                +-- 超时时间
 accept(3, {sa_family=AF_INET, sin_port=htons(35333), sin_addr=inet_ addr("127.0.0.1")}, [16]) = 7
-#+END_SRC
+#+end_src
 
 从内核的角度看，这三种方式非常相似，都是通过各自的系统调用不断地轮询，获得就绪的 socket，然后使用 =accept()= 接收请求。
 
@@ -676,7 +676,7 @@ _缓冲的目的在于协调各部件之间不同的速度，将快速设备和�
 *** Smarty 缓存
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 // 初始化
 require 'Smarty.class.php';
 $smarty = new Smarty();
@@ -693,7 +693,7 @@ if ($smarty->is_cached($template, $cachekey)) {
 
 // 缓存未命中，进行 DB 查询等
 $smarty->display($template, $cachekey);
-#+END_SRC
+#+end_src
 
 #+BEGIN_QUOTE
 *测试* ：使用 =strace= 跟踪 Smarty 使用和不使用缓存时的系统调用。\\
@@ -705,25 +705,25 @@ $smarty->display($template, $cachekey);
 
 Smarty 缓存文件存储在磁盘指定目录下，如果单一目录下的缓存文件数量很大，CPU 花在遍历目录上的时间便不可忽视，可以通过缓存目录分级来解决，少量次数的目录切换的开销可以忽略。
 
-#+BEGIN_SRC php
+#+begin_src php
 $smarty->use_sub_dirs = true;
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC sh
+#+begin_src sh
 cache/12882^%%E6^E6C^E6C210ED%%place_posts.htm # 目录分级前
 cache/12882/%%E6/E6C/E6C210ED%%place_posts.htm # 目录分级后
-#+END_SRC
+#+end_src
 
 *** 过期检查
 
 #+CAPTION: Smarty 缓存文件中的过期时间信息
-#+BEGIN_SRC js
+#+begin_src js
 {
     'timestamp' => int(1236035506), // 缓存创建时间
     'expires'   => int(1236039106), // 缓存过期时间
     ...
 }
-#+END_SRC
+#+end_src
 
 两种过期检查方法：
 
@@ -739,7 +739,7 @@ cache/12882/%%E6/E6C/E6C210ED%%place_posts.htm # 目录分级后
 在缓存命中、读取缓存文件、终止程序之前，不要加载直接输出缓存时不需要的 PHP 库文件（如数据库访问相关的库），只加载必要的文件，可以减少磁盘 I/O 开销。
 
 #+CAPTION: 更进一步，如果使用最简化的页面缓存替代 Smarty
-#+BEGIN_SRC php
+#+begin_src php
 $path = '../cache/' . $template . '/' . $id;
 if (file_exists($path)) {
     $stats = stat($path);                       // 获得文件修改时间
@@ -751,13 +751,13 @@ if (file_exists($path)) {
 $html = '...'; // 生成动态内容
 file_put_contents($path, $html);
 echo $html;
-#+END_SRC
+#+end_src
 
 #+CAPTION: 可以消除加载和实例化 Smarty 的开销
-#+BEGIN_SRC php
+#+begin_src php
 require 'Smarty.class.php'; // 磁盘 I/O 开销
 $smarty = new Smarty();     // 脚本解释器开销（CPU 计算、内存交换等）
-#+END_SRC
+#+end_src
 
 *** 内存缓存
 
@@ -775,7 +775,7 @@ $smarty = new Smarty();     // 脚本解释器开销（CPU 计算、内存交换
 有些页面的某一区域需要及时更新，比如阅读量和评论，为了这一区域的更新，将整个页面重新创建缓存的话，又会浪费资源。为此，模板框架一般支持局部无缓存，允许在页面中指定一块包含动态数据的代码，每次请求时，这段代码都会实时计算，然后和其余部分的缓存合成为最终的网页。
 
 #+CAPTION: Smarty 局部无缓存示例
-#+BEGIN_SRC php
+#+begin_src php
 $smarty->register_block('dynamic', 'block_dynamic', false);
 function block_dynamic($param, $content, &$smarty) {
     return $content;
@@ -784,7 +784,7 @@ function block_dynamic($param, $content, &$smarty) {
 {dynamic}
 $user->user_nick
 {/dynamic}
-#+END_SRC
+#+end_src
 
 引入局部无缓存机制后，控制器也要进行修改，把无缓存区域对应的动态数据计算提到缓存检查之前，这样势必会影响性能。使用局部无缓存之前，要评估局部动态数据的影响力，如果将网页中占主要开销的数据计算置于无缓存状态，缓存就失去了意义，可以考虑选择其他的缓存方式或者页面组织结构，比如使用数据层缓存。
 
@@ -829,9 +829,9 @@ $user->user_nick
 -----
 
 #+CAPTION: PHP 的 Parsekit 扩展提供的运行时 API 支持查看任何 PHP 文件或者代码段的 opcode。
-#+BEGIN_SRC php
+#+begin_src php
 var_dump(parsekit_compile_string('print 1+1;'));
-#+END_SRC
+#+end_src
 
 #+CAPTION: opcode 操作列表
 | =opcode= | =opcode_name=           | =op1=         | =op2=         | =result=     |
@@ -848,44 +848,44 @@ var_dump(parsekit_compile_string('print 1+1;'));
 
 解释器核心引擎将所有的操作抽象为类似汇编语言的操作码形式，这种操作码称为三地址码，因为每一个运算由不超过三个地址组成： =op1= 、 =op2= 、 =result= ，它们可以表示三种运算形式：
 
-#+BEGIN_SRC sh
+#+begin_src sh
 result = op1 op op2
 result = op op1
 op op1
-#+END_SRC
+#+end_src
 
 三地址码与汇编指令在结构上非常接近，所以从三地址码生成目标文件非常容易，只需要将抽象的操作指令（如 =ZEND_ADD= ），结合机器硬件以及操作系统平台等实际环境，翻译成底层的操作指令即可。
 
 #+CAPTION: opcode 在 PHP 源代码中的宏定义：
-#+BEGIN_SRC c
+#+begin_src c
 // Zend/zend_vm_opcodes.h
 #define ZEND_ADD                       1
 #define ZEND_PRINT                    41
 #define ZEND_RETURN                   62
 #define ZEND_FREE                     70
 #define ZEND_HANDLE_EXCEPTION        149
-#+END_SRC
+#+end_src
 
 *** 生成 opcode
 
 PHP 代码可以看成是一系列单词的集合，包括关键字、标识符、运算符等。解析器首先对所有单词进行分类，并打上记号（token），这个过程称为词法分析。
 
 #+CAPTION: PHP 源代码中的解释器的词法规则文件：
-#+BEGIN_SRC c
+#+begin_src c
 // Zend/zend_language_scanner.l
 <ST_IN_SCRIPTING>"print" {
     return T_PRINT; // 即 print 对应的记号为 T_PRINT
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 代码通过词法分析后，解释器要对记号进行语法分析：
-#+BEGIN_SRC c
+#+begin_src c
 // Zend/zend_language_parser.y
 T_PRINT expr { zend_do_print(&$$, &$2 TSRMLS_CC); } // 将 T_PRINT 标记及上下文替换为 zend_do_print()
-#+END_SRC
+#+end_src
 
 #+CAPTION: Zend 函数的实现代码：
-#+BEGIN_SRC c
+#+begin_src c
 // Zend/zend_compile.c
 void zend_do_print(znode *result, znode *arg TSRMLS_DC)
 {
@@ -897,7 +897,7 @@ void zend_do_print(znode *result, znode *arg TSRMLS_DC)
     SET_UNUSED(opline->op2);
     *result = opline->result;
 }
-#+END_SRC
+#+end_src
 
 *** 避免重复编译
 
@@ -911,7 +911,7 @@ nmon 可以提供时间间隔为秒的系统监控，如内核状态、系统负
 
 Linux 系统内一切都是文件，包括各种系统状态，比如：
 
-#+BEGIN_SRC sh
+#+begin_src sh
 # 内存使用情况
 $ cat /proc/meminfo
 MemTotal:     4142240 kB
@@ -920,30 +920,30 @@ MemFree:       344428 kB
 # 系统负载和进程队列状态
 $ cat /proc/loadavg 
 0.02 0.03 0.00 1/894 21407
-#+END_SRC
+#+end_src
 
 SNMP 作为监控代理程序已经逐渐成为标准，并且支持很多异构平台。比如通过 SNMP 来获取另一台服务器的所有设备状态：
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ snmpwalk -c public  -v 2c 10.0.1.201
 SNMPv2-MIB::sysDescr.0 = STRING: Linux s-mat 2.6.16.21-0.8-bigsmp #1 SMP Mon Jul 3 18:25:39 UTC 2006 i686
 ...
-#+END_SRC
+#+end_src
 
 SNMP 结果集非常庞大，一般要限定需要获取状态的设备名称，可以通过 MIB 来描述它，比如获取服务器的运行时间：
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ snmpwalk -c public  -v 2c 10.0.1.210 hrSystemUptime
 HOST-RESOURCES-MIB::hrSystemUptime.0 = Timeticks: (630851406) 73 days, 0:21:54.06
-#+END_SRC
+#+end_src
 
 MRTG、Cacti、Nagios 在内的很多监控工具都利用 SNMP 来监控远程服务器，只需要在被监控的服务器上开启 SNMP 服务，同时对监控来源进行授权配置即可。
 
 一些希望监控的服务并没有提供相应的 SNMP 支持，比如 Nginx 服务器当前的 HTTP 并发连接数，Nginx 提供了必要的监控接口，如访问 =http://10.0.1.200/status= 查看当前的运行状态：
 
-#+BEGIN_SRC sh
+#+begin_src sh
 Active connections: 3020 
 server accepts handled requests
 5440803 5440803 7336362
 Reading: 471 Writing: 2340 Waiting: 209 
-#+END_SRC
+#+end_src

@@ -142,9 +142,9 @@ DHCP ÊÇÒ»ÖÖÓ¦ÓÃ²ãĞ­Òé£¬½¨Á¢ÔÚ UDP Ğ­ÒéÖ®ÉÏ¡£Õâ¸öĞ­Òé¹æ¶¨£¬Ã¿Ò»¸ö×ÓÍøÂçÖĞ£¬ÓĞÒ»Ì¨
 DNS£¨Domain Name System£©µÄ×÷ÓÃ·Ç³£¼òµ¥£¬¾ÍÊÇ¸ù¾İÓòÃû²é³ö IP µØÖ·¡£¿ÉÒÔ°ÑËüÏëÏó³Éµç»°±¾¡£ËäÈ»Ö»ĞèÒª·µ»ØÒ»¸ö IP µØÖ·£¬µ«ÊÇ DNS µÄ²éÑ¯¹ı³Ì·Ç³£¸´ÔÓ£¬·Ö³É¶à¸ö²½Öè¡£
 
 #+CAPTION: =dig= ÃüÁî¿ÉÒÔÏÔÊ¾Õû¸ö²éÑ¯¹ı³Ì£º
-#+BEGIN_SRC sh
+#+begin_src sh
 $ dig math.stackexchange.com
-#+END_SRC
+#+end_src
 
 ** DNS ·şÎñÆ÷
 
@@ -155,17 +155,17 @@ DNS ·şÎñÆ÷Í¨³£ÊÇÄÚÍøµØÖ·£¬ÓĞÒ»Ğ©¹«ÍøµÄ DNS ·şÎñÆ÷Ò²¿ÉÒÔÊ¹ÓÃ£¬ÆäÖĞ×îÓĞÃûµÄ¾ÍÊÇ Go
 ** ÓòÃû²ã¼¶
 
 #+CAPTION: =dig= ÃüÁîÊä³öÖĞµÄ²éÑ¯²¿·Ö£º
-#+BEGIN_SRC sh
+#+begin_src sh
 ;; QUESTION SECTION:
 ;math.stackexchange.com.        IN      A
-#+END_SRC
+#+end_src
 
 ËùÓĞÓòÃûµÄÎ²²¿£¬Êµ¼ÊÉÏ¶¼ÓĞÒ»¸ö¸ùÓòÃû¡£ =www.example.com= ÕæÕıµÄÓòÃûÊÇ =www.example.com.root= £¬ÒòÎª _¸ùÓòÃû =.root= ¶ÔÓÚËùÓĞÓòÃû¶¼ÊÇÒ»ÑùµÄ£¬ËùÒÔ¿ÉÒÔÊ¡ÂÔ£¬_ ¼òĞ´Îª =www.example.com.= ¡£
 
 #+CAPTION: ÓòÃûµÄ²ã¼¶½á¹¹
-#+BEGIN_SRC sh
+#+begin_src sh
 host.sld.tld.root
-#+END_SRC
+#+end_src
 
 - ¶¥¼¶ÓòÃû£¨Top-Level Domain£¬ËõĞ´Îª TLD£©£¬±ÈÈç =.com= ¡¢ =.net= ¡£
 - ´Î¼¶ÓòÃû£¨Second-Level Domain£¬ËõĞ´Îª SLD£©£¬±ÈÈç =.example= £¬ÓÃ»§¿ÉÒÔ×¢²á´Î¼¶ÓòÃû¡£
@@ -182,7 +182,7 @@ host.sld.tld.root
 ¶ø¡¸¸ùÓòÃû·şÎñÆ÷¡¹µÄ NS ¼ÇÂ¼ºÍ IP µØÖ·Ò»°ã²»»á±ä»¯£¬ÄÚÖÃÔÚ DNS ·şÎñÆ÷Àï¡£
 
 #+CAPTION: ÄÚÖÃµÄ¸ùÓòÃû·şÎñÆ÷ IP µØÖ·£¨[[https://www.cyberciti.biz/faq/unix-linux-update-root-hints-data-file/][How Do I Update The Root Hints Data File for BIND Named Server?]]£©
-#+BEGIN_SRC sh
+#+begin_src sh
 ; formerly NS.INTERNIC.NET
 ;
 .                        3600000  IN  NS    A.ROOT-SERVERS.NET.
@@ -198,18 +198,18 @@ B.ROOT-SERVERS.NET.      3600000      A     192.228.79.201
 ;
 .                        3600000      NS    C.ROOT-SERVERS.NET.
 C.ROOT-SERVERS.NET.      3600000      A     192.33.4.12
-#+END_SRC
+#+end_src
 
 Ä¿Ç°£¬ÊÀ½çÉÏÒ»¹²ÓĞ 13 ×é¸ùÓòÃû·şÎñÆ÷£¬´Ó =A.ROOT-SERVERS.NET= µ½ =M.ROOT-SERVERS.NET= ¡£¸ùÓòÃû·şÎñÆ÷µÄ TTL ÖµÊÇ 3600000 Ãë£¬Ïàµ±ÓÚ 1000 Ğ¡Ê±¡£
 
 ** ·Ö¼¶²éÑ¯ÊµÀı
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ dig +trace math.stackexchange.com
-#+END_SRC
+#+end_src
 
 #+CAPTION: µÚÒ»¶Î£ºÁĞ³ö¸ùÓòÃû =.= µÄËùÓĞ NS ¼ÇÂ¼£¬¼´ËùÓĞ¸ùÓòÃû·şÎñÆ÷£º
-#+BEGIN_SRC code
+#+begin_src code
 ; <<>> DiG 9.9.4-RedHat-9.9.4-29.el7_2.4 <<>> +trace math.stackexchange.com
 ;; global options: +cmd
 .                       79737   IN      NS      e.root-servers.net.
@@ -226,10 +226,10 @@ $ dig +trace math.stackexchange.com
 .                       79737   IN      NS      i.root-servers.net.
 .                       79737   IN      NS      f.root-servers.net.
 ;; Received 241 bytes from 127.0.0.1#53(127.0.0.1) in 4 ms
-#+END_SRC
+#+end_src
 
 #+CAPTION: µÚ¶ş¶Î£ºÏò¸ùÓòÃû·şÎñÆ÷²éÑ¯¶¥¼¶ÓòÃû =com.= £¬·µ»Ø¶¥¼¶ÓòÃûµÄ NS ¼ÇÂ¼£¬ÒÔ¼°×îÏÈ·µ»Ø½á¹ûµÄ·şÎñÆ÷£º
-#+BEGIN_SRC code
+#+begin_src code
 com.                    172800  IN      NS      a.gtld-servers.net.
 com.                    172800  IN      NS      b.gtld-servers.net.
 com.                    172800  IN      NS      c.gtld-servers.net.
@@ -244,27 +244,27 @@ com.                    172800  IN      NS      k.gtld-servers.net.
 com.                    172800  IN      NS      l.gtld-servers.net.
 com.                    172800  IN      NS      m.gtld-servers.net.
 ;; Received 874 bytes from 2001:500:a8::e#53(e.root-servers.net) in 23 ms
-#+END_SRC
+#+end_src
 
 ×îÏÈ»Ø¸´µÄ¸ùÓòÃû·şÎñÆ÷½«±»»º´æ£¬Ö®ºó DNS ·şÎñÆ÷Ö»ÏòÕâÌ¨·şÎñÆ÷·¢ËÍÇëÇó¡£
 
 #+CAPTION: µÚÈı¶Î£ºÏò¶¥¼¶ÓòÃû·şÎñÆ÷²éÑ¯´Î¼¶ÓòÃû =stackexchange.com.= £¬·µ»Ø´Î¼¶ÓòÃûµÄ NS ¼ÇÂ¼£¬ÒÔ¼°×îÏÈ·µ»Ø½á¹ûµÄ·şÎñÆ÷£º
-#+BEGIN_SRC code
+#+begin_src code
 stackexchange.com.      172800  IN      NS      ns-463.awsdns-57.com.
 stackexchange.com.      172800  IN      NS      ns-925.awsdns-51.net.
 stackexchange.com.      172800  IN      NS      ns-1029.awsdns-00.org.
 stackexchange.com.      172800  IN      NS      ns-1832.awsdns-37.co.uk.
 ;; Received 705 bytes from 2001:503:231d::2:30#53(b.gtld-servers.net) in 2 ms
-#+END_SRC
+#+end_src
 
 #+CAPTION: µÚËÄ¶Î£ºÏò´Î¼¶ÓòÃû·şÎñÆ÷²éÑ¯Ö÷»úÃû =math.stackexchange.com.= £¬·µ»ØÖ÷»úµÄ IP µØÖ·£¬ÒÔ¼°×îÏÈ·µ»Ø½á¹ûµÄ·şÎñÆ÷£º
-#+BEGIN_SRC code
+#+begin_src code
 math.stackexchange.com. 300     IN      A       151.101.129.69
 math.stackexchange.com. 300     IN      A       151.101.65.69
 math.stackexchange.com. 300     IN      A       151.101.1.69
 math.stackexchange.com. 300     IN      A       151.101.193.69
 ;; Received 252 bytes from 205.251.196.5#53(ns-1029.awsdns-00.org) in 1 ms
-#+END_SRC
+#+end_src
 
 ** DNS ¼ÇÂ¼ÀàĞÍ
 
@@ -288,13 +288,13 @@ math.stackexchange.com. 300     IN      A       151.101.193.69
 =CNAME= Îª·şÎñÆ÷ÅäÖÃÌá¹©Áé»îĞÔ£¬ÓÃ»§¸ĞÖª²»µ½¡£
 
 #+CAPTION: ¾ÙÀıÀ´Ëµ£¬=facebook.github.io= ¾ÍÊÇÒ»¸ö =CNAME= ¼ÇÂ¼£º
-#+BEGIN_SRC sh
+#+begin_src sh
 $ dig facebook.github.io
 
 ;; ANSWER SECTION:
 facebook.github.io.     3600    IN      CNAME   github.map.fastly.net.
 github.map.fastly.net.  30      IN      A       151.101.48.133
-#+END_SRC
+#+end_src
 
 ÓÃ»§²éÑ¯ =facebook.github.io= Ê±£¬Êµ¼ÊÉÏ·µ»ØµÄÊÇ =github.map.fastly.net= µÄ IP µØÖ·¡£
 
@@ -319,11 +319,11 @@ _SSH Ö»ÊÇÒ»ÖÖĞ­Òé£¬´æÔÚ¶àÖÖÊµÏÖ£¬_ ¼ÈÓĞÉÌÒµÊµÏÖ£¬Ò²ÓĞ¿ªÔ´ÊµÏÖ¡£±¾ÎÄÕë¶ÔµÄÊµÏÖÊÇ 
 
 ** »ù±¾ÓÃ·¨
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ssh <user>@<host>
 $ ssh <host>                  # ±¾µØÓÃ»§ÃûÓëÔ¶³ÌÓÃ»§ÃûÒ»ÖÂÊ±¿ÉÒÔÊ¡ÂÔ
 $ ssh -p <port> <user>@<host> # Ö¸¶¨¶Ë¿Ú£¬Ä¬ÈÏ¶Ë¿ÚÊÇ 22
-#+END_SRC
+#+end_src
 
 ** ÖĞ¼äÈË¹¥»÷
 
@@ -340,22 +340,22 @@ SSH Ö®ËùÒÔÄÜ¹»±£Ö¤°²È«£¬Ô­ÒòÔÚÓÚËü²ÉÓÃÁË _¹«Ô¿¼ÓÃÜ_ ¡£
 ** ¿ÚÁîµÇÂ¼
 
 #+CAPTION: Èç¹ûÊÇµÚÒ»´ÎµÇÂ¼¶Ô·½Ö÷»ú£¬ÏµÍ³»á³öÏÖÏÂÃæµÄÌáÊ¾£º
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ssh user@host
 
 The authenticity of host 'host (12.18.429.21)' can't be established.
 RSA key fingerprint is 98:2e:d7:e0:de:9f:ac:67:28:c2:42:2d:37:16:58:4d.
 Are you sure you want to continue connecting (yes/no)?
-#+END_SRC
+#+end_src
 
 Õâ¶Î»°µÄÒâË¼ÊÇ£¬ÎŞ·¨È·ÈÏÖ÷»úµÄÕæÊµĞÔ£¬Ö»ÖªµÀËüµÄ¹«Ô¿Ö¸ÎÆ£¬Ñ¯ÎÊ»¹¼ÌĞøÁ¬½ÓÂğ£¿ËùÎ½ _¡¸¹«Ô¿Ö¸ÎÆ¡¹£¬ÊÇÒòÎª¹«Ô¿³¤¶È½Ï³¤£¨ÕâÀï²ÉÓÃ RSA Ëã·¨£¬³¤´ï 1024 Î»£©£¬ËùÒÔ¶ÔÆä½øĞĞ MD5 ¼ÆËã£¬½«Ëü±ä³ÉÒ»¸ö 128 Î»µÄÖ¸ÎÆ£¬ÔÙ½øĞĞ±È½Ï¡£_
 
 ºÜ×ÔÈ»µÄÒ»¸öÎÊÌâ¾ÍÊÇ£¬ÓÃ»§ÔõÃ´ÖªµÀÔ¶³ÌÖ÷»úµÄ¹«Ô¿Ö¸ÎÆÓ¦¸ÃÊÇ¶àÉÙ£¿»Ø´ğÊÇÃ»ÓĞºÃ°ì·¨£¬ _Ô¶³ÌÖ÷»ú±ØĞëÔÚ×Ô¼ºµÄÍøÕ¾ÉÏÌù³ö¹«Ô¿Ö¸ÎÆ£¬ÒÔ±ãÓÃ»§×ÔĞĞºË¶Ô¡£_
 
 #+CAPTION: Èç¹û¾ö¶¨½ÓÊÜÕâ¸öÔ¶³ÌÖ÷»úµÄ¹«Ô¿£¬ÏµÍ³»á³öÏÖÒ»¾äÌáÊ¾£¬±íÊ¾Ö÷»úÒÑ¾­µÃµ½ÈÏ¿É£º
-#+BEGIN_SRC sh
+#+begin_src sh
 Warning: Permanently added 'host 12.18.429.21' (RSA) to the list of known hosts.
-#+END_SRC
+#+end_src
 
 _µ±Ô¶³ÌÖ÷»úµÄ¹«Ô¿±»½ÓÊÜÒÔºó£¬Ëü¾Í»á±»±£´æÔÚ =~/.ssh/known_hosts= ÖĞ¡£ÏÂ´ÎÔÙÁ¬½ÓÕâÌ¨Ö÷»ú£¬ÏµÍ³¾Í»áÈÏ³öËüµÄ¹«Ô¿ÒÑ¾­±£´æÔÚ±¾µØÁË£¬´Ó¶øÌø¹ı¾¯¸æ²¿·Ö£¬Ö±½ÓÌáÊ¾ÊäÈëÃÜÂë¡£_ Ã¿¸ö SSH ÓÃ»§¶¼ÓĞ×Ô¼ºµÄ =known_hosts= ÎÄ¼ş£¬´ËÍâÏµÍ³Ò²ÓĞÒ»¸öÎÄ¼ş£¬Í¨³£ÊÇ =/etc/ssh/ssh_known_hosts= £¬±£´æÒ»Ğ©¶ÔËùÓĞÓÃ»§¶¼¿ÉĞÅÀµµÄÔ¶³ÌÖ÷»úµÄ¹«Ô¿¡£
 
@@ -369,67 +369,67 @@ _µ±Ô¶³ÌÖ÷»úµÄ¹«Ô¿±»½ÓÊÜÒÔºó£¬Ëü¾Í»á±»±£´æÔÚ =~/.ssh/known_hosts= ÖĞ¡£ÏÂ´ÎÔÙÁ¬½ÓÕ
 4. Ô¶³ÌÖ÷»úÓÃÊÂÏÈ´¢´æµÄ¹«Ô¿½øĞĞ½âÃÜ£¬Èç¹û³É¹¦£¬¾ÍÖ¤Ã÷ÓÃ»§ÊÇ¿ÉĞÅµÄ£¬Ö±½ÓÔÊĞíµÇÂ¼£¬²»ÔÙÒªÇóÃÜÂë¡£
 
 #+CAPTION: ÕâÖÖ·½·¨ÒªÇóÓÃ»§Ìá¹©×Ô¼ºµÄ¹«Ô¿¡£Èç¹ûÃ»ÓĞ£¬¿ÉÒÔÖ±½ÓÓÃ =ssh-keygen= Éú³ÉÒ»¸ö£º
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ssh-keygen
-#+END_SRC
+#+end_src
 
 ÔËĞĞÉÏÃæµÄÃüÁîÒÔºó£¬ÏµÍ³»á³öÏÖÒ»ÏµÁĞÌáÊ¾£¬¿ÉÒÔÒ»Â·»Ø³µ¡£ÆäÖĞÓĞÒ»¸öÎÊÌâÊÇ£¬Òª²»Òª¶ÔË½Ô¿ÉèÖÃ¿ÚÁî£¨passphrase£©£¬Èç¹ûµ£ĞÄË½Ô¿µÄ°²È«£¬ÕâÀï¿ÉÒÔÉèÖÃÒ»¸ö¡£ÔËĞĞ½áÊøÒÔºó£¬ÔÚ =~/.ssh/= Ä¿Â¼ÏÂ£¬»áĞÂÉú³ÉÁ½¸öÎÄ¼ş£º =id_rsa.pub= ºÍ =id_rsa= £¬Ç°ÕßÊÇÄãµÄ¹«Ô¿£¬ºóÕßÊÇÄãµÄË½Ô¿¡£
 
 #+CAPTION: ½«¹«Ô¿´«ËÍµ½Ô¶³ÌÖ÷»úÉÏ£º
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ssh-copy-id user@host
-#+END_SRC
+#+end_src
 
 Ö®ºó¾Í¿ÉÒÔ½øĞĞ¹«Ô¿µÇÂ¼£¬²»ĞèÒªÊäÈëÃÜÂëÁË¡£
 
 #+CAPTION: Èç¹ûÊ§°Ü£¬²é¿´Ô¶³ÌÖ÷»úµÄ =/etc/ssh/sshd_config= £¬½«ÏÂÃæ¼¸ĞĞÈ¡Ïû×¢ÊÍ£º
-#+BEGIN_SRC sh
+#+begin_src sh
 RSAAuthentication yes
 PubkeyAuthentication yes
 AuthorizedKeysFile .ssh/authorized_keys
-#+END_SRC
+#+end_src
 
 #+CAPTION: È»ºóÖØÆô SSH ·şÎñ£º
-#+BEGIN_SRC sh
+#+begin_src sh
 # Ubuntu
 service ssh restart
 # Debian
 /etc/init.d/ssh restart
-#+END_SRC
+#+end_src
 
 Ô¶³ÌÖ÷»ú½«ÓÃ»§µÄ¹«Ô¿±£´æÔÚ =~/.ssh/authorized_keys= ÎÄ¼şÖĞ¡£¹«Ô¿Êµ¼ÊÊÇÒ»¶Î×Ö·û´®£¬Ö»Òª°ÑËü×·¼ÓÔÚÎÄ¼şµÄÄ©Î²£¬Ğ§¹ûÊÇÒ»ÑùµÄ¡£¿ÉÒÔ²»Ê¹ÓÃ =ssh-copy-id= £¬¿ÉÒÔÓÃÏÂÃæµÄÃüÁî½øĞĞ¹«Ô¿±£´æ£º
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ssh user@host 'mkdir -p .ssh && cat >> .ssh/authorized_keys' < ~/.ssh/id_rsa.pub
-#+END_SRC
+#+end_src
 
 ** Ô¶³Ì²Ù×÷
 
 SSH ²»½ö¿ÉÒÔÓÃÓÚÔ¶³ÌÖ÷»úµÇÂ¼£¬»¹¿ÉÒÔÖ±½ÓÔÚÔ¶³ÌÖ÷»úÉÏÖ´ĞĞ²Ù×÷¡£ _SSH ¿ÉÒÔÔÚÓÃ»§ºÍÔ¶³ÌÖ÷»úÖ®¼ä£¬½¨Á¢ÃüÁîºÍÊı¾İµÄ´«ÊäÍ¨µÀ¡£_
 
 #+CAPTION: ½« =~/src/= Ä¿Â¼¸´ÖÆµ½Ô¶³ÌÖ÷»úµÄ =~/src/= Ä¿Â¼£º
-#+BEGIN_SRC sh
+#+begin_src sh
 $ cd ~ && tar czv src | ssh user@host 'tar xz'
-#+END_SRC
+#+end_src
 
 #+CAPTION: ½«Ô¶³ÌÖ÷»ú =~/src/= Ä¿Â¼¸´ÖÆµ½ÓÃ»§µÄµ±Ç°Ä¿Â¼£º
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ssh user@host 'tar cz src' | tar xzv
-#+END_SRC
+#+end_src
 
 #+CAPTION: ²é¿´Ô¶³ÌÖ÷»úÊÇ·ñÔËĞĞ =httpd= ½ø³Ì£º
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ssh user@host 'ps ax | grep [h]ttpd'
-#+END_SRC
+#+end_src
 
 ** °ó¶¨±¾µØ¶Ë¿Ú
 
 ¼ÈÈ» SSH ¿ÉÒÔ´«ËÍÊı¾İ£¬ÄÇÃ´ _¿ÉÒÔÈÃ²»¼ÓÃÜµÄÍøÂçÁ¬½ÓÈ«²¿¸Ä×ß SSH Á¬½Ó£¬´Ó¶øÌá¸ß°²È«ĞÔ¡£_
 
 #+CAPTION: ±ÈÈçÈÃ 8080 ¶Ë¿ÚµÄÊı¾İ¶¼Í¨¹ı SSH ´«ÏòÔ¶³ÌÖ÷»ú£º
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ssh -D 8080 user@host
-#+END_SRC
+#+end_src
 
 SSH »á½¨Á¢Ò»¸ö socket£¬¼àÌı±¾µØµÄ 8080 ¶Ë¿Ú£¬Ò»µ©ÓĞÊı¾İ´«ÏòÄÇ¸ö¶Ë¿Ú£¬¾Í×Ô¶¯°ÑËü×ªÒÆµ½ SSH Á¬½ÓÉÏÃæ£¬·¢ÍùÔ¶³ÌÖ÷»ú¡£Èç¹û 8080 ¶Ë¿ÚÔ­À´ÊÇÒ»¸ö²»¼ÓÃÜ¶Ë¿Ú£¬ÏÖÔÚ½«±ä³ÉÒ»¸ö¼ÓÃÜ¶Ë¿Ú¡£
 
@@ -440,28 +440,28 @@ SSH »á½¨Á¢Ò»¸ö socket£¬¼àÌı±¾µØµÄ 8080 ¶Ë¿Ú£¬Ò»µ©ÓĞÊı¾İ´«ÏòÄÇ¸ö¶Ë¿Ú£¬¾Í×Ô¶¯°ÑËü×
 ¼Ù¶¨ host1 ÊÇ±¾µØÖ÷»ú£¬host2 ÊÇÔ¶³ÌÖ÷»ú¡£ÓÉÓÚÖÖÖÖÔ­Òò£¬Õâ _Á½Ì¨Ö÷»úÖ®¼äÎŞ·¨Á¬Í¨¡£µ«ÊÇ£¬ÁíÍâ»¹ÓĞÒ»Ì¨ host3£¬¿ÉÒÔÍ¬Ê±Á¬Í¨Ç°ÃæÁ½Ì¨Ö÷»ú£¬ºÜ×ÔÈ»µÄÏë·¨¾ÍÊÇ£¬Í¨¹ı host3£¬½« host1 Á¬ÉÏ host2¡£_
 
 #+CAPTION: ÔÚ host1 Ö´ĞĞ£º
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ssh -L 2121:host2:21 host3
-#+END_SRC
+#+end_src
 
 =L= ²ÎÊıÒ»¹²½ÓÊÜÈı¸öÖµ£¬·Ö±ğÊÇ¡¸±¾µØ¶Ë¿Ú:Ä¿±êÖ÷»ú:Ä¿±êÖ÷»ú¶Ë¿Ú¡¹£¬ËüÃÇÖ®¼äÓÃÃ°ºÅ·Ö¸ô¡£ÕâÌõÃüÁîµÄÒâË¼ÊÇÖ¸¶¨ SSH °ó¶¨±¾µØ¶Ë¿Ú 2121£¬È»ºóÖ¸¶¨ host3 ½«ËùÓĞµÄÊı¾İ×ª·¢µ½Ä¿±êÖ÷»ú host2 µÄ 21 ¶Ë¿Ú¡£ÕâÑùÒ»À´£¬Ö»ÒªÁ¬½Ó host1 µÄ 2121 ¶Ë¿Ú£¬¾ÍµÈÓÚÁ¬ÉÏÁË host2 µÄ 21 ¶Ë¿Ú£º
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ftp localhost:2121
-#+END_SRC
+#+end_src
 
 ¡¸±¾µØ¶Ë¿Ú×ª·¢¡¹Ê¹µÃ host1 ºÍ host2 Ö®¼ä·Â·ğĞÎ³ÉÒ»¸öÊı¾İ´«ÊäµÄÃØÃÜËíµÀ£¬Òò´ËÓÖ±»³ÆÎª¡¸SSH ËíµÀ¡¹¡£
 
 #+CAPTION: ½«±¾»úµÄ 5900 ¶Ë¿Ú°ó¶¨ host3 µÄ 5900 ¶Ë¿Ú£º
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ssh -L 5900:localhost:5900 host3 # localhost Ö¸µÄÊÇ host3£¬ÒòÎªÄ¿±êÖ÷»úÊÇÏà¶Ô host3 ¶øÑÔµÄ
-#+END_SRC
+#+end_src
 
 #+CAPTION: Í¨¹ı host3 µÄ¶Ë¿Ú×ª·¢£¬SSH µÇÂ¼ host2£º
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ssh -L 9001:host2:22 host3
 $ ssh -p 9001 localhost # SSH µÇÂ¼±¾»úµÄ 9001 ¶Ë¿Ú£¬¾ÍÏàµ±ÓÚ SSH µÇÂ¼ host2
-#+END_SRC
+#+end_src
 
 ** Ô¶³Ì¶Ë¿Ú×ª·¢
 
@@ -470,15 +470,15 @@ $ ssh -p 9001 localhost # SSH µÇÂ¼±¾»úµÄ 9001 ¶Ë¿Ú£¬¾ÍÏàµ±ÓÚ SSH µÇÂ¼ host2
 »¹ÊÇÉÏÃæµÄÀı×Ó£¬host1 Óë host2 Ö®¼äÎŞ·¨Á¬Í¨£¬±ØĞë½èÖú host3 ×ª·¢¡£µ«ÊÇ£¬ÌØÊâÇé¿ö³öÏÖÁË£¬host3 ÊÇÒ»Ì¨ÄÚÍø»úÆ÷£¬Ëü¿ÉÒÔÁ¬½ÓÍâÍøµÄ host1£¬µ«ÊÇ·´¹ıÀ´¾Í²»ĞĞ£¬ÍâÍøµÄ host1 Á¬²»ÉÏÄÚÍøµÄ host3¡£½â¾ö°ì·¨ÊÇ£¬¼ÈÈ» host3 ¿ÉÒÔÁ¬½Ó host1£¬ÄÇÃ´¾Í´Ó host3 ÉÏ½¨Á¢Óë host1 µÄ SSH Á¬½Ó£¬È»ºóÔÚ host1 ÉÏÊ¹ÓÃÕâÌõÁ¬½Ó¾Í¿ÉÒÔÁË¡£
 
 #+CAPTION: ÔÚ host3 Ö´ĞĞ£º
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ssh -R 2121:host2:21 host1
-#+END_SRC
+#+end_src
 
 =R= ²ÎÊıÒ²½ÓÊÜÈı¸öÖµ£¬·Ö±ğÊÇ¡¸Ô¶³ÌÖ÷»ú¶Ë¿Ú:Ä¿±êÖ÷»ú:Ä¿±êÖ÷»ú¶Ë¿Ú¡¹¡£ÕâÌõÃüÁî¾ÍÊÇÈÃ host1 ¼àÌıËü×Ô¼ºµÄ 2121 ¶Ë¿Ú£¬È»ºó½«ËùÓĞÊı¾İ¾­ÓÉ host3£¬×ª·¢µ½ host2 µÄ 21 ¶Ë¿Ú¡£ÓÉÓÚ¶ÔÓÚ host3 À´Ëµ£¬host1 ÊÇÔ¶³ÌÖ÷»ú£¬ËùÒÔÕâÖÖÇé¿ö¾Í±»³ÆÎª¡¸Ô¶³Ì¶Ë¿Ú°ó¶¨¡¹¡£°ó¶¨Ö®ºó£¬ÔÚ host1 ¾Í¿ÉÒÔÁ¬½Ó host2 ÁË£º
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ftp localhost:2121
-#+END_SRC
+#+end_src
 
 ×¢Òâ¡¸Ô¶³Ì¶Ë¿Ú×ª·¢¡¹µÄÇ°ÌáÌõ¼şÊÇ£¬host1 ºÍ host3 Á½Ì¨Ö÷»ú¶¼ÓĞ sshD ºÍ ssh ¿Í»§¶Ë¡£
 
@@ -486,15 +486,15 @@ $ ftp localhost:2121
 
 =N= ²ÎÊı±íÊ¾Ö»Á¬½ÓÔ¶³ÌÖ÷»ú£¬²»´ò¿ªÔ¶³Ì Shell¡£ =T= ²ÎÊı±íÊ¾²»ÎªÕâ¸öÁ¬½Ó·ÖÅä TTY¡£Õâ¸öÁ½¸ö²ÎÊıÒ»ÆğÊ¹ÓÃ£¬´ú±íÕâ¸ö SSH Á¬½ÓÖ»ÓÃÀ´´«Êı¾İ£¬²»Ö´ĞĞÔ¶³Ì²Ù×÷£º
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ssh -NT -D 8080 host
-#+END_SRC
+#+end_src
 
 =f= ²ÎÊı±íÊ¾ SSH Á¬½Ó³É¹¦ºó£¬×ªÈëºóÌ¨ÔËĞĞ¡£ÕâÑù¾Í¿ÉÒÔÔÚ²»ÖĞ¶Ï SSH Á¬½ÓµÄÇé¿öÏÂ£¬ÔÚ±¾µØ Shell ÖĞÖ´ĞĞÆäËû²Ù×÷¡£Òª¹Ø±ÕÕâ¸öºóÌ¨Á¬½Ó£¬¾ÍÖ»ÓĞÓÃ =kill= ÃüÁîÈ¥É±µô½ø³Ì£º
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ssh -f -D 8080 host
-#+END_SRC
+#+end_src
 
 ** ²Î¿¼ÎÄÏ×
 
@@ -605,28 +605,28 @@ _IDL ÊÇÎªÁË¿çÆ½Ì¨ÓïÑÔÊµÏÖ RPC ²»µÃÒÑµÄÑ¡Ôñ£¬Òª½â¾ö¸ü¹ã·ºµÄÎÊÌâ×ÔÈ»µ¼ÖÂÁË¸ü¸´ÔÓµÄ
 µ¼³öÊÇÖ¸±©Â¶Ô¶³Ì½Ó¿Ú£¬Ö»ÓĞµ¼³öµÄ½Ó¿Ú¿ÉÒÔ¹©Ô¶³Ìµ÷ÓÃ¡£
 
 #+CAPTION: Java ÖĞµ¼³ö½Ó¿ÚµÄ´úÂëÊ¾Àı£º
-#+BEGIN_SRC java
+#+begin_src java
 DemoService demo   = new ...;
 RpcServer   server = new ...;
 server.export(DemoService.class, demo, options);
-#+END_SRC
+#+end_src
 
 #+CAPTION: ¿ÉÒÔÏ¸Á£¶ÈµØÖ»µ¼³ö½Ó¿ÚÖĞµÄÄ³Ğ©·½·¨£º
-#+BEGIN_SRC java
+#+begin_src java
 // Ö»µ¼³ö DemoService ÖĞÇ©ÃûÎª hi(String s) µÄ·½·¨
 server.export(DemoService.class, demo, "hi", new Class<?>[] { String.class }, options);
-#+END_SRC
+#+end_src
 
 Java »¹ÓĞÒ»ÖÖÌØÊâµÄµ÷ÓÃ¾ÍÊÇ¶àÌ¬£¬¾ÍÊÇÒ»¸ö½Ó¿ÚÓĞ¶à¸öÊµÏÖ£¬ÄÇÃ´Ô¶³Ìµ÷ÓÃÊ±µ½µ×µ÷ÓÃÄÄ¸ö£¿±¾µØµ÷ÓÃµÄÓïÒåÊÇÍ¨¹ı JVM Ìá¹©µÄÒıÓÃ¶àÌ¬ĞÔÒşÊ½ÊµÏÖµÄ£¬RPC ¿ç½ø³ÌµÄµ÷ÓÃÃ»·¨ÒşÊ½ÊµÏÖ¡£
 
 #+CAPTION: Èç¹û DemoService ½Ó¿ÚÓĞ 2 ¸öÊµÏÖ£¬ÔÚµ¼³ö½Ó¿ÚÊ±¾ÍĞèÒªÌØÊâ±ê¼Ç²»Í¬µÄÊµÏÖ£º
-#+BEGIN_SRC java
+#+begin_src java
 DemoService demo   = new ...;
 DemoService demo2  = new ...;
 RpcServer   server = new ...;
 server.export(DemoService.class, demo, options);
 server.export("demo2", DemoService.class, demo2, options);
-#+END_SRC
+#+end_src
 
 Ô¶³Ìµ÷ÓÃÊ±Ò²ĞèÒª´«µİ¸Ã±ê¼Ç²ÅÄÜµ÷ÓÃµ½ÕıÈ·µÄÊµÏÖÀà£¬ÕâÑù¾Í½â¾öÁË¶àÌ¬µ÷ÓÃµÄÓïÒå¡£
 
@@ -635,11 +635,11 @@ server.export("demo2", DemoService.class, demo2, options);
 µ¼ÈëÏà¶ÔÓÚµ¼³ö¶øÑÔ£¬¿Í»§¶Ë´úÂëÒª·¢Æğµ÷ÓÃ£¬±ØĞëÒª»ñµÃÔ¶³Ì½Ó¿ÚµÄ·½·¨»ò¹ı³Ì¶¨Òå¡£Ä¿Ç°£¬ _´ó²¿·Ö¿çÓïÑÔÆ½Ì¨ RPC ¿ò¼ÜÊÇ¸ù¾İ IDL ¶¨Òå£¬Í¨¹ı´úÂëÉú³ÉÆ÷Éú³É client stub ´úÂë£¬Êµ¼Êµ¼ÈëµÄ¹ı³ÌÊÇÍ¨¹ı´úÂëÉú³ÉÆ÷ÔÚ±àÒëÆÚÍê³ÉµÄ¡£_ ÎÒËùÊ¹ÓÃ¹ıµÄÒ»Ğ©¿çÓïÑÔÆ½Ì¨ RPC ¿ò¼ÜÈç CORBAR¡¢WebService¡¢ICE¡¢ +Thrift+ ¾ùÊÇ´Ë·½Ê½¡£´úÂëÉú³ÉµÄ·½Ê½¶Ô¿çÓïÑÔÆ½Ì¨ RPC ¿ò¼Ü¶øÑÔÊÇ±ØÈ»µÄÑ¡Ôñ£¬¶ø¶ÔÓÚÍ¬Ò»ÓïÑÔÆ½Ì¨µÄ RPC Ôò¿ÉÒÔÍ¨¹ı¹²Ïí½Ó¿Ú¶¨ÒåÀ´ÊµÏÖ¡£ 
 
 #+CAPTION: Java µ¼Èë½Ó¿ÚµÄ´úÂëÊ¾Àı£º
-#+BEGIN_SRC java
+#+begin_src java
 RpcClient client = new ...;
 DemoService demo = client.refer(DemoService.class);
 demo.hi("how are you?");
-#+END_SRC
+#+end_src
 
 ÔÚ Java ÖĞ =import= ÊÇ¹Ø¼ü×Ö£¬ËùÒÔ´úÂëÖĞÓÃ =refer= À´µ¼Èë½Ó¿Ú¡£ÕâÖÖµ¼Èë·½Ê½±¾ÖÊÒ²ÊÇÒ»ÖÖ´úÂëÉú³É¼¼Êõ£¬Ö»²»¹ıÊÇÔÚÔËĞĞÊ±Éú³É£¬±È¾²Ì¬±àÒëÆÚµÄ´úÂëÉú³É¸ü¼ò½à¡£Java ÖÁÉÙÌá¹©ÁËÁ½ÖÖ¼¼ÊõÀ´½øĞĞ¶¯Ì¬´úÂëÉú³É£¬Ò»ÖÖÊÇ JDK ¶¯Ì¬´úÀí£¬ÁíÍâÒ»ÖÖÊÇ×Ö½ÚÂëÉú³É¡£¶¯Ì¬´úÀíÏà±È×Ö½ÚÂëÉú³É¸ü·½±ã£¬µ«¶¯Ì¬´úÀí·½Ê½ÔÚĞÔÄÜÉÏÑ·É«ÓÚÖ±½ÓµÄ×Ö½ÚÂëÉú³É£¬¶ø×Ö½ÚÂëÉú³ÉÔÚ´úÂë¿É¶ÁĞÔÉÏÒª²îºÜ¶à¡£Á½ÕßÈ¨ºâÆğÀ´£¬×÷ÎªÒ»ÖÖµ×²ãÍ¨ÓÃ¿ò¼Ü£¬¸öÈË¸üÇãÏòÓÚÑ¡ÔñĞÔÄÜÓÅÏÈ¡£
 
@@ -782,11 +782,11 @@ The URL used in REST-ful web services also forms a core part of the API, it is n
 
 The benefit of using a logical URL scheme is that other parts of the web service API can be inferred, e.g.
 
-#+BEGIN_SRC text
+#+begin_src text
 GET http://location/customers/mythz/orders // return all of "mythz" orders
 GET http://location/customers/mythz        // return details about the customer "mythz"
 GET http://location/customers              // return a list of all customers
-#+END_SRC
+#+end_src
 
 If supported, you may have access to different operations on the same resources via other HTTP methods: =POST=, =PUT= and =DELETE=. One of the limitations of having a REST-ful web services API is that although the API may be conventional and inferable by humans, it isn't friendly to computers and likely requires another unstructured document accompanying the web services API identifying the list, schema and capabilities of each service. This makes it a hard API to provide rich tooling support for or to be able to generate a programmatic API against.
 

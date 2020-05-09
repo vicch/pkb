@@ -4,63 +4,63 @@
 * 安装
 
 #+CAPTION: 安装 libevent
-#+BEGIN_SRC sh
+#+begin_src sh
 wget https://sourceforge.net/projects/levent/files/libevent/libevent-2.0/libevent-2.0.22-stable.tar.gz
 tar -xvzf libevent-2.0.22-stable.tar.gz
 cd libevent-2.0.22-stable
 ./configure
 make
 make install
-#+END_SRC
+#+end_src
 
 #+CAPTION: 安装 BerkeleyDB
-#+BEGIN_SRC sh
+#+begin_src sh
 wget http://fossies.org/linux/misc/db-6.1.23.tar.gz
 tar -xvzf db-6.1.23.tar.gz
 cd db-6.1.23/build_unix
 ../dist/configure
 make
 make install
-#+END_SRC
+#+end_src
 
 #+CAPTION: 配置动态链接库查找路径
-#+BEGIN_SRC sh
+#+begin_src sh
 vim /etc/ld.so.conf
 ## 添加两行
 /usr/local/lib
 /usr/local/BerkeleyDB.6.1/lib
 ## 运行 ldconfig
 ldconfig
-#+END_SRC
+#+end_src
 
 #+CAPTION: 安装 memcacheq
-#+BEGIN_SRC sh
+#+begin_src sh
 wget https://memcacheq.googlecode.com/files/memcacheq-0.2.0.tar.gz
 tar -xvzf memcacheq-0.2.0.tar.gz
 cd memcacheq-0.2.0
 ./configure --with-bdb=/usr/local/BerkeleyDB.6.1 --with-libevent=/usr/local/lib --enable-threads
-#+END_SRC
+#+end_src
 
 #+CAPTION: 运行 memcacheq
-#+BEGIN_SRC sh
+#+begin_src sh
 mkdir /var/mcq/data
 mkdir /var/mcq/logs
 memcacheq -d -l 192.168.0.105 -r -H /var/mcq/data -N -R -v -L 1024 -B 1024 > /var/mcq/logs/memcacheq.log 2>&1
 
 ## 查看端口
 netstat -tlnp
-#+END_SRC
+#+end_src
 
 #+CAPTION: 连接测试
-#+BEGIN_SRC sh
+#+begin_src sh
 telnet 192.168.0.105 22201
 set ...
 get ...
-#+END_SRC
+#+end_src
 
 * 命令行
 ** 运行
-#+BEGIN_SRC sh
+#+begin_src sh
 memcacheq <options>
     -p <port>  # TCP
     -U <port>  # UDP
@@ -78,50 +78,50 @@ memcacheq <options>
     -L <kbyte> # 日志缓冲大小，默认 32
     -R         # 自动清除过期日志
     -N         # 激活 DB_TXN_NOSYN 提升性能
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例（微博等级队列）
-#+BEGIN_SRC sh
+#+begin_src sh
 memcacheq -drNvR -uroot -A8192 -B4096 -L1024 -m64 -c8000 -T16 -H/data2/mcq/6825 -p6825
-#+END_SRC
+#+end_src
 ** 操作
 
 #+CAPTION: 写入
-#+BEGIN_SRC sh
+#+begin_src sh
 set <queue> <flags> 0 <msg_len>
 <msg_body>
 
 ## output
 STORED
-#+END_SRC
+#+end_src
 
 #+CAPTION: 读取
-#+BEGIN_SRC sh
+#+begin_src sh
 get <queue>
 
 ## output
 VALUE <queue> <flags> <msg_len>
 <msg_body>
 END
-#+END_SRC
+#+end_src
 
 #+CAPTION: 删除队列
-#+BEGIN_SRC sh
+#+begin_src sh
 delete <queue>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 查看所有队列状态
-#+BEGIN_SRC sh
+#+begin_src sh
 stats queue
 
 ## output
 STAT <queue> <all_msg_cnt>/<consumed_msg_cnt>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 查看当前队列中消息数量
-#+BEGIN_SRC sh
+#+begin_src sh
 db_stat
-#+END_SRC
+#+end_src
 
 * 资源
 

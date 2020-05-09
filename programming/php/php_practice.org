@@ -84,7 +84,7 @@ PSR-3 interface
   + values replace ={placeholder_name}= in =$message=
 
 PSR-3 interface
-#+BEGIN_SRC php
+#+begin_src php
 <?php
 namespace Psr\Log;
 
@@ -100,7 +100,7 @@ interface LoggerInterface
     public function debug($message, array $context = array());
     public function log($level, $message, array $context = array());
 }
-#+END_SRC
+#+end_src
 
 ** PSR-4
 
@@ -122,7 +122,7 @@ Without PSR-4
 - register unique autoloaders for every component
 
 PSR-4 autoloader example
-#+BEGIN_SRC php
+#+begin_src php
 <?php
 /**
  * An example of a project-specific implementation.
@@ -163,11 +163,11 @@ spl_autoload_register(function ($class) {
         require $file;
     }
 });
-#+END_SRC
+#+end_src
 
 * 项目结构
 
-#+BEGIN_SRC sh
+#+begin_src sh
 application/     # Application specific code
     controllers/
     models/
@@ -184,7 +184,7 @@ tmp/
     cache/
     logs/
     sessions/
-#+END_SRC
+#+end_src
 
 * Front Controller
 
@@ -194,7 +194,7 @@ tmp/
 - responsible for routing the request and dispatching the appropriate code
 
 #+CAPTION: =.htaccess=
-#+BEGIN_SRC sh
+#+begin_src sh
 # Redirect calls to public/
 <IfModule mod_rewrite.c>
     RewriteEngine on
@@ -211,7 +211,7 @@ tmp/
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ index.php?url=$1 [PT,L]
 </IfModule>
-#+END_SRC
+#+end_src
 
 #+CAPTION: =index.php=
 

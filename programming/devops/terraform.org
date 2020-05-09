@@ -8,7 +8,7 @@ Terraform 配置使用 HCL (HashiCorp Confguration Language) 声明式语言，�
 
 ** Interpolation
 
-#+BEGIN_SRC terraform
+#+begin_src terraform
 // 变量
 "${var.<variable_name>}"
 
@@ -20,7 +20,7 @@ Terraform 配置使用 HCL (HashiCorp Confguration Language) 声明式语言，�
 
 // 模块输出
 "${module.<module_name>.<output_name>}"
-#+END_SRC
+#+end_src
 
 当一个资源引用了另一个资源的属性时，就产生了一个依赖关系，Terraform 会解读资源的依赖关系，以决定创建资源的顺序。
 
@@ -32,15 +32,15 @@ Terraform 配置使用 HCL (HashiCorp Confguration Language) 声明式语言，�
 
 *** =file()=
 
-#+BEGIN_SRC terraform
+#+begin_src terraform
 "${file("<file_path>")}"
-#+END_SRC
+#+end_src
 
 Terraform 将文件路径解读为当前目录的相对路径，在模块中使用 =file()= 时，需要使用 =${path.module}= 表示模块目录的相对路径，而非引用位置的相对路径。
 
-#+BEGIN_SRC terraform
+#+begin_src terraform
 "${file("${path.module}/<file_path>")}"
-#+END_SRC
+#+end_src
 
 ** 元参数
 
@@ -52,35 +52,35 @@ Terraform 将文件路径解读为当前目录的相对路径，在模块中使�
 
 *** =lifecycle=
 
-#+BEGIN_SRC terraform
+#+begin_src terraform
 lifecycle {
   create_before_destroy = <bool> // True 表示在删除现有资源前，先增加替代资源
                                  // 设置为 true 时，此资源依赖的所有资源也必须设置为 true
   prevent_destroy       = <bool> // True 表示防止资源被删除，尝试删除时会报错
   ignore_changes        = ["<string>", ...]
 }
-#+END_SRC
+#+end_src
 
 ** =provider=
 
-#+BEGIN_SRC terraform
+#+begin_src terraform
 provider "<name>" {   # e.g. aws
   region = "<region>" # e.g. us-east-1
 }
-#+END_SRC
+#+end_src
 
 ** =resource=
 
-#+BEGIN_SRC terraform
+#+begin_src terraform
 resource "<provider_resource>" "<name>" {
   <config_name> = "<config_value>"
 }
-#+END_SRC
+#+end_src
 
 ** =variable=
 
 #+CAPTION: 定义变量
-#+BEGIN_SRC terraform
+#+begin_src terraform
 variable "<name>" {
   description = "<desc>"
   type        = "<type>"  // string, list, map
@@ -89,25 +89,25 @@ variable "<name>" {
   default     = "<value>" // 如果未通过命令选项或环境变量指定值，则使用默认值
                           // 如果没有默认值，则命令会提示输入值
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 引用变量
-#+BEGIN_SRC terraform
+#+begin_src terraform
 "${var.<variable_name>}"
-#+END_SRC
+#+end_src
 
 ** =data=
 
 A data source represents a piece of read-only information that is fetched from the provider.
 
-#+BEGIN_SRC terraform
+#+begin_src terraform
 data "<type>" "<name>" {
 }
-#+END_SRC
+#+end_src
 
 *** =template_file=
 
-#+BEGIN_SRC terraform
+#+begin_src terraform
 data "template_file" "<name>" {
   template = "${file("<file_path>")}"
   vars {
@@ -121,7 +121,7 @@ ${<var_name>}
 
 # 引用模板文件的输出
 user_data = "${data.template_file.<name>.rendered}"
-#+END_SRC
+#+end_src
 
 *** =terraform_remote_state=
 
@@ -129,17 +129,17 @@ user_data = "${data.template_file.<name>.rendered}"
 
 ** =output=
 
-#+BEGIN_SRC terraform
+#+begin_src terraform
 output "<name>" {
   value = "<value>"
 }
-#+END_SRC
+#+end_src
 
 * AWS
 ** =aws_autoscaling_group=
 *** 资源
 
-#+BEGIN_SRC terraform
+#+begin_src terraform
 resource "aws_autoscaling_group" "<name>" {
   name = "<name>"
 
@@ -156,12 +156,12 @@ resource "aws_autoscaling_group" "<name>" {
   // 健康检查方式
   health_check_type = "<type>" // EC2 或 ELB
 }
-#+END_SRC
+#+end_src
 
 ** =aws_autoscaling_schedule=
 *** 资源
 
-#+BEGIN_SRC terraform
+#+begin_src terraform
 resource "aws_autoscaling_schedule" "<name>" {
   autoscaling_group_name = "<asg_name>"
   scheduled_action_name  = "<action_name>"
@@ -174,12 +174,12 @@ resource "aws_autoscaling_schedule" "<name>" {
   max_size         = <int>
   desired_capacity = <int>
 }
-#+END_SRC
+#+end_src
 
 ** =aws_db_instance=
 *** 资源
 
-#+BEGIN_SRC terraform
+#+begin_src terraform
 resource "aws_db_instance" "<name>" {
   name              = "<name>"
   instance_class    = "<instance_class>" # e.g. db.t2.micro
@@ -188,7 +188,7 @@ resource "aws_db_instance" "<name>" {
   username          = "<username>"
   password          = "<password>"
 }
-#+END_SRC
+#+end_src
 
 *** 属性
 
@@ -199,7 +199,7 @@ resource "aws_db_instance" "<name>" {
 ** =aws_elb=
 *** 资源
 
-#+BEGIN_SRC terraform
+#+begin_src terraform
 resource "aws_elb" "<name>" {
   name = "<name>"
 
@@ -227,17 +227,17 @@ resource "aws_elb" "<name>" {
     target   = "<protocol>:<port><path>" // protocol = HTTP, HTTPS, TCP, SSL
   }
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 健康检查需要实例或 ASG 包含发送规则：
-#+BEGIN_SRC terraform
+#+begin_src terraform
 egress {
   from_port   = 0
   to_port     = 0
   protocol    = "-1"
   cidr_blocks = ["0.0.0.0/0"]
 }
-#+END_SRC
+#+end_src
 
 *** 属性
 
@@ -248,7 +248,7 @@ egress {
 ** =aws_instance=
 *** 资源
 
-#+BEGIN_SRC terraform
+#+begin_src terraform
 resource "aws_instance" "<name>" {
   ami           = "<ami_id>"        // AMI ID
   instance_type = "<instance_type>" // 实例类型
@@ -263,12 +263,12 @@ resource "aws_instance" "<name>" {
     <tag_name> = "<tag_value>"
   }
 }
-#+END_SRC
+#+end_src
 
 ** =aws_launch_configuration=
 *** 资源
 
-#+BEGIN_SRC terraform
+#+begin_src terraform
 resource "aws_launch_configuration" "<name>" {
   image_id        = "<ami_id>"
   instance_type   = "<instance_type>"
@@ -279,12 +279,12 @@ resource "aws_launch_configuration" "<name>" {
               <script>
               EOF
 }
-#+END_SRC
+#+end_src
 
 ** =aws_s3_bucket=
 *** 资源
 
-#+BEGIN_SRC terraform
+#+begin_src terraform
 resource "aws_s3_bucket" "<name>" {
   bucket = "<bucket_name>"
   
@@ -292,7 +292,7 @@ resource "aws_s3_bucket" "<name>" {
     enabled = <bool>
   }
 }
-#+END_SRC
+#+end_src
 
 *** 属性
 
@@ -303,7 +303,7 @@ resource "aws_s3_bucket" "<name>" {
 ** =aws_security_group=
 *** 资源
 
-#+BEGIN_SRC terraform
+#+begin_src terraform
 resource "aws_security_group" "<name>" {
   name = "<name>"
 
@@ -323,10 +323,10 @@ resource "aws_security_group" "<name>" {
     cidr_blocks = ["<cidr_block>", ...]
   }
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC terraform
+#+begin_src terraform
 resource "aws_security_group" "test" {
   name = "test"
   ingress = {
@@ -336,11 +336,11 @@ resource "aws_security_group" "test" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-#+END_SRC
+#+end_src
 
 =ingress= 和 =egress= 为 inline 形式属性，建议使用资源 =aws_security_group_rule= 单独定义，以便于添加规则。
 
-#+BEGIN_SRC terraform
+#+begin_src terraform
 output "<output_name>" {
   value = "${aws_security_group.<name>.id}"
 }
@@ -348,11 +348,11 @@ output "<output_name>" {
 resource "aws_security_group_rule" "<name>" {
   security_group_id = "${module.<module_name>.<output_name>}"
 }
-#+END_SRC
+#+end_src
 
 ** =aws_security_group_rule=
 
-#+BEGIN_SRC terraform
+#+begin_src terraform
 resource "aws_security_group_rule" "<name>" {
   security_group_id = "<group_id>"
 
@@ -362,15 +362,15 @@ resource "aws_security_group_rule" "<name>" {
   protocol    = "<protocol>"
   cidr_blocks = ["<cidr_block>", ...]
 }
-#+END_SRC
+#+end_src
 
 ** =data=
 *** =aws_availability_zones=
 
 #+CAPTION: 示例
-#+BEGIN_SRC terraform
+#+begin_src terraform
 availability_zones = "${data.aws_availability_zones.all.names}"
-#+END_SRC
+#+end_src
 
 * State
 
@@ -383,7 +383,7 @@ Terraform 支持将状态文件加密存储到远程，每次运行时自动获�
 远程状态存储可以解决共享和明文保存敏感数据的问题，但是不支持锁机制，无法避免竞态问题。
 
 #+CAPTION: 状态存储
-#+BEGIN_SRC terraform
+#+begin_src terraform
 terraform {
   backend "s3" {
     bucket = "<bucket_name>"
@@ -396,13 +396,13 @@ terraform {
 output "<output_name>" {
   value = "<value>"
 }
-#+END_SRC
+#+end_src
 
 使用数据源 =terraform_remote_state= 可以以只读方式获取其他 Terraform 模板的状态文件。
 <<terraform_remote_state>>
 
 #+CAPTION: 状态读取
-#+BEGIN_SRC terraform
+#+begin_src terraform
 data "terraform_remote_state" "<data_name>" {
   backend = "s3"
   config {
@@ -414,7 +414,7 @@ data "terraform_remote_state" "<data_name>" {
 
 # Interpolation
 "${data.terraform_remote_state.<data_name>.<output_name>}"
-#+END_SRC
+#+end_src
 
 file:../images/terraform_up_and_running/04.png
 
@@ -423,16 +423,16 @@ file:../images/terraform_up_and_running/04.png
 任一目录下的一组 Terraform 模板都可以认为是一个模块（module），一个模块可以复用其他模块的代码。
 
 #+CAPTION: 使用模块
-#+BEGIN_SRC terraform
+#+begin_src terraform
 module "<name>" {
   source = "<source>" # 相对路径，e.g. ../../modules/<service>
                       # Git URL，e.g. git::git@github.com:foo/modules.git/service?ref=v0.0.1
                       # ref 可以指定 commit（sha1 hash）、分支名、标签名
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 模块变量
-#+BEGIN_SRC terraform
+#+begin_src terraform
 # /modules/<service>/vars.tf
 # 声明变量
 variable "<var_name>" {}
@@ -447,15 +447,15 @@ module "<name>" {
   source = "../../modules/<service>"
   <var_name> = "<var_value>"
 }
-#+END_SRC
+#+end_src
 
 * Command
 
-#+BEGIN_SRC sh
+#+begin_src sh
 terraform <command> <options>
     -var <name>="<value>" # 传入脚本变量
     -var-file <path>      # 通过文件传入脚本变量
-#+END_SRC
+#+end_src
 
 Terraform 命令只应用于当前目录下的 =.tf= 文件。
 
@@ -479,9 +479,9 @@ Terraform 命令只应用于当前目录下的 =.tf= 文件。
 
 ** =output=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 terrform output [<name>]
-#+END_SRC
+#+end_src
 
 ** =plan=
 
@@ -511,7 +511,7 @@ A thin wrapper for Terraform that manages remote state automatically and provide
 
 ** 配置
 
-#+BEGIN_SRC terraform
+#+begin_src terraform
 # /root/terraform.tfvars
 terragrunt = {
   remote_state {
@@ -537,7 +537,7 @@ terragrunt = {
 terraform {
   backend "s3" {}
 }
-#+END_SRC
+#+end_src
 
 * Link
 

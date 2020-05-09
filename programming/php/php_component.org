@@ -33,18 +33,18 @@ PHP community has evolved from a centralized framework model to a distributed ec
 
 ** 安装
 
-#+BEGIN_SRC sh
+#+begin_src sh
 curl -sS https://getcomposer.org/installer | php
 sudo mv composer.phar /usr/local/bin/composer
 sudo chmod +x /usr/local/bin/composer
 
 # ~/.bash_profile, add:
 PATH=/usr/local/bin:$PATH
-#+END_SRC
+#+end_src
 
 ** 文件
 
-#+BEGIN_SRC sh
+#+begin_src sh
 src/
 tests/
 composer.json
@@ -52,7 +52,7 @@ README.md       # Name, description, author, contributor guidelines, software li
 CONTRIBUTING.md # How others can contribute to this component
 LICENSE
 CHANGELOG.md
-#+END_SRC
+#+end_src
 
 - =composer.lock= :: lists all PHP components (and version numbers) used by the project
                    - Composer downloads the specific versions listed in =composer.lock= regardless of the latest available versions on Packagist
@@ -62,7 +62,7 @@ CHANGELOG.md
                    - contains information for the component's Packagist directory listing
 
 #+CAPTION: =composer.json= 示例
-#+BEGIN_SRC js
+#+begin_src js
 {
     "name": "<vendor>/<package>",
     "description": "...",
@@ -97,38 +97,38 @@ CHANGELOG.md
         }
     }
 }
-#+END_SRC
+#+end_src
 
 ** 命令行
 
-#+BEGIN_SRC sh
+#+begin_src sh
 composer <options> <arguments>
     -h, --help
-#+END_SRC
+#+end_src
 
 #+CAPTION: 增加 component
-#+BEGIN_SRC sh
+#+begin_src sh
 # At project's root directory
 composer require <vendor>/<package>
 # composer.json and composer.lock are created/updated
 # Components are downloaded into vendor/ directory
 # Autoloader is created at vendor/autoload.php
-#+END_SRC
+#+end_src
 
 #+CAPTION: 更新 component
-#+BEGIN_SRC sh
+#+begin_src sh
 composer update
 # Newer versions are installed
 # composer.lock is updated
-#+END_SRC
+#+end_src
 
 ** 使用
 
-#+BEGIN_SRC php
+#+begin_src php
 <?php
 // Usually in bootstrap
 require 'vendor/autoload.php';
-#+END_SRC
+#+end_src
 
 * Debug
 ** Monolog
@@ -136,7 +136,7 @@ require 'vendor/autoload.php';
 [[https://github.com/Seldaek/monolog][monolog/monolog]]
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 <?php
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
@@ -147,7 +147,7 @@ $log->pushHandler(new StreamHandler('logs/production.log', Logger::WARNING));
 
 $log->debug('This is a debug message');
 $log->warning('This is a warning message');
-#+END_SRC
+#+end_src
 
 * 链接
 

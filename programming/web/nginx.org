@@ -5,7 +5,7 @@
 ** 示例
 
 #+CAPTION: 最简
-#+BEGIN_SRC sh
+#+begin_src sh
 server {
     listen      80;
     server_name foo.com;
@@ -16,9 +16,9 @@ server {
         try_files $uri $uri/ /index.html;
     }
 }
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC code
+#+begin_src code
 http {
     access_log <file> <type>;
 
@@ -39,11 +39,11 @@ http {
         }
     }
 }
-#+END_SRC
+#+end_src
 
 *** PHP 配置
 
-#+BEGIN_SRC code
+#+begin_src code
 server {
     listen 80;
     server_name foo.com;
@@ -62,42 +62,42 @@ server {
         fastcgi_pass 127.0.0.1:9000;
     }
 }
-#+END_SRC
+#+end_src
 
 * 模块
 ** =ngx_http_stub_status_module=
 
 #+CAPTION: 查看模块是否编译
-#+BEGIN_SRC sh
+#+begin_src sh
 nginx -V 2>&1 | grep -o with-http_stub_status_module
-#+END_SRC
+#+end_src
 
 *** 配置
 
 #+CAPTION: 设置状态页面
-#+BEGIN_SRC sh
+#+begin_src sh
 location /server-status {
     stub_status on;
     allow <ip>;
 }
-#+END_SRC
+#+end_src
 
 *** 输出
 
-#+BEGIN_SRC sh
+#+begin_src sh
 Active connections: 2 
 server accepts handled requests
 10011 10011 10028 
 Reading: 0 Writing: 1 Waiting: 1
-#+END_SRC
+#+end_src
 
 * 命令
 
-#+BEGIN_SRC sh
+#+begin_src sh
 nginx <options>
     -c <file>   # 配置文件
     -s <signal> # stop, quit, reopen, reload
-#+END_SRC
+#+end_src
 
 * 链接
 

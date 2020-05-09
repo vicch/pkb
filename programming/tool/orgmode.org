@@ -71,7 +71,7 @@
 
 ** 文本
 
-| =<s= =Tab=      | =#+BEGIN_SRC ... #+END_SRC=         |
+| =<s= =Tab=      | =#+begin_src ... #+end_src=         |
 |-----------------+-------------------------------------|
 | =<q= =Tab=      | =#+BEGIN_QUOTE ... #+END_QUOTE=     |
 |-----------------+-------------------------------------|
@@ -113,49 +113,49 @@
 
 不输出代码块（直接嵌入生成的文件，不用每次输出时重新生成）：
 
-#+BEGIN_SRC code
-\#+BEGIN_SRC ... :exports none
-#+END_SRC
+#+begin_src code
+\#+begin_src ... :exports none
+#+end_src
 
 * MathJax
 
 #+CAPTION: 行内
-#+BEGIN_SRC text
+#+begin_src text
 $ ... $
 \( ... \)
-#+END_SRC
+#+end_src
 
 #+CAPTION: 段落
-#+BEGIN_SRC text
+#+begin_src text
 \begin{equation} ... \end{equation}
 $$ ... $$
 \[ ... \]
-#+END_SRC
+#+end_src
 
 ** Debug
 
-#+BEGIN_SRC lisp
+#+begin_src lisp
 ;; site-lisp/org/lisp/ox-html.el
 ;; line 1031
 tex2jax: {
     inlineMath: [ ['$', '$'], [\"\\\\(\",\"\\\\)\"] ],
     ...
 }
-#+END_SRC
+#+end_src
 
 * PlantUML
 ** 安装
 
 安装 Graphviz 和 PlantUML：
 
-#+BEGIN_SRC sh
+#+begin_src sh
 brew install graphviz
 brew install plantuml
-#+END_SRC
+#+end_src
 
 将 =plantuml.jar= 放置到 =emacs/etc/= 。修改 =config/.emacs= ：
 
-#+BEGIN_SRC lisp
+#+begin_src lisp
 ;; PlantUML, active Org-babel languages
 (org-babel-do-load-languages
   'org-babel-load-languages
@@ -163,27 +163,27 @@ brew install plantuml
     (plantuml . t)))
 (setq org-plantuml-jar-path
   (expand-file-name "../etc/plantuml.jar"))
-#+END_SRC
+#+end_src
 
 ** 示例
 
-#+BEGIN_SRC code
-\#+BEGIN_SRC plantuml :file ../images/01.svg
+#+begin_src code
+\#+begin_src plantuml :file ../images/01.svg
 @startuml
 !include ../../styles/plantuml-style
 ...
 @enduml
-\#+END_SRC
-#+END_SRC
+\#+end_src
+#+end_src
 
 In newer versions, the start and end tags can be omitted:
 
-#+BEGIN_SRC code
-\#+BEGIN_SRC plantuml :file ../images/01.svg
+#+begin_src code
+\#+begin_src plantuml :file ../images/01.svg
 !include ../../styles/plantuml-style
 ...
-\#+END_SRC
-#+END_SRC
+\#+end_src
+#+end_src
 
 ** =skinparam=
 
@@ -199,11 +199,11 @@ In newer versions, the start and end tags can be omitted:
 
 * Ditaa
 
-#+BEGIN_SRC code
-\#+BEGIN_SRC ditaa :file <path> :cmdline <options>
+#+begin_src code
+\#+begin_src ditaa :file <path> :cmdline <options>
 ...
-\#+END_SRC
-#+END_SRC
+\#+end_src
+#+end_src
 
 #+CAPTION: Options
 | =-E=         | Prevents the separation of common edges of shapes |
@@ -220,11 +220,11 @@ In newer versions, the start and end tags can be omitted:
 2 - 将 AUCTex 文件覆盖到 emacs 文件夹下
 
 #+CAPTION: 4 - 测试代码
-#+BEGIN_SRC text
-\#+BEGIN_SRC latex :file ../images/test.png
+#+begin_src text
+\#+begin_src latex :file ../images/test.png
 \LaTeX
-\#+END_SRC
-#+END_SRC
+\#+end_src
+#+end_src
 
 3 - 安装 [[http://www.imagemagick.org/script/binary-releases.php#windows][ImageMagick]]
 
@@ -233,15 +233,15 @@ In newer versions, the start and end tags can be omitted:
 ** 配置
 
 #+CAPTION: 使用 Latex
-#+BEGIN_SRC text
+#+begin_src text
 (load "auctex.el" nil t t)
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((latex . t)))
-#+END_SRC
+#+end_src
 
 #+CAPTION: 默认样式
-#+BEGIN_SRC text
+#+begin_src text
 (setq org-format-latex-options
  '(:foreground "Black"
    :background "Transparent"
@@ -250,17 +250,17 @@ In newer versions, the start and end tags can be omitted:
    :html-background "Transparent"
    :html-scale 2.0
    :matchers ("begin" "$1" "$$" "\\(" "\\[")))
-#+END_SRC
+#+end_src
 
 #+CAPTION: 使用 TikZ
-#+BEGIN_SRC text
+#+begin_src text
 (add-to-list 'org-latex-packages-alist '("" "tikz" "") t)
 (setq
  org-format-latex-header
  (concat
   org-format-latex-header
   "\n\\usepackage[active,tightpage]{preview}\n\\PreviewEnvironment{tikzpicture}"))
-#+END_SRC
+#+end_src
 
 ** 使用
 
@@ -271,47 +271,47 @@ In newer versions, the start and end tags can be omitted:
 -----
 
 #+CAPTION: 加载包
-#+BEGIN_SRC text
+#+begin_src text
 #+LATEX_HEADER: \usepackage{...}
-#+END_SRC
+#+end_src
 
 -----
 
 #+CAPTION: 使用 imagemagick 输出 svg
-#+BEGIN_SRC text
+#+begin_src text
 #+HEADER: :imagemagick yes :iminoptions -density 600 :imoutoptions -geometry 400
 #+HEADER: :file ../images/.../.svg
-\#+BEGIN_SRC latex
+\#+begin_src latex
 \begin{tikzpicture}
 ...
 \end{tikzpicture}
-\#+END_SRC
-#+END_SRC
+\#+end_src
+#+end_src
 
 -----
 
 #+CAPTION: 使用 dvisvgm 输出 svg
-#+BEGIN_SRC text
+#+begin_src text
 #+HEADER: :file ../images/.../.svg
-\#+BEGIN_SRC latex
+\#+begin_src latex
 \begin{tikzpicture}
 ...
 \end{tikzpicture}
-\#+END_SRC
-#+END_SRC
+\#+end_src
+#+end_src
 
 使用 dvisvgm 输出 svg，需要先修改 Org-mode 代码。
 
 #+CAPTION: 修改 =site-lisp/org/lisp/ob-latex.el=
-#+BEGIN_SRC lisp
+#+begin_src lisp
 ;; Line 95
 ((and (string-match "\\.svg$" out-file) (not imagemagick))
  (org-create-formula-image
   body out-file org-format-latex-options in-buffer))
-#+END_SRC
+#+end_src
 
 #+CAPTION: 修改 =site-lisp/org/lisp/org.el=
-#+BEGIN_SRC lisp
+#+begin_src lisp
 ;; Line 18623
 (if (featurep 'xemacs)
     (call-process "dvisvgm" nil nil nil
@@ -330,23 +330,23 @@ In newer versions, the start and end tags can be omitted:
           "-o" pngfile
           "--no-fonts"
           dvifile))
-#+END_SRC
+#+end_src
 * MELPA
 
-#+BEGIN_SRC sh
+#+begin_src sh
 # Refresh package lists from sources
 M-x package-refresh-contents
 
 # Install pacakge
 M-x package-install
 <package_name>
-#+END_SRC
+#+end_src
 
 * 修改
 
 =<blockquote>= 输出标题：
 
-#+BEGIN_SRC lisp
+#+begin_src lisp
 ; \site-lisp\org\lisp\ox-html.el line 2979
 (defun org-html-quote-block (quote-block contents info)
   "Transcode a QUOTE-BLOCK element from Org to HTML.
@@ -360,15 +360,15 @@ holding contextual information."
       (format "<label class=\"org-src-name\">%s</label>"
         (org-export-data caption info)))
     (format "<blockquote>\n%s</blockquote>" contents))))
-#+END_SRC
+#+end_src
 
 * 安装
 ** MacOS
 
-#+BEGIN_SRC sh
+#+begin_src sh
 brew cask install emacs
 # Check ~/Dropbox/portable/orgmode/config/emacs for setup
-#+END_SRC
+#+end_src
 
 * Links
 ** Org-mode

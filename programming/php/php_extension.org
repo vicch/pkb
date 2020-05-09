@@ -11,12 +11,12 @@
 
 ** PEAR 命令行
 
-#+BEGIN_SRC sh
+#+begin_src sh
 pear channel-discover
 pear install
 pear upgrade
 pear uninstall
-#+END_SRC
+#+end_src
 
 * bcompiler
 
@@ -44,11 +44,11 @@ Bytecode cache extension
 ** =DateTime=
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 $datetime = new DateTime(); // 默认为当前日期、时间
 $datetime = new DateTime('2014-04-27 5:03 AM');
 $datetime = DateTime::createFromFormat('M j, Y H:i:s', 'Jan 2, 2014 23:04:12');
-#+END_SRC
+#+end_src
 
 ** =DateInterval=
 
@@ -57,26 +57,26 @@ $datetime = DateTime::createFromFormat('M j, Y H:i:s', 'Jan 2, 2014 23:04:12');
 时间长度为绝对（e.g. "2 days"）或相对（e.g. "yesterday"）。
 
 #+CAPTION: 时间长度语法
-#+BEGIN_SRC sh
+#+begin_src sh
 P<n><unit>...[T<n><unit>...]
     P      # Period
     T      # 分隔「年月周日」与「时分秒」
     <unit> # Y, M, W, D, H, M, S
-#+END_SRC
+#+end_src
 
 #+CAPTION: 时间长度示例
-#+BEGIN_SRC sh
+#+begin_src sh
 P2D      # 2 天
 P2DT5H2M # 2 天 5 小时 2 分
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 $datetime = new DateTime('2014-01-01 14:00:00');
 $interval = new DateInterval('P2W');
 $interval = \DateInterval::createFromDateString('-1 day');
 $datetime->add($interval);
-#+END_SRC
+#+end_src
 
 ** =DateTimezone=
 
@@ -85,29 +85,29 @@ $datetime->add($interval);
 - 显示时将 UTC 时区时间转换为需要的时区时间。
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 $timezone = new DateTimeZone('America/New_York');
 $datetime = new DateTime('2014-08-20', $timezone);
 $datetime->setTimezone(new DateTimeZone('Asia/Hong_Kong'));
-#+END_SRC
+#+end_src
 
 ** =DatePeriod=
 
 指定间隔的日期时间序列。实例是迭代器，每个元素是一个 =DateTime= 实例。
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 $start = new DateTime();
 $interval = new DateInterval('P2W');
 $period = new DatePeriod($start, $interval, 3);
 foreach ($period as $nextDateTime) {
     echo $nextDateTime->format('Y-m-d H:i:s'), PHP_EOL;
 }
-#+END_SRC
+#+end_src
 
 *** =__construct()=
 
-#+BEGIN_SRC php
+#+begin_src php
 DatePeriod::__construct (
     DateTimeInterface $start       // 开始时间
 ,   DateInterval      $interval    // 时间间隔
@@ -121,7 +121,7 @@ DatePeriod::__construct (
 ,   DateTimeInterface $end      // 结束时间
 [,  int               $options
 ] )
-#+END_SRC
+#+end_src
 
 * Exception
 
@@ -186,26 +186,26 @@ DatePeriod::__construct (
 ** =filter_var()=
 <<filter_var>>
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed filter_var (
     mixed $variable
 [,  int   $filter = FILTER_DEFAULT
 [,  mixed $options
 ]] )
-#+END_SRC
+#+end_src
 
 | 返回值 | 输入数据 | 验证成功时 |
 |        | =false=  | 验证失败时 |
 
 #+CAPTION: 示例 1
-#+BEGIN_SRC php
+#+begin_src php
 <?php
 $email = 'john@example.com';
 $emailSafe = filter_var($email, FILTER_SANITIZE_EMAIL);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例 2
-#+BEGIN_SRC php
+#+begin_src php
 $input = 'john@example.com';
 $isEmail = filter_var($input, FILTER_VALIDATE_EMAIL);
 if ($isEmail !== false) {
@@ -213,29 +213,29 @@ if ($isEmail !== false) {
 } else {
     echo "Fail";
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例 3
-#+BEGIN_SRC php
+#+begin_src php
 $string = "\nIñtërnâtiônàlizætiøn\t";
 $safeString = filter_var(
     $string,
     FILTER_SANITIZE_STRING,
     FILTER_FLAG_STRIP_LOW|FILTER_FLAG_ENCODE_HIGH
 );
-#+END_SRC
+#+end_src
 
 ** =filter_input()=
 <<filter_input>>
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed filter_input (
     int    $type
 ,   string $variable_name
 [,  int    $filter = FILTER_DEFAULT
 [,  mixed  $options
 ]] )
-#+END_SRC
+#+end_src
 
 #+CAPTION: =$type=
 | =INPUT_GET=    |   |
@@ -259,13 +259,13 @@ mixed filter_input (
 ** =password_hash()=
 <<password_hash>>
 
-#+BEGIN_SRC php
+#+begin_src php
 string password_hash (
     string  $password
 ,   int     $algo
 [,  array   $options
 ] )
-#+END_SRC
+#+end_src
 
 | =$algo=    | =int=    | 算法                                |
 |------------+----------+-------------------------------------|
@@ -289,28 +289,28 @@ string password_hash (
 
 用于确保 hash 使用最新的算法、选项。
 
-#+BEGIN_SRC php
+#+begin_src php
 boolean password_needs_rehash (
     string  $hash
 ,   integer $algo
 [,  array   $options
 ] )
-#+END_SRC
+#+end_src
 
 ** =password_verify()=
 <<password_verify>>
 
-#+BEGIN_SRC php
+#+begin_src php
 boolean password_verify (
     string $password
 ,   string $hash
 )
-#+END_SRC
+#+end_src
 
 ** 注册、登录示例
 *** =register.php=
 
-#+BEGIN_SRC php
+#+begin_src php
 <?php
 try {
     // Validate email
@@ -350,11 +350,11 @@ try {
     header('HTTP/1.1 400 Bad request');
     echo $e->getMessage();
 }
-#+END_SRC
+#+end_src
 
 *** =login.php=
 
-#+BEGIN_SRC php
+#+begin_src php
 <?php
 session_start();
 try {
@@ -402,19 +402,19 @@ try {
     header('HTTP/1.1 401 Unauthorized');
     echo $e->getMessage();
 }
-#+END_SRC
+#+end_src
 
 * JSON
 ** =json_decode()=
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed json_decode (
     string $json
 [,  bool   $assoc = false
 [,  int    $depth = 512
 [,  int    $options = 0
 ]]] )
-#+END_SRC
+#+end_src
 
 | =$json=  |                                                                         |
 |----------+-------------------------------------------------------------------------|
@@ -424,16 +424,16 @@ mixed json_decode (
 
 ** =json_encode()=
 
-#+BEGIN_SRC php
+#+begin_src php
 string json_encode (
     mixed $value
 [,  int   $options = 0
 [,  int   $depth = 512
 ]] )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 function ajaxAction()
 {
     $response = array(
@@ -443,7 +443,7 @@ function ajaxAction()
     echo json_encode($response);
     exit;
 }
-#+END_SRC
+#+end_src
 
 * Multibyte
 ** Encoding
@@ -458,38 +458,38 @@ function ajaxAction()
 
 *** =mb_check_encoding()=
 
-#+BEGIN_SRC php
+#+begin_src php
 bool mb_check_encoding (
 [   string $var = null
 [,  string $encoding = mb_internal_encoding()
 ]] )
-#+END_SRC
+#+end_src
 
 *** =mb_convert_encoding()=
 
-#+BEGIN_SRC php
+#+begin_src php
 string mb_convert_encoding (
     string $str
 ,   string $to_encoding
 [,  mixed  $from_encoding = mb_internal_encoding()
 ] )
-#+END_SRC
+#+end_src
 
 *** =mb_detect_encoding()=
 
-#+BEGIN_SRC php
+#+begin_src php
 string mb_detect_encoding (
     string $str
 [,  mixed  $encoding_list = mb_detect_order()
 [,  bool   $strict = false
 ]] )
-#+END_SRC
+#+end_src
 
 *** =mb_internal_encoding()=
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed mb_internal_encoding ( [ string $encoding = mb_internal_encoding() ] )
-#+END_SRC
+#+end_src
 
 | 返回值 | =string= | =$encoding= 为空时，返回当前字符编码 |
 |        | =true=   | 设置字符编码成功                     |
@@ -502,30 +502,30 @@ PHP >= 5.5
 ** Enable
 
 Enable OPcache in PHP =./configure= command when compile
-#+BEGIN_SRC sh
+#+begin_src sh
 --enable-opcache
-#+END_SRC
+#+end_src
 
 Check path to OPcache extension (is also displayed after PHP compiling)
-#+BEGIN_SRC sh
+#+begin_src sh
 php-config --extension-dir
-#+END_SRC
+#+end_src
 
 Specify the path to OPcache extension in =php.ini=
-#+BEGIN_SRC sh
+#+begin_src sh
 ## Must be loaded before Xdebug if applicable
 zend_extension = /path/to/opcache.so
-#+END_SRC
+#+end_src
 
 Confirm OPcache is working
-#+BEGIN_SRC php
+#+begin_src php
 <?php
 phpinfo();
-#+END_SRC
+#+end_src
 
 ** Configure
 
-#+BEGIN_SRC sh
+#+begin_src sh
 # php.ini
 opcache.validate_timestamps = 1 # Set to "0" in production
                                 # If set to "0", must manually clear cache for changes
@@ -534,7 +534,7 @@ opcache.memory_consumption = 64
 opcache.interned_strings_buffer = 16
 opcache.max_accelerated_files = 4000
 opcache.fast_shutdown = 1
-#+END_SRC
+#+end_src
 
 * PDO
 
@@ -547,7 +547,7 @@ opcache.fast_shutdown = 1
           数据库连接信息。
 
 #+CAPTION: 语法
-#+BEGIN_SRC sh
+#+begin_src sh
 <driver>:<key>=<value>;...
     <driver>    # database driver name, eg. mysql, sqlite
     <key>
@@ -555,7 +555,7 @@ opcache.fast_shutdown = 1
         port
         dbname
         charset
-#+END_SRC
+#+end_src
 
 ** =PDO=
 
@@ -611,17 +611,17 @@ opcache.fast_shutdown = 1
 
 *** =__construct()=
 
-#+BEGIN_SRC php
+#+begin_src php
 public PDO::__construct (
     string $dsn
 [,  string $username
 [,  string $password
 [,  array  $options
 ]]] )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 try {
     $pdo = new PDO(
         'mysql:host=127.0.0.1;dbname=books;port=3306;charset=utf8',
@@ -632,56 +632,56 @@ try {
     echo "Database connection failed";
     exit;
 }
-#+END_SRC
+#+end_src
 
 *** =prepare()=
 
-#+BEGIN_SRC php
+#+begin_src php
 PDOStatement PDO::prepare (
     string $statement
 [,  array  $driver_options = array()
 ] )
-#+END_SRC
+#+end_src
 
 *** =beginTransaction()=
 
-#+BEGIN_SRC php
+#+begin_src php
 bool PDO::beginTransaction ( )
-#+END_SRC
+#+end_src
 
 *** =commit()=
 
-#+BEGIN_SRC php
+#+begin_src php
 bool PDO::commit ( )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 $dbh->beginTransaction();
 $sth = $dbh->exec("DROP TABLE fruit");
 $dbh->commit();
-#+END_SRC
+#+end_src
 
 *** =rollBack()=
 
-#+BEGIN_SRC php
+#+begin_src php
 bool PDO::rollBack ( )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 $dbh->beginTransaction();
 $sth = $dbh->exec("DROP TABLE fruit");
 $sth = $dbh->exec("UPDATE dessert SET name = 'hamburger'");
 /* Recognize mistake and roll back changes */
 $dbh->rollBack();
-#+END_SRC
+#+end_src
 
 *** =inTransaction()=
 
-#+BEGIN_SRC php
+#+begin_src php
 bool PDO::inTransaction ( )
-#+END_SRC
+#+end_src
 
 ** =PDOStatement=
 
@@ -701,7 +701,7 @@ bool PDO::inTransaction ( )
 
 *** =bindParam()=
 
-#+BEGIN_SRC php
+#+begin_src php
 bool PDOStatement::bindParam (
     mixed  $parameter
 ,   mixed &$variable // 变量引用，与 bindValue() 不同
@@ -709,12 +709,12 @@ bool PDOStatement::bindParam (
 [,  int    $length
 [,  mixed  $driver_options
 ]]] )
-#+END_SRC
+#+end_src
 
 | =$data_type= | =int= | [[pdo_param_][=PDO::PARAM_=]] |
 
 #+CAPTION: 示例 1
-#+BEGIN_SRC php
+#+begin_src php
 $calories = 150;
 $colour = 'red';
 $sth = $dbh->prepare('SELECT name, colour, calories
@@ -722,10 +722,10 @@ $sth = $dbh->prepare('SELECT name, colour, calories
 $sth->bindParam(':calories', $calories, PDO::PARAM_INT);
 $sth->bindParam(':colour', $colour, PDO::PARAM_STR, 12);
 $sth->execute();
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例 2
-#+BEGIN_SRC php
+#+begin_src php
 $calories = 150;
 $colour = 'red';
 $sth = $dbh->prepare('SELECT name, colour, calories
@@ -733,30 +733,30 @@ $sth = $dbh->prepare('SELECT name, colour, calories
 $sth->bindParam(1, $calories, PDO::PARAM_INT);
 $sth->bindParam(2, $colour, PDO::PARAM_STR, 12);
 $sth->execute();
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例 3
-#+BEGIN_SRC php
+#+begin_src php
 $colour = 'red';
 $sth = $dbh->prepare('CALL puree_fruit(?)');
 $sth->bindParam(1, $colour, PDO::PARAM_STR|PDO::PARAM_INPUT_OUTPUT, 12);
 $sth->execute();
-#+END_SRC
+#+end_src
 
 *** =bindValue()=
 
-#+BEGIN_SRC php
+#+begin_src php
 bool PDOStatement::bindValue (
     mixed $parameter
 ,   mixed $value
 [,  int   $data_type = PDO::PARAM_STR
 ] )
-#+END_SRC
+#+end_src
 
 | =$data_type= | =int= | [[pdo_param_][=PDO::PARAM_=]] |
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 $sql = 'SELECT id FROM users WHERE email = :email AND id = :id';
 $statement = $pdo->prepare($sql);
 
@@ -765,23 +765,23 @@ $statement->bindValue(':email', $email);
 
 $userId = filter_input(INPUT_GET, 'id');
 $statement->bindValue(':id', $userId, PDO::PARAM_INT);
-#+END_SRC
+#+end_src
 
 *** =execute()=
 
-#+BEGIN_SRC php
+#+begin_src php
 bool PDOStatement::execute ( [ array $input_parameters ] )
-#+END_SRC
+#+end_src
 
 *** =fetch()=
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed PDOStatement::fetch (
 [   int $fetch_style
 [,  int $cursor_orientation = PDO::FETCH_ORI_NEXT
 [,  int $cursor_offset = 0
 ]]] )
-#+END_SRC
+#+end_src
 
 | =$fetch_style= | =int=   | [[pdo_fetch_][=PDO::FETCH_=]]，默认为 =PDO::FETCH_BOTH= |
 |----------------+---------+-----------------------------------------|
@@ -789,15 +789,15 @@ mixed PDOStatement::fetch (
 |                | =false= | 失败，eg. 结果集为空                    |
 
 #+CAPTION: 迭代结果集
-#+BEGIN_SRC php
+#+begin_src php
 while (($result = $statement->fetch(PDO::FETCH_ASSOC)) !== false) {
     echo $result['email'];
 }
-#+END_SRC
+#+end_src
 
 <<pdo_fetch_example>>
 #+CAPTION: =$fetch_style= 示例
-#+BEGIN_SRC php
+#+begin_src php
 $sth = $dbh->prepare("SELECT name, colour FROM fruit");
 $sth->execute();
 
@@ -834,58 +834,58 @@ $result = $sth->fetch(PDO::FETCH_LAZY);
 $result = $sth->fetch(PDO::FETCH_OBJ);
 echo $result->name, ' ', $result->color;
 // apple red
-#+END_SRC
+#+end_src
 
 *** =fetchAll()=
 
-#+BEGIN_SRC php
+#+begin_src php
 array PDOStatement::fetchAll (
 [   int   $fetch_style
 [,  mixed $fetch_argument
 [,  array $ctor_args = array()
 ]]] )
-#+END_SRC
+#+end_src
 
 | =$fetch_style= | =int= | [[pdo_fetch_][=PDO_FETCH_=]] |
 
 在不确定结果集是否能放入内存的情况下，避免使用 =fetchAll()= 。
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 foreach ($results as $result) {
     echo $result['email'];
 }
-#+END_SRC
+#+end_src
 
 *** =fetchColumn()=
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed PDOStatement::fetchColumn ( [ int $column_number = 0 ] )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 while (($email = $statement->fetchColumn(1)) !== false) {
     echo $email;
 }
-#+END_SRC
+#+end_src
 
 *** =fetchObject()=
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed PDOStatement::fetchObject (
 [   string $class_name = "stdClass"
 [,  array  $ctor_args
 ]] )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 while (($result = $statement->fetchObject()) !== false) {
     echo $result->name;
 }
-#+END_SRC
+#+end_src
 
 * Reflection
 
@@ -907,20 +907,20 @@ while (($result = $statement->fetchObject()) !== false) {
 
 *** =export()=
 
-#+BEGIN_SRC php
+#+begin_src php
 public static string export (
     Reflector $reflector
 [,  bool      $return = false
 ] )
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 class Foo {
     public $bar;
     public function baz($arg) {}
 }
 Reflection::export(new ReflectionClass('Foo'));
-#+END_SRC
+#+end_src
 
 ** =ReflectionClass=
 
@@ -930,25 +930,25 @@ Reflection::export(new ReflectionClass('Foo'));
 
 *** =export=
 
-#+BEGIN_SRC php
+#+begin_src php
 public static string export (
     mixed $argument // 类名或对象
 [,  bool  $return = false
 ] )
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 class Foo {
     public $bar;
     public function baz($arg) {}
 }
 ReflectionClass::export('Foo');
 ReflectionClass::export(new Foo());
-#+END_SRC
+#+end_src
 
 ** 示例
 
-#+BEGIN_SRC php
+#+begin_src php
 interface Module {
     public function execute();
 }
@@ -1034,7 +1034,7 @@ $manager = new ModuleManager($config);
 $manager->init();
 $manager->execute();
 // foo = 1, bar = 2
-#+END_SRC
+#+end_src
 
 * SPL
 ** 自动加载
@@ -1054,19 +1054,19 @@ $manager->execute();
 *** =spl_autoload()=
 <<spl_spl_autoload>>
 
-#+BEGIN_SRC php
+#+begin_src php
 void spl_autoload (
     string $class_name
 [,  string $file_extensions = spl_autoload_extensions()
 ])
-#+END_SRC
+#+end_src
 
 未指定 autoloader，或不加参数调用 =spl_autoload_register()= 时， =spl_autoload()= 将代替 =__autoload()= 被调用，自动加载类文件。
 
 =spl_autoload()= 由 C 实现，比一般 PHP 实现的 autoload 函数速度快。
 
 #+CAPTION: 支持命名空间映射为目录层级。
-#+BEGIN_SRC php
+#+begin_src php
 // ./lib/Foo/Bar/Object.class.php
 namespace Foo\Bar;
 class Object {}
@@ -1077,48 +1077,48 @@ set_include_path(get_include_path() . PATH_SEPARATOR . LIB_DIR);
 spl_autoload_extensions('.class.php');
 spl_autoload_register();
 $obj = new Foo\Bar\Object(); // 加载 lib/Foo/Bar/Object.class.php
-#+END_SRC
+#+end_src
 
 *** =spl_autoload_call()=
 <<spl_spl_autoload_call>>
 
-#+BEGIN_SRC php
+#+begin_src php
 void spl_autoload_call ( string $class_name )
-#+END_SRC
+#+end_src
 
 *** =spl_autoload_extensions()=
 <<spl_spl_autoload_extenstions>>
 
-#+BEGIN_SRC php
+#+begin_src php
 string spl_autoload_extensions ([ string $file_extensions ] )
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 spl_autoload_extensions('.php,.class.php');
-#+END_SRC
+#+end_src
 
 *** =spl_autoload_functions()=
 <<spl_spl_autoload_functions>>
 
-#+BEGIN_SRC php
+#+begin_src php
 array spl_autoload_functions ( void )
-#+END_SRC
+#+end_src
 
 *** =spl_autoload_register()=
 <<spl_spl_autoload_register>>
 
-#+BEGIN_SRC php
+#+begin_src php
 bool spl_autoload_register (
 [   callable $autoload_function
 [,  bool     $throw = true
 [,  bool     $prepend = false
 ]]])
-#+END_SRC
+#+end_src
 
 支持注册多个自动加载函数，需要加载类文件时，将按注册顺序依次调用，直到类可以实例化。
 
 #+CAPTION: 自定义自动加载函数。
-#+BEGIN_SRC php
+#+begin_src php
 // ./Foo/Bar.class.php
 class Foo_Bar {}
 
@@ -1132,10 +1132,10 @@ function autoload($class) {
 }
 spl_autoload_register('autoload');
 $foo = new Foo_Bar(); // 加载 Foo/Bar.class.php
-#+END_SRC
+#+end_src
 
 #+CAPTION: 支持命名空间的自动加载函数。
-#+BEGIN_SRC php
+#+begin_src php
 // ./Foo/Bar/Object.class.php
 namespace Foo\Bar;
 class Object {}
@@ -1154,14 +1154,14 @@ function autoload($class) {
 }
 spl_autoload_register('autoload');
 $obj = new Foo\Bar\Object();
-#+END_SRC
+#+end_src
 
 *** =spl_autoload_unregister()=
 <<spl_spl_autoload_unregister>>
 
-#+BEGIN_SRC php
+#+begin_src php
 bool spl_autoload_unregister ( mixed $autoload_function )
-#+END_SRC
+#+end_src
 
 ** 函数
 
@@ -1184,31 +1184,31 @@ bool spl_autoload_unregister ( mixed $autoload_function )
 *** =class_implements()=
 <<spl_class_implements>>
 
-#+BEGIN_SRC php
+#+begin_src php
 array class_implements (
     mixed $class
 [,  bool  $autoload = true
 ])
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 interface Foo {}
 class Bar implements Foo {}
 class_implements('Bar');     // ['Foo' => 'Foo']
 class_implements(new Bar()); // ['Foo' => 'Foo']
-#+END_SRC
+#+end_src
 
 *** =class_parents()=
 <<spl_class_parents>>
 
-#+BEGIN_SRC php
+#+begin_src php
 array class_parents (
     mixed $class
 [,  bool  $autoload = true
 ])
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 class foo {}
 class bar extends foo {}
 class baz extends bar {}
@@ -1220,20 +1220,20 @@ print_r(class_parents('baz'));
 //     [bar] => bar
 //     [foo] => foo
 // )
-#+END_SRC
+#+end_src
 
 *** =class_uses()=
 <<spl_class_uses>>
 
-#+BEGIN_SRC php
+#+begin_src php
 array class_uses (
     mixed $class
 [,  bool  $autoload = true
 ])
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 trait foo {}
 class bar {
     use foo;
@@ -1245,7 +1245,7 @@ print_r(class_uses('bar'));
 // (
 //     [foo] => foo
 // )
-#+END_SRC
+#+end_src
 
 ** Datastructures
 
@@ -1330,15 +1330,15 @@ Interfaces
 *** =stream_context_create()=
 <<stream_context_create>>
 
-#+BEGIN_SRC php
+#+begin_src php
 resource stream_context_create (
 [   array $options
 [,  array $params
 ]] )
-#+END_SRC  
+#+end_src  
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 $requestBody = '{"username":"josh"}';
 $context = stream_context_create(array(
     'http' => array(
@@ -1349,7 +1349,7 @@ $context = stream_context_create(array(
     )
 ));
 $response = file_get_contents('https://my-api.com/users', false, $context);
-#+END_SRC
+#+end_src
 
 ** Stream wrapper
 
@@ -1376,13 +1376,13 @@ http://php.net/manual/en/wrappers.php
 <<php_stdin>>
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 $handleIn  = fopen('php://stdin', 'r');
 $handleOut = fopen('output.txt', 'w+');
 while ($line = fgets($handleIn)) {
     fwrite($handleOut, $line);
 }
-#+END_SRC
+#+end_src
 
 ** Stream filter
 
@@ -1404,41 +1404,41 @@ http://php.net/manual/en/filters.php
 *** =stream_filter_append()=
 <<stream_filter_append>>
 
-#+BEGIN_SRC php
+#+begin_src php
 resource stream_filter_append (
     resource $stream
 ,   string   $filtername
 [,  int      $read_write
 [,  mixed    $params
 ]] )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 $handle = fopen('data.txt', 'rb');
 stream_filter_append($handle, 'string.toupper');
 while (feof($handle) !== true) {
     echo fgets($handle);
 }
 fclose($handle);
-#+END_SRC
+#+end_src
 
 *** =stream_filter_register()=
 <<stream_filter_register>>
 
-#+BEGIN_SRC php
+#+begin_src php
 bool stream_filter_register (
     string $filtername
 ,   string $classname
 )
-#+END_SRC
+#+end_src
 
 *** 自定义 stream filter
 
 自定义 stream filter 必须扩展 =php_user_filter= 类并实现 =filter()= 方法。
 
 #+CAPTION: 自定义 stream filter 示例
-#+BEGIN_SRC php
+#+begin_src php
 class DirtyWordsFilter extends php_user_filter
 {
     /**
@@ -1471,9 +1471,9 @@ class DirtyWordsFilter extends php_user_filter
         return PSFS_PASS_ON;
     }
 }
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 stream_filter_register('dirty_words_filter', 'DirtyWordsFilter');
 
 $handle = fopen('data.txt', 'rb');
@@ -1482,7 +1482,7 @@ while (feof($handle) !== true) {
     echo fgets($handle);
 }
 fclose($handle);
-#+END_SRC
+#+end_src
 
 ** 示例
 
@@ -1491,7 +1491,7 @@ fclose($handle);
 - 日志文件被 bzip2 压缩
 - 筛选出日志中包含特定字符串的行
 
-#+BEGIN_SRC php
+#+begin_src php
 $dateStart = new \DateTime();
 $dateInterval = \DateInterval::createFromDateString('-1 day');
 $datePeriod = new \DatePeriod($dateStart, $dateInterval, 30);
@@ -1509,7 +1509,7 @@ foreach ($datePeriod as $date) {
     fclose($handle);
     }
 }
-#+END_SRC
+#+end_src
 
 * Xdebug
 * XHProf
@@ -1519,7 +1519,7 @@ foreach ($datePeriod as $date) {
 ** 安装
 
 #+CAPTION: 安装 XHProf
-#+BEGIN_SRC sh
+#+begin_src sh
 wget http://pecl.php.net/get/xhprof-0.9.4.tgz
 tar zxf xhprof-0.9.4.tgz
 cd xhprof-0.9.4/extension/
@@ -1527,42 +1527,42 @@ phpize
 ./configure
 make
 make install
-#+END_SRC
+#+end_src
 
 #+CAPTION: 移动 =lib= 和 =html= 目录
-#+BEGIN_SRC sh
+#+begin_src sh
 cp -r xhprof_lib xhprof_html <app_root>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 安装 Graphviz
-#+BEGIN_SRC sh
+#+begin_src sh
 wget https://graphviz.gitlab.io/pub/graphviz/stable/SOURCES/graphviz.tar.gz
 tar zxf graphviz*.tar.gz
 cd graphviz*
 ./configure
 make
 make install
-#+END_SRC
+#+end_src
 
 #+CAPTION: 修改 =php.ini=
-#+BEGIN_SRC sh
+#+begin_src sh
 [xhprof]
 extension=xhprof.so
 xhprof.output_dir=<dir_path>
 # 为了使用 Graphviz 绘图功能，取消禁用方法
 ;disable_functions = ...
-#+END_SRC
+#+end_src
 
 #+CAPTION: 重启 php-fpm
-#+BEGIN_SRC sh
+#+begin_src sh
 cat /usr/local/php/var/run/php-fpm.pid
 kill -USR2 <ps_num>
-#+END_SRC
+#+end_src
 
 ** 使用
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 // 代码之前
 xhprof_enable(XHPROF_FLAGS_CPU + XHPROF_FLAGS_MEMORY);
 
@@ -1578,5 +1578,5 @@ $run_id = $xhprof_runs->save_run($xhprof_data, 'xhprof');
 
 $url = APP_PATH . '/xhprof_html/index.php?run=' . $run_id . '&source=xhprof';
 echo '<a href="'.$url.'">'.$url.'</a>';
-#+END_SRC
+#+end_src
 

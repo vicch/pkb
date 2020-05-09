@@ -357,7 +357,7 @@ $$ P(B \mid A) = \frac{P(A \bigcap B)}{P(A)}$$
 得到指纹后，就可以对比不同的图片，计算 64 位中有多少位是不一样的，理论上等于计算 +汉明距离（[[https://en.wikipedia.org/wiki/Hamming_distance][Hamming distance]]）+ 。如果不相同的位不超过 5，就说明两张图片很相似；如果大于 10，就说明这是两张不同的图片。
 
 #+CAPTION: 具体的代码实现 =imgHash.py=
-#+BEGIN_SRC python
+#+begin_src python
 #!/usr/bin/python
 
 import glob
@@ -411,7 +411,7 @@ if __name__ == '__main__':
         if prog: print
         for f, ham in sorted(seq, key=lambda i: i[1]):
             print "%d\t%s" % (ham, f)
-#+END_SRC
+#+end_src
 
 第一个参数是基准图片，第二个参数是用来比较的其他图片所在的目录，返回结果是两张图片之间不相同的数据位数量，即汉明距离。
 

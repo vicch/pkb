@@ -7,51 +7,51 @@
 - 可以有任意个参数；
 - 可以嵌套；
 
-#+BEGIN_SRC lisp
+#+begin_src lisp
 (+ 1 2)
 (* 1 2 3)
 (* (+ 1 3) (+ 2 4))
-#+END_SRC
+#+end_src
 
 -----
 =define=
 
-#+BEGIN_SRC lisp
+#+begin_src lisp
 (define <name> <value>)
 (define (<name> <param> ...) (<body>))
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC lisp
+#+begin_src lisp
 (define (square x) (* x x))
-#+END_SRC
+#+end_src
 
 -----
 =cond=
 
-#+BEGIN_SRC lisp
+#+begin_src lisp
 (cond (<cond1> <expr1>)
       (<cond2> <expr2>)
       ...
       (else <expr>))
-#+END_SRC
+#+end_src
 
 -----
 =if=
 
-#+BEGIN_SRC lisp
+#+begin_src lisp
 (if (<cond>)
     <expr1>
     <expr2>)
-#+END_SRC
+#+end_src
 
 -----
 逻辑运算
 
-#+BEGIN_SRC lisp
+#+begin_src lisp
 (and <expr1> ...)
 (or <expr1> ...)
 (not <expr>)
-#+END_SRC
+#+end_src
 
 * 示例
 ** 数学
@@ -62,7 +62,7 @@
 - 通过一个初始猜测值，递归计算直到精确度达到一定要求；
 
 精度要求一：猜测值的 =n= 次方与 =x= 差的绝对值。
-#+BEGIN_SRC lisp
+#+begin_src lisp
 (define (nrt x n)
   (nrt-iter 1 0 x n)
 )
@@ -84,10 +84,10 @@
       (* x (power x (- y 1)))
   )
 )
-#+END_SRC
+#+end_src
 
 精度要求二：新的猜测值与旧的猜测值的变化率。
-#+BEGIN_SRC lisp
+#+begin_src lisp
 (define (nrt x n)
   (nrt-iter 1 0 x n)
 )
@@ -109,13 +109,13 @@
       (* x (power x (- y 1)))
   )
 )
-#+END_SRC
+#+end_src
 
 * 练习
 ** 数学
 
 返回三个数中最大两个数的和。
-#+BEGIN_SRC lisp
+#+begin_src lisp
 (define (add_two_big a b c)
   (cond
     ((and (>= a c) (>= b c))
@@ -140,12 +140,12 @@
   (- (+ a b c) (get_multi_min a b c))
 )
 (add_two_big 1 2 3)
-#+END_SRC
+#+end_src
 
 -----
 
 计算 Pascal 三角形（杨辉三角）中的数值。
-#+BEGIN_SRC lisp
+#+begin_src lisp
 (define (pascal x y)
   (cond ((= y 1) 1)
         ((= x y) 1)
@@ -154,12 +154,12 @@
           (pascal (- x 1) y)))
   )
 )
-#+END_SRC
+#+end_src
 
 -----
 
 求幂（连续平方迭代法）。
-#+BEGIN_SRC lisp
+#+begin_src lisp
 (define (fast-expt base power)
   (fast-expt-iter base power 1 ))
 (define (fast-expt-iter base power product)
@@ -174,4 +174,4 @@
   (= (floor (/ n 2)) (/ n 2)))
 (define (sqr n)
   (* n n))
-#+END_SRC
+#+end_src

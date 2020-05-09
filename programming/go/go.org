@@ -9,14 +9,14 @@
 
 ** Boolean
 
-#+BEGIN_SRC go
+#+begin_src go
 true
 false
-#+END_SRC
+#+end_src
 
 ** Number
 
-#+BEGIN_SRC go
+#+begin_src go
 uint8       // 0 to 255
 uint16      // 0 to 65535
 uint32      // 0 to 4294967295
@@ -35,16 +35,16 @@ float64     // IEEE-754 64-bit floating-point number
 
 complex64   // complex number with float32 real and imaginary parts
 complex128  // complex number with float64 real and imaginary parts
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC go
+#+begin_src go
 100  // 普通表示法
 1e9  // 科学计数法
-#+END_SRC
+#+end_src
 
 ** String
 
-#+BEGIN_SRC go
+#+begin_src go
 "string" // Interpreted string literal
 `string` // Raw string literal
 's'      // Character literal
@@ -60,11 +60,11 @@ compare2 := (&str1 == &str2) // false
 // Compare
 str3 := "banana"
 compare3 := (str1 < str3) // true
-#+END_SRC
+#+end_src
 
 ** Array
 
-#+BEGIN_SRC go
+#+begin_src go
 var a [2]string
 a := make([]string, 2)
 a[0] = "foo"
@@ -77,7 +77,7 @@ d := [][]string{     // 多维数组初始化
     []string{"a", "b"},
     []string{"c", "d"}
 }
-#+END_SRC
+#+end_src
 
 *** 数组分片
 
@@ -95,19 +95,19 @@ file:../images/go/02.png
 file:../images/go/03.png
 
 #+CAPTION: 分片作参数时传递引用
-#+BEGIN_SRC go
+#+begin_src go
 func Foo(a []int) {
 	a[0] += 10
 }
 a := []int{1, 2, 3}
 Foo(a) // a = {11, 2, 3}
-#+END_SRC
+#+end_src
 
 *** 手动分片
 
 除了创建数组时自动生成的分片，也可以手动创建数组的分片。
 
-#+BEGIN_SRC go
+#+begin_src go
 a := []int{10, 11, 12, 13}
 
 // from 包含，to 不包含
@@ -123,7 +123,7 @@ b, c := a[:2], a[2:] // b = {10, 11}
 a[0] = 14 // b = {14, 11}
           // c = {12, 13}
 b[1] = 15 // a = {14, 15, 12, 13}            
-#+END_SRC
+#+end_src
 
 *** 长度和容量
 
@@ -131,7 +131,7 @@ b[1] = 15 // a = {14, 15, 12, 13}
 |------------+----------------------------------------------------------------------|
 | *Capacity* | 分片引用的数组中，从此分片的第一个元素，到数组的最后一个元素的元素数 |
 
-#+BEGIN_SRC go
+#+begin_src go
 a := []int{1, 3, 5, 7} // len = 4, cap = 4
 a  = a[:0]             // len = 0, cap = 4
 a  = a[:2]             // len = 2, cap = 4
@@ -139,15 +139,15 @@ a  = a[2:]             // len = 2, cap = 2
 
 b = []int              // len = 0, cap = 0
                        // 空分片长度和容量都为 0
-#+END_SRC
+#+end_src
 
 ** Map
 
-#+BEGIN_SRC code
+#+begin_src code
 map[<ktype>]<vtype>
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC go
+#+begin_src go
 var a map[string]int
 a := make(map[string]int)
 a := make(map[string]int, 10)
@@ -172,7 +172,7 @@ if v, ok = a[k]; ok {
 }
 
 delete(a, "foo")
-#+END_SRC
+#+end_src
 
 ** Pointer
 
@@ -180,7 +180,7 @@ delete(a, "foo")
 
 Go 记录指针和对象的引用关系，对象的内存空间在所有引用其的指针被销毁前不会被回收（deallocate）。
 
-#+BEGIN_SRC go
+#+begin_src go
 var a *string
 b := "foo"
 a := &b
@@ -192,7 +192,7 @@ type Foo struct {
 c := Foo{1, 2}
 d := &c
 d.x = 3 // 结构体指针可以省略 *
-#+END_SRC
+#+end_src
 
 ** Channel
 
@@ -200,7 +200,7 @@ d.x = 3 // 结构体指针可以省略 *
 
 频道的类型即可通过此频道交换的数据的类型，如 =int= =string= 。
 
-#+BEGIN_SRC go
+#+begin_src go
 ch := make(chan string)
 
 ch <- "foo" // 向频道发送消息
@@ -215,14 +215,14 @@ for s := range ch {
 for {
     fmt.Println(<- ch)
 }
-#+END_SRC
+#+end_src
 
 等待频道接收数据 =<- ch= 为阻塞过程，频道接收到数据时解除阻塞。
 
 * Type Related
 ** Custom Type
 
-#+BEGIN_SRC go
+#+begin_src go
 type <name> Type
 
 // 定义后，<name> 将完全等价于指定的 Type
@@ -231,16 +231,16 @@ foo := color("red")
 
 type list []string
 bar := list{"a", "b"}
-#+END_SRC
+#+end_src
 
 ** Assertion
 
-#+BEGIN_SRC go
+#+begin_src go
 <name>.(Type)
-#+END_SRC
+#+end_src
 
 #+CAPTION: 类型断言用于类型判断
-#+BEGIN_SRC go
+#+begin_src go
 switch foo.(type) {
     case int:
         ...
@@ -249,10 +249,10 @@ switch foo.(type) {
     default:
         fmt.Printf("Unknown type: %T\n", t)
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 类型断言用于读取接口变量的实际（基础类型）值
-#+BEGIN_SRC go
+#+begin_src go
 var i interface{} = "hello"
 
 fmt.Println(i.(string))  // OK: hello
@@ -260,36 +260,36 @@ fmt.Println(i.(float64)) // Panic: 类型不匹配
 
 s, ok := i.(string)  // s = hello, ok = true
 f, ok := i.(float64) // f = 0, ok = false
-#+END_SRC
+#+end_src
 
 ** Casting
 
-#+BEGIN_SRC go
+#+begin_src go
 Type(<name>)
-#+END_SRC
+#+end_src
 
 #+CAPTION: 定义指定类型变量
-#+BEGIN_SRC go
+#+begin_src go
 foo := uint8(99)
 bar := string("test")
-#+END_SRC
+#+end_src
 
 #+CAPTION: 类型转换
-#+BEGIN_SRC go
+#+begin_src go
 foo := "test"
 bar := []byte(foo)
-#+END_SRC
+#+end_src
 
 #+CAPTION: 不同类型变量的赋值必须进行显式类型转换
-#+BEGIN_SRC go
+#+begin_src go
 var i int = 1
 f := float64(i)
-#+END_SRC
+#+end_src
 
 * Struct
 ** Syntax
 
-#+BEGIN_SRC go
+#+begin_src go
 type Foo struct {
     x, y int32 // Lowercase initial, invisible outside of pacakge
     Z string   // Uppercase initial, visible outside of package
@@ -317,11 +317,11 @@ d := map[string]Foo{
     "foo": Foo{1, 2},
     "bar": Foo{3, 4},
 }
-#+END_SRC
+#+end_src
 
 ** Struct Extension
 
-#+BEGIN_SRC go
+#+begin_src go
 type person struct {
     name string
 }
@@ -345,9 +345,9 @@ fmt.Println(account1.name)        // Foo (falls back to account1.person.name)
 fmt.Println(account1.person.name) // Foo
 account1.output()                 // Person name is Foo (falls back to account1.person.output())
 account1.person.output()          // Person name is Foo
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC go
+#+begin_src go
 type person struct {
     name string
 }
@@ -377,19 +377,19 @@ fmt.Println(account1.name)        // Bar
 fmt.Println(account1.person.name) // Foo
 account1.output()                 // Account name is Bar
 account1.person.output()          // Person name is Foo
-#+END_SRC
+#+end_src
 
 * Interface
 
-#+BEGIN_SRC go
+#+begin_src go
 type <name> interface {
     <method>() <type>
 }
-#+END_SRC
+#+end_src
 
 空接口 =interface{}= 可存放任何值，因此可用于定义可接受任何基础类型的函数：
 
-#+BEGIN_SRC go
+#+begin_src go
 var foo interface{} = 10
 var bar interface{} = "string"
 
@@ -400,13 +400,13 @@ func foo(i interface{}) {
 foo(1)        // Type is int
 foo("string") // Type is string
 foo(false)    // Type is bool
-#+END_SRC
+#+end_src
 
 ** Interface Implementation
 
 任何实现了接口中定义的方法的类型，即隐式实现了该接口，这种方式称为 duck typing。
 
-#+BEGIN_SRC go
+#+begin_src go
 type Obj interface {
     GetType() string
 }
@@ -425,12 +425,12 @@ func main() {
     PrintType(Foo{})
     PrintType(Bar{})
 }
-#+END_SRC
+#+end_src
 
 * Variable
 ** 语法
 
-#+BEGIN_SRC go
+#+begin_src go
 // 声明未初始化的变量为零值
 var foo int // foo = 0
 var foo, bar int
@@ -456,29 +456,29 @@ foo, bar := 1, "test"
 a := 1            // int
 b := 3.142        // float64
 c := 0.867 + 0.5i // complex128
-#+END_SRC
+#+end_src
 
 * Constant
 
 常量可以是布尔、数字、字符串类型。
 
-#+BEGIN_SRC go
+#+begin_src go
 const a string = "constant"
 
 func main() {
     const b = 500000000
     const c = 3e20 / d // 可以引用其他常量
 }
-#+END_SRC
+#+end_src
 
 * Expression
 ** =defer=
 
-#+BEGIN_SRC go
+#+begin_src go
 defer <stat>
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC go
+#+begin_src go
 func foo() {
     defer fmt.Println("deferred line")  // 延迟到函数返回前执行
     fmt.Println("normal line")
@@ -507,11 +507,11 @@ func foo() {
 // i = 9
 // i = 8
 // ...
-#+END_SRC
+#+end_src
 
 ** =for=
 
-#+BEGIN_SRC go
+#+begin_src go
 for i := 0; i < 10; i++ {
     if i % 2 == 0 {
         continue
@@ -526,17 +526,17 @@ for i < 10 { // 只有条件，相当于 while
 for { // 无限循环
     break
 }
-#+END_SRC
+#+end_src
 
 ** =go=
 
 Goroutine 即异步执行的函数调用。
 
-#+BEGIN_SRC go
+#+begin_src go
 go <func>()
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC go
+#+begin_src go
 func foo(s string) {
     fmt.Println(s)
 }
@@ -546,11 +546,11 @@ go foo("line 2")    // Goroutine 函数调用
 go func(s string) { // Goroutine 匿名函数调用
     fmt.Println(s)
 }("line 3")
-#+END_SRC
+#+end_src
 
 ** =if=
 
-#+BEGIN_SRC go
+#+begin_src go
 if i < 10 {
 } else if i < 100 {
 } else {
@@ -560,22 +560,22 @@ if i := 10; i < 10 { // 进行判断之前可执行语句
     i += 1           // 声明的变量只在 if 语句范围内有效
 } else {
 }
-#+END_SRC
+#+end_src
 
 ** =range=
 
 #+CAPTION: 字符串
-#+BEGIN_SRC go
+#+begin_src go
 for k, v := range "foo" {
     fmt.Printf("%d %c\n", k, v)
 }
 // 0 f
 // 1 o
 // 2 o
-#+END_SRC
+#+end_src
 
 #+CAPTION: 数组
-#+BEGIN_SRC go
+#+begin_src go
 pow := []int{1, 2, 4, 8}
 for k, v := range pow {
     fmt.Printf("2^%d = %d\n", k, v)
@@ -584,21 +584,21 @@ for k, v := range pow {
 // 2^1 = 2
 // 2^2 = 4
 // 2^3 = 8
-#+END_SRC
+#+end_src
 
 #+CAPTION: Map
-#+BEGIN_SRC go
+#+begin_src go
 m := map[int]string{10: "ten", 11: "eleven"}
 for k, v := range m {
     fmt.Printf("%d = %v\n", k, v)
 }
 // 10 = ten
 // 11 = eleven
-#+END_SRC
+#+end_src
 
 ** =switch=
 
-#+BEGIN_SRC go
+#+begin_src go
 switch [<stat>;] <name> {
     case <value>:
         ... // 自动 break，除非有 fallthrough
@@ -616,35 +616,35 @@ switch { // switch 没有表达式，只根据 case 表达式判断，可以实�
     default:
         ...
 }
-#+END_SRC
+#+end_src
 
 * Function
 
-#+BEGIN_SRC go
+#+begin_src go
 func (<receiver>) <name>(<params>) (<returns>) {}
-#+END_SRC
+#+end_src
 
 ** 参数
 
-#+BEGIN_SRC go
+#+begin_src go
 func foo(x int) {}
 func foo(x, y int) {}
-#+END_SRC
+#+end_src
 
 Go 函数参数不支持默认值，需要用默认值替代空值时：
 
-#+BEGIN_SRC go
+#+begin_src go
 func foo (x int) {
     if x == 0 {
         x = 1
     }
 }
-#+END_SRC
+#+end_src
 
 *** Variadic Parameter
 
 #+CAPTION: 同一类型
-#+BEGIN_SRC go
+#+begin_src go
 func foo(args ...int) int {
     sum := 0
     for _, i := range args {
@@ -654,10 +654,10 @@ func foo(args ...int) int {
 }
 x := foo(1, 2, 3)           // 6
 y := foo([]int{1, 2, 3}...) // 6
-#+END_SRC
+#+end_src
 
 #+CAPTION: 任意类型
-#+BEGIN_SRC go
+#+begin_src go
 func foo(args ...interface{}) {
     for _, arg := range args {
         fmt.Printf("type = %T\n", arg)
@@ -667,11 +667,11 @@ foo(1, "test", true)
 // type = int
 // type = string
 // type = bool
-#+END_SRC
+#+end_src
 
 ** 返回值
 
-#+BEGIN_SRC go
+#+begin_src go
 func foo(bar int) int {
     return 0
 }
@@ -690,13 +690,13 @@ func foo(x, y int) (sum, diff int) { // Named return values
     return // Return all named return values by default
 }
 a, b := foo(1, 5) // 6, -4
-#+END_SRC
+#+end_src
 
 ** 函数类型
 
 自定义类型可以为函数，任何符合此签名的函数都可以认为属于此类型。
 
-#+BEGIN_SRC go
+#+begin_src go
 type fooFunc func(Type) Type
 
 func fooOne(Type) Type {...}
@@ -709,13 +709,13 @@ func getFooFuncs() []fooFunc {
 for _, fooFunc := range getFooFuncs() {
     fooFunc()
 }
-#+END_SRC
+#+end_src
 
 ** 函数字面量
 
 函数字面量（literal）即匿名函数，也称为闭包。
 
-#+BEGIN_SRC go
+#+begin_src go
 foo := func(x, y int) int {
     return x + y
 }
@@ -725,11 +725,11 @@ bar := foo(1, 2) // 3
 foo := func(x, y int) int {
     return x + y
 } (1, 2) // 3
-#+END_SRC
+#+end_src
 
 闭包内可以引用声明闭包的作用域内的任何变量，即使其外部函数返回，外部的变量依然有效。
 
-#+BEGIN_SRC go
+#+begin_src go
 func main() {
     x := 1
     foo := func() {
@@ -742,7 +742,7 @@ func main() {
 func bar(x int) {
     fmt.Println("x =", x)
 }
-#+END_SRC
+#+end_src
 
 * Method
 
@@ -750,15 +750,15 @@ func bar(x int) {
 
 名称相同但参数不同的函数不能共存，但名称相同而 receiver 不同的方法可以共存。
 
-#+BEGIN_SRC go
+#+begin_src go
 func (<rc> <rc_type>) <name>() <rt_type> {
     ...
 }
-#+END_SRC
+#+end_src
 
 ** 示例
 
-#+BEGIN_SRC go
+#+begin_src go
 type Vertex struct {
     X, Y float64
 }
@@ -776,7 +776,7 @@ func (v Vertex) Abs() float64 {
 v := Vertex{3, 4}
 fmt.Println(Abs(v))  // 调用函数
 fmt.Println(v.Abs()) // 调用方法
-#+END_SRC
+#+end_src
 
 ** Receiver
 <<method_receiver>>
@@ -784,7 +784,7 @@ fmt.Println(v.Abs()) // 调用方法
 方法的 receiver 传递的是值而不是引用，需要修改 receiver 的值时，将 receiver 定义为指针。
 
 #+CAPTION: 示例
-#+BEGIN_SRC go
+#+begin_src go
 type Vertex struct {
     X, Y float64
 }
@@ -814,13 +814,13 @@ func main() {
     p.Scale4(10)    // 方法 receiver 为指针，使用指针调用：OK
     v.Scale4(10)    // 方法 receiver 为指针，使用值调用：OK，v 自动转换为 &v
 }
-#+END_SRC
+#+end_src
 
 ** 内置类型
 
 方法只可以被当前包中定义的类型的变量调用，内置类型如 =int= 需要被重新定义，才可以作为 receiver 类型。
 
-#+BEGIN_SRC go
+#+begin_src go
 type MyFloat float64;
 
 func (f MyFloat) Abs() float64 {
@@ -831,19 +831,19 @@ func main() {
     f := MyFloat(-math.Sqrt2)
     fmt.Println(f.Abs())
 }
-#+END_SRC
+#+end_src
 
 * Package
 ** =package=
 
-#+BEGIN_SRC go
+#+begin_src go
 package <name>
-#+END_SRC
+#+end_src
 
 可执行程序必须有 =main= 包，其中定义 =main()= 函数。
 
 #+CAPTION: 一个包可以跨越多个文件
-#+BEGIN_SRC go
+#+begin_src go
 // main_one.go
 package main
 func main() {
@@ -853,11 +853,11 @@ func main() {
 package main
 func foo() {
 }
-#+END_SRC
+#+end_src
 
 ** =import=
 
-#+BEGIN_SRC go
+#+begin_src go
 import "<package>"
 import <alias> "<package>"
 import (
@@ -865,7 +865,7 @@ import (
     "<package>"
     <alias> "<package>"
 )
-#+END_SRC
+#+end_src
 
 加载包之后，可以通过 =<package>.= 引用其输出（export）的所有类型、变量、常量、函数。
 
@@ -874,17 +874,17 @@ import (
 ** 可见性
 * Testing
 
-#+BEGIN_SRC sh
+#+begin_src sh
 foo.go      # 代码文件
 foo_test.go # 测试文件
 $ go test   # 运行测试
-#+END_SRC
+#+end_src
 
 #+CAPTION: =foo_test.go=
-#+BEGIN_SRC go
+#+begin_src go
 func TestFoo(t *testing.T) {
 }
-#+END_SRC
+#+end_src
 
 * Environment
 ** =GOPATH=
@@ -893,16 +893,16 @@ func TestFoo(t *testing.T) {
 
 ** 工作区
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $GOPATH/
     bin/ # Installed Go applications
     src/ # Go packages
-#+END_SRC
+#+end_src
 
 * Command
 ** =go=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 go build <file>   # 编译包和依赖，生成可执行文件
 go run <file> ... # 编译并运行
 go test           # 运行项目测试
@@ -912,7 +912,7 @@ go get <package>  # e.g. go get github.com/foo/bar
 go install <package>
 
 go version
-#+END_SRC
+#+end_src
 
 Go 代码编译不生成中间代码，如 Java 的字节码，而是直接生成二进制代码。
 

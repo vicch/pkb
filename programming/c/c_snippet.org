@@ -4,7 +4,7 @@
 * 数据结构
 
 #+CAPTION: 堆栈
-#+BEGIN_SRC c
+#+begin_src c
 #define MAXVAL 100 // Max depth of stack
 
 int sp = 0;         // Next free stack position
@@ -27,12 +27,12 @@ double pop(void)
         return 0.0;
     }
 }
-#+END_SRC
+#+end_src
 
 * 算法
 ** 二分查找
 
-#+BEGIN_SRC c
+#+begin_src c
 int binarySearch(int x, int v[], int n)
 {
     int l = 0, r = n - 1, m;
@@ -47,11 +47,11 @@ int binarySearch(int x, int v[], int n)
     }
     return -1;
 }
-#+END_SRC
+#+end_src
 
 ** 快速排序
 
-#+BEGIN_SRC c
+#+begin_src c
 void swap(int v[], int i, int j);
 
 void qsort(int v[], int left, int right)
@@ -82,12 +82,12 @@ void swap(int v[], int i, int j)
     v[i] = v[j];
     v[j] = temp;
 }
-#+END_SRC
+#+end_src
 
 * 计算
 
 #+CAPTION: 乘方
-#+BEGIN_SRC c
+#+begin_src c
 int power(int base, int power)
 {
     int i = 1;
@@ -95,20 +95,20 @@ int power(int base, int power)
         i *= base;
     return i;
 }
-#+END_SRC
+#+end_src
 
 * 文本
 ** IO
 
 #+CAPTION: 输入字符复制到输出
-#+BEGIN_SRC c
+#+begin_src c
 int c;
 while ((c = getchar()) != EOF)
     putchar(c);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 输入中获取一行，写入字符数组，返回长度
-#+BEGIN_SRC c
+#+begin_src c
 int getline(char s[], int lim) // 因为不确定输入的长度，需要设置溢出检查
 {
     int c, i;
@@ -119,10 +119,10 @@ int getline(char s[], int lim) // 因为不确定输入的长度，需要设置溢出检查
     s[i] = '\0';
     return i;
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 字符缓冲，支持将暂时不读取的字符退回
-#+BEGIN_SRC c
+#+begin_src c
 #define BUFSIZE 100
 
 char buf[BUFSIZE];
@@ -141,10 +141,10 @@ void ungetch(int c)
     else
         buf[bufp++] = c;
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 十进制数按位输出（递归）
-#+BEGIN_SRC c
+#+begin_src c
 void printd(int n)
 {
     if (n < 0) {
@@ -155,12 +155,12 @@ void printd(int n)
         printd(n / 10);
     putchar(n % 10 + '0');
 }
-#+END_SRC
+#+end_src
 
 ** 统计
 
 #+CAPTION: 返回字符串长度
-#+BEGIN_SRC c
+#+begin_src c
 // 写法 1
 int strlen(char* s)
 {
@@ -176,23 +176,23 @@ int strlen(char* s)
         p++;
     return p - s;
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 统计输入字符数
-#+BEGIN_SRC c
+#+begin_src c
 int nc;
 for (nc = 0; getchar() != EOF; ++nc);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 统计输入行数
-#+BEGIN_SRC c
+#+begin_src c
 int c, nl = 0;
 while ((c = getchar()) != EOF)
     if (c == '\n') nl++;
-#+END_SRC
+#+end_src
 
 #+CAPTION: 统计行数、单词数、字符数
-#+BEGIN_SRC c
+#+begin_src c
 #define IN  1 // 单词内
 #define OUT 0 // 单词外
 
@@ -210,12 +210,12 @@ while ((c = getchar()) != EOF) {
         ++nw;
     }
 }
-#+END_SRC
+#+end_src
 
 ** 转换
 
 #+CAPTION: 字符串转换为整数
-#+BEGIN_SRC c
+#+begin_src c
 int atoi(char s[])
 {
     int i, n, sign;
@@ -233,10 +233,10 @@ int atoi(char s[])
 
     return sign * n;
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 整数转换为字符串
-#+BEGIN_SRC c
+#+begin_src c
 void itoa(int n, char s[])
 {
     int i = 0, sign = n;
@@ -249,10 +249,10 @@ void itoa(int n, char s[])
     s[i] = '\0';
     reverse(s); // 倒序
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 字符串转换为浮点数
-#+BEGIN_SRC c
+#+begin_src c
 double atof(char s[])
 {
     double val, power;
@@ -278,12 +278,12 @@ double atof(char s[])
 
     return sign * val / power;
 }
-#+END_SRC
+#+end_src
 
 ** 操作
 
 #+CAPTION: 复制字符串
-#+BEGIN_SRC c
+#+begin_src c
 // 指针形式 1
 void copy(char* t, char* f)
 {
@@ -300,20 +300,20 @@ void copy(char* t, char* f)
     int i;
     for (i = 0; (t[i] = f[i]) != '\0'; i++);
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 字符串倒序
-#+BEGIN_SRC c
+#+begin_src c
 void reverse(char* s)
 {
     int i, j, tmp;
     for (i = 0, j = strlen(s) - 1; i < j; i++, j--)
         tmp = s[i], s[i] = s[j], s[j] = tmp;
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 删除末尾的空白字符
-#+BEGIN_SRC c
+#+begin_src c
 int trim(char s[])
 {
     int n;
@@ -323,12 +323,12 @@ int trim(char s[])
     s[n+1] = '\0'; // 将之后的内容截断
     return n;
 }
-#+END_SRC
+#+end_src
 
 ** 查找
 
 #+CAPTION: 查找子字符串，返回起始位置
-#+BEGIN_SRC c
+#+begin_src c
 int strindex(char s[], char t[])
 {
     int i, j, k;
@@ -339,11 +339,11 @@ int strindex(char s[], char t[])
     }
     return -1;
 }
-#+END_SRC
+#+end_src
 
 ** 比较
 
-#+BEGIN_SRC c
+#+begin_src c
 // 指针形式
 int strcmp(char *s, char *t)
 {
@@ -361,12 +361,12 @@ int strcmp(char *s, char *t)
             return 0;
     return s[i] - t[i];
 }
-#+END_SRC
+#+end_src
 
 * 位运算
 
 #+CAPTION: 计数二进制位中 =1= 的个数
-#+BEGIN_SRC c
+#+begin_src c
 int bitcount(unsigned x)
 {
     int b = 0;
@@ -374,20 +374,20 @@ int bitcount(unsigned x)
         if (x & 01) b++;
     return b;
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 从比特位 =p= （索引值，最右一位为 =0=）开始取 =n= 位
-#+BEGIN_SRC c
+#+begin_src c
 unsigned getbits(unsigned x, int p, int n)
 {
     return (x >> (p+1-n)) & ~(~0 << n);
 }
-#+END_SRC
+#+end_src
 
 * 日期
 
 #+CAPTION: 输入年月日，计算该日期是当年的第几天
-#+BEGIN_SRC c
+#+begin_src c
 static int monthDays[2][13] = {
     {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
     {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
@@ -400,10 +400,10 @@ int dayOfYear(int year, int month, int day)
         day += monthDays[leap][i];
     return day;
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 输入年和当年的第几天，计算月和日
-#+BEGIN_SRC c
+#+begin_src c
 static int monthDays[2][13] = {
     {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
     {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
@@ -417,12 +417,12 @@ void monthDay(int year, int nthDay, int* month, int* day)
     *month = i;
     *day = nthDay;
 }
-#+END_SRC
+#+end_src
 
 * 命令行
 
 #+CAPTION: 读取命令行参数
-#+BEGIN_SRC c
+#+begin_src c
 int main(int argc, char* argv[])
 {
     int c, optionA = 0, optionB = 0;
@@ -445,4 +445,4 @@ int main(int argc, char* argv[])
     }
     ...
 }
-#+END_SRC
+#+end_src

@@ -17,29 +17,29 @@ file:../images/kubernetes/01.png
 * Config
 
 #+CAPTION: 配置文件格式
-#+BEGIN_SRC yaml
+#+begin_src yaml
 apiVersion: <string>   # v1
 kind: <string>         # E.g. Deployment
 metadata: <ObjectMeta>
 spec: <ObjectSpec>     # 不同 kind 有不同 spec 对象类型，e.g. DeploymentSpec
-#+END_SRC
+#+end_src
 
 ** =ObjectMeta=
 
-#+BEGIN_SRC yaml
+#+begin_src yaml
 metadata:
   name: <string>
   labels: <object>
   annotations: <object> # 用于外部工具的元数据，如 Ingress
   ...
-#+END_SRC
+#+end_src
 
 ** =LabelSelector=
 
-#+BEGIN_SRC yaml
+#+begin_src yaml
 selector:
   matchLabels: <object> # 键值对，用于匹配 metadata 中的 labels
-#+END_SRC
+#+end_src
 
 ** =Secret=
 
@@ -49,7 +49,7 @@ selector:
 ** Container
 
 #+CAPTION: =Container=
-#+BEGIN_SRC yaml
+#+begin_src yaml
 name: <string>
 image: <string>
 env:
@@ -67,19 +67,19 @@ volumeMounts:
   - name: <string>           # 匹配 Volume 的 name
     mountPath: <string>      # 容器内 mount 路径
     subPath: <string>        # Volume 内存放此容器 volume 的路径，默认为空，即 Volume 根目录
-#+END_SRC
+#+end_src
 
 ** Pod
 
 Pod 用于运行一个或一组相关的容器。
 
 #+CAPTION: =PodSpec=
-#+BEGIN_SRC yaml
+#+begin_src yaml
 containers:
   - <Container>
 volumes:
   - <Volume>
-#+END_SRC
+#+end_src
 
 ** Deployment
 
@@ -88,19 +88,19 @@ Deployment 用于描述一组 Pod 的理想状态（desired state），Deploymen
 Deployment 可以定义一个 Pod 模版，根据此模版生成一组相同的 Pod。
 
 #+CAPTION: =DeploymentSpec=
-#+BEGIN_SRC yaml
+#+begin_src yaml
 replicas: <integer>       # 理想状态 Pod 数量
 selector: <LabelSelector> # 只影响符合此 selector 的 Pod
 template:
   metadata: <ObjectMeta>
   spec: <PodSpec>         # 格式同 Pod 配置，如 containers
-#+END_SRC
+#+end_src
 
 * Service
 
 Service 用于配置 Kubernetes 集群的网络环境。
 
-#+BEGIN_SRC yaml
+#+begin_src yaml
 apiVersion: ...
 kind: Service
 metadata: ...
@@ -109,13 +109,13 @@ spec:
                  # NodePort
                  # ExternalName
                  # LoadBalancer
-#+END_SRC
+#+end_src
 
 ** =ClusterIP=
 
 =ClusterIP= 用于向集群中的其他对象暴露（expose）指定 Pod 的端口。
 
-#+BEGIN_SRC yaml
+#+begin_src yaml
 ...
 spec:
   type: ClusterIP
@@ -123,10 +123,10 @@ spec:
   ports:
     - port: <integer>       # 暴露给集群内其他 Pod 的端口
       targetPort: <integer> # Pod 目标端口
-#+END_SRC
+#+end_src
 
 #+CAPTION: =ClusterIP= 的 =name= 将作为 Pod 的主机名
-#+BEGIN_SRC yaml
+#+begin_src yaml
 # Foo Deployment
 kind: Deployment
 metadata:
@@ -158,7 +158,7 @@ spec:
           env:
             - name: FOO_HOST
               value: foo-cluster-ip-service # 匹配 ClusterIP 的 name
-#+END_SRC
+#+end_src
 
 ** =LoadBalancer=
 
@@ -168,7 +168,7 @@ spec:
 
 =NodePort= 用于向外部网络暴露（expose）指定 Pod 的端口，一般只用于开发环境。
 
-#+BEGIN_SRC yaml
+#+begin_src yaml
 ...
 spec:
   type: NodePort
@@ -177,7 +177,7 @@ spec:
     - port: <integer>       # 暴露给集群内其他 Pod 的端口
       nodePort: <integer>   # 暴露给外部网络的端口
       targetPort: <integer> # Pod 目标端口
-#+END_SRC
+#+end_src
 
 * Storage
 ** Volume
@@ -190,11 +190,11 @@ Volume 使容器能在 Pod 级别存储数据，以解决两个问题：
 Volume 的生命周期与 Pod 一致，Pod 关闭后，Volume 也被清空。
 
 #+CAPTION: =Volume=
-#+BEGIN_SRC yaml
+#+begin_src yaml
 name: <string>
 persistentVolumeClaim:
   claimName: <string> # 匹配 PersistentVolumeClaim 的 name
-#+END_SRC
+#+end_src
 
 ** Persistent Volume
 
@@ -209,7 +209,7 @@ file:../images/kubernetes/02.png
 Persistent Volume Claim (PVC) 是 Pod 对于它所需要的 Persistent Volume 的声明。
 
 #+CAPTION: =PersistentVolumeClaimSpec=
-#+BEGIN_SRC yaml
+#+begin_src yaml
 accessModes:
   - <string> # ReadWriteOnce，单个节点读写
              # ReadOnlyMany，多个节点只
@@ -218,7 +218,7 @@ resources:
   requests:
     storage: <string> # E.g. 2Gi
 storageClassName: <string>
-#+END_SRC
+#+end_src
 
 * Ingress
 ** =ingress-nginx=
@@ -231,7 +231,7 @@ file:../images/kubernetes/04.png
 
 ** =Ingress=
 
-#+BEGIN_SRC yaml
+#+begin_src yaml
 apiVersion: ... # extensions/v1beta1
 kind: Ingress
 metadata:
@@ -248,7 +248,7 @@ spec:
               serviceName: <string> # 匹配 ClusterIP Service 的 name
               servicePort: <integer>
           - path: /foo/?(.*)
-#+END_SRC
+#+end_src
 
 * RBAC
 
@@ -291,7 +291,7 @@ Helm has 2 parts:
 
 [[https://helm.sh/docs/using_helm/#from-script][Helm Documentation | Installing Helm | Using Script]]
 
-#+BEGIN_SRC sh
+#+begin_src sh
 # 安装
 curl -LO https://git.io/get_helm.sh
 chmod 700 get_helm.sh
@@ -303,7 +303,7 @@ kubectl create clusterrolebinding tiller-cluster-role --clusterrole=cluster-admi
 
 # 初始化
 helm init --service-account tiller --upgrade
-#+END_SRC
+#+end_src
 
 * =kubectl=
 
@@ -324,68 +324,68 @@ helm init --service-account tiller --upgrade
 
 ** =apply=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 kubectl apply <options>
   -f, --filename <file>|<dir> # 指定目录时，将应用目录下所有配置文件
   --validate=<bool>           # 是否检查语法，因为客户端和服务器版本不同而报错时可以设为 false
-#+END_SRC
+#+end_src
 
 ** =create=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 kubectl create <type> ...
-#+END_SRC
+#+end_src
 
 *** =create clusterrolebinding=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 kubectl create clusterrolebinding <options> <name>
   <options>
     --clusterrole=<role> # e.g. cluster-admin
     --serviceaccount=<namespace>:<name>
-#+END_SRC
+#+end_src
 
 *** =create secret=
 
 创建 =Secret= 对象，用于存储密码等敏感信息。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 kubectl create secret <subtype> <name> <options> <key>=<value>
   <subtype>
     generic        # 从本地文件或命令参数创建对象 
   <name>           # 用于在 Pod 配置内引用
   <options>
     --from-literal # 从命令参数创建，而不是从文件读取
-#+END_SRC
+#+end_src
 
 *** =create serviceaccount=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 kubectl create serviceaccount <options> <name>
   <options>
     --namespace <namespace>
-#+END_SRC
+#+end_src
 
 ** =delete=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 kubectl delete <options>
   -f, --filename <file>
 
 kubectl delete <type> <name>
-#+END_SRC
+#+end_src
 
 ** =describe=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 kubectl describe <type> <name>
   <type>
     storageclass # 存储空间类别，用于 Persistent Volume
-#+END_SRC
+#+end_src
 
 ** =get=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 kubectl get <options> <type>
   <options>
     -o, --output [wide|json|yaml] # 输出格式
@@ -396,29 +396,29 @@ kubectl get <options> <type>
     pods
     services
     storageclass (sc) # 存储空间类别，用于 Persistent Volume
-#+END_SRC
+#+end_src
 
 ** =logs=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 kubectl logs <name>
-#+END_SRC
+#+end_src
 
 ** =set=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 kubectl set <command>
   image # 修改 Pod 模版的镜像
-#+END_SRC
+#+end_src
 
 *** =set image=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 kubectl set image <type>/<name> <container>=<image>
-#+END_SRC
+#+end_src
 
 #+CAPTION: =foo-deployment.yml=
-#+BEGIN_SRC yaml
+#+begin_src yaml
 ...
 kind: Deployment
 metadata:
@@ -430,12 +430,12 @@ spec:
       containers:
         - name: bar
           image: project/bar-image
-#+END_SRC
+#+end_src
 
 #+CAPTION: 指定镜像
-#+BEGIN_SRC sh
+#+begin_src sh
 kubectl set image deployment/foo-deployment bar=project/bar-image:v1
-#+END_SRC
+#+end_src
 
 * Minikube
 
@@ -453,11 +453,11 @@ Minikube 是用于开发环境的 Kubernetes 集群配置和管理工具。Minik
 
 ** =docker-env=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 minikube docker-env
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ minikube docker-env
 export DOCKER_TLS_VERIFY="1"
 export DOCKER_HOST="tcp://<ip>:<port>"
@@ -466,7 +466,7 @@ export DOCKER_API_VERSION="1.35"
 
 # 在当前会话内将本地 Docker client 指向 minikube 内的 Docker server
 $ eval $(minikube docker-env)
-#+END_SRC
+#+end_src
 
 * Links
 

@@ -22,7 +22,7 @@ APT = Advanced Packaging Tool
 ** 命令
 *** =apt-get=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 apt-get <options> <command> <package>, ...
 
 # <options>
@@ -35,11 +35,11 @@ apt-get <options> <command> <package>, ...
     install <package> # 安装包
     remove <package>  # 移除包
     purge <package>   # 移除包和配置文件
-#+END_SRC
+#+end_src
 
 *** =apt-cache=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 apt-cache <options> <command>
 
 # <command>
@@ -47,23 +47,23 @@ apt-cache <options> <command>
         -n # 只搜索包名
     show <package>   # 查看包信息
     policy <package> # 查看可安装的版本等
-#+END_SRC
+#+end_src
 
 *** =add-apt-repository=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 add-apt-repository <options> <repo>
     -y, --yes # 所有确认项回答 Yes
-#+END_SRC
+#+end_src
 
 *** 示例
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ add-apt-repository ppa:chris-lea/redis-server
 $ apt-get updaet
 $ apt-cache policy redis-server
 $ apt-get install -y redis-server
-#+END_SRC
+#+end_src
 
 ** 配置
 
@@ -79,12 +79,12 @@ $ apt-get install -y redis-server
 *** =periodic=
 
 #+CAPTION: 示例
-#+BEGIN_SRC sh
+#+begin_src sh
 APT::Periodic::Update-Package-Lists "1";
 APT::Periodic::Download-Upgradeable-Packages "1";
 APT::Periodic::AutocleanInterval "7";
 APT::Periodic::Unattended-Upgrade "1";
-#+END_SRC
+#+end_src
 
 *** =unattended-upgrades=
 
@@ -92,7 +92,7 @@ APT::Periodic::Unattended-Upgrade "1";
 - 自动更新信息记录在 =/var/log/unattended-upgrades= 。
 
 #+CAPTION: 配置示例
-#+BEGIN_SRC sh
+#+begin_src sh
 Unattended-Upgrade::Allowed-Origins {
     "${distro_id}:${distro_codename}-security";  # 安全更新，建议打开
 //  "${distro_id}:${distro_codename}-updates";   # 其他更新，建议关闭
@@ -101,13 +101,13 @@ Unattended-Upgrade::Allowed-Origins {
 }
 
 Unattended-Upgrade::Automatic-Reboot "false"; # 更新后是否自动重启
-#+END_SRC
+#+end_src
 
 * Awk
 
-#+BEGIN_SRC sh
+#+begin_src sh
 awk <options> <script> <file>
-#+END_SRC
+#+end_src
 
 ** 选项
 
@@ -120,9 +120,9 @@ awk <options> <script> <file>
 *** 示例
 
 #+CAPTION: 统计某个字符在每行出现的次数（将其作为分割符，然后统计字段数）
-#+BEGIN_SRC sh
+#+begin_src sh
 awk -F <char> '{print NR, '\t', NF-1}' <file>
-#+END_SRC
+#+end_src
 
 ** 脚本
 
@@ -140,26 +140,26 @@ awk -F <char> '{print NR, '\t', NF-1}' <file>
 | =match(<field>, /<pattern>/, <result>); {<cmd>}= | 字段匹配，提取结果 |
 
 #+CAPTION: 打印匹配行
-#+BEGIN_SRC sh
+#+begin_src sh
 awk '/<pattern>/ {print FILENAME, '\t', NR, '\t', $0}' <file>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 打印匹配部分
-#+BEGIN_SRC sh
+#+begin_src sh
 awk '{match($0, /<pattern>/, a); {print a[1]}}' <file>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 匹配电话号码 =xxx-xxx-xxxx= 和 =(xxx) xxx-xxxx=
-#+BEGIN_SRC sh
+#+begin_src sh
 awk '/^([0-9]{3}-|\([0-9]{3}\) )[0-9]{3}-[0-9]{4}$/' <file>
-#+END_SRC
+#+end_src
 
 *** 遍历
 
 #+CAPTION: 计算所有行（数值）的平均值
-#+BEGIN_SRC sh
+#+begin_src sh
 awk '{sum += $1} END {print "Average = ", sum / NR}' <file>
-#+END_SRC
+#+end_src
 
 ** 变量
 
@@ -174,15 +174,15 @@ awk '{sum += $1} END {print "Average = ", sum / NR}' <file>
 | =$<n>=     | 第 n 列    |
 
 #+CAPTION: =NR=
-#+BEGIN_SRC sh
+#+begin_src sh
 awk 'NR == 10' <file>    # 输出第 10 行
 awk 'NR % 2 == 0' <file> # 输出偶数行
-#+END_SRC
+#+end_src
 
 * IPTables
 ** 命令
 
-#+BEGIN_SRC sh
+#+begin_src sh
 iptables <options>
 
 # <options> 输出
@@ -205,7 +205,7 @@ iptables <options>
     -m, --match <module>           # 使用模块进行匹配，如 conntrack
     --ctstate <state>              # 状态，如 RELATED, ESTABLISHED
     --dport <port>                 # 目标端口
-#+END_SRC
+#+end_src
 
 ** 规则链
 
@@ -237,7 +237,7 @@ iptables <options>
 | =FORWARD= | =DROP=   |
 
 #+CAPTION: 查看和修改规则链的默认目标
-#+BEGIN_SRC sh
+#+begin_src sh
 $ iptables -L -v
 Chain INPUT (policy ACCEPT ...)
 ...
@@ -245,7 +245,7 @@ $ iptables -P INPUT DROP
 $ iptables -L -v
 Chain INPUT (policy DROP ...)
 ...
-#+END_SRC
+#+end_src
 
 ** 规则
 
@@ -267,7 +267,7 @@ Chain INPUT (policy DROP ...)
 
 *** 示例
 
-#+BEGIN_SRC sh
+#+begin_src sh
 # 添加：允许所有内部通信
 iptables -A INPUT -i lo -j ACCEPT
 
@@ -291,25 +291,25 @@ sudo iptables -D INPUT 3
 
 # 删除：指定规则
 sudo iptables -D INPUT -p tcp --dport 22 -j ACCEPT
-#+END_SRC
+#+end_src
 
 ** =iptables-save=
 
 #+CAPTION: 输出规则，可用于保存或备份：
-#+BEGIN_SRC sh
+#+begin_src sh
 iptables-save > iptables-backup.rules
-#+END_SRC
+#+end_src
 
 ** =iptables-restore=
 
 #+CAPTION: 从备份文件恢复规则：
-#+BEGIN_SRC sh
+#+begin_src sh
 iptables-restore < iptables-backup.rules
-#+END_SRC
+#+end_src
 
 * Sed
 
-#+BEGIN_SRC sh
+#+begin_src sh
 sed <options> <script> <file>
 
 # <options> 
@@ -320,34 +320,34 @@ sed <options> <script> <file>
     -r, --regexp-extended     # 使用扩展正则
 
 # <script> 如果包含空格、特殊字符 $、*，需要用单引号包围
-#+END_SRC
+#+end_src
 
 ** 打印
 
 =<options>= 为 =-n= 时控制输出的行。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 <num>p         # 行数
 '/<pattern>/p' # 模式匹配
-#+END_SRC
+#+end_src
 
 *** 示例
 
 #+CAPTION: 行数
-#+BEGIN_SRC sh
+#+begin_src sh
 # 输出第 10 行
 sed -n 10p <file>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 模式匹配
-#+BEGIN_SRC sh
+#+begin_src sh
 # 匹配电话号码 xxx-xxx-xxxx 和 (xxx) xxx-xxxx
 sed -n -r '/^([0-9]{3}-|\([0-9]{3}\) )[0-9]{3}-[0-9]{4}$/p' <file>
-#+END_SRC
+#+end_src
 
 ** 替换
 
-#+BEGIN_SRC sh
+#+begin_src sh
 's/<search>/<replace>/<options>'
 
 # <replace>
@@ -357,19 +357,19 @@ sed -n -r '/^([0-9]{3}-|\([0-9]{3}\) )[0-9]{3}-[0-9]{4}$/p' <file>
 # <options>
     'g' # 全部替换（默认只替换第一处）
     'I' # 忽略大小写
-#+END_SRC
+#+end_src
 
 *** 示例
 
 #+CAPTION: 去除空白字符
-#+BEGIN_SRC sh
+#+begin_src sh
 sed 's/[[:space:]]//g'
-#+END_SRC
+#+end_src
 
 #+CAPTION: 修改 PHP-FPM 配置
-#+BEGIN_SRC sh
+#+begin_src sh
 sed -i "s/listen =.*/listen = 127.0.0.1:9000/" /etc/php5/fpm/pool.d/www.conf
-#+END_SRC
+#+end_src
 
 * Systemd
 
@@ -377,14 +377,14 @@ Systemd is considered a "polyglot", taking over a lot of services such as loggin
 
 ** 配置
 
-#+BEGIN_SRC sh
+#+begin_src sh
 
-#+END_SRC
+#+end_src
 
 ** 命令
 
 #+CAPTION: 服务控制
-#+BEGIN_SRC sh
+#+begin_src sh
 systemctl <command> <service>
     enable
     disable
@@ -393,26 +393,26 @@ systemctl <command> <service>
     restart
     reload
     status
-#+END_SRC
+#+end_src
 
 #+CAPTION: 
-#+BEGIN_SRC sh
+#+begin_src sh
 systemctl list-unit-files
-#+END_SRC
+#+end_src
 
 * SysV
 ** 配置
 
-#+BEGIN_SRC sh
+#+begin_src sh
 /etc/init.d/<service> # 配置文件为 Bash 脚本
 /etc/init.d/skeleton  # 配置文件模板
-#+END_SRC
+#+end_src
 
 ** 命令
 
-#+BEGIN_SRC sh
+#+begin_src sh
 /etc/init.d/<service> [start|stop|restart|reload]
-#+END_SRC
+#+end_src
 
 * 链接
 

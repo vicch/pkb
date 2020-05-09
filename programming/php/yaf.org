@@ -9,32 +9,32 @@
 =Yaf_Application= 为单例模式。
 
 #+CAPTION: 程序入口（ =/public/index.php= =/public/api.php= ），初始化实例
-#+BEGIN_SRC php
+#+begin_src php
 $app = new Yaf_Application(APP_PATH . '/config/application.ini');
 $app->...
-#+END_SRC
+#+end_src
 
 #+CAPTION: 其他位置，获取实例
-#+BEGIN_SRC php
+#+begin_src php
 $app = Yaf_Application::app();
 $app->...
-#+END_SRC
+#+end_src
 
 ** 方法
 *** =__construct()=
 
-#+BEGIN_SRC php
+#+begin_src php
 __construct( mixed $config, string $section )
     $config  // string：配置文件路径
              // array：详细配置，关联数组，eg. ['ap' => ['directory' => '/usr/local/www/ap']]
              // Yaf_Config_Abstract
     $section // 要读取的配置节，eg. 'ap.environ'
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 $app = new Yaf_Application(APP_PATH . '/config/application.ini');
-#+END_SRC
+#+end_src
 
 *** =app()=
 
@@ -42,9 +42,9 @@ $app = new Yaf_Application(APP_PATH . '/config/application.ini');
 - 返回当前的 =Yaf_Application= 实例
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 $app = Yaf_Application::app();
-#+END_SRC
+#+end_src
 
 *** =bootstrap()=
 
@@ -53,9 +53,9 @@ $app = Yaf_Application::app();
 - 返回 =Yaf_Application=
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 $app->bootstrap()->run();
-#+END_SRC
+#+end_src
 
 *** =run()=
 
@@ -64,9 +64,9 @@ $app->bootstrap()->run();
 - 返回 =bool=
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 $app->bootstrap()->run();
-#+END_SRC
+#+end_src
 
 *** =environ()=
 
@@ -75,9 +75,9 @@ $app->bootstrap()->run();
 - 返回 =string=
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 $env = Yaf_Application::app()->environ();
-#+END_SRC
+#+end_src
 
 *** =getConfig()=
 
@@ -85,9 +85,9 @@ $env = Yaf_Application::app()->environ();
 - 返回 =Yaf_Config_Abstract=
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 $config = Yaf_Application::app()->getConfig();
-#+END_SRC
+#+end_src
 
 *** =getDispatcher()=
 
@@ -95,9 +95,9 @@ $config = Yaf_Application::app()->getConfig();
 - 返回 =Yaf_Dispatcher=
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 $app->getDispatcher()->setAppDirectory(APPLICATION_PATH . '/action/');
-#+END_SRC
+#+end_src
 
 *** =getModules()=
 
@@ -105,9 +105,9 @@ $app->getDispatcher()->setAppDirectory(APPLICATION_PATH . '/action/');
 - 返回 =string=
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 print_r($app->getModules());
-#+END_SRC
+#+end_src
 
 *** =execute()=
 
@@ -115,17 +115,17 @@ print_r($app->getModules());
 - 主要用于使用 Yaf 做简单的命令行脚本，应用 Yaf 的外围环境，eg. 自动加载、配置、视图引擎
 - 返回 =mixed= ，被调用函数、方法的返回值
 
-#+BEGIN_SRC php
+#+begin_src php
 execute( callback $function, mixed $parameter = NULL ... )
     $function  // 要运行的函数、方法，eg. array($obj, 'method_name')
     $parameter // 零个或多个要传递给函数的参数
-#+END_SRC
+#+end_src
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 $app->execute('main');
 function main() {}
-#+END_SRC
+#+end_src
 
 * 启动
 
@@ -154,9 +154,9 @@ function main() {}
 - 返回 =Yef_Dispatcher=
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 $dispatcher = Yaf_Dispatcher::getInstance();
-#+END_SRC
+#+end_src
 
 *** =getApplication()=
 
@@ -168,15 +168,15 @@ $dispatcher = Yaf_Dispatcher::getInstance();
 - 不会改变自动加载的路径
 - 成功返回 =Yaf_Dispatcher= ，失败返回 =FALSE=
 
-#+BEGIN_SRC php
+#+begin_src php
 setAppDirectory( string $directory )
     $directory // 绝对路径
-#+END_SRC
+#+end_src
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 $app->getDispatcher()->setAppDirectory('/usr/local/new/application')->getApplication()->run();
-#+END_SRC
+#+end_src
 
 *** =dispatch()=
 
@@ -184,26 +184,26 @@ $app->getDispatcher()->setAppDirectory('/usr/local/new/application')->getApplica
 - 一般不需要手动调用此方法， =Yaf_Application::run()= 会自动调用；
 - 成功返回 =Yaf_Response_Abstract= 实例，失败会抛出异常；
 
-#+BEGIN_SRC php
+#+begin_src php
 dispatch( Yaf_Request_Abstract $request )
-#+END_SRC
+#+end_src
 
 *** =registerPlugin()=
 
 - 注册一个插件
 - 成功返回 =Yaf_Dispatcher= ，失败返回 =FALSE=
 
-#+BEGIN_SRC php
+#+begin_src php
 registerPlugin( Yaf_Plugin_Abstract $plugin )
-#+END_SRC
+#+end_src
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 // Bootstrap 类中
 public function _initPlugin(Yaf_Dispatcher $dispatcher) {
     $dispatcher->registerPlugin(new SomePlugin());
 }
-#+END_SRC
+#+end_src
 
 *** =getRouter()=
 
@@ -220,50 +220,50 @@ public function _initPlugin(Yaf_Dispatcher $dispatcher) {
 - 初始化视图引擎
 - 返回 =Yaf_View_Interface=
 
-#+BEGIN_SRC php
+#+begin_src php
 initView( string $tpl_dir )
     $tpl_dir // 视图的模板目录的绝对路径
-#+END_SRC
+#+end_src
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 // Bootstrap 类中
 public function _initViewParameters(Yaf_Dispatcher $dispatcher) {
     $dispatcher->initView(APPLICATION_PATH . '/views/')->assign('webroot', WEBROOT);
 }
-#+END_SRC
+#+end_src
 
 *** =setView()=
 
 - 设置视图引擎；
 - 成功返回 =Yaf_Dispatcher= ，失败返回 =FALSE= ；
 
-#+BEGIN_SRC php
+#+begin_src php
 setView( Yaf_View_Interface $view )
-#+END_SRC
+#+end_src
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 // Bootstrap 类中
 public function _initSmarty(Yaf_Dispatcher $dispatcher) {
     $smarty = new Smarty_Adapter(null, Yaf_Registry::get('config')->get('smarty'));
     $dispatcher->setView($smarty);
 }
-#+END_SRC
+#+end_src
 
 *** =autoRender()=
 
 - 打开或关闭自动渲染；
 - 成功返回 =Yaf_Dispatcher= ，失败返回 =FALSE= ；
 
-#+BEGIN_SRC php
+#+begin_src php
 autoRender( boolean $switch )
-#+END_SRC
+#+end_src
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 Yaf_Dispatcher::getInstance()->autoRender(FALSE);
-#+END_SRC
+#+end_src
 
 *** =disableView()=
 
@@ -271,12 +271,12 @@ Yaf_Dispatcher::getInstance()->autoRender(FALSE);
 - 成功返回 =Yaf_Dispatcher= ，失败返回 =FALSE= ；
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 // Controller 类中
 if ($this->getRequest()->isXmlHttpRequest()) { // Ajax
     Yaf_Dispatcher::getInstance()->disableView();
 }
-#+END_SRC
+#+end_src
 
 *** =enableView()=
 
@@ -293,15 +293,15 @@ if ($this->getRequest()->isXmlHttpRequest()) { // Ajax
 - 设置请求对象；
 - 成功返回 =Yaf_Dispatcher= ，失败返回 =FALSE= ；
 
-#+BEGIN_SRC php
+#+begin_src php
 setRequest( Yaf_Request_Abstract $request )
-#+END_SRC
+#+end_src
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 $request = new Yaf_Request_Simple('Index', 'Index', 'index');
 Yaf_Dispatcher::getInstance()->setRequest($request);
-#+END_SRC
+#+end_src
 
 *** =returnResponse()=
 
@@ -309,29 +309,29 @@ Yaf_Dispatcher::getInstance()->setRequest($request);
 - 如果开启（ =TRUE= ），则响应对象在分发完成后不会自动输出给请求端，而是手动控制输出；
 - 成功返回 =Yaf_Dispatcher= ，失败返回 =FALSE= ；
 
-#+BEGIN_SRC php
+#+begin_src php
 returnResponse( boolean $switch )
-#+END_SRC
+#+end_src
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 $response = $app->getDispatcher()->returnResponse(TRUE)->getApplication()->run();
 $response->response(); // 手动输出响应
-#+END_SRC
+#+end_src
 
 *** =flushInstantly()=
 
 - 立即输出响应，调用 =Yaf_Controller_Abstract::display()= ，直接输出响应给请求端
 - 成功返回 =Yaf_Dispatcher= ，失败返回 =FALSE=
 
-#+BEGIN_SRC php
+#+begin_src php
 flushInstantly( boolean $switch )
-#+END_SRC
+#+end_src
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 Yaf_Dispatcher::getInstance()->flushInstantly(TRUE);
-#+END_SRC
+#+end_src
 
 ** 错误处理方法
 
@@ -347,17 +347,17 @@ Yaf_Dispatcher::getInstance()->flushInstantly(TRUE);
 - 设置错误处理函数
 - 成功返回 =Yaf_Dispatcher= ，失败返回 =FALSE=
 
-#+BEGIN_SRC php
+#+begin_src php
 setErrorHandler( mixed $callback, int $error_code = E_ALL | E_STRICT )
     $callback   // 错误处理函数
     $error_code // 要捕获的错误类型
-#+END_SRC
+#+end_src
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 function myErrorHandler($errno, $errstr, $errfile, $errline) {}
 Yaf_Dispatcher::getInstance()->setErrorHandler('myErrorHandler');
-#+END_SRC
+#+end_src
 
 *** =throwException()=
 
@@ -365,15 +365,15 @@ Yaf_Dispatcher::getInstance()->setErrorHandler('myErrorHandler');
 - 也可以在配置文件中使用 =ap.dispatcher.throwException=$switch=
 - 成功返回 =Yaf_Dispatcher= ，失败返回 =FALSE=
 
-#+BEGIN_SRC php
+#+begin_src php
 throwException( boolean $switch )
     $switch // TRUE = 抛出异常，FALSE = 触发错误
-#+END_SRC
+#+end_src
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 Yaf_Dispatcher::getInstance()->throwException(FALSE);
-#+END_SRC
+#+end_src
 
 *** =catchException()=
 
@@ -382,15 +382,15 @@ Yaf_Dispatcher::getInstance()->throwException(FALSE);
 - 也可以在配置文件中使用 =ap.dispatcher.catchException=$switch=
 - 成功返回 =Yaf_Dispatcher= ，失败返回 =FALSE=
 
-#+BEGIN_SRC php
+#+begin_src php
 catchException( boolean $switch )
     $switch
-#+END_SRC
+#+end_src
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 Yaf_Dispatcher::getInstance()->catchException(TRUE);
-#+END_SRC
+#+end_src
 ** 默认路由方法
 
 - 设置路由的默认模块、控制器、动作
@@ -401,30 +401,30 @@ Yaf_Dispatcher::getInstance()->catchException(TRUE);
 - 设置路由的默认模块
 - 成功返回 =Yaf_Dispatcher= ，失败返回 =FALSE=
 
-#+BEGIN_SRC php
+#+begin_src php
 setDefaultModule( string $default_module_name )
     $default_module_name // 首字母大写
-#+END_SRC
+#+end_src
 
 *** =setDefaultController()=
 
 - 设置路由的默认控制器
 - 成功返回 =Yaf_Dispatcher= ，失败返回 =FALSE=
 
-#+BEGIN_SRC php
+#+begin_src php
 setDefaultController( string $default_controller_name )
     $default_controller_name // 首字母大写
-#+END_SRC
+#+end_src
 
 *** =setDefaultAction()=
 
 - 设置路由的默认动作
 - 成功返回 =Yaf_Dispatcher= ，失败返回 =FALSE=
 
-#+BEGIN_SRC php
+#+begin_src php
 setDefaultAction( string $default_module_name )
     $default_module_name // 首字母大写
-#+END_SRC
+#+end_src
 
 * 控制器
 
@@ -439,9 +439,9 @@ setDefaultAction( string $default_module_name )
 ** 动作参数
 
 获取方式一
-#+BEGIN_SRC php
+#+begin_src php
 $name = $this->getRequest()->getParam('name');
-#+END_SRC
+#+end_src
 
 -----
 
@@ -468,36 +468,36 @@ $name = $this->getRequest()->getParam('name');
 - 只是登记下要目的地，并不会立即跳转，当前的动作执行完成后才进行新的分发
 - 成功返回 =Yaf_Controller_Abstract= ，失败返回 =FALSE=
 
-#+BEGIN_SRC php
+#+begin_src php
 forward( string $module, string $controller, string $action, array $params=NULL )
     $module     // 首字母大写，如果为空，则转给当前模块
     $controller // 首字母大写，如果为空，则转给当前控制器
     $action     // 全部小写
     $params     // 附加参数，可通过 Yaf_Request_Abstract::getParam() 获取
-#+END_SRC
+#+end_src
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 if ($user_not_login) {
     $this->forward('login');
 }
-#+END_SRC
+#+end_src
 
 *** =redirect()=
 
 - 重定向请求到新的路径
 - 成功返回 =Yaf_Controller_Abstract= ，失败返回 =FALSE=
 
-#+BEGIN_SRC php
+#+begin_src php
 redirect( string $url )
-#+END_SRC
+#+end_src
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 if ($user_not_login) {
     $this->redirect('/login/');
 }
-#+END_SRC
+#+end_src
 
 ** 视图引擎方法
 
@@ -510,10 +510,10 @@ if ($user_not_login) {
 - 返回 =Yaf_View_Interface=
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 $view = $this->initView();
 $this->_view->assign('webroot', 'http://domain.com/');
-#+END_SRC
+#+end_src
 
 *** =render()=
 
@@ -521,15 +521,15 @@ $this->_view->assign('webroot', 'http://domain.com/');
 - 是对 =Yaf_View_Interface::render()= 的包装
 - 返回 =Yaf_Response_Abstract=
 
-#+BEGIN_SRC php
+#+begin_src php
 render( string $action, array $tpl_vars=NULL )
     $action   // 要渲染的动作名
     $tpl_vars // 传递给视图引擎的渲染参数
               // 也可以使用 Yaf_View_Interface::assign()
-#+END_SRC
+#+end_src
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 public funciton init() {
     /* 关闭自动渲染 */
     Yaf_Dispatcher::getInstance()->disableView();
@@ -538,7 +538,7 @@ public function indexAction() {
     $this->initView();
     echo $this->render('test.phtml');
 }
-#+END_SRC
+#+end_src
 
 *** =display()=
 
@@ -546,15 +546,15 @@ public function indexAction() {
 - 是对 =Yaf_View_Interface::display()= 的包装
 - 返回 =boolean=
 
-#+BEGIN_SRC php
+#+begin_src php
 display( string $action, array $tpl_vars=NULL )
     $action   // 要渲染的动作名
     $tpl_vars // 传递给视图引擎的渲染参数
               // 也可以使用 Yaf_View_Interface::assign()
-#+END_SRC
+#+end_src
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 public funciton init() {
     /* 关闭自动渲染 */
     Yaf_Dispatcher::getInstance()->disableView();
@@ -563,7 +563,7 @@ public function indexAction() {
     $this->initView();
     $this->display('test.phtml', array('name' => 'value'));
 }
-#+END_SRC
+#+end_src
 
 *** =getView()=
 
@@ -574,15 +574,15 @@ public function indexAction() {
 - 更改视图模板目录，之后 =Yaf_Controller_Abstract::render()= 会在新目录下寻找模板文件
 - 成功返回 =Yaf_Controller_Abstract= ，失败返回 =FALSE=
 
-#+BEGIN_SRC php
+#+begin_src php
 setViewPath( string $view_directory )
     $view_directory // 视图模板目录，绝对路径
-#+END_SRC
+#+end_src
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 $this->setViewPath('/usr/local/www/tpl/');
-#+END_SRC
+#+end_src
 
 *** =getViewPath()=
 
@@ -590,9 +590,9 @@ $this->setViewPath('/usr/local/www/tpl/');
 - 成功返回模板目录，失败返回 =NULL=
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 echo $this->getViewPath();
-#+END_SRC
+#+end_src
 ** 其他方法
 
 *** =getModuleName()=
@@ -621,7 +621,7 @@ echo $this->getViewPath();
 -----
 
 一个 Smarty 实现
-#+BEGIN_SRC php
+#+begin_src php
 class Smarty_Adapter implements Yaf_View_Interface
 {
     public $_smarty;
@@ -676,7 +676,7 @@ class Smarty_Adapter implements Yaf_View_Interface
         return $this->_smarty->fetch($name);
     }
 }
-#+END_SRC
+#+end_src
 
 * 配置
 

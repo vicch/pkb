@@ -5,12 +5,12 @@
 ** =DISTINCT=
 
 #+CAPTION: 示例
-#+BEGIN_SRC sql
+#+begin_src sql
 SELECT COUNT(DISTINCT city) FROM address;
-#+END_SRC
+#+end_src
 
 #+CAPTION: =SELECT= 多列时， =DISTINCT= 作用于所有列的整合结果
-#+BEGIN_SRC sql
+#+begin_src sql
 # | a |  b  |
 # |---+-----|
 # | 1 | foo |
@@ -22,19 +22,19 @@ SELECT DISTINCT a, b FROM test;
 # | 1 | foo |
 # | 1 | bar |
 # | 2 | foo |
-#+END_SRC
+#+end_src
 
 ** =HAVING=
 
 =WHERE= 不能用于聚合函数， =HAVING= 可以聚合函数的条件。
 
 #+CAPTION: 示例：查询租住的公寓多于一间的房客
-#+BEGIN_SRC sql
+#+begin_src sql
 SELECT tenant_id
 FROM tenant_apartment
 GROUP BY tenant_id
 HAVING COUNT(*) > 1;
-#+END_SRC
+#+end_src
 
 ** =JOIN=
 

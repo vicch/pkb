@@ -206,17 +206,17 @@ _Stack space in recursive calls counts, too._
 Big O just describes the rate of increase. For this reason, we drop the constants in runtime.
 
 #+CAPTION: Min and Max 1
-#+BEGIN_SRC java
+#+begin_src java
 int min = Integer.MAX_VALUE;
 int max = Integer.MIN_VALUE;
 for (int x : array) {
     if (x < min) min = x;
     if (x > max) max = x;
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: Min and Max 2
-#+BEGIN_SRC java
+#+begin_src java
 int min = Integer.MAX_VALUE;
 int max = Integer.MIN_VALUE;
 for (int x : array) {
@@ -225,7 +225,7 @@ for (int x : array) {
 for (int x : array) {
     if (x > max) max = x;
 }
-#+END_SRC
+#+end_src
 
 Two non-nested loops does not make the runtime $O(2N)$ in this case. If you're going to count the number of instructions, then you'd have to go to the assembly level.
 
@@ -251,7 +251,7 @@ Let $s$ be the length of the longest string. Let $a$ be the length of the array.
 *** Example 12
 
 #+CAPTION: This code counts all permutations of a string.
-#+BEGIN_SRC java
+#+begin_src java
 void permutation(String str) {
     permutation(str, "");
 }
@@ -268,20 +268,20 @@ void permutation(String str, String prefix) {
         }
     }
 }
-#+END_SRC
+#+end_src
 
 不理解：How many times does permutation get called before its base case (how many times lines 9 through 12 are hit)? Picture a large call tree representing all the calls. There are $N!$ permutations (leaves). Each leaf is attached to a path of length $N$. Therefore, there will be no more than $N \times N!$ nodes (function calls) in this tree.
 
 *** Example 13
 
 #+CAPTION: The following code computes the Nth Fibonacci number.
-#+BEGIN_SRC java
+#+begin_src java
 int fib(int n) {
     if (n <= 0) return 0;
     else if (n == 1) return 1;
     return fib(n - 1) + fib(n - 2);
 }
-#+END_SRC
+#+end_src
 
 There are 2 branches per call, and we go as deep as $N$, therefore the runtime is $O(2^N)$. But it's actually closer to $O(1.6^N)$. Because at the bottom of the call stack, there is sometimes only one call.
 
@@ -500,7 +500,7 @@ Constant factors might get dropped when computing the big O time, but in real li
 Example: Write a function to check if the value of a binary number (passed as a string) equals the hexadecimal representation of a string.
 #+END_QUOTE
 
-#+BEGIN_SRC java
+#+begin_src java
 boolean compareBinToHex(String binary, String hex) {
     int n1 = convertFromBase(binary, 2);
     int n2 = convertFromBase(hex, 16);
@@ -525,7 +525,7 @@ int convertFromBase(String number, int base) {
 }
 
 int digitToValue(char c) { ... }
-#+END_SRC
+#+end_src
 
 *** Modular
 
@@ -839,7 +839,7 @@ A graph is a collection of nodes with edges. A tree is a connected graph without
 
 Adjacenct list is the most common way to represent a graph: _every vertex (or node) stores a list of adjacent vertices._ In an undirected graph, an edge like =(a, b)= would be stored twice. The =Graph= class is used because, unlike in a tree, _it's not necessarily possible to reach all the nodes from a single node._
 
-#+BEGIN_SRC java
+#+begin_src java
 class Graph {
     public Node[] nodes;
 }
@@ -848,11 +848,11 @@ class Node {
     public String name;
     public Node[] children;
 }
-#+END_SRC
+#+end_src
 
 An array (or a hash table) of lists (arrays, arraylists, linked lists, etc.) can store the adjacency list. It is a bit more compact, but it isn't quite as clean. Use node classes unless there's a compelling reason not to.
 
-#+BEGIN_SRC code
+#+begin_src code
 0: 1
 1: 2
 2: 0, 3
@@ -860,7 +860,7 @@ An array (or a hash table) of lists (arrays, arraylists, linked lists, etc.) can
 4: 6
 5: 4
 6: 5
-#+END_SRC
+#+end_src
 
 *** Adjacency Matrix
 
@@ -878,7 +878,7 @@ The two most common ways to search a graph are DFS and BFS. _DFS is often prefer
 
 Tree traveral is a form of DFS. The difference is that when implementing this algorithm for a graph, it _must check if the node has been visited, to avoid infinite loop._
 
-#+BEGIN_SRC java
+#+begin_src java
 void search(Node root) {
     if (root == null) return;
     visit(root); // Node checking
@@ -889,13 +889,13 @@ void search(Node root) {
         }
     }
 }
-#+END_SRC
+#+end_src
 
 *** BFS
 
 BFS uses a queue instead of recursion.
 
-#+BEGIN_SRC java
+#+begin_src java
 void search(Node root) {
     Queue queue = new Queue();
     root.marked = true;
@@ -912,7 +912,7 @@ void search(Node root) {
         }
     }
 }
-#+END_SRC
+#+end_src
 
 *** Bidirectional Search
 
@@ -934,7 +934,7 @@ We can recurse through the entire tree, and for each node, compute the heights o
 
 To improve, check if the tree is balanced at the same time as checking heights. Return an error code (e.g. =Integer.MIN_VALUE=) when a subtree isn't balanced.
 
-#+BEGIN_SRC java
+#+begin_src java
 int checkHeight(TreeNode root) {
     if (root == null) return -1;
 
@@ -955,7 +955,7 @@ int checkHeight(TreeNode root) {
 boolean isBalanced(TreeNode root) {
     return checkHeight(root) != Integer.MIN_VALUE;
 }
-#+END_SRC
+#+end_src
 
 ** Question: Validate BST
 
@@ -972,7 +972,7 @@ The problem is that it can't handle duplicate values. If we assume that the tree
 
 The array is not actually necessary. It only needs to track the last element and compare it as it goes.
 
-#+BEGIN_SRC java
+#+begin_src java
 Integer last_printed = null; // Static variable
 boolean checkBST(TreeNode n) {
     if (n == null) return true;
@@ -991,7 +991,7 @@ boolean checkBST(TreeNode n) {
 
     return true;
 }
-#+END_SRC
+#+end_src
 
 ** Question: Build Order (Incomplete)
 
@@ -1145,11 +1145,11 @@ Write a program to swap odd and even bits in an integer with as few instructions
 
 Get all the odd bits by a mask, then shift them right by 1 to put them in the even spots. Then do the opposite for all the even bits.
 
-#+BEGIN_SRC java
+#+begin_src java
 int swap(int x) {
     return (((x & 0xaaaaaaaa) >>> 1) | ((x & 0x55555555) << 1));
 }
-#+END_SRC
+#+end_src
 
 ** Question: Draw Line (Incomplete)
 
@@ -1268,13 +1268,13 @@ Dynamic programming is mostly a matter of taking a recursive algorithm and _find
 *** Example: Fibonacci Numbers
 **** Without Dynamic Programming
 
-#+BEGIN_SRC java
+#+begin_src java
 int fibonacci(int i) {
     if (i == 0) return 0;
     if (i == 1) return 1;
     return fibonacci(i - 1) + fibonacci(i - 2);
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: Recursion tree
 file:../images/cracking_the_coding_interview/11.png
@@ -1284,7 +1284,7 @@ $O(2^n)$ nodes gives a runtime of roughly $O(2^n)$.
 **** Top-down Dynamic Programming (Memoization)
 
 #+CAPTION: Each time computing $fib(i)$, cache the result and use it later.
-#+BEGIN_SRC java
+#+begin_src java
 int fibonacci(int n) {
     return fibonacci(n, new int[n + 1]);
 }
@@ -1295,7 +1295,7 @@ int fibonacci(int i, int[] memo) {
     }
     return memo[i];
 }
-#+END_SRC
+#+end_src
 
 file:../images/cracking_the_coding_interview/12.png
 
@@ -1304,7 +1304,7 @@ Each node has one other child, resulting in roughly $2n$ children in the tree. T
 **** Bottom-Up Dynamic Programming
 
 #+CAPTION: The same things as the recursive memoized approach, but in reverse: start from the base cases up.
-#+BEGIN_SRC java
+#+begin_src java
 int fibonacci(int n) {
     if (n == 0) return 0;
     else if (n == 1) return 1;
@@ -1318,10 +1318,10 @@ int fibonacci(int n) {
     }
     return memo[n - 1] + memo[n - 2];
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: Actually only the last 2 values are being used, so it can get rid of the memo table andjust store a few variables.
-#+BEGIN_SRC java
+#+begin_src java
 int fibinacci(int n) {
     if (n == 0) return 0;
 
@@ -1335,7 +1335,7 @@ int fibinacci(int n) {
     }
     return a + b;
 }
-#+END_SRC
+#+end_src
 ** Question: Recursive Multiply
 
 #+BEGIN_QUOTE
@@ -1344,7 +1344,7 @@ Multiply two positive integers without using the =*= or =/= operator. =+=, =-= a
 
 $a \times b = a / 2 \times b \times 2$, therefore the calculation can be done recursively by halve one of the numbers and double the result. If $a$ is odd, $a \times b = \lfloor a / 2 \rfloor \times b \times 2 + b$. This algorithm will run in $O(\log{s})$ time, where $s$ is the smaller of the two numbers.
 
-#+BEGIN_SRC java
+#+begin_src java
 int minProduct(int a, int b) {
     int bigger = a< b ? b: a;
     int smaller = a< b ? a : b;
@@ -1363,7 +1363,7 @@ int minProductHelper(int smaller, int bigger) {
         return halfProd + halfProd + bigger;
     }
 }
-#+END_SRC
+#+end_src
 
 ** Question: Permutations without Dups
 
@@ -1379,7 +1379,7 @@ To generate permutations of $a_1a_2a_3$ from permutations of $a_1a_2$, insert $a
 
 To generate permutations of $a_1a_2a_3$ from permutations of 2 characters, prepend the third character as prefix to each permutation of 2 characters: $P(a_1a_2a_3) = \{a_1 + P(a_2a_3)\} + \{a_2 + P(a_1a_3)\} + \{a_3 + P(a_1a_2)\}$
 
-#+BEGIN_SRC java
+#+begin_src java
 Arraylist<String> getPerms(String str) {
     Arraylist<String> result = new Arraylist<String>();
     getPerms("", str, result);
@@ -1397,7 +1397,7 @@ void getPerms(String prefix, String remainder, Arraylist<String> result) {
         getPerms(prefix + c, before + after, result);
     }
 }
-#+END_SRC
+#+end_src
 
 ** Question: Permutations with Duplicates (Incomplete)
 
@@ -1427,7 +1427,7 @@ Append left and right parens to the string, as long as the expression stays vali
 - Left parens can be added when there are left parens left.
 - Right parens can be added when there are more right parens left than left parens.
 
-#+BEGIN_SRC java
+#+begin_src java
 void addParen(Arraylist<String> list, int leftRem, int rightRem, char[] str, int index) {
     if (leftRem < 0 || rightRem < leftRem) return; // Check for invalid
 
@@ -1449,24 +1449,24 @@ ArrayList<String> generateParens(int count) {
     addParen(list, count, count, str, 0);
     return list;
 }
-#+END_SRC
+#+end_src
 ** Question: Coins
 
 #+BEGIN_QUOTE
 Given an infinite number of quarters (25 cents), dimes (1O cents), nickels (5 cents), and pennies (1 cent),  calculate the number of ways of representing $n$ cents.
 #+END_QUOTE
 
-#+BEGIN_SRC code
+#+begin_src code
 makeChange(100, [25, 10, 5, 1]) = makeChange(100, [10, 5, 1]) +
                                   makeChange(75,  [10, 5, 1]) +
                                   makeChange(50,  [10, 5, 1]) +
                                   makeChange(25,  [10, 5, 1]) +
                                   makeChange(0 ,  [10, 5, 1])
-#+END_SRC
+#+end_src
 
 =makeChange()= will be called multiple times with the same values, the results can be stored to save some time.
 
-#+BEGIN_SRC java
+#+begin_src java
 int makeChange(int n) {
     int[] denoms = {25, 10, 5, l};
     int[][] map = new int[n+ l][denoms.length];
@@ -1488,7 +1488,7 @@ int makeChange(int amount, int[] denoms, int index, int[][] map) {
     map[amount][index]= ways; // Store results
     return ways;
 }
-#+END_SRC
+#+end_src
 
 ** Question: Stack of Boxes (Incomplete)
 
@@ -1923,7 +1923,7 @@ What is the difference between deep copy and shallow copy?
 | *Deep copy*    | Copies member values and pointer objects from one object to another. |
 |                | Used in most cases.                                                  |
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 struct Test {
     char * ptr;
 };
@@ -1936,7 +1936,7 @@ void deep_copy(Test& src, Test& dest) {
     dest.ptr = (char*)malloc(strlen(src.ptr) + 1);
     strcpy(dest.ptr, src.ptr);
 }
-#+END_SRC
+#+end_src
 
 ** Question: Copy Node
 
@@ -1946,7 +1946,7 @@ Write a method that takes a pointer to a Node structure as a parameter and retur
 
 Maintain a mapping from a node address in the original structure to the copied node in the new structure, to avoid re-copy nodes during a depth-first recursive copy.
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 typedef map<Node*, Node*> NodeMap;
 
 Node * copy_recursive(Node * cur, NodeMap & nodeMap) {
@@ -1968,7 +1968,7 @@ Node* copy_structure(Node* root) {
   NodeMap nodeMap;
   return copy_recursive(root, nodeMap);
 }
-#+END_SRC
+#+end_src
 ** Question: Smart Pointer
 
 #+BEGIN_QUOTE
@@ -1977,7 +1977,7 @@ Write a smart pointer class. A smart pointer is a data type, usually implemented
 
 One useful way to approach the problem is to divide the problem into two parts: (1) _outline the pseudocode_ and approach and then (2) implement the detailed code. In terms of the approach, we need a reference count variable that is incremented when we add a new reference to the object and decremented when we remove a reference.
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 template <class T> class SmartPointer {
   T* ref;
   unsigned* count;
@@ -2032,7 +2032,7 @@ protected:
     }
   }
 };
-#+END_SRC
+#+end_src
 ** Question: Malloc
 
 #+BEGIN_QUOTE
@@ -2044,7 +2044,7 @@ Example:\\
 
 To guarantee the address allocated can be divided by $2^n$ , it would need to allocate an extra $2^n-1$ bytes, besides the memory length required. And to correctly free the allocated memory, the actual initial address of the block needs to be stored. It can be stored just before the returned memory location, which means it needs another extra =sizeof(void*)= bytes to guarantee there is space to store the address.
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 void* aligned_malloc(size_t required_bytes, size_t alignment) {
     void* p1; // Initial address
     void* p2; // Aligned address
@@ -2067,7 +2067,7 @@ void aligned_free(void* p2) {
     void* p1 = ((void**)p2)[-1];
     free(p1);
 }
-#+END_SRC
+#+end_src
 * Databases
 ** Database Design
 
@@ -2090,23 +2090,23 @@ Write a function to swap 2 numbers in place (without temporary variables).
 *** Number Manipulation
 
 #+CAPTION: By sum
-#+BEGIN_SRC cpp
+#+begin_src cpp
 a = a + b;
 b = a - b;
 a = a - b;
-#+END_SRC
+#+end_src
 
 #+CAPTION: By diff
-#+BEGIN_SRC cpp
+#+begin_src cpp
 a = a - b;
 b = a + b;
 a = a - a;
-#+END_SRC
+#+end_src
 
 *** Bit Manipulation
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 a = a ^ b;
 b = a ^ b;
 a = a ^ b;
-#+END_SRC
+#+end_src

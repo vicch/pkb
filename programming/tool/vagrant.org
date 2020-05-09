@@ -5,14 +5,14 @@
 ** =config.vm=
 *** =config.vm.box=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 config.vm.box = "<box>"
-#+END_SRC
+#+end_src
 
 *** =config.vm.define=
 
 #+CAPTION: 配置多个虚拟机
-#+BEGIN_SRC sh
+#+begin_src sh
 Vagrant.configure("2") do |config|
   config.vm.define "vm1" do |vm1|
     vm1.vm.box = ""
@@ -21,28 +21,28 @@ Vagrant.configure("2") do |config|
     vm2.vm.box = ""
   end
 end
-#+END_SRC
+#+end_src
 
 *** =config.vm.network=
 
 虚拟机地址默认为端口转发。
 
 #+CAPTION: 设置私有网络
-#+BEGIN_SRC sh
+#+begin_src sh
 config.vm.network "private_network", ip: "192.168.0.1"
-#+END_SRC
+#+end_src
 
 #+CAPTION: 设置端口映射（用于将虚拟机作为 Web 服务器）
-#+BEGIN_SRC sh
+#+begin_src sh
 config.vm.network "forwarded_port", guest: 80, host: 8080
-#+END_SRC
+#+end_src
 
 *** =config.vm.synced_folderr=
 
 #+CAPTION: 默认共享虚拟机 =/vagrant= 目录和宿主机 =Vagrantfile= 所在目录
-#+BEGIN_SRC sh
+#+begin_src sh
 config.vm.synced_folder ".", "/vagrant"
-#+END_SRC
+#+end_src
 
 * =vagrant=
 
@@ -63,32 +63,32 @@ config.vm.synced_folder ".", "/vagrant"
 
 ** =box=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 vagrant box <command>
     list
     add <box>
     remove <box>
-#+END_SRC
+#+end_src
 
 ** =init=
 
 创建虚拟机，生成 =Vagrantfile= 。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 vagrant init <box>
-#+END_SRC
+#+end_src
 
 * Debug
 
 #+CAPTION: CentOS 启动时加载共享目录报错，找不到 =rsync= ，修改配置
-#+BEGIN_SRC sh
+#+begin_src sh
 config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
-#+END_SRC
+#+end_src
 
 #+CAPTION: CentOS 启动时加载共享目录报错，找不到 =vboxsf= ，运行命令
-#+BEGIN_SRC sh
+#+begin_src sh
 vagrant plugin install vagrant-vbguest
-#+END_SRC
+#+end_src
 
 * 链接
 

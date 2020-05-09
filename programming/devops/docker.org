@@ -53,58 +53,58 @@ Dockerfile 是构建镜像的指令列表。
 
 ** =CMD=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 CMD ["<command>", "<argument>", ...]
-#+END_SRC
+#+end_src
 
 如果不指定启动命令，则默认使用 base 镜像的启动命令。
 
 ** =COPY=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 COPY <options> <host_path> <container_path>
   --from=<stage>   # 从指定 stage 复制
   <host_path>      # ./ 为主机当前路径
   <container_path> # ./ 为容器根目录
-#+END_SRC
+#+end_src
 
 镜像中已存在的文件会被覆盖。
 
 #+CAPTION: =--from= 示例
-#+BEGIN_SRC sh
+#+begin_src sh
 FROM alpine AS foo
 WORKDIR /usr
 RUN touch file.txt
 
 FROM alpine
 COPY --from=foo /usr/file.txt .
-#+END_SRC
+#+end_src
 
 ** =EXPOSE=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 EXPOSE <port>
-#+END_SRC
+#+end_src
 
 ** =FROM=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 FROM <image>:<tag> AS <stage>
-#+END_SRC
+#+end_src
 
 ** =RUN=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 RUN <command>
-#+END_SRC
+#+end_src
 
 ** =WORKDIR=
 
 使之后的命令相对于指定目录执行，包括 =Dockerfile= 中的指令，和容器运行后通过 =docker exec= 执行的命令。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 WORKDIR <path>
-#+END_SRC
+#+end_src
 
 * Compose
 
@@ -114,7 +114,7 @@ Docker Compose 用于同时运行多个容器，通过 YAML 文件配置容器�
 ** 示例
 
 #+CAPTION: =docker-compose.yml=
-#+BEGIN_SRC yaml
+#+begin_src yaml
 version: "3"
 services:
   redis: # 依赖服务，直接使用 Docker Hub 的镜像
@@ -131,7 +131,7 @@ services:
     ports:
       - "4001:8081"
     restart: always
-#+END_SRC
+#+end_src
 
 ** 配置列表
 
@@ -148,62 +148,62 @@ services:
 
 ** =build=
 
-#+BEGIN_SRC yaml
+#+begin_src yaml
 build: <path> # Dockerfile 路径
 
 build:
   context: <path>    # 项目文件路径
   dockerfile: <path> # Dockerfile 路径（包含文件名）
-#+END_SRC
+#+end_src
 
 ** =command=
 
-#+BEGIN_SRC yaml
+#+begin_src yaml
 command: ["<command>", "<argument>", ...]
-#+END_SRC
+#+end_src
 
 ** =environment=
 
-#+BEGIN_SRC yaml
+#+begin_src yaml
 environment:
   - <name>=<value> # 使用指定值
   - <name>         # 使用主机的环境变量值 
-#+END_SRC
+#+end_src
 
 ** =ports=
 
-#+BEGIN_SRC yaml
+#+begin_src yaml
 ports:
   - '<host_port>:<container_port>'
-#+END_SRC
+#+end_src
 
 ** =restart=
 
-#+BEGIN_SRC yaml
+#+begin_src yaml
 restart: <value>
   'no'           # 不重启
   always         # 始终重启
   on-failure     # 返回码为错误时（非 0）重启
   unless-stopped # 始终重启，除非手动强制终止
-#+END_SRC
+#+end_src
 
 ** =services=
 
-#+BEGIN_SRC yaml
+#+begin_src yaml
 services:
   <name>:
     ...
-#+END_SRC
+#+end_src
 
 Service 的名称 =<name>= 即容器的主机名，Docker Compose 创建的容器可以通过主机名相互连接。
 
 ** =volumes=
 
-#+BEGIN_SRC yaml
+#+begin_src yaml
 volumes:
   - <host_path>:<container_path> # 主机路径到容器路径的映射
   - <container_path_exception>   # 被排除的容器路径不被映射到主机路径
-#+END_SRC
+#+end_src
 
 设置路径映射，用于容器直接读取主机路径下的文件，文件被主机修改时将直接生效，不需要通过 =COPY= 重建镜像。
 
@@ -240,85 +240,85 @@ volumes:
 
 将本地 IO （ =STDIN= =STDOUT= =STDERR= ）连接到容器。只能连接到容器内 ID 为 1 的进程。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 docker attach <container>
-#+END_SRC
+#+end_src
 
 ** =build=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 docker build <options> <path>
   -f, --file <file>      # 指定 Dockerfile
   -t, --tag <name>:<tag> # 指定标签，默认为 latest
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ docker build . # Dockerfile 在当前目录
 $ docker build -t foo/bar:latest
   # foo:    Docker ID
   # bar:    Project name
   # latest: Version tag                             
-#+END_SRC
+#+end_src
 
 ** =commit=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 docker commit <options> <container>
   -c, --change # 设置 Dockerfile 指令
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ docker commit -c 'CMD ["<command>"]' <container> # 设置镜像启动命令
-#+END_SRC
+#+end_src
 
 ** =create=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 docker create <options> <image> <command>
 
 # <command> 启动命令
 # Returns the container ID
-#+END_SRC
+#+end_src
 
 ** =exec=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 docker exec <options> <container> <command>
   -i, --interactive
   -t, --tty
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ docker exec -it <container> sh
-#+END_SRC
+#+end_src
 
 ** =image=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 docker image <command>
   rm <image>
-#+END_SRC
+#+end_src
 
 ** =images=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 docker images <options>
   <empty> # 输出本地镜像列表
-#+END_SRC
+#+end_src
 
 ** =kill=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 docker kill <container>
-#+END_SRC
+#+end_src
 
 ** =logs=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 docker logs <options> <container>
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ docker run busybox echo foo
 <container>
 $ docker start <container>
@@ -328,64 +328,64 @@ $ docker start <container> # 多次运行
 $ docker logs <container>
 foo
 foo # 输出多次运行的日志
-#+END_SRC
+#+end_src
 
 ** =network=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 docker network <command>
   create <network> # 创建 bridge 网络
   inspect <network>
   ls
-#+END_SRC
+#+end_src
 
 ** =port=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 docker port <container>
-#+END_SRC
+#+end_src
 
 ** =ps=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 docker ps <options>
   <empty>      # 显示正在运行的容器
   -a, --all    # 显示所有容器
   -f, --filter # 条件筛选
     <key>=<value>
   -q, --quiet  # 只显示容器 ID
-#+END_SRC
+#+end_src
 
 ** =pull=
 
 从 Docker registry 获取镜像并保存到本地。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 docker pull <options> <name>
-#+END_SRC
+#+end_src
 
 ** =push=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 docker push <options> <name>:<tag>
-#+END_SRC
+#+end_src
 
 ** =rm=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 docker rm <options> <container>
-#+END_SRC
+#+end_src
 
 #+CAPTION: =docker ps= 获取容器 ID 列表
-#+BEGIN_SRC sh
+#+begin_src sh
 docker rm $(docker ps -aq -f status=exited)
-#+END_SRC
+#+end_src
 
 ** =run=
 
 ~docker run = docker create + docker start~
 
-#+BEGIN_SRC sh
+#+begin_src sh
 docker run <options> <image> <command> <args>
 
 # <options> 运行
@@ -408,49 +408,49 @@ docker run <options> <image> <command> <args>
     <container_path_exception>   # 被排除的路径指向容器本地
 
 # <command> 覆盖镜像的默认命令
-#+END_SRC
+#+end_src
 
 #+CAPTION: 确认 Docker 安装
-#+BEGIN_SRC sh
+#+begin_src sh
 $ docker run hello-world
-#+END_SRC
+#+end_src
 
 ** =search=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 docker search <options> <keyword>
-#+END_SRC
+#+end_src
 
 ** =start=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 docker start <options> <container>
   -a, --attach # Attach STDOUT/STDERR and forward signals
                # Prints out output from container
-#+END_SRC
+#+end_src
 
 =docker start= 只能执行容器创建时指定的启动命令，不能重新指定启动命令。
 
 ** =stop=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 docker stop <options> <container>
   -t, --time # 强制终止前等待秒数
-#+END_SRC
+#+end_src
 
 ** =system=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 docker system <command>
   prune    # Delete dangling (not associated with a container) images, containers, volumes, and networks
   prune -a # Delete stopped containers and unused images
-#+END_SRC
+#+end_src
 
 * =docker-compose=
 
 =docker-compose= 命令的对象是当前目录的 =docker-compose.yml= 定义的容器。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 docker-compose <options> <command>
   <options>
     -f, --file <file> # 指定 compose file，默认为 ./docker-compose.yml
@@ -458,15 +458,15 @@ docker-compose <options> <command>
     up   # 运行容器
     down # 终止容器
     ps   # 显示容器列表
-#+END_SRC
+#+end_src
 
 ** =up=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 docker-compose up <options>
   --build      # docker build && docker run，强制重新构建镜像
   -d, --detach # docker run -d
-#+END_SRC
+#+end_src
 
 * Links
 

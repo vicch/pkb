@@ -124,7 +124,7 @@ Ansible, and Terraform, use a client-only architecture. Ansible client works by 
 ** Deploy a single web server
 
 #+CAPTION: Run a simple web server with AWS user data
-#+BEGIN_SRC terraform
+#+begin_src terraform
 resource "aws_instance" "foo" {
   user_data = <<-EOF
               #!/bin/bash
@@ -132,7 +132,7 @@ resource "aws_instance" "foo" {
               nohup busybox httpd -f -p 8080 &
               EOF
 }
-#+END_SRC
+#+end_src
 
 When one resource references another resource using interpolation syntax, an implicit dependency is created. Terraform parses these dependencies, builds a dependency graph from them, and uses that to automatically figure out in what order it should create resources. When Terraform walks your dependency tree, it will create as many resources in parallel as it can.
 
@@ -141,11 +141,11 @@ In Terraform, most changes to an EC2 Instance, other than metadata such as tags,
 
 An ASG needs parameter =availability_zones= which specifies into which availability zones (AZs) the EC2 Instances should be deployed. It could be a  hard-code the list of AZs, e.g. =["us-east-1a", "us-east-1b"]=, but each AWS account has access to a slightly different set of AZs, so a better option is to use the =aws_availability_zones= data source to fetch the AZs specific to the AWS account.
 
-#+BEGIN_SRC terraform
+#+begin_src terraform
 resource "aws_autoscaling_group" "foo" {
   availability_zones = ["${data.aws_availability_zones.all.names}"]
 }
-#+END_SRC
+#+end_src
 * Chapter 3. How to manage Terraform state
 ** What is Terraform state
 
@@ -167,7 +167,7 @@ Take the isolation concept beyond environments and down to the "component" level
 
 ** File layout
 
-#+BEGIN_SRC sh
+#+begin_src sh
 root
  |
  |- global
@@ -200,7 +200,7 @@ root
      +- services
          |- bastion_host.tf
          +- jenkins.tf
-#+END_SRC
+#+end_src
 
 _Splitting components into separate folders prevents breaking multiple components in one command, but it also prevents creating all the components in one command._ It's also harder to use resource dependencies, for example, application component access attributes of the database component. Terraform offers read-only state for this purpose.
 ** Read-only state

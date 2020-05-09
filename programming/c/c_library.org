@@ -4,12 +4,12 @@
 * =assert.h=
 ** =assert()=
 
-#+BEGIN_SRC c
+#+begin_src c
 void assert(int expression);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 int i;
 
 for (i = 0; i < 9; i++) {
@@ -22,16 +22,16 @@ for (i = 0; i < 9; i++) {
 // 2
 // main: main.c:10: main: Assertion `i < 2' failed.
 // Aborted
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例：输入参数验证
-#+BEGIN_SRC c
+#+begin_src c
 int foo(int a)
 {
     assert(a > 0);
     ...
 }
-#+END_SRC
+#+end_src
 
 * =ctype.h=
 
@@ -72,18 +72,18 @@ int foo(int a)
 ** 判断
 
 #+CAPTION: 所有判断函数签名一致
-#+BEGIN_SRC c
+#+begin_src c
 int is*(int c);
-#+END_SRC
+#+end_src
 
 返回 =0= 表示判断不成立，非 =0= 表示判断成立。
 
 ** 转换
 
 #+CAPTION: 转换函数签名一致
-#+BEGIN_SRC c
+#+begin_src c
 int to*(int c);
-#+END_SRC
+#+end_src
 
 * =float.h=
 
@@ -246,9 +246,9 @@ int to*(int c);
 ** 格式化
 
 #+CAPTION: 格式字符串
-#+BEGIN_SRC text
+#+begin_src text
 %<sign><width>.<precision><type>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 占位符
 | *数字*    |                  |
@@ -280,85 +280,85 @@ int to*(int c);
 ** =fflush()=
 <<stdio_fflush>>
 
-#+BEGIN_SRC c
+#+begin_src c
 int fflush(FILE *stream);
-#+END_SRC
+#+end_src
 
 ** =fread()=
 <<stdio_fread>>
 
-#+BEGIN_SRC c
+#+begin_src c
 size_t fread(
     void   *ptr    // 读取的数据写入此指针指向的数组
 ,   size_t size    // 读取的元素的单位长度
 ,   size_t nmemb   // 读取的元素个数
 ,   FILE   *stream // 输入流（文件）
 )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 FILE *fp;
 char buffer[100];
 
 fp = fopen("file.txt", "w+");
 fread(buffer, 10, 1, fp);
 fclose(fp);
-#+END_SRC
+#+end_src
 
 ** =getchar()=
 
 结束符 =EOF= 不在 =char= 类型可表示的范围内，所以接收 =getchar()= 返回值的变量需要是 =int= 类型。
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 int c;
 while ((c = getchar()) != EOF)
     putchar(c);
-#+END_SRC
+#+end_src
 
 ** =perror()=
 <<stdio_perror>>
 
-#+BEGIN_SRC c
+#+begin_src c
 void perror(const char *str);
-#+END_SRC
+#+end_src
 
 ** =printf()=
 <<stdio_printf>>
 
-#+BEGIN_SRC c
+#+begin_src c
 void printf (
     const char *format
 ,   ...
 );
-#+END_SRC
+#+end_src
 
 #+CAPTION: 格式化字符串可以是表达式
-#+BEGIN_SRC c
+#+begin_src c
 printf((n > 1) ? "%d > 1" : "%d < 1", n);
 // 等价于
 printf("%d %c 1", n, (n > 1) ? '>' : '<');
-#+END_SRC
+#+end_src
 
 ** =puts()=
 <<stdio_puts>>
 
-#+BEGIN_SRC c
+#+begin_src c
 int puts(const char *str);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 puts("Hello, world!");
-#+END_SRC
+#+end_src
 
 ** =rewind=
 <<stdio_rewind>>
 
-#+BEGIN_SRC c
+#+begin_src c
 void rewind(FILE *stream);
-#+END_SRC
+#+end_src
 
 * =stdlib.h=
 
@@ -460,12 +460,12 @@ void rewind(FILE *stream);
 ** =abort()=
 <<stdlib_abort>>
 
-#+BEGIN_SRC c
+#+begin_src c
 void abort(void);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 FILE *fp;
 
 fp = fopen("nofile.txt", "r");
@@ -476,24 +476,24 @@ if (fp == NULL) {
 
 // Error opening file.
 // Aborted (core dump)
-#+END_SRC
+#+end_src
 
 ** =abs()=
 <<stdlib_abs>>
 
-#+BEGIN_SRC c
+#+begin_src c
 int abs(int x);
-#+END_SRC
+#+end_src
 
 ** =atexit()=
 <<stdlib_atexit>>
 
-#+BEGIN_SRC c
+#+begin_src c
 int atexit(void (*func)(void));
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 void callback_exit()
 {
     printf("Run before exit.\n");
@@ -509,33 +509,33 @@ int main()
 
 // Exiting main program...
 // Run before exit.
-#+END_SRC
+#+end_src
 
 ** =atof()=
 <<stdlib_atof>>
 
-#+BEGIN_SRC c
+#+begin_src c
 double atof(const char *str)
-#+END_SRC
+#+end_src
 
 ** =atoi()=
 <<stdlib_atoi>>
 
-#+BEGIN_SRC c
+#+begin_src c
 int atoi(const char *str);
-#+END_SRC
+#+end_src
 
 ** =atol()=
 <<stdlib_atol>>
 
-#+BEGIN_SRC c
+#+begin_src c
 long int atol(const char *str);
-#+END_SRC
+#+end_src
 
 ** =bsearch()=
 <<stdlib_bsearch>>
 
-#+BEGIN_SRC c
+#+begin_src c
 void *bsearch(
     const void *key   // 查找值的指针
 ,   const void *base  // 查找范围第一个元素的指针
@@ -546,10 +546,10 @@ void *bsearch(
       , const void *
     )
 )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 int cmpfunc(const void * a, const void * b)
 {
     return (*(int*)a - *(int*)b);
@@ -561,17 +561,17 @@ int values[] = {5, 20, 29, 32, 63};
 
 item = (int*)bsearch(&key, values, 5, sizeof(int), cmpfunc);
 // *item -> 32
-#+END_SRC
+#+end_src
 
 ** =calloc()=
 <<stdlib_calloc>>
 
-#+BEGIN_SRC c
+#+begin_src c
 void *calloc(size_t nitems, size_t size);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 int i, *a;
 
 a = (int*)calloc(10, sizeof(int));
@@ -579,94 +579,94 @@ for (i = 0; i < 10; i++) {
     a[i] = i * 2;
 }
 // a -> {0,2,4,6,...}
-#+END_SRC
+#+end_src
 
 ** =div()=
 <<stdlib_div>>
 
-#+BEGIN_SRC c
+#+begin_src c
 div_t div(int numer, int denom);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 div_t output = div(27, 4);
 
 // output.quot -> 6
 // output.rem  -> 3
-#+END_SRC
+#+end_src
 
 ** =exit()=
 <<stdlib_exit>>
 
-#+BEGIN_SRC c
+#+begin_src c
 void exit(int status);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 exit(0);
-#+END_SRC
+#+end_src
 
 ** =free()=
 <<stdlib_free>>
 
-#+BEGIN_SRC c
+#+begin_src c
 void free(void *ptr);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 char *str; 
 
 str = (char *) malloc(20);
 strcpy(str, "https://example.com");
 free(str);
-#+END_SRC
+#+end_src
 
 ** =getenv()=
 <<stdlib_getenv>>
 
-#+BEGIN_SRC c
+#+begin_src c
 char *getenv(const char *name);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 printf("PATH : %s\n", getenv("PATH"));
 // PATH : /sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin
-#+END_SRC
+#+end_src
 
 ** =labs()=
 <<stdlib_labs>>
 
-#+BEGIN_SRC c
+#+begin_src c
 long int labs(long int x);
-#+END_SRC
+#+end_src
 
 ** =ldiv()=
 <<stdlib_ldiv>>
 
-#+BEGIN_SRC c
+#+begin_src c
 ldiv_t ldiv(long int numer, long int denom);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 ldiv_t output = ldiv(100000L, 30000L);
 // output.quot -> 3
 // output.rem  -> 10000
-#+END_SRC
+#+end_src
 
 ** =malloc()=
 <<stdlib_malloc>>
 
-#+BEGIN_SRC c
+#+begin_src c
 void *malloc(size_t size);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 int i;
 char *a;
 
@@ -677,26 +677,26 @@ for (i = 0; i < 9; i++) {
 a[10] = '\0';
 
 // ABCDEFGHI
-#+END_SRC
+#+end_src
 
 ** =mblen()=
 <<stdlib_mblen>>
 
-#+BEGIN_SRC c
+#+begin_src c
 int mblen(
     const char *str
 ,   size_t     n    // 查看的最大字节数 
 );
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC c
+#+begin_src c
 
-#+END_SRC
+#+end_src
 
 ** =qsort()=
 <<stdlib_qsort>>
 
-#+BEGIN_SRC c
+#+begin_src c
 void qsort(
     void   *base
 ,   size_t nitems
@@ -706,10 +706,10 @@ void qsort(
     ,   const void *
     )
 )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 int cmpfunc(const void * a, const void * b)
 {
     return (*(int*)a - *(int*)b);
@@ -717,17 +717,17 @@ int cmpfunc(const void * a, const void * b)
 
 int values[] = {88, 56, 100, 2, 25};
 qsort(values, 5, sizeof(int), cmpfunc);
-#+END_SRC
+#+end_src
 
 ** =rand()=
 <<stdlib_rand>>
 
-#+BEGIN_SRC c
+#+begin_src c
 int rand(void);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 int i, n;
 time_t t;
 
@@ -738,16 +738,16 @@ srand((unsigned) time(&t));
 for(i = 0 ; i < 5; i++) {
     printf("%d\n", rand() % 50);
 }
-#+END_SRC
+#+end_src
 
 ** =realloc()=
 <<stdlib_realloc>>
 
-#+BEGIN_SRC c
+#+begin_src c
 void *realloc(void *ptr, size_t size);
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC c
+#+begin_src c
 char *str;
 
 /* Initial memory allocation */
@@ -757,22 +757,22 @@ strcpy(str, "https://example");
 /* Reallocating memory */
 str = (char*)realloc(str, 25);
 strcat(str, ".com");
-#+END_SRC
+#+end_src
 
 ** =srand()=
 <<stdlib_srand>>
 
-#+BEGIN_SRC c
+#+begin_src c
 void srand(unsigned int seed);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 srand(time(NULL));
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 int i, n;
 time_t t;
 
@@ -783,20 +783,20 @@ srand((unsigned)time(&t));
 for(i = 0 ; i < 5; i++) {
     printf("%d\n", rand() % 50);
 }
-#+END_SRC
+#+end_src
 
 ** =strtod()=
 <<stdlib_strtod>>
 
-#+BEGIN_SRC c
+#+begin_src c
 double strtod(
     const char *str
 ,   char       **endptr // 将剩余字符串赋值给传入的指针
 );
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 char str[30] = "20.30300_This is test.";
 char *ptr;
 double ret;
@@ -807,38 +807,38 @@ printf("%s\n", ptr);
 
 // 20.30300
 // _This is test.
-#+END_SRC
+#+end_src
 
 ** =strtol()=
 <<stdlib_strtol>>
 
-#+BEGIN_SRC c
+#+begin_src c
 long int strtol(
     const char *str
 ,   char       **endptr
 ,   int        base
 );
-#+END_SRC
+#+end_src
 
 ** =strtoul()=
 <<stdlib_strtoul>>
 
-#+BEGIN_SRC c
+#+begin_src c
 unsigned long int strtoul(const char *str, char **endptr, int base);
-#+END_SRC
+#+end_src
 
 ** =system()=
 <<stdlib_system>>
 
-#+BEGIN_SRC c
+#+begin_src c
 int system(const char *string);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 system("ls -l");
 // drwxr-xr-x ...
-#+END_SRC
+#+end_src
 
 * =string.h=
 
@@ -892,32 +892,32 @@ system("ls -l");
 ** =memchr()=
 <<string_memchr>>
 
-#+BEGIN_SRC c
+#+begin_src c
 void *memchr(
     const void *str // 数组
 ,   int        c    // 查找的数值
 ,   size_t     n    // 查找范围（前 n 字节）
 );
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 const char *s = "http://www.sample.com";
 char *r = memchr(s, '.', strlen(s));
 
 printf("%s\n", r); // .sample.com
-#+END_SRC
+#+end_src
 
 ** =memcmp()=
 <<string_memcmp>>
 
-#+BEGIN_SRC c	
+#+begin_src c	
 int memcmp(
     const void *str1
 ,   const void *str2
 ,   size_t     n     // 比较范围（前 n 字节）
 );
-#+END_SRC
+#+end_src
 
 | 返回值 | =int= | =< 0= ： =str1= 小于 =str2= |
 |        |       | => 0= ： =str1= 大于 =str2= |
@@ -926,217 +926,217 @@ int memcmp(
 ** =memcpy()=
 <<string_memcpy>>
 
-#+BEGIN_SRC c
+#+begin_src c
 void *memcpy(
     void       *dest
 ,   const void *src
 ,   size_t     n     // 复制范围（前 n 字节）
 );
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 const char *f = "Sample string";
 char *t;
 
 memcpy(t, f, strlen(f));
-#+END_SRC
+#+end_src
 
 ** =memmove()=
 <<string_memmove>>
 
 对于重叠的内存（overlapping memory blocks），比如将已有字符串覆盖， =memmove()= 比 =memcpy()= 更安全。
 
-#+BEGIN_SRC c
+#+begin_src c
 void *memmove(
     void       *str1
 ,   const void *str2
 ,   size_t     n     // 复制范围（前 n 字符）
 );
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 const char *f = "New string etc.";
 char t[] = "Old string";
 
 memmove(t, f, strlen(f));
-#+END_SRC
+#+end_src
 
 ** =memset()=
 <<string_memset>>
 
-#+BEGIN_SRC c
+#+begin_src c
 void *memset(
     void   *str // 被填充数组
 ,   int    c    // 填充数值
 ,   size_t n    // 填充范围（前 n 字节）
 );
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 char str[] = "Test string";
 memset(str, '$', 4);
 // $$$$ string
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例：用于整数数组
-#+BEGIN_SRC c
+#+begin_src c
 int seq[10];
 memset(seq, 0, sizeof(seq)); // 因为整数占用多字节，而 memset() 是按字节设置值，
                              // 所以只有值为 0（所有位为 0）或 -1（所有位为 1）时有效
-#+END_SRC
+#+end_src
 
 ** =strcat()=
 <<string_strcat>>
 
-#+BEGIN_SRC c
+#+begin_src c
 char *strcat(char *dest, const char *src);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 char str1[] = "Some string";
 char str2[] = " and more";
 strcat(str1, str2);
 // str1 -> Some string and more
-#+END_SRC
+#+end_src
 
 ** =strchr()=
 <<string_strchr>>
 
-#+BEGIN_SRC c
+#+begin_src c
 char *strchr(const char *str, int c);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 char str[] = "foo bar baz";
 char *sub = strchr(str, 'b');
 // sub -> bar baz
-#+END_SRC
+#+end_src
 
 ** =strcmp()=
 <<string_strcmp>>
 
-#+BEGIN_SRC c
+#+begin_src c
 int strcmp(const char *str1, const char *str2);
-#+END_SRC
+#+end_src
 
 | 返回值 | =int= | =< 0= ： =str1= 小于 =str2= |
 |        |       | => 0= ： =str1= 大于 =str2= |
 |        |       | ~= 0~ ： 相等               |
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 char *str1 = "foo bar baz";
 char *str2 = "foo bar caz";
 int i = strcmp(str1, str2);
 // i -> -2
-#+END_SRC
+#+end_src
 
 ** =strcoll()=
 <<string_strcoll>>
 
-#+BEGIN_SRC c
+#+begin_src c
 int strcoll(const char *str1, const char *str2);
-#+END_SRC
+#+end_src
 
 根据 =LC_COLLATE= 地区设置。
 
 ** =strcpy()=
 <<string_strcpy>>
 
-#+BEGIN_SRC c
+#+begin_src c
 char *strcpy(char *dest, const char *src);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 char *str1 = "Sample string";
 char *str2;
 strcpy(str2, str1);
 // str2 -> Sample string
-#+END_SRC
+#+end_src
 
 ** =strlen()=
 <<string_strlen>>
 
-#+BEGIN_SRC c
+#+begin_src c
 size_t strlen(const char *str);
-#+END_SRC
+#+end_src
 
 ** =strncat()=
 <<string_strncat>>
 
-#+BEGIN_SRC c
+#+begin_src c
 char *strncat(
     char       *dest
 ,   const char *src
 ,   size_t     n    // 连接范围，源字符串的前 n 个字符
 );
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 char str1[] = "Some string";
 char str2[] = " and more";
 strncat(str1, str2, 4);
 // str1 -> Some string and
-#+END_SRC
+#+end_src
 
 ** =strncmp()=
 <<string_strncmp>>
 
-#+BEGIN_SRC c
+#+begin_src c
 int strncmp(
     const char *str1
 ,   const char *str2
 ,   size_t     n
 )
-#+END_SRC
+#+end_src
 
 | 返回值 | =int= | =< 0= ： =str1= 小于 =str2= |
 |        |       | => 0= ： =str1= 大于 =str2= |
 |        |       | ~= 0~ ： 相等               |
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 char *str1 = "foo bar baz";
 char *str2 = "foo bar faz";
 int i = strncmp(str1, str2, 7);
 // i -> 0
-#+END_SRC
+#+end_src
 
 ** =strncpy()=
 <<string_strncpy>>
 
-#+BEGIN_SRC c
+#+begin_src c
 char *strncpy(
     char       *dest
 ,   const char *src
 ,   size_t     n     // 复制范围（前 n 个字符）
 );
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 char *str1 = "Sample string";
 char str2[] = "Other string";
 strncpy(str2, str1, 6);
 // str2 -> Samplestring
-#+END_SRC
+#+end_src
 
 ** =strstr()=
 <<string_strstr>>
 
-#+BEGIN_SRC c
+#+begin_src c
 char *strstr(
     const char *haystack
 ,   const char *needle
 )
-#+END_SRC
+#+end_src
 
 * 链接
 

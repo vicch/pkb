@@ -59,7 +59,7 @@ Testing for error conditions is relatively trivial, but it must be decided how t
 
 =__call()= method can be useful for delegation - the mechanism by which one object passes method invocations on to a second. With inheritance the relationship between child and parent is fixed, the ability to switch the receiving object at runtime means that _delegation can be more flexible than inheritance_.
 
-#+BEGIN_SRC php
+#+begin_src php
 class Person {
     private $writer;
     public function __construct(PersonWriter $writer) {
@@ -84,13 +84,13 @@ class PersonWriter {
 $writer = new PersonWriter();
 $person = new Person($writer);
 $person->writeName();
-#+END_SRC
+#+end_src
 
 Although automated delegation can save a lot of legwork, there can be a cost in clarity. Rely too much on delegation, you present the world with a dynamic interface that resists reflection. The logic that governs the interaction between a delegating class and its target can be obscure - buried in methods like =__call()= rather than signaled up front by inheritance relationships or method type hints.
 
 =__get()= and =__set()= interceptor methods can also be used to manage composite properties.
 
-#+BEGIN_SRC php
+#+begin_src php
 <?php
 class Person {
     private $firstName;
@@ -125,12 +125,12 @@ $a = new Person('Foo', 'Bar');
 echo $a->fullName;
 $b = new Person('Foo Bar');
 echo $b->fullName;
-#+END_SRC
+#+end_src
 ** Callbacks, Anonymous Functions, and Closures
 
 Adding many incidental tasks to a method will overwhelm its core responsibility. Callbacks allow plugging functionality into a component at runtime that is not directly related to that component's core task. By making a component callback aware, client code will have the power to extend core code in contexts you don't yet know about.
 
-#+BEGIN_SRC php
+#+begin_src php
 class Item {}
 
 class Processor {
@@ -159,7 +159,7 @@ $callback = function(Item $item) {
 $processor = new Processor();
 $processor->registerCallback($callback);
 $processor->process(new Item());
-#+END_SRC
+#+end_src
 * Object Tools
 ** PHP and Packages
 *** PHP Packages and Namespaces
@@ -167,22 +167,22 @@ $processor->process(new Item());
 Until PHP 5.3, developers were forced to name their files in a global context.
 
 #+CAPTION: The most damaging problem was the possibility of naming collisions.
-#+BEGIN_SRC php
+#+begin_src php
 // Foo.php
 class Dummy {}
 // Bar.php
 include 'Foo.php';
 class Dummy {} // Fatal error:  Cannot declare class Dummy ...
-#+END_SRC
+#+end_src
 
 #+CAPTION: A conventional workaround was to prepend package names to class names.
-#+BEGIN_SRC php
+#+begin_src php
 // Foo.php
 class Foo_Dummy {}
 // Bar.php
 include 'Foo.php';
 class Bar_Dummy {}
-#+END_SRC
+#+end_src
 
 However, as class names grew longer and longer, it resulted in issues with code readability.
 
@@ -191,35 +191,35 @@ However, as class names grew longer and longer, it resulted in issues with code 
 A domain name is unique to its owner, this is a trick that Java developers typically use for their package names. They invert domain names so that they run from the most generic to the most specific.
 *** Include Paths
 
-#+BEGIN_SRC php
+#+begin_src php
 require_once(__DIR__ . '/../useful/Outputter.php');
-#+END_SRC
+#+end_src
 
 The relationship between files is hardcoded. There must always be a =useful= directory alongside the calling class's containing directory.
 
-#+BEGIN_SRC php
+#+begin_src php
 require_once('../../projectlib/business/User.php');
-#+END_SRC
+#+end_src
 
 The path is not relative to the file that contains this =require_once= statement, but to a configured calling context.
 
-#+BEGIN_SRC php
+#+begin_src php
 require_once('/home/john/projectlib/business/User.php');
-#+END_SRC
+#+end_src
 
 Freeze the library file into a particular context. It will work for a single instance, but it makes libraries hard to relocate and impractical to share among projects. To install the project on a new server, all =require= statements will need changing to account for a new file path.
 
 If must manually include files, the neatest approach is to decouple the invoking code from the library =business/User.php=.
 
 #+CAPTION: This can be achieved by adding the directory to =include_path=.
-#+BEGIN_SRC sh
+#+begin_src sh
 include_path = ".:/usr/local/lib/php-libraries"
-#+END_SRC
+#+end_src
 
 #+CAPTION: Or with Apache, set =include_path= in =httpd.conf= or per-directory configuration file =.htaccess=.
-#+BEGIN_SRC sh
+#+begin_src sh
 php_value include_path value .:/usr/local/lib/php-libraries
-#+END_SRC 
+#+end_src 
 
 *** Autoload
 
@@ -233,11 +233,11 @@ To use autoload, classes should be organized so that each sits in its own file. 
 ** The Class and Object Functions
 
 #+CAPTION: PHP allows you to use strings to refer to classes dynamically:
-#+BEGIN_SRC php
+#+begin_src php
 class Foo {}
 $class = 'Foo';
 $foo = new $class();
-#+END_SRC
+#+end_src
 * Objects and Design
 ** Object-Oriented and Procedural Programming
 
@@ -248,7 +248,7 @@ In procedure programming, the controlling code tends to take responsibility for 
 *** Responsibility
 
 #+CAPTION: Placing a static method for generating child objects in the parent class.
-#+BEGIN_SRC php
+#+begin_src php
 abstract class ParamHandler {
     public static function getInstance(string $filename) {
         if (preg_match("/\.xml$/i", $filename)) {
@@ -261,7 +261,7 @@ abstract class ParamHandler {
 }
 class TextParamHandler extends ParamHandler {...}
 class XmlParamHandler extends ParamHandler {...}
-#+END_SRC
+#+end_src
 
 The choice about file format is made in the static method, which tests the file extension only once. The client code takes no responsibility for implementation. It uses the provided object with no knowledge of, or interest in, the particular subclass it belongs to. Because responsibility for implementation lies with the objects and not with the client code, it would be easy to switch in support for new formats transparently.
 

@@ -9,14 +9,14 @@
 
 ** =lsb_release=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 lsb_release <options>
     -a, --all
-#+END_SRC
+#+end_src
 
 ** =uname=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 uname <options>
     -a, --all
     -i, --hardware-platform
@@ -26,7 +26,7 @@ uname <options>
     -r, --kernel-release
     -s, --kernel-name
     -v, --kernel-version
-#+END_SRC
+#+end_src
 
 * 系统状态
 
@@ -46,16 +46,16 @@ uname <options>
 
 ** =free=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 free <options>
     -h, --human
-#+END_SRC
+#+end_src
 
 ** =nmon=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 nmon <options>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 模式
 | =c= | cpu     |                    |
@@ -68,7 +68,7 @@ nmon <options>
 
 *** =k=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 RunQueue
 ContextSwitch # 每秒上下文切换次数
 Forks
@@ -83,24 +83,24 @@ CPU use since boot time
 Uptime Days = Hours = Mins =
 Idle   Days = Hours = Mins =
 Average CPU use =
-#+END_SRC
+#+end_src
 
 ** =nmonchart=
 
 [[http://nmon.sourceforge.net/pmwiki.php?n=Site.Nmonchart][nmonchart]]
 
-#+BEGIN_SRC sh
+#+begin_src sh
 nmonchart <nmon> <html>
-#+END_SRC
+#+end_src
 
 ** =top=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 top
-#+END_SRC
+#+end_src
 
 #+CAPTION: 输出
-#+BEGIN_SRC sh
+#+begin_src sh
 top - _ up _ min, _ user, load average: _, _, _            # 系统运行时间、用户数、系统负载（1、5、15 分钟）
 Tasks: _ total, _ running, _ sleeping, _ stopped, _ zombie
 %Cpu(s):  _ us, _ sy, _ ni, _ id, _ wa, _ hi, _ si, _ st   # CPU 时间百分比
@@ -118,7 +118,7 @@ PID USER PR NI VIRT RES SHR S %CPU %MEM TIME+ COMMAND # 进程列表
          |  |  +------------------------------------- # 占用虚拟内存
          |  +---------------------------------------- # Nice 值
          +------------------------------------------- # 优先级
-#+END_SRC
+#+end_src
 
 =Shift + F= 选择排序方式。
 
@@ -143,18 +143,18 @@ PID USER PR NI VIRT RES SHR S %CPU %MEM TIME+ COMMAND # 进程列表
 
 ** =uptime=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ uptime
 
 15:42:30 up 2 days,  7:50,  4 users,  load average: 0.73, 0.67, 0.68
 # 三个数字分别为 1 分钟、5 分钟、15 分钟内系统的平均负荷
-#+END_SRC
+#+end_src
 
 ** =vmstat=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 vmstat <options>
-#+END_SRC
+#+end_src
 
 * 系统控制
 
@@ -170,7 +170,7 @@ vmstat <options>
 
 ** =shutdown=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 shutdown <options> <time> <message>
 
 # <options>
@@ -183,7 +183,7 @@ shutdown <options> <time> <message>
     <hh>:<mm> # 指定时间
     +<m>      # 几分钟后
     now       # 立即
-#+END_SRC
+#+end_src
 
 * 进程
 
@@ -206,25 +206,25 @@ shutdown <options> <time> <message>
 ** =bg= =fg=
 
 #+CAPTION: 后台重启
-#+BEGIN_SRC sh
+#+begin_src sh
 bg <job>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 前台重启
-#+BEGIN_SRC sh
+#+begin_src sh
 fg <job>
-#+END_SRC
+#+end_src
 
 ** =jobs=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 jobs <options>
     -l # 列出 PID 和作业号
     -n # 只列出上次 shell 通知后改变了状态的作业
     -p # 只列出 PID
     -r # 只列出运行中的作业
     -s # 只列出已停止的作业
-#+END_SRC
+#+end_src
 
 #+CAPTION: 输出符号
 | =+= | 作业控制命令要操作的默认作业       |
@@ -234,51 +234,51 @@ jobs <options>
 ** =kill=
 
 
-#+BEGIN_SRC sh
+#+begin_src sh
 kill <options> <pids>
     -<sig>                # 发送一个信号，默认是 SIGTERM（信号名可以不带 SIG 前缀）
     -s, --signal <sig>    # 同上
     -l, --list [<signal>] # 列出所有或某个信号（信号数值查找信号名，或相反）
     <pids>                # 空格分隔的进程 ID，负数表示进程组
-#+END_SRC
+#+end_src
 
 *** 示例
 
 #+CAPTION: 强制终止
-#+BEGIN_SRC sh
+#+begin_src sh
 ## 强制终止
 kill -KILL <pids>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 批量终止
-#+BEGIN_SRC sh
+#+begin_src sh
 for pid in $(ps -ef | awk '/<keyword>/ {print $2}'); do sudo kill -9 $pid; done
-#+END_SRC
+#+end_src
 
 ** =nice=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 nice <options> <cmd>
     -n, --adjustment <int> # 优先级数值
 
 ## eg.
 nice -n -10 ./script > file &
-#+END_SRC
+#+end_src
 
 不允许普通系统用户增加优先级。
 
 ** =nohup=
 
 #+CAPTION: 示例
-#+BEGIN_SRC sh
+#+begin_src sh
 nohup ./script &
-#+END_SRC
+#+end_src
 
 进程输出会被重定向到当前目录下的 =nohup.out= 文件。
 
 ** =ps=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 ps <options>
 
 # <options>
@@ -292,7 +292,7 @@ ps <options>
     a # 显示所有用户进程
     u # 显示进程的用户和 owner
     x # 显示不依附于终端的进程
-#+END_SRC
+#+end_src
 
 | =NI=   | 调度优先级   |
 |--------+--------------|
@@ -300,12 +300,12 @@ ps <options>
 
 ** =renice=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 renice [-n] <int> <options>
     -p, --pid <pid>
     -g, --pgrp <group>
     -u, --user <user>
-#+END_SRC
+#+end_src
 
 - 普通用户只能调整属于自己的进程的优先级。
 - 只能降低优先级。
@@ -313,12 +313,12 @@ renice [-n] <int> <options>
 * 服务
 ** =service=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 service <name> <command>
 
 service <options>
     --status-all # 列出所有服务状态
-#+END_SRC
+#+end_src
 
 * 文本
 
@@ -358,21 +358,21 @@ service <options>
 
 ** =cat=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 cat <file> ...
-#+END_SRC
+#+end_src
 
 未指定文件时， =cat= 从标准输入读取
 
 ** =cmp=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 cmp <options> <file1> <file2>
-#+END_SRC
+#+end_src
 
 ** =cut=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 cut <options> <file>
     -d, --delimiter=<delim> # 字段分割符，默认为 tab
     -b, --bytes=<list>      # 按字节
@@ -382,22 +382,22 @@ cut <options> <file>
 <list>
     <n1>,<n2>...     # 枚举
     [<from>]-[<to>]  # 范围，包含端点
-#+END_SRC
+#+end_src
 
 #+CAPTION: 分割行并取第一列
-#+BEGIN_SRC sh
+#+begin_src sh
 val=$(echo $line | cut -f1)
-#+END_SRC
+#+end_src
 
 ** =diff=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 diff <file1> <file2>
-#+END_SRC
+#+end_src
 
 ** =grep=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 grep <options> <pattern> <file>
     -i, --ignore-case # 忽略大小写
 
@@ -418,68 +418,68 @@ grep <options> <pattern> <file>
     -A, --after-context <n>  # 输出匹配行及后 n 行
     -B, --before-context <n> # 输出匹配行及前 n 行
     -C, --context <n>        # 输出匹配行及前后 n 行
-#+END_SRC
+#+end_src
 
 *** 正则
 
-#+BEGIN_SRC sh
+#+begin_src sh
 # 正则「或」逻辑
 grep "<pattern>\|<pattern>" <file>
 
 # 连续两位相同数字
 grep "\([0-9]\)\1"
-#+END_SRC
+#+end_src
 
 #+CAPTION: =-P= 正则
-#+BEGIN_SRC sh
+#+begin_src sh
 # 包含 tab
 grep -P "\t0$"
 
 # 匹配电话号码 xxx-xxx-xxxx 和 (xxx) xxx-xxxx
 grep -P '^(\d{3}-|\(\d{3}\) )\d{3}-\d{4}$'
-#+END_SRC
+#+end_src
 
 *** 示例
 
 #+CAPTION: 遍历目录下文件
-#+BEGIN_SRC sh
+#+begin_src sh
 grep -R <pattern> *
-#+END_SRC
+#+end_src
 
 #+CAPTION: 保留数字行
-#+BEGIN_SRC sh
+#+begin_src sh
 cat <file> | grep -o '^[0-9.]\+$'
-#+END_SRC
+#+end_src
 
 #+CAPTION: 统计文本中某字符串出现的次数（假设一行最多出现一次）
-#+BEGIN_SRC sh
+#+begin_src sh
 grep -o <str> <file> | wc -l
-#+END_SRC
+#+end_src
 
 ** =head=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 head <options> <file>
     -c <num>  # 字符数
     -n <num>  # 行数
        +<num> # 从第 <num> 行起
-#+END_SRC
+#+end_src
 
 ** =join=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 join <options> <file1> <file2> # 结果写出到标准输出
     -1 <field> # 按照文件 1 的第 n 列比对，默认按第 1 列
     -2 <field> # 按照文件 2 的第 n 列比对，默认按第 1 列
     -a <file>  # 保留文件 1 或 2 中不匹配的行，都保留：-a 1 -a 2
     -j <field> # 等于：-1 <field> -2 <field>
-#+END_SRC
+#+end_src
 
 ** =less=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 less <file>
-#+END_SRC
+#+end_src
 
 =less= 是加强版的 =more= 。
 
@@ -494,20 +494,20 @@ less <file>
 
 将文件合并，默认为左右并列。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 paste <options> <file1> [<file2> ...]
     -d, --delimiter=<char> # 分隔符，默认为 tab
     -s, --serial           # 每个文件占据一行，而不是左右并列
-#+END_SRC
+#+end_src
 
 #+CAPTION: 单个文件每两行合并为一行
-#+BEGIN_SRC sh
+#+begin_src sh
 paste -d '<char>' - -
-#+END_SRC
+#+end_src
 
 ** =sort=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 sort <options> <file>
 
 # 排序方式
@@ -528,41 +528,41 @@ sort <options> <file>
             -n    # 按数字
             -r    # 倒序
 # e.g. -k2nr 表示以第二列进行数字倒序排序
-#+END_SRC
+#+end_src
 
 ** =split=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 split <options> <file> <prefix>
     <prefix>               # 拆分生成的文件的前缀
     -d, --numeric-suffixes # 拆分生成的文件的后缀使用数字，而不是字母
     -l, --lines= <number>  # 按固定行数拆分
-#+END_SRC
+#+end_src
 
 #+CAPTION: 合并文件
-#+BEGIN_SRC sh
+#+begin_src sh
 cat <files> > <file>
-#+END_SRC
+#+end_src
 
 ** =tail=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 tail <options> <file>
     -c <num>  # 字符数
     -n <num>  # 行数
        +<num> # 从第 <num> 行起
-#+END_SRC
+#+end_src
 
 ** =tr=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 tr <options> '<from>' '<to>'
     -d, --delete         # 删除字符，而不是替换
     -s, --squeeze-repeat # 将连续的重复字符替换为一个
 
 # '<from>' '<to>'
     '<f1><f2>...' '<t1><t2>...' # 多个字符一一对应
-#+END_SRC
+#+end_src
 
 | =[:digit:]= | 数字               |
 |-------------+--------------------|
@@ -581,13 +581,13 @@ tr <options> '<from>' '<to>'
 | =[:punct:]= | 标点               |
 
 #+CAPTION: 小写转换为大写
-#+BEGIN_SRC sh
+#+begin_src sh
 upper=`echo $lower | tr '[:lower:]' '[:upper:]'`
-#+END_SRC
+#+end_src
 
 ** =uniq=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 uniq <options> <file>
     -c, --count # 在输出结果第一列显示每行重复次数
 
@@ -597,17 +597,17 @@ uniq <options> <file>
 
     -d, --repeated # 只输出重复行
     -u, --unique   # 只输出不重复行
-#+END_SRC
+#+end_src
 
 ** =wc=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 wc <options> <file>
     -l, --lines # 行数
     -w, --words # 词数
     -m, --chars # 字符数
     -c, --bytes # 字节数
-#+END_SRC
+#+end_src
 
 * 文件系统
 
@@ -637,34 +637,34 @@ wc <options> <file>
 
 ** =cp=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 cp <src> ... <dest>
-#+END_SRC
+#+end_src
 
 ** =df=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 df <options> <file>
     -h, --human-readable
-#+END_SRC
+#+end_src
 
 ** =du=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 du <options> <file>
     -h, --human-readable
     --max-depth=         # 递归深度
-#+END_SRC
+#+end_src
 
 ** =file=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 file <file>
-#+END_SRC
+#+end_src
 
 ** =find=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 find <path> <cond> <action>
     
 <path> # 默认为当前目录
@@ -691,63 +691,63 @@ find <path> <cond> <action>
     -a, -and       # 逻辑连接，() 需要转义
     -o, -or
     -!, -not
-#+END_SRC
+#+end_src
 
 #+CAPTION: =find= 支持通配符，但必须用引号包围，避免 Shell 进行 glob 扩展
-#+BEGIN_SRC sh
+#+begin_src sh
 $ find . -name .bash*
 find: paths must precede expression ...
 $ find . -name '.bash*'
 ./.bashrc
 ./.bash_logout
 ./.bash_history
-#+END_SRC
+#+end_src
 
 *** 示例
 
 #+CAPTION: 查找过去 10 分钟修改过的文件
-#+BEGIN_SRC sh
+#+begin_src sh
 $ find . -type f -mmin -10
-#+END_SRC
+#+end_src
 
 #+CAPTION: 查找近期修改过的文件，按修改时间倒序
-#+BEGIN_SRC sh
+#+begin_src sh
 $ find . -mtime -90 -printf "%T+\t%p\n" | sort -r
-#+END_SRC
+#+end_src
 
 ** =ln=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 ln <options> <dest> <link>
 
 <options>
     -f, --force
     -s, --symbolic
-#+END_SRC
+#+end_src
 
 ** =locate=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 locate <options> <name>
     -i # 忽略大小写
-#+END_SRC
+#+end_src
 
 - 在路径名数据库（ =/var/lib/locatedb= ）中查找路径名包含输入字符串的文件。
 - 路径名数据库由 cron 每天自动更新。
 
 #+CAPTION: 强制更新数据库
-#+BEGIN_SRC sh
+#+begin_src sh
 $ sudo updatedb
-#+END_SRC
+#+end_src
 
 ** =ls=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 ls <options> <path>
     -h, --human-readable # 以可读方式显示大小
     -i                   # 显示 inode 编号
     -t                   # 按修改时间排序
-#+END_SRC
+#+end_src
 
 file:../images/linux_command/01.gif
 
@@ -770,7 +770,7 @@ file:../images/linux_command/01.gif
 - 列出当前打开的所有文件的信息
 - 包括后台进程以及所有登录用户的文件
 
-#+BEGIN_SRC sh
+#+begin_src sh
 lsof <options>
    -a       # 将其他选项的条件进行交集
    -d <fd>  # 文件描述符
@@ -778,7 +778,7 @@ lsof <options>
 
 ## eg. 显示当前进程的保留文件描述符
 lsof -a -p $$ -d 0,1,2
-#+END_SRC
+#+end_src
 
 | =COMMAND= | 命令名（前 9 个字符）                                            |
 |-----------+------------------------------------------------------------------|
@@ -800,25 +800,25 @@ lsof -a -p $$ -d 0,1,2
 
 ** =mkdir=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 mkdir <options> <dir>
     -p, --parent # 自动创建不存在的目录
-#+END_SRC
+#+end_src
 
 ** =mktemp=
 
 创建临时文件
-#+BEGIN_SRC sh
+#+begin_src sh
 mktemp <options> <template>
     -d, --directory # 创建临时目录
     <template>      # 文件名模板，需要包含至少三个连续的 X，eg. test.XXXXXX
-#+END_SRC
+#+end_src
 
 ** =mv=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 mv <file> ... <dir>
-#+END_SRC
+#+end_src
 
 * 用户和组
 
@@ -838,65 +838,65 @@ mv <file> ... <dir>
 
 ** =addgroup=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 addgroup <group>
-#+END_SRC
+#+end_src
 
 ** =adduser=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 adduser <user>
-#+END_SRC
+#+end_src
 
 ** =groups=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 groups
-#+END_SRC
+#+end_src
 
 ** =passwd=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 passwd [<user>]
-#+END_SRC
+#+end_src
 
 ** =su=
 
 作为指定用户执行之后的命令。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 su <options> <login>
     -, -l, --login # 
-#+END_SRC
+#+end_src
 
 ** =useradd=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 useradd <options> <user>
     -d <dir>   # 指定 home 目录
     -m         # 目录不存在时创建
     -s <shell> # 指定 shell
-#+END_SRC
+#+end_src
 
 ** =usermod=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 usermod <options> <user>
     -g, --gid <group>        # 设置 primary 组
     -G, --groups <group> ... # 设置 secondary 组
     -a, --append             # 添加到 -G 指定的组，而不从当前组移除
-#+END_SRC
+#+end_src
 
 * 用户权限
 ** =chgrp=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 chgrp <options> <group> <path>
-#+END_SRC
+#+end_src
 
 ** =chmod=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 chmod <options> <type>[+-=]<perm> <path>
 
 # <options>
@@ -915,28 +915,28 @@ chmod <options> <type>[+-=]<perm> <path>
     X # 执行（目标为目录，或已有执行权限）
     s # Executable bit
     t # Sticky bit (用户只可以删除属于他的文件、目录)
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例：为拥有者添加执行权限，组和全局的权限设为读和执行
-#+BEGIN_SRC sh
+#+begin_src sh
 chmod u+x,go=rx file
-#+END_SRC
+#+end_src
 
 ** =chown=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 chown <options> <owner>:<group> <path>
-#+END_SRC
+#+end_src
 
 ** =getfacl=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 getfacl <options> <file/dir>
-#+END_SRC
+#+end_src
 
 ** =setfacl=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 setfacl <options> <acl> <file/dir>
 
 <options>
@@ -951,35 +951,35 @@ setfacl <options> <acl> <file/dir>
     [d(efault):]g(roup):<gid>:<perm>
     [d(efault):]o(ther)::<perm>
     [d(efault):]m(ask)::<perm>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC sh
+#+begin_src sh
 setfacl -m u:www1:rxw web_data/
 setfacl -m d:www1:rxw web_data/
-#+END_SRC
+#+end_src
 
 ** =umask=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 umask <umask>
-#+END_SRC
+#+end_src
 
 ** =visudo=
 
 #+CAPTION: =/etc/sudoers= 语法
-#+BEGIN_SRC sh
+#+begin_src sh
 <user>|%<group> <from>[=(<as_user>:<as_group>)] [<option>:]<command>, ...
 
 # <option>
     NOPASSWD
     PASSWD
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC sh
+#+begin_src sh
 %admin ALL NOPASSWD:/bin/mkdir, PASSWD:/bin/rm
-#+END_SRC
+#+end_src
 
 * 网络连接
 
@@ -999,7 +999,7 @@ umask <umask>
 
 ** =curl=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 curl <options> <url>
     
 # <options> POST
@@ -1035,7 +1035,7 @@ curl <options> <url>
     -w, --write-out <format> # 指定输出格式
     --trace <file>           # 显示更详细的通信过程（可以保存到文件）
     --trace-ascii <file>     # 显示更详细的通信过程（可以保存到文件）
-#+END_SRC
+#+end_src
 
 #+CAPTION: URL 语法
 | =<url>{<a>,<b>,...}=   | URL 的一部分被一个集合中的值替换   |
@@ -1045,26 +1045,26 @@ curl <options> <url>
 *** 示例
 
 #+CAPTION: 上传文件
-#+BEGIN_SRC sh
+#+begin_src sh
 ## <input type="file" name="upload">
 ## <input type="submit" name="press" value="OK">
 $ curl --form upload=@<file> --form press=OK <URL>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 显示 TCP 握手和 SSL 握手的耗时
-#+BEGIN_SRC sh
+#+begin_src sh
 $ curl -w "TCP handshake: %{time_connect}, SSL handshake: %{time_appconnect}\n" -so /dev/null https://domain.com
 
 TCP handshake: 0.022, SSL handshake: 0.064
-#+END_SRC
+#+end_src
 
 ** =nc=
 
 可以创建几乎任何连接，常被其他程序、脚本调用，或用于网络排障。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 nc <options> <dest> <port>
-#+END_SRC
+#+end_src
 
 ** =rsync=
 
@@ -1075,7 +1075,7 @@ nc <options> <dest> <port>
 
 *** 命令
 
-#+BEGIN_SRC sh
+#+begin_src sh
 rsync <options> <src> <dest>
 
 -a, --archive # 存档模式，等于 -rlptguD
@@ -1098,36 +1098,36 @@ rsync <options> <src> <dest>
 
 --devices  # 保留设备文件
 --specials # 保留特殊文件
-#+END_SRC
+#+end_src
 
 #+CAPTION: 本地同步
-#+BEGIN_SRC sh
+#+begin_src sh
 rsync <options> <src> [<dest>]
-#+END_SRC
+#+end_src
 
 #+CAPTION: 使用远程 Shell 同步
-#+BEGIN_SRC sh
+#+begin_src sh
 rsync <options> [<user>@]<host>::<path> [<local_path>] # 拉
 rsync <options> <local_path> [<user>@]<host>::<path>   # 推
-#+END_SRC
+#+end_src
 
 #+CAPTION: 使用 rsync daemon（通过 TCP 连接）同步
-#+BEGIN_SRC sh
+#+begin_src sh
 rsync <options> [<user>@]<host>::<path> [<local_path>]                 # 拉
 rsync <options> rsync://[<user>@]<host>[:<port>]/<path> [<local_path>] # 拉
 rsync <options> <local_path> [<user>@]<host>::<path>                   # 推
 rsync <options> <local_path> rsync://[<user>@]<host>[:<port>]/<path>   # 推
-#+END_SRC
+#+end_src
 
 -----
 
 如果源目录末尾加 /，表示复制其下的文件，而不复制这一层目录，但是目录的特性总是被复制到目的地目录上。
 
 #+CAPTION: 以下两种用法等效
-#+BEGIN_SRC sh
+#+begin_src sh
 rsync -av /src/foo /dest
 rsync -av /src/foo/ /dest/foo
-#+END_SRC
+#+end_src
 
 *** 运行
 
@@ -1136,7 +1136,7 @@ rsync -av /src/foo/ /dest/foo
 | 日志 | =/var/log/rsyncd.log= | 
 
 #+CAPTION: 配置文件示例
-#+BEGIN_SRC text
+#+begin_src text
 max connections=500
 log file=/var/log/rsyncd.log
 pid file=/var/run/rsyncd.pid
@@ -1148,36 +1148,36 @@ uid=nobody
 gid=nobody
 path=/data2/rsync_receive
 hosts allow=
-#+END_SRC
+#+end_src
 
 #+CAPTION: 启动 rsync daemon
-#+BEGIN_SRC sh
+#+begin_src sh
 /usr/bin/rsync --daemon --config=/etc/rsyncd.conf
-#+END_SRC
+#+end_src
 
 *** 示例
 
 #+CAPTION: 将当前目录下匹配 =*.c= 的文件同步到 =foo= 服务器 =path= 目录下
-#+BEGIN_SRC sh
+#+begin_src sh
 rsync -t *.c foo:path/
-#+END_SRC
+#+end_src
 
 #+CAPTION: 复制多个文件
-#+BEGIN_SRC sh
+#+begin_src sh
 rsync -av host:file1 :file2 host:file{3,4} /dest/
 rsync -av host::modname/file{1,2} host::modname/file3 /dest/
 rsync -av host::modname/file1 ::modname/file{3,4}
-#+END_SRC
+#+end_src
 
 ** =scp=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 scp <options> <user>@<host>:<path> <user>@<host>:<path>
-#+END_SRC
+#+end_src
 
 ** =ssh=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 ssh <options> <user>@<host>
     -i <file>     # 指定身份认证文件
     -o "<option>" # 连接设置
@@ -1185,12 +1185,12 @@ ssh <options> <user>@<host>
 
 # -o "<option>"
     -o "IdentitiesOnly yes" # 只使用身份认证文件登录
-#+END_SRC
+#+end_src
 
 *** 配置
 
 #+CAPTION: =/etc/ssh/sshd_config=
-#+BEGIN_SRC sh
+#+begin_src sh
 AllowUsers <user> ...
 AllowGroups <group> ...
 DenyUsers <user> ...
@@ -1198,30 +1198,30 @@ DenyGroups <group> ...
 PasswordAuthentication <yes/no> # 是否允许使用密码登录
 PermitRootLogin <yes/no>        # 是否允许以 root 登录
 Port <port>                     # 指定端口号，默认为 22
-#+END_SRC
+#+end_src
 
 *** 服务
 
 #+CAPTION: 重启
-#+BEGIN_SRC sh
+#+begin_src sh
 sudo service ssh restart  # Debian, Ubuntu
 sudo service sshd restart # RedHat, CentOS, Fedora
-#+END_SRC
+#+end_src
 
 ** =ssh-keygen=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 ssh-keygen <options>
     -b <bits>     # 长度（位）
     -C <comment>  # 注释，通常为用户名、邮箱
     -f <filename> # 指定生成的文件名
     -t <type>     # 密钥类型，
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC sh
+#+begin_src sh
 ssh-keygen -t rsa -b 4096 -C your@email.com -f id_myidentity
-#+END_SRC
+#+end_src
 
 生成密钥时会要求输入密码，如果留空，则使用密钥进行 SSH 登录时不要求输入密码。使用密码会使安全性更高。
 
@@ -1235,9 +1235,9 @@ SSH 连接时，会先尝试使用身份认证文件（公钥私钥对）登录�
 
 ** =telnet=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 telnet <ip> <port>
-#+END_SRC
+#+end_src
 
 * 网络信息
 
@@ -1259,129 +1259,129 @@ telnet <ip> <port>
 
 ** =dig=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 dig <options> <domain>
-#+END_SRC
+#+end_src
 
 *** 输出
 
 #+CAPTION: 查询参数和统计
-#+BEGIN_SRC sh
+#+begin_src sh
 ; <<>> DiG 9.9.4-RedHat-9.9.4-38.el7_3 <<>> math.stackexchange.com
 ;; global options: +cmd
 ;; Got answer:
 ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 19831
 ;; flags: qr rd ra; QUERY: 1, ANSWER: 4, AUTHORITY: 4, ADDITIONAL: 5
-#+END_SRC
+#+end_src
 
 #+CAPTION: 查询内容
-#+BEGIN_SRC sh
+#+begin_src sh
 ;; QUESTION SECTION:
 ;math.stackexchange.com.        IN      A # 查询 A 记录，A = Address
-#+END_SRC
+#+end_src
 
 #+CAPTION: DNS 服务器答复
-#+BEGIN_SRC sh
+#+begin_src sh
 ;; ANSWER SECTION:
 math.stackexchange.com. 300     IN      A       151.101.65.69  # 300 是 TTL 值，表示缓存时间
 math.stackexchange.com. 300     IN      A       151.101.129.69 # 即 300 秒内不用重新查询
 math.stackexchange.com. 300     IN      A       151.101.193.69
 math.stackexchange.com. 300     IN      A       151.101.1.69
-#+END_SRC
+#+end_src
 
 #+CAPTION: NS（Name Server，域名服务器）记录，即哪些服务器负责管理以上 DNS 记录
-#+BEGIN_SRC sh
+#+begin_src sh
 ;; AUTHORITY SECTION:
 stackexchange.com.      3024    IN      NS      ns-925.awsdns-51.net.
 stackexchange.com.      3024    IN      NS      ns-1029.awsdns-00.org.
 stackexchange.com.      3024    IN      NS      ns-1832.awsdns-37.co.uk.
 stackexchange.com.      3024    IN      NS      ns-463.awsdns-57.com.
-#+END_SRC
+#+end_src
 
 #+CAPTION: NS 的 IP 地址
-#+BEGIN_SRC sh
+#+begin_src sh
 ;; ADDITIONAL SECTION:
 ns-463.awsdns-57.com.   80192   IN      A       205.251.193.207
 ns-925.awsdns-51.net.   2946    IN      A       205.251.195.157
 ns-1029.awsdns-00.org.  3003    IN      A       205.251.196.5
 ns-1832.awsdns-37.co.uk. 2987   IN      A       205.251.199.40
-#+END_SRC
+#+end_src
 
 #+CAPTION: DNS 服务器和传输信息
-#+BEGIN_SRC sh
+#+begin_src sh
 ;; Query time: 30 msec
 ;; SERVER: 129.173.1.100\#53(129.173.1.100) # 本机 DNS 服务器和端口号
 ;; WHEN: Fri Dec 09 09:13:31 AST 2016
 ;; MSG SIZE  rcvd: 316                      # 响应长度
-#+END_SRC
+#+end_src
 
 *** 参数
 
 #+CAPTION: =+= 参数
-#+BEGIN_SRC sh
+#+begin_src sh
 dig +short <domain> # 简化输出，只返回 IP 地址（A 记录）
 dig +trace <domain> # 输出分级查询过程
-#+END_SRC
+#+end_src
 
 #+CAPTION: 查询指定 DNS 服务器
-#+BEGIN_SRC sh
+#+begin_src sh
 dig @<ip> <domain>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 记录参数
-#+BEGIN_SRC sh
+#+begin_src sh
 dig a <domain>  # A 记录
 dig ns <domain> # NS 记录
 dig mx <domain> # MX 记录
 dig -x <ip>     # PTR 记录
-#+END_SRC
+#+end_src
 
 #+CAPTION: 查看每一级域名的 NS 记录
-#+BEGIN_SRC sh
+#+begin_src sh
 dig ns com
 dig ns stackexchange.com
-#+END_SRC
+#+end_src
 
 ** =host=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 host <domain>
 host <ip>     # 逆向查询，等同于 dig -x <ip>
-#+END_SRC
+#+end_src
 
 ** =hostname=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 hostname <options>
     -i, --ip-address
     -I, --all-ip-addresses
-#+END_SRC
+#+end_src
 
 ** =ifconfig=
 
 #+CAPTION: 输出
-#+BEGIN_SRC sh
+#+begin_src sh
 eth0 # 私有网络
 eth1 # 其他网络
 ...
 lo   # Loopback，用于本地服务之间的内部通信
-#+END_SRC
+#+end_src
 
 ** =netstat=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 netstat <options>
     -l, --listening # 只显示正在监听的 socket
     -n, --numeric   # 显示数字格式的信息，而不是字符串（主机名、用户名）
     -p, --program   # 显示每个 socket 所属的 PID 和程序名
     -t, --tcp       #
     -u, --udp       #
-#+END_SRC
+#+end_src
 
 ** =nslookup=
 
 #+CAPTION: 示例
-#+BEGIN_SRC sh
+#+begin_src sh
 nslookup
 
 > math.stackexchange.com
@@ -1397,30 +1397,30 @@ Name:   math.stackexchange.com
 Address: 151.101.1.69
 Name:   math.stackexchange.com
 Address: 151.101.129.69
-#+END_SRC
+#+end_src
 
 ** =tcpdump=
 ** =whois=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 whois <domain>
-#+END_SRC
+#+end_src
 
 * 网络性能
 ** =ab=
 
 ApacheBenchmark
 
-#+BEGIN_SRC sh
+#+begin_src sh
 ab <options> <path>
     -n <n> # 请求数
     -c <n> # 并发数
     -k     # 使用长连接
-#+END_SRC
+#+end_src
 
 *** 输出
 
-#+BEGIN_SRC sh
+#+begin_src sh
 Server Software:        nginx/1.10.0
 Server Hostname:        localhost
 Server Port:            _
@@ -1439,7 +1439,7 @@ Requests per second:    _ [/sec] (mean) # 吞吐率
 Time per request:       _ [ms] (mean)   # 用户平均等待时间
 Time per request:       _ [ms] (mean, across all concurrent requests) # 服务器平均处理时间
 Transfer rate:          _ [Kbytes/sec] received # 单位时间从服务器获取的数据长度
-#+END_SRC
+#+end_src
 
 #+ATTR_HTML: :class no-border
 | =Failed requests=                  | 连接服务器、发送、接收数据出错，或超时无响应 |
@@ -1463,12 +1463,12 @@ Transfer rate:          _ [Kbytes/sec] received # 单位时间从服务器获取
 ** =at=
 
 一次性计划任务，将作业提交到队列，并指定何时运行
-#+BEGIN_SRC sh
+#+begin_src sh
 at <options> <time>
     -f <file>  # 设定执行脚本
     -q <queue> # 设定队列
     -m         # 无输出时也发送邮件
-#+END_SRC
+#+end_src
 
 - 守护进程 atd 在后台运行，检查作业队列（默认 60 秒一次），运行作业
 - 队列根据优先级分为 a 到 z，a 优先级最低
@@ -1480,36 +1480,36 @@ at <options> <time>
 ** =atq= =atrm=
 
 列出队列中的作业
-#+BEGIN_SRC sh
+#+begin_src sh
 atq
-#+END_SRC
+#+end_src
 
 -----
 
 删除队列中的作业
-#+BEGIN_SRC sh
+#+begin_src sh
 atrm <job>
-#+END_SRC
+#+end_src
 
 ** =cron=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 <min> <hour> <day_of_month> <month> <day_of_week> <cmd>
 
 ## eg. 每月最后一天执行
 0 0 * * * if [`date +%d -d tomorrow` = 01]; then; <cmd>
-#+END_SRC
+#+end_src
 
 - 必须指定脚本的完整路径
 - 会使用提交任务的用户账户执行命令，必须有执行权限
 
 -----
 
-#+BEGIN_SRC sh
+#+begin_src sh
 crontab <options>
     -e
     -l
-#+END_SRC
+#+end_src
 
 -----
 
@@ -1519,12 +1519,12 @@ crontab <options>
 
 不要求精确的执行时间时，可以将脚本放置到 cron 脚本目录自动执行
 
-#+BEGIN_SRC sh
+#+begin_src sh
 /etc/cron.hourly
 /etc/cron.daily
 /etc/cron.weekly
 /etc/cron.monthly
-#+END_SRC
+#+end_src
 
 * 命令
 
@@ -1548,75 +1548,75 @@ crontab <options>
 
 在执行命令时，将一个字符串替换成另一个。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 alias <options> <name>='<replace>'
     <nil> # 列出已定义的别名
-#+END_SRC
+#+end_src
 
 ** =sh=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 sh <options>
     -c "<cmd>"
-#+END_SRC
+#+end_src
 
 ** =source=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 source <file> <args>
-#+END_SRC
+#+end_src
 
 ** =strace=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 strace <options> <command>
     -c               # 输出系统调用统计信息
     -e <syscall>,... # 指定追踪的系统调用
     -p <pid>         # 指定追踪的进程
-#+END_SRC
+#+end_src
 
 *** 示例
 
 #+CAPTION: 查看 PHP 加载的配置文件
-#+BEGIN_SRC sh
+#+begin_src sh
 strace -e open php 2>&1 | grep php.ini
-#+END_SRC
+#+end_src
 
 ** =time=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 time <cmd>
 
 real _m_s # 运行的全部时间，包括 CPU 切换去执行其他任务的时间，是用户能感知到的时间
 user _m_s # 在用户态的执行时间
 sys  _m_s # 在内核态的执行时间
-#+END_SRC
+#+end_src
 
 - 单个 CPU， =user= 和 =sys= 之和一般小于 =real= 。
 - 多个 CPU， =user= 和 =sys= 表示的是所有 CPU 的总耗时，所以它们的和可能大于 =real= 。
 
 ** =type=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 type <options> <command>
     -p # 返回命令文件路径，相当于 which
-#+END_SRC
+#+end_src
 
 ** =whereis=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 whereis <options> <name>
     -b    # 返回二进制文件
     -m    # 返回 man 文件
     -s    # 返回源码文件
     <nil> # 返回全部
-#+END_SRC
+#+end_src
 
 ** =which=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 which <command>
-#+END_SRC
+#+end_src
 
 * 会话
 
@@ -1630,16 +1630,16 @@ which <command>
 
 ** =ac=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 ac <options>
-#+END_SRC
+#+end_src
 
 ** =id=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 id
 ## Output: uid=500(me) gid=500(me) groups=500(me)
-#+END_SRC
+#+end_src
 
 | =uid=    |           |
 |----------+-----------|
@@ -1653,18 +1653,18 @@ id
 
 ** =w=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 w <options>
-#+END_SRC
+#+end_src
 
 *** 输出
 
-#+BEGIN_SRC sh
+#+begin_src sh
 _ up _ min, _ user, load average: _, _, _ # 系统时间、已运行时间、登录用户数、系统负载
 
 USER TTY FROM LOGIN@ IDLE JCPU PCPU WHAT
 ...
-#+END_SRC
+#+end_src
 
 * 区域
 
@@ -1676,11 +1676,11 @@ USER TTY FROM LOGIN@ IDLE JCPU PCPU WHAT
 
 ** =date=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 date <options> +<format>
     -d "<desc>" # 时间描述
     -d @<stamp> # 时间戳
-#+END_SRC
+#+end_src
 
 #+CAPTION: =<format>=
 | =%Y= |   |
@@ -1690,21 +1690,21 @@ date <options> +<format>
 | =%d= |   |
 
 #+CAPTION: 示例
-#+BEGIN_SRC sh
+#+begin_src sh
 date -d "2 days ago" +"%Y%m%d"
-#+END_SRC
+#+end_src
 
 ** =locale=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 locale <options>
-#+END_SRC
+#+end_src
 
 ** =locale-gen=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 locale-gen ...
-#+END_SRC
+#+end_src
 
 * 其他
 
@@ -1714,7 +1714,7 @@ locale-gen ...
 
 ** =echo=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 echo <string>
 echo <var>
 echo <glob>
@@ -1722,11 +1722,11 @@ echo <glob>
 # 示例
 echo $HOME
 echo ~/.bash*
-#+END_SRC
+#+end_src
 
 ** =man=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 man <cmd>            # 查看指定命令的文档
 man <section> <page> # 查看指定章节的文档
 man -k <keyword>     # 搜索关键词
@@ -1734,11 +1734,11 @@ man -k <keyword>     # 搜索关键词
 # 示例
 man gcc
 man 3 puts
-#+END_SRC
+#+end_src
 
 ** =seq=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 seq <option> <last>
 seq <option> <first> <last>
 seq <option> <first> <incr> <last>
@@ -1747,15 +1747,15 @@ seq <option> <first> <incr> <last>
     -f, --format <format> # printf 样式的浮点数打印格式
     -s, --separator <sep> # 指定分隔符，默认为 \n
     -w, --equal-width     # 统一宽度，不足的左侧用 0 补齐
-#+END_SRC
+#+end_src
 
 * 常用
 
 #+CAPTION: 只复制目录结构
-#+BEGIN_SRC sh
+#+begin_src sh
 cd /path/to/directories &&
 find . -type d -exec mkdir -p -- /path/to/backup/{} \;
-#+END_SRC
+#+end_src
 
 * 链接
 

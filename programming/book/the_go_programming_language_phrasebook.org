@@ -74,7 +74,7 @@ threads and working out exactly when the object can be destroyed is incredibly h
 
 There are no guarantees what to expect when two goroutines touch the same memory. Go does not enforce any constraints on the order that memory accesses occur. The compiler is free to reorder any memory accesses within a goroutine, as long as that reordering does not alter the semantics of the goroutine running in isolation.
 
-#+BEGIN_SRC go
+#+begin_src go
 // For example
 a = b;
 use(b)
@@ -85,7 +85,7 @@ use(b)
 a = b;
 b = 12;
 use(a);
-#+END_SRC
+#+end_src
 
 It is not possible for the user to distinguish the difference, unless either variable in this example is shared, then this kind of optimization would have confusing consequences. In general, it's a good idea to only share readonly strutures.
 * Chapter 2. A Go Primer

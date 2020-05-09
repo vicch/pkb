@@ -156,7 +156,7 @@ _函数的返回值也可以是一个函数_ ，这样不同函数的层次问�
 
 下面给出 Scheme 语言对数学中求和函数的定义和调用形式，来结束吧：
 
-#+BEGIN_SRC scheme
+#+begin_src scheme
 (define sum
     (lambda (L)
         (cond
@@ -167,7 +167,7 @@ _函数的返回值也可以是一个函数_ ，这样不同函数的层次问�
 )
 
 (sum '(1 2 3))
-#+END_SRC
+#+end_src
 * 函数式编程初探
 
 [[http://www.ruanyifeng.com/blog/2012/04/functional_programming.html][Source]]
@@ -183,21 +183,21 @@ _函数的返回值也可以是一个函数_ ，这样不同函数的层次问�
 简单说，「函数式编程」是一种编程范式"（programming paradigm），也就是如何编写程序的方法论。它 _属于「结构化编程」的一种，主要思想是把运算过程尽量写成一系列嵌套的函数调用。_
 
 #+CAPTION: 举例来说，现在有一个数学表达式：
-#+BEGIN_SRC code
+#+begin_src code
 (1 + 2) * 3 - 4
-#+END_SRC
+#+end_src
 
 #+CAPTION: 传统的过程式编程，可能这样写：
-#+BEGIN_SRC js
+#+begin_src js
 var a = 1 + 2;
 var b = a * 3;
 var c = b - 4;
-#+END_SRC
+#+end_src
 
 #+CAPTION: 函数式编程要求使用函数，我们可以把运算过程定义（[[https://lostechies.com/derickbailey/2012/01/24/some-thoughts-on-functional-javascript/][Some Thoughts On Functional JavaScript]]）为不同的函数，然后写成这样：
-#+BEGIN_SRC js
+#+begin_src js
 var result = subtract(multiply(add(1, 2), 3), 4);
-#+END_SRC
+#+end_src
 
 ** 特点
 
@@ -208,10 +208,10 @@ var result = subtract(multiply(add(1, 2), 3), 4);
 所谓「第一等公民」（[[https://en.wikipedia.org/wiki/First-class_function][first-class function]]），指的是 _函数与其他数据类型地位平等，可以赋值给其他变量，也可以作为参数、传入另一个函数，或者作为其他函数的返回值。_
 
 #+CAPTION: 举例来说，下面的 =print= 变量就是一个函数，可以作为另一个函数的参数。
-#+BEGIN_SRC js
+#+begin_src js
 var print = function(i) { console.log(i); };
 [1, 2, 3].forEach(print);
-#+END_SRC
+#+end_src
 
 *** 只用「表达式」，不用「语句」
 
@@ -227,7 +227,7 @@ _「表达式」（expression）是一个单纯的运算过程，总是有返回
 
 上一点已经提到，函数式编程只是返回新的值，不修改系统变量。因此，不修改变量，也是它的一个重要特点。 在其他类型的语言中， _变量往往用来保存「状态」（state）。不修改变量，意味着状态不能保存在变量中。函数式编程使用参数保存状态，_ 最好的例子就是递归。下面的代码是一个将字符串逆序排列的函数，它演示了不同的参数如何决定了运算所处的「状态」。
 
-#+BEGIN_SRC js
+#+begin_src js
 function reverse(string) {
     if (string.length == 0) {
         return string;
@@ -235,7 +235,7 @@ function reverse(string) {
         return reverse(string.substring(1, string.length)) + string.substring(0, 1);
     }
 }
-#+END_SRC
+#+end_src
 
 _由于使用了递归，函数式语言的运行速度比较慢，_ 这是它长期不能在业界推广的主要原因。
 
@@ -253,19 +253,19 @@ Paul Graham 在《黑客与画家》一书中写道：同样功能的程序，�
 *** 接近自然语言，易于理解
 
 #+CAPTION: 前文将表达式 =(1 + 2) * 3 - 4= 写成函数式语言：
-#+BEGIN_SRC js
+#+begin_src js
 subtract(multiply(add(1, 2), 3), 4)
-#+END_SRC
+#+end_src
 
 #+CAPTION: 对它进行变形，基本就是自然语言的表达了：
-#+BEGIN_SRC js
+#+begin_src js
 add(1, 2).multiply(3).subtract(4)
-#+END_SRC
+#+end_src
 
 #+CAPTION: 另外的例子：
-#+BEGIN_SRC js
+#+begin_src js
 merge([1, 2], [3, 4]).sort().search("2")
-#+END_SRC
+#+end_src
 
 *** 更方便的代码管理
 
@@ -275,11 +275,11 @@ merge([1, 2], [3, 4]).sort().search("2")
 
 函数式编程不需要考虑死锁（deadlock），因为 _不修改变量，所以不存在「锁」线程的问题。不必担心一个线程的数据，被另一个线程修改，_ 所以可以很放心地把工作分摊到多个线程，部署并发编程（concurrency）。
 
-#+BEGIN_SRC js
+#+begin_src js
 var s1 = op1();
 var s2 = op2();
 var s3 = concat(s1, s2);
-#+END_SRC
+#+end_src
 
 由于 =s1= 和 =s2= 互不干扰，不会修改变量，谁先执行是无所谓的，所以可以放心地增加线程，把它们分配在两个线程上完成。其他类型的语言就做不到这一点，因为 =s1= 可能会修改系统状态，而 =s2= 可能会用到这些状态，所以必须保证 =s2= 在 =s1= 之后运行，自然也就不能部署到其他线程上了。
 
@@ -293,21 +293,21 @@ var s3 = concat(s1, s2);
 [[http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html][Source]]
 
 #+CAPTION: A simple value:
-#+BEGIN_SRC code
+#+begin_src code
 2
-#+END_SRC
+#+end_src
 
 #+CAPTION: To apply a function to this value:
-#+BEGIN_SRC code
+#+begin_src code
 2 -> (+3)2 -> 5
-#+END_SRC
+#+end_src
 
 Let's extend this by saying that any _value can be in a context_ .
 
 #+CAPTION: Think of a context as a box that you can put a value in:
-#+BEGIN_SRC code
+#+begin_src code
 [2] = Just 2 <- Value and context
-#+END_SRC
+#+end_src
 
 Applying a function to this value will _return different results depending on the context_ . This is the idea that Functors, Applicatives, Monads, Arrows etc are all based on.
 
@@ -315,10 +315,10 @@ Applying a function to this value will _return different results depending on th
 
 =Functor= is a [[http://learnyouahaskell.com/types-and-typeclasses][typeclass]]. _A =Functor= is any data type that defines how =fmap= applies to it._
 
-#+BEGIN_SRC haskell
+#+begin_src haskell
 class Functor f where    // To make data type f a Functor
     fmap::(a->b)->fa->fb // Data type f needs to define how fmap works with it
-#+END_SRC
+#+end_src
 
 *** =fmap=
 
@@ -329,77 +329,77 @@ file:../images/programming_language_scrap/01.png
 When a value is wrapped in a context, you can't apply a normal function to it. This is where =fmap= comes in. _=fmap= knows how to apply functions to values that are wrapped in a context._
 
 #+CAPTION: For example, to apply =(+3)= to =Just 2=:
-#+BEGIN_SRC haskell
+#+begin_src haskell
 > fmap (+3) (Just 2)
 Just 5
-#+END_SRC
+#+end_src
 
 file:../images/programming_language_scrap/03.png
 
 #+CAPTION: To apply =(+3)= to =Nothing=:
-#+BEGIN_SRC haskell
+#+begin_src haskell
 > fmap (+3) Nothing
 Nothing
-#+END_SRC
+#+end_src
 
 file:../images/programming_language_scrap/04.png
 
 *** =Maybe=
 
 #+CAPTION: The =Maybe= data type defines two related contexts:
-#+BEGIN_SRC haskell
+#+begin_src haskell
 data Maybe a = Nothing | Just a
-#+END_SRC
+#+end_src
 
 #+CAPTION: =Maybe= specifies how =fmap= applies to =Just= and =Nothing=:
-#+BEGIN_SRC haskell
+#+begin_src haskell
 instance Functor Maybe where
     fmap func (Just val) = Just (func val)
     fmap func Nothing = Nothing
-#+END_SRC
+#+end_src
 
 #+CAPTION: How to work with a database record in a language without =Maybe=:
-#+BEGIN_SRC python
+#+begin_src python
 post = Post.find_by_id(1)
 if post:
     return post.title
 else
     return nil
-#+END_SRC
+#+end_src
 
 #+CAPTION: In Haskell:
-#+BEGIN_SRC haskell
+#+begin_src haskell
 fmap (getPostTitle) (findPost 1)
-#+END_SRC
+#+end_src
 
 #+CAPTION: =<$>= is the infix version of =fmap=:
-#+BEGIN_SRC haskell
+#+begin_src haskell
 getPostTitle <$> (findPost 1)
-#+END_SRC
+#+end_src
 *** List
 
 #+CAPTION: Lists are functors too. The definition:
-#+BEGIN_SRC haskell
+#+begin_src haskell
 instance Functor [] where
     fmap = map
-#+END_SRC
+#+end_src
 
 file:../images/programming_language_scrap/05.png
 
 *** Function
 
 #+CAPTION: Functions are Functors too:
-#+BEGIN_SRC haskell
+#+begin_src haskell
 instance Functor ((->) r) where
     fmap f g = f . g
-#+END_SRC
+#+end_src
 
 #+CAPTION: To apply a function to another function:
-#+BEGIN_SRC haskell
+#+begin_src haskell
 > import Control.Applicative
 > let foo = fmap (+3) (+2)
 > foo 10
 15
-#+END_SRC
+#+end_src
 
 file:../images/programming_language_scrap/06.png

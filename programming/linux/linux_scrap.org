@@ -8,72 +8,72 @@
 ** 登录
 
 #+CAPTION: 使用 =root= 用户登录远程主机
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ssh root@128.199.209.242
-#+END_SRC
+#+end_src
 
 #+CAPTION: 修改 =root= 用户密码
-#+BEGIN_SRC sh
+#+begin_src sh
 $ passwd
-#+END_SRC
+#+end_src
 
 ** 添加用户
 
 #+CAPTION: 添加用户组
-#+BEGIN_SRC sh
+#+begin_src sh
 $ addgroup admin
-#+END_SRC
+#+end_src
 
 #+CAPTION: 添加用户
-#+BEGIN_SRC sh
+#+begin_src sh
 $ useradd -d /home/foo -s /bin/bash -m foo
-#+END_SRC
+#+end_src
 
 #+CAPTION: 设置密码
-#+BEGIN_SRC sh
+#+begin_src sh
 $ passwd foo
-#+END_SRC
+#+end_src
 
 #+CAPTION: 将用户添加到组
-#+BEGIN_SRC sh
+#+begin_src sh
 $ usermod -a -G admin foo
-#+END_SRC
+#+end_src
 
 #+CAPTION: 设置 sudo 权限
-#+BEGIN_SRC sh
+#+begin_src sh
 $ visudo
 
 foo    ALL=(ALL:ALL) ALL
 foo    ALL=(ALL) NOPASSWD: ALL # sudo 时不需要输入密码，不安全
-#+END_SRC
+#+end_src
 
 #+CAPTION: 退出 =root= 用户登录，用新用户身份登录
-#+BEGIN_SRC sh
+#+begin_src sh
 $ exit
 $ ssh foo@128.199.209.242
-#+END_SRC
+#+end_src
 
 ** SSH
 
 首先，确定本地有 SSH 公钥，一般是 =~/.ssh/id_rsa.pub= ，如果没有的话，使用 =ssh-keygen= 命令生成一个。
 
 #+CAPTION: 将本地的公钥拷贝到服务器的 =authorized_keys= 文件
-#+BEGIN_SRC sh
+#+begin_src sh
 $ cat ~/.ssh/id_rsa.pub | ssh foo@128.199.209.242 'mkdir -p .ssh && cat - >> ~/.ssh/authorized_keys'
-#+END_SRC
+#+end_src
 
 #+CAPTION: 或者在服务器端直接写入文件
-#+BEGIN_SRC sh
+#+begin_src sh
 $ echo "ssh-rsa <public key>" > ~/.ssh/authorized_keys
-#+END_SRC
+#+end_src
 
 #+CAPTION: 修改 =authorized_keys= 文件权限
-#+BEGIN_SRC sh
+#+begin_src sh
 $ sudo chmod 600 ~/.ssh/authorized_keys && chmod 700 ~/.ssh/
-#+END_SRC
+#+end_src
 
 #+CAPTION: 修改 SSH 配置文件 =/etc/ssh/sshd_config=
-#+BEGIN_SRC sh
+#+begin_src sh
 $ sudo cp /etc/ssh/sshd_config ~
 $ sudo nano /etc/ssh/sshd_config
 
@@ -91,46 +91,46 @@ AuthorizedKeysFile .ssh/authorized_keys
 UseDNS no
 
 AllowUsers foo            # 指定允许登录的用户
-#+END_SRC
+#+end_src
 
 #+CAPTION: 重启 sshd
-#+BEGIN_SRC sh
+#+begin_src sh
 $ sudo service ssh restart
 # 或
 $ sudo /etc/init.d/ssh restart
-#+END_SRC
+#+end_src
 
 #+CAPTION: （可选）在本地创建 SSH 连接配置文件 =~/.ssh/config=
-#+BEGIN_SRC sh
+#+begin_src sh
 Host h1
 HostName 128.199.209.242
 User foo
 Port 25000
-#+END_SRC
+#+end_src
 
 #+CAPTION: 测试 SSH 连接
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ssh h1
-#+END_SRC
+#+end_src
 
 ** 运行环境
 
 #+CAPTION: 检查区域设置
-#+BEGIN_SRC sh
+#+begin_src sh
 $ locale
-#+END_SRC
+#+end_src
 
 #+CAPTION: 如果不是 =en_US.UTF-8= ，建议修改
-#+BEGIN_SRC sh
+#+begin_src sh
 $ sudo locale-gen en_US en_US.UTF-8 en_CA.UTF-8
 $ sudo dpkg-reconfigure locales
-#+END_SRC
+#+end_src
 
 #+CAPTION: 更新软件
-#+BEGIN_SRC sh
+#+begin_src sh
 $ sudo apt-get update
 $ sudo apt-get upgrade
-#+END_SRC
+#+end_src
 
 ** 安全
 
@@ -162,12 +162,12 @@ _init 进程的一大任务，就是运行开机启动的程序。_ 但是，不
 - 6：重启
 
 #+CAPTION: init 进程首先读取 _运行级别的设置文件 =/etc/inittab=_ 第一行：
-#+BEGIN_SRC sh
+#+begin_src sh
 id:2:initdefault: # 系统启动时的默认运行级别为 2
-#+END_SRC
+#+end_src
 
 #+CAPTION: _每个运行级别在 =/etc= 目录下有对应的子目录，指定要加载的程序_ ：
-#+BEGIN_SRC sh
+#+begin_src sh
 /etc/rc0.d # rc = run command, d = directory
 /etc/rc1.d
 /etc/rc2.d
@@ -175,10 +175,10 @@ id:2:initdefault: # 系统启动时的默认运行级别为 2
 /etc/rc4.d
 /etc/rc5.d
 /etc/rc6.d
-#+END_SRC
+#+end_src
 
 #+CAPTION: 查看 =/etc/rc2.d= 下指定的程序：
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ls  /etc/rc2.d
 
 README
@@ -191,7 +191,7 @@ S16sudo
 S17apache2
 S18acpid
 ...
-#+END_SRC
+#+end_src
 
 除了 =README= 以外，其他文件名都是「S + 两位数字 + 程序名」的形式。字母 S 表示启动脚本的运行参数为 =start= ，如果这个位置是字母 K，就代表 =kill= ，即如果从其他运行级别切换过来，需要关闭的程序（启动脚本的运行参数为 =stop= ）。后面的两位数字表示处理顺序，数字越小越早处理，所以第一个启动的程序是 motd，然后是 rpcbing、nfs 等。数字相同时，则按照程序名的字母顺序启动，所以 rsyslog 会先于 sudo 启动。
 
@@ -201,7 +201,7 @@ S18acpid
 
 如果多个运行级别需要启动同一个程序，那么这个程序的启动脚本，就会在每一个运行级别的目录里都有一个拷贝。这样会造成管理上的困扰：如果要修改启动脚本，岂不是每个目录都要改一遍？Linux 的解决办法是 7 个 _=/etc/rc*.d= 目录里列出的程序都是链接文件，真正的启动脚本统一放在 =/etc/init.d= 目录下。_ init 进程逐一加载开机启动程序，其实是运行这个目录里的启动脚本。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ls -l /etc/rc2.d
 
 README
@@ -214,14 +214,14 @@ S16sudo -> ../init.d/sudo
 S17apache2 -> ../init.d/apache2
 S18acpid -> ../init.d/acpid
 ...
-#+END_SRC
+#+end_src
 
 这样做的另一个好处，就是如果要 _手动关闭或重启某个进程，直接到目录 =/etc/init.d= 中寻找启动脚本_ 即可。
 
 #+CAPTION: 比如，重启 Apache 服务器：
-#+BEGIN_SRC sh
+#+begin_src sh
 $ sudo /etc/init.d/apache2 restart
-#+END_SRC
+#+end_src
 
 ** 用户登录
 
@@ -243,11 +243,11 @@ $ sudo /etc/init.d/apache2 restart
 
 - 命令行登录：首先读入 _=/etc/profile= ，这是对所有用户都有效的配置；然后依次寻找三个针对当前用户的配置，_ 这三个文件只要有一个存在，就不再读入后面的文件了：
 
-#+BEGIN_SRC sh
+#+begin_src sh
 ~/.bash_profile
 ~/.bash_login
 ~/.profile
-#+END_SRC
+#+end_src
 
 - SSH 登录：同上。
 - 图形界面登录：只加载 =/etc/profile= 和 =~/.profile= 。
@@ -258,21 +258,21 @@ $ sudo /etc/init.d/apache2 restart
 
 如果不进入 non-login shell，岂不是 =~/.bashrc= 就不会运行，因此 bash 也就不能完成定制了？Debian 已经考虑到这个问题了， =~/.profile= 可以看到下面的代码：
 
-#+BEGIN_SRC sh
+#+begin_src sh
 if [ -n "$BASH_VERSION" ]; then
     if [ -f "$HOME/.bashrc" ]; then
         . "$HOME/.bashrc"
     fi
 fi
-#+END_SRC
+#+end_src
 
 先判断变量 =$BASH_VERSION= 是否有值，然后判断主目录下是否存在 =.bashrc= 文件，如果存在就运行该文件。第三行开头的 =.= 是 =source= 命令的简写形式，表示运行某个文件，即 =source ~/.bashrc= 。因此，只要运行 =~/.profile= ， =~/.bashrc= 就会连带运行。但是上面提到过，如果存在 =~/.bash_profile= ，那么有可能不会运行 =~/.profile= 。解决这个问题很简单，把下面代码写入 =.bash_profile= 就行了。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 if [ -f ~/.profile ]; then
     . ~/.profile
 fi
-#+END_SRC
+#+end_src
 
 这样一来，不管是哪种情况， =~/.bashrc= 都会执行，用户的设置可以放心地都写入这个文件。
 
@@ -318,7 +318,7 @@ inode 包含文件的元信息，具体来说有以下内容：
 - 文件数据 block 的位置
 
 #+CAPTION: 可以用 =stat= 命令查看某个文件的 inode 信息：
-#+BEGIN_SRC sh
+#+begin_src sh
 $ stat foo.bar
 
   File: ‘foo.bar’
@@ -330,7 +330,7 @@ Access: 2016-11-07 10:25:23.903727528 -0400
 Modify: 2016-09-02 08:40:28.265492387 -0300
 Change: 2016-09-02 08:40:34.875042038 -0300
  Birth: -
-#+END_SRC
+#+end_src
 ** inode 大小
 
 _硬盘格式化的时候，操作系统自动将硬盘分成两个区域：一个是数据区，存放文件数据；另一个是 inode 区（inode table），存放 inode 所包含的信息。_
@@ -338,7 +338,7 @@ _硬盘格式化的时候，操作系统自动将硬盘分成两个区域：一�
 inode 也会消耗硬盘空间。每个 inode 节点的大小，一般是 128 字节或 256 字节。 _inode 节点的总数，在格式化时就给定，一般是每 1KB 或每 2KB 就设置一个 inode。_ 假定在一块 1GB 的硬盘中，每个 inode 节点的大小为 128 字节，每 1KB 就设置一个 inode，那么 inode table 的大小就会达到 128MB，占整块硬盘的 12.8%。
 
 #+CAPTION: 查看每个硬盘分区的 inode 总数和已经使用的数量，可以使用 =df= 命令：
-#+BEGIN_SRC sh
+#+begin_src sh
 $ df -i
 
 Filesystem       Inodes  IUsed    IFree IUse% Mounted on
@@ -347,15 +347,15 @@ tmpfs           1001351    568  1000783    1% /run
 /dev/sda3        512064   7123   504941    2% /var
 /dev/sda2        640848   4264   636584    1% /var/local
 ...
-#+END_SRC
+#+end_src
 
 #+CAPTION: 查看每个 inode 节点的大小：
-#+BEGIN_SRC sh
+#+begin_src sh
 $ sudo dumpe2fs -h /dev/hda | grep "Inode size"
 
 dumpe2fs 1.41.14 (22-Dec-2010)
 Inode size:               256
-#+END_SRC
+#+end_src
 
 由于每个文件都必须有一个 inode，因此 _有可能发生 inode 已经用光，但是硬盘还未存满的情况。这时，就无法在硬盘上创建新文件。_
 
@@ -368,11 +368,11 @@ Inode size:               256
 3. 根据 inode 信息找到文件数据所在的 block，读出数据。
 
 #+CAPTION: 使用 =ls -i= 命令，可以查看文件名对应的 inode 编号：
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ls -i foo.bar
 
 11274707 foo.bar
-#+END_SRC
+#+end_src
 ** 目录文件
 
 Unix/Linux 系统中，目录（directory）也是一种文件。打开目录，实际上就是打开目录文件。 _目录文件的结构非常简单，就是目录项（dirent）的列表。_ 每个目录项，由两部分组成：
@@ -381,11 +381,11 @@ Unix/Linux 系统中，目录（directory）也是一种文件。打开目录，
 - 文件名对应的 inode 编号
 
 #+CAPTION: =ls -i= 命令列出整个目录文件，即文件名和 inode 编号：
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ls -i foo
 
 11274150 foo.1  11274149 foo.2  11274045 foo.3
-#+END_SRC
+#+end_src
 
 如果要查看文件的详细信息，就必须根据 inode 编号，访问 inode 节点，读取信息。目录文件的读权限和写权限，都是针对目录文件本身。 _由于目录文件内只有文件名和 inode 号码，所以如果只有读权限，只能获取文件名，无法获取其他信息，而读取 inode 节点内的信息需要目录文件的执行权限。_
 
@@ -423,10 +423,10 @@ systemd 是 Linux 系统工具，用来启动守护进程，已成为大多数�
 历史上，Linux 的启动一直采用 init 进程。
 
 #+CAPTION: 启动服务命令
-#+BEGIN_SRC sh
+#+begin_src sh
 $ sudo /etc/init.d/apache2 start
 $ service apache2 start
-#+END_SRC
+#+end_src
 
 这种方式的缺点：
 
@@ -451,7 +451,7 @@ systemd 并不是一个命令，而是一组命令，涉及到系统管理的方
 
 =systemctl= 是 systemd 的主命令，用于管理系统。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ sudo systemctl reboot       # 重启
 $ sudo systemctl poweroff     # 关机（切断电源）
 $ sudo systemctl halt         # CPU 停止工作
@@ -459,63 +459,63 @@ $ sudo systemctl suspend      # 暂停系统
 $ sudo systemctl hibernate    # 休眠
 $ sudo systemctl hybrid-sleep # 交互式休眠
 $ sudo systemctl rescue       # 救援状态（单用户状态）
-#+END_SRC
+#+end_src
 
 *** =systemd-analyze=
 
 =systemd-analyze= 命令用于查看启动耗时。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ systemd-analyze       # 查看启动耗时
 $ systemd-analyze blame # 查看每个服务的启动耗时
 
 $ systemd-analyze critical-chain             # 显示瀑布状的启动过程
 $ systemd-analyze critical-chain atd.service # 显示指定服务的启动过程
-#+END_SRC
+#+end_src
 
 *** =hostnamectl=
 
 =hostnamectl= 命令用于查看、设置主机信息。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ hostnamectl # 显示当前主机的信息
 
 $ sudo hostnamectl set-hostname rhel7 # 设置主机名
-#+END_SRC
+#+end_src
 
 *** =localectl=
 
 =localectl= 命令用于查看、设置本地化参数。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ localectl # 查看本地化参数
 
 $ sudo localectl set-locale LANG=en_GB.utf8 # 设置本地化参数
 $ sudo localectl set-keymap en_GB
-#+END_SRC
+#+end_src
 
 *** =timedatectl=
 
 =timedatectl= 命令用于查看、设置当前时区、日期时间。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ timedatectl                # 查看当前时区设置
 $ timedatectl list-timezones # 显示所有可用的时区
 
 $ sudo timedatectl set-timezone America/New_York # 设置当前时区
 $ sudo timedatectl set-time YYYY-MM-DD           # 设置日期
 $ sudo timedatectl set-time HH:MM:SS             # 设置时间
-#+END_SRC
+#+end_src
 
 *** =loginctl=
 
 =loginctl= 命令用于查看当前登录的用户。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ loginctl list-sessions # 列出当前会话
 $ loginctl list-users    # 列出当前登录用户
 $ loginctl show-user foo # 列出显示指定用户的信息
-#+END_SRC
+#+end_src
 
 * Unix 目录结构的来历
 
@@ -546,10 +546,10 @@ Unix（包含 Linux）初学者常常会很困惑目录结构的含义。举例�
 
 在 Linux 系统中，一般使用 =uptime= 命令查看系统负荷（ =w= 命令和 =top= 命令也行）。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ uptime
 12:28:20 up 11 days,  5:27,  2 users,  load average: 0.77, 0.68, 0.71
-#+END_SRC
+#+end_src
 
 「平均负荷」的三个数字分别是 1 分钟、5 分钟、15 分钟内系统的平均负荷。
 
@@ -629,29 +629,29 @@ file:../images/linux_scrap/05.png
 内核态可以执行任意命令，调用系统的一切资源。 _用户态只能执行简单的运算，不能直接调用系统资源，必须通过系统调用（system call），才能向内核发出指令。_
 
 #+CAPTION: 代码示例
-#+BEGIN_SRC python
+#+begin_src python
 str = "my string" # 用户态
 x = x + 2
 file.write(str)   # 切换到内核态（写文件必须通过内核）
 y = x + 4         # 切换回用户态
-#+END_SRC
+#+end_src
 
 #+CAPTION: 使用 =top= 命令查看 CPU 时间分配：
-#+BEGIN_SRC sh
+#+begin_src sh
 $ top
 %Cpu(s): 19.7 us,  2.4 sy,  0.0 ni, 77.4 id,  0.1 wa,  0.0 hi,  0.3 si,  0.0 st
 #        |         |
 #        |         +- CPU 消耗在内核态的时间百分比
 #        +----------- CPU 消耗在用户态的时间百分比
-#+END_SRC
+#+end_src
 
 #+CAPTION: 使用 =time= 查看单个程序的耗时：
-#+BEGIN_SRC sh
+#+begin_src sh
 $ time ./test.sh
 real    0m0.018s # 程序运行的全部时间，包括 CPU 切换去执行其他任务的时间，是用户能感知到的时间
 user    0m0.003s # 程序在用户态的执行时间
 sys     0m0.005s # 程序在内核态的执行时间
-#+END_SRC
+#+end_src
 
 - 单 CPU 的情况下， =user= 和 =sys= 之和一般小于 =real= 。
 - 多 CPU 的情况下， =user= 和 =sys= 表示的是所有 CPU 的总耗时，所以它们的和可能大于 =real= 。
@@ -730,22 +730,22 @@ If you've used other Unix systems, this is similar to =truss=. Another (much mor
 
 Ever tried figuring out why some program doesn't read the config file you thought it should? Had to wrestle with custom compiled or distro-specific binaries that read their config from what you consider the "wrong" location? The naive approach:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ strace php 2>&1 | grep php.ini
 open("/usr/local/bin/php.ini", O_RDONLY) = -1 ENOENT (No such file or directory) # First try
 open("/usr/local/lib/php.ini", O_RDONLY) = 4                                     # Read config file
 lstat64("/usr/local/lib/php.ini", {st_mode=S_IFLNK|0777, st_size=27, ...}) = 0
 readlink("/usr/local/lib/php.ini", "/usr/local/Zend/etc/php.ini", 4096) = 27
 lstat64("/usr/local/Zend/etc/php.ini", {st_mode=S_IFREG|0664, st_size=40971, ...}) = 0
-#+END_SRC
+#+end_src
 
 The more sophisticated approach if I only care about a specific syscall:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ strace -e open php 2>&1 | grep php.ini
 open("/usr/local/bin/php.ini", O_RDONLY) = -1 ENOENT (No such file or directory)
 open("/usr/local/lib/php.ini", O_RDONLY) = 4
-#+END_SRC
+#+end_src
 
 The same approach work for a lot of other things. Have multiple versions of a library installed at different paths and wonder exactly which actually gets loaded? etc.
 
@@ -753,21 +753,21 @@ The same approach work for a lot of other things. Have multiple versions of a li
 
 Ever run into a program that silently refuse to read a file it doesn't have read access to, but you only figured out after swearing for ages because you thought it didn't actually find the file? Well, you already know what to do:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ strace -e open,access 2>&1 | grep filename
 # Look for open or access syscall that fails
-#+END_SRC
+#+end_src
 
 ** What is that process doing right now?
 
 Ever had a process suddenly hog lots of CPU? Or had a process seem to be hanging? Then you find the pid, and do this:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ strace -p 15427
 Process 15427 attached - interrupt to quit
 futex(0x402f4900, FUTEX_WAIT, 2, NULL 
 Process 15427 detached
-#+END_SRC
+#+end_src
 
 Ah. So in this case it's hanging in a call to =futex()=. Incidentally in this case it doesn't tell us all that much - hanging on a futex can be caused by a lot of things (a futex is a locking mechanism in the Linux kernel). The above is from a normally working but idle Apache child process that's just waiting to be handed a request. But =strace -p= is highly useful because it removes a lot of guesswork, and often removes the need for restarting an app with more extensive logging (or even recompile it).
 
@@ -775,7 +775,7 @@ Ah. So in this case it's hanging in a call to =futex()=. Incidentally in this ca
 
 You can always recompile an app with profiling turned on, and for accurate information, especially about what parts of your own code that is taking time that is what you should do. But often it is tremendously useful to be able to just quickly attach strace to a process to see what it's currently spending time on, especially to diagnose problems. Is that 90% CPU use because it's actually doing real work, or is something spinning out of control. Here's what you do:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ strace -c -p 11084
 Process 11084 attached - interrupt to quit
 Process 11084 detached
@@ -786,11 +786,11 @@ Process 11084 detached
   2.52    0.000027           1        21           time
 ------ ----------- ----------- --------- --------- ----------------
 100.00    0.001072                    63           total
-#+END_SRC
+#+end_src
 
 After you've started =strace -c -p= you just wait for as long as you care to, and then exit with =Ctrl-C=. Strace will spit out profiling data as above. In this case, it's an idle Postgres =postmaster= process that's spending most of it's time quietly waiting in =select()=. In this case it's calling =getppid()= and =time()= in between each =select()= call, which is a fairly standard event loop. You can also run this "start to finish", here with =ls=:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ strace -c >/dev/null ls
 % time     seconds  usecs/call     calls    errors syscall
 ------ ----------- ----------- --------- --------- ----------------
@@ -801,7 +801,7 @@ $ strace -c >/dev/null ls
 ...
 ------ ----------- ----------- --------- --------- ----------------
 100.00    0.000868                    87        10 total
-#+END_SRC
+#+end_src
 
 Pretty much what you'd expect, it spents most of it's time in two calls to read the directory entries (only two since it was run on a small directory).
 
@@ -809,7 +809,7 @@ Pretty much what you'd expect, it spents most of it's time in two calls to read 
 
 Debugging why some process isn't connecting to a remote server can be exceedingly frustrating. DNS can fail, connect can hang, the server might send something unexpected back etc. You can use =tcpdump= to analyze a lot of that, but a lot of the time =strace= will give you less chatter, simply because it will only ever return data related to the syscalls generated by "your" process. If you're trying to figure out what one of hundreds of running processes connecting to the same database server does for example (where picking out the right connection with =tcpdump= is a nightmare), =strace= makes life a lot easier. This is an example of a trace of =nc= connecting to www.news.com on port 80 without any problems:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ strace -e poll,select,connect,recvfrom,sendto nc www.news.com 80
 sendto(3, "\\24\\0\\0\\0\\26\\0\\1\\3\\255\\373NH\\0\\0\\0\\0\\0\\0\\0\\0", 20, 0, {sa_family=AF_NETLINK, pid=0, groups=00000000}, 12) = 20
 connect(3, {sa_family=AF_FILE, path="/var/run/nscd/socket"}, 110) = -1 ENOENT (No such file or directory)
@@ -831,17 +831,17 @@ poll([{fd=3, events=POLLIN, revents=POLLIN}], 1, 5000) = 1
 recvfrom(3, "\\\\\\2\\201\\200\\0\\1\\0\\2\\0\\0\\0\\0\\3www\\4news\\3com\\0\\0\\1\\0\\1\\300\\f"..., 1024, 0, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("62.30.112.39")}, [16]) = 106
 connect(3, {sa_family=AF_INET, sin_port=htons(80), sin_addr=inet_addr("216.239.122.102")}, 16) = -1 EINPROGRESS (Operation now in progress)
 select(4, NULL, [3], NULL, NULL)        = 1 (out [3])
-#+END_SRC
+#+end_src
 
 So what happens here? Notice the connection attempts to =/var/run/nscd/socket=? They mean =nc= first tries to connect to NSCD - the Name Service Cache Daemon - which is usually used in setups that rely on NIS, YP, LDAP or similar directory protocols for name lookups. In this case the connects fails. It then moves on to DNS. DNS is port 53, hence the =sin_port=htons(53)= in the following connect. You can see it then does a =sendto()= call, sending a DNS packet that contains www.news.com. It then reads back a packet. For whatever reason it tries three times, the last with a slightly different request. My best guess why in this case is that www.news.com is a CNAME (an "alias"), and the multiple requests may just be an artifact of how =nc= deals with that. Then in the end, it finally issues a =connect()= to the IP it found. Notice it returns =EINPROGRESS=. That means the connect was non-blocking - =nc= wants to go on processing. It then calls =select()=, which succeeds when the connection was successful. Try adding =read= and =write= to the list of syscalls given to =strace= and enter a string when connected, and you'll get something like this:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 read(0, "test\\n", 1024)                 = 5
 write(3, "test\\n", 5)                   = 5
 poll([{fd=3, events=POLLIN, revents=POLLIN}, {fd=0, events=POLLIN}], 2, -1) = 1
 read(3, "\"-//IETF//"..., 1024) = 216
 write(1, "\"-//IETF//"..., 216) = 216
-#+END_SRC
+#+end_src
 
 his shows it reading "test + linefeed" from standard in, and writing it back out to the network connection, then calling =poll()= to wait for a reply, reading the reply from the network connection and writing it to standard out. Everything seems to be working right.
 * How to find out if a system uses SysV, Upstart or Systemd
@@ -861,7 +861,7 @@ These are heuristics that must be considered together, possibly with other data,
 
 Ways to tell exactly which one is being used:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ps -p 1
 PID TTY          TIME CMD
   1 ?             ... systemd
@@ -869,7 +869,7 @@ $ ll /sbin/init
 ... /sbin/init -> ../lib/systemd/systemd
 $ sudo stat /proc/1/exe
 File: ‘/proc/1/exe’ -> ‘/usr/lib/systemd/systemd’
-#+END_SRC
+#+end_src
 * Shared Libraries: Understanding Dynamic Loading
 
 [[https://amir.rachum.com/blog/2016/09/17/shared-libraries/][Source]]
@@ -885,31 +885,31 @@ A library is a file that contains compiled code and data. Libraries in general a
 The main file of the executable just calls a function from a =random= library.
 
 #+CAPTION: =main.cpp=
-#+BEGIN_SRC cpp
+#+begin_src cpp
 #include "random.h"
 
 int main() {
     return get_random_number();
 }
-#+END_SRC
+#+end_src
 
 The =random= library defines a function in its header file.
 
 #+CAPTION: =random.h=
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int get_random_number();
-#+END_SRC
+#+end_src
 
 And implementation in its source file.
 
 #+CAPTION: =random.cpp=
-#+BEGIN_SRC cpp
+#+begin_src cpp
 #include "random.h"
 
 int get_random_number(void) {
     return 4;
 }
-#+END_SRC
+#+end_src
 
 ** Compiling Shared Library
 
@@ -917,7 +917,7 @@ int get_random_number(void) {
 This example uses LLVM (clang) compiler instead of GCC to compile C++ code.
 #+END_QUOTE
 
-#+BEGIN_SRC sh
+#+begin_src sh
 # Create object file from source file
 $ clang++ -o random.o -c random.cpp
 # -o <file>  Output file
@@ -926,13 +926,13 @@ $ clang++ -o random.o -c random.cpp
 # Compile object file into shared library
 $ clang++ -shared -o librandom.so random.o
 # -shared  Build shared library
-#+END_SRC
+#+end_src
 
 Shared library files should be named =lib<name>.so= for them to link properly.
 
 ** Compiling and Linking Dynamic Executable
 
-#+BEGIN_SRC sh
+#+begin_src sh
 # Create object file from source file
 $ clang++ -o main.o -c main.cpp
 
@@ -943,31 +943,31 @@ Undefined symbols for architecture x86_64:
      _main in main.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
-#+END_SRC
+#+end_src
 
 Linker throws error because the shared library is not being linked. It is possible to link the library statically, but we choose to dynamically link =librandom.so= to =main=.
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ clang++ -o main main.o -lrandom
 # -l<library>  Link library, the target library file is "lib<library>.so"
 ld: library not found for -lrandom
-#+END_SRC
+#+end_src
 
 Why does the compiler need this file at compile time when it is supposed to be loaded dynamically at runtime? Because the compiler needs to make sure that the dependent libraries contain all the symbols needed for the executable.
 
 By using =-l= flag, we told compiler to look for a =librandom.so= file. We also need to tell compiler the location to search for this file, which can be done with =-L= flag:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ clang++ -o main main.o -lrandom -L.
 # -L<path>  Path to search for library
-#+END_SRC
+#+end_src
 
 Run the executable:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ./main
 ./main: error while loading shared libraries: librandom.so ... No such file or directory
-#+END_SRC
+#+end_src
 
 This error means a dependency can’t be located. It is thrown before the execution of the actual code, because shared libraries are loaded before symbols in the executable. Now the questions:
 
@@ -1000,7 +1000,7 @@ file:../images/linux_scrap/07.gif
 
 Use =readelf= to read the ELF header of =main=:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ readelf -h main
 ELF Header:
   Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00
@@ -1012,11 +1012,11 @@ ELF Header:
   Size of section headers:           64 (bytes)
   Number of section headers:         30
   ...
-#+END_SRC
+#+end_src
 
 And the program headers:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ readelf -l main
 
 Elf file type is EXEC (Executable file)
@@ -1036,11 +1036,11 @@ Program Headers:
    00
    ...
    08     .init_array .fini_array .dynamic .got
-#+END_SRC
+#+end_src
 
 And the section headers:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ readelf -S main
 There are 30 section headers, starting at offset 0x1930:
 
@@ -1051,7 +1051,7 @@ Section Headers:
   [21] .dynamic          DYNAMIC          0000000000600de8  00000de8
        0000000000000210  0000000000000010  WA       6     0     8
   ...
-#+END_SRC
+#+end_src
 
 As you can see, an ELF file has a segment of type =DYNAMIC= in its program header table. The =DYNAMIC= segment owns a =.dynamic= section, which contains useful information to understand dynamic dependencies.
 
@@ -1059,24 +1059,24 @@ As you can see, an ELF file has a segment of type =DYNAMIC= in its program heade
 
 Use =readelf= to show all dynamic dependencies of =main=:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ readelf -d main | grep NEEDED
  0x0000000000000001 (NEEDED)             Shared library: [librandom.so]
  0x0000000000000001 (NEEDED)             Shared library: [libstdc++.so.6]
  0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]
  0x0000000000000001 (NEEDED)             Shared library: [libgcc_s.so.1]
  0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
-#+END_SRC
+#+end_src
 
 Except =librandom.so=, there are 4 other shared libraries in the result, these are the dependencies that appear in all compiled shared library. Use =objdump= to see a similar result by specifying =librandom.so=:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ objdump -p librandom.so | grep NEEDED
   NEEDED               libstdc++.so.6
   NEEDED               libm.so.6
   NEEDED               libgcc_s.so.1
   NEEDED               libc.so.6
-#+END_SRC
+#+end_src
 
 These libraries are:
 
@@ -1093,7 +1093,7 @@ These libraries are:
 
 Use =ldd= to see recursive shared library dependencies of =main=, and their locations:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ldd main
 	linux-vdso.so.1 =>  (0x00007fff373d7000)
 	librandom.so => not found
@@ -1102,7 +1102,7 @@ $ ldd main
 	libgcc_s.so.1 => /lib64/libgcc_s.so.1 (0x00007fa1b6236000)
 	libc.so.6 => /lib64/libc.so.6 (0x00007fa1b5e68000)
 	/lib64/ld-linux-x86-64.so.2 (0x00007fa1b6a55000)
-#+END_SRC
+#+end_src
 
 Note =librandom.so='s location is =not found=, but not the others.
 
@@ -1123,7 +1123,7 @@ Each shared library in an executable's dependencies is searched in the following
 
 Use =ldd= to see the search process of =librandom.so= when executing =main=:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ LD_DEBUG=libs ldd main
         ...
         48:	find library=librandom.so [0]; searching
@@ -1143,14 +1143,14 @@ $ LD_DEBUG=libs ldd main
         48:	  trying file=/usr/lib64/x86_64/librandom.so
         48:	  trying file=/usr/lib64/librandom.so
         ...
-#+END_SRC
+#+end_src
 
 Note that =librandom.so= doesn't exist in any of these locations being searched. To fix this, the most ad-hoc way to solve this is to use =LD_LIBRARY_PATH=:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ LD_LIBRARY_PATH=.
 $ ./main
-#+END_SRC
+#+end_src
 
 This fix is not portable. A better way is to put dependencies inside the file, via =rpath= and =runpath=.
 
@@ -1160,31 +1160,31 @@ This fix is not portable. A better way is to put dependencies inside the file, v
 
 To bake =rpath= into the executable:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ clang++ -o main main.o -lrandom -L. -Wl,-rpath,.
 # -Wl,<arg>,<arg>...  Pass comma separated arguments to linker
-#+END_SRC
+#+end_src
 
 =-Wl,-rpath,.= means passing =-rpath .= to the linker. Or to do the same thing for =runpath=:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ clang++ -o main main.o -lrandom -L. -Wl,--enable-new-dtags,-rpath,.
-#+END_SRC
+#+end_src
 
 Check =.dynamic= section of =main= again:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ readelf -d main | grep path
  0x000000000000000f (RPATH)              Library rpath: [.]
-#+END_SRC
+#+end_src
 
 The downside of using =.= (the current working directory) as search path is that, it won't work when executing =main= from a different directory:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ cd /tmp
 $ /home/cpp/main
 /home/cpp/main: error while loading shared libraries: librandom.so ...
-#+END_SRC
+#+end_src
 
 An easy way to solve this is to copy =librandom.so= to a directory that is on the search path, e.g. =/lib=. Another way is, of course, to set =rpath= to be relative to the executable, instead of the current location.
 
@@ -1203,41 +1203,41 @@ Paths in =rpath= and =runpath= can be:
 
 To use =$ORIGIN= in =rpath=:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ clang++ -o main main.o -lrandom -L. -Wl,-rpath,"\$ORIGIN"
-#+END_SRC
+#+end_src
 
 =$= needs to be escaped in this case, because we don't want Shell to expand it here. Then check the executable data:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ readelf main -d | grep path
  0x000000000000000f (RPATH)              Library rpath: [$ORIGIN]
 $ ldd main | grep librandom
 	librandom.so => /home/cpp/./librandom.so (0x00007f4ef0f20000)
-#+END_SRC
+#+end_src
 
 Now =main= works when being executed from any directory:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ cd /tmp
 $ /home/cpp/main
-#+END_SRC
+#+end_src
 
 ** Runtime Search Path Security
 
 Linux user password hash is stored in =/etc/shadow= and it's root protected. But a non-root user can change his password with =passwd=. The reason is that =passwd= executable has the =setuid= bit set:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ls -l /usr/bin/passwd
 -rwsr-xr-x 1 root root 27832 Jun 10  2014 /usr/bin/passwd
 #  ^--- The "setuid" bit is set for user execution.
-#+END_SRC
+#+end_src
 
 A program with the =setuid= bit set is executed as the owner of that program, which in this example is root.
 
 To demonstrate how this is relevant to the shared library, we move the library file to =libs/librandom.so= relative to =main=, and set the =rpath= accordingly:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ clang++ -o main main.o -lrandom -L. -Wl,-rpath,"\$ORIGIN/libs"
 # librandom.so needs to be in the same path when compiling, otherwise
 # linker doesn't know where to find it
@@ -1247,11 +1247,11 @@ $ mkdir libs
 $ mv librandom.so libs
 $ ./main
 # main should execute without error
-#+END_SRC
+#+end_src
 
 Turn on =setuid= bit for =main= and try execute it (as root):
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ sudo chown root main
 $ sudo chmod a+s main
 
@@ -1263,7 +1263,7 @@ $ LD_LIBRARY_PATH=./libs
 $ ./main
 ./main: error while loading shared libraries: librandom.so ...
 # LD_LIBRARY_PATH is not working either
-#+END_SRC
+#+end_src
 
 This is because, for security reasons, when running an executable with elevated privileges, e.g. =setuid= and =setgid=, the search path list is different than normal: =LD_LIBRARY_PATH=, =rpath= and =runpath= are all ignored, because using these search path allows exploit of elevated privileges executable to run as root, see [[https://marc.info/?l=full-disclosure&m=128739684614072&w=2][The GNU C library dynamic linker expands $ORIGIN in setuid library search path]].
 
@@ -1275,10 +1275,10 @@ Therefore, if the executable needs to have elevated privileges, the dependencies
 
 When seeing this error on running an executable:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ./executable
 ./executable: error while loading shared libraries: ...
-#+END_SRC
+#+end_src
 
 Try these debugging steps:
 

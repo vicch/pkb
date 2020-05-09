@@ -68,36 +68,36 @@ file:../images/linux/04.png
 Shell 通过简单模式匹配文件和目录名的方式称为 globbing，Shell 将包含 glob 的参数替换为匹配的文件和目录名，这个过程称为扩展（expansion）。Shell 进行扩展是在运行具体命令之前，即 Shell 将扩展的结果作为参数传递给命令。
 
 #+CAPTION: 示例
-#+BEGIN_SRC sh
+#+begin_src sh
 $ echo .bash*
 .bash_history  .bash_logout  .bashrc
-#+END_SRC
+#+end_src
 
 #+CAPTION: 使用引号包围 glob 可以避免 Shell 进行扩展。
-#+BEGIN_SRC sh
+#+begin_src sh
 $ echo .bash'*'
 .bash*
-#+END_SRC
+#+end_src
 
 #+CAPTION: 当 glob 无法匹配到任何结果时，Shell 直接输出 glob 字符串。
-#+BEGIN_SRC sh
+#+begin_src sh
 $ echo notfound*
 notfound*
-#+END_SRC
+#+end_src
 
 #+CAPTION: Glob 不匹配 =.= 字符，需要显式使用 =.= 。
-#+BEGIN_SRC sh
+#+begin_src sh
 $ echo .*
 . .. .file
-#+END_SRC
+#+end_src
 
 #+CAPTION: 避免匹配 =.= 和 =..= 。
-#+BEGIN_SRC sh
+#+begin_src sh
 $ echo .[^.]*
 .file
 $ echo .??*
 .file
-#+END_SRC
+#+end_src
 
 ** Inode
 
@@ -105,7 +105,7 @@ file:../images/linux/03.png
 
 ** 结构
 
-#+BEGIN_SRC sh
+#+begin_src sh
 /
   bin/   # GNU 用户级工具
   boot/  # 启动文件
@@ -136,7 +136,7 @@ file:../images/linux/03.png
     share/
       dict/words # 字典文件
   var/   # 可变文件，如日志
-#+END_SRC
+#+end_src
 
 * 流
 ** 输入
@@ -153,14 +153,14 @@ file:../images/linux/03.png
 
 存储已创建的用户的信息。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 <user>:<password>:<uid>:<gid>:<info>:<home_dir>:<shell>
     <password> # x 表示加密密码
 
 # 示例
 root:x:0:0:root:/root:/bin/bash
 ubuntu:x:1001:1001:Ubuntu:/home/ubuntu:/bin/bash
-#+END_SRC
+#+end_src
 
 * 权限
 
@@ -196,20 +196,20 @@ ubuntu:x:1001:1001:Ubuntu:/home/ubuntu:/bin/bash
 | =7= |            |            |            |
 
 #+CAPTION: 执行权限只赋予新建的目录，不赋予新建的文件
-#+BEGIN_SRC sh
+#+begin_src sh
 $ umask
 0002
 $ touch tmp
 -rw-rw-r-- ...
 $ mkdir tmp
 drwxrwxr-x ...
-#+END_SRC
+#+end_src
 
 ** Sticky Bit
 
 目录设置 sticky bit 后，目录下新建的文件和目录会继承此目录的所属组。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ mkdir foo
 drwxrwxr-x ... root root ... foo/
 $ chgrp foo foo
@@ -219,7 +219,7 @@ drwxrwsr-x ... root foo ... foo/ # 组权限变为 rws
 $ cd foo
 $ touch bar
 -rw-rw-r-- ... root foo ... bar  # 继承所属组 foo
-#+END_SRC
+#+end_src
 
 * 启动
 ** 运行级
@@ -245,19 +245,19 @@ $ touch bar
 ** 开机运行
 
 #+CAPTION: 系统开机运行脚本（发行版之间不同）
-#+BEGIN_SRC sh
+#+begin_src sh
 /etc/rc<n>.d # n 为运行级，rc = run commands
 /etc/init.d
 /etc/init.d/rc.d
-#+END_SRC
+#+end_src
 
 #+CAPTION: 本地自定义开机运行脚本（发行版之间不同）
-#+BEGIN_SRC sh
+#+begin_src sh
 /etc/init.d/rc.local
 /etc/init.d/boot.local
 /etc/rc.d/rc.local
 /etc/rc.local
-#+END_SRC
+#+end_src
 
 ** Shell 登录运行
 
@@ -278,7 +278,7 @@ $ touch bar
 
 file:../images/linux/01.svg
 
-#+BEGIN_SRC plantuml :file ../images/linux/01.svg :exports none
+#+begin_src plantuml :file ../images/linux/01.svg :exports none
 @startuml
 !include ../../styles/plantuml-style
 
@@ -295,7 +295,7 @@ endif
 :执行命令;
 
 @enduml
-#+END_SRC
+#+end_src
 
 ** 变量
 
@@ -306,17 +306,17 @@ endif
 
 *** Shell 变量
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ <NAME>=<value>
 $ echo $<NAME>
-#+END_SRC
+#+end_src
 
 *** 环境变量
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ <NAME>=<value>
 $ export <NAME>
-#+END_SRC
+#+end_src
 
 *** 环境变量列表
 
@@ -350,11 +350,11 @@ $ export <NAME>
 *** =.bashrc=
 
 #+CAPTION: 示例：SSH 连接时显示账号过期时间
-#+BEGIN_SRC sh
+#+begin_src sh
 if [ "x${SSH_TTY}" != "x" ]; then
     chage -l <account> | grep "Account expires" | tr -d "\t"
 fi
-#+END_SRC
+#+end_src
 
 * 发行版
 

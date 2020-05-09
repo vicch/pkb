@@ -7,21 +7,21 @@
 
 Build classes of objects that are just bundles of attributes with no custom methods, like a database record.
 
-#+BEGIN_SRC python
+#+begin_src python
 namedtuple(
     typename
 ,   field_names
 [,  verbose=False ]
 [,  rename=False ]
 )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC python
+#+begin_src python
 Card = collections.namedtuple('Card', ['rank', 'suit'])
 new_card = Card('7', 'diamonds')
 # Card(rank='7', suit='diamonds')
-#+END_SRC
+#+end_src
 
 * 数字
 ** =math=
@@ -48,18 +48,18 @@ new_card = Card('7', 'diamonds')
 
 Return a =k= length list of unique elements chosen from the =population= sequence.
 
-#+BEGIN_SRC python
+#+begin_src python
 sample ( population, k )
-#+END_SRC
+#+end_src
 
 *** =shuffle()=
 
-#+BEGIN_SRC python
+#+begin_src python
 shuffle (
     x
 [,  random
 ])
-#+END_SRC
+#+end_src
 
 * 序列
 ** =itertools=
@@ -91,23 +91,23 @@ shuffle (
 
 *** =strftime()=
 
-#+BEGIN_SRC python
+#+begin_src python
 strftime (
     format
 [,  t
 ])
-#+END_SRC
+#+end_src
 
 *** =sleep()=
 
-#+BEGIN_SRC python
+#+begin_src python
 sleep ( secs )
-#+END_SRC
+#+end_src
 
 ** =datetime.datetime=
 *** =datetime()=
 
-#+BEGIN_SRC python
+#+begin_src python
 datetime (
     year
 ,   month
@@ -118,53 +118,53 @@ datetime (
 ,   microsecond=0
 ,   tzinfo=None
 )
-#+END_SRC  
+#+end_src  
 
 *** =datetime.now()=
 
-#+BEGIN_SRC python
+#+begin_src python
 datetime.now(tz=None)
-#+END_SRC
+#+end_src
 
 返回 =datetime= 对象。
 
-#+BEGIN_SRC python
+#+begin_src python
 datetime.now()
 # datetime.datetime(2019, 2, 23, 16, 39, 22, 560828)
-#+END_SRC
+#+end_src
 
 *** =datetime.strftime()=
 
-#+BEGIN_SRC python
+#+begin_src python
 datetime.strftime(format)
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC python
+#+begin_src python
 datetime(2019, 1, 10).strftime("%m/%d/%Y")
 # "01/10/2019"
-#+END_SRC
+#+end_src
 
 *** =datetime.strptime()=
 
-#+BEGIN_SRC python
+#+begin_src python
 datetime.strptime(date_string, format)
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC python
+#+begin_src python
 datetime.strptime("01-10-2019", "%m-%d-%Y")
 # datetime.datetime(2019, 1, 10, 0, 0)
-#+END_SRC
+#+end_src
 
 ** =datetime.timedelta=
 
-#+BEGIN_SRC python
+#+begin_src python
 datetime(2019, 1, 10) - datetime(2019, 1, 1)
 # datetime.timedelta(days=9)
-#+END_SRC
+#+end_src
 
 *** =timedelta()=
 
-#+BEGIN_SRC python
+#+begin_src python
 timedelta (
     days=0
 ,   seconds=0
@@ -174,40 +174,40 @@ timedelta (
 ,   hours=0
 ,   weeks=0
 )
-#+END_SRC  
+#+end_src  
 
 * 文本
 ** =difflib=
 *** =difflib.get_close_matches()=
 
-#+BEGIN_SRC python
+#+begin_src python
 difflib.get_close_matches(
     word          # 字符串
 ,   possibilities # 字符串序列
 ,   n=3           # 最多返回 n 个相似结果
 ,   cutoff=0.6    # 忽略相似度不足 cutoff 的结果
 )
-#+END_SRC
+#+end_src
 
 从字符串序列中寻找与给定字符串相似的结果，返回的结果序列按相似度从高到低排序。
 
-#+BEGIN_SRC python
+#+begin_src python
 get_close_matches('appel', ['ape', 'apple', 'peach', 'puppy'])
 # ['apple', 'ape']
-#+END_SRC
+#+end_src
 
 ** =difflib.SequenceMatcher=
 
-#+BEGIN_SRC python
+#+begin_src python
 difflib.SequenceMatcher(
     isjunk=None # 单参数函数，返回 True 时表示该序列元素应该被忽略
 ,   a=''        # 序列 A
 ,   b=''        # 序列 B
 ,   autojunk=True
 )
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC python
+#+begin_src python
 s = SequenceMatcher(
     lambda x: x == " ",
     "private Thread currentThread;",
@@ -215,17 +215,17 @@ s = SequenceMatcher(
 
 s.ratio()       # 序列相似度
 s.quick_ratio() # 序列相似度上限，速度较快
-#+END_SRC
+#+end_src
 
 ** =re=
 
-#+BEGIN_SRC python
+#+begin_src python
 match (
     pattern
 ,   string
 ,   flags = 0
 )
-#+END_SRC
+#+end_src
 
 * 文件
 ** =csv=
@@ -256,36 +256,36 @@ match (
 
 *** =getenv()=
 
-#+BEGIN_SRC python
+#+begin_src python
 getenv (
     name
 [,  value
 ])
-#+END_SRC
+#+end_src
 
 *** =mkdir()=
 
-#+BEGIN_SRC python
+#+begin_src python
 mkdir (
     path
 [,  mode
 ])
-#+END_SRC
+#+end_src
 
 *** =putenv()=
 
-#+BEGIN_SRC python
+#+begin_src python
 putenv (
     name
 ,   value
 )
-#+END_SRC
+#+end_src
 
 *** =system()=
 
-#+BEGIN_SRC python
+#+begin_src python
 system ( command )
-#+END_SRC
+#+end_src
 
 | 返回值 |   | 退出状态码 |
 
@@ -303,16 +303,16 @@ system ( command )
 
 *** =exists()=
 
-#+BEGIN_SRC python
+#+begin_src python
 exists ( path )
-#+END_SRC
+#+end_src
 
 ** =glob=
 
-#+BEGIN_SRC python
+#+begin_src python
 glob.glob("*.txt")
 # ["foo.txt", "bar.txt", ...]
-#+END_SRC
+#+end_src
 
 * 运行时
 ** =sys=
@@ -332,7 +332,7 @@ glob.glob("*.txt")
 =argv[0]= 为当前脚本名称。
 
 #+CAPTION: 示例
-#+BEGIN_SRC python
+#+begin_src python
 from sys import argv
 
 script, foo, bar = argv
@@ -343,7 +343,7 @@ print 'bar =', bar
 
 # 运行
 python script.py 1 2
-#+END_SRC
+#+end_src
 
 *** =path=
 
@@ -351,9 +351,9 @@ python script.py 1 2
 
 *** =exit()=
 
-#+BEGIN_SRC python
+#+begin_src python
 exit( [arg] )
-#+END_SRC
+#+end_src
 
 * 网络
 ** =urllib=
@@ -364,21 +364,21 @@ exit( [arg] )
 
 *** =urlopen()=
 
-#+BEGIN_SRC python
+#+begin_src python
 urlopen (
     url
 [,  data
 [,  proxies
 [,  context
 ]]])
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC python
+#+begin_src python
 url = 'http://example.com/foo.txt'
 for line in urllib.urlopen(url).readlines():
     print line
-#+END_SRC
+#+end_src
 
 * 网络数据
 ** =json=
@@ -402,7 +402,7 @@ for line in urllib.urlopen(url).readlines():
 
 *** =json.load()=
 
-#+BEGIN_SRC python
+#+begin_src python
 json.load(
     fp
 ,   *
@@ -414,20 +414,20 @@ json.load(
 ,   object_pairs_hook=None
 ,   **kw
 )
-#+END_SRC
+#+end_src
 
 将 JSON 文件内容反序列化为 Python 对象。
 
-#+BEGIN_SRC python
+#+begin_src python
 data = json.load(open("data.json"))
-#+END_SRC
+#+end_src
 
 * 持久化
 ** =pickle=
 
 从文件存取 Python 对象。
 
-#+BEGIN_SRC python
+#+begin_src python
 pickle.dump (
     obj
 ,   file
@@ -439,9 +439,9 @@ import pickle as p
 f = file('pickle.tmp', 'w')
 p.dump(<obj>, f)
 f.close()
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC python
+#+begin_src python
 pickle.load ( file )
 
 # eg.
@@ -449,7 +449,7 @@ import pickle as p
 f = file('pickle.tmp')
 <obj> = p.load(f)
 f.close()
-#+END_SRC
+#+end_src
 
 ** =cPickle=
 
@@ -464,7 +464,7 @@ Simulates console sessions and verifies that the expressions evaluate to the res
 
 *** 测试
 
-#+BEGIN_SRC python
+#+begin_src python
 def my_function(a, b):
     """
     >>> my_function(2, 3)
@@ -481,14 +481,14 @@ def my_function(a, b):
     [1, 2, 3, ...]
     """
     print(range(a, b))
-#+END_SRC
+#+end_src
 
 *** 命令
 
-#+BEGIN_SRC sh
+#+begin_src sh
 python -m doctest foo.py
 python -m doctest -v foo.py
-#+END_SRC
+#+end_src
 
 * Tkinter
 ** =Tk=
@@ -501,20 +501,20 @@ Root window.
 
 *** =geometry()=
 
-#+BEGIN_SRC python
+#+begin_src python
 Tk.geometry(<geo_string>)
-#+END_SRC
+#+end_src
 
 #+CAPTION: =<geo_string>=
-#+BEGIN_SRC python
+#+begin_src python
 <width>x<height>+/-<x_offset>+/-<y_offset>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC python
+#+begin_src python
 root = Tk()
 root.geometry("250x150+300-300")
-#+END_SRC
+#+end_src
 
 ** =Frame=
 

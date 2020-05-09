@@ -36,9 +36,9 @@
 
 字符由 @@html:<code>'</code>@@ 包围时，表示它对应的整数值，即字符码（character code）。
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 'A' == 65;
-#+END_SRC
+#+end_src
 
 ** 数组
 
@@ -46,18 +46,18 @@
 
 数组定义：
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 <type> <name>[<size>];
-#+END_SRC
+#+end_src
 
 定义之后，数组名成为一个常量指针，指向数组第一个元素。
 
 数组初始化：
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int foo[10] = {1, 2, 3}; // 指定前三个元素，之后默认为 0
 int foo[10] = {0};       // 全部元素初始化为 0
-#+END_SRC
+#+end_src
 
 ** 字符串
 
@@ -68,7 +68,7 @@ int foo[10] = {0};       // 全部元素初始化为 0
 *** 语法
 
 #+CAPTION: =char*=
-#+BEGIN_SRC cpp
+#+begin_src cpp
 char* <name>;
 char* <name> = "<string>";
 <name> = new char[<size>];
@@ -78,21 +78,21 @@ char* foo(char* str) {
   return "output";
 }
 cout << foo("input") << endl;
-#+END_SRC
+#+end_src
 
 #+CAPTION: =string=
-#+BEGIN_SRC cpp
+#+begin_src cpp
 string <name>;
 string <name> = "<string>";
-#+END_SRC
+#+end_src
 
 *** 运算
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 string a, b, c;
 int l = a.size(); // 长度
 a = b + c;        // 连接
-#+END_SRC
+#+end_src
 
 *** 指针
 
@@ -102,7 +102,7 @@ a = b + c;        // 连接
 
 file:../images/c++/04.png
 
-#+BEGIN_SRC ditaa :file ../images/c++/04.png :cmdline -E -S -s 1.25 :exports none
+#+begin_src ditaa :file ../images/c++/04.png :cmdline -E -S -s 1.25 :exports none
     foo
     +----------+----------+ 
     | 00000011 | 10011000 |  <----- Value of foo variable is a
@@ -124,7 +124,7 @@ file:../images/c++/04.png
          |          |          |          |
          |          |          |          +----- Null character
          b          o          x          <----- Encoded characters
-#+END_SRC
+#+end_src
 
 ** 列表
 
@@ -143,7 +143,7 @@ When using a list, instead of an array, there is no need to anticipate how many 
 从头部插入元素的列表。
 
 #+CAPTION: 定义
-#+BEGIN_SRC cpp
+#+begin_src cpp
 template <class element_param>
 class element {
   friend class list<element_param>;
@@ -183,10 +183,10 @@ class list {
     element<list_param> *first;
     element<list_param> *current;
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 使用
-#+BEGIN_SRC cpp
+#+begin_src cpp
 list my_list;
 my_list.add(new foo());
 ...
@@ -194,17 +194,17 @@ my_list.reset();
 for (; !my_list.is_end(); my_list.advance()) {
   cout << my_list.access()->attr << endl;
 }
-#+END_SRC
+#+end_src
 
 ** 类型检验
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 Foo* test = dynamic_cast <Foo*> (obj);
 if (test != NULL)
     cout << "object of class Foo" << end;
 else
     cout << "not object of class Foo" << endl;
-#+END_SRC
+#+end_src
 
 ** 类型转换
 *** 隐式类型转换
@@ -215,14 +215,14 @@ else
 
 *** 显式类型转换
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 (<type>) <expr>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 a = (double) b;
-#+END_SRC
+#+end_src
 
 * 变量
 ** 声明 vs 定义
@@ -239,7 +239,7 @@ a = (double) b;
 
 ** 语法
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 // 声明
 int foo;
 int foo, bar;
@@ -247,7 +247,7 @@ int foo, bar;
 // 声明和初始化
 int foo = 1;
 int foo = 1, bar = 2;
-#+END_SRC
+#+end_src
 
 ** 作用域
 
@@ -274,7 +274,7 @@ int foo = 1, bar = 2;
 
 *** 示例
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 // 全局变量
 int a = 18;
 int b = 6;
@@ -299,7 +299,7 @@ int main() {
   c = function2();     // 本地 c = 全局 a + 全局 b = -6 + 6 = 0
   cout << "a: " << a << " b: " << b << " c: " << c << endl;
 }
-#+END_SRC
+#+end_src
 
 *** =extern=
 
@@ -308,49 +308,49 @@ int main() {
 使用 =extern= 声明全局变量时不能有初始值，因为初始值将迫使编译器为变量分配内存，使得变量在此处被定义（变量的定义只能有一次），而不是原本定义变量的位置。
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 // foo.h
 int var;
 
 // bar.h
 extern int var;
-#+END_SRC
+#+end_src
 
 ** 静态全局变量
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 static <type> <name>;
-#+END_SRC
+#+end_src
 
 * 常量
 ** 语法
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 const <type> <name> = <expr>;
-#+END_SRC
+#+end_src
 
 常量定义后不能修改，如果常量名出现在赋值表达式的左边，编译器将会报错。
 
 ** 枚举常量
 
 #+CAPTION: 定义
-#+BEGIN_SRC cpp
+#+begin_src cpp
 enum {<name>, <name>, ...};         // 默认值从 0 开始依次递增 1
 enum {<name>, <name> = <int>, ...}; // 指定值之后的常量值从此指定值开始继续递增 1
 enum {<name> = '<char>', ...};      // 可以使用字符编码指定值
-#+END_SRC
+#+end_src
 
 #+CAPTION: 枚举类型
-#+BEGIN_SRC cpp
+#+begin_src cpp
 enum <type_name> {<name>, <name>, ...}; // 定义枚举类型
 enum <type_name> <var>;                 // 使用枚举类型声明变量
-#+END_SRC
+#+end_src
 
 ** 符号常量
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 #define <name> <expr>
-#+END_SRC
+#+end_src
 
 ** 宏
 
@@ -404,23 +404,23 @@ enum <type_name> <var>;                 // 使用枚举类型声明变量
 ** 数学运算符
 
 #+CAPTION: 整数进行除法时，结果会被截断（truncate），而不是四舍五入。
-#+BEGIN_SRC cpp
+#+begin_src cpp
 5 / 3 // == 1
-#+END_SRC
+#+end_src
 
 ** 逻辑运算符
 
 #+CAPTION: =&&= 可以替代 =if=
-#+BEGIN_SRC cpp
+#+begin_src cpp
 if (<expr>) <statement>;
 (expr) && <statement>; 
-#+END_SRC
+#+end_src
 
 #+CAPTION: =||= 可以替代 =if ... else=
-#+BEGIN_SRC cpp
+#+begin_src cpp
 if (<expr>); else <statement>;
 (<expr>) || <statement>;
-#+END_SRC
+#+end_src
 
 ** 一元运算符
 
@@ -439,53 +439,53 @@ if (<expr>); else <statement>;
 | 值可以为 =NULL=            | 值不可以为 =NULL=                          |
 
 #+CAPTION: =*= 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int* a = new int;
 int* b = new int;
 int* c;
 *a = 1, *b = 1;
 c = a, *c = 2; // *a == 2
 c = b, *c = 3; // *b == 3
-#+END_SRC
+#+end_src
 
 #+CAPTION: =&= 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int a;
 int& b = a;
 a = 1;
 b = 2; // a == 2
-#+END_SRC
+#+end_src
 
 #+CAPTION: 可以将引用声明为常量，称为 free-standing 引用。
-#+BEGIN_SRC cpp
+#+begin_src cpp
 const int& b = 1;
-#+END_SRC
+#+end_src
 
 ** =new=
 
 从 free store 内存空间分配内存用于指定的对象，并返回地址。
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int* a = new int[10];
-#+END_SRC
+#+end_src
 
 ** =delete=
 
 清理对象，回收内存空间，防止内存泄漏。
 
 #+CAPTION: 语法
-#+BEGIN_SRC cpp
+#+begin_src cpp
 delete <obj>;      // 回收单个对象
 delete [] <array>; // 回收对象数组
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 char *foo;
 foo = new char[10];
 delete [] foo;
-#+END_SRC
+#+end_src
 
 ** =sizeof=
 
@@ -493,7 +493,7 @@ delete [] foo;
 - 可以加或不加 =()= 。
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 struct Empty {};
 struct Base { int a; };
 
@@ -506,7 +506,7 @@ std::cout << sizeof a                 << '\n' // 40
           << sizeof(e)                << '\n' // 1
           << sizeof b                 << '\n' // 4
           << sizeof &b                << '\n' // 8
-#+END_SRC
+#+end_src
 
 ** =>>=
 
@@ -514,15 +514,15 @@ std::cout << sizeof a                 << '\n' // 40
 
 ** 运算符重载
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 <type> operator <symbol> (<type> <param>, ...) {
 }
-#+END_SRC
+#+end_src
 
 *** 重载 =<<=
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class Foo {
   private:
     int bar;
@@ -532,12 +532,12 @@ class Foo {
       return out;
     }
 }
-#+END_SRC
+#+end_src
 
 *** 重载 =<=
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class Foo {
   private:
     int bar;
@@ -546,7 +546,7 @@ class Foo {
       return bar < f.bar;
     }
 }
-#+END_SRC
+#+end_src
 
 * 指针
 
@@ -560,7 +560,7 @@ When using pointer, C++ allocates only a small amount of memory for a pointer at
 
 file:../images/c++/03.png
 
-#+BEGIN_SRC ditaa :file ../images/c++/03.png :cmdline -E -S -s 1.25 :exports none
+#+begin_src ditaa :file ../images/c++/03.png :cmdline -E -S -s 1.25 :exports none
     +-- Pointer variable identifies the address of a chunk of
     |   memory containing a pointer to a cylinder class object
     |
@@ -586,7 +586,7 @@ file:../images/c++/03.png
                 ^               ^               ^
                 |               |               |
                288             296             304
-#+END_SRC
+#+end_src
 
 ** 运算符
 
@@ -607,20 +607,20 @@ file:../images/c++/03.png
 ** 语法
 
 #+CAPTION: 定义
-#+BEGIN_SRC cpp
+#+begin_src cpp
 <type> *<pointer>;
-#+END_SRC
+#+end_src
 
 #+CAPTION: 赋值
-#+BEGIN_SRC cpp
+#+begin_src cpp
 <pointer> = new <type>; // new 表达式返回的是分配的地址
 // 等于：
 <var> = new <type>;
 <pointer> = &<var>;
-#+END_SRC
+#+end_src
 
 #+CAPTION: 类对象
-#+BEGIN_SRC cpp
+#+begin_src cpp
 <Class> *<pointer>;
 <pointer> = new <Class>;
 
@@ -629,17 +629,17 @@ file:../images/c++/03.png
 // 等于：
 (*<pointer>).<var> = ... ; // 类成员运算符 . 的优先级高于指针运算符 *
 (*<pointer>).<function>();
-#+END_SRC
+#+end_src
 
 ** 指针数组
 
 #+CAPTION: 定义
-#+BEGIN_SRC cpp
+#+begin_src cpp
 <type> *<pointer>[<n>]; // 指针运算符 * 优先级高于 []，因此定义的是 n 个指针的数组
-#+END_SRC
+#+end_src
 
 #+CAPTION: 类对象
-#+BEGIN_SRC cpp
+#+begin_src cpp
 <Class> *<pointer>[<n>];
 <pointer>[<idx>] = new <Class>;
 
@@ -648,7 +648,7 @@ file:../images/c++/03.png
 // 或
 <pointer>[<idx>]-><var> = ... ;
 <pointer>[<idx>]-><function>();
-#+END_SRC
+#+end_src
 
 定义类对象指针数组中的指针，可以指向某类或其子类的对象。因此通过类对象指针数组，可以解决「普通数组要求其中的元素数据类型完全一致」的问题。
 
@@ -656,15 +656,15 @@ file:../images/c++/03.png
 ** =for=
 *** 一般循环
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 for (<init>; <expr>; <incr>) {
 }
-#+END_SRC
+#+end_src
 
 当 =<expr>= 的值为 =0= 或 =NULL= 时，循环中止。
 
 #+CAPTION: 循环体的内容可以合并到条件中
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int counter, result = 1;
 for (counter = n; counter; --counter) {
   result *= 2;
@@ -674,28 +674,28 @@ int counter, result;
 for (counter = n, result = 1;
      counter;
      --counter, result *= 2);
-#+END_SRC
+#+end_src
 
 *** 迭代循环
 
 从 C++ 11 开始 =for= 支持迭代（range-based）循环。
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 for (<type> <elem> : <range>) {
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int nums[] = {1, 2, 3};
 for (int num : nums) {
   cout << num << endl;
 }
-#+END_SRC
+#+end_src
 
 ** =if=
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 if (<expr>) {
   ...
 } else if (<expr>) {
@@ -703,11 +703,11 @@ if (<expr>) {
 } else {
   ...
 }
-#+END_SRC
+#+end_src
 
 ** =switch=
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 switch (<expr>) {
   case <int>:
     ...;
@@ -715,35 +715,35 @@ switch (<expr>) {
   default:
     ...;
 }
-#+END_SRC
+#+end_src
 
 ** =try= =catch=
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 try {
     ...
 } catch (exception& e) {
     cout << e.what() << endl;
 }
-#+END_SRC
+#+end_src
 
 ** =while=
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 while (<expr>) {
   ...
 }
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 do {
   ...
 } while (<expr>);
-#+END_SRC
+#+end_src
 
 ** 注释
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 // Short comment
 
 /*
@@ -751,18 +751,18 @@ Long comment ...
 that just goes on ...
 and on ...
 */
-#+END_SRC
+#+end_src
 
 * 函数
 ** 定义
 
 #+CAPTION: 定义
-#+BEGIN_SRC cpp
+#+begin_src cpp
 <type> <name> (<type> <param>, ...) {
     // Declarations
     // Statements
 }
-#+END_SRC
+#+end_src
 
 函数只可以被定义一次，但可以声明多次（通过函数原型）。
 
@@ -776,7 +776,7 @@ C++ is a call-by-value language. When a function is called, copies of the value 
 
 file:../images/c++/05.png
 
-#+BEGIN_SRC ditaa :file ../images/c++/05.png :cmdline -E -S -s 1.25 :exports none
+#+begin_src ditaa :file ../images/c++/05.png :cmdline -E -S -s 1.25 :exports none
 foo (height,  width,   length)
        |        |        |
        |        |        |   Argument are evaluated
@@ -789,7 +789,7 @@ foo (height,  width,   length)
      +---+    +---+    +---+           |
      |   |    |   |    |   | <---------+
      +---+    +---+    +---+
-#+END_SRC
+#+end_src
 
 -----
 
@@ -799,7 +799,7 @@ When a function is to return the value of a call-by-value parameter or of a loca
 
 file:../images/c++/06.png
 
-#+BEGIN_SRC ditaa :file ../images/c++/06.png :cmdline -E -S -s 1.25 :exports none
+#+begin_src ditaa :file ../images/c++/06.png :cmdline -E -S -s 1.25 :exports none
                           Reserved for "call by
                           value" parameter whose
                           value is returned
@@ -815,7 +815,7 @@ for returned value                 | during return
 +---------+                        |
 |         | <----------------------+
 +---------+
-#+END_SRC
+#+end_src
 
 Some functions involve a pass-through object: an object that is handed to the function via a call-by-reference parameter, without copying, and is to be returned as the function's value, also without copying.
 
@@ -831,7 +831,7 @@ Some functions involve a pass-through object: an object that is handed to the fu
 
 file:../images/c++/07.png
 
-#+BEGIN_SRC ditaa :file ../images/c++/07.png :cmdline -E -S -s 1.2 :exports none
+#+begin_src ditaa :file ../images/c++/07.png :cmdline -E -S -s 1.2 :exports none
                   <-- Retained    |    Reclaimed -->
                                   |
 Memory reserved for               |      Memory reserved for
@@ -851,7 +851,7 @@ class object argument             |      class object parameter
              |        +---+---+---+---+---+---+---+---+---+--
              |        |   |   |   |   |   |   |   |   |   |
              |        +---+---+---+---+---+---+---+---+---+--
-#+END_SRC
+#+end_src
 
 可能的解决方法：
 - 自定义复制构造函数，在复制对象时，连指针变量指向的变量也进行复制
@@ -862,11 +862,11 @@ class object argument             |      class object parameter
 为避免对象被作为传值参数（被复制），可以将类的复制构造函数声明为 =private= ，当类对象以传值方式作为函数参数时，编译会报错。、
 
 #+CAPTION: 可以只在基类中声明为原型：
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class Foo {
   private: Foo(Foo&);
 }
-#+END_SRC
+#+end_src
 
 *** 传引用
 
@@ -877,23 +877,23 @@ class Foo {
 - 参数类型是基类，而传入值是多态的子类对象，长度可能不同。
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 void foo(int& bar) {}
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例：传数组引用
-#+BEGIN_SRC cpp
+#+begin_src cpp
 void foo(int bar[]) {}
 void foo(int bar[10]) {}
 void foo(int* bar) {}
-#+END_SRC
+#+end_src
 
 *** 默认值
 
 #+CAPTION: 带有默认值的参数必须在最右：
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int foo(int a, int b = 1) {}
-#+END_SRC
+#+end_src
 
 ** 返回值
 
@@ -903,10 +903,10 @@ int foo(int a, int b = 1) {}
 
 函数返回值类型后加 =&= ，表示函数返回值时不进行复制，而是直接返回。
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 <type>& <function>(...) {
 }
-#+END_SRC
+#+end_src
 
 只有在参数是传递引用时，返回值才可以是引用，即传入和返回的是同一个变量的引用，比如运算符重载。
 
@@ -918,7 +918,7 @@ int foo(int a, int b = 1) {}
 - 类函数原型是为了将类函数的定义移动到类定义之外。
 
 #+CAPTION: 示例：斐波那契数列（兔子繁殖问题）
-#+BEGIN_SRC cpp
+#+begin_src cpp
 // Function prototype
 int rabbits (int);
 
@@ -932,17 +932,17 @@ int rabbits (int n) {
     return 1;
   else return previous_month (n) + penultimate_month (n);
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 原型可以加参数名
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int rabbits (int n);
-#+END_SRC
+#+end_src
 
 ** 模板
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 template <typename t> void print_vector(vector<t> v) {
   for (t elem: v)
     cout << elem << endl;
@@ -951,19 +951,19 @@ template <typename t> void print_vector(vector<t> v) {
 
 print_vector<int>(int_vector);
 print_vector<stirng>(string_vector);
-#+END_SRC
+#+end_src
 
 * OO
 ** 类
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class Foo {};      // 定义，必须以 ; 结束
 Foo foo;           // 实例化，作为数据类型
 Foo foo(1);        // 实例化，调用构造函数
 class Foo {} foo1; // 定义同时声明变量
 
 class Foo : public Bar, protected Qux {}; // 继承
-#+END_SRC
+#+end_src
 
 C++ 支持多继承，基类必须在子类之前定义。
 
@@ -972,21 +972,21 @@ C++ 支持多继承，基类必须在子类之前定义。
 - 抽象类不可被实例化。
 - 通过定义完全虚拟函数来实现抽象类，最简单的方式是将析构函数定义为完全虚拟。
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class Foo {
 public:
     Foo() {}
     virtual ~Foo() = 0;
 };
 Foo::~Foo() {}
-#+END_SRC
+#+end_src
 
 ** 模板
 
 模板是一种代码重用方式，使同一个类可以用于不同的数据类型。
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 template <class Type> class Foo {
   Type t;
 public:
@@ -1008,11 +1008,11 @@ Foo<int> foo2(int1);
 cout << foo2.add(int2) << endl;
 Foo<string> foo3(string1);
 cout << foo3.add(string2) << endl;
-#+END_SRC
+#+end_src
 
 ** =friend=
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class <ClassA> {
   friend class <ClassB>; // 声明 ClassB 为 ClassA 的 friend
   private:
@@ -1020,7 +1020,7 @@ class <ClassA> {
     <ClassA>() {
     }
 }
-#+END_SRC
+#+end_src
 
 ** 可见性
 
@@ -1037,7 +1037,7 @@ class <ClassA> {
 |             | =private= 成员不变。                                         |
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class First {
   public: double var1, var2;
 }
@@ -1050,42 +1050,42 @@ class Second : protected First {
 class Third : public Second {
   // 在 Third 中 var1 和 var2 依然为 protected
 }
-#+END_SRC
+#+end_src
 
 ** 成员变量
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class <Class> {
     <visib>: <type> <var>;
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 访问对象的成员变量
-#+BEGIN_SRC cpp
+#+begin_src cpp
 <Class> <obj>;
 <obj>.<var> = <value>;
-#+END_SRC
+#+end_src
 
 *** 静态成员变量
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class Foo {
     static int bar; // 定义
 }
 int Foo::bar = 1; // 初始化，需要声明类型
-#+END_SRC
+#+end_src
 
 ** 成员函数
 *** 定义
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class <Class> {
     public: <type> <var>, <var>;
             <type> <function>() {
                 return <var>;
             }
 };
-#+END_SRC
+#+end_src
 
 Each member function has one special argument:
 - the value is a class object that belongs to the same class as does the member function
@@ -1093,21 +1093,21 @@ Each member function has one special argument:
 
 *** 执行
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class <Class> {
     public: <function>() { ... }
 };
 <Class> <obj>;
 <obj>.<function>();
 <obj>.<Parent>::<function>(); // 调用基类函数
-#+END_SRC
+#+end_src
 
 *** 继承
 
 继承关系中，子类与基类有同名函数时，除非指定，否则默认调用子类中定义的函数。
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class <Parent> {
     public: <function>() { ... }
 };
@@ -1117,14 +1117,14 @@ class <Child> : public <Parent> {
 <Child> <obj>;
 <obj>.<function>();           // 调用子类的函数
 <obj>.<Parent>::<function>(); // 调用基类的函数
-#+END_SRC
+#+end_src
 
 *** =this=
 
 =this= 用于在一个成员函数中（使用当前的对象）调用另一个成员函数。
 
 #+CAPTION: 语法
-#+BEGIN_SRC cpp
+#+begin_src cpp
 foo() {
   cout << (*this).bar();
   cout << this->bar();
@@ -1132,12 +1132,12 @@ foo() {
 }
 bar() {
 }
-#+END_SRC
+#+end_src
 
 ** 虚拟函数
 
 #+CAPTION: C++ 在编译时就决定将调用的成员函数，称为静态绑定（static binding），使得子类无法实现多态。
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class Person {
     public:
         void about() { cout << "I'm a person."; }
@@ -1153,10 +1153,10 @@ p->about(); // I'm a student.
 
 Person* p = new Student;
 p->about(); // I'm a person.
-#+END_SRC
+#+end_src
 
 #+CAPTION: 虚拟成员函数（virtual member function）使得程序在运行时，而不是编译时，选择将调用的函数。
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class Person {
     public:
         virtual void about() { cout << "I'm a person."; }
@@ -1173,18 +1173,18 @@ p->about(); // I'm a student.
 
 Person* p = new Student;
 p->about(); // I'm a student.
-#+END_SRC
+#+end_src
 
 *** 完全虚拟函数
 
 当某个子类未定义虚拟成员函数，以覆盖基类的定义时，基类的虚拟成员函数将被调用。完全虚拟函数（pure virtual function）可以避免基类的虚拟成员函数被调用。
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class Foo {
     public:
         virtual int bar() = 0; // 完全虚拟
 }
-#+END_SRC
+#+end_src
 
 - 子类未实现完全虚拟函数时，编译会报错。
 - 定义了完全虚拟函数的类为抽象类，无法实例化。
@@ -1196,7 +1196,7 @@ class Foo {
 - 默认构造函数没有参数。
 
 #+CAPTION: 定义
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class Foo {
     int bar;
 public:
@@ -1208,10 +1208,10 @@ public:
 
 Foo foo;    // 调用默认构造函数
 Foo foo(v); // 调用自定义构造函数
-#+END_SRC
+#+end_src
 
 #+CAPTION: 调用基类构造函数
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class Person {
 protected:
     int id;
@@ -1227,20 +1227,20 @@ protected:
 public:
     Student(int id, string fn, string ln, vector<int> scores): Person(id, fn, ln), scores(scores) {}
 };
-#+END_SRC
+#+end_src
 
 *** 基类构造函数
 
 实例化子类时，基类的构造函数先于子类的被执行。
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 <ChildClass>() : <ParentClass>(<value>, ...)
                  [, <ParentClass>(<value>, ...)]
                  {}
-#+END_SRC 
+#+end_src 
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 // 基类
 class box : public container {
   public: 
@@ -1259,9 +1259,9 @@ class box_car : public railroad_car, public box {
     // 调用基类的构造函数
     box_car() : box(10.5, 9.5, 40.0) {}
 };
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 // 基类
 class railroad_car {
   public:
@@ -1279,20 +1279,20 @@ class box_car : public railroad_car {
     box_car() {}
     box_car(char *input_buffer) : railroad_car(input_buffer) {}
 }
-#+END_SRC
+#+end_src
 
 *** 复制构造函数
 <<copy_constructor>>
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class Foo {
   private:
     int bar;
   public: 
     Foo(Foo& f) { bar = f.bar; }
 }
-#+END_SRC
+#+end_src
 
 将复制构造函数声明为私有，可以避免 [[excess_reclamation_bug][excess-reclamation bug]]。
 
@@ -1306,7 +1306,7 @@ class Foo {
 *** 虚拟析构函数
 
 #+CAPTION: 当使用多态，使用基类指针声明子类对象时，子类的析构函数无法被调用：
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class Person {
     public:
         ~Person() { cout << "Deleting person."; }
@@ -1319,10 +1319,10 @@ class Student : public Person {
 
 Person* p = new Student;
 delete p; // Deleting person.
-#+END_SRC
+#+end_src
 
 #+CAPTION: 将基类中的析构函数声明为 =virtual= ，可以使基类和子类的析构函数都被调用：
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class Person {
     public:
         virtual ~Person() { cout << "Deleting person."; }
@@ -1336,7 +1336,7 @@ class Student : public Person {
 Person* p = new Student;
 delete p; // Deleting student.
           // Deleting person.
-#+END_SRC
+#+end_src
 
 ** 函数原型
 
@@ -1345,18 +1345,18 @@ delete p; // Deleting student.
                         The function can be defined elsewhere, outside of the class definition.
 
 #+CAPTION: 声明
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class <Class> {
     public: <type> <function>(<type>);
 };
-#+END_SRC
+#+end_src
 
 #+CAPTION: 定义
-#+BEGIN_SRC cpp
+#+begin_src cpp
 <type> <Class>::<function>(<type> <param>) { // :: are called the class-scope operator
     ...
 };
-#+END_SRC
+#+end_src
 
 * 程序
 
@@ -1379,7 +1379,7 @@ A good program
 头文件只包含声明，不包含定义（内存分配操作），因为头文件可能被多个文件加载，而变量和函数定义只能有一次。
 
 #+CAPTION: 示例：=class.h=
-#+BEGIN_SRC cpp
+#+begin_src cpp
 // Description: ...
 #include <iostream>
 
@@ -1398,7 +1398,7 @@ class Class {
   private:
     string attr;
 }; // 结尾需要 ;
-#+END_SRC
+#+end_src
 
 -----
 
@@ -1409,32 +1409,32 @@ Many C++ compilers bring every function mentioned in a header file into the prog
 ** 源码文件
 
 #+CAPTION: =class.cpp=
-#+BEGIN_SRC cpp
+#+begin_src cpp
 #include "class.h"
 
 Class::Class() {...}
 void Class::foo() {...}
-#+END_SRC
+#+end_src
 
 在源码文件中加载相应的头文件，是为了确保函数定义和函数原型保持一致，在不一致时编译器会报错。
 
 ** 客户文件
 
 #+CAPTION: 示例：=main.cpp=
-#+BEGIN_SRC cpp
+#+begin_src cpp
 #include "class.h"
 
 int main() {
   Class obj;
   return 0;
 }
-#+END_SRC
+#+end_src
 
 ** =#include=
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 #include <file>
-#+END_SRC
+#+end_src
 
 =#include= 的效果相当于把被加载的文件内容加入到此处。
 
@@ -1463,7 +1463,7 @@ When compiler links object files to create an executable program, it encounters 
 
 file:../images/c++/01.png
 
-#+BEGIN_SRC ditaa :file ../images/c++/01.png :cmdline -E -S -s 1.25 :exports none
+#+begin_src ditaa :file ../images/c++/01.png :cmdline -E -S -s 1.25 :exports none
   +--------------+
   |sort.h        |--+
   +--------------+  | Preprocessor
@@ -1480,15 +1480,15 @@ Header file         |
           |sort.cpp      |---------------->|sort.o        |---+
           +--------------+                 +--------------+
         Source file                      Object file
-#+END_SRC
+#+end_src
 
 当一个头文件被修改时，必须重新编译所有加载这个头文件的源码文件。
 
 #+CAPTION: 当一个源码文件被修改时，只需要重新编译这个文件，并重新链接所有对象文件：
-#+BEGIN_SRC sh
+#+begin_src sh
 g++ -c foo.cpp
 g++ -o exe foo.o bar.o baz.o
-#+END_SRC
+#+end_src
 
 ** 编译器
 
@@ -1496,20 +1496,20 @@ g++ -o exe foo.o bar.o baz.o
 
 ** =g++=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 g++ <options> <file>
     -o <file> # Place the output into <file>
     -c        # Compile and assembly, but do not link
     -v
-#+END_SRC
+#+end_src
 
 #+CAPTION: 直接编译
-#+BEGIN_SRC sh
+#+begin_src sh
 $ g++ -Wall -W -Werror <file> -o <file>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 脚本编译
-#+BEGIN_SRC sh
+#+begin_src sh
 ## /bin/gccp
 #/bin/sh
 echo compiling C++ using -ansi -pedantic-errors -Wall
@@ -1517,7 +1517,7 @@ g++ -ansi -pedantic-errors -Wall $1 $2 $3
 
 ## 编译
 $ gccp <file> -o <file>
-#+END_SRC
+#+end_src
 
 ** =make=
 
@@ -1529,11 +1529,11 @@ $ gccp <file> -o <file>
 - 将源文件的依赖关系和编译命令写在 =makefile= 文件中，通过 =make= 命令执行编译
 - 当一个目标的依赖文件更新后， =make= 将会执行其后的所有命令行，以生成目标的新版本
 
-#+BEGIN_SRC sh
+#+begin_src sh
 make [<options>] [<target>]
     <target>  # 不指定时，将执行 makefile 中第一个目标的命令
     -f <file> # 指定 makefile
-#+END_SRC
+#+end_src
 
 ** =makefile=
 
@@ -1543,33 +1543,33 @@ make [<options>] [<target>]
 - 命令：编译目标的命令
 
 #+CAPTION: 语法
-#+BEGIN_SRC sh
+#+begin_src sh
 # Comment                  # 注释
 <target>: <dependency> ... # 依赖文件更新后（通过比较时间戳），才重新编译这个目标
     <command>              # 需要以 tab 开头
-#+END_SRC
+#+end_src
 
 -----
 
 #+CAPTION: =target= 为可执行文件（通常是 =makefile= 中第一个目标）
-#+BEGIN_SRC sh
+#+begin_src sh
 exe: alpha.o beta.o gamma.o
     g++ -Wall alpha.o beta.o gamma.o -o exe
-#+END_SRC
+#+end_src
 
 #+CAPTION: =target= 为 =.o= 文件
-#+BEGIN_SRC sh
+#+begin_src sh
 alpha.o: alpha.cpp alpha.h beta.h # alpha.cpp 依赖于（#include） beta.h
     g++ -Wall -c alpha.cpp        # 使用 -c 选项只生成 .o 文件
 
 beta.h: gamma.h # beta.h 依赖于 gamma.h，因此 alpha.o 也依赖于 gamma.h
                 # 单独声明传递的（非直接的）依赖，更简洁，也避免遗漏
-#+END_SRC
+#+end_src
 
 -----
 
 #+CAPTION: macros
-#+BEGIN_SRC sh
+#+begin_src sh
 OBJS = src1.o src2.o
 CC = g++
 DEBUG = -g                 # Flags for debugging
@@ -1578,7 +1578,7 @@ LFLAGS = -Wall $(DEBUG)    # Flags for linking
 
 p1: $(OBJS)
     $(CC) $(LFLAGS) $(OBJS) -o p1
-#+END_SRC
+#+end_src
 
 -----
 
@@ -1586,21 +1586,21 @@ Dummy targets
 - used to run commands without creating targets
 
 #+CAPTION: =make clean=
-#+BEGIN_SRC sh
+#+begin_src sh
 clean:
     \rm *.o *~ exe # 删除所有 .o 文件、emacs 备份文件、指定可执行文件
-#+END_SRC
+#+end_src
 
 #+CAPTION: =make tar=
-#+BEGIN_SRC sh
+#+begin_src sh
 tar:
     tar cvf project.tar alpha.h alpha.cpp beta.h ...
-#+END_SRC
+#+end_src
 
 #+CAPTION: =make all=
-#+BEGIN_SRC sh
+#+begin_src sh
 all: exe1 exe2 ... # 一次生成多个可执行文件
-#+END_SRC
+#+end_src
 
 * Links
 

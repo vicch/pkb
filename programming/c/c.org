@@ -100,11 +100,11 @@ file:../images/c_language/01.jpg
 - 由单引号包围的字符，在表达式中等于 =int= 类型，值为字符在字符集（如 ASCII）中对应的数值。
 - =char= 作为 =int= 时，有可能成为负值，为了可移植性，当 =char= 存储非字符数据时，应当指明 =signed= 或 =unsigned= 。
 
-#+BEGIN_SRC c
+#+begin_src c
 int i;
 char c;
 i = c - '0'; // 表示字符对应的数值
-#+END_SRC
+#+end_src
 
 *** 字符转义
 
@@ -139,21 +139,21 @@ i = c - '0'; // 表示字符对应的数值
 由双引号包围的字符序列，即使只有一个字符（或没有字符）。
 
 #+CAPTION: 字符串常量不等于字符常量
-#+BEGIN_SRC c
+#+begin_src c
 '\n' != "\n"
-#+END_SRC
+#+end_src
 
 #+CAPTION: 字符串作为实参时，传递的是字符指针
-#+BEGIN_SRC c
+#+begin_src c
 printf("Hello, world.\n");
-#+END_SRC
+#+end_src
 
 #+CAPTION: 字符串连接（可用于将长字符串分割为多行）
-#+BEGIN_SRC c
+#+begin_src c
 "Hello," "world."
 // 等价于
 "Hello, world."
-#+END_SRC
+#+end_src
 
 ** 类型转换
 *** 自动转换
@@ -167,22 +167,22 @@ printf("Hello, world.\n");
 - =?:= 表达式的类型与条件是否成立无关，总是两个选项中较长的类型。
 
 #+CAPTION: 示例：整数除法操作会被截断（truncate），要保留小数部分需要使用浮点数
-#+BEGIN_SRC c
+#+begin_src c
 float a = 9 / 5;     // 1.0
 float b = 9.0 / 5.0; // 1.8
 float c = 9 / 5.0;   // 1.8
-#+END_SRC
+#+end_src
 
 *** 显式转换
 
-#+BEGIN_SRC c
+#+begin_src c
 (<type>)<expr>
-#+END_SRC
+#+end_src
 
 ** =typedef=
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 typedef struct {
     int value;
 } MyStruct;
@@ -195,14 +195,14 @@ struct MyStruct {
 }
 
 struct MyStruct* a;
-#+END_SRC
+#+end_src
 
 ** =volatile=
 
 =volatile= 表示变量的值可能由外部（操作系统、硬件、其他线程等）修改，避免编译器进行优化，可用于多线程程序中的全局变量。
 
 #+CAPTION: 声明
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int volatile a;
 volatile int a;
 
@@ -212,10 +212,10 @@ volatile int* a;
 int* volatile a; // 指向普通整数的 volatile 指针
 
 int volatile* volatile a; // 指向 volatile 整数的 volatile 指针
-#+END_SRC
+#+end_src
 
 #+CAPTION: 编译器优化示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int opt = 1; // 避免优化：volatile int opt = 1;
 void foo() {
   start:
@@ -228,14 +228,14 @@ void foo() {
   if (true)
   goto start;
 }
-#+END_SRC
+#+end_src
 
 * 数组
 
 #+CAPTION: 声明
-#+BEGIN_SRC c
+#+begin_src c
 <type> <name>[<length>] = {<value>, ...};
-#+END_SRC
+#+end_src
 
 数组名的值等于数组首元素的地址，即 =arr= 等价于 =&arr[0]= 。
 
@@ -244,25 +244,25 @@ void foo() {
 数组名作实参时，传递的是数组首元素的地址。
 
 #+CAPTION: 数组形式和指针形式的形参等价
-#+BEGIN_SRC c
+#+begin_src c
 int strlen(char s[]);
 int strlen(char* s); // 通常使用指针形式
-#+END_SRC
+#+end_src
 
 ** 数字数组
 
 #+CAPTION: 初始化示例
-#+BEGIN_SRC c
+#+begin_src c
 int seq[4] = {1, 2, 3, 4};
 int seq[]  = {1, 2, 3, 4};
 int seq[4] = {1, 2}; // 未初始化的元素自动填充 0
-#+END_SRC
+#+end_src
 
 ** 字符数组
 <<char_array>>
 
 #+CAPTION: 初始化
-#+BEGIN_SRC c
+#+begin_src c
 // 数组初始化
 char foo[5] = "Test";
 char foo[]  = "Test";
@@ -271,19 +271,19 @@ char foo[5] = {'T', 'e'}; // 未初始化的元素自动填充 0（即 '\0'）
 
 // 指针初始化
 char* foo = "Test";
-#+END_SRC
+#+end_src
 
 #+CAPTION: 修改
-#+BEGIN_SRC c
+#+begin_src c
 char foo[] = "Test";
 
 foo    = "Sample";     // "LVALUE Required" 错误
 foo[0] = "S";          // 使用下标修改
 strcpy(foo, "Sample"); // 使用 strcpy() 修改
-#+END_SRC
+#+end_src
 
 #+CAPTION: 初始化为数组和指针的区别
-#+BEGIN_SRC c
+#+begin_src c
 // 初始化为指针
 char* foo  = "Bar"; // 将 "Bar" 写入内存的只读区域，作为静态匿名数组，并将指针指向它
                     // 写操作都是非法的
@@ -294,20 +294,20 @@ char* foo = (char*) _anonymous_array;
 // 初始化为数组
 char foo[] = "Bar"; // 将 "Bar" 写入内存的只读区域，然后将内容复制到堆栈上新分配的内存中
                     // 写操作是合法的
-#+END_SRC
+#+end_src
 
 #+CAPTION: 作为函数参数时，数组形式和指针形式是等价的
-#+BEGIN_SRC c
+#+begin_src c
 void foo(char* s);
 void foo(char s[]);
-#+END_SRC
+#+end_src
 
 ** 字符串数组
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 char* strs[] = {"foo", "bar", "baz"};
-#+END_SRC
+#+end_src
 
 ** 数组 & 指针
 
@@ -315,7 +315,7 @@ char* strs[] = {"foo", "bar", "baz"};
 - 指向同一数组的指针可以通过 =>= =<= ~!=~ 等操作符进行比较，获得前后关系。
 
 #+CAPTION: 数组偏移， =pointer[n]= 等价于 =*(pointer+n)=
-#+BEGIN_SRC c
+#+begin_src c
 int   seq[]  = {1, 2, 3, 4};
 char* str    = "Test";
 char* strs[] = {"foo", "bar", "baz"};
@@ -329,7 +329,7 @@ printf("%s\n", strs[2]); // baz
 printf("%d\n", *(seq+2));  // 3
 printf("%c\n", *(str+2));  // s
 printf("%s\n", *(strs+2)); // baz
-#+END_SRC
+#+end_src
 
 -----
 
@@ -337,7 +337,7 @@ printf("%s\n", *(strs+2)); // baz
 - 数组名不是变量，初始化之后永远指向同一块内存空间。
 
 #+CAPTION: 
-#+BEGIN_SRC c
+#+begin_src c
 int a[] = {1,2,3};
 int* ap;
 
@@ -346,34 +346,34 @@ a = ap; // Error
 
 ap++; // OK
 a++;  // Error
-#+END_SRC
+#+end_src
 
 ** 多维数组 & 指针数组
 
 #+CAPTION: 多维数组定义
-#+BEGIN_SRC c
+#+begin_src c
 int nums[2][3] = {
     {1,2,3},
     {4,5,6}
 };
-#+END_SRC
+#+end_src
 
 #+CAPTION: 多维数组做函数参数时，必须声明除最高维以外的维度的大小
-#+BEGIN_SRC c
+#+begin_src c
 int nums[2][3] = ...;
 void foo(int nums[2][3]);
 void foo(int nums[][3]);
 void foo(int (*nums)[3]); // 声明参数是指向 13 个整数的数组的指针
-#+END_SRC
+#+end_src
 
 #+CAPTION: 多维数组的每个子数组有固定的大小，而指针数组的每个元素可以指向不同大小的子数组
-#+BEGIN_SRC c
+#+begin_src c
 int nums[10][20]; // 分配 200 个整数的空间
 int* nums[10];    // 分配 10 个指针的空间
 
 // 指针数组最常见的用法是存储不等长的字符串
 char* months[] = {"January", "February", "March", ...};
-#+END_SRC
+#+end_src
 
 * 指针
 
@@ -402,7 +402,7 @@ char* months[] = {"January", "February", "March", ...};
 |---------+----------+----------|
 | =key_2= | =addr_2= | =val_2=  |
 
-#+BEGIN_SRC sh
+#+begin_src sh
 key_1 -> val_1
 key_2 -> val_2
 &key_1 -> addr_1
@@ -414,7 +414,7 @@ key_1 = &key_2
 val_1 == addr_2
 # 则
 *key_1 -> val_2
-#+END_SRC
+#+end_src
 
 =key_1= 即为 =key_2= 的指针， =*key_1= 与 =key_2= 代表的值相同。
 
@@ -429,49 +429,49 @@ val_1 == addr_2
 ** 变量
 *** 声明
 
-#+BEGIN_SRC c
+#+begin_src c
 <type> *<name>
-#+END_SRC
+#+end_src
 
 - =name= 的值是一个地址，该地址用于存储一个 =<type>= 类型的值。
 - =*name= 的值是 =<type>= 类型。
 
 #+CAPTION: 示例 1
-#+BEGIN_SRC c
+#+begin_src c
 int *intptr;
 intptr = new int; // 分配内存（初始化被指向的空间）
 *intptr = 5;      // 分配内存后才可以引用 *intptr，否则会导致错误
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例 2
-#+BEGIN_SRC c
+#+begin_src c
 int my_int = 13;
 int *intptr = &my_int; // 指针指向的地址初始化为一个已有变量的地址
 *intptr = 42;          // my_int 的值变为 42
-#+END_SRC
+#+end_src
 
 *** 释放
 
-#+BEGIN_SRC c
+#+begin_src c
 void main() {
     float *ptr = new float;
     delete ptr;
 }
-#+END_SRC
+#+end_src
 
 ** 函数
 *** 参数指针
 
-#+BEGIN_SRC c
+#+begin_src c
 <type_1> <function>(<type_2> *<name>);
-#+END_SRC
+#+end_src
 
 - =function()= 的值是 =<type_1>= 类型。
 - =funciton()= 的参数是一个指向 =<type_2>= 类型的指针。
 - 调用函数时传入的参数值应该是一个地址： =function(&var)= 。
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 void Duplicate(int *a) {
     *a = 2;
 }
@@ -481,32 +481,32 @@ int main() {
     Duplicate(&x); // x == 2
     return 0;
 }
-#+END_SRC
+#+end_src
 
 *** 返回值指针
 
-#+BEGIN_SRC c
+#+begin_src c
 <type>* <function>(...);
-#+END_SRC
+#+end_src
 
 - =0= 是无效的地址，返回值为指针的函数可以通过返回 =0= 来表示错误，但通常使用 =NULL= 来确切表示无效的指针值。
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 struct bar* foo(struct bar* baz);
-#+END_SRC
+#+end_src
 
 *** 参数引用
 
-#+BEGIN_SRC c
+#+begin_src c
 <type_1> <function>(<type_2>& <name>);
-#+END_SRC
+#+end_src
 
 - 传入参数为变量引用。
 - 在函数内部对参数的修改会反映到传入的变量上。
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 void Duplicate(int& a) {
     a = 2;
 }
@@ -516,25 +516,25 @@ int main() {
     Duplicate(x); // x == 2
     return 0;
 }
-#+END_SRC
+#+end_src
 *** 返回值引用
 
-#+BEGIN_SRC c
+#+begin_src c
 <type>& <function>(...);
-#+END_SRC
+#+end_src
 
 *** 函数指针
 
 函数指针可用于回调函数。
 
-#+BEGIN_SRC c
+#+begin_src c
 int* foo(void);    // foo 是函数，函数返回值是 int 指针
 int (*foo)(void);  // foo 是函数指针，函数返回值是 int
 int* (*foo)(void); // foo 是函数指针，函数返回值是 int 指针
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 // 参数 comp 是指向函数的指针，该函数以两个指针为参数，返回 int 类型
 void qsort(void *lineptr[], int left, int right, int (*comp)(void *, void *))
 {
@@ -550,10 +550,10 @@ int main()
     // numcmp 和 strcmp 是函数的地址，被 cast 到 qsort 需要的函数指针类型
     qsort((void**) lineptr, 0, nlines-1, (int (*)(void*, void*))(numeric ? numcmp : strcmp));
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 typedef char (*trans_func)(char c);
 
 char* trans(char* str, trans_func func)
@@ -586,7 +586,7 @@ int main()
 
     return 0;
 }
-#+END_SRC
+#+end_src
 
 * 结构
 
@@ -596,18 +596,18 @@ int main()
 
 ** 声明
 
-#+BEGIN_SRC c
+#+begin_src c
 struct <name> {
     <type> <field>;
     ...
 };
-#+END_SRC
+#+end_src
 
 结构、结构成员、普通变量的名字可以重复，通过上下文可以进行区分。
 
 ** 初始化
 
-#+BEGIN_SRC c
+#+begin_src c
 struct foo {
     int bar;
     int baz;
@@ -615,49 +615,49 @@ struct foo {
 
 struct foo a, b, c;
 struct foo a = {.bar = 1, .baz = 2};
-#+END_SRC
+#+end_src
 
 #+CAPTION: 结构指针
-#+BEGIN_SRC c
+#+begin_src c
 struct foo* a = malloc(sizeof(struct foo));
-#+END_SRC
+#+end_src
 
 #+CAPTION: 匿名结构
-#+BEGIN_SRC c
+#+begin_src c
 struct {...} a, b, c;
-#+END_SRC
+#+end_src
 
 ** 访问
 *** 访问成员
 
-#+BEGIN_SRC c
+#+begin_src c
 <name>.<field>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 struct name {...};
 struct name a = {...};
 printf("%d", a.x);
-#+END_SRC
+#+end_src
 
 *** 通过结构指针访问成员
 
-#+BEGIN_SRC c
+#+begin_src c
 (*<name>).<field>
 // 等价于
 <name>-><field>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 struct name a, *ap;
 a.x = 1;
 ap = &a;
 printf("%d", (*ap).x);
 // 等价于
 printf("%d", ap->x);
-#+END_SRC
+#+end_src
 
 * 变量
 
@@ -693,20 +693,20 @@ printf("%d", ap->x);
 - 非本地变量只能初始化一次，且初始化值必须为常量表达式。
 - 外部变量、静态变量默认初始化为 0，未初始化的本地变量、寄存器变量的值是不确定的（garbage）。
 
-#+BEGIN_SRC c
+#+begin_src c
 int a = 1;     // OK
 int b = a + 1; // Error
 int main() {
     static int c = a + 2; // Error
     int d = a + 3;        // OK
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 数组初始化时，未指定的元素初始化为 0，适用于本地、外部、静态变量
-#+BEGIN_SRC c
+#+begin_src c
 int seq[5] = {1,2,3,4};
 printf("%d\n", seq[4]); // 0
-#+END_SRC
+#+end_src
 
 ** 本地变量
 
@@ -717,7 +717,7 @@ printf("%d\n", seq[4]); // 0
 - 本地变量会覆盖函数（或代码块）之外的同名变量，为避免混乱，应避免使用和外部变量同名的本地变量。
 
 #+CAPTION: 本地变量覆盖同名外部变量
-#+BEGIN_SRC c
+#+begin_src c
 // 非函数
 int i = 1, j = 2;
 if (1) {
@@ -738,7 +738,7 @@ int main()
     printf("%d,%d,%d\n", x, y, z); // 1,2,3
     foo(5);                        // 4,5,3
 }
-#+END_SRC
+#+end_src
 
 ** 外部变量
 
@@ -749,9 +749,9 @@ int main()
 - 对外部变量（或函数）的引用，即使在分别编译的函数里，指向也是相同的（reference to the same thing）。
 
 #+CAPTION: 在定义之前引用外部变量，或引用其他文件中的外部变量，必须使用 =extern= 声明。
-#+BEGIN_SRC c
+#+begin_src c
 extern <type> <name>;
-#+END_SRC
+#+end_src
 
 #+ATTR_HTML: :class no-border
 | *优点：* | 简化函数参数。                                                |
@@ -765,7 +765,7 @@ extern <type> <name>;
 - 访问其他文件中定义的外部变量时，必须 =extern= 显式声明。
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 // 定义
 int local1;
 char local2[10]; // 数组定义时必须指定大小
@@ -784,7 +784,7 @@ int main()
     extern int remote1;
     extern char remote2[];
 }
-#+END_SRC
+#+end_src
 
 通常做法：
 
@@ -796,12 +796,12 @@ int main()
 - 静态外部变量（或函数）的作用域只在当前文件，对当前文件的不同函数可见，但对其他文件不可见，不会和其他文件中的同名变量（和函数）冲突。
 - 静态本地变量的作用域与普通本地变量相同，但函数调用结束时不会消失，在下次调用时还保存最后的值，可以为函数提供私有的、永久的存储。
 
-#+BEGIN_SRC c
+#+begin_src c
 static <type> <name>;
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 char* monthName(int n)
 {
     static char* name[] = {
@@ -811,7 +811,7 @@ char* monthName(int n)
     };
     return (n < 1 || n > 12) ? name[0] : name[n];
 }
-#+END_SRC
+#+end_src
 
 ** 寄存器变量
 
@@ -821,9 +821,9 @@ char* monthName(int n)
 - 每个函数只允许有少量和特定类型的变量声明为 =register= ，具体限制依赖于硬件，声明超过限制和不支持类型的变量时， =register= 会编译器被忽略。
 - 声明为 =register= 的变量无法获取地址，无论其是否存储在寄存器中。
 
-#+BEGIN_SRC c
+#+begin_src c
 register <type> <name>;
-#+END_SRC
+#+end_src
 
 * 常量
 ** 常量
@@ -831,15 +831,15 @@ register <type> <name>;
 在变量声明前加 =const= 表示变量的值不会改变。
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 const double e = 2.71828182845905;
 e += 1.0; // Error
-#+END_SRC
+#+end_src
 
 #+CAPTION: 用 =const= 表示函数不会修改参数值
-#+BEGIN_SRC c
+#+begin_src c
 int strlen(const char[]);
-#+END_SRC
+#+end_src
 
 ** 符号常量
 <<symbolic_constant>>
@@ -854,11 +854,11 @@ int strlen(const char[]);
 - 不同列表中的常量名不能重复，同一列表中的常量值不能重复。
 
 #+CAPTION: 定义
-#+BEGIN_SRC c
+#+begin_src c
 enum months {JAN = 1, FEB, ...};
 // JAN =1, FEB = 2, ... 
 enum marks {GREAT = 'A', GOOD = 'B', AVERAGE = 'C', ...};
-#+END_SRC
+#+end_src
 
 * 运算符
 ** 优先级
@@ -907,35 +907,35 @@ enum marks {GREAT = 'A', GOOD = 'B', AVERAGE = 'C', ...};
 除以下运算符外，C 语言不规定表达式中操作数的计算顺序： =&&= 、 =||= 、 =?:= 、 @@html:<code>,</code>@@ 。
 
 #+CAPTION: 操作数计算顺序不确定
-#+BEGIN_SRC c
+#+begin_src c
 int n = f() + g(); // f() 和 g() 的调用顺序不确定
-#+END_SRC
+#+end_src
 
 #+CAPTION: 函数参数的计算顺序不确定
-#+BEGIN_SRC c
+#+begin_src c
 printf("%d %d\n", ++n, power(2, n)); // 不同编译器结果不同
-#+END_SRC
+#+end_src
 
 ** 赋值运算符
 
 赋值表达式的值，等于赋给左边变量的值。
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 int c;
 while ((c = getchar()) != EOF) putchar(c);
-#+END_SRC
+#+end_src
 
 -----
 
 赋值运算符的结合次序是从右至左。
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 a = b = c = 0;
 // 等价于
 a = ( b = (c = 0));
-#+END_SRC
+#+end_src
 
 ** 指针运算符
 
@@ -950,7 +950,7 @@ a = ( b = (c = 0));
 *** =*=
 
 #+CAPTION: =*= 和 =++= =--= 优先级相同，且自右至左结合
-#+BEGIN_SRC c
+#+begin_src c
 char* str = malloc(sizeof(char) * 4);
 str[0] = 'A', str[1] = 'C', str[2] = 'E', str[3] = '\0';
 
@@ -963,7 +963,7 @@ printf("%c,", *(++str)), printf("%s\n", str); // 等价
 printf("%c,", *str++),   printf("%s\n", str); // A,CE
 printf("%c,", *(str++)), printf("%s\n", str); // 等价
 printf("%c,", (*str)++), printf("%s\n", str); // A,BCE
-#+END_SRC
+#+end_src
 
 *** =&=
 
@@ -987,26 +987,26 @@ printf("%c,", (*str)++), printf("%s\n", str); // A,BCE
 | =~=                          | 按位取反                                                                                          |
 
 #+CAPTION: =&= 用于 mask
-#+BEGIN_SRC c
+#+begin_src c
 n = n & 0177; // n 除最后 7 位外全部变为 0
-#+END_SRC
+#+end_src
 
 #+CAPTION: =|= 用于打开位开关
-#+BEGIN_SRC c
+#+begin_src c
 x = x | SET_ON;
-#+END_SRC
+#+end_src
 
 ** =sizeof=
 
 =sizeof= 返回类型或变量的长度。
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 int seq[] = {1, 2, 3, 4, 5};
 sizeof(int);               // 4
 sizeof(seq);               // 20
 sizeof(seq) / sizeof(int); // 5
-#+END_SRC
+#+end_src
 
 ** 逗号
 
@@ -1015,9 +1015,9 @@ sizeof(seq) / sizeof(int); // 5
 - 整个表达式的类型和值等于最右的操作数。
 
 #+CAPTION: 交换数值。
-#+BEGIN_SRC c
+#+begin_src c
 tmp = a, a = b, b = tmp;
-#+END_SRC
+#+end_src
 
 * 语句
 ** =continue=
@@ -1028,35 +1028,35 @@ tmp = a, a = b, b = tmp;
 ** =for=
 
 #+CAPTION: =for= 的循环体可以为空
-#+BEGIN_SRC c
+#+begin_src c
 long nc;
 for (nc = 0; getchar() != EOF; nc++)
     ;
 printf("%d", nc);
-#+END_SRC
+#+end_src
 
 #+CAPTION: =for= 的条件可以为空，等于无限循环
-#+BEGIN_SRC c
+#+begin_src c
 for (;;) {
     ...
 }
-#+END_SRC
+#+end_src
 
 ** =goto=
 
-#+BEGIN_SRC c
+#+begin_src c
 goto <label>;
 ...
 <label>: // label 可以附加在同一函数中的任何语句
     ...
-#+END_SRC
+#+end_src
 
 - 可用于从嵌套的循环体中跳出（break out），因为 =break= 只能跳出一层循环体。
 - =goto= 总能用其他方法代替，但可能需要引入新的变量，或进行重复的测试。
 
 ** =if=
 
-#+BEGIN_SRC c
+#+begin_src c
 if (<expr>) {
     ...
 } else if (<expr>) {
@@ -1064,21 +1064,21 @@ if (<expr>) {
 } else {
     ...
 }
-#+END_SRC
+#+end_src
 
 -----
 
 #+CAPTION: =if= 测试表达式的数字值（numeric value），表达式可以进行简写。
-#+BEGIN_SRC c
+#+begin_src c
 if (<expr>)
 // 等价于
 if (<expr> != 0)
-#+END_SRC
+#+end_src
 
 -----
 
 #+CAPTION: =if= 嵌套时用 ={}= 关联 =if= 和 =else= ，否则 =else= 会关联到距离最近的没有 =else= 的 =if= 。
-#+BEGIN_SRC c
+#+begin_src c
 if (1)
     if (0)
         a = 1;
@@ -1090,11 +1090,11 @@ if (1) {
         a = 1;
 } else
     a = 2;
-#+END_SRC
+#+end_src
 
 ** =switch=
 
-#+BEGIN_SRC c
+#+begin_src c
 switch (<expr>) {
     case <expr>:
         <statement>;
@@ -1102,11 +1102,11 @@ switch (<expr>) {
     default:
         <statement>;
 }
-#+END_SRC
+#+end_src
 
 ** =while=
 
-#+BEGIN_SRC c
+#+begin_src c
 for (<expr1>; <expr2>; <expr3>) {
     <statement>;
 }
@@ -1116,7 +1116,7 @@ while (<expr2>) {
     <statement>;
     <expr3>;
 }
-#+END_SRC
+#+end_src
 
 * 函数
 
@@ -1124,14 +1124,14 @@ while (<expr2>) {
 
 ** 声明
 
-#+BEGIN_SRC c
+#+begin_src c
 <type> <function>(<arg>, ...);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 函数声明的形式和变量声明一致，可以同时声明：
-#+BEGIN_SRC c
+#+begin_src c
 double sum, atof(char s[]);
-#+END_SRC
+#+end_src
 
 ** 参数
 
@@ -1143,23 +1143,23 @@ double sum, atof(char s[]);
 -----
 
 #+CAPTION: 函数没有参数时，用 =void= 代替参数列表：
-#+BEGIN_SRC c
+#+begin_src c
 int foo(void);
-#+END_SRC
+#+end_src
 
 *** 传值 vs 传地址
 
 一般类型实参传递的是值，数组（指针）类型实参传递的是数组首元素的地址。
 
 #+CAPTION: 参数传值可以使程序更紧凑，传入参数作为已初始化的本地变量使用，可以对其进行任意修改：
-#+BEGIN_SRC c
+#+begin_src c
 int power(int b, int p)
 {
     int r = 1;
     while (p-- > 0) r *= b;
     return r;
 }
-#+END_SRC
+#+end_src
 
 ** 返回值
 
@@ -1167,9 +1167,9 @@ int power(int b, int p)
 
 ** 返回语句
 
-#+BEGIN_SRC c
+#+begin_src c
 return <expr>;
-#+END_SRC
+#+end_src
 
 - 表达式的值会被转换为返回值的类型。
 - 没有表达式的返回语句，只是把控制返回给调用方。
@@ -1181,7 +1181,7 @@ return <expr>;
 - 不要求有参数名，也不要求参数名和实际参数一致（但通过参数名可以更清晰地表明函数的使用方法）。
 
 #+CAPTION: 函数原型通常在文件开头，所有函数定义之前
-#+BEGIN_SRC c
+#+begin_src c
 ...
 int power(int, int);       // 函数原型
 ...
@@ -1189,10 +1189,10 @@ int power(int base, int n) // 函数声明
 {
     ...
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 函数原型也可以在其他函数内
-#+BEGIN_SRC c
+#+begin_src c
 int foo(int arg)
 {
     int bar(int arg);
@@ -1202,7 +1202,7 @@ int foo(int arg)
 int bar(int arg)
 {
 }
-#+END_SRC
+#+end_src
 
 -----
 
@@ -1213,9 +1213,9 @@ int bar(int arg)
 - 程序从 =main()= 开始执行，程序必须包含 =main()= 。
 - =main()= 的调用者是程序的执行环境。
 
-#+BEGIN_SRC c
+#+begin_src c
 int main(int argc, char *argv[]);
-#+END_SRC
+#+end_src
 
 | =argc= | =int=    | 命令行参数个数        |
 |--------+----------+-----------------------|
@@ -1226,7 +1226,7 @@ int main(int argc, char *argv[]);
 |        |          | 非 =0= 表示异常、出错 |
 
 #+CAPTION: 命令行参数示例
-#+BEGIN_SRC c
+#+begin_src c
 int main(int argc, char *argv[])
 {
     for (int i = 0; i < argc; i++) {
@@ -1240,7 +1240,7 @@ $ ./foo This is "a test"
 // arg 1 = This
 // arg 2 = is
 // arg 3 = a test
-#+END_SRC
+#+end_src
 
 * 程序
 ** 头文件
@@ -1256,9 +1256,9 @@ $ ./foo This is "a test"
 - 当一个文件被修改时，所有加载此文件的文件需要重新编译。
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 #include <library.h>
-#+END_SRC
+#+end_src
 
 ** =#define=
 <<define>>
@@ -1268,27 +1268,27 @@ $ ./foo This is "a test"
 - 作用域只在当前文件。
 - 名称只能用于标记（token），在引号内无效。
 
-#+BEGIN_SRC c
+#+begin_src c
 #define <name> <replacement> // 末尾没有 ;
 #define <name> ...\          // 用 \ 分隔为多行
 ...\
-#+END_SRC
+#+end_src
 
 #+CAPTION: 参数名前加 =#= ，表示将输入参数转换为字符串表示
-#+BEGIN_SRC c
+#+begin_src c
 #define tostr(expr) #expr
 printf(tostr(Hello\n)); // printf("Hello\n");
 
 #define dprint(expr) printf(#expr " = %g\n" expr)
 dprint(x / y); // printf("x / y" " = %g\n", x / y);
-#+END_SRC
+#+end_src
 
 #+CAPTION: =##= 表示将输入参数连接为新的标记
-#+BEGIN_SRC c
+#+begin_src c
 #define concat(a, b) a ## b // ## 两边的空格被忽略
 int foobar = 1;
 printf("%d\n", concat(foo, bar)); // 1
-#+END_SRC
+#+end_src
 
 *** 宏
 
@@ -1297,14 +1297,14 @@ printf("%d\n", concat(foo, bar)); // 1
 - 宏可以减少调用函数的消耗，可用于频繁使用的操作，如 =getchar= 和 =putchar= 。
 
 #+CAPTION: 示例
-#+BEGIN_SRC c
+#+begin_src c
 #define FOREVER for(;;)
 #define SQR(A) (A) * (A) // 用 () 确保计算顺序
 #define MAX(A, B) ((A) > (B) ? (A) : (B))
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例：复合宏
-#+BEGIN_SRC c
+#+begin_src c
 #define FUNCTION(name, compare)\
 void name(int& a, int& b) {\
     if (b compare a) a = b;\
@@ -1315,21 +1315,21 @@ FUNCTION(max, >)
 
 min(a, b); // 将较小的值赋给 a
 max(a, b); // 将较大的值赋给 a
-#+END_SRC
+#+end_src
 
 ** =#undef=
 
 - 删除已定义的符号常量或宏。
 - 可用于确保一个名称是函数而不是宏。
 
-#+BEGIN_SRC c
+#+begin_src c
 #undef getchar
 int getchar(void);
-#+END_SRC
+#+end_src
 
 ** =#if= =#elif= =#else= =#endif=
 
-#+BEGIN_SRC c
+#+begin_src c
 #if <expr>
     ...
 #elif <expr>
@@ -1337,20 +1337,20 @@ int getchar(void);
 #else
     ...
 #endif
-#+END_SRC
+#+end_src
 
 - =<expr>= 是整数常量表达式（不包括 =sizeof()= 、类型转换、枚举常量）。
 
 #+CAPTION: 确保文件只加载一次
-#+BEGIN_SRC c
+#+begin_src c
 #if !defined(FOO)
 #define FOO
 #include "foo.h"
 #endif
-#+END_SRC
+#+end_src
 
 #+CAPTION: 选择性加载文件
-#+BEGIN_SRC c
+#+begin_src c
 #if SYSTEM == SYSV
     #define HDR "sysv.h"
 #elif SYSTEM == BSD
@@ -1361,7 +1361,7 @@ int getchar(void);
     #define HDR "default.h"
 #endif
 #include HDR
-#+END_SRC
+#+end_src
 
 ** =#ifdef= =#ifndef=
 
@@ -1369,20 +1369,20 @@ int getchar(void);
 - =#ifndef= 等价于 =#if !defined()= 。
 
 #+CAPTION: 确保文件只加载一次
-#+BEGIN_SRC c
+#+begin_src c
 #ifndef FOO
 #define FOO
 #include "foo.h"
 #endif;
-#+END_SRC
+#+end_src
 
 ** =#error=
 
-#+BEGIN_SRC c
+#+begin_src c
 #if !defined FUNCTION || !defined INF
 #error Missing preprocessor definitions
 #endif 
-#+END_SRC
+#+end_src
 
 * 编译
 
@@ -1397,33 +1397,33 @@ int getchar(void);
 
 ** =cc=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 cc <options> <file>.c
     -Wall # Warnings
-#+END_SRC
+#+end_src
 
 ** =gcc=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 gcc <options> <file>.c
     -o <file> # 输出文件名
-#+END_SRC
+#+end_src
 
 ** =make=
 
 #+CAPTION: 示例
-#+BEGIN_SRC sh
+#+begin_src sh
 make foo
 # 等价于
 cc foo.c -o foo
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC sh
+#+begin_src sh
 CFLAGS="-Wall" make foo
 # 等价于
 cc -Wall foo.c -o foo
-#+END_SRC
+#+end_src
 
 ** =makefile=
 
@@ -1433,30 +1433,30 @@ cc -Wall foo.c -o foo
 - 命令：编译目标的命令
 
 #+CAPTION: =makefile= 语法
-#+BEGIN_SRC sh
+#+begin_src sh
 <NAME>=<value>             # 环境变量，e.g. CFLAGS=-Wall
 
 # Comment                  # 注释
 <target>: <dependency> ... # 依赖文件更新后（通过比较时间戳），才重新编译这个目标
     <command>              # 需要以 tab 开头
-#+END_SRC
+#+end_src
 
 #+CAPTION: =make= 命令
-#+BEGIN_SRC sh
+#+begin_src sh
 make <target>
-#+END_SRC
+#+end_src
 
 *** 条目示例
 
 #+CAPTION: 清除编译结果
-#+BEGIN_SRC sh
+#+begin_src sh
 # makefile
 clean:
     rm -f foo
 
 # make
 make clean
-#+END_SRC
+#+end_src
 
 * 标准
 ** ANSI C

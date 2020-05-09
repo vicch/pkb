@@ -100,12 +100,12 @@ file:../images/mongodb/02.png
 
 ** =find()=
 
-#+BEGIN_SRC code
+#+begin_src code
 db.<collection>.find(
     <condition>,
     <projection>
 ).<modifier>()
-#+END_SRC
+#+end_src
 
 file:../images/mongodb/05.png
 
@@ -159,35 +159,35 @@ file:../images/mongodb/06.png
 | =remove(<cond>, <max>)=                                 | 最多移除几条         |
 
 =<document>=
-#+BEGIN_SRC code
+#+begin_src code
 {
     _id: ObjectId(...),
     <key>: <value>,
     ...
 }
-#+END_SRC
+#+end_src
 
 * 命令行
 
 服务
-#+BEGIN_SRC sh
+#+begin_src sh
 sudo service mongod start
 sudo service mongod stop
 sudo service mongod restart
-#+END_SRC
+#+end_src
 
 启动
-#+BEGIN_SRC sh
+#+begin_src sh
 sudo mongod --config=/etc/mongod.conf
-#+END_SRC
+#+end_src
 
 连接
-#+BEGIN_SRC sh
+#+begin_src sh
 mongo
-#+END_SRC
+#+end_src
 
 导出
-#+BEGIN_SRC sh
+#+begin_src sh
 mongoexport <options>
     --host <>
     --port <>
@@ -202,10 +202,10 @@ mongoexport <options>
 
 ## eg.
 mongoexport --db vdict --collection word --out word.json
-#+END_SRC
+#+end_src
 
 导入
-#+BEGIN_SRC sh
+#+begin_src sh
 mongoimport <options>
     --db <>
     --collection <>
@@ -214,11 +214,11 @@ mongoimport <options>
 
 ## eg.
 mongoimport --db vdict --collection word --file word.json
-#+END_SRC
+#+end_src
 
 * 安装
 
-#+BEGIN_SRC sh
+#+begin_src sh
 ## 导入公共 GPG key
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 
@@ -230,6 +230,6 @@ sudo apt-get update
 
 ## 安装 MongoDB 包（最新）
 sudo apt-get install -y mongodb-org
-#+END_SRC
+#+end_src
 
 http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/

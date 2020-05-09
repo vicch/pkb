@@ -30,29 +30,29 @@
 * 语法
 ** 注释
 
-#+BEGIN_SRC smarty
+#+begin_src smarty
 {* Comment *}
-#+END_SRC
+#+end_src
 
 ** 配置
 
 #+CAPTION: 加载配置文件（路径为实例化 Smarty 对象时设置的 =config_dir= ）：
-#+BEGIN_SRC smarty
+#+begin_src smarty
 {config_load file="site.conf"}
-#+END_SRC
+#+end_src
 
 #+CAPTION: 读取配置文件中的变量：
-#+BEGIN_SRC smarty
+#+begin_src smarty
 {#var#}
 {$smarty.config.var}
-#+END_SRC
+#+end_src
 
 ** 示例
 
-#+BEGIN_SRC smarty
+#+begin_src smarty
 {* Smarty *} // 模板注释，模板文件最好以此类注释开头
 Hello {$name}, welcome to Smarty!
-#+END_SRC
+#+end_src
 
 * 运算符
 
@@ -87,20 +87,20 @@ Hello {$name}, welcome to Smarty!
 * 语句
 ** =if=
 
-#+BEGIN_SRC smarty
+#+begin_src smarty
 {if ...}
 {elseif ...}
 {else}
 {/if}
-#+END_SRC
+#+end_src
 
 ** =foreach=
 *** Smarty 2
 
-#+BEGIN_SRC smarty
+#+begin_src smarty
 {foreach from= key= item= name= }
 {/foreach}
-#+END_SRC
+#+end_src
 
 | =from= | Array  | 遍历的数组变量       |
 |--------+--------+----------------------|
@@ -126,7 +126,7 @@ Hello {$name}, welcome to Smarty!
 
 *** Smarty 3
 
-#+BEGIN_SRC smarty
+#+begin_src smarty
 {foreach $array as $item}
 {/foreach}
 
@@ -136,7 +136,7 @@ Hello {$name}, welcome to Smarty!
 {break}
 
 {continue}
-#+END_SRC
+#+end_src
 
 #+CAPTION: =foreach= 变量
 | =$item@index=     |   |
@@ -154,7 +154,7 @@ Hello {$name}, welcome to Smarty!
 * 示例
 
 #+CAPTION: 目录结构
-#+BEGIN_SRC sh
+#+begin_src sh
 project/
     cache/
     images/
@@ -173,10 +173,10 @@ project/
     styles/
         styles.css          # 样式
         yui_styles.css      # YUI 包文件
-#+END_SRC
+#+end_src
 
 #+CAPTION: =includ/config.php=
-#+BEGIN_SRC php
+#+begin_src php
 define('SITE_ROOT', dirname(dirname(__FILE__)));
 define('PRESENTATION_DIR', SITE_ROOT . '/presentation/');
 define('BUSINESS_DIR', SITE_ROOT . '/business/');
@@ -184,15 +184,15 @@ define('SMARTY_DIR', SITE_ROOT . '/libs/smarty/');
 define('TEMPLATE_DIR', PRESENTATION_DIR . 'templates');
 define('COMPILE_DIR', PRESENTATION_DIR . 'templates_c');
 define('CONFIG_DIR', SITE_ROOT . '/include/configs');
-#+END_SRC
+#+end_src
 
 #+CAPTION: =include/configs/site.conf=
-#+BEGIN_SRC code
+#+begin_src code
 site_title = "Site Title"
-#+END_SRC
+#+end_src
 
 #+CAPTION: =presentation/application.php=
-#+BEGIN_SRC php
+#+begin_src php
 require_once SMARTY_DIR . 'Smarty.class.php';
 class Application extends Smarty
 {
@@ -204,65 +204,65 @@ class Application extends Smarty
         $this->config_dir = CONFIG_DIR;
     }
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: =index.php=
-#+BEGIN_SRC php
+#+begin_src php
 require_once 'include/config.php';
 require_once PRESENTATION_DIR . 'application.php';
 $application = new Application();
 $application->display('store_front.tpl');
-#+END_SRC
+#+end_src
 
 #+CAPTION: =presentation/templates/store_front.tpl=
-#+BEGIN_SRC html
+#+begin_src html
 {* smarty *}
 {config_load file="site.conf"}
 <!DOCTYPE html>
 <html>
     <head>
         <title>{#site_title#}</title>
-#+END_SRC
+#+end_src
 
 #+CAPTION: =styles/styles.css=
-#+BEGIN_SRC css
+#+begin_src css
 @import "reset-min.css";
 @import "base-min.css";
 @import "fonts-min.css";
 @import "grids-min.css";
-#+END_SRC
+#+end_src
 
 * 安装
 
 1 - 下载 Smarty 库，将文件放入项目根目录或公用目录下的 =libs/smarty= 。
 
 #+CAPTION: 2 - 将 Smarty 文件加入 =php.ini= 的包含路径：
-#+BEGIN_SRC code
+#+begin_src code
 include_path = ".:/usr/share/php:/usr/local/lib/Smarty-v.e.r/libs/smarty/"
-#+END_SRC
+#+end_src
 
 #+CAPTION: 或定义常量 =SMARTY_DIR= ：
-#+BEGIN_SRC php
+#+begin_src php
 define('SMARTY_DIR', '/usr/local/lib/Smarty-v.e.r/libs/smarty/');
-#+END_SRC
+#+end_src
 
 #+CAPTION: 或直接以绝对路径加载文件：
-#+BEGIN_SRC php
+#+begin_src php
 require_once('/usr/local/lib/Smarty-v.e.r/libs/smarty/Smarty.class.php');
-#+END_SRC
+#+end_src
 
 #+CAPTION: 3 - 根目录下建立：
-#+BEGIN_SRC sh
+#+begin_src sh
 templates/
 templates_c/ # 需要写权限
 configs/
 cache/       # 需要写权限
-#+END_SRC
+#+end_src
 
 4 - =.tpl= 文件放置在 =templates/= 目录下。
 
 #+CAPTION: 5 - =index.php= 中初始化 Smarty，显示模板：
-#+BEGIN_SRC php
+#+begin_src php
 require_once(SMARTY_DIR . 'Smarty.class.php');
 $smarty = new Smarty();
 $smarty->setTemplateDir('/web/localhost/project/templates/');
@@ -272,7 +272,7 @@ $smarty->setCacheDir('/web/localhost/project/cache/');
 $smarty->assign('name','Your Name');
 // $smarty->debugging = true;
 $smarty->display('index.tpl');
-#+END_SRC
+#+end_src
 * 资源
 
 1. [[http://www.smarty.net/docs/en/][Smarty 3 Manual]]

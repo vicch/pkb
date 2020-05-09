@@ -91,7 +91,7 @@ Implemented as red-black tree.
 
 ** =[]=
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 map<string, int> m;
 map<string, int>::iterator i;
 
@@ -105,22 +105,22 @@ cout << m['a'] << endl; // Key 不存在时值为 0
 // 等价于
 i = m.find('a');
 cout << (i == m.end() ? 0 : i->second) << endl;
-#+END_SRC
+#+end_src
 
 ** =find()=
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 iterator find (const key_type& k);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 map<string, int> m;
 map<string, int>::iterator i;
 
 i = m.find('a');
 cout << (i == m.end() ? 'Not found' : i->second) << endl;
-#+END_SRC
+#+end_src
 
 * =<queue>=
 
@@ -180,13 +180,13 @@ Implemented as hash table (buckets). Average search, insertion, removal time is 
 
 [[https://en.cppreference.com/w/cpp/container/unordered_map/find][C++ Reference | Containers Library | =std::unordered_map= | =find=]]
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 iterator find( const Key& key );
-#+END_SRC
+#+end_src
 
 Returns iterator to an element with key equivalent to =key=. If no such element is found, past-the-end iterator =end()= is returned:
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 std::unordered_map<int,char> example = { {1, 'a'}, {2, 'b'} };
  
 auto search = example.find(2);
@@ -195,7 +195,7 @@ if (search != example.end()) {
 } else {
     std::cout << "Not found\n";
 }
-#+END_SRC
+#+end_src
 
 * =<vector>=
 
@@ -233,7 +233,7 @@ if (search != example.end()) {
 
 ** Constructor
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int n[] = {1,2,3};
 
 // 定义
@@ -248,23 +248,23 @@ vector<vector<int>> foo7 (n, vector<int> (m));     // 二维
 // 初始化
 vector<int> foo8 = {1, 2, 3};
 vector<int> foo() { return vector<int> {1, 2, 3}; }
-#+END_SRC
+#+end_src
 
 ** =push_back()=
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 void push_back (const value_type& val);
-#+END_SRC
+#+end_src
 
 ** =erase()=
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 iterator erase (iterator position);
 iterator erase (iterator first, iterator last);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 v.erase(v.begin() + 4);                // 移除第 5 个元素
 v.erase(v.begin() + 1, v.begin() + 3); // 移除第 2 至第 3 个元素
-#+END_SRC
+#+end_src

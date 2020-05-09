@@ -18,12 +18,12 @@ Code should be easy to understand.
 ** Is Smaller Always Better?
 
 #+CAPTION: Fewer lines isn't always better
-#+BEGIN_SRC java
+#+begin_src java
 assert((!(bucket = FindBucket(key))) || !bucket->IsOccupied());
 // ->
 bucket = FindBucket(key);
 if (bucket != NULL) assert(!bucket->IsOccupied());
-#+END_SRC
+#+end_src
 
 ** Does Time-Till-Understanding Conflict with Other Goals?
 
@@ -61,18 +61,18 @@ It's better to be clear and precise than to be cute.
 +Pick a name that describes the entity's value or purpose.+
 
 #+CAPTION: Announce the purpose of the variable upfront might help catch a bug.
-#+BEGIN_SRC java
+#+begin_src java
 retval += v[i];
 // ->
 sum_squares += v[i]; // Where's the square? Bug!
-#+END_SRC
+#+end_src
 
 The name =tmp= should be used only in cases when being short-lived and temporary is the most important fact about that variable, for example, in the case of swapping two variables.
 
 Names like =i=, =j=, =iter=, and =it= are commonly used as indices and loop iterators.
 
 #+CAPTION: Sometimes more precise names are better for spotting bugs.
-#+BEGIN_SRC java
+#+begin_src java
 for (int i = 0; i < clubs.size(); i++)
     for (int j = 0; j < clubs[i].members.size(); j++)
         for (int k = 0; k < users.size(); k++)
@@ -81,26 +81,26 @@ for (int i = 0; i < clubs.size(); i++)
 // -> Use indexes ci, mi, ui
 if (clubs[ci].members[ui] == users[mi]) // Bug! First letters don't match up.
 if (clubs[ci].members[mi] == users[ui]) // OK. First letters match.
-#+END_SRC
+#+end_src
 ** Prefer Concrete Names over Abstract Names
 
 Describe functions, variables concretely rather than abstractly.
 
 #+CAPTION: In C++, to disallow default copy constructor and assignment operator of a class:
-#+BEGIN_SRC cpp
+#+begin_src cpp
 #define DISALLOW_EVIL_CONSTRUCTORS(ClassName) ...
 // The word "evil" is not clear
 // A better macro name:
 #define DISALLOW_COPY_AND_ASSIGN(ClassName) ...
-#+END_SRC
+#+end_src
 
 #+CAPTION: A command-line flag that prints debugging information but runs slowly, used when testing on a local machine:
-#+BEGIN_SRC sh
+#+begin_src sh
 --run_locally
 # To print debugging information remotely, Passing --run_locally is confusing
 # A more explicit flag:
 --extra_logging
-#+END_SRC
+#+end_src
 
 Don't try to smash two orthogonal ideas into one to control both at once.
 
@@ -140,13 +140,13 @@ Attach extra information whenever there's something dangerous or surprising abou
 ** How Long Should a Name Be?
 
 #+CAPTION: Shorter names can be used for shorter scopes, where all information (variable type, initial value, how it's destroyed) is easy to see.
-#+BEGIN_SRC java
+#+begin_src java
 if (debug) {
     map<string,int> m;
     LookUpNamesNumbers(&m);
     Print(m);
 }
-#+END_SRC
+#+end_src
 
 If an identifier has a large scope, it needs to carry enough information to make it clear.
 
@@ -171,13 +171,13 @@ Follow naming conventions and be consistent. Use =UPPERCASE=, =CamelCase= and =_
 -----
 
 #+CAPTION: Rename a function that clips the contents of a paragraph:
-#+BEGIN_SRC python
+#+begin_src python
 def Clip(text, length):
 # If it removes length from the end:
 ?
 # If it truncates to a maximum length:
 def Truncate(text, max_chars):
-#+END_SRC
+#+end_src
 
 ** Naming Limits
 
@@ -187,12 +187,12 @@ def Truncate(text, max_chars):
 | Inclusive/exclusive limits | =begin= =end=  |
 
 #+CAPTION: Inclusive/exclusive limits example
-#+BEGIN_SRC python
+#+begin_src python
 # To print events that happened on October 16
 PrintEventsInRange("OCT 16 12:00am", "OCT 17 12:00am") # Inclusive/exclusive limits
 # is easier than
 PrintEventsInRange("OCT 16 12:00am", "OCT 16 11:59:59.9999pm") # Inclusive limits
-#+END_SRC
+#+end_src
 
 The word "end" is a still little ambiguous. Unfortunately, English doesn't have a succinct word for "just past the last value".
 
@@ -201,16 +201,16 @@ The word "end" is a still little ambiguous. Unfortunately, English doesn't have 
 Be sure it's clear what =true= and =false= really mean for a boolean.
 
 #+CAPTION: Adding words like =is= , =has= , =can= , or =should= can make booleans more clear.
-#+BEGIN_SRC python
+#+begin_src python
 def SpaceLeft():    # Implying return a number
 def HasSpaceLeft(): # Implying return a boolean
-#+END_SRC
+#+end_src
 
 #+CAPTION: Avoid negated terms in a name.
-#+BEGIN_SRC python
+#+begin_src python
 disable_ssl = false; # Needs thinking
 use_ssl = true;      # Easier to read
-#+END_SRC
+#+end_src
 
 ** Matching Expectations of Users
 

@@ -37,51 +37,51 @@
 ** =CREATE=
 *** =CREATE DATABASE=
 
-#+BEGIN_SRC sql
+#+begin_src sql
 CREATE {DATABASE | SCHEMA} [IF NOT EXISTS] db_name
     [create_specification] ...
 
 create_specification:
     [DEFAULT] CHARACTER SET [=] charset_name
   | [DEFAULT] COLLATE [=] collation_name
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC sql
+#+begin_src sql
 CREATE DATABASE `foo`
 DEFAULT CHARACTER SET utf8
 DEFAULT COLLATE utf8_unicode_ci;
-#+END_SRC
+#+end_src
 
 * DMS
 * DAS
 ** =SHOW=
 *** =SHOW CREATE TABLE=
 
-#+BEGIN_SRC sql
+#+begin_src sql
 SHOW CREATE TABLE tbl_name
-#+END_SRC
+#+end_src
 
 *** =SHOW DATABASES=
 
-#+BEGIN_SRC sql
+#+begin_src sql
 SHOW {DATABASES | SCHEMAS}
     [LIKE 'pattern' | WHERE expr]
-#+END_SRC
+#+end_src
 
 *** =SHOW TABLES=
 
-#+BEGIN_SRC sql
+#+begin_src sql
 SHOW [FULL] TABLES
     [{FROM | IN} db_name]
     [LIKE 'pattern' | WHERE expr]
-#+END_SRC
+#+end_src
 
 * SQL
 ** 表
 *** =CREATE=
 
-#+BEGIN_SRC sql
+#+begin_src sql
 CREATE [TEMPORARY] TABLE [IF NOT EXISTS] tbl_name
     (create_definition,...)
     [table_options]
@@ -95,9 +95,9 @@ CREATE [TEMPORARY] TABLE [IF NOT EXISTS] tbl_name
 
 CREATE [TEMPORARY] TABLE [IF NOT EXISTS] tbl_name
     { LIKE old_tbl_name | (LIKE old_tbl_name) }
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC sql
+#+begin_src sql
 create_definition:
     col_name column_definition
   | [CONSTRAINT [symbol]] PRIMARY KEY [index_type] (index_col_name,...)
@@ -112,9 +112,9 @@ create_definition:
   | [CONSTRAINT [symbol]] FOREIGN KEY
       [index_name] (index_col_name,...) reference_definition
   | CHECK (expr)
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC sql
+#+begin_src sql
 column_definition:
     data_type [NOT NULL | NULL] [DEFAULT default_value]
       [AUTO_INCREMENT] [UNIQUE [KEY] | [PRIMARY] KEY]
@@ -124,9 +124,9 @@ column_definition:
   | data_type [GENERATED ALWAYS] AS (expression)
       [VIRTUAL | STORED] [UNIQUE [KEY]] [COMMENT comment]
       [NOT NULL | NULL] [[PRIMARY] KEY]
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC sql
+#+begin_src sql
 
 data_type:
     BIT[(length)]
@@ -169,12 +169,12 @@ data_type:
   | SET(value1,value2,value3,...)
       [CHARACTER SET charset_name] [COLLATE collation_name]
   | spatial_type
-#+END_SRC
+#+end_src
 
 http://dev.mysql.com/doc/refman/5.7/en/create-table.html
 
 #+CAPTION: 示例
-#+BEGIN_SRC sql
+#+begin_src sql
 CREATE TABLE `data` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `dt` int(10) unsigned NOT NULL,
@@ -182,13 +182,13 @@ CREATE TABLE `data` (
   PRIMARY KEY (`id`),
   KEY `dt` (`dt`,`count`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-#+END_SRC
+#+end_src
 
 *** =TRUNCATE=
 
-#+BEGIN_SRC sql
+#+begin_src sql
 TRUNCATE <table>;
-#+END_SRC
+#+end_src
 
 删除表中所有记录时， =TRUNCATE= 比 =DELETE= 效率高。
 
@@ -196,37 +196,37 @@ TRUNCATE <table>;
 
 *** =DROP=
 
-#+BEGIN_SRC sql
+#+begin_src sql
 DROP <table>;
-#+END_SRC
+#+end_src
 
 ** 列
 *** 添加列
 
-#+BEGIN_SRC sql
+#+begin_src sql
 ALTER TABLE `table` ADD COLUMN `column` <type> [<options>];
 
 <options>
     NOT NULL
     DEFAULT <default>    
-#+END_SRC
+#+end_src
 
 *** 删除列
 
-#+BEGIN_SRC sql
+#+begin_src sql
 ALTER TABLE `table` DROP COLUMN `column`;
-#+END_SRC
+#+end_src
 
 *** 修改列
 
-#+BEGIN_SRC sql
+#+begin_src sql
 ALTER TABLE <table> CHANGE COLUMN <old_column> <new_column> [<options>];
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC sql
+#+begin_src sql
 ALTER TABLE month_report CHANGE COLUMN value value (varchar(50) NOT NULL);
-#+END_SRC
+#+end_src
 
 * 函数
 ** 数字
@@ -245,10 +245,10 @@ ALTER TABLE month_report CHANGE COLUMN value value (varchar(50) NOT NULL);
 *** =REGEXP=
 
 #+CAPTION: 示例：查询（非）元音字母开头的城市名称
-#+BEGIN_SRC sql
+#+begin_src sql
 SELECT DISTINCT city FROM station WHERE city REGEXP '^[AEIOU]';
 SELECT DISTINCT city FROM station WHERE city NOT REGEXP '^[AEIOU]';
-#+END_SRC
+#+end_src
 
 ** 日期
 
@@ -256,22 +256,22 @@ SELECT DISTINCT city FROM station WHERE city NOT REGEXP '^[AEIOU]';
 
 *** =DATE_ADD()=
 
-#+BEGIN_SRC sql
+#+begin_src sql
 DATE_ADD(<date>, INTERVAL <expr> <type>)
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例 1
-#+BEGIN_SRC sql
+#+begin_src sql
 SELECT id, DATE_ADD(curr_date, INTERVAL 30 DAY) AS future_date;
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例 2：在天气记录中查找所有气温高于前一天气温的日期
-#+BEGIN_SRC sql
+#+begin_src sql
 SELECT w1.id
 FROM weather w1, weather w2
 WHERE w1.date = DATE_ADD(w2.date, INTERVAL 1 DAY)
 AND w1.temperature > w2.temperature;
-#+END_SRC
+#+end_src
 
 ** 控制流
 
@@ -286,19 +286,19 @@ AND w1.temperature > w2.temperature;
 *** =CASE=
 
 #+CAPTION: 示例：通过三角形三边判断类型
-#+BEGIN_SRC sql
+#+begin_src sql
 SELECT CASE
     WHEN A >= B + C OR B >= A + C OR C >= A + B THEN 'Not A Triangle'
     WHEN A = B AND A = C THEN 'Equilateral'
     WHEN A = B OR A = C OR B = C THEN 'Isosceles'
     ELSE 'Scalene' END
 FROM TRIANGLES;
-#+END_SRC
+#+end_src
 
 * 命令
 ** =mysql=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 mysql <options>
     -h, --host=
     -P, --port=
@@ -309,23 +309,23 @@ mysql <options>
     -e, --execute=<query>
     -s, --silent            # 不输出分隔符
     -N, --skip-column-names # 不输出列名
-#+END_SRC
+#+end_src
 
 #+CAPTION: 数据库导入
-#+BEGIN_SRC sh
+#+begin_src sh
 mysql -h <host> -u <user> -p <password> <database> < <file>
-#+END_SRC
+#+end_src
 
 ** =mysqldump=
 
 #+CAPTION: 数据库备份
-#+BEGIN_SRC sh
+#+begin_src sh
 mysqldump <options> <database> <tables> > <file>
     -h, --host=
     -P, --port=
     -u, --user=
     -p, --password=
-#+END_SRC
+#+end_src
 
 ** 命令行
 
@@ -337,12 +337,12 @@ mysqldump <options> <database> <tables> > <file>
 
 ** =service=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 service mysql <action>
     status
     start
     stop
-#+END_SRC
+#+end_src
 
 * 配置
 
@@ -356,38 +356,38 @@ service mysql <action>
 * 使用
 ** 安装
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ sudo apt-get install mysql-server
 $ sudo service mysql start
 $ mysql -u root -p
 > ALTER USER 'root'@'localhost' IDENTIFIED BY '<new_password>';
-#+END_SRC
+#+end_src
 
 ** Debug
 *** 表
 
-#+BEGIN_SRC sql
+#+begin_src sql
 DESC <table>;
 SHOW CREATE TABLE <table>;
 SHOW TABLE STATUS;
-#+END_SRC
+#+end_src
 
 *** 引擎
 
-#+BEGIN_SRC sql
+#+begin_src sql
 SHOW ENGINE INNODB STATUS;
 SHOW VARIABLES LIKE 'innodb%';
-#+END_SRC
+#+end_src
 
 *** 其他
 
 #+CAPTION: 列出所有表的行数、占用空间等
-#+BEGIN_SRC sql
+#+begin_src sql
 SELECT TABLE_NAME, table_rows, data_length, index_length, round(((data_length + index_length) / 1024 / 1024),2) "Size in MB"
 FROM information_schema.TABLES
 # WHERE table_schema = "schema_name"
 ORDER BY (data_length + index_length) DESC;
-#+END_SRC
+#+end_src
 
 * 链接
 

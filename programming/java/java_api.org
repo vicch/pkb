@@ -9,21 +9,21 @@
 
 [[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/PrintStream.html][java.base | java.io.PrintStream]]
 
-| =print()​=   | Print                    |
+| =print()=   | Print                    |
 |-------------+--------------------------|
 | =println()= | Print and terminate line |
 |-------------+--------------------------|
-| =printf()​=  | Print formatted string   |
+| =printf()=  | Print formatted string   |
 
 *** =printf()=
 
-#+BEGIN_SRC java
+#+begin_src java
 printf​(String format, Object... args)
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC java
+#+begin_src java
 System.out.printf("pi = %.5f", Math.PI);
-#+END_SRC
+#+end_src
 
 * =java.lang=
 
@@ -71,31 +71,31 @@ System.out.printf("pi = %.5f", Math.PI);
 
 *** =floor=
 
-#+BEGIN_SRC java
+#+begin_src java
 public static double floor​(double a);
-#+END_SRC
+#+end_src
 
 *** =floorDiv()=
 
-#+BEGIN_SRC java
+#+begin_src java
 public static int floorDiv​(int x, int y);
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC java
+#+begin_src java
 floorDiv(10, 3); // 3 = floor(10 / 3);
 floorDiv(10, 4); // 2 = floor(10 / 4);
-#+END_SRC
+#+end_src
 
 *** =floorMod()=
 
-#+BEGIN_SRC java
+#+begin_src java
 public static int floorMod​(int x, int y);
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC java
+#+begin_src java
 floorMod(10, 3); // 1 = 10 % 3
 floorMod(10, 4); // 2 = 10 % 4
-#+END_SRC
+#+end_src
 
 ** =String=
 
@@ -123,10 +123,10 @@ floorMod(10, 4); // 2 = 10 % 4
 
 *** =format()=
 
-#+BEGIN_SRC java
+#+begin_src java
 String foo = "foo";
 String bar = String.format("foo = %s", foo);
-#+END_SRC
+#+end_src
 
 ** =StringBuilder=
 
@@ -138,12 +138,12 @@ String bar = String.format("foo = %s", foo);
 
 *** =append()=
 
-#+BEGIN_SRC java
+#+begin_src java
 StringBuilder builder = new StringBuilder();
 builder.append("foo");
 builder.append("bar");
 System.out.println(builder.toString());
-#+END_SRC
+#+end_src
 
 ** =System=
 
@@ -183,9 +183,9 @@ System.out.println(builder.toString());
 
 *** =BigInteger()=
 
-#+BEGIN_SRC java
+#+begin_src java
 public BigInteger​(String val); // Translates decimal String representation into BigInteger
-#+END_SRC
+#+end_src
 
 * =java.time=
 
@@ -259,11 +259,11 @@ public BigInteger​(String val); // Translates decimal String representation in
 
 *** =asList()=
 
-#+BEGIN_SRC java
+#+begin_src java
 @SafeVarargs public static <T> List<T> asList​(T... a)
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC java
+#+begin_src java
 String[] foo = {"a", "b", "c"};
 List<String> bar = Arrays.asList(foo);
 int i = bar.indexOf("a"); // 0
@@ -273,14 +273,14 @@ int i = bar.indexOf("a"); // 0
 
 String[] foo = {"a", "b", "c"};
 int i = Arrays.asList(foo).indexOf("a"); // 0
-#+END_SRC
+#+end_src
 
 *** =sort()=
 
-#+BEGIN_SRC java
+#+begin_src java
 public static void sort​(int[] a);
 public static void sort​(int[] a, int fromIndex, int toIndex);
-#+END_SRC
+#+end_src
 
 ** =Collection<E>=
 
@@ -298,20 +298,20 @@ file:../images/java_api/01.jpg
 
 *** =get()=
 
-#+BEGIN_SRC java
+#+begin_src java
 public V get​(Object key)
-#+END_SRC
+#+end_src
 
 *** =put()=
 
-#+BEGIN_SRC java
+#+begin_src java
 public V put​(K key, V value)
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC java
+#+begin_src java
 HashMap<String, Integer> foo = new HashMap<String, Integer>();
 foo.put("bar", 1);
-#+END_SRC
+#+end_src
 
 ** =Map<K,V>=
 
@@ -331,17 +331,17 @@ foo.put("bar", 1);
 
 *** =ofEntries()=
 
-#+BEGIN_SRC java
+#+begin_src java
 @SafeVarargs static <K,​V> Map<K,​V> ofEntries​(Map.Entry<? extends K,​? extends V>... entries)
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC java
+#+begin_src java
 Map<Character, Integer> foo = Map.ofEntries(
     Map.entry('A', 1),
     Map.entry('B', 2),
     Map.entry('C', 3)
 );
-#+END_SRC
+#+end_src
 
 ** =List<E>=
 
@@ -365,27 +365,27 @@ Map<Character, Integer> foo = Map.ofEntries(
 
 *** =ints()=
 
-#+BEGIN_SRC java
+#+begin_src java
 public IntStream ints();
 public IntStream ints​(long streamSize);
 public IntStream ints​(int randomNumberOrigin, int randomNumberBound);
 public IntStream ints​(long streamSize, int randomNumberOrigin, int randomNumberBound);
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC java
+#+begin_src java
 ints(4, 1, 7); // Generate 4 random ints between 1 and 6
-#+END_SRC
+#+end_src
 
 *** =nextInt()=
 
-#+BEGIN_SRC java
+#+begin_src java
 public int nextInt​(int bound)
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC java
+#+begin_src java
 Random rand = new Random();
 int foo = rand.nextInt(6); // Random int between 0 and 5
-#+END_SRC
+#+end_src
 
 ** =Set<E>=
 
@@ -452,11 +452,11 @@ int foo = rand.nextInt(6); // Random int between 0 and 5
 
 *** =filter=
 
-#+BEGIN_SRC java
+#+begin_src java
 IntStream filter​(IntPredicate predicate);
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC java
+#+begin_src java
 String foo = "a1b2c3";
 IntStream bar = foo.chars().filter(Characters::isAlphabetic); // IntStream of chars a, b, c
 
@@ -465,17 +465,17 @@ IntStream bar = foo.chars().filter(c -> c == 'a' || c == 'b'); // IntStream of c
 
 IntPredicate isEven = i -> i % 2 == 0;
 IntStream bar = IntStream.range(0, 100).filter(isEven); // IntStream of 0, 2, 4, ...
-#+END_SRC
+#+end_src
 
 *** =range=
 
-#+BEGIN_SRC java
+#+begin_src java
 static IntStream range​(int startInclusive, int endExclusive);
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC java
+#+begin_src java
 IntStream foo = IntStream.range(0, 10); // 0, 1, ..., 9
-#+END_SRC
+#+end_src
 
 * Links
 

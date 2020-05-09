@@ -5,61 +5,61 @@
 ** 信息
 
 #+CAPTION: 基本信息：分支、版本号、最近一次提交等
-#+BEGIN_SRC sh
+#+begin_src sh
 svn info
-#+END_SRC
+#+end_src
 
 #+CAPTION: 文件修改状态
-#+BEGIN_SRC sh
+#+begin_src sh
 svn status
-#+END_SRC
+#+end_src
 
 #+CAPTION: 提交日志
-#+BEGIN_SRC sh
+#+begin_src sh
 svn log
-#+END_SRC
+#+end_src
 
 #+CAPTION: 文件差异
-#+BEGIN_SRC sh
+#+begin_src sh
 svn diff <options> <path>
     -r, --revision # 一个或两个版本号：<rev>:<rev>
-#+END_SRC
+#+end_src
 
 ** 操作
 
 #+CAPTION: 检出
-#+BEGIN_SRC sh
+#+begin_src sh
 svn checkout <url> <path>
 svn checkout <repo>/branches/<branch>/<path>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 提交
-#+BEGIN_SRC sh
+#+begin_src sh
 svn commit <options>
     -m, --message "" #
-#+END_SRC
+#+end_src
 
 #+CAPTION: 合并
-#+BEGIN_SRC sh
+#+begin_src sh
 svn merge
-#+END_SRC
+#+end_src
 
 #+CAPTION: 重置
-#+BEGIN_SRC sh
+#+begin_src sh
 svn revert <options> <path>
     -R, --recursive # 路径为目录时递归操作
-#+END_SRC
+#+end_src
 
 ** 示例
 
 #+CAPTION: 已提交后进行回滚
-#+BEGIN_SRC sh
+#+begin_src sh
 svn update                      # 确认代码最新
 svn log <path>                  # 确认要回滚到的版本号
 svn merge -r <rev>:<rev> <path> # 回滚
 svn diff <path>                 # 确认回滚结果
 svn commit -m "Revert ..."      # 提交
-#+END_SRC
+#+end_src
 * 资源
 
 1. [[http://riaoo.com/subpages/svn_cmd_reference.html][SVN 命令参考]]

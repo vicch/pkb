@@ -49,12 +49,12 @@ RDBMS will optimize SQL commands, allowing you to concentrate on the application
 Floating-point numbers have limited precision. They are approximations of real numbers. Floating-point numbers are intended for efficient scientific computation.
 
 #+CAPTION: Floating-point numbers are not evenly spaced throughout their range:
-#+BEGIN_SRC c
+#+begin_src c
 float a = 2147483647;   // Largest 32-bit signed integer
 printf("%f\n", a);      // 2147483648.000000
 printf("%f\n", a - 64); // 2147483648.000000
 printf("%f\n", a - 65); // 2147483520.000000
-#+END_SRC
+#+end_src
 
 Because the spacing between adjacent floats in that range is 128, and floating-point operations round to the nearest floating-point number.
 
@@ -77,14 +77,14 @@ A linker does:
 - write out an executable
 
 #+CAPTION: Declarations (normally in header files) generate external references to the symbols:
-#+BEGIN_SRC c
+#+begin_src c
 extern int foo; // Generates an external reference to the symbol "foo"
-#+END_SRC
+#+end_src
 
 #+CAPTION: Definitions (usually in implementation files) set aside storage for the symbols:
-#+BEGIN_SRC c
+#+begin_src c
 int foo = 3;
-#+END_SRC
+#+end_src
 
 - Linker reports "multiply defined" when more than 1 definition is found for a symbol.
 - Linker reports "unresolved symbol" when no definition is found for a symbol.
@@ -134,19 +134,19 @@ _Tests can demonstrate the presence of features, but tests cannot prove the abse
 A mathematical function can be understood as a set, some subset of the Cartesian product of the sets that are its domain (all possible arguments) and range (all possible results).
 
 #+CAPTION: In the game of Go there is a condition called atari in which a player's stones may be captured by opponent: a stone with 2 or more free spaces adjacent to it (called liberties) is not in atari.
-#+BEGIN_SRC c
+#+begin_src c
 boolean atari(int libertyCount)
     libertyCount < 2
-#+END_SRC
+#+end_src
 
 If argument =int= can have 2^32 = 4,294,976,296 different values, and result =boolean= can have 2 values, then there are 8,589,934,592 members in the Cartesian product of the sets, and half of these belong to the subset which is the function. To provide complete evidence that the function is correct, it will need to check around 4.3E9 examples.
 
 #+CAPTION: The nature of Go means that the number of liberties of a stone is not any =int=, but exactly one of ={1,2,3,4}=. So it can be alternatively wrote:
-#+BEGIN_SRC c
+#+begin_src c
 LibertyCount = {1,2,3,4}
 boolean atari(LibertyCount libertyCount)
     libertyCount == 1
-#+END_SRC
+#+end_src
 
 This is one reason why it's a good idea to _use types closely related to the problem domain to write programs, rather than native types_. Using domain-inspired types can often make the functions much smaller.
 
@@ -312,17 +312,17 @@ Many design patterns have the explicit goal of reducing or eliminating duplicati
 
 One foundational principle of good design, known as the _Single Responsibility Principle, or SRP: Gather together those things that change for the same reason, and separate those things that change for different reasons._ A subsystem, module, class, or even a function, should not have more than one reason to change.
 
-#+BEGIN_SRC java
+#+begin_src java
 public class Employee { // Any class depending on Employee will be affected by changes below
     public Money calculatePay() {} // Changes when rules for calculating pay change
     public String reportHours() {} // Changes when a different format of report is needed
     public void save() {}          // Changes when database schema changes
 }
-#+END_SRC
+#+end_src
 
 Good system design means _separating the system into components that can be independently deployed_. Component design (or +SOA+, if you prefer the trendier name) means when one component is changed, we do not have to redeploy any of the others.
 
-#+BEGIN_SRC java
+#+begin_src java
 public class Employee {
     public Money calculatePay() {}
 }
@@ -332,7 +332,7 @@ public class EmployeeReporter {
 public class EmployeeRepository {
     public void save(Employee e) {}
 }
-#+END_SRC
+#+end_src
 
 ** Thinking in States
 
@@ -355,12 +355,12 @@ The cleanup of singletons may present a final challenge. There is no support for
 * Domains
 ** Code in the Language of the Domain
 
-#+BEGIN_SRC java
+#+begin_src java
 // Algorithmic approach
 if (portfolioIdsByTraderId.get(trader.getId()).containsKey(portfolio.getId())) { ... }
 // Business concept approach
 if (trader.canView(portfolio)) { ... }
-#+END_SRC
+#+end_src
 
 "Computer science" was about spending effort mapping the real world into the restrictive data structures.
 

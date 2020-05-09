@@ -8,7 +8,7 @@
 源码要运行，必须先转成二进制的机器码，这是编译器的任务。
 
 #+CAPTION: 源码：
-#+BEGIN_SRC c
+#+begin_src c
 // test.c
 #include <stdio.h>
 
@@ -17,21 +17,21 @@ int main(void)
     fputs("Hello, world!\n", stdout);
     return 0;
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 编译和运行：
-#+BEGIN_SRC sh
+#+begin_src sh
 $ gcc test.c
 $ ./a.out
 Hello, world!
-#+END_SRC
+#+end_src
 
 #+CAPTION: 对于复杂的项目，编译过程分成三步：
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ./configure
 $ make  
 $ make install
-#+END_SRC
+#+end_src
 
 这些命令到底在干什么？大多数的书籍和资料，都语焉不详。本文介绍编译器的工作过程，也就是上面三个命令各自的任务。主要参考了 Alex Smith 的 [[http://nethack4.org/blog/building-c.html][Building C Projects]]。需要声明的是，本文主要针对 gcc 编译器，也就是针对 C 和 C++，不一定适用于其他语言的编译。
 
@@ -44,9 +44,9 @@ file:../images/c_scrap/01.png
 这些 _配置信息保存在一个配置文件之中，通常是 =configure= 脚本文件，由 +autoconf+ 工具生成。_ 编译器通过运行这个脚本，获知编译参数。 _=configure= 脚本已经尽量考虑到不同系统的差异，对各种编译参数给出了默认值。_ 如果用户的系统环境比较特别，或者有一些特定的需求，就需要手动向 =configure= 脚本提供编译参数。
 
 #+CAPTION: PHP 的一种编译配置，指定安装后的文件保存在 =www= 目录，并且编译时加入 mysql 模块的支持：
-#+BEGIN_SRC sh
+#+begin_src sh
 $ ./configure --prefix=/www --with-mysql
-#+END_SRC
+#+end_src
 
 ** 第二步：确定标准库和头文件位置
 
@@ -73,7 +73,7 @@ $ ./configure --prefix=/www --with-mysql
 
 预编译完成后，编译器就开始 _替换源码中的头文件和宏，插入头文件预编译后的结果，_ 编译器在这一步还会移除注释。以头文件 =stdio.h= 为例，替换后的源码：
 
-#+BEGIN_SRC c
+#+begin_src c
 extern int fputs(const char *, FILE *);
 extern FILE *stdout;
 ...
@@ -83,7 +83,7 @@ int main(void)
     fputs("Hello, world!\n", stdout);
     return 0;
 }
-#+END_SRC
+#+end_src
 
 这一步称为「预处理」（preprocessing）。
 
@@ -92,7 +92,7 @@ int main(void)
 预处理之后，编译器就开始生成机器码。对于某些编译器来说，还存在一个中间步骤，会先把源码转为汇编码（assembly），再把汇编码转为机器码。转码后的文件称为 _对象文件（object file）_ 。
 
 #+CAPTION: 示例源码转换成的汇编码：
-#+BEGIN_SRC c
+#+begin_src c
     .file   "test.c"
     .section    .rodata
 .LC0:
@@ -123,7 +123,7 @@ main:
     .size   main, .-main
     .ident  "GCC: (Debian 4.9.1-19) 4.9.1"
     .section    .note.GNU-stack,"",@progbits
-#+END_SRC
+#+end_src
 ** 第七步：链接（linking）
 
 对象文件还不能运行，必须进一步转成可执行文件。仔细看上一步的转码结果，会发现其中引用了 =stdout= 函数和 =fwrite= 函，也就是说，程序要正常运行，还必须有 =stdout= 和 =fwrite= 这两个函数的代码，它们是由 C 语言的标准库提供的。
@@ -167,19 +167,19 @@ _动态链接是指外部函数库不进入安装包，只在运行时动态引�
 
 Make 的意思是「做出」某个文件。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ make a.txt
-#+END_SRC
+#+end_src
 
 但是 Make 命令本身并不知道如何「做出」 =a.txt= ，需要有人告诉它，如何调用其他命令完成这个目标。Make 只是一个根据指定的 Shell 命令进行构建的工具，它的规则很简单： _需要构建的文件，依赖的源文件，当源文件改变时，如何重新构建。_
 
 ** 规则
 
 #+CAPTION: 假设文件 =a.txt= 依赖于 =b.txt= 和 =c.txt= ，是两个文件连接的产物，Make 规则：
-#+BEGIN_SRC sh
+#+begin_src sh
 a.txt: b.txt c.txt
     cat b.txt c.txt > a.txt
-#+END_SRC
+#+end_src
 
 这条规则分为两步：
 
@@ -191,19 +191,19 @@ a.txt: b.txt c.txt
 Make 命令的规则都写在 Makefile（ 默认为 =makefile= ）中，Make 命令依赖 Makefile 进行构建。
 
 #+CAPTION: Makefile 可以用命令行参数指定为其他文件名：
-#+BEGIN_SRC sh
+#+begin_src sh
 $ make -f rules.txt
 $ make --file=rules.txt
-#+END_SRC
+#+end_src
 
 ** Makefile 规则
 
 Makefile 文件由一系列规则构成，每条规则的形式如下：
 
-#+BEGIN_SRC code
+#+begin_src code
 <target>: <prerequisites>
     <commands>
-#+END_SRC
+#+end_src
 
 每条规则明确两件事：构建目标的前置条件是什么，以及如何构建。目标是必需的，不可省略，前置条件和命令可选，但是两者之中必须至少存在一个。
 
@@ -218,19 +218,19 @@ Makefile 文件由一系列规则构成，每条规则的形式如下：
 *** 伪目标
 
 #+CAPTION: 目标还可以是某个操作的名字，这称为「伪目标」（phony target）：
-#+BEGIN_SRC sh
+#+begin_src sh
 clean:
     rm *.o
-#+END_SRC
+#+end_src
 
 如果当前目录正好有一个文件 =clean= ，那么这个命令不会执行，因为 Make 发现 =clean= 已经存在，认为没有必要重新构建。
 
 #+CAPTION: 为避免这种情况，可以显式声明 =clean= 是伪目标：
-#+BEGIN_SRC sh
+#+begin_src sh
 .PHONY: clean
 clean:
     rm *.o
-#+END_SRC
+#+end_src
 
 其他的内置目标名：[[https://www.gnu.org/software/make/manual/html_node/Special-Targets.html#Special-Targets][Special Built-in Target Names]]
 
@@ -239,144 +239,144 @@ clean:
 前置条件通常是一组文件名，之间用空格分隔。它指定了 _目标需要重新构建的判断标准：当一个前置文件不存在，或者有过修改（比较前置条件与目标的修改时间戳）时，_ 目标就需要重新构建，否则， Make 命令不执行任何操作，目标也不会重新生成。
 
 #+CAPTION: 如果前置条件不存在，通常需要另一条规则来生成前置条件：
-#+BEGIN_SRC sh
+#+begin_src sh
 result.txt: source.txt
     cp source.txt result.txt
 
 source.txt:
     echo "Hello world" > source.txt
-#+END_SRC
+#+end_src
 
 #+CAPTION: 使用命令为空的伪目标一次生成多个文件：
-#+BEGIN_SRC code
+#+begin_src code
 source: file_1 file_2 file_3
-#+END_SRC
+#+end_src
 
 *** 命令
 
 命令表示如何更新目标文件，由一行或多行 Shell 命令组成，运行结果通常是生成目标文件。
 
 #+CAPTION: 命令之前必须有一个 tab 字符，可以通过内置变量进行修改：
-#+BEGIN_SRC sh
+#+begin_src sh
 .RECIPEPREFIX = >
 all:
 > echo Hello, world
-#+END_SRC
+#+end_src
 
 -----
 
 #+CAPTION: 每行命令默认在一个单独的 Shell 中执行，这些 Shell 之间没有继承关系：
-#+BEGIN_SRC sh
+#+begin_src sh
 var-lost:
     export foo=bar
     echo "foo=[$$foo]" # 取不到 foo 的值
-#+END_SRC
+#+end_src
 
 #+CAPTION: 解决办法一：将两行命令写在一行，中间用分号分隔：
-#+BEGIN_SRC sh
+#+begin_src sh
 var-kept:
     export foo=bar; echo "foo=[$$foo]"
-#+END_SRC
+#+end_src
 
 #+CAPTION: 解决办法二：换行符前加反斜杠：
-#+BEGIN_SRC sh
+#+begin_src sh
 var-kept:
     export foo=bar; \
     echo "foo=[$$foo]"
-#+END_SRC
+#+end_src
 
 #+CAPTION: 解决办法三：使用 =.ONESHELL:= 命令：
-#+BEGIN_SRC sh
+#+begin_src sh
 .ONESHELL:
 var-kept:
     export foo=bar; 
     echo "foo=[$$foo]"
-#+END_SRC
+#+end_src
 
 ** Makefile 语法
 *** 注释
 
-#+BEGIN_SRC sh
+#+begin_src sh
 # Comment
 result.txt: source.txt
     cp source.txt result.txt # Comment
-#+END_SRC
+#+end_src
 
 *** 输出
 
 #+CAPTION: Make 命令默认会在执行前打印每条命令，称为回声（echoing）：
-#+BEGIN_SRC sh
+#+begin_src sh
 target:
     # Comment
 
 $ make target
 # Comment
-#+END_SRC
+#+end_src
 
 #+CAPTION: 使用 =@= 关闭回声：
-#+BEGIN_SRC sh
+#+begin_src sh
 target:
     @# Comment
-#+END_SRC
+#+end_src
 
 #+CAPTION: 由于在构建过程中，需要了解当前执行的命令，所以通常只在注释和 =echo= 命令前面加 =@= ：
-#+BEGIN_SRC sh
+#+begin_src sh
 target:
     @# Comment
     @echo TODO
-#+END_SRC
+#+end_src
 
 *** 模式匹配
 
 Make 命令允许对文件名进行匹配，使用匹配符 =%= 可以使大量同类型的文件只用一条规则就完成构建。
 
 #+CAPTION: 假设需要将 =f1.c= 和 =f2.c= 两个源文件编译为对象文件：
-#+BEGIN_SRC sh
+#+begin_src sh
 %.o: %.c
 # 等同于
 f1.o: f1.c
 f2.o: f2.c
-#+END_SRC
+#+end_src
 
 *** 变量
 
 Makefile 允许使用自定义变量，语法为 =$(<var>)= 。
 
 #+CAPTION: 示例：
-#+BEGIN_SRC sh
+#+begin_src sh
 txt = Hello World
 target:
     @echo $(txt)
-#+END_SRC
+#+end_src
 
 #+CAPTION: 使用 Shell 变量名需要两个 =$= ，因为 Make 命令会对 =$= 转义：
-#+BEGIN_SRC sh
+#+begin_src sh
 target:
     @echo $$HOME
-#+END_SRC
+#+end_src
 
 #+CAPTION: 变量的值可能指向另一个变量：
-#+BEGIN_SRC sh
+#+begin_src sh
 v1 = $(v2)
-#+END_SRC
+#+end_src
 
 这会产生一个问题， =v1= 的值是在定义时扩展（静态扩展），还是在运行时扩展（动态扩展）？如果 =v2= 的值是动态的，这两种扩展方式的结果不同。为了解决类似问题，Makefile 提供了 4 个赋值运算符，它们的区别：[[http://stackoverflow.com/questions/448910/makefile-variable-assignment][Makefile variable assignment]]
 
-#+BEGIN_SRC sh
+#+begin_src sh
 VARIABLE = value  # 执行时扩展，允许递归扩展
 VARIABLE := value # 定义时扩展
 VARIABLE ?= value # 只有变量为空时才赋值
 VARIABLE += value # 将值追加到变量的末尾
-#+END_SRC
+#+end_src
 
 *** 内置变量
 
 Make 命令提供一系列内置变量，比如， =$(CC)= 指向当前使用的编译器， =$(MAKE)= 指向当前使用的 Make 工具。这主要是为了跨平台的兼容性，详细的内置变量清单：[[https://www.gnu.org/software/make/manual/html_node/Implicit-Variables.html][Variables Used by Implicit Rules]] 。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 output:
     $(CC) -o output input.c
-#+END_SRC
+#+end_src
 
 *** 自动变量
 
@@ -400,68 +400,68 @@ Make 命令还提供一些自动变量，它们的值与当前规则有关。所
 |---------+------------------------|
 | =$*=    | =%= 匹配的部分         |
 
-#+BEGIN_SRC sh
+#+begin_src sh
 dest/%.txt: src/%.txt
     @[ -d dest ] || mkdir dest # 如果 dest 目录不存在则新建
     cp $< $@                   # 将 src 目录下的 .txt 文件拷贝到 dest 目录
-#+END_SRC
+#+end_src
 
 **** =$@=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 a.txt:
     touch $@ # 等价于 touch a.txt
-#+END_SRC
+#+end_src
 
 **** =$(@D)= =$(@F)=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 src/input.c: # $(@D) = src
              # $(@F) = input.c
-#+END_SRC
+#+end_src
 
 **** =$<=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 a.txt: b.txt c.txt
     cp $< $@ # 等价于 cp b.txt a.txt
-#+END_SRC
+#+end_src
 
 **** =$*=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 %.o: %.c
     cp $*.c $*.o # 对于 f1.o，$* 表示 f1
-#+END_SRC
+#+end_src
 
 *** 判断
 
 #+CAPTION: 根据编译器指定不同的库文件
-#+BEGIN_SRC sh
+#+begin_src sh
 ifeq ($(CC), gcc)
   libs = $(libs_for_gcc)
 else
   libs = $(normal_libs)
 endif
-#+END_SRC
+#+end_src
 
 *** 循环
 
-#+BEGIN_SRC sh
+#+begin_src sh
 LIST = one two three
 all:
     for i in $(LIST); do \
         echo $$i; \
     done
-#+END_SRC
+#+end_src
 
 *** 函数
 
 #+CAPTION: Makefile 可以使用函数：
-#+BEGIN_SRC sh
+#+begin_src sh
 $(<func> <args>)
 ${<func> <args>}
-#+END_SRC
+#+end_src
 
 内置函数列表：[[https://www.gnu.org/software/make/manual/html_node/Functions.html][Functions for Transforming Text]]
 
@@ -475,64 +475,64 @@ ${<func> <args>}
 
 **** =shell=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 srcfiles := $(shell echo src/{00..99}.txt)
-#+END_SRC
+#+end_src
 
 **** =wildcard=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 srcfiles := $(wildcard src/*.txt)
-#+END_SRC
+#+end_src
 
 **** =subst=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $(subst <from>,<to>,<text>)
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例 1
-#+BEGIN_SRC sh
+#+begin_src sh
 $(subst ee,EE,feet on the street) # fEEt on the strEEt
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例 2
-#+BEGIN_SRC sh
+#+begin_src sh
 comma := ,
 empty :=                   # 空变量
 space := $(empty) $(empty) # 用两个空变量作为标识符，中间是一个空格
 foo := a b c
 bar := $(subst $(space),$(comma),$(foo)) # bar = a,b,c
-#+END_SRC
+#+end_src
 
 **** =patsubst=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $(patsubst <pattern>,<replace>,<text>)
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC sh
+#+begin_src sh
 $(patsubst %.c,%.o,f1.c f2.c) # f1.o f2.o
-#+END_SRC
+#+end_src
 
 **** 替换后缀名
 
 实际上是 =patsubst= 的简写形式。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 <var>:<from>=<to>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC sh
+#+begin_src sh
 min: $(OUTPUT:.js=.min.js) # 将变量 OUTPUT 中的后缀名 .js 替换为 .min.js
-#+END_SRC
+#+end_src
 
 ** Makefile 实例
 
 #+CAPTION: 执行多个目标
-#+BEGIN_SRC sh
+#+begin_src sh
 .PHONY: cleanall cleanobj cleandiff
 
 cleanall: cleanobj cleandiff
@@ -543,10 +543,10 @@ cleanobj:
 
 cleandiff:
     rm *.diff
-#+END_SRC
+#+end_src
 
 #+CAPTION: 编译 C 项目
-#+BEGIN_SRC sh
+#+begin_src sh
 edit: main.o kbd.o command.o display.o 
     cc -o edit main.o kbd.o command.o display.o
 
@@ -566,7 +566,7 @@ clean:
     rm edit main.o kbd.o command.o display.o
 
 .PHONY: edit clean
-#+END_SRC
+#+end_src
 
 ** 链接
 

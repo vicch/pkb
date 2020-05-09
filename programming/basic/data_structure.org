@@ -133,7 +133,7 @@ file:../images/data_structure/01.png
 ** 单向链表 C 实现
 *** =list.h=
 
-#+BEGIN_SRC c
+#+begin_src c
 #ifndef LIST_H
 
 #define LIST_H
@@ -169,19 +169,19 @@ int list_rem_next(List *list, ListElmt *element, void **data);
 #define list_next(element) ((element)->next)
 
 #endif
-#+END_SRC
+#+end_src
 
 *** =list.c=
 
-#+BEGIN_SRC c
+#+begin_src c
 #include <stdlib.h>
 #include <string.h>
 #include "list.h"
-#+END_SRC
+#+end_src
 
 **** 初始化
 
-#+BEGIN_SRC c
+#+begin_src c
 void list_init(List *list, void (*destroy)(void *data))
 {
     list->size = 0;
@@ -191,11 +191,11 @@ void list_init(List *list, void (*destroy)(void *data))
 
     return;
 }
-#+END_SRC
+#+end_src
 
 **** 销毁
 
-#+BEGIN_SRC c
+#+begin_src c
 void list_destroy(List *list)
 {
     void *data;
@@ -213,11 +213,11 @@ void list_destroy(List *list)
 
     return;
 }
-#+END_SRC
+#+end_src
 
 **** 插入元素
 
-#+BEGIN_SRC c
+#+begin_src c
 /* 在指定元素后插入元素 */
 int list_ins_next(List *list, ListElmt *element, const void *data)
 {
@@ -249,11 +249,11 @@ int list_ins_next(List *list, ListElmt *element, const void *data)
 
     return 0;
 }
-#+END_SRC
+#+end_src
 
 **** 删除元素
 
-#+BEGIN_SRC c
+#+begin_src c
 /* 删除指定元素后的元素 */
 int list_rem_next(List *list, ListElmt *element, void **data)
 {
@@ -291,12 +291,12 @@ int list_rem_next(List *list, ListElmt *element, void **data)
 
     return 0;
 }
-#+END_SRC
+#+end_src
 
 ** 双向链表 C 实现
 *** =dlist.h=
 
-#+BEGIN_SRC c
+#+begin_src c
 #ifndef DLIST_H
 
 #define DLIST_H
@@ -333,19 +333,19 @@ int dlist_remove(DList *list, DListElmt *element, void **data);
 #define dlist_prev(element) ((element)->prev)
 
 #endif
-#+END_SRC
+#+end_src
 
 *** =dlist.c=
 
-#+BEGIN_SRC c
+#+begin_src c
 #include <stdlib.h>
 #include <string.h>
 #include "dlist.h"
-#+END_SRC
+#+end_src
 
 **** 初始化
 
-#+BEGIN_SRC c
+#+begin_src c
 void dlist_init(DList *list, void (*destroy)(void *data))
 {
     list->size = 0;
@@ -355,11 +355,11 @@ void dlist_init(DList *list, void (*destroy)(void *data))
 
     return;
 }
-#+END_SRC
+#+end_src
 
 **** 销毁
 
-#+BEGIN_SRC c
+#+begin_src c
 void dlist_destroy(DList *list)
 {
     void *data;
@@ -377,11 +377,11 @@ void dlist_destroy(DList *list)
 
     return;
 }
-#+END_SRC
+#+end_src
 
 **** 插入元素 1
 
-#+BEGIN_SRC c
+#+begin_src c
 /* 在指定元素后插入元素 */
 int dlist_ins_next(DList *list, DListElmt *element, const void *data)
 {
@@ -421,11 +421,11 @@ int dlist_ins_next(DList *list, DListElmt *element, const void *data)
 
     return 0;
 }
-#+END_SRC
+#+end_src
 
 **** 插入元素 2
 
-#+BEGIN_SRC c
+#+begin_src c
 /* 在指定元素前插入元素 */
 int dlist_ins_prev(DList *list, DListElmt *element, const void *data)
 {
@@ -465,11 +465,11 @@ int dlist_ins_prev(DList *list, DListElmt *element, const void *data)
 
     return 0;
 }
-#+END_SRC
+#+end_src
 
 **** 移除元素
 
-#+BEGIN_SRC c
+#+begin_src c
 int dlist_remove(DList *list, DListElmt *element, void **data)
 {
     /* 不允许指定元素为 NULL，或从空链表移除 */
@@ -504,11 +504,11 @@ int dlist_remove(DList *list, DListElmt *element, void **data)
 
     return 0;
 }
-#+END_SRC
+#+end_src
 
 **** 初始化
 
-#+BEGIN_SRC c
+#+begin_src c
 void list_init(List *list, void (*destroy)(void *data))
 {
     list->size = 0;
@@ -518,11 +518,11 @@ void list_init(List *list, void (*destroy)(void *data))
 
     return;
 }
-#+END_SRC
+#+end_src
 
 **** 销毁
 
-#+BEGIN_SRC c
+#+begin_src c
 void list_destroy(List *list)
 {
     void *data;
@@ -540,11 +540,11 @@ void list_destroy(List *list)
 
     return;
 }
-#+END_SRC
+#+end_src
 
 **** 插入元素
 
-#+BEGIN_SRC c
+#+begin_src c
 /* 在指定元素后插入元素 */
 int list_ins_next(List *list, ListElmt *element, const void *data)
 {
@@ -576,11 +576,11 @@ int list_ins_next(List *list, ListElmt *element, const void *data)
 
     return 0;
 }
-#+END_SRC
+#+end_src
 
 **** 删除元素
 
-#+BEGIN_SRC c
+#+begin_src c
 /* 删除指定元素后的元素 */
 int list_rem_next(List *list, ListElmt *element, void **data)
 {
@@ -618,12 +618,12 @@ int list_rem_next(List *list, ListElmt *element, void **data)
 
     return 0;
 }
-#+END_SRC
+#+end_src
 
 ** 循环链表 C 实现
 *** =clist.h=
 
-#+BEGIN_SRC c
+#+begin_src c
 #ifndef CLIST_H
 
 #define CLIST_H
@@ -653,19 +653,19 @@ int clist_rem_next(CList *list, CListElmt *element, void **data);
 #define clist_next(element) ((element)->next)
 
 #endif
-#+END_SRC
+#+end_src
 
 *** =clist.c=
 
-#+BEGIN_SRC c
+#+begin_src c
 #include <stdlib.h>
 #include <string.h>
 #include "clist.h"
-#+END_SRC
+#+end_src
 
 **** 初始化
 
-#+BEGIN_SRC c
+#+begin_src c
 void clist_init(CList *list, void (*destroy)(void *data))
 {
     list->size = 0;
@@ -674,11 +674,11 @@ void clist_init(CList *list, void (*destroy)(void *data))
 
     return;
 }
-#+END_SRC
+#+end_src
 
 **** 销毁
 
-#+BEGIN_SRC c
+#+begin_src c
 void clist_destroy(CList *list)
 {
     void *data;
@@ -696,11 +696,11 @@ void clist_destroy(CList *list)
 
     return;
 }
-#+END_SRC
+#+end_src
 
 **** 插入元素
 
-#+BEGIN_SRC c
+#+begin_src c
 int clist_ins_next(CList *list, CListElmt *element, const void *data)
 {
     CListElmt *new_element;
@@ -728,11 +728,11 @@ int clist_ins_next(CList *list, CListElmt *element, const void *data)
 
     return 0;
 }
-#+END_SRC
+#+end_src
 
 **** 移除元素
 
-#+BEGIN_SRC c
+#+begin_src c
 int clist_rem_next(CList *list, CListElmt *element, void **data)
 {
     CListElmt *old_element;
@@ -763,12 +763,12 @@ int clist_rem_next(CList *list, CListElmt *element, void **data)
 
     return 0;
 }
-#+END_SRC
+#+end_src
 
 ** 栈 C 实现（单向链表）
 *** =stack.h=
 
-#+BEGIN_SRC c
+#+begin_src c
 #ifndef STACK_H
 
 #define STACK_H
@@ -789,38 +789,38 @@ int stack_pop(Stack *stack, void **data);
 #define stack_size list_size
 
 #endif
-#+END_SRC
+#+end_src
 
 *** =stack.c=
 
-#+BEGIN_SRC c
+#+begin_src c
 #include <stdlib.h>
 #include "list.h"
 #include "stack.h"
-#+END_SRC
+#+end_src
 
 **** 入栈
 
-#+BEGIN_SRC c
+#+begin_src c
 int stack_push(Stack *stack, const void *data)
 {
     return list_ins_next(stack, NULL, data);
 }
-#+END_SRC
+#+end_src
 
 **** 出栈
 
-#+BEGIN_SRC c
+#+begin_src c
 int stack_pop(Stack *stack, void **data)
 {
     return list_rem_next(stack, NULL, data);
 }
-#+END_SRC
+#+end_src
 
 ** 队列 C 实现（单向链表）
 *** =queue.h=
 
-#+BEGIN_SRC c
+#+begin_src c
 #ifndef QUEUE_H
 
 #define QUEUE_H
@@ -841,38 +841,38 @@ int queue_dequeue(Queue *queue, void **data);
 #define queue_size list_size
 
 #endif
-#+END_SRC
+#+end_src
 
 *** =queue.c=
 
-#+BEGIN_SRC c
+#+begin_src c
 #include <stdlib.h>
 #include "list.h"
 #include "queue.h"
-#+END_SRC
+#+end_src
 
 **** 入队
 
-#+BEGIN_SRC c
+#+begin_src c
 int queue_enqueue(Queue *queue, const void *data)
 {
     return list_ins_next(queue, list_tail(queue), data);
 }
-#+END_SRC
+#+end_src
 
 **** 出队
 
-#+BEGIN_SRC c
+#+begin_src c
 int queue_dequeue(Queue *queue, void **data)
 {
     return list_rem_next(queue, NULL, data);
 }
-#+END_SRC
+#+end_src
 * 集合
 ** 集合 C 实现
 *** =set.h=
 
-#+BEGIN_SRC c
+#+begin_src c
 #ifndef SET_H
 
 #define SET_H
@@ -896,20 +896,20 @@ int set_is_equal(const Set *set1, const Set *set2);
 #define set_size(set) ((set)->size)
 
 #endif
-#+END_SRC
+#+end_src
 
 *** =set.c=
 
-#+BEGIN_SRC c
+#+begin_src c
 #include <stdlib.h>
 #include <string.h>
 #include "list.h"
 #include "set.h"
-#+END_SRC
+#+end_src
 
 **** 初始化
 
-#+BEGIN_SRC c
+#+begin_src c
 void set_init(
     Set *set,
     int (*match)(const void *key1, const void *key2),
@@ -920,11 +920,11 @@ void set_init(
 
     return;
 }
-#+END_SRC
+#+end_src
 
 **** 插入元素
 
-#+BEGIN_SRC c
+#+begin_src c
 int set_insert(Set *set, const void *data)
 {
     /* 不允许重复元素 */
@@ -933,11 +933,11 @@ int set_insert(Set *set, const void *data)
 
     return list_ins_next(set, list_tail(set), data);
 }
-#+END_SRC
+#+end_src
 
 **** 移除元素
 
-#+BEGIN_SRC c
+#+begin_src c
 int set_remove(Set *set, void **data)
 {
     ListElmt *member, *prev;
@@ -956,11 +956,11 @@ int set_remove(Set *set, void **data)
 
     return list_rem_next(set, prev, data);
 }
-#+END_SRC
+#+end_src
 
 **** 并集
 
-#+BEGIN_SRC c
+#+begin_src c
 int set_union(Set *setu, const Set *set1, const Set *set2)
 {
     ListElmt *member;
@@ -995,11 +995,11 @@ int set_union(Set *setu, const Set *set1, const Set *set2)
 
     return 0;
 }
-#+END_SRC
+#+end_src
 
 **** 交集
 
-#+BEGIN_SRC c
+#+begin_src c
 int set_intersection(Set *seti, const Set *set1, const Set *set2)
 {
     ListElmt *member;
@@ -1021,11 +1021,11 @@ int set_intersection(Set *seti, const Set *set1, const Set *set2)
 
     return 0;
 }
-#+END_SRC
+#+end_src
 
 **** 差集
 
-#+BEGIN_SRC c
+#+begin_src c
 int set_difference(Set *setd, const Set *set1, const Set *set2)
 {
     ListElmt *member;
@@ -1047,11 +1047,11 @@ int set_difference(Set *setd, const Set *set1, const Set *set2)
 
     return 0;
 }
-#+END_SRC
+#+end_src
 
 **** 成员判断
 
-#+BEGIN_SRC c
+#+begin_src c
 int set_is_member(const Set *set, const void *data)
 {
     ListElmt *member;
@@ -1063,11 +1063,11 @@ int set_is_member(const Set *set, const void *data)
 
     return 0;
 }
-#+END_SRC
+#+end_src
 
 **** 子集判断
 
-#+BEGIN_SRC c
+#+begin_src c
 int set_is_subset(const Set *set1, const Set *set2)
 {
     ListElmt *member;
@@ -1084,11 +1084,11 @@ int set_is_subset(const Set *set1, const Set *set2)
 
     return 1;
 }
-#+END_SRC
+#+end_src
 
 **** 等集判断
 
-#+BEGIN_SRC c
+#+begin_src c
 int set_is_equal(const Set *set1, const Set *set2)
 {
     /* 先通过集合大小进行判断 */
@@ -1098,7 +1098,7 @@ int set_is_equal(const Set *set1, const Set *set2)
     /* 大小相等且第一个集合为第二个集合的子集，则集合相等 */
     return set_is_subset(set1, set2);
 }
-#+END_SRC
+#+end_src
 
 * 哈希表
 
@@ -1136,7 +1136,7 @@ int set_is_equal(const Set *set1, const Set *set2)
 ** 链式哈希表 C 实现
 *** =chtbl.h=
 
-#+BEGIN_SRC c
+#+begin_src c
 #ifndef CHTBL_H
 
 #define CHTBL_H
@@ -1167,20 +1167,20 @@ int chtbl_lookup(const CHTbl *htbl, void **data);
 #define chtbl_size(htbl) ((htbl)->size)
 
 #endif
-#+END_SRC
+#+end_src
 
 *** =chtbl.c=
 
-#+BEGIN_SRC c
+#+begin_src c
 #include <stdlib.h>
 #include <string.h>
 #include "list.h"
 #include "chtbl.h"
-#+END_SRC
+#+end_src
 
 **** 初始化
 
-#+BEGIN_SRC c
+#+begin_src c
 int chtbl_init(
     CHTbl *htbl,
     int buckets,
@@ -1209,10 +1209,10 @@ int chtbl_init(
 
     return 0;
 }
-#+END_SRC
+#+end_src
 **** 销毁
 
-#+BEGIN_SRC c
+#+begin_src c
 void chtbl_destroy(CHTbl *htbl)
 {
     int i;
@@ -1230,10 +1230,10 @@ void chtbl_destroy(CHTbl *htbl)
 
     return;
 }
-#+END_SRC
+#+end_src
 **** 插入元素
 
-#+BEGIN_SRC c
+#+begin_src c
 int chtbl_insert(CHTbl *htbl, const void *data)
 {
     void *temp;
@@ -1253,10 +1253,10 @@ int chtbl_insert(CHTbl *htbl, const void *data)
 
     return retval;
 }
-#+END_SRC
+#+end_src
 **** 删除元素
 
-#+BEGIN_SRC c
+#+begin_src c
 int chtbl_remove(CHTbl *htbl, void **data)
 {
     ListElmt *element, *prev;
@@ -1284,10 +1284,10 @@ int chtbl_remove(CHTbl *htbl, void **data)
 
     return -1;
 }
-#+END_SRC
+#+end_src
 **** 查找元素
 
-#+BEGIN_SRC c
+#+begin_src c
 int chtbl_lookup(const CHTbl *htbl, void **data)
 {
     ListElmt *element;
@@ -1307,7 +1307,7 @@ int chtbl_lookup(const CHTbl *htbl, void **data)
 
     return -1;
 }
-#+END_SRC
+#+end_src
 * 树
 
 | 二叉查找树           |   |

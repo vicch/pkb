@@ -12,10 +12,10 @@
 基于 IP 地址的虚拟主机很少见，服务器通常只有一个公网地址，特殊情况是使用 SSL 证书要求每个域名有独立的 IP 地址。
 
 #+CAPTION: 每一个 IP 地址和端口组合能且只能对应一个 =<VirtualHost>=
-#+BEGIN_SRC sh
+#+begin_src sh
 <VirtualHost 0.0.0.0:80>
 </VirtualHost>
-#+END_SRC
+#+end_src
 
 *** 基于主机名
 
@@ -27,10 +27,10 @@ Apache 按照虚拟主机在配置文件中的顺序，将被 HTTP header 的 =H
 - 控制 Apache 的运行模式和并发策略。
 
 #+CAPTION: 查看 MPM 模式
-#+BEGIN_SRC sh
+#+begin_src sh
 $ apachectl status | grep "MPM"
 Server MPM: event
-#+END_SRC
+#+end_src
 
 *** Prefork
 
@@ -40,7 +40,7 @@ Server MPM: event
 - 需要使用非线程安全（non-thread safe）的库，如 =mod_php= 时，或需要进程隔离时，选用此模式。
 
 #+CAPTION: 配置
-#+BEGIN_SRC sh
+#+begin_src sh
 <IfModule mpm_prefork_module>
     StartServers            5
     MinSpareServers         5
@@ -48,7 +48,7 @@ Server MPM: event
     MaxRequestWorkers       150
     MaxConnectionsPerChild  0
 </IfModule>
-#+END_SRC
+#+end_src
 
 *** Worker
 
@@ -108,40 +108,40 @@ Red Hat 下主配置文件为 =/etc/httpd/conf/httpd.conf= 。
 
 *** =<Directory>=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 <Directory <path>>    # 使用路径
 <Directory ~ <regex>> # 使用正则
-#+END_SRC
+#+end_src
 
 *** =<DirectoryMatch>=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 <DirectoryMatch <regex>>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC sh
+#+begin_src sh
 <DirectoryMatch "/\.git">
     Require all denied
 </Directory>
-#+END_SRC
+#+end_src
 
 *** =<Location>=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 <Location <url>>
     # /  任意 URL
-#+END_SRC
+#+end_src
 
 *** =<VirtualHost>=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 <VirtualHost <addr>[:<port>]>
     # <addr> 为 * 表示匹配所有 IP 地址
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC sh
+#+begin_src sh
 # /etc/apache2/sites-available/foo.com.conf
 <VirtualHost *:80>
     ServerName foo.com
@@ -153,7 +153,7 @@ Red Hat 下主配置文件为 =/etc/httpd/conf/httpd.conf= 。
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
-#+END_SRC
+#+end_src
 
 ** 指令
 
@@ -185,34 +185,34 @@ Red Hat 下主配置文件为 =/etc/httpd/conf/httpd.conf= 。
 
 *** =AllowOverride=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 AllowOverride <option>
     # All
     # None
     # Options=
-#+END_SRC
+#+end_src
 
 使用 =AllowOverride All= 会查找各级目录下的 =.htaccess= 文件，增加系统调用。
 
 *** =Listen=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 Listen [<ip>:]<port>
-#+END_SRC
+#+end_src
 
 *** =LogLevel=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 LogLevel [<module>:]<level> ...
     # warn  默认级别
-#+END_SRC
+#+end_src
 
 *** =Options=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 Options [+|-]<option> ...
     # + enables option, - disables option
-#+END_SRC
+#+end_src
 
 #+CAPTION: 选项
 | =All=            | 除 =MultiViews= 外所有选项                          |
@@ -225,23 +225,23 @@ Options [+|-]<option> ...
 
 *** =ServerAlias=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 ServerAlias <hostname> ...
     # 可以包含 * 通配符
-#+END_SRC
+#+end_src
 
 *** =ServerSignature=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 ServerSignature <option>
     # On
     # Off
     # Email 显示管理员邮箱
-#+END_SRC
+#+end_src
 
 *** =ServerTokens=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 ServerTokens <option>
     # Full    Apache/2.4.18 (Ubuntu)
     # OS      Apache/2.4.18 (Ubuntu)
@@ -249,7 +249,7 @@ ServerTokens <option>
     # Minor   Apache/2.4
     # Major   Apache/2
     # Prod    Apache
-#+END_SRC
+#+end_src
 
 * 模块
 ** =mod_authz_core=
@@ -262,15 +262,15 @@ ServerTokens <option>
 
 *** =Require=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 Require all granted|denied
 Require ip <ip> ...
-#+END_SRC
+#+end_src
 
 ** =mod_log_config=
 *** =CustomLog=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 CustomLog <file> <nickname>|<format>
 
 # <nickname>
@@ -278,7 +278,7 @@ CustomLog <file> <nickname>|<format>
     # common
 
 # <format>
-#+END_SRC
+#+end_src
 
 ** =mod_negotiation=
 
@@ -304,7 +304,7 @@ CustomLog <file> <nickname>|<format>
 
 *** 示例
 
-#+BEGIN_SRC sh
+#+begin_src sh
 <VirtualHost *:80>
     <Directory /var/www/example.com/public>
         <Proxy balancer://cluster>                # Define balancer cluster
@@ -321,13 +321,13 @@ CustomLog <file> <nickname>|<format>
         <Location>
     </Directory>
 </VirtualHost>
-#+END_SRC  
+#+end_src  
 
 ** =mod_status=
 *** 配置
 
 #+CAPTION: 设置状态页面
-#+BEGIN_SRC sh
+#+begin_src sh
 <Location "/server-status">
     SetHandler server-status
     # 允许指定域名的主机访问
@@ -335,18 +335,18 @@ CustomLog <file> <nickname>|<format>
     # 允许指定 IP 的主机访问（允许宿主机访问虚拟机）
     Require ip <addr>
 </Location>
-#+END_SRC
+#+end_src
 
 *** 输出
 
-#+BEGIN_SRC sh
+#+begin_src sh
 Server uptime: 3 minutes 4 seconds
 Server load: 5.68 2.19 0.78
 Total accesses: 12025 - Total Traffic: 133.8 MB
 CPU Usage: u1 s8.32 cu0 cs0 - 5.07% CPU load
 65.4 requests/sec - 0.7 MB/second - 11.4 kB/request   # 吞吐率
 1 requests currently being processed, 74 idle workers # 当前并发用户数
-#+END_SRC
+#+end_src
 
 ** =mpm_common=
 
@@ -382,9 +382,9 @@ CPU Usage: u1 s8.32 cu0 cs0 - 5.07% CPU load
 ** 安装
 
 #+CAPTION: Add repository for latest stable release
-#+BEGIN_SRC sh
+#+begin_src sh
 add-apt-repository -y ppa:ondrej/apache2
-#+END_SRC
+#+end_src
 
 ** =apache2= =httpd=
 
@@ -394,7 +394,7 @@ add-apt-repository -y ppa:ondrej/apache2
 
 ** =service=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 /etc/init.d/apache2 <command>
 service apache2 <command>
 
@@ -403,21 +403,21 @@ service apache2 <command>
     stop
     restart
     reload  # 重新加载配置
-#+END_SRC
+#+end_src
 
 ** =a2enmod= =a2dismod=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 a2enmod <module>
 a2dismod <module>
-#+END_SRC
+#+end_src
 
 ** =a2ensite= =a2dissite=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 a2ensite <domain>.conf
 a2dissite <domain>.conf
-#+END_SRC
+#+end_src
 
 ** =a2enconf= =a2disconf=
 * 链接

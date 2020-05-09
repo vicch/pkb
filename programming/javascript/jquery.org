@@ -4,17 +4,17 @@
 * Snippet
 
 #+CAPTION: 元素是否可见
-#+BEGIN_SRC js
+#+begin_src js
 $("#element").is(":visible");
-#+END_SRC
+#+end_src
 * Function
 ** =ajax()=
 
 [[http://api.jquery.com/jQuery.ajax/][jQuery.ajax()]]
 
-#+BEGIN_SRC js
+#+begin_src js
 jQuery.ajax( url [, settings ])
-#+END_SRC
+#+end_src
 
 ***  Settings
 
@@ -50,7 +50,7 @@ jQuery.ajax( url [, settings ])
 | =dataType=    | String      | Intelligent guess =xml= =json= =script= =html=                                                             |
 
 #+CAPTION: 示例
-#+BEGIN_SRC js
+#+begin_src js
 function foo(id) {
     $.ajax({
         type: "POST",
@@ -64,7 +64,7 @@ function foo(id) {
         }
     });
 }
-#+END_SRC
+#+end_src
 
 *** =accepts=
 <<jquery_ajax_accepts>>
@@ -72,7 +72,7 @@ function foo(id) {
 A set of key/value pairs that map a given =dataType= to its MIME type, which gets sent in the =Accept= request header.
 
 #+CAPTION: Define a custom type =mycustomtype= to be sent with the request.
-#+BEGIN_SRC js
+#+begin_src js
 $.ajax({
   accepts: {
     mycustomtype: 'application/x-some-custom-type'
@@ -89,7 +89,7 @@ $.ajax({
   // Expect a `mycustomtype` back from server
   dataType: 'mycustomtype'
 });
-#+END_SRC
+#+end_src
 *** =async=
 <<jquery_ajax_async>>
 
@@ -101,9 +101,9 @@ Synchronous requests may temporarily lock the browser, disabling any actions whi
 
 A pre-request callback function that can be used to modify the jqXHR object before it is sent. The jqXHR and settings objects are passed as arguments.
 
-#+BEGIN_SRC js
+#+begin_src js
 function ( jqXHR jqXHR, PlainObject settings )
-#+END_SRC
+#+end_src
 
 *** =cache=
 
@@ -115,9 +115,9 @@ Setting to =false= will only work correctly with HEAD and GET requests. It works
 
 A function to be called when the request finishes, after =success= and =error= callbacks are executed.
 
-#+BEGIN_SRC js
+#+begin_src js
 function ( jqXHR jqXHR, String textStatus )
-#+END_SRC
+#+end_src
 
 #+CAPTION: =textStatus=
 | =success=     |   |
@@ -153,14 +153,14 @@ The context of all Ajax-related callbacks.
 By default, the context is an object that represents the Ajax settings used in the call (=$.ajaxSettings= merged with the settings passed to =$.ajax=).
 
 #+CAPTION: Specify a DOM element as the context to make that the context for the complete callback of a request.
-#+BEGIN_SRC js
+#+begin_src js
 $.ajax({
   url: "test.html",
   context: document.body
 }).done(function() {
   $(this).addClass("done");
 });
-#+END_SRC
+#+end_src
 
 *** =converters=
 
@@ -182,12 +182,12 @@ Object must be Key/Value pairs. If value is an Array, jQuery serializes multiple
 
 A function to be used to handle the raw response data of XMLHttpRequest. This is a pre-filtering function to sanitize the response.
 
-#+BEGIN_SRC js
+#+begin_src js
 function (
     String data // Raw data returned from the server
 ,   String type // "dataType" parameter
 )
-#+END_SRC
+#+end_src
 *** =dataType=
 
 The type of data expected back from the server. If none is specified, jQuery will try to infer it based on the MIME type of the response.

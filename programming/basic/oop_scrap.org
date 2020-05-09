@@ -30,7 +30,7 @@ Sometimes we look at a piece of code, we cringe at how ugly it is, and we notice
 
 For example, to create a music sheet displaying app, we need one class per type of clef. The app is going to support all clefs based on the 3 basic ones: the C, the F and the G clef. The function that returns the correct instance of clef:
 
-#+BEGIN_SRC php
+#+begin_src php
 function getClef($note, $octave) {
     switch ($note) {
         case 'C':
@@ -58,7 +58,7 @@ function getClef($note, $octave) {
         default: throw new UnknownClefException();
     }
 }
-#+END_SRC
+#+end_src
 
 It's easy to think of applying the Factory Method pattern, and it would definitely make the code cleaner. But what if this code is not going to change ever? It seems unrealistic that new notes are going to be invented in the future, so we can safely assume that no clefs or notes will be added.
 

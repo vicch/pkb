@@ -376,14 +376,14 @@ Thus $n!$ grows slower than $n^{n}$, but faster than $c^{n}$ for any positive in
 - Permutation :: A permutation of a sequence $S$ is the members of $S$ arranged in some order.
 
 #+CAPTION: A simple C++ function for generating a random permutation
-#+BEGIN_SRC cpp
+#+begin_src cpp
 // Randomly permute the "n" values of array "A"
 template<typename E>
 void permute(E A[], int n) {
     for (int i=n; i>0; i--)
         swap(A, i-1, Random(i));
 }
-#+END_SRC
+#+end_src
 
 -----
 
@@ -485,13 +485,13 @@ A recursive algorithm must have two parts:
 - the recursive part which contains one or more recursive calls to the algorithm where the parameters are in some sense "closer" to the base case
 
 #+CAPTION: A recursive C++ function to compute the factorial of $n$
-#+BEGIN_SRC cpp
+#+begin_src cpp
 long fact(int n) {        // Compute n! recursively
     Assert((n >= 0) && (n <= 12), "Input out of range"); // Require n <= 12
     if (n <= 1) return 1; // Base case: return base solution
     return n * fact(n-1); // Recursive call for n > 1
 }
-#+END_SRC
+#+end_src
 
 Recursion solves problems by combining the results of one or more smaller ¡ª but similar ¡ª subproblems.
 
@@ -510,14 +510,14 @@ Then move the bottom ring from Pole 1 to Pole 3. \\
 Finally, again use function $X$ to move the remaining $n - 1$ rings from Pole 2 to Pole 3.
 #+END_QUOTE
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 void TOH(int n, Pole start, Pole goal, Pole temp) {
     if (n == 0) return;          // Base case
     TOH(n-1, start, temp, goal); // Recursive call: n-1 rings
     move(start, goal);           // Move bottom disk to goal
     TOH(n-1, temp, goal, start); // Recursive call: n-1 rings
 }
-#+END_SRC
+#+end_src
 
 #+BEGIN_QUOTE
 A recursive algorithm usually does not yield the most efficient computer program for solving the problem because recursion involves function calls, which are typically more expensive than other alternatives such as a =while= loop.

@@ -14,37 +14,37 @@
 ** MIME
 
 #+CAPTION: MIME 类型不能使用：
-#+BEGIN_SRC code
+#+begin_src code
 Content-Type: text/plain;
-#+END_SRC
+#+end_src
 
 #+CAPTION: 而要使用
-#+BEGIN_SRC code
+#+begin_src code
 Content-Type: Multipart/Alternative;
-#+END_SRC
+#+end_src
 
 ** 布局
 
 网页的布局必须使用 =<table>= 。
 
 #+CAPTION: 首先，放置一个最外层的表格，用来设置背景：
-#+BEGIN_SRC html
+#+begin_src html
 <body style="margin: 0; padding: 0;">
     <table border="1" cellpadding="0" cellspacing="0" width="100%">
     </table>
 </body>
-#+END_SRC
+#+end_src
 
 =border= 属性等于 1 是为了方便开发，正式发布的时候再把这个属性设为 0。
 
 #+CAPTION: 在内层放置第二个表格，用来展示内容，邮件内容有几个部分，就设置几行：
-#+BEGIN_SRC html
+#+begin_src html
 <table align="center" border="1" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse;">
     <tr></tr>
     <tr></tr>
     <tr></tr>
 </table>
-#+END_SRC
+#+end_src
 
 宽度定为 600 像素，防止超过客户端的显示宽度。
 
@@ -53,12 +53,12 @@ Content-Type: Multipart/Alternative;
 图片是唯一可以引用的外部资源，其他的外部资源，比如 CSS 文件、字体文件、视频文件等，一概不能引用。
 
 #+CAPTION: 有些客户端会给图片链接加上边框，要去除边框：
-#+BEGIN_SRC html
+#+begin_src html
 img { outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; }
 a img { border: none; }
 
 <img border="0" style="display:block;"/>
-#+END_SRC
+#+end_src
 
 不少客户端默认不显示图片，所以要确保即使没有图片，主要内容也能被阅读。
 
@@ -67,10 +67,10 @@ a img { border: none; }
 所有的 CSS 规则最好都采用行内样式，因为放置在网页头部的样式，很可能会被客户端删除。客户端对 CSS 规则的支持情况：[[https://www.campaignmonitor.com/css/][CSS Support Guide for Email Clients]]
 
 #+CAPTION: 不要采用 CSS 的简写形式，有些客户端不支持：
-#+BEGIN_SRC html
+#+begin_src html
 <p style="margin: 1em 0;">
 <p style="margin-top: 1em; margin-bottom: 1em; margin-left: 0; margin-right: 0;">
-#+END_SRC
+#+end_src
 
 ** W3C 校验和测试工具
 

@@ -36,11 +36,11 @@ Create a method under the resource:
 
 Add some JSON as mock response data under =first-api-test= > GET > Integration response > Default response > Mapping templates > =application/json=:
 
-#+BEGIN_SRC js
+#+begin_src js
 {
   "message": "success"
 }
-#+END_SRC
+#+end_src
 
 Deploy the API under =first-api= > Resources > Actions > Deploy API:
 
@@ -98,11 +98,11 @@ Create a Lambda function:
 Change the entry point script:
 
 #+CAPTION: =cy-store-data/index.js=
-#+BEGIN_SRC js
+#+begin_src js
 exports.handler = (event, context, callback) => {
   callback(null, {message: 'This is Lambda.'});
 }
-#+END_SRC
+#+end_src
 
 Note that the handler value =index.handler= must match the entry script name =index= plus the exported object name =handler=.
 
@@ -122,14 +122,14 @@ Deploy =compare-yourself= to =dev= stage, and copy the endpoint URL under Stages
 
 Go to [[https://codepen.io][CodePen]] and create a JS snippet to send =POST= request to the endpoint:
 
-#+BEGIN_SRC js
+#+begin_src js
 const xhr = new XMLHttpRequest();
 xhr.open('POST', 'https://*.execute-api.us-east-1.amazonaws.com/dev/compare-yourself');
 xhr.onreadystatechange = function(event) {
   console.log(event.target.response);
 }
 xhr.send();
-#+END_SRC
+#+end_src
 
 On running the script, there will be an error in the console: =Access to XMLHttpRequest at 'https://*.execute-api.us-east-1.amazonaws.com/dev/compare-yourself' from origin 'https://cdpn.io' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.=
 
@@ -145,11 +145,11 @@ Re-deploy =compare-yourself= to =dev= stage. Re-run the script on CodePen and co
 Update Lambda function =cy-store-data=:
 
 #+CAPTION: =cy-store-data/index.js=
-#+BEGIN_SRC js
+#+begin_src js
 exports.handler = (event, context, callback) => {
   callback(null, event);
 }
-#+END_SRC
+#+end_src
 
 This passing the =event= to the callback, this function will respond any request data back. Confirm the result by testing the =/compare-yourself= resource's =POST= method.
 
@@ -160,12 +160,12 @@ Go to Amazon API Gateway > APIs > =compare-yourself= > Resources > =/compare-you
 Update the Lambda function to return a custom header and log the request object:
 
 #+CAPTION: =cy-compare-yourself/index.js=
-#+BEGIN_SRC js
+#+begin_src js
 exports.handler = (event, context, callback) => {
   console.log(event);
   callback(null, {headers: {"Foo": "Bar"}});
 }
-#+END_SRC
+#+end_src
 
 Test the =POST= method of =/compare-yourself= resource and confirm the custom header in the response.
 
@@ -173,7 +173,7 @@ Test the =POST= method of =/compare-yourself= resource and confirm the custom he
 
 Lambda functions write logs to CloudWatch. Go to [[https://console.aws.amazon.com/cloudwatch/home][CloudWatch]] > Logs > =/aws/lambda/cy-store-data= and check the latest log stream to find the =event= object dump:
 
-#+BEGIN_SRC js
+#+begin_src js
 {
   resource: '/compare-yourself',
   path: '/compare-yourself',
@@ -181,7 +181,7 @@ Lambda functions write logs to CloudWatch. Go to [[https://console.aws.amazon.co
   headers: null,
   ...
 }
-#+END_SRC
+#+end_src
 
 ** Get Started with Mapping Templates
 
@@ -190,23 +190,23 @@ Go to Amazon API Gateway > APIs > =compare-yourself= > Resources > =/compare-you
 Update the Lambda function to extract an =age= value out of the request data and return a calculated value:
 
 #+CAPTION: =cy-compare-yourself/index.js=
-#+BEGIN_SRC js
+#+begin_src js
 exports.handler = (event, context, callback) => {
   const age = event.personData.age;
   callback(null, age * 2);
 }
-#+END_SRC
+#+end_src
 
 Test the =POST= method of =/compare-yourself= resource with person data:
 
-#+BEGIN_SRC js
+#+begin_src js
 {
   "personData": {
     "name": "Max",
     "age": 28
   }
 }
-#+END_SRC
+#+end_src
 
 And confirm the response to be =56=.
 
@@ -220,21 +220,21 @@ Go to Amazon API Gateway > APIs > =compare-yourself= > Resources > =/compare-you
 - Content type: add =application/json=
 - Mapping template:
 
-#+BEGIN_SRC js
+#+begin_src js
 {
   "age": $input.json('$.personData.age') // Extract personData.age from request JSON body
 }
-#+END_SRC
+#+end_src
 
 Update the Lambda function:
 
 #+CAPTION: =cy-store-data/index.js=
-#+BEGIN_SRC js
+#+begin_src js
 exports.handler = (event, context, callback) => {
   const age = event.age;
   callback(null, age * 2);
 }
-#+END_SRC
+#+end_src
 
 Test the =POST= method of =/compare-yourself= resource with same person data as above and confirm the response to be =56=.
 
@@ -242,19 +242,19 @@ Test the =POST= method of =/compare-yourself= resource with same person data as 
 
 Go to Amazon API Gateway > APIs > =compare-yourself= > Resources > =/compare-yourself= > =POST= > Integration Response > 200 > Mapping Templates > =application/json=, set the mapping template to:
 
-#+BEGIN_SRC js
+#+begin_src js
 {
   "age": $input.json('$') // Extract whole response body and transform it to JSON object
 }
-#+END_SRC
+#+end_src
 
 Test the =POST= method of =/compare-yourself= resource with same person data as above and confirm the response to be:
 
-#+BEGIN_SRC js
+#+begin_src js
 {
   "age": 56
 }
-#+END_SRC
+#+end_src
 
 ** Use Model and Validate Requests
 
@@ -264,7 +264,7 @@ Go to Amazon API Gateway > APIs > =compare-yourself= > Models, and create a mode
 - Content type: =application/json=
 - Model schema:
 
-#+BEGIN_SRC js
+#+begin_src js
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "CompareData",
@@ -276,7 +276,7 @@ Go to Amazon API Gateway > APIs > =compare-yourself= > Models, and create a mode
   },
   "required": ["age", "height", "income"]
 }
-#+END_SRC
+#+end_src
 
 Go to Amazon API Gateway > APIs > =compare-yourself= > Resources > =/compare-yourself= > =POST= > Method Request, and enable request body validation against the model:
 
@@ -287,7 +287,7 @@ Go to Amazon API Gateway > APIs > =compare-yourself= > Resources > =/compare-you
 
 Confirm the validation by testing the =POST= method with different request bodies:
 
-#+BEGIN_SRC js
+#+begin_src js
 {
   "age": 28
 }
@@ -299,7 +299,7 @@ Confirm the validation by testing the =POST= method with different request bodie
   "income": 1000
 }
 // Response status 200
-#+END_SRC
+#+end_src
 
 ** Models and Mappings
 
@@ -307,21 +307,21 @@ Models can also be used in mapping templates.
 
 Go to Amazon API Gateway > APIs > =compare-yourself= > Resources > =/compare-yourself= > =POST= > Integration Request > Mapping Templates > =application/json= > Generate Template, and select =CompareData=. Update the mapping template to:
 
-#+BEGIN_SRC js
+#+begin_src js
 #set($inputRoot = $input.path('$'))
 {
   "age": $inputRoot.age
 }
-#+END_SRC
+#+end_src
 
 Go to Amazon API Gateway > APIs > =compare-yourself= > Resources > =/compare-yourself= > =POST= > Integration Response > 200 > Mapping Templates > =application/json= > Generate Template, and select =CompareData=. Update the mapping template to:
 
-#+BEGIN_SRC js
+#+begin_src js
 #set($inputRoot = $input.path('$'))
 {
   "age": $inputRoot
 }
-#+END_SRC
+#+end_src
 
 Test the =POST= method with above data and confirm the result is successful.
 
@@ -352,7 +352,7 @@ Go to Amazon API Gateway > APIs > =compare-yourself= > Resources > =/compare-you
 Create a Lambda function =cy-get-data= with code:
 
 #+CAPTION: =cy-get-data/index.js=
-#+BEGIN_SRC js
+#+begin_src js
 exports.handler = (event, context, callback) => {
   const type = event.type;
   if (type === 'all') {
@@ -363,7 +363,7 @@ exports.handler = (event, context, callback) => {
     callback(null, 'Error');
   }
 };
-#+END_SRC
+#+end_src
 
 Go back to resource =/compare-yourself= > =/{type}=, create a =GET= method:
 
@@ -376,11 +376,11 @@ Go to =GET= > Integration Request > Mapping Templates:
 - Content type: add =application/json=
 - Mapping template:
 
-#+BEGIN_SRC js
+#+begin_src js
 {
   "type": "$input.params('type')" // Extract the "type" param from URL params
 }
-#+END_SRC
+#+end_src
 
 Test the =GET= method by setting ={type}= param to =all= and =single= and confirm the result.
 
@@ -390,7 +390,7 @@ Go to Amazon API Gateway > APIs > =compare-yourself= > Resources > =/compare-you
 
 Go to CodePen and test the =POST= method with this code:
 
-#+BEGIN_SRC js
+#+begin_src js
 const xhr = new XMLHttpRequest();
 xhr.open('POST', 'https://*.execute-api.us-east-1.amazonaws.com/dev/compare-yourself');
 xhr.onreadystatechange = function(event) {
@@ -399,18 +399,18 @@ xhr.onreadystatechange = function(event) {
 xhr.setRequestHeader('Content-Type', 'application/json'); // Content type imposed by the model
 xhr.send(JSON.stringify({age: 28, height: 170, income: 2000}));
 // Response: {"age": 56}
-#+END_SRC
+#+end_src
 
 Also test the =GET= method with path parameter:
 
-#+BEGIN_SRC js
+#+begin_src js
 const xhr = new XMLHttpRequest();
 xhr.open('GET', 'https://*.execute-api.us-east-1.amazonaws.com/dev/compare-yourself/single');
 xhr.onreadystatechange = function(event) {
   console.log(event.target.response);
 }
 xhr.send();
-#+END_SRC
+#+end_src
 
 * Data Storage with DynamoDB
 ** NoSQL vs SQL
@@ -447,14 +447,14 @@ Go to [[https://console.aws.amazon.com/dynamodb/home][DynamoDB]] and create a ta
 
 Go to DynamoDB > Tables > =compare-yourself= > Items, and create an item:
 
-#+BEGIN_SRC js
+#+begin_src js
 {
   "UserId": "001",
   "Age": 28,
   "Height": 170,
   "Income": 1000
 }
-#+END_SRC
+#+end_src
 
 ** Access DynamoDB from Lambda
 
@@ -469,7 +469,7 @@ To access DynamoDB (and other AWS services in general) from an external applicat
 Update the Lambda function code:
 
 #+CAPTION: =cy-store-data/index.js=
-#+BEGIN_SRC js
+#+begin_src js
 // Best practice of Lambda: init global/static/singleton variables
 // outside of any function, because Lambda functions are cached
 // after invocation, these variables can be reused to improve
@@ -503,7 +503,7 @@ exports.handler = (event, context, callback) => {
     }
   });
 }
-#+END_SRC
+#+end_src
 
 Test the function, and confirm that it throws =AccessDeniedException=.
 
@@ -519,19 +519,19 @@ Test the function again, and confirm it executes successfully.
 
 Go to Amazon API Gateway > APIs > =compare-yourself= > Resources > =/compare-yourself= > =POST= > Integration Request > Mapping Templates > =application/json=, and update the mapping template to:
 
-#+BEGIN_SRC js
+#+begin_src js
 #set($inputRoot = $input.path('$'))
 {
   "age": "$inputRoot.age", // Wrap with "" so the value will be passed as string
   "height": "$inputRoot.height",
   "income": "$inputRoot.income"
 }
-#+END_SRC
+#+end_src
 
 Update the Lambda function to read params from the =event= object:
 
 #+CAPTION: =cy-store-data/index.js=
-#+BEGIN_SRC js
+#+begin_src js
 ...
 const params = {
   TableName: 'compare-yourself',
@@ -543,17 +543,17 @@ const params = {
   }
 };
 ...
-#+END_SRC
+#+end_src
 
 Go to Amazon API Gateway > APIs > =compare-yourself= > Resources > =/compare-yourself= > =POST= > Method Test, and set request body as:
 
-#+BEGIN_SRC js
+#+begin_src js
 {
   "age": 99,
   "height": 180,
   "income": 10
 }
-#+END_SRC
+#+end_src
 
 Confirm the response status as 200 and the item being added in DynamoDB.
 
@@ -563,7 +563,7 @@ Go to Amazon API Gateway > APIs > =compare-yourself= > Actions > Deploy API, and
 
 Go to CodePen and create a JS snippet to send POST request to the endpoint:
 
-#+BEGIN_SRC js
+#+begin_src js
 const xhr = new XMLHttpRequest();
 xhr.open('POST', 'https://*.execute-api.us-east-1.amazonaws.com/dev/compare-yourself');
 xhr.onreadystatechange = function(event) {
@@ -571,7 +571,7 @@ xhr.onreadystatechange = function(event) {
 }
 xhr.setRequestHeader('Content-Type', 'application/json');
 xhr.send(JSON.stringify({age: 12, height: 123, income: 1234}));
-#+END_SRC
+#+end_src
 
 Run the script and confirm the response is successful, and the item is created in DynamoDB.
 
@@ -582,7 +582,7 @@ Run the script and confirm the response is successful, and the item is created i
 Update the Lambda function to scan data from DynamoDB:
 
 #+CAPTION: =cy-get-data/index.js=
-#+BEGIN_SRC js
+#+begin_src js
 const AWS = require('aws-sdk');
 const dynamodb = new AWS.DynamoDB({
   apiVersion: '2012-08-10',
@@ -616,17 +616,17 @@ exports.handler = (event, context, callback) => {
     callback(null, 'Error');
   }
 };
-#+END_SRC
+#+end_src
 
 Go to IAM > Roles > =cy-get-data-role-*= > Attach Policies, and attach =AmazonDynamoDBFullAccess=.
 
 Test the Lambda function with event:
 
-#+BEGIN_SRC js
+#+begin_src js
 {
   "type": "all"
 }
-#+END_SRC
+#+end_src
 
 Confirm the result to be all items from =compare-yourself= table in DynamoDB.
 
@@ -654,7 +654,7 @@ Create a policy =compare-yourself-write= for =cy-store-data= in the same manner 
 Update the Lambda function to get a single item from DynamoDB:
 
 #+CAPTION: =cy-get-data/index.js=
-#+BEGIN_SRC js
+#+begin_src js
 ...
 } else if (type === 'single') {
   const params = {
@@ -678,25 +678,25 @@ Update the Lambda function to get a single item from DynamoDB:
   });
 } else {
 ...
-#+END_SRC
+#+end_src
 
 Test the function with event:
 
-#+BEGIN_SRC js
+#+begin_src js
 {
   "type": "single"
 }
-#+END_SRC
+#+end_src
 
 And confirm the result:
 
-#+BEGIN_SRC js
+#+begin_src js
 {
   "age": "28",
   "height": "170",
   "income": "1000"
 }
-#+END_SRC
+#+end_src
 
 ** Prepare Delete Permissions
 
@@ -718,7 +718,7 @@ Lambda functions need the =AWSLambdaBasicExecutionRole= policy to be able to wri
 Update the Lambda function to delete a single item from DynamoDB:
 
 #+CAPTION: =cy-delete-data/index.js=
-#+BEGIN_SRC js
+#+begin_src js
 const AWS = require('aws-sdk');
 const dynamodb = new AWS.DynamoDB({
   apiVersion: '2012-08-10',
@@ -742,7 +742,7 @@ exports.handler = (event, context, callback) => {
     }
   });
 };
-#+END_SRC
+#+end_src
 
 Test the function with any event, and confirm the item being removed from DynamoDB.
 
@@ -756,7 +756,7 @@ Go to Amazon API Gateway > APIs > =compare-yourself= > Models, and create a mode
 - Content type: =application/json=
 - Model schema:
 
-#+BEGIN_SRC js
+#+begin_src js
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "CompareDataArray",
@@ -771,13 +771,13 @@ Go to Amazon API Gateway > APIs > =compare-yourself= > Models, and create a mode
     "required": ["age", "height", "income"]
   }
 }
-#+END_SRC
+#+end_src
 
 Go to Amazon API Gateway > APIs > =compare-yourself= > Resources > =/compare-yourself/{type}= > =GET= > Method Response > 200 > Response Body for 200 > Models, set the value to be =CompareDataArray=.
 
 Go to Amazon API Gateway > APIs > =compare-yourself= > Resources > =/compare-yourself/{type}= > =GET= > Integration Response > 200 > Mapping Templates > =application/json= > Generate Template, and selete =CompareDataArray=. Update the mapping template to:
 
-#+BEGIN_SRC js
+#+begin_src js
 #set($inputRoot = $input.path('$'))
 [
 #foreach($elem in $inputRoot)
@@ -789,11 +789,11 @@ Go to Amazon API Gateway > APIs > =compare-yourself= > Resources > =/compare-you
 #if($foreach.hasNext),#end
 #end
 ]
-#+END_SRC
+#+end_src
 
 Test the =GET= method by setting ={type}= param to =single= and confirm the result:
 
-#+BEGIN_SRC js
+#+begin_src js
 [
   {
     "age": 28,
@@ -801,7 +801,7 @@ Test the =GET= method by setting ={type}= param to =single= and confirm the resu
     "income": 1000
   }
 ]
-#+END_SRC
+#+end_src
 
 * Authenticate Users with Cognito and API Gateway Authorizers
 ** How to Add Authentication to API Gateway
@@ -825,7 +825,7 @@ A custom authorizer is a Lambda function which takes input from API Gateway, and
 Create a new Lambda function =cy-custom-auth=:
 
 #+CAPTION: =cy-custom-auth/index.js=
-#+BEGIN_SRC js
+#+begin_src js
 exports.handler = (event, context, callback) => {
   const token = event.authorizationToken; // Provided by API Gateway
   if (token === 'allow' || token === 'deny') {
@@ -858,7 +858,7 @@ function genPolicy(effect, resource) {
   };
   return policy;
 }
-#+END_SRC
+#+end_src
 
 ** Use Custom Authorizers
 
@@ -876,7 +876,7 @@ Apply the custom authorizer to method at Amazon API Gateway > APIs > =compare-yo
 
 Test authentication on CodePen:
 
-#+BEGIN_SRC js
+#+begin_src js
 const xhr = new XMLHttpRequest();
 xhr.open('POST', 'https://*.execute-api.us-east-1.amazonaws.com/dev/compare-yourself');
 xhr.onreadystatechange = function(event) {
@@ -885,7 +885,7 @@ xhr.onreadystatechange = function(event) {
 xhr.setRequestHeader('Content-Type', 'application/json');
 xhr.setRequestHeader('Authorization', 'allow'); // allow -> 200, deny -> 403, other values -> 401
 xhr.send(JSON.stringify({age: 10, height: 100, income: 1000}));
-#+END_SRC
+#+end_src
 
 ** Retrieve Users from Custom Authorizers
 
@@ -895,7 +895,7 @@ Since the custom authorizer is returning a user ID in the =principalId= field, w
 
 Add user ID as input to Lambda function at Amazon API Gateway > APIs > =compare-yourself= > Resources > =/compare-yourself= > =POST= > Integration Request > Mapping Templates > =application/json=:
 
-#+BEGIN_SRC js
+#+begin_src js
 #set($inputRoot = $input.path('$'))
 {
   "age": "$inputRoot.age",
@@ -903,12 +903,12 @@ Add user ID as input to Lambda function at Amazon API Gateway > APIs > =compare-
   "income": "$inputRoot.income",
   "userId": "$context.authorizer.principalId" // New field
 }
-#+END_SRC
+#+end_src
 
 Update Lambda function =cy-store-data= to use this field:
 
 #+CAPTION: =cy-store-data/index.js=
-#+BEGIN_SRC js
+#+begin_src js
 ...
 Item: {
   UserId: {S: event.userId}, // Use event.userId
@@ -917,11 +917,11 @@ Item: {
   Income: {N: event.income}
 }
 ...
-#+END_SRC
+#+end_src
 
 Deploy the API and test with CodePen:
 
-#+BEGIN_SRC js
+#+begin_src js
 const xhr = new XMLHttpRequest();
 xhr.open('POST', 'https://*.execute-api.us-east-1.amazonaws.com/dev/compare-yourself');
 xhr.onreadystatechange = function(event) {
@@ -930,7 +930,7 @@ xhr.onreadystatechange = function(event) {
 xhr.setRequestHeader('Content-Type', 'application/json');
 xhr.setRequestHeader('Authorization', 'allow');
 xhr.send(JSON.stringify({age: 20, height: 200, income: 2000}));
-#+END_SRC
+#+end_src
 
 Confirm in DynamoDB that there is a new item with ID =12345=, which is returned by =cy-custom-auth= function.
 
@@ -955,11 +955,11 @@ file:../images/aws_serverless_apis_and_apps/03.png
 
 Unpack the Angular project to a local directory, and start running the app:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ cd compare-yourself
 $ npm install
 $ npm start # Or "./node_modules/.bin/ng serve" if not working
-#+END_SRC
+#+end_src
 
 Open http://localhost:4200/ and confirm the app working.
 
@@ -978,7 +978,7 @@ Credentials the app needs to access the Cognito user pool:
 Setup Cognito user pool, which is the entry point of Cognito service:
 
 #+CAPTION: =src/app/user/auth.service.ts=
-#+BEGIN_SRC typescript
+#+begin_src typescript
 import { CognitoUserPool } from 'amazon-cognito-identity-js';
 
 // Credentials
@@ -988,12 +988,12 @@ const COGNITO_DATA = {
 }
 // Init user pool object
 const cognitoUserPool = new CognitoUserPool(COGNITO_DATA);
-#+END_SRC
+#+end_src
 
 Prepare the user attributes and call Cognito signup function:
 
 #+CAPTION: =src/app/user/auth.service.ts=
-#+BEGIN_SRC typescript
+#+begin_src typescript
 import { CognitoUserAttribute, CognitoUser } from 'amazon-cognito-identity-js';
 
 export class AuthService {
@@ -1015,7 +1015,7 @@ export class AuthService {
     });
   }
 }
-#+END_SRC
+#+end_src
 
 Run the app and sign up as a new user, confirm the verification email is sent to the email address.
 
@@ -1024,7 +1024,7 @@ Run the app and sign up as a new user, confirm the verification email is sent to
 Call Cognito to confirm a registered user with code:
 
 #+CAPTION: =src/app/user/auth.service.ts=
-#+BEGIN_SRC typescript
+#+begin_src typescript
 export class AuthService {
   confirmUser(username: string, code: string) {
     const cognitoUser = new CognitoUser({
@@ -1041,7 +1041,7 @@ export class AuthService {
     });
   }
 }
-#+END_SRC
+#+end_src
 
 Sign up in the frontend app, and confirm user with the verification code, and confirm the user's status is =CONFIRMED= at Amazon Cognito > User Pools > =compare-yourself= > General Settings > Users and Groups.
 
@@ -1050,7 +1050,7 @@ Sign up in the frontend app, and confirm user with the verification code, and co
 Call Cognito to sign in a user:
 
 #+CAPTION: =src/app/user/auth.service.ts=
-#+BEGIN_SRC typescript
+#+begin_src typescript
 import { AuthenticationDetails, CognitoUserSession } from 'amazon-cognito-identity-js';
 
 export class AuthService {
@@ -1074,14 +1074,14 @@ export class AuthService {
     return;
   }
 }
-#+END_SRC
+#+end_src
 
 ** Manage User State with Cognito
 
 Cognito SDK provides helper functions to get the user's auth state:
 
 #+CAPTION: =src/app/user/auth.service.ts=
-#+BEGIN_SRC typescript
+#+begin_src typescript
 export class AuthService {
   // Return current user
   getAuthenticatedUser() {
@@ -1111,7 +1111,7 @@ export class AuthService {
     this.getAuthenticatedUser().signOut();
   }
 }
-#+END_SRC
+#+end_src
 
 ** Use Cognito Authorizer with API Gateway
 
@@ -1131,7 +1131,7 @@ Set the authorizer also for =/compare-yourself= > =DELETE=, and =/compare-yourse
 With the API endpoints using the Cognito authorizer, frontend app needs to send the token via the =Authorization= header. Update the =POST= request logic of the app:
 
 #+CAPTION: =src/app/compare/compare.service.ts=
-#+BEGIN_SRC typescript
+#+begin_src typescript
 export class CompareService {
   onStoreData(data: CompareData) {
     // Get user session
@@ -1147,11 +1147,11 @@ export class CompareService {
     });
   }
 }
-#+END_SRC
+#+end_src
 
 Data format returned by Cognito is different with the custom Lambda authorizer, so the API endpoint body mapping needs to be updated at Amazon API Gateway > APIs > =compare-yourself= > Resources > =/compare-yourself= > =POST= > Integration Request > Mapping Templates > =application/json=:
 
-#+BEGIN_SRC js
+#+begin_src js
 #set($inputRoot = $input.path('$'))
 {
   "age": "$inputRoot.age",
@@ -1159,7 +1159,7 @@ Data format returned by Cognito is different with the custom Lambda authorizer, 
   "income": "$inputRoot.income",
   "userId": "$context.authorizer.claims.sub" // Update this
 }
-#+END_SRC
+#+end_src
 
 Go to http://localhost:4200/compare and submit some data, and confirm the data is stored in DynamoDB. If not successful, add debug output from the Lambda function =cy-store-data=, and check CloudWatch logs.
 
@@ -1178,18 +1178,18 @@ Then under URL Query String Parameters, add a parameter:
 
 Then pass the parameter to Lambda function by updating the body mapping at Amazon API Gateway > APIs > =compare-yourself= > Resources > =/compare-yourself/{type}= > =GET= > Integration Request > Mapping Templates > =application/json=:
 
-#+BEGIN_SRC js
+#+begin_src js
 {
   "accessToken": "$input.params('accessToken')"
 }
-#+END_SRC
+#+end_src
 
 Add the same parameter and body mapping for the =DELETE= method.
 
 Update Lambda function to get user ID from the access token, by using the AWS SDK =CognitoIdentityServiceProvider=:
 
 #+CAPTION: =cy-get-data/index.js=
-#+BEGIN_SRC js
+#+begin_src js
 const cisp = new AWS.CognitoIdentityServiceProvider({apiVersion: '2016-04-18'});
 exports.handler = (event, context, callback) => {
   ...
@@ -1223,14 +1223,14 @@ exports.handler = (event, context, callback) => {
     }
   });
 };
-#+END_SRC
+#+end_src
 
 ** Pass Query Params from the Frontend
 
 Update the Angular app to pass the query param =accessToken= to the API endpoints:
 
 #+CAPTION: =src/app/compare/compare.service.ts=
-#+BEGIN_SRC typescript
+#+begin_src typescript
 export class CompareService {
   onRetrieveData(all = true) {
     // Same as onStoreData, get the session object
@@ -1243,7 +1243,7 @@ export class CompareService {
     }
   }
 }
-#+END_SRC
+#+end_src
 
 Confirm in frontend that the data associated with the user can be retrieved.
 
@@ -1252,7 +1252,7 @@ Confirm in frontend that the data associated with the user can be retrieved.
 Update the frontend's delete action to pass access token as param to =DELETE= endpoint, and then update Lambda function to get the user ID from access token.
 
 #+CAPTION: =src/app/compare/compare.service.ts=
-#+BEGIN_SRC typescript
+#+begin_src typescript
 export class CompareService {
   onDeleteData() {
     this.authService.getAuthenticatedUser().getSession((err, session) => {
@@ -1264,12 +1264,12 @@ export class CompareService {
     });
   }
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: =cy-delete-data/index.js=
-#+BEGIN_SRC js
+#+begin_src js
 
-#+END_SRC
+#+end_src
 
 * Host a Serverless SPA
 
@@ -1294,7 +1294,7 @@ The static website needs to be built before being uploaded to S3.
 Optimize the build command:
 
 #+CAPTION: =package.json=
-#+BEGIN_SRC js
+#+begin_src js
 {
   "scripts": {
     "ng": "ng",
@@ -1304,13 +1304,13 @@ Optimize the build command:
   },
   ...
 }
-#+END_SRC
+#+end_src
 
 Build the project:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 npm run build
-#+END_SRC
+#+end_src
 
 The built files are under =dist= directory. Upload the files at Amazon S3 > Buckets > =dev.victorchen.compare-yourself= > Upload.
 
@@ -1324,7 +1324,7 @@ Public access is granted to buckets and objects through ACLs, bucket policies, o
 
 Copy the read-only policy example from S3 doc, and replace the ARN:
 
-#+BEGIN_SRC js
+#+begin_src js
 {
   "Version":"2012-10-17",
   "Statement":[
@@ -1337,7 +1337,7 @@ Copy the read-only policy example from S3 doc, and replace the ARN:
     }
   ]
 }
-#+END_SRC
+#+end_src
 
 Set the policy to the bucket at S3 > Buckets > =dev.victorchen.compare-yourself= > Permissions > Bucket Policy.
 
@@ -1423,11 +1423,11 @@ Add documentation at API Gateway > APIs > =compare-yourself= > Documentation > C
 - Path: =/compare-yourself=
 - Method: =GET=
 
-#+BEGIN_SRC js
+#+begin_src js
 {
     "description": "Get all or single user data."
 }
-#+END_SRC
+#+end_src
 
 ** Other AWS Lambda Triggers
 
@@ -1467,33 +1467,33 @@ Save the =express-serverless= project locally, and start the Node server with =n
 The routes are setup in =app.js=:
 
 #+CAPTION: =app.js=
-#+BEGIN_SRC js
+#+begin_src js
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
 app.use('/', routes);
 app.use('/users', users);
-#+END_SRC
+#+end_src
 
 *** Integrate Express Application with =aws-serverless-express=
 
 =aws-serverless-express= is a tool that wraps an Express application so it can run on AWS Lambda. Install dependency into the application:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 npm install --save aws-serverless-express
-#+END_SRC
+#+end_src
 
 The generated =lambda.js= file creates a request handler which passes requests to a server:
 
 #+CAPTION: =lambda.js=
-#+BEGIN_SRC js
+#+begin_src js
 'use strict'
 const awsServerlessExpress = require('aws-serverless-express')
 const app = require('./app')
 const server = awsServerlessExpress.createServer(app)
 
 exports.handler = (event, context) => { awsServerlessExpress.proxy(server, event, context) }
-#+END_SRC
+#+end_src
 
 *** Import Express Application to Lambda
 
@@ -1566,7 +1566,7 @@ This protection depends on the browser's respect of CORS headers.
 
 Install Serverless framework and create an application:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 # Install Serverless globally
 npm install -g serverless
 
@@ -1576,7 +1576,7 @@ serverless create --template hello-world
 
 # Deploy to cloud, this requires AWS credentials being setup locally
 serverless deploy
-#+END_SRC
+#+end_src
 
 ** Get to Know SAM (Serverless Application Model) by AWS
 

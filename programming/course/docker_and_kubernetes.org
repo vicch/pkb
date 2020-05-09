@@ -195,14 +195,14 @@ The reason of using =ingress-nginx= instead of a simple Nginx =Pod= for load bal
 Follow =ingress-nginx= [[https://kubernetes.github.io/ingress-nginx/deploy/][Installation Guide]]:
 
 #+CAPTION: Run generic deployment command to applies a yaml config to create the =Ingress= controller and other objects
-#+BEGIN_SRC sh
+#+begin_src sh
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
-#+END_SRC
+#+end_src
 
 #+CAPTION: Run setup commands for minikube.
-#+BEGIN_SRC sh
+#+begin_src sh
 minikube addons enable ingress
-#+END_SRC
+#+end_src
 
 The deployment command for Google Cloud applies a yaml config to create a =LoadBalancer= =Service=.
 
@@ -290,7 +290,7 @@ The Travis config file will:
 ** Install Google Cloud SDK
 
 #+CAPTION: =.travis.yml=
-#+BEGIN_SRC yaml
+#+begin_src yaml
 env:
   global:
     # Disable prompts during SDK installation
@@ -304,7 +304,7 @@ before_install:
   # Configure auth
   - gcloud auth activate-service-account --key-file service-account.json
 # service-account.json contains credentials
-#+END_SRC
+#+end_src
 
 ** Generate Service Account
 
@@ -314,15 +314,15 @@ Create a service account at [[https://console.cloud.google.com/iam-admin/service
 
 Travis CI CLI needs Ruby. It's more convenient to use a Docker image with Ruby installed.
 
-#+BEGIN_SRC sh
+#+begin_src sh
 docker run -it -v $(pwd):/app ruby:2.3 sh
 gem install travis
-#+END_SRC
+#+end_src
 
 ** Encrypt Service Account File
 
 #+CAPTION: (Following last section inside Docker)
-#+BEGIN_SRC sh
+#+begin_src sh
 # Go to the mounted dir where the service account JSON file is
 # Assuming the file is named as service-account.json
 cd /app
@@ -330,7 +330,7 @@ travis login
 # Specify the Git repo to tie the encrypted file to
 travis encrypt-file service-account.json -r vicch/multi-k8s
 # Copy the given openssl command to .travis.yml under before_install
-#+END_SRC
+#+end_src
 
 The encrypted keys will be added as environment variables to the repo on Travis CI. The variables are referenced in the generated =openssl= command.
 
@@ -339,19 +339,19 @@ Commit the generated =service-account.json.enc= into Git repo, but DO NOT commit
 ** More Google Cloud CLI Config
 
 #+CAPTION: =.travis.yml=
-#+BEGIN_SRC yaml
+#+begin_src yaml
 before_install:
   - ...
   # Configure Google Cloud project and cluster
   - gcloud config set project <project_id> # Project ID is not project name
   - gcloud config set compute/zone <location> # E.g. us-central1-a
   - gcloud container clusters get-credentials <cluster_name>
-#+END_SRC
+#+end_src
 
 ** Run Tests with Travis
 
 #+CAPTION: =.travis.yml=
-#+BEGIN_SRC yaml
+#+begin_src yaml
 before_install:
   - ...
   # Login to Docker, username and password are added as environment variables
@@ -361,25 +361,25 @@ before_install:
 script:
   # Run the tests
   - docker run ...
-#+END_SRC
+#+end_src
 
 ** Custom Deployment Providers
 
 Travis CI doesn's support Kubernetes as deployment provider, so a custom script is needed to perform the deployment.
 
 #+CAPTION: =.travis.yml=
-#+BEGIN_SRC yaml
+#+begin_src yaml
 deploy:
   provider: script
   script: bash ./deploy.sh # The custom script to do deployment
   on:
     branch: master
-#+END_SRC
+#+end_src
 
 ** Unique Deployment Images
 
 #+CAPTION: =deploy.sh=
-#+BEGIN_SRC sh
+#+begin_src sh
 # Build images and push to Docker Hub
 docker build ...
 docker push ...
@@ -387,7 +387,7 @@ docker push ...
 kubectl apply -f k8s
 # Imperatively set the latest image
 kubectl set image ...
-#+END_SRC
+#+end_src
 
 ** Unique Tags for Built Images
 
@@ -402,21 +402,21 @@ The Git commit's SHA hash can be used as the tag:
 ** Updating Deployment Script
 
 #+CAPTION: =.travis.yml=
-#+BEGIN_SRC yaml
+#+begin_src yaml
 env:
   global:
     # Define the environment variable for Git SHA
     - SHA=$(git rev-parse HEAD)
-#+END_SRC
+#+end_src
 
 #+CAPTION: =deploy.sh=
-#+BEGIN_SRC sh
+#+begin_src sh
 # Set Git SHA as image tag
 docker build ... -t ...:$SHA ...
 docker push ...:$SHA
 # Reference Git SHA when setting image
 kubectl set image ...:$SHA
-#+END_SRC
+#+end_src
 
 ** Configure Google Cloud CLI on Cloud Console
 
@@ -425,20 +425,20 @@ The Postgres =Deployment= of the cluster needs a Kubernetes =Secret= object to h
 To do this on Google Cloud, on [[https://console.cloud.google.com/kubernetes/list][Google Cloud Platform | Kubernetes Engine]] click "Activate Cloud Shell" to open a console, where =kubectl= commands can be executed to configure the cluster.
 
 #+CAPTION: Environment setup for using =kubectl=
-#+BEGIN_SRC sh
+#+begin_src sh
 gcloud config set project <project_id>
 gcloud config set compute/zone <location>
 gcloud container clusters get-credentials <cluster_name>
 # Confirm setup is successful
 kubectl get all
-#+END_SRC
+#+end_src
 
 ** Create Secret on Google Cloud
 
 #+CAPTION: Create =Secret= in Cloud Shell
-#+BEGIN_SRC sh
+#+begin_src sh
 kubectl create secret generic pg-password --from-literal PG_PASSWORD=123456
-#+END_SRC
+#+end_src
 
 Confirm the =Secret= is created under [[https://console.cloud.google.com/kubernetes/config][Google Cloud Platform | Kubernetes Engine | Configuration]].
 
@@ -446,11 +446,11 @@ Confirm the =Secret= is created under [[https://console.cloud.google.com/kuberne
 
 =ingress-unix= is needed to handle ingress. Helm can be used to manage =ingress-unix= on Google Cloud cluster. Go to [[https://helm.sh/docs/using_helm/#from-script][Helm Documentation | Installing Helm | Using Script]], run the commands in Cloud Shell to install Helm.
 
-#+BEGIN_SRC sh
+#+begin_src sh
 curl -LO https://git.io/get_helm.sh
 chmod 700 get_helm.sh
 ./get_helm.sh
-#+END_SRC
+#+end_src
 
 ** Kubernetes Security with RBAC
 
@@ -460,24 +460,24 @@ Tiller (server part of Helm) needs proper Kubernetes RBAC (Role-Based Access Con
 
 A service account and a =ClusterRoleBinding= need to be created to grant Tiller the permissions.
 
-#+BEGIN_SRC sh
+#+begin_src sh
 kubectl create serviceaccount --namespace kube-system tiller
 kubectl create clusterrolebinding tiller-cluster-role --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
-#+END_SRC
+#+end_src
 
 Initialize Helm with the service account just created.
 
-#+BEGIN_SRC sh
+#+begin_src sh
 helm init --service-account tiller --upgrade
-#+END_SRC
+#+end_src
 
 ** ingress-nginx with Helm
 
 Install =ingress-nginx= with Helm by following [[https://kubernetes.github.io/ingress-nginx/deploy/#using-helm][ingress-nginx | Installation Guide | Using Helm]].
 
-#+BEGIN_SRC sh
+#+begin_src sh
 helm install stable/nginx-ingress --name my-nginx --set rbac.create=true
-#+END_SRC
+#+end_src
 
 The ingress-related objects will be created behind the scene.
 
@@ -528,7 +528,7 @@ HTTPS certificate for Kubernetes cluster can be provided for free by Let's Encry
 
 [[https://github.com/jetstack/cert-manager][cert-manager]] can be used to manage certificates on Kubernetes cluster. Go to [[https://docs.cert-manager.io/en/latest/getting-started/install.html#installing-with-helm][cert-manager Documentation | Installing with Helm]] and run the command in Google Cloud Console.
 
-#+BEGIN_SRC sh
+#+begin_src sh
 kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.7/deploy/manifests/00-crds.yaml
 
 kubectl create namespace cert-manager
@@ -538,7 +538,7 @@ helm repo add jetstack https://charts.jetstack.io
 helm repo update
 
 helm install --name cert-manager --namespace cert-manager --version v0.7.2 --set webhook.enabled=false jetstack/cert-manager
-#+END_SRC
+#+end_src
 
 ** How to Wire Up cert-manager
 
@@ -558,7 +558,7 @@ The Issuer and Certificate objects need to be setup by yaml config files and dep
 [[https://docs.cert-manager.io/en/latest/reference/issuers.html][cert-manager Documentation | Issuers]]
 
 #+CAPTION: =issuer.yaml=
-#+BEGIN_SRC yaml
+#+begin_src yaml
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: ClusterIssuer
 metadata:
@@ -570,14 +570,14 @@ spec:
     privateKeySecretRef: # Used for comm between cluster and Let's Encrypt
       name: letsencrypt-prod
     http01: {} # Use HTTP-01 challenge mechanism
-#+END_SRC
+#+end_src
 
 ** Certificate Config File
 
 [[https://docs.cert-manager.io/en/latest/reference/certificates.html][cert-manager Documentation | Certificates]]
 
 #+CAPTION: =certificate.yaml=
-#+BEGIN_SRC yaml
+#+begin_src yaml
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
@@ -596,7 +596,7 @@ spec:
           ingressClass: nginx
         domains: # Domains to be used for the HTTP-01 challenge
           - <domain> # e.g. example.com, www.example.com
-#+END_SRC
+#+end_src
 
 ** Deploy Changes
 
@@ -606,19 +606,19 @@ Commit the repo and wait for Travis CI to deploy the changes to Google Cloud.
 
 Confirm the Certificate and Secret object being created in Google Cloud Console:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 kubectl get certificates
 kubectl describe certificates
 # There should be one message of "Certificate issued successfully" at the end
 kubectl get secrets
-#+END_SRC
+#+end_src
 
 ** Ingress Config for HTTPS
 
 The Ingress Service needs to be updated to serve HTTPS.
 
 #+CAPTION: =ingress-service.yaml=
-#+BEGIN_SRC sh
+#+begin_src sh
 ...
 metadata:
   annotations:
@@ -635,7 +635,7 @@ spec:
       ... # Don't change the rest, just add "host" to the existing rule
     - host: <domain> # e.g. www.example.com
       ... # Copy the same config as the rule above
-#+END_SRC
+#+end_src
 
 ** It Worked
 

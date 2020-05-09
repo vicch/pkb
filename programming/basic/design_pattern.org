@@ -67,7 +67,7 @@ file:../images/design_pattern/03.svg
 
 *** 示例
 
-#+BEGIN_SRC java
+#+begin_src java
 // 产品接口
 public interface Sender {
     public void Send();
@@ -114,7 +114,7 @@ public class Test {
         sender.Send();
     }
 }
-#+END_SRC
+#+end_src
 
 ** 工厂方法
 
@@ -129,7 +129,7 @@ file:../images/design_pattern/02.png
 -----
 
 #+CAPTION: 普通工厂方法
-#+BEGIN_SRC java
+#+begin_src java
 // 产品接口
 public interface Sender {
     public void Send();
@@ -171,12 +171,12 @@ public class FactoryTest {
         sender.Send();
     }
 }
-#+END_SRC
+#+end_src
 
 -----
 
 #+CAPTION: 多个工厂方法：定义多个而不是一个工厂方法，每个工厂方法只返回一个特定的类的实例
-#+BEGIN_SRC java
+#+begin_src java
 // 工厂类
 public class SendFactory {
     public Sender produceMail() {
@@ -195,12 +195,12 @@ public class FactoryTest {
         sender.Send();
     }
 }
-#+END_SRC
+#+end_src
 
 -----
 
 #+CAPTION: 静态工厂方法：将多个工厂方法定义为静态方法，不需要创建工厂实例就可以调用
-#+BEGIN_SRC java
+#+begin_src java
 // 工厂类
 public class SendFactory {
     public static Sender produceMail() {
@@ -218,7 +218,7 @@ public class FactoryTest {
         sender.Send();
     }
 }
-#+END_SRC
+#+end_src
 
 ** 单例
 
@@ -234,7 +234,7 @@ file:../images/design_pattern/04.png
 
 -----
 
-#+BEGIN_SRC java
+#+begin_src java
 public class Singleton {
 
     /* 持有私有静态实例，防止被引用，此处赋值为null，目的是实现延迟加载 */
@@ -257,12 +257,12 @@ public class Singleton {
         return instance;
     }
 }
-#+END_SRC
+#+end_src
 
 -----
 
 多线程环境下，第一次创建对象时需要加锁
-#+BEGIN_SRC java
+#+begin_src java
 public static Singleton getInstance() {
     if (instance == null) {
         synchronized (instance) {
@@ -273,7 +273,7 @@ public static Singleton getInstance() {
     }
     return instance;
 }
-#+END_SRC
+#+end_src
 
 ** Builder
 
@@ -283,7 +283,7 @@ file:../images/design_pattern/05.svg
 
 *** 示例
 
-#+BEGIN_SRC java
+#+begin_src java
 // 产品接口
 public interface Sender {
     public void Send();
@@ -326,7 +326,7 @@ public class Test {
         builder.produceMailSender(10);
     }
 }
-#+END_SRC
+#+end_src
 
 ** 原型
 
@@ -340,7 +340,7 @@ file:../images/design_pattern/06.png
 
 -----
 
-#+BEGIN_SRC java
+#+begin_src java
 // 原型类
 // 实现 Cloneable 接口，覆写 clone() 方法
 public class Prototype implements Cloneable {
@@ -349,7 +349,7 @@ public class Prototype implements Cloneable {
         return proto;
     }
 }
-#+END_SRC
+#+end_src
 
 * Structural
 
@@ -397,7 +397,7 @@ file:../images/design_pattern/09.png
 *** 示例
 
 #+CAPTION: =LegacyRectangle= uses coordinates while client expects to use coordinates and dimensions.
-#+BEGIN_SRC cpp
+#+begin_src cpp
 typedef int Coordinate;
 typedef int Dimension;
 
@@ -433,7 +433,7 @@ int main() {
     Rectangle *r = new RectangleAdapter(120, 200, 60, 40);
     r->draw();
 }
-#+END_SRC
+#+end_src
 
 ** Bridge
 
@@ -484,7 +484,7 @@ State, Strategy, Bridge (and to some degree Adapter) have similar solution struc
 
 *** 示例
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 /***** Implementation *****/
 
 class TimeImp {
@@ -553,7 +553,7 @@ int main() {
     time2->tell(); // Time is 1430
     return 0;
 }
-#+END_SRC
+#+end_src
 
 ** Composite
 
@@ -606,7 +606,7 @@ file:../images/design_pattern/21.svg
 
 *** 示例
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class Descriptor {
 protected:
     string name;
@@ -659,7 +659,7 @@ int main() {
 //     file2
 //     file3
 // file2
-#+END_SRC
+#+end_src
 
 ** Decorator
 
@@ -680,13 +680,13 @@ To achieve the same flexibility with Decorator pattern:
 file:../images/design_pattern/19.svg
 
 #+CAPTION: Client has the ability to specify whatever combination of "features" is desired.
-#+BEGIN_SRC java
+#+begin_src java
 Widget* widget = new BorderDecorator(
   new HorizontalScrollBarDecorator(
     new VerticalScrollBarDecorator(
       new Window(80, 24))));
 widget->draw();
-#+END_SRC
+#+end_src
 
 *** 特点
 
@@ -723,7 +723,7 @@ widget->draw();
 
 *** 示例
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class Explosive {
 public:
     virtual void explode() = 0;
@@ -785,7 +785,7 @@ int main() {
     
     return 0;
 }
-#+END_SRC
+#+end_src
 
 ** Proxy
 
@@ -823,7 +823,7 @@ file:../images/design_pattern/16.svg
 
 *** 示例
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 // Real class
 class Data {
     int data[3];
@@ -861,7 +861,7 @@ public:
 DataProxy dp1(1); cout << dp1.read(1) << endl; // -1, not enough clearance
 DataProxy dp2(3); cout << dp2.read(3) << endl; // -1, wrong sector
 DataProxy dp3(4); cout << dp3.read(2) << endl; // 5
-#+END_SRC
+#+end_src
 
 ** 外观
 
@@ -874,7 +874,7 @@ DataProxy dp3(4); cout << dp3.read(2) << endl; // 5
 *** Java 示例
 
 #+CAPTION: 实现类
-#+BEGIN_SRC java
+#+begin_src java
 public class CPU {
     public void startup() {
         System.out.println("cpu startup!");
@@ -890,10 +890,10 @@ public class Disk {
         System.out.println("disk startup!");
     }
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 外观类
-#+BEGIN_SRC java
+#+begin_src java
 public class Computer {
     private CPU cpu;
     private Memory memory;
@@ -913,10 +913,10 @@ public class Computer {
         System.out.println("start computer finished!");
     }
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 使用
-#+BEGIN_SRC java
+#+begin_src java
 public class User {
     public static void main(String[] args) {
         Computer computer = new Computer();
@@ -924,7 +924,7 @@ public class User {
         computer.shutdown();
     }
 }
-#+END_SRC
+#+end_src
 
 * Behavioral
 
@@ -973,7 +973,7 @@ Chain of Responsibility, Command, Mediator, and Observer, address how to decoupl
 
 *** 示例
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class Error {
 public:
     string type, message;
@@ -1042,7 +1042,7 @@ int main() {
 
     return 0;
 }
-#+END_SRC
+#+end_src
 
 ** Iterator
 
@@ -1074,7 +1074,7 @@ file:../images/design_pattern/15.svg
 
 *** 示例
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 // Forward declaration
 class Iterator;
 
@@ -1137,7 +1137,7 @@ int main() {
 
     return 0;
 }
-#+END_SRC
+#+end_src
 
 ** 命令
 
@@ -1150,14 +1150,14 @@ int main() {
 *** Java 示例
 
 #+CAPTION: 抽象命令
-#+BEGIN_SRC java
+#+begin_src java
 public interface Command {
     void execute();
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 具体命令：定义接收者和行为之间的弱耦合，调用接收者
-#+BEGIN_SRC java
+#+begin_src java
 public class ConcreteCommand implements Command {
     private Receiver receiver = null;
 
@@ -1170,10 +1170,10 @@ public class ConcreteCommand implements Command {
         receiver.action();
     }
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 请求者
-#+BEGIN_SRC java
+#+begin_src java
 public class Invoker {
     private Command command = null;
 
@@ -1185,19 +1185,19 @@ public class Invoker {
         command.execute();
     }
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 接收者
-#+BEGIN_SRC java
+#+begin_src java
 public class Receiver {
     public void action() {
         System.out.println("Execute action.");
     }
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 使用
-#+BEGIN_SRC java
+#+begin_src java
 public class Client {
     public static void main(String[] args) {
         Receiver receiver = new Receiver();
@@ -1206,7 +1206,7 @@ public class Client {
         invoker.action();
     }
 }
-#+END_SRC
+#+end_src
 
 ** 观察者
 
@@ -1218,14 +1218,14 @@ public class Client {
 *** Java 实现
 
 #+CAPTION: 观察者接口
-#+BEGIN_SRC java
+#+begin_src java
 public interface Observer {
     public void update(String state);
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 观察者实现
-#+BEGIN_SRC java
+#+begin_src java
 public class ConcreteObserver implements Observer {
     private String observerState;
 
@@ -1234,19 +1234,19 @@ public class ConcreteObserver implements Observer {
          observerState = state;
     }
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 主题接口
-#+BEGIN_SRC java
+#+begin_src java
 public interface Subject {
     public void attach(Observer observer);
     public void detach(Observer observer);
     public void notify();
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 主题抽象类
-#+BEGIN_SRC java
+#+begin_src java
 public abstract class AbstractSubject implements Subject {
     private List<Observer> list = new ArrayList<Observer>();
 
@@ -1264,10 +1264,10 @@ public abstract class AbstractSubject implements Subject {
         }
     }
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 主题实现
-#+BEGIN_SRC java
+#+begin_src java
 public class ConcreteSubject {
     private String subjectState;
 
@@ -1276,10 +1276,10 @@ public class ConcreteSubject {
         this.nodify(subjectState);
     }
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 使用
-#+BEGIN_SRC java
+#+begin_src java
 public class Client {
     public static void main(String[] args) {
         ConcreteSubject subject = new ConcreteSubject();
@@ -1288,7 +1288,7 @@ public class Client {
         subject.change("new state");
     }
 }
-#+END_SRC
+#+end_src
 
 ** 策略
 
@@ -1300,14 +1300,14 @@ public class Client {
 *** Java 示例
 
 #+CAPTION: 抽象策略类
-#+BEGIN_SRC java
+#+begin_src java
 interface Strategy {
     void execute();
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 具体策略类：封装不同的算法或行为
-#+BEGIN_SRC java
+#+begin_src java
 class FirstStrategy implements Strategy {
     public void execute() {
         System.out.println("Called FirstStrategy.execute()");
@@ -1318,10 +1318,10 @@ class SecondStrategy implements Strategy {
         System.out.println("Called SecondStrategy.execute()");
     }
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 环境类
-#+BEGIN_SRC java
+#+begin_src java
 class Context {
     Strategy strategy;
 
@@ -1333,10 +1333,10 @@ class Context {
         this.strategy.execute();
     }
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 使用
-#+BEGIN_SRC java
+#+begin_src java
 class StrategyExample {
     public static void main(String[] args) {
         Context context;
@@ -1348,7 +1348,7 @@ class StrategyExample {
         context.execute();
     }
 }
-#+END_SRC
+#+end_src
 
 ** 访问者
 
@@ -1360,7 +1360,7 @@ file:../images/design_pattern/07.png
 - 从硬编码的依赖中解耦，在运行、编译时能够修改的设计模式。
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 // Before
 class Database {
     protected $adapter;
@@ -1375,7 +1375,7 @@ class Database {
         $this->adapter = $adapter; // 通过依赖注入解耦
     }
 }
-#+END_SRC
+#+end_src
 
 ** 依赖反转
 
@@ -1383,7 +1383,7 @@ class Database {
 - 对接口编程，依赖于抽象而不是具体，即依赖于约定、接口、抽象类，而不是具体实现。
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 // Before
 class Database {
     protected $adapter;
@@ -1400,7 +1400,7 @@ class Database {
 }
 interface AdapterInterface {}
 class MySqlAdapter implements AdapterInterface {}
-#+END_SRC
+#+end_src
 
 * Quote
 

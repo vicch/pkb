@@ -4,16 +4,16 @@
 * Get Started
 ** Install TypeScript
 
-#+BEGIN_SRC sh
+#+begin_src sh
 npm install -g typescript
-#+END_SRC
+#+end_src
 
 ** Use TypeScript
 
 Create a simple TypeScript script:
 
 #+CAPTION: =script.ts=
-#+BEGIN_SRC typescript
+#+begin_src typescript
 class Greeter {
   greeting: string;
   constructor(message: string) {
@@ -33,14 +33,14 @@ button.onclick = function() {
 };
 
 document.body.appendChild(button);
-#+END_SRC
+#+end_src
 
 Compile it to JavaScript:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 tsc script.ts
 # Generates script.js
-#+END_SRC
+#+end_src
 
 Embed the JavaScript file to an HTML document and see the effect.
 
@@ -50,21 +50,21 @@ Embed the JavaScript file to an HTML document and see the effect.
 
 lite-server is a local dev server which loads latest files automatically. Install lite-server:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 npm init
 npm install --save-dev lite-server
-#+END_SRC
+#+end_src
 
 Add an npm command to start lite-server:
 
 #+CAPTION: =package.json=
-#+BEGIN_SRC js
+#+begin_src js
 {
   "scripts": {
     "start": "lite-server"
   }
 }
-#+END_SRC
+#+end_src
 
 Create a simple =index.html= and start lite-server, which will open [[http://localhost:3000/]] in browser.
 
@@ -72,10 +72,10 @@ Create a simple =index.html= and start lite-server, which will open [[http://loc
 
 Initialize the directory as TypeScript project: 
 
-#+BEGIN_SRC sh
+#+begin_src sh
 tsc --init
 # Generates tsconfig.json
-#+END_SRC
+#+end_src
 
 Then command =tsc= will compile all TypeScript files in the directory, file names are not needed anymore.
 
@@ -88,7 +88,7 @@ Once TypeScript is compiled into JavaScript, all the type notations are removed,
 
 Add types as explicitly as possible to this code:
 
-#+BEGIN_SRC typescript
+#+begin_src typescript
 let bankAccount = {
     money: 2000,
     deposit(value) {
@@ -103,11 +103,11 @@ let myself = {
 };
  
 myself.bankAccount.deposit(3000);
-#+END_SRC
+#+end_src
 
 Result:
 
-#+BEGIN_SRC typescript
+#+begin_src typescript
 type BankAccount = {
     money: number,
     deposit: (value: number) => void
@@ -133,7 +133,7 @@ let me: User = {
 };
  
 me.bankAccount.deposit(3000);
-#+END_SRC
+#+end_src
 
 * TypeScript and ES6
 ** The Spread and Rest Operators
@@ -141,13 +141,13 @@ me.bankAccount.deposit(3000);
 - [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax][MDN | JavaScript | Reference | Expressions & Operators | Spread Syntax]]
 - [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters][MDN | JavaScript | Reference | Functions | Rest Parameters]]
 
-#+BEGIN_SRC typescript
+#+begin_src typescript
 const foo = (...args: string[]) => { // Rest
   console.log(args);
 }
 let bar: string[] = ["b", "a", "r"];
 foo(...bar); // Spread
-#+END_SRC
+#+end_src
 
 * Namespaces and Modules
 ** Namespaces and Multiple Files
@@ -169,13 +169,13 @@ When the application grow, dependencies become less maintainable by using namesp
 The config file specifies the module standard to be used by the compiler:
 
 #+CAPTION: =tsconfig.json=
-#+BEGIN_SRC js
+#+begin_src js
 {
   "compilerOptions": {
     "module": "commonjs"
   }
 }
-#+END_SRC
+#+end_src
 
 Regardless of the module standard, module importing won't work directly in browser. A module loader such as rollup.js needs to be used.
 
@@ -184,59 +184,59 @@ Regardless of the module standard, module importing won't work directly in brows
 Module usage example:
 
 #+CAPTION: =/foo/bar.ts=
-#+BEGIN_SRC typescript
+#+begin_src typescript
 export const name = 'bar';
 export const bar = () => 'This is bar.';
-#+END_SRC
+#+end_src
 
 #+CAPTION: =/app.ts=
-#+BEGIN_SRC typescript
+#+begin_src typescript
 import { name, bar } from './foo/bar';
 console.log(name);
 console.log(bar());
-#+END_SRC
+#+end_src
 
 -----
 
 Install rollup.js:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ npm install --save-dev rollup
-#+END_SRC
+#+end_src
 
 Update compiler config to use ES2015 module standard:
 
 #+CAPTION: =tsconfig.json=
-#+BEGIN_SRC js
+#+begin_src js
 {
   "compilerOptions": {
     "module": "es2015"
   }
 }
-#+END_SRC
+#+end_src
 
 Add an npm script to invoke rollup.js after compiling TypeScript:
 
 #+CAPTION: =package.json=
-#+BEGIN_SRC js
+#+begin_src js
 {
   "scripts": {
     "build": "tsc && rollup app.js --format iife --file app.js"
   }
 }
-#+END_SRC
+#+end_src
 
 Then to compile TypeScript:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ npm run build
-#+END_SRC
+#+end_src
 * Generics
 ** Module Exercise
 
 Write a class that implements a generic map, which stores the given type of elements keyed by strings.
 
-#+BEGIN_SRC typescript
+#+begin_src typescript
 class MyMap<T> {
   private map: { [key: string]: T } = {};
   setItem(key: string, value: T) {
@@ -261,26 +261,26 @@ map.setItem('bar', 2);
 console.log(map.getItem('foo'));
 map.print();
 map.clear();
-#+END_SRC
+#+end_src
 
 * Use JavaScript Libraries with TypeScript
 ** Use jQuery
 
 Include a jQuery distribution file into HTML to make it available for the page. However it can't be used directly in TypeScript code, because =$= is not defined. One way to define it and get past compiling:
 
-#+BEGIN_SRC typescript
+#+begin_src typescript
 declare var $: any;
 $('...'); // OK
-#+END_SRC
+#+end_src
 
 ** Understand Declaration Files
 
 TypeScript compiler loads automatically declaration files with =.d.ts= extensions. Declaration files are similar to header files, where global variables and functions can be defined and shared among all TypeScript files.
 
 #+CAPTION: =jquery.d.ts=
-#+BEGIN_SRC typescript
+#+begin_src typescript
 declare var $: any;
-#+END_SRC
+#+end_src
 
 ** Use Public Type Definitions
 
@@ -289,10 +289,10 @@ declare var $: any;
 
 To install type definitions provided by DefinitelyTyped for jQuery:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ npm init
 $ npm install --save-dev @types/jquery
-#+END_SRC
+#+end_src
 
 TypeScript compiler will automatically pick up the type definitions under =node_modules/@types/jquery/=. The type definitions also enable IDE to provide type checks and auto completions.
 
@@ -306,14 +306,14 @@ gulp.js is a build system. gulp-typescript is a plugin which wraps the TypeScrip
 
 Install packages:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ npm install --save-dev gulp gulp-typescript typescript
-#+END_SRC
+#+end_src
 
 Create gulp config file:
 
 #+CAPTION: =gulpfile.js=
-#+BEGIN_SRC js
+#+begin_src js
 var gulp = require('gulp');
 var ts = require('gulp-typescript');
 
@@ -331,18 +331,18 @@ gulp.task('watch', function() {
 });
 
 gulp.task('default', gulp.series('watch')); // Run "watch" task by default
-#+END_SRC
+#+end_src
 
 Add an npm script to run gulp:
 
 #+CAPTION: =package.json=
-#+BEGIN_SRC js
+#+begin_src js
 {
   "scripts": {
     "build": "gulp"
   }
 }
-#+END_SRC
+#+end_src
 
 ** Add TypeScript to Webpack Workflow
 
@@ -351,14 +351,14 @@ Add an npm script to run gulp:
 
 Install packages:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ npm install --save-dev webpack webpack-cli ts-loader
-#+END_SRC
+#+end_src
 
 Create webpack config file:
 
 #+CAPTION: =webpack.config.js=
-#+BEGIN_SRC js
+#+begin_src js
 module.exports = {
   entry: './app.ts',
   output: {
@@ -370,48 +370,48 @@ module.exports = {
     ]
   }
 }
-#+END_SRC
+#+end_src
 
 Add an npm script to run webpack:
 
 #+CAPTION: =package.json=
-#+BEGIN_SRC js
+#+begin_src js
 {
   "scripts": {
     "build": "webpack -d --watch",
     "build:prod": "webpack -p"
   }
 }
-#+END_SRC
+#+end_src
 
 Importing of jQuery needs to be updated:
 
-#+BEGIN_SRC typescript
+#+begin_src typescript
 import $ from 'jquery'; // Assuming @types/jquery is installed
-#+END_SRC
+#+end_src
 * Use TypeScript with ReactJS
 ** Project Setup
 
 Install packages and create project:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ npm install -g create-react-app
 $ create-react-app ./react-app --scripts-version=react-scripts-ts
-#+END_SRC
+#+end_src
 
 Start the app, changes will be watched:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ cd react-app
 $ npm start
-#+END_SRC
+#+end_src
 
 ** User PropTypes
 
 Create a functional component:
 
 #+CAPTION: =src/Counter.tsx=
-#+BEGIN_SRC typescript
+#+begin_src typescript
 import * as React from 'react';
 
 interface ICounterProps {
@@ -421,12 +421,12 @@ interface ICounterProps {
 const counter = (props: ICounterProps) => <p>{props.counter}</p>;
 
 export default counter;
-#+END_SRC
+#+end_src
 
 Use the component:
 
 #+CAPTION: =src/App.tsx=
-#+BEGIN_SRC typescript
+#+begin_src typescript
 import Counter from './Counter';
 
 class App extends React.Component {
@@ -434,14 +434,14 @@ class App extends React.Component {
     return <Counter counter={1} />;
   }
 }
-#+END_SRC
+#+end_src
 
 ** Type and Class Components
 
 Make the counter more functional by adding states and event handlers to the app:
 
 #+CAPTION: =src/App.tsx=
-#+BEGIN_SRC typescript
+#+begin_src typescript
 interface IAppState {
   counter: number;
 }
@@ -468,7 +468,7 @@ class App extends React.Component<{}, IAppState> { // React.Component is a gener
     });
   }
 }
-#+END_SRC
+#+end_src
 
 ** Wrap Up
 

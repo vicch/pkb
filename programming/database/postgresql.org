@@ -9,18 +9,18 @@
 ** 日期时间
 
 #+CAPTION: 按格式输出
-#+BEGIN_SRC sql
+#+begin_src sql
 SELECT to_char(<column>, '<format>') FROM ...;
 
 # 示例
 SELECT to_char(insert_time, 'YYYY-MM-DD HH24:MI:SS') FROM ...;
-#+END_SRC
+#+end_src
 
 [[http://www.postgresql.org/docs/9.1/static/functions-formatting.html][Data Type Formatting Functions]]
 * 命令行
 ** =psql=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 psql <options>
 
 <options> # 连接
@@ -44,11 +44,11 @@ psql <options>
     -t, --tuples-only                # 不输出列名和 footer
     -P, --pset= <name>=<value>
         footer
-#+END_SRC
+#+end_src
 
 ** =pg_dump=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 pg_dump <options> <database> > <file>
 
 <options> # 连接
@@ -60,17 +60,17 @@ pg_dump <options> <database> > <file>
     -a, --data-only
     -s, --schema-only
     -n, --schema=<schema> # Dump the names schema only
-#+END_SRC
+#+end_src
 
 #+CAPTION: 恢复备份
-#+BEGIN_SRC sh
+#+begin_src sh
 psql <options> <database> < <file>
 
 <options> # 连接
     -h <host>
     -p <port>
     -U <user>
-#+END_SRC
+#+end_src
 
 * 控制台
 
@@ -109,21 +109,21 @@ psql <options> <database> < <file>
 ** 程序
 
 #+CAPTION: 安装客户端
-#+BEGIN_SRC sh
+#+begin_src sh
 $ sudo apt-get install postgresql-client
-#+END_SRC
+#+end_src
 
 #+CAPTION: 安装服务器
-#+BEGIN_SRC sh
+#+begin_src sh
 $ sudo apt-get install postgresql
-#+END_SRC
+#+end_src
 
 正常情况下，安装完成后，PostgreSQL 服务器会自动在本机的 5432 端口开启。
 
 #+CAPTION: 安装图形管理界面
-#+BEGIN_SRC sh
+#+begin_src sh
 $ sudo apt-get install pgadmin3
-#+END_SRC
+#+end_src
 
 ** 初始化
 
@@ -138,54 +138,54 @@ $ sudo apt-get install pgadmin3
 *** 使用控制台
 
 #+CAPTION: 新建系统用户 =dbuser=
-#+BEGIN_SRC sh
+#+begin_src sh
 $ sudo adduser dbuser
-#+END_SRC
+#+end_src
 
 #+CAPTION: 切换到 =postgres= 用户，以同名数据库用户身份登录控制台
-#+BEGIN_SRC sh
+#+begin_src sh
 $ sudo su - postgres
 $ psql
-#+END_SRC
+#+end_src
 
 #+CAPTION: 为 =postgres= 用户设置密码
-#+BEGIN_SRC sh
+#+begin_src sh
 > \password postgres
-#+END_SRC
+#+end_src
 
 #+CAPTION: 新建数据库用户 =dbuser= 并设置密码
-#+BEGIN_SRC sh
+#+begin_src sh
 > CREATE USER dbuser WITH PASSWORD 'password';
-#+END_SRC
+#+end_src
 
 #+CAPTION: 新建数据库并指定所有者为 =dbuser= ，并赋予所有权限
-#+BEGIN_SRC sh
+#+begin_src sh
 > CREATE DATABASE exampledb OWNER dbuser;
 > GRANT ALL PRIVILEGES ON DATABASE exampledb TO dbuser;
-#+END_SRC
+#+end_src
 
 *** 使用 shell 命令
 
 #+CAPTION: 新建数据库用户 =dbuser= ，并指定为超级用户
-#+BEGIN_SRC sh
+#+begin_src sh
 $ sudo -u postgres createuser --superuser dbuser
-#+END_SRC
+#+end_src
 
 #+CAPTION: 登录控制台，设置 =dbuser= 密码
-#+BEGIN_SRC sh
+#+begin_src sh
 $ sudo -u postgres psql
 > \password dbuser
-#+END_SRC
+#+end_src
 
 #+CAPTION: 新建数据库，并指定所有者为 =dbuser=
-#+BEGIN_SRC sh
+#+begin_src sh
 $ sudo -u postgres createdb -O dbuser exampledb
-#+END_SRC
+#+end_src
 
 * Debug
 
 #+CAPTION: 查看并解除锁
-#+BEGIN_SRC sql
+#+begin_src sql
 SELECT
 t.schemaname,
 t.relname,
@@ -201,7 +201,7 @@ WHERE t.schemaname <> 'pg_toast'::name AND t.schemaname <> 'pg_catalog'::name
 ORDER BY t.schemaname, t.relname;
 
 SELECT pg_cancel_backend('<pid>');
-#+END_SRC
+#+end_src
 
 * 加密
 

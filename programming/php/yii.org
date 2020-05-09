@@ -120,7 +120,7 @@ Project root
 ** Web server 配置
 
 Apache
-#+BEGIN_SRC code
+#+begin_src code
 # Set document root to be "basic/web"
 DocumentRoot "path/to/basic/web"
 
@@ -135,12 +135,12 @@ DocumentRoot "path/to/basic/web"
 
     # ...other settings...
 </Directory>
-#+END_SRC
+#+end_src
 
 -----
 
 Nginx
-#+BEGIN_SRC code
+#+begin_src code
 server {
     charset utf-8;
     client_max_body_size 128M;
@@ -178,7 +178,7 @@ server {
         deny all;
     }
 }
-#+END_SRC
+#+end_src
 
 * Controller
 ** 路由
@@ -188,7 +188,7 @@ server {
 | 优化 URL | =http://yourdomain/menu/action=             |
 
 =config/web.php=
-#+BEGIN_SRC php
+#+begin_src php
 $config = [
     'components' => [
         'urlManager' => [
@@ -203,11 +203,11 @@ $config = [
         ],
     ],
 ];
-#+END_SRC
+#+end_src
 
 ** 示例
 =controllers/<Menu>Controller.php=
-#+BEGIN_SRC php
+#+begin_src php
 namespace app\controllers; // 属于 Application 类的 controllerNamespace 定义的命名空间
 use yii\web\Controller;    // 继承 \yii\web\Controller 或 \yii\base\Controller（用于 console）
 
@@ -288,7 +288,7 @@ class MenuController extends Controller // 类名以 Controller 为后缀
         // save() 之后生成了 $record->id
     }
 }
-#+END_SRC
+#+end_src
 
 * Model
 
@@ -297,7 +297,7 @@ class MenuController extends Controller // 类名以 Controller 为后缀
 ** 示例
 
 =models/<model>/<Model>.php=
-#+BEGIN_SRC php
+#+begin_src php
 namespace app\models\model; // 将相关类组织在一个命名空间
                             // 对应目录 models/model/
 Class Model
@@ -309,7 +309,7 @@ Class Model
     {
     }
 }
-#+END_SRC
+#+end_src
 
 ** API
 
@@ -329,7 +329,7 @@ Class Model
 ** 示例
 
 =models/<model>/<Model>Record.php=
-#+BEGIN_SRC php
+#+begin_src php
 namespace yii\models\model;
 use yii\db\ActiveRecord;
 
@@ -348,7 +348,7 @@ class ModelRecord extends ActiveRecord
         ];
     }
 }
-#+END_SRC
+#+end_src
 
 ** API
 
@@ -404,7 +404,7 @@ Trigger methods
 | =endPage()=   |                                        | =EVENT_END_PAGE=   |
 
 Example
-#+BEGIN_SRC php
+#+begin_src php
 <?php
 use yii\helpers\Html;
 
@@ -430,32 +430,32 @@ use yii\helpers\Html;
 </body>
 </html>
 <?php $this->endPage() ?>
-#+END_SRC
+#+end_src
 
 ** Block
 
 - Specify view content in one place, display it in another place;
 
 In View
-#+BEGIN_SRC html
+#+begin_src html
 <?php $this->beginBlock('block'); ?>
 ... content ...
 <?php $this->endBlock(); ?>
-#+END_SRC
+#+end_src
 
 In Layout
-#+BEGIN_SRC html
+#+begin_src html
 <?php if (isset($this->blocks['block'])): ?>
     <?= $this->blocks['block'] ?>
 <?php else: ?>
     ... default content ...
 <?php endif; ?>
-#+END_SRC
+#+end_src
 
 ** 示例
 *** 列表
 列表页面 =views/<menu>/index.php=
-#+BEGIN_SRC php
+#+begin_src php
 echo \yii\widgets\ListView::widget([
 	'options' => [
 		'class' => 'list-view',
@@ -464,12 +464,12 @@ echo \yii\widgets\ListView::widget([
 	'itemView' => '_model',
 	'dataProvider' => $records
 ]);
-#+END_SRC
+#+end_src
 
 -----
 
 列表项 =views/<menu>/_<model>.php=
-#+BEGIN_SRC php
+#+begin_src php
 echo \yii\widgets\DetailView::widget([
 	'model' => $model,
 	'attributes' => [
@@ -479,12 +479,12 @@ echo \yii\widgets\DetailView::widget([
 		['label' => '<Property'>, 'attribute' => 'property.0.number']
 	]
 ]);
-#+END_SRC
+#+end_src
 
 *** 表单
 
 =views/<menu>/add.php=
-#+BEGIN_SRC php
+#+begin_src php
 use app\models\model\ModelRecord;
 use yii\web\View;
 use yii\helpers\Html;
@@ -498,9 +498,9 @@ echo $form->errorSummary([$model]);   // 验证错误信息
 echo $form->field($model, '<field>');
 echo Html::submitButton('Submit', ['class' => 'btn btn-primary']);
 ActiveForm::end();
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -520,12 +520,12 @@ $this->title = 'Login';
     <?= $form->field($model, 'password')->passwordInput() ?>
     <?= Html::submitButton('Login') ?>
 <?php ActiveForm::end(); ?>
-#+END_SRC
+#+end_src
 
 *** 查询
 
 =viewe/<menu>/query.php=
-#+BEGIN_SRC php
+#+begin_src php
 use yii\helpers\Html;
 
 echo Html::beginForm(['/menu'], 'get');
@@ -533,7 +533,7 @@ echo Html::label('Property to search:', 'property');
 echo Html::textInput('property');
 echo Html::submitButton('Search');
 echo Html::endForm();
-#+END_SRC
+#+end_src
 
 ** =yii\base\View=
 
@@ -544,12 +544,12 @@ echo Html::endForm();
 *** =beginContent()=
 
 <<view_begincontent>>
-#+BEGIN_SRC php
+#+begin_src php
 beginContent (
     $viewFile,
     $params = []
 )
-#+END_SRC
+#+end_src
 
 | =$viewFile= | String                         | The view file to decorate the content enclosed                  |
 |             |                                | Can be view file path or path alias                             |
@@ -559,18 +559,18 @@ beginContent (
 | Return      | =yii\widgets\ContentDecorator= |                                                                 |
 
 Implement nested layout
-#+BEGIN_SRC html
+#+begin_src html
 <?php $this->beginContent('@app/views/layouts/base.php'); ?>
 ... layout content ...
 <?php $this->endContent(); ?>
-#+END_SRC
+#+end_src
 
 ** =yii\helpers\BaseHtml=
 
 View 中调用
-#+BEGIN_SRC php
+#+begin_src php
 <?= Html::<method>() ?>
-#+END_SRC
+#+end_src
 
 -----
 
@@ -622,27 +622,27 @@ CSS
 *** =addCssClass()= =removeCssClass()=
 
 <<html_addCssClass>>
-#+BEGIN_SRC php
+#+begin_src php
 void addCssClass (
    &$options
 ,   $class
 )
-#+END_SRC
+#+end_src
 
 <<html_removeCssClass>>
-#+BEGIN_SRC php
+#+begin_src php
 void removeCssClass (
    &$options
 ,   $class
 )
-#+END_SRC
+#+end_src
 
 | =$options= | Array          |
 |------------+----------------|
 | =$class=   | String / Array |
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 $options = ['class' => 'btn btn-default'];
 if ($type === 'success') {
     Html::removeCssClass($options, 'btn-default');
@@ -650,48 +650,48 @@ if ($type === 'success') {
 }
 // <div class="btn btn-success btn-submit">content</div>
 echo Html::tag('div', 'content', $options);
-#+END_SRC
+#+end_src
 
 *** =addCssStyle()= =removeCssStyle()=
 
 <<html_addCssStyle>>
-#+BEGIN_SRC php
+#+begin_src php
 void addCssStyle (
    &$options
 ,   $style
 ,   $overwrite = true
 )
-#+END_SRC
+#+end_src
 
 -----
 
 <<html_removeCssStyle>>
-#+BEGIN_SRC php
+#+begin_src php
 void removeCssStyle (
    &$options
 ,   $properties
 )
-#+END_SRC
+#+end_src
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 $options = ['style' => ['width' => '100px', 'height' => '100px']];
 // new style="width: 100px; height: 200px; position: absolute;"
 Html::addCssStyle($options, 'height: 200px; position: absolute;');
 // new style="position: absolute;"
 Html::removeCssStyle($options, ['width', 'height']);
-#+END_SRC
+#+end_src
 
 *** =beginForm()= =endForm()=
 
 <<html_beginForm>>
-#+BEGIN_SRC php
+#+begin_src php
 string beginForm (
     $action = '',
     $method = 'post', 
     $options = []
 )
-#+END_SRC
+#+end_src
 
 | =$action=  | Array / String | 提交动作，由 =yii\helpers\Url::to()= 处理 | @@html:<code>order/update</code>@@ |
 |------------+----------------+-------------------------------------------+------------------------------------|
@@ -700,43 +700,43 @@ string beginForm (
 | =$options= | Array          |                                           |                                    |
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 <?= Html::beginForm(['order/update', 'id' => $id], 'post', ['enctype' => 'multipart/form-data']) ?>
-#+END_SRC
+#+end_src
 
 -----
 
 <<html_endForm>>
-#+BEGIN_SRC php
+#+begin_src php
 string endForm ( )
-#+END_SRC
+#+end_src
 
 *** =beginTag()= =endTag()=
 
 <<html_beginTag>>
-#+BEGIN_SRC php
+#+begin_src php
 string beginTag (
     $name,
     $options = []
 )
-#+END_SRC
+#+end_src
 
 -----
 
 <<html_endTag>>
-#+BEGIN_SRC php
+#+begin_src php
 string endTag ( $name )
-#+END_SRC
+#+end_src
 
 *** =button()= =submitButton()= =resetButton()=
 
 <<html_button>>
-#+BEGIN_SRC php
+#+begin_src php
 string button (
     $content = 'Button',
     $options = []
 )
-#+END_SRC
+#+end_src
 
 | =$content= | String | 不经过转码，所以可以使用图片标签等 |
 |------------+--------+------------------------------------|
@@ -745,52 +745,52 @@ string button (
 -----
 
 <<html_submitButton>>
-#+BEGIN_SRC php
+#+begin_src php
 string submitButton (
     $content = 'Submit',
     $options = []
 )
-#+END_SRC
+#+end_src
 
 -----
 
 <<html_resetButton>>
-#+BEGIN_SRC php
+#+begin_src php
 string resetButton (
     $content = 'Reset',
     $options = []
 )
-#+END_SRC
+#+end_src
 
 *** =cssStyleFromArray()= =cssStyleToArray()=
 
 <<html_cssStyleFromArray>>
-#+BEGIN_SRC php
+#+begin_src php
 string cssStyleFromArray ( array $style )
-#+END_SRC
+#+end_src
 
 <<html_cssStyleToArray>>
-#+BEGIN_SRC php
+#+begin_src php
 array cssStyleToArray ( $style )
-#+END_SRC
+#+end_src
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 // 'width: 100px; height: 200px;'
 Html::cssStyleFromArray(['width' => '100px', 'height' => '200px']);
 // ['width' => '100px', 'height' => '200px']
 Html::cssStyleToArray('width: 100px; height: 200px;');
-#+END_SRC
+#+end_src
 
 *** =encode()= =decode()=
 
 <<html_encode>>
-#+BEGIN_SRC php
+#+begin_src php
 string encode (
     $content,
     $doubleEncode = true
 )
-#+END_SRC
+#+end_src
 
 - 编码字符集取决于 =yii\base\Application::$charset= ；
 
@@ -801,21 +801,21 @@ string encode (
 -----
 
 <<html_decode>>
-#+BEGIN_SRC php
+#+begin_src php
 string decode ( $content )
-#+END_SRC
+#+end_src
 
 *** =input()=
 
 <<html_input>>
-#+BEGIN_SRC php
+#+begin_src php
 string input (
     $type
 ,   $name = null
 ,   $value = null
 ,   $options = []
 )
-#+END_SRC
+#+end_src
 
 | =$type=    | String |   |
 |------------+--------+---|
@@ -828,13 +828,13 @@ string input (
 *** =tag()=
 
 <<html_tag>>
-#+BEGIN_SRC php
+#+begin_src php
 string tag (
     $name,
     $content = '',
     $options = []
 )
-#+END_SRC
+#+end_src
 
 | =$name=    | String | 标签名称                                 | @@html:<code>'p'</code>@@  |
 |------------+--------+------------------------------------------+----------------------------|
@@ -878,12 +878,12 @@ string tag (
 
 *** =get()=
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed get (
     $name = null,
     $defaultValue = null
 )
-#+END_SRC
+#+end_src
 
 | =$name= | String |                           |
 |         | Null   | 返回全部 GET 参数（数组） |
@@ -905,17 +905,17 @@ mixed get (
 | =composer.json= | 依赖信息、Composer 数据 |
 
 =composer.json=
-#+BEGIN_SRC code
+#+begin_src code
 {
     "require": {
         "<package>": "<version>",
         ...
     }
 }
-#+END_SRC
+#+end_src
 
 命令
-#+BEGIN_SRC sh
+#+begin_src sh
 ## 安装
 curl -sS https://getcomposer.org/installer | php
 
@@ -924,7 +924,7 @@ php composer.phar update
 
 ## 将依赖加入 .json 文件并执行 update
 php composer.phar require "<package>:<version>"
-#+END_SRC
+#+end_src
 
 ** Codeception
 
@@ -933,7 +933,7 @@ php composer.phar require "<package>:<version>"
 | =tests/codeception/*.suite.yml= | 配置文件   |
 
 命令
-#+BEGIN_SRC sh
+#+begin_src sh
 ## 在项目根目录安装
 php composer.phar require "codeception/codeception:*"
 alias cept="./vendor/bin/codecept"
@@ -949,7 +949,7 @@ cept run
 
 ## 修改配置文件后 rebuild
 cept build
-#+END_SRC
+#+end_src
 
 -----
 
@@ -969,14 +969,14 @@ cept build
 
 *** =migrate=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 ./yii migrate/create <table> # 在 migrations/ 目录下创建迁移 Migration 类脚本
 ./yii migrate/up             # 运行 migrations/ 下所有脚本的 up() 方法
 ./yii migrate/down
-#+END_SRC
+#+end_src
 
 =Migration= 类
-#+BEGIN_SRC php
+#+begin_src php
 class ... extends Migration
 {
     public function up()
@@ -1004,23 +1004,23 @@ class ... extends Migration
         $this->dropTable('<table>');
     }
 }
-#+END_SRC
+#+end_src
 
 ** MongoDB
 *** 安装
 
-#+BEGIN_SRC sh
+#+begin_src sh
 sudo pecl install mongo
 ## php.ini 加入一行
 extension=mongo.so
 
 php composer.phar require --prefer-dist yiisoft/yii2-mongodb
-#+END_SRC
+#+end_src
 
 *** 配置
 
 =config/web.php=
-#+BEGIN_SRC php
+#+begin_src php
 $config = [
     'components' => [
         'mongodb' => [
@@ -1029,20 +1029,20 @@ $config = [
         ],
     ],
 ];
-#+END_SRC
+#+end_src
 
 *** 示例
 
 插入
-#+BEGIN_SRC php
+#+begin_src php
 use Yii;
 
 $collection = Yii::$app->mongodb->getCollection('<coll>');
 $collection->insert(['<key>' => '<value>', ...]);
-#+END_SRC
+#+end_src
 
 查询
-#+BEGIN_SRC php
+#+begin_src php
 use yii\mongodb\Query;
 
 $query = new Query;
@@ -1050,12 +1050,12 @@ $query->select(['<key>', ...])
       ->from('<coll>')
       ->limit(<int>);
 $rows = $query->all();
-#+END_SRC
+#+end_src
 
 *** ActiveRecord
 
 ActiveRecord 类
-#+BEGIN_SRC php
+#+begin_src php
 use yii\mongodb\ActiveRecord;
 
 class ModelRecord extends ActiveRecord
@@ -1070,10 +1070,10 @@ class ModelRecord extends ActiveRecord
         return ['_id', '<key>', ...];
     }
 }
-#+END_SRC
+#+end_src
 
 查询示例 1
-#+BEGIN_SRC php
+#+begin_src php
 use yii\data\ActiveDataProvider;
 use yii\mongodb\Query;
 
@@ -1086,10 +1086,10 @@ $provider = new ActiveDataProvider([
     ]
 ]);
 $models = $provider->getModels();
-#+END_SRC
+#+end_src
 
 查询示例 2
-#+BEGIN_SRC php
+#+begin_src php
 use yii\data\ActiveDataProvider;
 use app\models\Model;
 
@@ -1100,7 +1100,7 @@ $provider = new ActiveDataProvider([
     ]
 ]);
 $models = $provider->getModels();
-#+END_SRC
+#+end_src
 
 ** 组件
 
@@ -1113,7 +1113,7 @@ $models = $provider->getModels();
 * Install
 
 Basic 应用
-#+BEGIN_SRC sh
+#+begin_src sh
 ## 设定安装目录
 cd /usr/local/yii
 
@@ -1126,12 +1126,12 @@ php composer.phar create-project --prefer-dist --stability=dev yiisoft/yii2-app-
 
 ## 启动 PHP 内置 web server
 php -S localhost:8000 -t basic/web
-#+END_SRC
+#+end_src
 
 -----
 
 Advanced 应用
-#+BEGIN_SRC sh
+#+begin_src sh
 ## 设定安装目录
 cd /usr/local/yii
 
@@ -1154,14 +1154,14 @@ php yii migrate
 ## 启动 PHP 内置 web server
 php -S localhost:8080 -t frontend/web
 php -S localhost:8081 -t backend/web
-#+END_SRC
+#+end_src
 
 -----
 
 自定义项目
 - 不依赖于 Yii 的目录结构，只使用类；
 
-#+BEGIN_SRC sh
+#+begin_src sh
 php composer.phar require "yiisoft/yii2:*"
 php composer.phar install
-#+END_SRC
+#+end_src

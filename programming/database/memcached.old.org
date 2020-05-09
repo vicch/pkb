@@ -147,10 +147,10 @@ key
 -----
 
 线程模式
-#+BEGIN_SRC sh
+#+begin_src sh
 ./configure --enable-threads              # 安装时
 /usr/local/memcache/bin/memcached -t 1024 # 启动时
-#+END_SRC
+#+end_src
 
 * PHP
 
@@ -164,7 +164,7 @@ Read-through cache callbacks
 - 在某个数据无法从服务器获取时调用的 callback；
 - 获得：Memcached 对象、要读取的 key、和通过引用传递的 value 变量；
 
-#+BEGIN_SRC php
+#+begin_src php
 $profile_info = $m->get('user:'.$user_id, 'user_info_cb');
 function user_info_cb($memc, $key, &$value) {
     /* lookup profile info in the DB */
@@ -172,7 +172,7 @@ function user_info_cb($memc, $key, &$value) {
     $value = $profile_info;
     return true;
 }
-#+END_SRC
+#+end_src
 
 ** 配置
 

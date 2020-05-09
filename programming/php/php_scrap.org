@@ -116,14 +116,14 @@ PHP-FPM features:
 当使用 =mod_php= 模式时，Apache 将 PHP 作为模块来运行，配置如下：
 
 #+CAPTION: =httpd.conf=
-#+BEGIN_SRC xml
+#+begin_src xml
 LoadModule phpX_module modules/mod_php.so
 AddType application/x-httpd-php .php
 
 <IfModule dir_module>
     DirectoryIndex index.html index.htm index.php index.phtml
 </IfModule>
-#+END_SRC
+#+end_src
 
 当请求 PHP 脚本时，Apache 调用 =phpX_module= ，而 =phpX_module= 通过 SAPI 解析 PHP 代码：
 
@@ -131,9 +131,9 @@ file:../images/php_scrap/02.jpg
 
 SAPI 是 PHP 与其他应用，如 Web 服务器，进行数据交互的接口。因此在 =mod_php= 模式下 Apache 调用 PHP 的过程为：
 
-#+BEGIN_SRC sh
+#+begin_src sh
 Apache -> httpd -> php_module -> SAPI -> PHP
-#+END_SRC
+#+end_src
 
 =mod_php= 模式下，Apache 为每个请求产生一个进程来连接 PHP 并通过 SAPI 完成请求，在高并发的情况下，服务器负载会很高。
 
@@ -214,10 +214,10 @@ PHP-FPM provides an enormous security benefit over other PHP handlers by maintai
 
 When using opcode caching, the server’s main PHP config should have these settings configured for security:
 
-#+BEGIN_SRC text
+#+begin_src text
 opcache.validate_root = true
 opcache.validate_permission = true 
-#+END_SRC
+#+end_src
 
 These settings prevent users from obtaining access to other users’ opcode caches.
 
@@ -258,7 +258,7 @@ How exactly the web server connects to PHP has evolved, but roughly speaking, du
 
 An example of Nginx PHP-FPM setting:
 
-#+BEGIN_SRC text
+#+begin_src text
 location ~ \.php$ {
     try_files $uri =404;
     fastcgi_split_path_info ^(.+\.php)(/.+)$;
@@ -267,7 +267,7 @@ location ~ \.php$ {
     include fastcgi_params;
     fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
 }
-#+END_SRC
+#+end_src
 
 The line =fastcgi_pass unix:/run/php/php7.2-fpm.sock;= tells Nginx to communicate with the PHP process through the socket named =php7.2-fpm.sock=. So, for every incoming request, Nginx writes data through this file, and on receiving the output, sends it back to the browser.
 
@@ -279,36 +279,36 @@ Nginx was built for handling thousands of connection at the same time, but if th
 
 In PHP-FPM's config file, e.g. =/etc/php/7.2/fpm/php-fpm.conf= :
 
-#+BEGIN_SRC text
+#+begin_src text
 emergency_restart_threshold 10
 emergency_restart_interval 1m
-#+END_SRC
+#+end_src
 
 These 2 lines means if 10 child processes fail within 1 minute, =php-fpm= main process should restart. PHP is a short-lived process that does leak memory, so restarting the main process in cases of high failure can solve a lot of problems.
 
-#+BEGIN_SRC text
+#+begin_src text
 process_control_timeout 10s
-#+END_SRC
+#+end_src
 
 This means the child processes should wait for this much time before executing the signal received from the parent process. This is useful, e.g. when child processes are in the middle of something when the parent processes send a =KILL= signal. With 10 seconds on hand, they’ll have a better chance of finishing their tasks and exiting gracefully.
 
 PHP-FPM also has config file per pool of processes, e.g. =/etc/php/7.2/fpm/pool.d/www.conf= which contains user and group settings:
 
-#+BEGIN_SRC text
+#+begin_src text
 user = www-data
 group = www-data
-#+END_SRC
+#+end_src
 
 And process manager (pm) settings:
 
-#+BEGIN_SRC text
+#+begin_src text
 pm = dynamic
 pm.max_children = 5
 pm.start_servers = 3
 pm.min_spare_servers = 2
 pm.max_spare_servers = 4
 pm.max_requests = 200
-#+END_SRC
+#+end_src
 
 #+ATTR_HTML: :class no-border
 | =static=   | Number of child processes is fixed to =pm.max_children=.                              |
@@ -343,58 +343,58 @@ Check if you’re using any of PHP’s [[https://www.php.net/manual/en/ref.apach
 If you’re currently changing any [[https://www.php.net/manual/en/configuration.changes.php][PHP settings in Apache configuration files]], move these to [[https://www.php.net/manual/en/configuration.file.per-user.php][=.user.ini= files]] which are picked up by PHP-FPM. For example, move:
 
 #+CAPTION: =.htaccess=
-#+BEGIN_SRC sh
+#+begin_src sh
 php_value include_path ".:/php_lib"
 php_value auto_prepend_file "autoload.php"
-#+END_SRC
+#+end_src
 
 To an equivalent:
 
 #+CAPTION: =.user.ini=
-#+BEGIN_SRC sh
+#+begin_src sh
 include_path = '.:/php_lib'
 auto_prepend_file = 'autoload.php'
-#+END_SRC
+#+end_src
 
 ** Switch PHP Package
 
 Run the following as root:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 dnf install php-fpm
 dnf remove php # Package php is actually mod_php in Fedora
 systemctl start php-fpm
 systemctl enable php-fpm
-#+END_SRC
+#+end_src
 
 ** Tweak Default httpd Configuration
 
 To avoid PHP-FPM gets called for files that don't exist (httpd logs like =AH01071: Got error ‘Primary script unknown=):
 
 #+CAPTION: =/etc/httpd/conf.d/php.conf=
-#+BEGIN_SRC xml
+#+begin_src xml
 <FilesMatch \.php$>
   <If "-f %{SCRIPT_FILENAME}">
     SetHandler "proxy:unix:/run/php-fpm/www.sock|fcgi://localhost"
   </If>
 </FilesMatch>
-#+END_SRC
+#+end_src
 
 ** Switch MPM
 
 #+CAPTION: =/etc/httpd/conf.modules.d/00-mpm.conf=
-#+BEGIN_SRC sh
+#+begin_src sh
 # LoadModule mpm_prefork_module modules/mod_mpm_prefork.so
 LoadModule mpm_event_module modules/mod_mpm_event.so
-#+END_SRC
+#+end_src
 
 ** Restart httpd
 
-#+BEGIN_SRC sh
+#+begin_src sh
 apachectl configtest
 # Syntax OK
 systemctl restart httpd
-#+END_SRC
+#+end_src
 
 Note that PHP logs are now in =/var/log/php-fpm=.
 
@@ -406,15 +406,15 @@ Note that PHP logs are now in =/var/log/php-fpm=.
 
 Apache PHP module, a.k.a. =mod_php= is the module that allows Apache to interpret PHP files, and it’s known to suffer from memory problems. Here is what I did to migrate to PHP-FPM on Ubuntu 16.04 and using PHP 7.0.
 
-#+BEGIN_SRC sh
+#+begin_src sh
 sudo apt-get remove libapache2-mod-php7.0 # Remove mod_php
 sudo apt-get -y install php7.0-fpm libapache2-mod-fastcgi # Install php-fpm
 sudo a2dismod mpm_worker mpm_prefork # Disable conflicting modules
 sudo a2enmod actions fastcgi alias rewrite mpm_event # Enable required modules
-#+END_SRC
+#+end_src
 
 #+CAPTION: =/etc/apache2/conf-available/php7.0-fpm.conf=
-#+BEGIN_SRC xml
+#+begin_src xml
 <IfModule mod_fastcgi.c>
     SetHandler php7-fcgi .php
     Action php7-fcgi /php7-fcgi virtual
@@ -424,15 +424,15 @@ sudo a2enmod actions fastcgi alias rewrite mpm_event # Enable required modules
         Require all granted
     </Directory>
 </IfModule>
-#+END_SRC
+#+end_src
 
 Then enable the configuration and restart the services to see the changes:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 sudo a2enconf php7.0-fpm # Enable php-fpm configuration
 service apache2 restart
 service php7.0-fpm restart
-#+END_SRC
+#+end_src
 
 ** Links
 
@@ -458,9 +458,9 @@ PHP 提供很多种形式的 SAPI 接口，常用的只有 5 种形式：
 
 PHP 函数查看当前 SAPI 接口类型：
 
-#+BEGIN_SRC php
+#+begin_src php
 php_sapi_name(): string
-#+END_SRC
+#+end_src
 
 ** PHP 生命周期
 
@@ -521,9 +521,9 @@ Embedded SAPI 允许在 C/C++ 代码中调用 PHP 提供的函数。Embedded SAP
 * 提高 PHP 代码质量 36 计
 ** 不要使用相对路径
 
-#+BEGIN_SRC php
+#+begin_src php
 require_once('../../lib/some_class.php');
-#+END_SRC
+#+end_src
 
 该写法的缺点：
 
@@ -533,17 +533,17 @@ require_once('../../lib/some_class.php');
 
 使用绝对路径：
 
-#+BEGIN_SRC php
+#+begin_src php
 define('ROOT', '/var/www/project/');
 require_once(ROOT . '../../lib/some_class.php');
-#+END_SRC
+#+end_src
 
 绝对路径也可能会改变，继续改进：
 
-#+BEGIN_SRC php
+#+begin_src php
 define('ROOT', pathinfo(__FILE__, PATHINFO_DIRNAME));
 require_once(ROOT . '../../lib/some_class.php');
-#+END_SRC
+#+end_src
 
 这样无论移到哪个目录，甚至外网的服务器上，代码都无须更改便可正确运行。
 
@@ -551,15 +551,15 @@ require_once(ROOT . '../../lib/some_class.php');
 
 在脚本头部引入文件、库、工具文件和助手函数等：
 
-#+BEGIN_SRC php
+#+begin_src php
 require_once('lib/Database.php');
 require_once('lib/Mail.php');
 require_once('helpers/utitlity_functions.php');
-#+END_SRC
+#+end_src
 
 使用助手函数包含文件，可以更灵活地改变文件路径，且代码更具可读性：
 
-#+BEGIN_SRC php
+#+begin_src php
 function load_class($class_name) {
     $path = ROOT . '/lib/' . $class_name . '.php';
     if (file_exists($path)) {
@@ -568,7 +568,7 @@ function load_class($class_name) {
 }
 load_class('Database');
 load_class('Mail');
-#+END_SRC
+#+end_src
 
 更多扩展：
 
@@ -577,7 +577,7 @@ load_class('Mail');
 
 ** 保留调试代码
 
-#+BEGIN_SRC php
+#+begin_src php
 define('ENVIRONMENT' , 'development'); // 开发环境
 define('ENVIRONMENT' , 'production');  // 生产环境
 
@@ -588,7 +588,7 @@ if (!$db->query($query)) {
         echo "Database error. Please contact administrator";
     }
 }
-#+END_SRC
+#+end_src
 
 ** Links
 
@@ -596,7 +596,7 @@ if (!$db->query($query)) {
 
 * Fastest way to determine where PHP script exits?
 
-#+BEGIN_SRC php
+#+begin_src php
 function write_stack()
 {
     $GLOBALS['debug_stack'] = debug_backtrace();
@@ -610,7 +610,7 @@ function dump_stack()
 declare(ticks=1); // Increase tick to make execution faster
 register_tick_function('write_stack');
 register_shutdown_function('dump_stack');
-#+END_SRC
+#+end_src
 
 ** Links
 
@@ -622,7 +622,7 @@ PHP is associated with either web server, or external FastCGI process manager.
 
 ** Restarting web server
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ /etc/init.d/apache2 restart
 $ /etc/init.d/nginx restart
 $ /etc/init.d/lighttpd restart
@@ -630,15 +630,15 @@ $ /etc/init.d/lighttpd restart
 $ service httpd restart
 $ service nginx restart
 $ service lighttpd restart
-#+END_SRC
+#+end_src
 
 ** Restart PHP-FAM Fastcgi
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ /etc/init.d/php-fpm restart
 
 $ service php-fpm restart
-#+END_SRC
+#+end_src
 
 ** Links
 

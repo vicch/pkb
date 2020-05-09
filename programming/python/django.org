@@ -13,7 +13,7 @@ App
 - an app can be in multiple projects, can be packaged and distributed for reuse
 
 配置
-#+BEGIN_SRC python
+#+begin_src python
 # <site>/<site>/settings.py
 
 INSTALLED_APPS = [
@@ -25,11 +25,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     '<app>.apps.<App>Config',
 ]
-#+END_SRC
+#+end_src
 
 ** 目录结构
 
-#+BEGIN_SRC sh
+#+begin_src sh
 # django-admin startproject <site>
 <site>/             # 容器，可以任意命名
     manage.py       # 操作 Django 项目的命令行工具
@@ -53,14 +53,14 @@ INSTALLED_APPS = [
         views.py
     <site>/
         ...
-#+END_SRC
+#+end_src
 
 * Route
 ** 示例
 
 为 =http://127.0.0.1:8000/<app>/= 设置路由
 
-#+BEGIN_SRC python
+#+begin_src python
 # <site>/<site>/urls.py
 
 from django.conf.urls import include, url
@@ -71,9 +71,9 @@ urlpatterns = [ # 按顺序将 URL 匹配列表中的正则
                                             # 去除正则匹配的部分，剩余（<app>/ 之后的）传递给 include()
     url(r'^admin/', admin.site.urls),       # admin.site.urls 不需要 include()
 ]
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC python
+#+begin_src python
 # <site>/<app>/urls.py
 
 from django.conf.urls import url
@@ -82,7 +82,7 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index, name='index'),
 ]
-#+END_SRC
+#+end_src
 
 * Model
 ** 方法
@@ -94,7 +94,7 @@ urlpatterns = [
 ** 示例
 
 定义
-#+BEGIN_SRC python
+#+begin_src python
 # <site>/<app>/models.py
 
 from django.db import models
@@ -106,26 +106,26 @@ class <Model_1>(models.Model): # 继承 django.db.models.Model
 class <Model_2>(models.Model):
     <name_1> = models.ForeignKey(<Model_1>, on_delete=models.CASCADE)
     <name_2> = models.IntegerField(default=<n>)
-#+END_SRC
+#+end_src
 
 配置
-#+BEGIN_SRC python
+#+begin_src python
 # <site>/<site>/settings.py
 
 INSTALLED_APPS = [
     ...
     '<app>.apps.<App>Config',
 ]
-#+END_SRC
+#+end_src
 
 生成数据表
-#+BEGIN_SRC sh
+#+begin_src sh
 python manage.py makemigrations <app>
 python manage.py migrate
-#+END_SRC
+#+end_src
 
 使用
-#+BEGIN_SRC python
+#+begin_src python
 # 列出所有记录
 <Model>.objects.all()
 
@@ -139,23 +139,23 @@ obj.<name_1>
 # 修改属性值
 obj.<name_2> = ...
 obj.save()
-#+END_SRC
+#+end_src
 
 * View
 ** 示例
 
-#+BEGIN_SRC python
+#+begin_src python
 # <site>/<app>/views.py
 
 from django.http import HttpResponse
 
 def index(request):
     return HttpResponse("Hello, world.")
-#+END_SRC
+#+end_src
 
 * 数据库
 ** 配置
-#+BEGIN_SRC python
+#+begin_src python
 # <site>/<site>/settings.py
 
 DATABASES = {
@@ -171,38 +171,38 @@ DATABASES = {
         'PASSWORD':
     }
 }
-#+END_SRC
+#+end_src
 
 ** 命令行
 
 安装 SQLite3
-#+BEGIN_SRC sh
+#+begin_src sh
 sudo apt-get install sqlite3
-#+END_SRC
+#+end_src
 
 运行
-#+BEGIN_SRC sh
+#+begin_src sh
 # <site>/
 python manage.py dbshell
-#+END_SRC
+#+end_src
 
 * Admin
 ** 示例
 
-#+BEGIN_SRC python
+#+begin_src python
 # <site>/<app>/admin.py
 
 from django.contrib import admin
 from .models import <Model>
 
 admin.site.register(<Model>)
-#+END_SRC
+#+end_src
 
 * Django 库
 ** =django.conf=
 *** =django.conf.urls=
 
-#+BEGIN_SRC python
+#+begin_src python
 def url(
     regex
 ,   view        # 调用的 view 函数，第一个参数为 HttpRequest 对象
@@ -210,7 +210,7 @@ def url(
 ,   name=None   # 用于引用此 URL 的唯一名称，如在模板中
 ,   prefix=''
 )
-#+END_SRC
+#+end_src
 
 ** =django.db=
 *** =django.db.models=
@@ -239,7 +239,7 @@ def url(
 
 *** =django.db.models.Model=
 
-#+BEGIN_SRC python
+#+begin_src python
 def save(
     self
 ,   force_insert=False
@@ -247,7 +247,7 @@ def save(
 ,   using=None
 ,   update_fields=None
 )
-#+END_SRC
+#+end_src
 
 *** =django.db.models.Manager=
 
@@ -289,7 +289,7 @@ Manager
 
 *** =django.db.models.query.QuerySet=
 
-#+BEGIN_SRC python
+#+begin_src python
 # Creating a QuerySet doesn't involve database activity
 q = Entry.objects.filter(headline__startswith="What")
 q = q.filter(pub_date__lte=datetime.date.today())
@@ -297,7 +297,7 @@ q = q.exclude(body_text__icontains="food")
 
 # Django won't run the query until the QuerySet is evaluated
 print(q)
-#+END_SRC
+#+end_src
 
 ** =django.utils=
 *** =django.utils.timezone=
@@ -310,14 +310,14 @@ print(q)
 ** =django-admin=
 
 =startproject=
-#+BEGIN_SRC sh
+#+begin_src sh
 # <site>/../
 django-admin startproject <site> # 避免冲突：django，test 等
-#+END_SRC
+#+end_src
 
 ** =manage.py=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 python manage.py <cmd>
 
 <cmd> # 项目
@@ -336,12 +336,12 @@ python manage.py <cmd>
     sqlmigrate <app> <seq> # 读取指定的 migration，返回 SQL
     migrate                # 根据配置中的 INSTALLED_APPS 创建数据库、表
                            # 执行所有未执行的 migration
-#+END_SRC
+#+end_src
 
 * 安装
 
 安装（Python 2）
-#+BEGIN_SRC sh
+#+begin_src sh
 # pip
 sudo apt-get install python-pip
 
@@ -350,19 +350,19 @@ sudo pip install django
 
 # 验证
 python -c "import django; print(django.get_version())"
-#+END_SRC
+#+end_src
 
 卸载（Python 2）
-#+BEGIN_SRC sh
+#+begin_src sh
 # Django
 sudo pip uninstall django
 
 # pip
 sudo apt-get remove python-pip
-#+END_SRC
+#+end_src
 
 安装（Python 3）
-#+BEGIN_SRC sh
+#+begin_src sh
 # Python
 sudo apt-get install package
 sudo apt-get install python3
@@ -375,13 +375,13 @@ sudo pip3 install django
 
 # 验证
 python3 -c "import django; print(django.get_version())"
-#+END_SRC
+#+end_src
 
 卸载（Python 3）
-#+BEGIN_SRC sh
+#+begin_src sh
 # Django
 sudo pip3 uninstall django
 
 # pip
 sudo apt-get remove python3-pip
-#+END_SRC
+#+end_src

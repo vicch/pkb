@@ -24,58 +24,58 @@
 
 ** =any()=
 
-#+BEGIN_SRC python
+#+begin_src python
 any ( iterable )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 检查字符串中是否存在数字字符
-#+BEGIN_SRC python
+#+begin_src python
 hasdigit = any(map(str.isdigit, string))
-#+END_SRC
+#+end_src
 
 ** =file()=
 
-#+BEGIN_SRC python
+#+begin_src python
 file(
     name
 [,  mode
 [,  buffering
 ]])
-#+END_SRC
+#+end_src
 
 =file= 类型的构建方法，返回 =file= 类型实例。打开文件时建议使用 =open()= 。
 
 ** =len()=
 
-#+BEGIN_SRC python
+#+begin_src python
 len ( seq )
-#+END_SRC
+#+end_src
 
 ** =map()=
 
-#+BEGIN_SRC python
+#+begin_src python
 map (
     function
 ,   iterable
 ,   ...
 )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC python
+#+begin_src python
 s = list(map(abs, [-1, 0, 1]))
 n, m = map(int, raw_input().split())
-#+END_SRC
+#+end_src
 
 ** =open()=
 
-#+BEGIN_SRC python
+#+begin_src python
 open(
     name
 [,  mode
 [,  buffering
 ]])
-#+END_SRC
+#+end_src
 
 以指定权限打开文件，返回 =file= 类型示例。
 
@@ -90,16 +90,16 @@ open(
 |------+------------|
 | =B=  | 二进制文件 |
 
-#+BEGIN_SRC python
+#+begin_src python
 fname = raw_input('Open file: ')
 fhandle = open(filename)
 print fhandle.read()
 fhanlde.close()
-#+END_SRC
+#+end_src
 
 ** =range()=
 
-#+BEGIN_SRC python
+#+begin_src python
 range(stop) # 从 0 开始到 stop 为止，不包括 stop
 
 range(      # 指定开始和结束
@@ -107,52 +107,52 @@ range(      # 指定开始和结束
 ,   stop    # 不包括右边界
 [,  step
 ])
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC python
+#+begin_src python
 range(10)         # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 range(0, 30, 5)   # [0, 5, 10, 15, 20, 25]
 range(0, -10, -1) # [0, -1, -2, -3, -4, -5, -6, -7, -8, -9]
 range(0)          # []
-#+END_SRC
+#+end_src
 
 ** =sum()=
 
-#+BEGIN_SRC python
+#+begin_src python
 sum (
     iterable,
 [,  start
 ])
-#+END_SRC
+#+end_src
 
 ** =reversed()=
 
-#+BEGIN_SRC python
+#+begin_src python
 reversed ( seq )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC python
+#+begin_src python
 list(reversed(lst)) # 返回值是一个迭代器，需要包含在 list() 中
-#+END_SRC
+#+end_src
 
 ** =sorted()=
 
-#+BEGIN_SRC python
+#+begin_src python
 sorted (
     iterable
 [,  cmp
 [,  key
 [,  reverse
 ]]])
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC python
+#+begin_src python
 new = sorted(lst, key=str.lower, reverse=True)
 new = sorted(lst, key=lambda i: i[1])
-#+END_SRC
+#+end_src
 
 * 输出
 
@@ -165,15 +165,15 @@ new = sorted(lst, key=lambda i: i[1])
 | =repr()=  | 取得对象的规范字符串表示 |
 
 
-#+BEGIN_SRC python
+#+begin_src python
 print <pattern> % <arg>
 print <pattern> % (<arg>, ...)
 # Python 3
 print(<pattern> % <arg>)
 print(<pattern> % (<arg>, ...))
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC python
+#+begin_src python
 foo = 'My name is %s %s.' % ('Foo', 'Bar')
 print foo
 
@@ -184,7 +184,7 @@ print 'My name is %s %s' % (foo, bar)
 foo = 'My name is %s %s.'
 bar = ('Foo', 'Bar')
 print foo % bar
-#+END_SRC
+#+end_src
 
 ** 占位符
 
@@ -217,64 +217,64 @@ print foo % bar
 
 ** =eval()=
 
-#+BEGIN_SRC python
+#+begin_src python
 eval (
     expr
 [,  globals
 [,  locals
 ]])
-#+END_SRC
+#+end_src
 
 ** =print=
 
-#+BEGIN_SRC python
+#+begin_src python
 print <expr>, <expr>, ...
-#+END_SRC
+#+end_src
 
 #+CAPTION: 用 @@html:<code>,</code>@@ 连接时，会自动使用空格分隔。
-#+BEGIN_SRC python
+#+begin_src python
 print 'Foo bar', 1 + 2
 # Foo bar 3
-#+END_SRC
+#+end_src
 
 #+CAPTION: 以 @@html:<code>,</code>@@ 结尾，避免自动换行。
-#+BEGIN_SRC python
+#+begin_src python
 print 'Foo bar',
 ...
-#+END_SRC
+#+end_src
 
 ** =print()=
 
-#+BEGIN_SRC python
+#+begin_src python
 print (
     expr, ... # 接受多个表达式
 ,   sep       # 分隔符，默认为空格
 ,   end       # 结尾字符，默认为换行
 ,   file      # 默认为 sys.stdout
 )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 在 Python 2 中使用 =print()=
-#+BEGIN_SRC python
+#+begin_src python
 from __future__ import print_function
-#+END_SRC
+#+end_src
 
 #+CAPTION: 打印多个对象
-#+BEGIN_SRC python
+#+begin_src python
 print(a + b, a - b, sep = '\n')
-#+END_SRC
+#+end_src
 
 #+CAPTION: 打印序列
-#+BEGIN_SRC python
+#+begin_src python
 print([1, 2, 3])  # 作为单个对象打印：[1, 2, 3]
 print(*[1, 2, 3]) # 作为多个对象打印：1 2 3
-#+END_SRC
+#+end_src
 
 ** =repr()=
 
-#+BEGIN_SRC python
+#+begin_src python
 repr ( object )
-#+END_SRC
+#+end_src
 
 - 同 =``= 。
 - 大多数时候， ~eval(repr(object)) == object~ 。
@@ -287,13 +287,13 @@ repr ( object )
 
 ** =input()=
 
-#+BEGIN_SRC python
+#+begin_src python
 input([prompt])
-#+END_SRC
+#+end_src
 
 =input()= 存在安全问题，避免使用。
 
-#+BEGIN_SRC python
+#+begin_src python
 # Python 2 会对输入进行类型转换，等于 eval(raw_input())
 i = input("Enter a value: ") # 42
 type(i) # <type 'int'>
@@ -301,106 +301,106 @@ type(i) # <type 'int'>
 # Python 3 不对输入进行类型转换，只存储为字符串
 i = input("Enter a value: ") # 42
 type(i) # <class 'str'>
-#+END_SRC
+#+end_src
 
 ** =raw_input()=
 
-#+BEGIN_SRC python
+#+begin_src python
 raw_input([prompt])
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC python
+#+begin_src python
 value = raw_input('Input a value: ')
-#+END_SRC
+#+end_src
 
 * 类型
 ** =complex()=
 
 #+CAPTION: 示例
-#+BEGIN_SRC python
+#+begin_src python
 a = complex('1+2j')
-#+END_SRC
+#+end_src
 
 ** =dict=
 
-#+BEGIN_SRC python
+#+begin_src python
 class dict (
     iterable
 ,   **kwarg
 )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC python
+#+begin_src python
 dct = dict(name='test', type='file') # 键（字面量）必须是字符串
 print dct
 # {'name': 'test', 'type': 'file'}
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC python
+#+begin_src python
 dct = dict([('name', 'test'), ('type', 'file')])
 print dct
 # {'name': 'test', 'type': 'file'}
-#+END_SRC
+#+end_src
 
 ** =float()=
 
-#+BEGIN_SRC python
+#+begin_src python
 class float ( [x] )
-#+END_SRC
+#+end_src
 
 ** =int()=
 
-#+BEGIN_SRC python
+#+begin_src python
 class int( x = 0 )
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC python
+#+begin_src python
 class int(
     x
 ,   base = 10
 )
-#+END_SRC
+#+end_src
 
 ** =isinstance()=
 
-#+BEGIN_SRC python
+#+begin_src python
 bool isinstance (
     object
 ,   classinfo
 )
-#+END_SRC
+#+end_src
 
 ** =list()=
 
-#+BEGIN_SRC python
+#+begin_src python
 class list([iterable])
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC python
+#+begin_src python
 lst = list('abc') # ['a', 'b', 'c']
-#+END_SRC
+#+end_src
 
 ** =set()=
 ** =str()=
 
-#+BEGIN_SRC python
+#+begin_src python
 class str(object = '')
-#+END_SRC
+#+end_src
 
 ** =tuple()=
 
-#+BEGIN_SRC python
+#+begin_src python
 tuple([iterable])
-#+END_SRC
+#+end_src
 
 ** =type()=
 
-#+BEGIN_SRC python
+#+begin_src python
 type type(object)
-#+END_SRC
+#+end_src
 
 * 数字
 
@@ -416,18 +416,18 @@ type type(object)
 
 ** =bin()=
 
-#+BEGIN_SRC python
+#+begin_src python
 bin ( x )
-#+END_SRC
+#+end_src
 
 ** =round()=
 
-#+BEGIN_SRC python
+#+begin_src python
 round (
     number
 [,  ndigits
 ])
-#+END_SRC
+#+end_src
 
 * 字符串
 
@@ -463,33 +463,33 @@ round (
 
 ** =str.count()=
 
-#+BEGIN_SRC python
+#+begin_src python
 str.count(sub[, start[, end]])
-#+END_SRC
+#+end_src
 
 Return the number of non-overlapping occurrences of substring =sub= in the range =[start, end]= interpreted as in slice notation.
 
 ** =str.find=
 
-#+BEGIN_SRC python
+#+begin_src python
 str.find(
     sub
 [,  start
 [,  end
 ]])
-#+END_SRC
+#+end_src
 
 ** =str.format()=
 
-#+BEGIN_SRC python
+#+begin_src python
 str.format( 
   arg, ...
 , **kwargs
 )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 格式化字符串
-#+BEGIN_SRC python
+#+begin_src python
 '{<index>:<fill><align><width>.<precision><type>}'
     <index>     # 数字，从 0 开始，对应参数
     <fill>      # 填充字符，默认为空格
@@ -505,87 +505,87 @@ str.format(
         x       # 十六进制小写
         X       # 十六进制大写
         c       # 字符
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC python
+#+begin_src python
 "The sum of 1 + 2 is {0}".format(1 + 2)
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例：打印十进制、八进制、十六进制、二进制形式
-#+BEGIN_SRC python
+#+begin_src python
 print('{0:{1}d} {0:{1}o} {0:{1}X} {0:{1}b}'.format(number, width))
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例：参数为序列
-#+BEGIN_SRC python
+#+begin_src python
 print('{s[0]}, {s[1]}, {s}'.format(s = [1, 2]))
 # 1, 2, [1, 2]
-#+END_SRC
+#+end_src
 
 ** =str.join()=
 
-#+BEGIN_SRC python
+#+begin_src python
 str.join(iterable)
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC python
+#+begin_src python
 lst = ['foo', 'bar']
 ' '.join(lst) # foo bar
 # foo bar
-#+END_SRC
+#+end_src
 
 ** =str.replace()=
 
-#+BEGIN_SRC python
+#+begin_src python
 str.replace(
     old
 ,   new
 [,  max
 ])
-#+END_SRC
+#+end_src
 
 ** =str.split()=
 
-#+BEGIN_SRC python
+#+begin_src python
 str.split(
 [   sep      # 默认为空格
 [,  maxsplit
 ]])
-#+END_SRC
+#+end_src
 
 ** =str.splitlines()=
 
-#+BEGIN_SRC python
+#+begin_src python
 str.splitlines(
 [   keepends # 是否保留换行符，默认不保留
 ])
-#+END_SRC
+#+end_src
 
 将字符串根据换行符分解为字符串列表，换行符包括 ="\r"= ="\n"= ="\r\n"= 。
 
-#+BEGIN_SRC python
+#+begin_src python
 'ab c\n\nde fg\rkl\r\n'.splitlines()
 # ['ab c', '', 'de fg', 'kl']
 # 最后一个元素为空时被丢弃
 'ab c\n\nde fg\rkl\r\n'.splitlines(True)
 # ['ab c\n', '\n', 'de fg\r', 'kl\r\n']
-#+END_SRC
+#+end_src
 
 ** =str.translate()=
 
-#+BEGIN_SRC python
+#+begin_src python
 str.translate(
     table       # 转换映射
 [,  deletechars # 移除字符
 ])
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC python
+#+begin_src python
 "read this short text".translate(None, "aeiou")
 # rd ths shrt txt
-#+END_SRC
+#+end_src
 
 * 列表
 
@@ -603,34 +603,34 @@ str.translate(
 
 ** =list.sort()=
 
-#+BEGIN_SRC python
+#+begin_src python
 list.sort(
     cmp     # 比较方法
 ,   key     #
 ,   reverse # 倒序
 )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC python
+#+begin_src python
 # l = [['a', 2], ['b', 1], ['c', 3]]
 # 按每个元素第二项倒序排序
 l.sort(cmp=lambda a, b: cmp(a[1], b[1]), reverse=True)
 # l = [['c', 3], ['a', 2], ['b', 1]]
-#+END_SRC
+#+end_src
 
 ** =list.remove()=
 
 移除首个出现的指定值。
 
-#+BEGIN_SRC python
+#+begin_src python
 list.remove(x)
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC python
+#+begin_src python
 l = [1, 2, 3, 2, 1]
 l.remove(2) # [1, 3, 2, 1]
-#+END_SRC
+#+end_src
 
 * 字典
 
@@ -652,12 +652,12 @@ l.remove(2) # [1, 3, 2, 1]
 
 ** =zip()=
 
-#+BEGIN_SRC python
+#+begin_src python
 zip([iterable, ...])
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC python
+#+begin_src python
 foo = ['a', 'b']
 bar = [1, 2]
 dict(zip(foo, bar))
@@ -668,32 +668,32 @@ bar = ['a', 'b', 'c']
 baz = [[4, 5], [6, 7], [8, 9]]
 zip(foo, bar, baz)
 # [(1, 'a', [4, 5]), (2, 'b', [6, 7]), (3, 'c', [8, 9])]
-#+END_SRC
+#+end_src
 
 ** =dict.fromkeys()=
 
-#+BEGIN_SRC python
+#+begin_src python
 dict.fromkeys (
     seq
 [,  value
 ])
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC python
+#+begin_src python
 dct = dict.fromkeys(['name', 'type'])
 print dct
 # {'name': None, 'type': None}
-#+END_SRC
+#+end_src
 
 ** =dict.get()=
 
-#+BEGIN_SRC python
+#+begin_src python
 dict.get (
     key
 [,  default
 ])
-#+END_SRC
+#+end_src
 
 * 集合
 
@@ -726,21 +726,21 @@ dict.get (
 ** =set.add()=
 
 #+CAPTION: 示例
-#+BEGIN_SRC python
+#+begin_src python
 foo = {1, 2, 3}
 foo.add(4)
 foo.add('a')
-#+END_SRC
+#+end_src
 
 ** =set.update()=
 
 #+CAPTION: 示例
-#+BEGIN_SRC python
+#+begin_src python
 foo = {1, 2, 3}
 foo.update([4, 5])
 foo.update({6, 7})
 foo.update({8, 9}, [10, 11])
-#+END_SRC
+#+end_src
 
 * 文件
 
@@ -757,46 +757,46 @@ foo.update({8, 9}, [10, 11])
 
 ** =file.read()=
 
-#+BEGIN_SRC python
+#+begin_src python
 file.read([size])
-#+END_SRC
+#+end_src
 
 无参数调用 =read()= 之后，文件指针会指向 EOF 位置。
 
 ** =file.seek()=
 
-#+BEGIN_SRC python
+#+begin_src python
 file.seek (
     offset
 [,  whence
 ])
-#+END_SRC
+#+end_src
 
 | =whence= | =os.SEEK_SET= 绝对位置             |
 |          | =os.SEEK_CUR= 相对（当前位置）位置 |
 |          | =os.SEEK_END= 相对（文件末尾）位置 |
 
 #+CAPTION: 读取文件之后使指针回到文件开头
-#+BEGIN_SRC python
+#+begin_src python
 f = open('foo.txt')
 print f.read()
 f.seek(0)
-#+END_SRC
+#+end_src
 
 * 模块
 ** =dir()=
 
 返回标示符列表，即所有属性、函数、加载的模块。
 
-#+BEGIN_SRC python
+#+begin_src python
 dir([object])
     # 参数为空时，返回当前模块的标示符列表
     # 参数为模块名时，返回此模块的标示符列表
     # 参数为对象时，返回对象所属类的标示符列表
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC python
+#+begin_src python
 dir()
 # ['__builtins__', '__doc__', '__name__', ...] 当前模块
 dir(sys)
@@ -812,7 +812,7 @@ dir(a)
 del a
 dir()
 # ['__builtins__', '__doc__', '__name__', 'sys'] 当前模块减去被删除的成员 a
-#+END_SRC
+#+end_src
 
 * 特殊
 
@@ -860,7 +860,7 @@ If a collection has no =__contains__()= method, the =in= operator does a sequent
 Because =__getitem__()= delegates to the =[]= operator, the object automatically supports slicing and iteration.
 
 #+CAPTION: 示例
-#+BEGIN_SRC python
+#+begin_src python
 class Foo:
     def __init__(self):
         self._elements = [n * n for n in range(1, 10)]
@@ -872,7 +872,7 @@ foo = Foo()
 foo[1]   # 4
 foo[2:5] # [9, 16, 25]
 for i in foo: # 1, 4, 9, ...
-#+END_SRC
+#+end_src
 
 ** =__init__()=
 <<__init__>>
@@ -883,7 +883,7 @@ for i in foo: # 1, 4, 9, ...
 <<__len__>>
 
 #+CAPTION: 示例
-#+BEGIN_SRC python
+#+begin_src python
 class Foo:
     def __init__(self):
         self._elements = [n * n for n in range(1, 10)]
@@ -893,7 +893,7 @@ class Foo:
 
 foo = Foo()
 len(foo) # 9
-#+END_SRC
+#+end_src
 
 * 其他
 
@@ -903,13 +903,13 @@ len(foo) # 9
 
 ** =help()=
 
-#+BEGIN_SRC python
+#+begin_src python
 help([object])
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC python
+#+begin_src python
 help(list.remove)
-#+END_SRC
+#+end_src
 
 * 链接
 

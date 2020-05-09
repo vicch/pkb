@@ -103,7 +103,7 @@ file:../images/redis/01.png
 
 -----
 
-#+BEGIN_SRC code
+#+begin_src code
 SET  <key> <value> [<expire_sec>] [<expire_ms>] [NX|XX]
 GET  <key>
 MSET <key> <value> [<key> <value>]...
@@ -127,7 +127,7 @@ BITCOUNT <key> [<start> <end>] # 统计值中（某一范围内）有几个二�
 BITOP <operation> <dest_key> <key> [<key>]...
     <operation> # AND, OR, XOR, NOT
     <dest_key>  # 结果存储在此键中
-#+END_SRC
+#+end_src
 
 ** 列表
 
@@ -270,30 +270,30 @@ file:../images/redis/04.png
 |--------------------------------------+------------------------------|
 | =ZREMRANGEBYSCORE <key> <min> <max>= | 删除分数范围内的元素         |
 
-#+BEGIN_SRC sh
+#+begin_src sh
 # 返回指定分数范围内的元素
 ZRANGEBYSCORE    <key> <min> <max> [WITHSCORES] [LIMIT <offset> <count>] # 正序排列
 ZREVRANGEBYSCORE <key> <max> <min> [WITHSCORES] [LIMIT <offset> <count>] # 逆序排列
     <offset> # 在获得的元素列表上偏移
     <count>  # 只获取前 N 个元素
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC sh
+#+begin_src sh
 # 返回分数排名在指定范围内的元素
 # 分数相同时，按照元素值字典排序
 ZRANGE    <key> <start> <stop> [WITHSCORES] # 正序
 ZREVRANGE <key> <start> <stop> [WITHSCORES] # 逆序
     <start>, <stop> # 索引从 0 开始，负数表示从后向前
     WITHSCORES      # 返回元素和分数
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC sh
+#+begin_src sh
 ZINTERSTORE <dest> <numkeys> <key> ... [WEIGHTS <weight> ...] [AGGREGATE SUM|MIN|MAX]
 ZUNIONSTORE <dest> <numkeys> <key> ... [WEIGHTS <weight> ...] [AGGREGATE SUM|MIN|MAX]
     <dest>    # 存储结果的键
     WEIGHTS   # 进行计算时，每个集合中分数的权重
     AGGREGATE # 决定结果集中的元素分数
-#+END_SRC
+#+end_src
 
 * 数据结构
 ** SDS
@@ -305,18 +305,18 @@ ZUNIONSTORE <dest> <numkeys> <key> ... [WEIGHTS <weight> ...] [AGGREGATE SUM|MIN
 - 更高效的追加操作
 - 二进制安全
 
-#+BEGIN_SRC c
+#+begin_src c
 typedef char *sds;
 struct sdshdr {
     int len;    // 已占用长度
     int free;   // 剩余可用长度
     char buf[]; // 实际保存字符串数据的地方
 }
-#+END_SRC
+#+end_src
 
 ** 双向链表
 
-#+BEGIN_SRC c
+#+begin_src c
 typedef struct listNode {
     struct listNode *prev;
     struct listNode *next;
@@ -340,7 +340,7 @@ typedef struct listIter {
     listNode *next;
     int direction; // 迭代方向
 } listIter;
-#+END_SRC
+#+end_src
 
 ** 字典
 
@@ -355,7 +355,7 @@ Redis 使用散列表实现字典。
 
 file:../images/redis/02.png
 
-#+BEGIN_SRC c
+#+begin_src c
 typedef struct dict {
     dictType *type; // 依赖于类型的处理函数
     void *privdata; // 类型处理函数的私有数据
@@ -383,7 +383,7 @@ typedef struct dictEntry {
     } v;
     struct dictEntry *next; // 链地址法：用一个链表连接 Hash 值碰撞的多个键
 } dictEntry;
-#+END_SRC
+#+end_src
 
 #+CAPTION: 散列算法
 | MurmurHash2 32 bit 算法               | 用于数据库、集群、散列键、阻塞操作等 |
@@ -467,7 +467,7 @@ file:../images/redis/03.png
 
 对列表、集合、有序集合排序。有序集合只按照元素值排序，忽略分数。
 
-#+BEGIN_SRC code
+#+begin_src code
 SORT <key>
     BY <pattern>
     LIMIT <offset> <count>
@@ -475,7 +475,7 @@ SORT <key>
     ASC | DESC
     ALPHA
     STORE <dest>
-#+END_SRC
+#+end_src
 
 ** 事务
 
@@ -509,9 +509,9 @@ SORT <key>
 
 *** =ttl()=
 
-#+BEGIN_SRC php
+#+begin_src php
 ttl( $key )
-#+END_SRC
+#+end_src
 
 | 返回值 | >=0 |              |
 |        |  -1 | key 没有 ttl |
@@ -519,9 +519,9 @@ ttl( $key )
 
 *** =expireAt()=
 
-#+BEGIN_SRC php
+#+begin_src php
 expireAt( $key, int $stamp )
-#+END_SRC
+#+end_src
 
 ** String
 
@@ -535,27 +535,27 @@ expireAt( $key, int $stamp )
 
 *** =set()= 
 
-#+BEGIN_SRC php
+#+begin_src php
 set( $key, $value )
-#+END_SRC 
+#+end_src 
 
 *** =setex()=
 
-#+BEGIN_SRC php
+#+begin_src php
 setex( $key, $ttl, $value )
-#+END_SRC
+#+end_src
 
 *** =get()=
 
-#+BEGIN_SRC php
+#+begin_src php
 get( $key )
-#+END_SRC
+#+end_src
 
 *** =delete()=
 
-#+BEGIN_SRC php
+#+begin_src php
 delete( $key, ... )
-#+END_SRC
+#+end_src
 
 ** Hash
 
@@ -569,27 +569,27 @@ delete( $key, ... )
 
 *** =hSet()=
 
-#+BEGIN_SRC php
+#+begin_src php
 hSet( $key, $hashKey, $value )
-#+END_SRC
+#+end_src
 
 *** =hGet()=
 
-#+BEGIN_SRC php
+#+begin_src php
 hGet( $key, $hashKey )
-#+END_SRC
+#+end_src
 
 *** =hGetAll()=
 
-#+BEGIN_SRC php
+#+begin_src php
 hgetall( $key )
-#+END_SRC
+#+end_src
 
 *** =hIncrBy()=
 
-#+BEGIN_SRC php
+#+begin_src php
 hIncrBy( $key, $member, int $value )
-#+END_SRC
+#+end_src
 
 ** List
 
@@ -611,41 +611,41 @@ hIncrBy( $key, $member, int $value )
 
 *** =lPop()= =rPop()=
 
-#+BEGIN_SRC php
+#+begin_src php
 lPop( $key )
 rPop( $key )
-#+END_SRC
+#+end_src
 
 *** =lPush()= =rPush()=
 
-#+BEGIN_SRC php
+#+begin_src php
 lPush( $key, $value )
 rPush( $key, $value )
-#+END_SRC
+#+end_src
 
 *** =lSet()=
 
-#+BEGIN_SRC php
+#+begin_src php
 lSet( $key, $index, $value )
-#+END_SRC
+#+end_src
 
 *** =lLen()=
 
-#+BEGIN_SRC php
+#+begin_src php
 lLen( $key )
-#+END_SRC
+#+end_src
 
 *** =lRange()=
 
-#+BEGIN_SRC php
+#+begin_src php
 lRange( $key, $start, $end )
-#+END_SRC
+#+end_src
 
 *** =lTrim()=
 
-#+BEGIN_SRC php
+#+begin_src php
 lTrim( $key, $start, $stop )
-#+END_SRC
+#+end_src
 * 资源
 
 1. [[http://redisdoc.com/][Redis 命令参考]]

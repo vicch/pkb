@@ -6,18 +6,18 @@
 *** 配置
 
 #+CAPTION: 设置状态页面
-#+BEGIN_SRC sh
+#+begin_src sh
 status.status-url = "/server-status"
 
 # 限制 IP
 $HTTP["remoteip"] == "10.0.0.0/8" {
     status.status-url = "/server-status"
 }
-#+END_SRC
+#+end_src
 
 *** 输出
 
-#+BEGIN_SRC sh
+#+begin_src sh
 absolute (since start)
 Requests  10 kreq
 Traffic   110.48 Mbyte
@@ -27,20 +27,20 @@ Traffic   1.78 Mbyte/s
 average (5s sliding average)
 Requests  0 req/s
 Traffic   4.01 kbyte/s
-#+END_SRC
+#+end_src
 
 * 命令
 ** =service=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 service lighttpd <command>
     start
     stop
     reload
-#+END_SRC
+#+end_src
 ** =lighttpd-enable/disable-mod=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 lighttpd-enable-mod <module>
 lighttpd-disable-mod <module>
-#+END_SRC
+#+end_src

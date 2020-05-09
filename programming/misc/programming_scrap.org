@@ -171,7 +171,7 @@ Stack 的第一种含义是一组数据的存放方式，特点为 LIFO（Last I
 
 Stack 的第二种含义是 +调用栈（call stack）+ ，表示函数或子例程层层调用。
 
-#+BEGIN_SRC java
+#+begin_src java
 class Student {
     int age;              
     String name;      
@@ -195,7 +195,7 @@ public class Main {
         s = new Student(23, "Jonh");
     }
 }
-#+END_SRC
+#+end_src
 
 首先调用 =main()= 方法，里面需要生成一个 =Student= 实例，于是又调用 =Student= 构造函数。在构造函数中，又调用到 =setName()= 方法。这三次调用就叫做「调用栈」。程序运行的时候，总是 _先完成最上层的调用，然后将它的值返回到下一层调用，直至完成整个调用栈，返回最后的结果。_
 
@@ -209,19 +209,19 @@ Stack 的第三种含义是存放数据的一种内存区域（[[https://en.wiki
 
 数据存放的规则是：只要是 _局部的、占用空间确定的数据，一般都存放在 stack 里面，否则就放在 heap 里面。_
 
-#+BEGIN_SRC java
+#+begin_src java
 public void Method1()
 {
     int i = 4;
     int y = 2;
     Class1 cls1 = new Class1();
 }
-#+END_SRC
+#+end_src
 
 - =i= 和 =y= 是整数，内存占用空间是确定的，而且是本地变量，只用在 =Method1()= 之内。
 - =cls1= 也是局部变量，类型为指针，指向一个对象的实例。指针变量占用的大小是确定的，但是对象实例以目前的信息无法确知所占用的内存空间大小，所以对象实例存放在 heap。作为一条规则， _所有的对象都存放在 heap。_
 
-#+BEGIN_SRC java
+#+begin_src java
 public void Method1()
 {                               // | Stack       | Heap        |
                                 // |-------------|-------------|
@@ -235,7 +235,7 @@ public void Method1()
                                 // | i = 4       |             |
                                 // |-------------|-------------|
 }                               // | (empty)     | cls1 object |
-#+END_SRC
+#+end_src
 
 当 =Method1()= 运行结束，整个 stack 被清空，3 个本地变量消失。而 _heap 中的对象实例继续存在，直到系统的垃圾清理机制（garbage collector）将这块内存回收。_ 因此， _一般内存泄漏发生在 heap，即某些内存空间不再被使用了，却因为种种原因，没有被系统回收。
 

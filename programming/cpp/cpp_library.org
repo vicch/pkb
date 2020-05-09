@@ -47,22 +47,22 @@ http://pubs.opengroup.org/onlinepubs/7908799/xsh/math.h.html
 
 *** =printf()=
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int printf ( const char* format, ... );
-#+END_SRC
+#+end_src
 
 *** =scanf()=
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int scanf ( const char* format, ... );
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 char c;
 double d;
 scanf("%c %lf", &c, &d);
-#+END_SRC
+#+end_src
 
 ** =<cstdlib>=
 
@@ -81,21 +81,21 @@ scanf("%c %lf", &c, &d);
 
 Returns a pseudo-random integral number in the range between 0 and =RAND_MAX=.
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int rand ( void );
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例 1
-#+BEGIN_SRC cpp
+#+begin_src cpp
 #include <stdlib.h>
 
 v1 = rand() % 100;       // v1 in the range 0 to 99
 v2 = rand() % 100 + 1;   // v2 in the range 1 to 100
 v3 = rand() % 30 + 1985; // v3 in the range 1985-2014
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例 2
-#+BEGIN_SRC cpp
+#+begin_src cpp
 #include <stdio.h>  /* printf, scanf, puts, NULL */
 #include <stdlib.h> /* srand, rand */
 #include <time.h>   /* time */
@@ -120,7 +120,7 @@ int main ()
   puts ("Congratulations!");
   return 0;
 }
-#+END_SRC
+#+end_src
 
 *** =srand()=
 <<srand>>
@@ -133,12 +133,12 @@ Two different initializations with the same =seed= will generate the same succes
 
 If =seed= is set to =1=, the generator is reinitialized to its initial value and produces the same values as before any call to =rand= or =srand=.
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 void srand ( unsigned int seed );
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 #include <stdio.h>  /* printf, NULL */
 #include <stdlib.h> /* srand, rand */
 #include <time.h>   /* time */
@@ -153,25 +153,25 @@ int main ()
 
   return 0;
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例输出
-#+BEGIN_SRC text
+#+begin_src text
 First number: 41
 Random number: 13
 Again the first number: 41
-#+END_SRC
+#+end_src
 
 *** =exit()=
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 void exit ( int status )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 exit(0);
-#+END_SRC
+#+end_src
 
 * C++ Library
 ** =<algorithm>=
@@ -193,7 +193,7 @@ exit(0);
 *** =equal()=
 <<algorithm_equal>>
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 template <class InputIterator1, class InputIterator2>
 bool equal (
     InputIterator1 first1
@@ -208,10 +208,10 @@ bool equal (
 ,   InputIterator2 first2
 ,   BinaryPredicate pred
 );
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int a[] = {1, 3, 5, 7, 9};
 int b[] = {1, 3, 5, 2, 4};
 vector<int> c(a, a + 5);
@@ -220,12 +220,12 @@ cout << equal(a, a + 3, b) << endl;                 // 1
 cout << equal(a, a + 4, b) << endl;                 // 0
 cout << equal(c.begin(), c.begin() + 3, b) << endl; // 1
 cout << equal(c.begin(), c.end(), b) << endl;       // 0
-#+END_SRC
+#+end_src
 
 *** =lower_bound()=
 <<algorithm_lower_bound>>
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 ForwardIterator lower_bound (
     ForwardIterator first
 ,   ForwardIterator last
@@ -238,10 +238,10 @@ ForwardIterator lower_bound (
 ,   const T& val
 ,   Compare comp
 );
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int nums[] = {10,20,30,30,20,10,10,20};
 vector<int> vec(nums, nums + 8);
 sort(vec.begin(), vec.end());
@@ -249,12 +249,12 @@ sort(vec.begin(), vec.end());
 vector<int>::iterator low;
 low = lower_bound(vec.begin(), vec.end(), 20);
 cout << "lower bound at " << low - vec.begin() << endl;
-#+END_SRC
+#+end_src
 
 *** =min_element()= =max_element()=
 <<algorithn_min_element>><<algorithn_max_element>>
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 template <class ForwardIterator>
 ForwardIterator min_element (
     ForwardIterator first
@@ -267,30 +267,30 @@ ForwardIterator min_element (
 ,   ForwardIterator last
 ,   Compare comp
 );
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int arr[5] = {3, 1, 4, 1, 5};
 int min = *min_element(arr, arr + 4);
 
 vector<int> vec{3, 1, 4, 1, 5};
 int min = *min_element(vec.begin(), vec.end());
-#+END_SRC
+#+end_src
 
 *** =sort()=
 <<algorithm_sort>>
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 void sort (
     RandomAccessIterator first
 ,   RandomAccessIterator last
 ,[  Compare comp
 ,]);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int nums[] = {32,71,12,45,26,80,53,33};
 vector<int> vec (nums, nums + 8);
 
@@ -303,11 +303,11 @@ struct sortclass {
     bool operator () (int i, int j) { return i < j;}
 } sortobj;
 sort(vec.begin(), vec.begin(), sortobj);
-#+END_SRC
+#+end_src
 
 *** =upper_bound()=
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 template <class ForwardIterator, class T>
 ForwardIterator upper_bound (
     ForwardIterator first
@@ -322,7 +322,7 @@ ForwardIterator upper_bound (
 ,   const T& val
 ,   Compare comp
 );
-#+END_SRC
+#+end_src
 
 ** =<exception>=
 
@@ -351,7 +351,7 @@ ForwardIterator upper_bound (
 |                     | =underflow_error=      |
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 class Calculator {
 public:
     int power(int n, int p) {
@@ -361,7 +361,7 @@ public:
             return pow(n, p);
     }
 };
-#+END_SRC
+#+end_src
 
 ** =<numeric>=
 
@@ -371,7 +371,7 @@ public:
 
 *** =accumulate()=
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 // 求和：将 [first, last) 范围内的值累加到 init
 template <class InputIterator, class T>
 T accumulate (
@@ -388,10 +388,10 @@ T accumulate (
 ,   T init
 ,   BinaryOperation binary_op
 );
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int myfunc(int x, int y) { return x + 2 * y; }
 
 struct myclass {
@@ -405,7 +405,7 @@ cout << accumulate(nums, nums + 3, init);               // 160 (100 + 10 + 20 + 
 cout << accumulate(nums, nums + 3, init, minus<int>()); // 40 (100 - 10 - 20 -30)
 cout << accumulate(nums, nums + 3, init, myfunc);       // 220 (100 + 20 + 40 + 60)
 cout << accumulate(nums, nums + 3, init, myobject);     // 280 (100 + 30 + 60 + 90)
-#+END_SRC
+#+end_src
 
 ** =<utility>=
 
@@ -436,18 +436,18 @@ cout << accumulate(nums, nums + 3, init, myobject);     // 280 (100 + 30 + 60 + 
 
 [[https://en.cppreference.com/w/cpp/string/byte/isalpha][C++ Reference | Standard Library Headers | =<cctype>= | =std::isalpha=]]
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int isalpha( int ch ); // Returns non-0 if is alphabetic, 0 otherwise
-#+END_SRC
+#+end_src
 
 *** =tolower=
 
 [[https://en.cppreference.com/w/cpp/string/byte/tolower][C++ Reference | Standard Library Headers | =<cctype>= | =std::tolower=]]
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int tolower( int ch ); // Returns lowercase version of char if there is lowercase
                        // Returns unmodified char if there is no lowercase
-#+END_SRC
+#+end_src
 
 ** =<cstring>=
 
@@ -459,30 +459,30 @@ int tolower( int ch ); // Returns lowercase version of char if there is lowercas
 
 *** =strcpy()=
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 char * strcpy (
   char *       destination
 , const char * source
 );
-#+END_SRC
+#+end_src
 
 *** =strlen()=
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 size_t strlen ( const char * str );
-#+END_SRC
+#+end_src
 
 =strlen()= 不包含字符串结尾 null 字符，所以存储字符串需要的长度是 =strlen()= 结果加 1。
 
 *** =strncmp()=
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int strncmp (
   const char * str1
 , const char * str2
 , size_t       num
 );
-#+END_SRC
+#+end_src
 
 比较两个字符串直到
 - 出现不同的字符
@@ -524,11 +524,11 @@ int strncmp (
 
 *** 迭代
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 string s = "abc";
 for (char c: s)
     cout << c << endl;
-#+END_SRC
+#+end_src
 
 *** =erase=
 <<std_string_erase>>
@@ -536,35 +536,35 @@ for (char c: s)
 - Erases part of the string, reducing its length
 
 #+CAPTION: Sequence
-#+BEGIN_SRC cpp
+#+begin_src cpp
 string& erase (
   size_t pos = 0
 , size_t len = npos
 );
-#+END_SRC
+#+end_src
 
 *** =find()=
 <<std_string_find>>
 
 Searches the string for the first occurrence of the sequence specified by its arguments.
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 size_t find (
   const string& str
 , size_t pos = 0
 ) const noexcept;
-#+END_SRC
+#+end_src
 
 *** =getline()=
 <<string_getline>>
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 istream& getline (
   istream& is
 , string&  str
 , char     delim
 );
-#+END_SRC
+#+end_src
 
 *** =insert()=
 <<std_string_insert>>
@@ -572,34 +572,34 @@ istream& getline (
 Inserts additional characters into the string right before the character indicated by =pos=.
 
 #+CAPTION: String
-#+BEGIN_SRC cpp
+#+begin_src cpp
 string& insert (
   size_t pos
 , const string& str
 );
-#+END_SRC
+#+end_src
 
 #+CAPTION: Substring
-#+BEGIN_SRC cpp
+#+begin_src cpp
 string& insert (
   size_t pos
 , const string& str
 , size_t subpos
 , size_t sublen
 );
-#+END_SRC
+#+end_src
 
 *** =rbegin()= =rend()=
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 reverse_iterator rbegin();
 reverse_iterator rend();
 const_reverse_iterator rbegin() const;
 const_reverse_iterator rend() const;
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 bool ends_with(const string& a, const string& b) {
     if (b.size() > a.size()) return false;
     return equal(b.rbegin(), b.rend(), a.rbegin());
@@ -607,7 +607,7 @@ bool ends_with(const string& a, const string& b) {
 
 cout << ends_with("abcd", "cd") << endl;  // 1
 cout << ends_with("abcd", "acd") << endl; // 0
-#+END_SRC
+#+end_src
 
 *** =replace()=
 <<std_string_replace>>
@@ -615,16 +615,16 @@ cout << ends_with("abcd", "acd") << endl; // 0
 Replaces the portion of the string that begins at character =pos= and spans =len= characters by new contents.
 
 #+CAPTION: String
-#+BEGIN_SRC cpp
+#+begin_src cpp
 string& replace (
   size_t pos
 , size_t len
 , const string& str
 );
-#+END_SRC
+#+end_src
 
 #+CAPTION: Substring
-#+BEGIN_SRC cpp
+#+begin_src cpp
 string& replace (
   size_t pos
 , size_t len
@@ -632,19 +632,19 @@ string& replace (
 , size_t subpos
 , size_t sublen
 );
-#+END_SRC
+#+end_src
 
 *** =substr()=
 <<std_string_substr>>
 
 Returns a newly constructed string object with its value initialized to a copy of a substring of this object.
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 string substr (
   size_t pos = 0
 , size_t len = npos
 ) const;
-#+END_SRC
+#+end_src
 
 * IO
 
@@ -689,7 +689,7 @@ file:../images/c++_library/01.png
 
 *** Flag 示例
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 double a = 100.345;
 double b = 2006.008;
 double c = 2331.41592653498;
@@ -701,7 +701,7 @@ cout << setw(15) << scientific << setprecision(9) << uppercase << noshowpos << C
 // 0x64
 // _______+2006.01
 // 2.331415927E+03
-#+END_SRC
+#+end_src
 
 ** =<istream>=
 
@@ -714,15 +714,15 @@ cout << setw(15) << scientific << setprecision(9) << uppercase << noshowpos << C
 Extracts characters from the input sequence and discards them. \\
 Until either =n= characters have been extracted, or one compares equal to =delim=.
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 istream& ignore (
   streamsize n = 1,
   int delim = EOF
 );
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 #include <iostream> // std::cin, std::cout
 
 int main () {
@@ -738,13 +738,13 @@ int main () {
 
   return 0;
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例输出
-#+BEGIN_SRC text
+#+begin_src text
 Please, enter your first name followed by your surname: John Smith
 Your initials are JS
-#+END_SRC
+#+end_src
 
 ** =<ostream>=
 
@@ -759,7 +759,7 @@ Inserts a new-line character and flushes the stream.
 =endl= not only terminates lines, but also directs the computer to complete the delivery to screen of all the characters that have accumulated in an output buffer. Thus, =<<= is said to flush the output buffer.
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 #include <iostream> // std::cout, std::end
 
 int main () {
@@ -773,14 +773,14 @@ int main () {
 
   return 0;
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例输出
-#+BEGIN_SRC text
+#+begin_src text
 100
 3.14
 314
-#+END_SRC
+#+end_src
 
 ** =<ifstream>=
 
@@ -792,7 +792,7 @@ int main () {
 *** =ifstream()=
 <<std_ifstream_ifstream>>
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 explicit ifstream (
   const char* filename
 , ios_base::openmode mode = ios_base::in
@@ -802,18 +802,18 @@ explicit ifstream (
   const string& filename
 , ios_base::openmode mode = ios_base::in
 );
-#+END_SRC
+#+end_src
 
 #+CAPTION: 使用
-#+BEGIN_SRC cpp
+#+begin_src cpp
 // 创建
 ifstream <stream>(<path>, ios::in);
 // 读取
 <stream> >> <var> >> ... ; 
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 #include <fstream>
 #include <iostream>
 using namespace std;
@@ -838,14 +838,14 @@ int main() {
 
   return 0;
 }
-#+END_SRC
+#+end_src
 
 *** =close()=
 
 #+CAPTION: 使用
-#+BEGIN_SRC cpp
+#+begin_src cpp
 <stream>.close();
-#+END_SRC
+#+end_src
 
 ** =<ofstream>=
 
@@ -860,7 +860,7 @@ int main() {
 <<std_ofstream_ofstream>>
 
 #+CAPTION: Initialization
-#+BEGIN_SRC cpp
+#+begin_src cpp
 explicit ofstream (
   const char* filename
 , ios_base::openmode mode = ios_base::out
@@ -870,16 +870,16 @@ explicit ofstream (
   const string& filename
 , ios_base::openmode mode = ios_base::out
 );
-#+END_SRC
+#+end_src
 
 #+CAPTION: 使用
-#+BEGIN_SRC cpp
+#+begin_src cpp
 ofstream <stream>(<path>, ios::out);
 <stream> << <expr> << ... << endl;
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 #include <fstream> // std::ofstream
 
 int main () {
@@ -888,7 +888,7 @@ int main () {
   ofs.close();
   return 0;
 }
-#+END_SRC
+#+end_src
 
 *** =open()=
 <<std_ofstream_open>>
@@ -896,7 +896,7 @@ int main () {
 - Opens the file identified by =filename=
 - Associating it with the stream object, so that i/o operations are performed on its content
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 void open (
   const char* filename
 , ios_base::openmode mode = ios_base::out
@@ -906,7 +906,7 @@ void open (
   const string& filename
 , ios_base::openmode mode = ios_base::out
 );
-#+END_SRC
+#+end_src
 
 =mode=
 - Specifies the opening mode
@@ -925,7 +925,7 @@ void open (
 | =trunc=  | truncate | Any contents that existed in the file before it is open are discarded                   |
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 #include <fstream> // std::ofstream
 
 int main () {
@@ -935,14 +935,14 @@ int main () {
   ofs.close();
   return 0;
 }
-#+END_SRC
+#+end_src
 
 *** =close()=
 
 #+CAPTION: 使用
-#+BEGIN_SRC cpp
+#+begin_src cpp
 <stream>.close();
-#+END_SRC
+#+end_src
 
 ** =<iomanip>=
 
@@ -962,9 +962,9 @@ int main () {
 
 Sets the format flags specified by =mask=.
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 setiosflags ( ios_base::fmtflags mask );
-#+END_SRC
+#+end_src
 
 #+CAPTION: =mask= (=ios::=)
 | Numerical base | =dec=        |
@@ -982,7 +982,7 @@ setiosflags ( ios_base::fmtflags mask );
 |                | =uppercase=  |
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 #include <iostream> // std::cout, std::hex, std::endl
 #include <iomanip>  // std::setiosflags
 using namespace std;
@@ -993,12 +993,12 @@ int main () {
   cout << 100 << endl;
   return 0;
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例输出
-#+BEGIN_SRC text
+#+begin_src text
 0X64
-#+END_SRC
+#+end_src
 
 ** =cout=
 
@@ -1011,7 +1011,7 @@ The value of =cout= is meaningful to only the output operator.
 
 Each output expression refers to the same chunk of memory that is referred to by the output expression's left-side operand.\\
 
-#+BEGIN_SRC text
+#+begin_src text
               +-------------+ 
               |             | 
 --------------+---------    |   
@@ -1024,7 +1024,7 @@ cout << "Text to output"    |
                          +-----+-----+-----+-----+-- 
                          |     |     |     |     | 
                          +-----+-----+-----+-----+-- 
-#+END_SRC
+#+end_src
 
 As a result =cout= expression can be chained like =cout << "..." << "..." << ...=.
 
@@ -1037,7 +1037,7 @@ As a result =cout= expression can be chained like =cout << "..." << "..." << ...
 - 空格、tab、回车都可以分隔多个输入。
 - 表达式的值表示读取是否成功，可用于验证输入格式。
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int height, width, length;
 string s;
 
@@ -1051,20 +1051,20 @@ cin >> height >> width >> length;
 
 // 读取字符串（忽略空格）
 getling(cin, s);
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 int var;
 if (!(cin >> var))
   cout << "Non-numeric value entered." << endl;
-#+END_SRC
+#+end_src
 
 *** 循环
 
 =cin= 可以循环读取输入直到表达式返回 =0= （如通过 =Ctrl+D= ）。
 
 #+CAPTION: =while= 循环
-#+BEGIN_SRC cpp
+#+begin_src cpp
 #include <iostream>
 double box_volume(double h, double w, double l) { return h * w * l; }
 main() {
@@ -1076,10 +1076,10 @@ main() {
          << endl;
   cout << "You appear to have finished." << endl;
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: =for= 循环
-#+BEGIN_SRC cpp
+#+begin_src cpp
 #include <iostream>
 double box_volume(double h, double w, double l) { return h * w * l; }
 main() {
@@ -1093,34 +1093,34 @@ main() {
   cout << "You have computed the volumes of " 
        << count << " box cars." << endl;
 }
-#+END_SRC
+#+end_src
 
 *** 文件
 
 #+CAPTION: 通过 Unix 管道， =cin= 可以直接从文件获取输入
-#+BEGIN_SRC sh
+#+begin_src sh
 ./<program> < <file>
-#+END_SRC
+#+end_src
 
 *** 示例
 
-#+BEGIN_SRC cpp
+#+begin_src cpp
 char first_name[30], last_name[30]; int age;
 cout << "Enter First Name: "; cin >> first_name;
 cout << "Enter Last Name: "; cin >> last_name;
 cout << "Enter Age: "; cin >> age;
-#+END_SRC
+#+end_src
 
 ** =cerr=
 
 =cerr= 是 =ostream= 对象。
 
 #+CAPTION: 示例
-#+BEGIN_SRC cpp
+#+begin_src cpp
 include <iostream>;
 
 cerr << "Error message" << endl;
-#+END_SRC
+#+end_src
 
 ** =stringstream=
 
@@ -1129,7 +1129,7 @@ cerr << "Error message" << endl;
 *** 示例
 
 #+CAPTION: 从分隔开的数字组成的字符串中读取出数字
-#+BEGIN_SRC cpp
+#+begin_src cpp
 vector<int> parseInts(string str) {
     int num;
     char delim;
@@ -1145,7 +1145,7 @@ vector<int> parseInts(string str) {
 }
 
 vector<int> nums = parstInts("1,3,5");
-#+END_SRC
+#+end_src
 
 * Links
 

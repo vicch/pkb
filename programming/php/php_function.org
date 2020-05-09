@@ -26,9 +26,9 @@
 ** =echo()=
 <<echo>>
 
-#+BEGIN_SRC php
+#+begin_src php
 void echo ( string $arg, ... )
-#+END_SRC
+#+end_src
 
 =echo()= 属于构造体，与普通函数的行为和使用语境不同。一般不用 =()= ，输入参数多于一个时不能用 =()= 。
 
@@ -36,7 +36,7 @@ void echo ( string $arg, ... )
 
 渲染模板但不输出，将结果保存到字符串：
 
-#+BEGIN_SRC php
+#+begin_src php
 public function render() {
     extract($this->variables);
 
@@ -48,39 +48,39 @@ public function render() {
 
     return $rendered;
 }
-#+END_SRC
+#+end_src
 
 ** =print()=
 <<print>>
 
-#+BEGIN_SRC php
+#+begin_src php
 int print ( string $arg ) : int
-#+END_SRC
+#+end_src
 
 =print()= 属于构造体，与普通函数的行为和使用语境相同，可以不用 =()= 。
 
 因为 =echo()= 不能用于复杂表达式，某些语境下只能用 =print()= ：
 
-#+BEGIN_SRC php
+#+begin_src php
 ($some_var) ? echo 'true' : echo 'false';   // 错误
 ($some_var) ? print 'true' : print 'false'; // 可以运行
 echo $some_var ? 'true': 'false';           // 可以运行
-#+END_SRC
+#+end_src
 
 ** =printf()=
 <<printf>>
 
-#+BEGIN_SRC php
+#+begin_src php
 int printf (
     string $format // 输出格式
 [,  mixed  $args   // 变量或表达式
 [,  ...
 ]]) : int          // 输出字符串的长度
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 printf("<font color='#%X%X%X'>Hello</font>", $r-20, $g-20, $b-20);
-#+END_SRC
+#+end_src
 
 *** 转换指示符
 
@@ -94,23 +94,23 @@ printf("<font color='#%X%X%X'>Hello</font>", $r-20, $g-20, $b-20);
 |---------------+----------------|
 | =%<n>$<type>= | 指定输入参数   |
 
-#+BEGIN_SRC php
+#+begin_src php
 $format = 'The %2$s contains %1$d monkeys';
 echo sprintf($format, $num, $location);
-#+END_SRC
+#+end_src
 
 ** =print_r()=
 <<print_r>>
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed print_r (
     mixed $expression     // string|int|float 输出字面值
                           // object|array     输出详细信息
 [,  bool  $return = false
 ])
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 $a = array('a' => 'apple', 'b' => 'banana');
 print_r($a);
 // Array
@@ -118,35 +118,35 @@ print_r($a);
 //     [a] => apple
 //     [b] => banana
 // )
-#+END_SRC
+#+end_src
 
 ** =sprintf()=
 <<sprintf>>
 
-#+BEGIN_SRC php
+#+begin_src php
 string sprintf (
     string $format // 与 printf() 使用同样的格式规则
 [,  mixed  $args
 [,  ...
 ]])
-#+END_SRC
+#+end_src
 
 ** =var_dump()=
 <<var_dump>>
 
-#+BEGIN_SRC php
+#+begin_src php
 void var_dump ( mixed $expression , ... )
-#+END_SRC
+#+end_src
 
 ** =var_export()=
 <<var_export>>
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed var_export (
     mixed $expression
 [,  bool  $return = false // true 表示不输出，而将输出文本赋值给字符串
 ])
-#+END_SRC
+#+end_src
 
 =var_export()= 与 =var_dump()= 的区别是， =var_export()= 输出或返回的是有效的 PHP 代码。
 
@@ -157,25 +157,25 @@ file:../images/php_function/01.jpg
 
 *** =array_push()= =array_unshift()=
 
-#+BEGIN_SRC php
+#+begin_src php
 int array_push    ( // 返回加入之后的数组元素个数
 int array_unshift (
     array &$array
 ,   mixed  $var ...
 )
-#+END_SRC
+#+end_src
 
 - =array_push()= 相当于 =$array[]= ，使用 =$array[]= 可以减少调用函数的开销。
 - =array_unshift()= 会将数字索引重新排列，关联数组的索引不变。
 
 *** =array_pop()= =array_shift()=
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed array_pop   (
 mixed array_shift (
     array &$array
 ) : mixed           // $array 为空或不是数组时返回 NULL
-#+END_SRC
+#+end_src
 
 - =array_pop()= 会将数组指针重置。
 - =array_shift()= 会将数字索引重新排列，关联数组的索引不变。
@@ -193,7 +193,7 @@ mixed array_shift (
 |-----+------------------------+----------------|
 | =u= | 用户定义顺序           | 正序或倒序     |
 
-#+BEGIN_SRC php
+#+begin_src php
 bool sort   (
 bool rsort  (
 bool asort  (
@@ -207,11 +207,11 @@ bool krsort (
                                       // SORT_FLAG_CASE  忽略大小写
                                       // SORT_NATURAL    自然排序（natural ordering）
 ])
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 ksort($array, SORT_STRING | SORT_FLAG_CASE);
-#+END_SRC
+#+end_src
 
 *** 自定义排序
 
@@ -222,9 +222,9 @@ bool uasort (
     array    &$array
 ,   callable  $cmp_function
 )
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 function cmp($a, $b) {
     if ($a == $b) {
         return 0;
@@ -234,7 +234,7 @@ function cmp($a, $b) {
 
 $array = array('a' => 4, 'b' => 8, 'c' => -1);
 uasort($array, 'cmp');
-#+END_SRC
+#+end_src
 
 ** 键值
 
@@ -248,25 +248,25 @@ uasort($array, 'cmp');
 
 *** =array_keys()=
 
-#+BEGIN_SRC php
+#+begin_src php
 array array_keys (
     array $input
 [,  mixed $search_value = null // 筛选条件，只返回与此值相同的元素的索引
 [,  bool  $strict = false      // true 表示比较值和类型
 ]] )
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 $a = array('1', '2', '1', 2, 1);
 $b = array_keys($a, 1);       // array(0, 2, 4);
 $c = array_keys($a, 1, true); // array(4);
-#+END_SRC
+#+end_src
 
 *** =array_values()=
 
-#+BEGIN_SRC php
+#+begin_src php
 array array_values ( array $input )
-#+END_SRC
+#+end_src
 
 ** 遍历
 
@@ -284,7 +284,7 @@ array array_values ( array $input )
 
 返回值无法区分数组为空、超过首端、超过末端的情况和元素值为 =false= 的情况。
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed reset   (
 mixed prev    (
 mixed current (
@@ -292,7 +292,7 @@ mixed next    (
 mixed end     (
     array &$array
 )
-#+END_SRC
+#+end_src
 
 ** 合并
 
@@ -304,13 +304,13 @@ mixed end     (
 
 *** =array_merge()=
 
-#+BEGIN_SRC php
+#+begin_src php
 array array_merge ( array $array , ... )
-#+END_SRC
+#+end_src
 
 如果数组中出现重复的字符串索引，后出现的元素覆盖前面的元素。数字索引不会被覆盖，所有数字索引的元素从 0 开始重新排列。
 
-#+BEGIN_SRC php
+#+begin_src php
 $arr1 = array("color" => "red", 2, 4);
 $arr2 = array("a", "b", "color" => "green", "shape" => "trapezoid", 4);
 $result = array_merge($arr1, $arr2);
@@ -323,15 +323,15 @@ $result = array_merge($arr1, $arr2);
 //     [shape] => trapezoid
 //     [4]     => 4
 // )
-#+END_SRC
+#+end_src
 
 *** =array_merge_recursive()=
 
-#+BEGIN_SRC php
+#+begin_src php
 array array_merge_recursive ( array $array , ... )
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 $arr1 = array("color" => array("favorite" => "red"), 5);
 $arr2 = array(10, "color" => array("favorite" => "green", "blue"));
 $result = array_merge_recursive($arr1, $arr2);
@@ -346,16 +346,16 @@ $result = array_merge_recursive($arr1, $arr2);
 //     [0] => 5
 //     [1] => 10
 // )
-#+END_SRC
+#+end_src
 
 *** =array_combine()=
 
-#+BEGIN_SRC php
+#+begin_src php
 array array_combine (
     array $keys
 ,   array $values
 ) : array             // 两个数组元素个数不同时返回 false
-#+END_SRC
+#+end_src
   
 ** 变量
  
@@ -367,16 +367,16 @@ array array_combine (
 
 *** =compact()=
 
-#+BEGIN_SRC php
+#+begin_src php
 array compact (
     mixed $varname1 // string 字符串直接作为变量名处理
                     // array  遍历数组中的字符串，作为变量名处理
 [,  mixed $varname2
 [,  ...
 ]] )
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 $city  = 'San Francisco';
 $state = 'CA';
 $event = 'SIGGRAPH';
@@ -387,17 +387,17 @@ $result = compact('event', 'nothing_here', $location_vars);
 //     'city'  => 'San Francisco',
 //     'state' => 'CA'
 // );
-#+END_SRC
+#+end_src
 
 *** =extract()=
 
-#+BEGIN_SRC php
+#+begin_src php
 int extract (
     array &$array                  // 键作为变量名，值作为变量值
 [,  int    $flags = EXTR_OVERWRITE // 出现冲突时（同名变量已存在）的行为
 [,  string $prefix = NULL          // 变量名前缀
 ]] )
-#+END_SRC
+#+end_src
 
 #+CAPTION: =$flags=
 | =EXTR_OVERWRITE=        | 覆盖，默认值                                    |
@@ -417,7 +417,7 @@ int extract (
 |-------------------------+-------------------------------------------------|
 | =EXTR_REFS=             | 新变量是对传入的数组的值的引用                  |
 
-#+BEGIN_SRC php
+#+begin_src php
 $size = 'large';
 $var_array = array(
     'color' => 'blue',
@@ -429,29 +429,29 @@ extract($var_array, EXTR_PREFIX_SAME, 'wddx');
 // $size      -> 'large'
 // $shape     -> 'sphere'
 // $wddx_size -> 'medium'
-#+END_SRC
+#+end_src
 
 *** =list()=
 
-#+BEGIN_SRC php
+#+begin_src php
 array list ( mixed $var , ... )
-#+END_SRC
+#+end_src
 
 =list()= 为构造体，非函数。变量与数组元素按顺序一一对应。
 
-#+BEGIN_SRC php
+#+begin_src php
 $info = array('coffee', 'brown', 'caffeine');
 list($drink, $color, $power) = $info;
 list($drink, , $power) = $info;
 list( , , $power) = $info;
-#+END_SRC
+#+end_src
 
 用于交换变量：
 
-#+BEGIN_SRC php
+#+begin_src php
 $a = 1; $b = 2;
 list($a, $b) = array($b, $a);
-#+END_SRC
+#+end_src
 
 ** 回调
 
@@ -467,63 +467,63 @@ list($a, $b) = array($b, $a);
 
 *** =array_filter()=
 
-#+BEGIN_SRC php
+#+begin_src php
 array array_filter (
     array    $array
 [,  callable $callback
 [,  int      $flag = 0
 ]] )
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 function even($var) {
     return !($var & 1); // 返回 true 则保留元素
 }
 $array = array(6, 7, 8, 9, 10, 11, 12);
 $evens = array_filter($array, 'even');
 // array(6, 8, 10, 12)
-#+END_SRC
+#+end_src
 
 *** =array_map()=
 
-#+BEGIN_SRC php
+#+begin_src php
 array array_map (
     callable $callback
 ,   array    $array
 [,  array    $array
 [,  ...
 ]] )
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 function cube($n) {
     return($n * $n * $n);
 }
 $a = array(1, 2, 3, 4, 5);
 $b = array_map('cube', $a);
 // array(1, 8, 27, 64, 125);
-#+END_SRC
+#+end_src
 
 *** =array_reduce()=
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed array_reduce (
     array    $array
 ,   callable $callback
 [,  mixed    $initial = NULL
 ] )
-#+END_SRC
+#+end_src
 
 回调函数签名：
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed callback (
     mixed $carry
 ,   mixed $item
 )
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 function sum($carry, $item) {
     $carry += $item;
     return $carry;
@@ -540,19 +540,19 @@ $x = array();
 array_reduce($a, 'sum');            // 15
 array_reduce($a, 'product', 10));   // 1200 (10 * 1 * 2 * 3 * 4 * 5)
 array_reduce($x, 'sum', 'No data'); // No data
-#+END_SRC
+#+end_src
 
 *** =array_walk()=
 
-#+BEGIN_SRC php
+#+begin_src php
 bool array_walk (
     array    &$array
 ,   callable  $callback
 [,  mixed     $userdata = NULL
 ] )
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 function test_print($item2, $key) {
     echo "$key. $item2\n";
 }
@@ -572,28 +572,28 @@ array_walk($fruits, 'test_alter', 'fruit');
 array_walk($fruits, 'test_print');
 // a. fruit: apple
 // b. fruit: banana
-#+END_SRC
+#+end_src
 
 *** =array_walk_recursive()=
 
-#+BEGIN_SRC php
+#+begin_src php
 bool array_walk_recursive (
     array   &$array
 ,   callable $callback
 [,  mixed    $userdata = NULL
 ] )
-#+END_SRC
+#+end_src
 
 回调函数签名：
 
-#+BEGIN_SRC php
+#+begin_src php
 void callback (
     mixed $value
 ,   mixed $key
 )
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 $sweet = array('a' => 'apple', 'b' => 'banana');
 $fruits = array('sweet' => $sweet, 'sour' => 'lemon');
 
@@ -605,7 +605,7 @@ array_walk_recursive($fruits, 'test_print');
 // a holds apple
 // b holds banana
 // sour holds lemon
-#+END_SRC
+#+end_src
 
 ** 生成
 
@@ -615,34 +615,34 @@ array_walk_recursive($fruits, 'test_print');
 
 *** =array_fill()=
 
-#+BEGIN_SRC php
+#+begin_src php
 array array_fill (
     int   $start_index // 起始索引
 ,   int   $num         // 元素个数
 ,   mixed $value
 )
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 $a = array_fill(5, 3, 'banana');
 // array(
 //     5 => 'banana',
 //     6 => 'banana',
 //     7 => 'banana'
 // )
-#+END_SRC
+#+end_src
 
 *** =range()=
 
-#+BEGIN_SRC php
+#+begin_src php
 array range (
     mixed  $start
 ,   mixed  $end
 [,  number $step = 1
 ])
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 foreach (range(0, 12) as $number) { // array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
     echo $number;
 }
@@ -650,7 +650,7 @@ foreach (range(0, 12) as $number) { // array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1
 foreach (range('c', 'a') as $letter) { // array('c', 'b', 'a');
     echo $letter;
 }
-#+END_SRC
+#+end_src
 
 ** 其他
 
@@ -670,47 +670,47 @@ foreach (range('c', 'a') as $letter) { // array('c', 'b', 'a');
 
 *** =count()= =sizeof()=
 
-#+BEGIN_SRC php
+#+begin_src php
 int count (
 int sizeof (
     mixed $var
 [,  int   $mode = COUNT_NORMAL
 ]) : int // 变量的值为 null、变量未赋值、数组为空时返回 0
          // 变量为数组以外其他类型，且不满足返回 0 的条件时返回 1
-#+END_SRC
+#+end_src
 
 *** =array_rand()=
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed array_rand (
     array $array
 [,  int   $num = 1
 ])
-#+END_SRC
+#+end_src
 
 *** =array_splice()=
 
-#+BEGIN_SRC php
+#+begin_src php
 array array_splice (
     array &$input                  // 输入数组
 ,   int    $offset                 // 替换起始
 [,  int    $length = count($input) // 替换长度
 [,  mixed  $replacement = array()  // 替换数组
 ]]) : array                        // 返回被替换的部分
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 $a = array(1, 3, 5, 7, 9);
 $b = array_splice($a, 2, 1, 6);
 // $a -> array(1, 3, 6, 7, 9)
 // $b -> array(5)
-#+END_SRC
+#+end_src
 
 *** =shuffle()=
 
-#+BEGIN_SRC php
+#+begin_src php
 bool shuffle ( array &$array )
-#+END_SRC
+#+end_src
 
 * 数字
 
@@ -722,7 +722,7 @@ bool shuffle ( array &$array )
 
 ** =min()= =max()=
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed min ( array $values )
 mixed max ( array $values )
 
@@ -732,16 +732,16 @@ mixed max (
 ,   mixed $value2
 [,  ...
 ] )
-#+END_SRC
+#+end_src
 
 ** =rand()=
 
-#+BEGIN_SRC php
+#+begin_src php
 int rand (
     int $min
 ,   int $max
 )
-#+END_SRC
+#+end_src
 
 * 字符串
 
@@ -780,24 +780,24 @@ int rand (
 ** =lcfirst()= =ucfirst()=
 <<lcfirst>><<ucfirst>>
 
-#+BEGIN_SRC php
+#+begin_src php
 string lcfirst (
 string ucfirst (
     string $str
 )
-#+END_SRC
+#+end_src
 
 ** =strlen()=
 <<strlen>>
 
-#+BEGIN_SRC php
+#+begin_src php
 int strlen ( string $string )
-#+END_SRC
+#+end_src
 
 ** =strpos()= =stripos()= =strrpos()= =strripos()=
 <<strpos>><<stripos>><<strrpos>><<strripos>>
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed strpos (  // 返回 false 表示找不到 needle
 mixed strrpos (
 mixed stripos (
@@ -806,46 +806,46 @@ mixed strripos (
 ,   mixed  $needle
 [,  int    $offset = 0
 ])
-#+END_SRC
+#+end_src
 
 ** =strrev()=
 <<strrev>>
 
-#+BEGIN_SRC php
+#+begin_src php
 string strrev ( string $string )
-#+END_SRC
+#+end_src
 
 ** =strstr()=
 <<strstr>>
 
-#+BEGIN_SRC php
+#+begin_src php
 string strstr (
     string $haystack
 ,   mixed  $needle
 [,  bool   $before_needle = false // true 表示返回匹配位置之前的部分
 ] )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 $email  = 'name@example.com';
 $domain = strstr($email, '@');       // @example.com
 $user   = strstr($email, '@', true); // name
-#+END_SRC
+#+end_src
 
 ** =strtoupper()= =strtolower()=
 <<strtoupper>><<strtolower>>
 
-#+BEGIN_SRC php
+#+begin_src php
 string strtoupper (
 string strtolower (
     string $string
 )
-#+END_SRC
+#+end_src
 
 ** =strtr()=
 
-#+BEGIN_SRC php
+#+begin_src php
 string strtr (
     string $str
 ,   string $from
@@ -856,29 +856,29 @@ string strtr (
     string $str
 ,   array  $replace_pairs
 )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 $a = 'AbCdE';
 $b = strtr($a, 'b', 'B');                      // ABCdE
 $c = strtr($a, array('b' => 'B', 'd' => 'D')); // ABCDE
-#+END_SRC
+#+end_src
 
 ** =str_repeat()=
 <<str_repeat>>
 
-#+BEGIN_SRC php
+#+begin_src php
 string str_repeat (
     string $input
 ,   int    $multiplier
 )
-#+END_SRC
+#+end_src
 
 ** =str_replace()=
 <<str_replace>>
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed str_replace (
     mixed  $search  // string 一个查找项
                     // array  多个查找项
@@ -888,21 +888,21 @@ mixed str_replace (
                     // array  对数组中每个字符串进行替换
 [,  int   &$count   // int    进行替换操作的次数
 ])
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 $a = 'AbCdE';
 $b = 0;
 $c = str_replace(['b', 'd'], ['B', 'D'], $a, $b);
 // $b: 2
 // $c: 'ABCDE'
-#+END_SRC
+#+end_src
 
 ** =substr()=
 <<substr>>
 
-#+BEGIN_SRC php
+#+begin_src php
 string substr (
     string $string
 ,   int    $start  // >= 0 表示正向位置（第一个字符为 0）
@@ -912,17 +912,17 @@ string substr (
                    // == 0 返回 false，null 或空字符串
                    // <  0 到字符串末尾之前 n 个字符（-1 表示取到倒数第二个字符）
 ])
-#+END_SRC
+#+end_src
 
 ** =ucwords()=
 <<ucwords>>
 
-#+BEGIN_SRC php
+#+begin_src php
 string ucwords (
     string $str
 [,  string $delimiters = " \t\r\n\f\v"
 ])
-#+END_SRC
+#+end_src
 
 * 日期时间
 
@@ -937,12 +937,12 @@ string ucwords (
 ** =date()=
 <<date>>
 
-#+BEGIN_SRC php
+#+begin_src php
 string date (
     string $format
 [,  int    $timestamp = time()
 ] )
-#+END_SRC
+#+end_src
 
 =$format=
 | 年 | =Y= | 2015           |
@@ -972,7 +972,7 @@ string date (
 ** =mktime()=
 <<mktime>>
 
-#+BEGIN_SRC php
+#+begin_src php
 int mktime (
 [   int $hour   = date("H") 
 [,  int $minute = date("i")
@@ -982,20 +982,20 @@ int mktime (
 [,  int $year   = date("Y")
 [,  int $is_dst = -1
 ]]]]]]] )
-#+END_SRC
+#+end_src
 
 ** =strtotime()=
 <<strtotime>>
 
-#+BEGIN_SRC php
+#+begin_src php
 int strtotime (
     string $time
 [,  int    $now = time()
 ] )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 strtotime("now");
 strtotime("-1 day");
 strtotime("+1 week 2 days 4 hours 2 seconds");
@@ -1003,14 +1003,14 @@ strtotime("next Thursday");
 
 // 可以用于从字符串中解析时间
 $date = date("d-m-Y", strtotime("2010-03-21"));
-#+END_SRC
+#+end_src
 
 ** =time()=
 <<time>>
 
-#+BEGIN_SRC php
+#+begin_src php
 int time ( void )
-#+END_SRC
+#+end_src
 
 * 转义
 
@@ -1029,24 +1029,24 @@ int time ( void )
 ** =addslashes()= =stripslashes=
 <<addslashes>><<stripslashes>>
 
-#+BEGIN_SRC php
+#+begin_src php
 string addslashes   (
 string stripslashes (
     string $str
 )
-#+END_SRC
+#+end_src
 
 ** =htmlspecialchars()= =htmlentities()=
 <<htmlspecialchars>><<htmlentities>>
 
-#+BEGIN_SRC php
+#+begin_src php
 string htmlspecialchars (
 string htmlentities     (
     string $string
 [,  int    $flags = ENT_COMPAT | ENT_HTML401
 [,  string $encoding = 'UTF-8'
 ]] )
-#+END_SRC
+#+end_src
 
 =$flags=
 | =ENT_COMPAT= | 只转换双引号，不转换单引号 |
@@ -1066,31 +1066,31 @@ HTML entity
 - =htmlentities()= 将所有可以转换为 HTML entity 的字符都转换，包括无法识别的字符，如中文字符
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 $output = '<p><script>alert("NSA backdoor installed");</script>';
 echo htmlentities($output, ENT_QUOTES, 'UTF-8');
 // &lt;p&gt;&lt;script&gt;alert(&quot;NSA backdoor installed&quot;);&lt;/script&gt;
-#+END_SRC
+#+end_src
 
 ** =htmlspecialchars_decode()=
 <<htmlspecialchars_decode>>
 
-#+BEGIN_SRC php
+#+begin_src php
 string htmlspecialchars_decode (
     string $string
 [,  int    $flags = ENT_COMPAT | ENT_HTML401
 ] )
-#+END_SRC
+#+end_src
 
 ** =strip_tags()=
 <<strip_tags>>
 
-#+BEGIN_SRC php
+#+begin_src php
 string strip_tags (
     string $str
 [,  string $allowable_tags
 ] )
-#+END_SRC
+#+end_src
 
 * 正则
 
@@ -1104,13 +1104,13 @@ string strip_tags (
 
 ** 表达式
 
-#+BEGIN_SRC regex
+#+begin_src regex
 /(<pattern>)/<modifier>
-#+END_SRC
+#+end_src
 
 ** =preg_match()=
 
-#+BEGIN_SRC php
+#+begin_src php
 int preg_match (
     string $pattern
 ,   string $subject
@@ -1118,7 +1118,7 @@ int preg_match (
 [,  int    $flags = 0
 [,  int    $offset = 0
 ]]] )
-#+END_SRC
+#+end_src
 
 | =$matches= |                       | =$matches[0]= 为第一个匹配完整表达式的位置               |
 |            |                       | =$matches[1]= 为第一个匹配第一个子表达式的位置，以此类推 |
@@ -1131,7 +1131,7 @@ int preg_match (
 
 ** =preg_match_all()=
 
-#+BEGIN_SRC php
+#+begin_src php
 int preg_match_all (
     string $pattern
 ,   string $subject
@@ -1139,7 +1139,7 @@ int preg_match_all (
 [,  int    $flags = PREG_PATTERN_ORDER
 [,  int    $offset = 0
 ]]])
-#+END_SRC
+#+end_src
 
 | =$matches= |         | =$matches[0]= 为所有匹配完整表达式的位置               |
 |            |         | =$matches[1]= 为所有匹配第一个子表达式的位置，以此类推 |
@@ -1149,7 +1149,7 @@ int preg_match_all (
 
 ** =preg_replace()=
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed preg_replace (
     mixed $pattern
 ,   mixed $replacement
@@ -1157,7 +1157,7 @@ mixed preg_replace (
 [,  int   $limit = -1
 [,  int  &$count
 ]])
-#+END_SRC
+#+end_src
 
 | =$pattern=     | =string= |                                                                          |
 |                | =array=  |                                                                          |
@@ -1170,18 +1170,18 @@ mixed preg_replace (
 |                | =array=  |                                                                          |
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 // $ 1,000.00 -> 1000.00
 $money = preg_replace(array('/\\$/', '/\s/', '/,/'), '', $money);
 
 // 将每个单词首字符变为红色
 $text = preg_replace('/(\b.)/', '<span style="color:red;">\1</span>', $text);
 // \b 表示词边界（word boundary）
-#+END_SRC
+#+end_src
 
 ** =preg_replace_callback()=
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed preg_replace_callback (
     mixed    $pattern
 ,   callable $callback
@@ -1189,24 +1189,24 @@ mixed preg_replace_callback (
 [,  int      $limit = -1
 [,  int     &$count
 ]])
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例 1
-#+BEGIN_SRC php
+#+begin_src php
 function handler(array $matches) {  // 参数是匹配结果
     return strtolower($matches[0]); // 返回用于替换的字符串
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例 2
-#+BEGIN_SRC php
+#+begin_src php
 // 使用匿名函数，可以使逻辑在同一位置，避免污染函数命名空间
 $line = preg_replace_callback(
     '|<p>\s*\w|',
     function ($matches) {return strtolower($matches[0]);},
     $line
 );
-#+END_SRC
+#+end_src
 
 * 加载
 
@@ -1223,19 +1223,19 @@ $line = preg_replace_callback(
 - 相当于在此处粘贴文件的内容。
 - =_once= 可以避免多次加载，PHP 会解析文件的绝对路径进行比较，但会造成额外开销。
 
-#+BEGIN_SRC php
+#+begin_src php
 require('reusable.php');
 require 'reusable.php'; // 构造体，调用时可以不加 () 
 if (include('reusable.php') == 'OK') {
     echo 'OK';
 }
-#+END_SRC
+#+end_src
 
 ** =get_included_files()=
 
-#+BEGIN_SRC php
+#+begin_src php
 array get_included_files ( void )
-#+END_SRC
+#+end_src
 
 * 错误和异常
 
@@ -1257,12 +1257,12 @@ array get_included_files ( void )
 
 ** =error_get_last()=
 
-#+BEGIN_SRC php
+#+begin_src php
 array error_get_last ( void )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 $a = 1 / 0;
 $b = error_get_last();
 // array(
@@ -1271,18 +1271,18 @@ $b = error_get_last();
 //     'file' => '/var/www/foo.com/public/index.php',
 //     'line' => 3
 // )
-#+END_SRC
+#+end_src
 
 ** =error_log()=
 
-#+BEGIN_SRC php
+#+begin_src php
 bool error_log (
     string $message           // 错误信息
 [,  int    $message_type = 0  // 目标错误日志的种类
 [,  string $destination       // 目标错误日志的位置，具体含义依赖 $message_type
 [,  string $extra_headers     //
 ]]] )
-#+END_SRC
+#+end_src
 
 #+CAPTION: =$message_type=
   | 0 | 使用操作系统的日志机制，或写入文件               |
@@ -1296,28 +1296,28 @@ bool error_log (
 
 ** =error_reporting()=
 
-#+BEGIN_SRC php
+#+begin_src php
 int error_reporting ( // 返回修改前的 error_reporting 值
 [   int $level        // 位掩码
 ])
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE);
-#+END_SRC
+#+end_src
 
 ** =set_error_handler()=
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed set_error_handler (
     callable $error_handler                  // 错误处理函数
 [,  int      $error_types = E_ALL | E_STRICT // 错误级别
 ] )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 自定义错误处理函数
-#+BEGIN_SRC php
+#+begin_src php
 bool handler (
     int    $errno      // 错误级别，对应 E_* 常量
 ,   string $errstr     // 错误信息
@@ -1325,57 +1325,57 @@ bool handler (
 [,  int    $errline
 [,  array  $errcontext
 ]]] )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 function foo($errno, $errmsg) {
     echo 'Error handled by foo: ' . $errmsg . "\n";
 }
 set_error_handler('foo', E_USER_ERROR);
 trigger_error('Unknown error', E_USER_ERROR);
 // Error handled by foo: Unknown error
-#+END_SRC
+#+end_src
 
 ** =set_exception_handler()=
 
-#+BEGIN_SRC php
+#+begin_src php
 callable set_exception_handler (
     callable $exception_handler
 )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 自定义异常捕捉函数
-#+BEGIN_SRC php
+#+begin_src php
 void handler ( Exception $exception )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 function foo($exception) {
     echo 'Uncaught exception: ', $exception->getMessage(), "\n";
 }
 set_exception_handler('foo');
 throw new Exception('Some exception');
 // Uncaught exception: Some exception
-#+END_SRC
+#+end_src
 
 ** =trigger_error()=
 
-#+BEGIN_SRC php
+#+begin_src php
 bool trigger_error (
     string $error_msg
 [,  int    $error_type = E_USER_NOTICE
 ] )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 if ($divisor == 0) {
     trigger_error("Cannot divide by zero", E_USER_ERROR);
 }
 // Fatal error: Cannot divide by zero in ... on line ...
-#+END_SRC
+#+end_src
 
 * 变量和常量
 
@@ -1393,16 +1393,16 @@ if ($divisor == 0) {
 
 ** =define()=
 
-#+BEGIN_SRC php
+#+begin_src php
 bool define (
     string $name
 ,   mixed  $value
 [,  bool   $case_insensitive = false
 ])
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 define("CONSTANT", "Hello world.");
 echo CONSTANT; // outputs "Hello world."
 echo Constant; // outputs "Constant" and issues a notice.
@@ -1413,27 +1413,27 @@ echo GREETING; // outputs "Hello you."
 echo Greeting; // outputs "Hello you."
 
 // 数组（PHP >= 7）
-#+BEGIN_SRC php
+#+begin_src php
 define('ANIMALS', array('dog', 'cat', 'bird'));
 echo ANIMALS[1]; // outputs "cat"
-#+END_SRC
+#+end_src
 
 ** =defined()=
 
-#+BEGIN_SRC php
+#+begin_src php
 bool defined ( string $name )
-#+END_SRC
+#+end_src
 
 ** =isset()=
 
-#+BEGIN_SRC php
+#+begin_src php
 bool isset ( mixed $var , ... ) // 变量存在且不为 null 时返回 true
                                 // 多个变量全部符合 true 时返回 true
-#+END_SRC
+#+end_src
 
 ** =is_callable()=
 
-#+BEGIN_SRC php
+#+begin_src php
 bool is_callable (
     mixed   $var // string: <function_name>
                  // array:  [<class_name>, <method_name>]
@@ -1441,13 +1441,13 @@ bool is_callable (
 [,  bool    $syntax_only = false
 [,  string &$callable_name
 ]] )
-#+END_SRC
+#+end_src
 
 ** =empty()=
 
-#+BEGIN_SRC php
+#+begin_src php
 bool empty ( mixed $var ) // 变量不存在，或值为零值、空值时返回 true
-#+END_SRC
+#+end_src
 
 #+CAPTION: 零值、空值
 | =int=    | =0=                       |
@@ -1467,16 +1467,16 @@ bool empty ( mixed $var ) // 变量不存在，或值为零值、空值时返回
 
 ** =unset()=
 
-#+BEGIN_SRC php
+#+begin_src php
 void unset ( mixed $var , ... )
-#+END_SRC  
+#+end_src  
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 unset($foo);
 unset($bar['qux']);
 unset($foo1, $foo2, $foo3);
-#+END_SRC
+#+end_src
 
 * 类和对象
 
@@ -1498,12 +1498,12 @@ unset($foo1, $foo2, $foo3);
 
 ** =get_class_methods()=
 
-#+BEGIN_SRC php
+#+begin_src php
 array get_class_methods ( mixed $class_name )
-#+END_SRC
+#+end_src
 
 #+CAPTION: =protected= 和 =private= 方法在类之外不可见。
-#+BEGIN_SRC php
+#+begin_src php
 class Foo {
     private function bar() {}
     public static function baz() {
@@ -1512,24 +1512,24 @@ class Foo {
 }
 Foo::baz();               // bar, baz
 get_class_methods('Foo'); // baz
-#+END_SRC
+#+end_src
 
 #+CAPTION: 用于在调用方法前确认是否存在。
-#+BEGIN_SRC php
+#+begin_src php
 if (in_array('bar', get_class_methods($foo))) {
     $foo->bar();
 }
 // 等价于 is_callable([$foo, 'bar'])
-#+END_SRC
+#+end_src
 
 ** =get_class_vars()=
 
-#+BEGIN_SRC php
+#+begin_src php
 array get_class_vars ( string $class_name )
-#+END_SRC
+#+end_src
 
 #+CAPTION: =protected= 和 =private= 属性在类之外不可见
-#+BEGIN_SRC php
+#+begin_src php
 class Foo {
     public $hoge;
     private $fuga;
@@ -1539,15 +1539,15 @@ class Foo {
 }
 Foo::bar();            // ['hoge' => null, 'fuga' => null]
 get_class_vars('Foo'); // ['hoge' => null]
-#+END_SRC
+#+end_src
 
 ** =get_parent_class()=
 
-#+BEGIN_SRC php
+#+begin_src php
 string get_parent_class ( [ mixed $object ] )
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 namespace Foobar;
 class Foo {}
 class Bar extends Foo {
@@ -1558,46 +1558,46 @@ class Bar extends Foo {
 get_parent_class('Foobar\Bar'); // Foobar\Foo
 get_parent_class(new Bar());    // Foobar\Foo
 Bar::bar();                     // Foobar\Foo
-#+END_SRC
+#+end_src
 
 ** =is_subclass_of()=
 
-#+BEGIN_SRC php
+#+begin_src php
 bool is_subclass_of (
     mixed  $object
 ,   string $class_name
 [,  bool   $allow_string = true
 ] )
-#+END_SRC
+#+end_src
 
 =is_subclass_of()= 只判断继承关系，判断继承关系和是否实现接口使用 =instanceof= 。
 
-#+BEGIN_SRC php
+#+begin_src php
 class Foo {}
 class Bar extends Foo {}
 is_subclass_of('Foo', 'Foo');     // false
 is_subclass_of('Bar', 'Foo');     // true
 is_subclass_of(new Bar(), 'Foo'); // true
-#+END_SRC
+#+end_src
 
 ** =method_exists()=
 
-#+BEGIN_SRC php
+#+begin_src php
 bool method_exists (
     mixed  $object // 对象或类名
 ,   string $method_name
 )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 存在的方法不一定可以调用， =protected= 和 =private= 方法都返回 =true= 。
-#+BEGIN_SRC php
+#+begin_src php
 class Foo {
     private function bar() {}
     public function baz() {}
 }
 method_exists('Foo', 'bar'); // true
 method_exists('Foo', 'baz'); // true
-#+END_SRC
+#+end_src
 
 * 函数
 
@@ -1607,47 +1607,47 @@ method_exists('Foo', 'baz'); // true
 
 ** =call_user_func()=
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed call_user_func (
     callable $callback
 [,  mixed    $parameter // 传递给函数的参数
 [,  ...
 ]] )
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 function foo($arg1, $arg2) {}
 call_user_func('foo', 'one', 'two');
-#+END_SRC
+#+end_src
 
 #+CAPTION: 动态调用时的参数是传值。
-#+BEGIN_SRC php
+#+begin_src php
 function increment(&$var) {}
 $a = 0;
 increment($a);                    // 直接调用不需要 &
 call_user_func('increment', &$a); // 动态调用需要 & 显式传递引用
-#+END_SRC
+#+end_src
 
 ** =call_user_func_array()=
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed call_user_func_array (
     callable $callback
 ,   array    $param_arr // 传递给函数的参数
 )
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 function foo($arg1, $arg2) {}
 class Foo {
     public function bar($arg1, $arg2) {}
 }
 call_user_func_array('foo', ['one', 'two']);
 call_user_func_array([new Foo(), 'bar'], ['one', 'two']);
-#+END_SRC
+#+end_src
 
 #+CAPTION: 用于 =__call()= 处理未知个数的参数。
-#+BEGIN_SRC php
+#+begin_src php
 class Foo {
     private $bar;
     public function __construct(Bar $bar) {
@@ -1666,7 +1666,7 @@ class Bar {
 }
 $foo = new Foo(new Bar());
 $foo->add(1, 2); // 3
-#+END_SRC
+#+end_src
 
 * 文件
 
@@ -1699,9 +1699,9 @@ $foo->add(1, 2); // 3
 ** =fclose()=
 <<fclose>>
 
-#+BEGIN_SRC php
+#+begin_src php
 bool fclose ( resource $handle )
-#+END_SRC
+#+end_src
 
 | 返回值 | =true=  | 成功 |
 |        | =false= | 失败 |
@@ -1709,58 +1709,58 @@ bool fclose ( resource $handle )
 ** =feof()=
 <<feof>>
 
-#+BEGIN_SRC php
+#+begin_src php
 bool feof ( resource $handle )
-#+END_SRC
+#+end_src
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 $handle = fopen($file, 'rb');
 while (feof($handle) !== true) {
     $line = fgets($handle);
 }
-#+END_SRC
+#+end_src
 
 ** =fgets()=
 <<fgets>>
 
-#+BEGIN_SRC php
+#+begin_src php
 string fgets (
     resource $handle // 开始读取的指针位置
 [,  int      $length
 ] )
-#+END_SRC
+#+end_src
 
 ** =file()=
 
-#+BEGIN_SRC php
+#+begin_src php
 array file (
     string   $filename
 [,  int      $flags = 0
 [,  resource $context
 ]] )
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC php
+#+begin_src php
 // file.txt
 foo
 bar
 
 // index.php
 file('file.txt'); // ['foo', 'bar'] 包含换行符
-#+END_SRC
+#+end_src
 
 ** =file_exists()=
 <<file_exists>>
 
-#+BEGIN_SRC php
+#+begin_src php
 bool file_exists ( string $filename )
-#+END_SRC
+#+end_src
 
 ** =file_get_contents()=
 <<file_get_contents>>
 
-#+BEGIN_SRC php
+#+begin_src php
 string file_get_contents (
     string   $filename // 文件路径、HTTP 链接
 [,  bool     $use_include_path = false
@@ -1768,21 +1768,21 @@ string file_get_contents (
 [,  int      $offset = -1
 [,  int      $maxlen
 ]]]] )
-#+END_SRC
+#+end_src
 
 | =$context= | =resource= | [[file:php_extension.org::stream_context_create][=stream_context_create()=]] 创建的 context resource  |
 
 ** =fopen()=
 <<fopen>>
 
-#+BEGIN_SRC php
+#+begin_src php
 resource fopen (
     string   $filename // 文件路径、HTTP、FTP 链接
 ,   string   $mode
 [,  bool     $use_include_path = false
 [,  resource $context
 ]] )
-#+END_SRC
+#+end_src
 
 | 返回值 | =true=  | 打开文件成功                               |
 |        | =false= | 打开文件失败（模式不是 =w(+)= 和 =a(+)= ） |
@@ -1800,23 +1800,23 @@ resource fopen (
 ** =fread()=
 <<fread>>
 
-#+BEGIN_SRC php
+#+begin_src php
 string fread (
     resource $handle // 开始读取的指针位置
 ,   int      $length // 读取的字节长度，或到文件末尾为止
 )
-#+END_SRC
+#+end_src
 
 ** =fwrite()=
 <<fwrite>>
 
-#+BEGIN_SRC php
+#+begin_src php
 int fwrite (
     resource $handle // 开始写入的指针位置
 ,   string   $string
 [,  int      $length
 ] )
-#+END_SRC
+#+end_src
 
 | 返回值 | =int= | 写入的字符串长度 |
 
@@ -1836,23 +1836,23 @@ int fwrite (
 
 ** =header()=
 
-#+BEGIN_SRC php
+#+begin_src php
 void header (
     string $string
 [,  bool   $replace = true
 [,  int    $http_response_code
 ]] )
-#+END_SRC
+#+end_src
 
 必须在产生任何输出（HTML 标签、空格、空行）之前使用。当已产生输出时，PHP 会自动发送 header，此时调用 =header()= 会产生警告信息。
 
 #+CAPTION: HTTP 跳转
-#+BEGIN_SRC php
+#+begin_src php
 header('Location: http://www.domain.com/new_home_page.html');
-#+END_SRC
+#+end_src
 
 #+CAPTION: HTTP 身份验证
-#+BEGIN_SRC php
+#+begin_src php
 if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) {
 	...
 } else {
@@ -1860,52 +1860,52 @@ if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) {
 	header('HTTP/1.0 401 Unauthorized');
 	die("Please enter your username and password");
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 内容类型
-#+BEGIN_SRC php
+#+begin_src php
 header('Content-Type: image/png');
-#+END_SRC
+#+end_src
 
 ** =header_remove()=
 
-#+BEGIN_SRC php
+#+begin_src php
 void header_remove ( [ string $name ] )
-#+END_SRC
+#+end_src
 
 ** =headers_list()=
 
-#+BEGIN_SRC php
+#+begin_src php
 array headers_list ( void )
-#+END_SRC
+#+end_src
 
 ** =headers_sent()=
 
-#+BEGIN_SRC php
+#+begin_src php
 bool headers_sent (
 [   string &$file // 发送 header 的文件名
 [,  int    &$line // 发送 header 的行数
 ]] )
-#+END_SRC
+#+end_src
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 if (!headers_sent($filename, $linenum)) {
     header('Location: http://www.example.com/');
 } else {
     echo "Headers already sent in $filename on line $linenum\n" .
 }
-#+END_SRC
+#+end_src
 
 ** =http_response_code()=
 
-#+BEGIN_SRC php
+#+begin_src php
 int http_response_code ( [ int $response_code ] )
-#+END_SRC
+#+end_src
 
 ** =setcookie()=
 
-#+BEGIN_SRC php
+#+begin_src php
 bool setcookie (
     string $name
 [,  string $value
@@ -1915,7 +1915,7 @@ bool setcookie (
 [,  bool   $secure = false
 [,  bool   $httponly = false
 ]]]]]])
-#+END_SRC
+#+end_src
 * URL
 
 | =http_build_query()= | 生成 URL 编码的查询字符串   |
@@ -1926,26 +1926,26 @@ bool setcookie (
 
 ** =http_build_query()=
 
-#+BEGIN_SRC php
+#+begin_src php
 string http_build_query (
     mixed  $query_data
 [,  string $numeric_prefix
 [,  string $arg_separator
 [,  int    $enc_type = PHP_QUERY_RFC1738
 ]]])
-#+END_SRC
+#+end_src
 
 ** =parse_url()=
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed parse_url (
     string $url
 [,  int    $component = -1
 ])
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC php
+#+begin_src php
 $array = parse_url('http://foo.com:8080/bar/index.php?key=value#anchor');
 // array(
 //    'scheme' => 'http',
@@ -1955,14 +1955,14 @@ $array = parse_url('http://foo.com:8080/bar/index.php?key=value#anchor');
 //    'query' => 'key=value',
 //    'fragment' => 'anchor'
 // )
-#+END_SRC
+#+end_src
 
 ** =urlencode()=
 <<urlencode>>
 
-#+BEGIN_SRC php
+#+begin_src php
 string urlencode ( string $str )
-#+END_SRC
+#+end_src
 
 规则
 | =0-9a-zA-Z._-= | 保持不变             |
@@ -1994,9 +1994,9 @@ string urlencode ( string $str )
 ** =ini_get()=
 <<ini_get>>
 
-#+BEGIN_SRC php
+#+begin_src php
 string ini_get ( string $varname )
-#+END_SRC
+#+end_src
 
 | 返回值 | =string= | 配置的值，值为 =null= 时返回空字符串 |
 |        | =false=  | 配置不存在时                         |
@@ -2004,23 +2004,23 @@ string ini_get ( string $varname )
 ** =ini_get_all()=
 <<ini_get_all>>
 
-#+BEGIN_SRC php
+#+begin_src php
 array ini_get_all (
 [   string $extension
 [,  bool   $details = true
 ]] )
-#+END_SRC
+#+end_src
 
 ** =ini_set()= =ini_alter()=
 <<ini_set>><<ini_alter>>
 
-#+BEGIN_SRC php
+#+begin_src php
 string ini_set (
 string ini_alter (
     string $varname
 ,   string $newvalue
 )
-#+END_SRC
+#+end_src
 
 | 返回值 | =string= | 成功时，返回修改前的值 |
 |        | =false=  | 失败时                 |
@@ -2030,14 +2030,14 @@ string ini_alter (
 ** =ini_restore()=
 <<ini_restore>>
 
-#+BEGIN_SRC php
+#+begin_src php
 void ini_restore ( string $varname )
-#+END_SRC
+#+end_src
 ** =phpinfo()=
 
-#+BEGIN_SRC php
+#+begin_src php
 bool phpinfo ( [ int $what = INFO_ALL ] )
-#+END_SRC
+#+end_src
 
 =$what=
 | 1 | =INFO_GENERAL= |
@@ -2046,30 +2046,30 @@ bool phpinfo ( [ int $what = INFO_ALL ] )
 
 ** =phpversion()=
 
-#+BEGIN_SRC php
+#+begin_src php
 string phpversion ( [ string $extension ] )
-#+END_SRC
+#+end_src
 
 ** =set_include_path()=
 
-#+BEGIN_SRC php
+#+begin_src php
 string set_include_path ( string $new_include_path )
-#+END_SRC
+#+end_src
 
 #+CAPTION: 添加查找路径。
-#+BEGIN_SRC php
+#+begin_src php
 set_include_path(get_include_path() . PATH_SEPARATOR . "/home/foobar/phplib/");
-#+END_SRC
+#+end_src
 
 ** =version_compare()=
 
-#+BEGIN_SRC php
+#+begin_src php
 mixed version_compare (
     string $version1
 ,   string $version2
 [,  string $operator
 ])
-#+END_SRC
+#+end_src
 
 | =$operation= | =string= | =<= ~<=~ =>= ~>=~ etc.      |
 |--------------+----------+-----------------------------|
@@ -2080,12 +2080,12 @@ mixed version_compare (
 |              |  =false= | =$oprator= 进行的比较不成立 |
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 $version = curl_version();
 if (version_compare($version["version"], "7.16.2") < 0) {
     ...
 }
-#+END_SRC
+#+end_src
 
 * Magic
 
@@ -2123,7 +2123,7 @@ if (version_compare($version["version"], "7.16.2") < 0) {
 
 ** 示例
 
-#+BEGIN_SRC php
+#+begin_src php
 class Test {
     private $data = array();
     public function __set($name, $value) {
@@ -2151,11 +2151,11 @@ class Test {
 $obj = new MethodTest;
 $obj->runTest('in object context');       // __call()
 MethodTest::runTest('in static context'); // __callStatic()
-#+END_SRC
+#+end_src
 
 ** =__get()= =__set()=
 
-#+BEGIN_SRC php
+#+begin_src php
 class Foo {
     protected $data = array();
     public function __set($name, $value) {
@@ -2173,7 +2173,7 @@ class Foo {
 $obj = new Foo;
 $obj->bar = '123';
 echo $obj->bar;
-#+END_SRC
+#+end_src
 
 * 结构体
 
@@ -2189,11 +2189,11 @@ echo $obj->bar;
 
 ** =exit=
 
-#+BEGIN_SRC php
+#+begin_src php
 exit;                            // 无参数
 void exit ( [ string $status ] ) // 错误信息（输出）
 void exit ( int $status )        // exit 状态码（不输出）
-#+END_SRC
+#+end_src
 
 - =exit= 被调用时， =shutdown= 函数和对象的 =destructor= 会在结束前执行
 
@@ -2202,35 +2202,35 @@ void exit ( int $status )        // exit 状态码（不输出）
 - 通常与 =or= 组合使用，用于为可能出错的函数调用提供错误处理
 
 示例 1
-#+BEGIN_SRC php
+#+begin_src php
 mysql_query($query) or die('Could not execute query');
-#+END_SRC
+#+end_src
 
 示例 2
-#+BEGIN_SRC php
+#+begin_src php
 mysql_query($query) or die(err_msg());
 function err_msg()
 {
 	return 'MySQL error was: ' . mysql_error();
 }
-#+END_SRC
+#+end_src
 
 ** =or=
 
-#+BEGIN_SRC php
+#+begin_src php
 <expr> or <command>
-#+END_SRC
+#+end_src
 
 - 跟在返回 =bool= 的表达式后
 - 等价于 =if (!<expr>) {<command>}=
 
 示例
-#+BEGIN_SRC php
+#+begin_src php
 mysql_connect($db_host, $db_user, $db_password) or die("Unable to connect to MySQL");
 // 等价于
 $db_server = mysql_connect($db_host, $db_user, $db_password);
 if (!$db_server) die("Unable to connect to MySQL");
-#+END_SRC
+#+end_src
 
 * 其他
 

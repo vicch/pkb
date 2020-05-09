@@ -5,16 +5,16 @@
 ** 矩阵
 
 #+CAPTION: Dimension
-#+BEGIN_SRC octave
+#+begin_src octave
 a = [1 2 3]
 size(a) % [1 3]
 
 a = [1 2 3; 4 5 6]
 size(a) % [4 3]
-#+END_SRC
+#+end_src
 
 #+CAPTION: Index
-#+BEGIN_SRC octave
+#+begin_src octave
 a = [1 2 3; 4 5 6]
 a(2,3)     % 6
 a(2,:)     % Get row 2: [4 5 6]
@@ -22,64 +22,64 @@ a(:,2)     % Get column 2: [2; 4]
 a(:,[1 3]) % Get column 1 and 3: [1 3; 4 6]
 
 a(:,2) = [7; 8] % Assign column 2
-#+END_SRC
+#+end_src
 
 #+CAPTION: Slice
-#+BEGIN_SRC octave
+#+begin_src octave
 a = [1 3 5 7 9]
 a(2:4) % [3 5 7]
-#+END_SRC
+#+end_src
 
 #+CAPTION: Generate
-#+BEGIN_SRC octave
+#+begin_src octave
 a = <from>:<step>:<to>
 a = <from>:<to> % Step defaults to 1
 
 a = 1:2:11 % [1 3 5 7 9 11]
 a = 1:5    % [1 2 3 4 5]
-#+END_SRC
+#+end_src
 
 #+CAPTION: Join
-#+BEGIN_SRC octave
+#+begin_src octave
 a = [1 2; 3 4]
 a = [a, [5; 6]] % Append column: [1 2 5; 3 4 6] 
 b = [7 8; 9 10]
 c = [a, b]      % Append matrix: [1 2 5 7 8; 3 4 6 9 10]
-#+END_SRC
+#+end_src
 
 #+CAPTION: Transform
-#+BEGIN_SRC octave
+#+begin_src octave
 a = [1 2 3; 4 5 6]
 a(:) % Transform to vector: [1; 2; 3; 4; 5; 6]
-#+END_SRC
+#+end_src
 
 * 运算
 
-#+BEGIN_SRC octave
+#+begin_src octave
 1 + 2
 3 * 4
 5 ^ 6
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC octave
+#+begin_src octave
 1 == 2 % ans = 0
 1 ~= 2 % ans = 1
 1 && 0
 1 || 0
-#+END_SRC
+#+end_src
 
 * 语法
 
-#+BEGIN_SRC octave
+#+begin_src octave
 <expr>; % Semicolon suppresses output
-#+END_SRC
+#+end_src
 
 * 变量
 
-#+BEGIN_SRC octave
+#+begin_src octave
 a = <expr> % Assign value
 a          % Print value
-#+END_SRC
+#+end_src
 
 * 函数
 ** octave
@@ -106,78 +106,78 @@ a          % Print value
 
 *** =disp()=
 
-#+BEGIN_SRC octave
+#+begin_src octave
 disp (x)
-#+END_SRC
+#+end_src
 
 *** =eye()=
 
-#+BEGIN_SRC octave
+#+begin_src octave
 eye (n)
-#+END_SRC
+#+end_src
 
 *** =hist()=
 
-#+BEGIN_SRC octave
+#+begin_src octave
 hist (vector y)
 hist (vector y, scalar n) % n = number of bins
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC octave
+#+begin_src octave
 a = randn(1, 10000)
 hist(a, 50)
-#+END_SRC
+#+end_src
 
 *** =inv()=
 
-#+BEGIN_SRC octave
+#+begin_src octave
 inv (A)
-#+END_SRC
+#+end_src
 
 *** =length()=
 
-#+BEGIN_SRC octave
+#+begin_src octave
 length (a) % Return 0 for empty object
            % Return 1 for scalar
            % Return size of largest dimension for matrix, same as max(size(a))
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC octave
+#+begin_src octave
 a = [1 2; 3 4; 5 6]
 length(a) % 3
-#+END_SRC
+#+end_src
 
 *** =ones()=
 
-#+BEGIN_SRC octave
+#+begin_src octave
 ones (m, n)
-#+END_SRC
+#+end_src
 
 *** =rand()=
 
-#+BEGIN_SRC octave
+#+begin_src octave
 rand (m, n)
-#+END_SRC
+#+end_src
 
 *** =size()=
 
-#+BEGIN_SRC octave
+#+begin_src octave
 size (a)
 size (a, dim) % Size of the given dimension
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC octave
+#+begin_src octave
 a = [1 2; 3 4; 5 6]
 size(a)    % 3 2
 size(a, 1) % 3
 size(a, 2) % 2
-#+END_SRC
+#+end_src
 
 *** =zeros()=
 
-#+BEGIN_SRC octave
+#+begin_src octave
 zeros (m, n)
-#+END_SRC
+#+end_src
 
 * 命令
 
@@ -199,54 +199,54 @@ zeros (m, n)
 
 ** =clear=
 
-#+BEGIN_SRC octave
+#+begin_src octave
 clear       % Clear all variables
 clear <var>
-#+END_SRC
+#+end_src
 
 ** =format=
 
-#+BEGIN_SRC octave
+#+begin_src octave
 format long  % Display numbers in long format
 format short % Display numbers in short format
-#+END_SRC
+#+end_src
 
 ** =help=
 
-#+BEGIN_SRC octave
+#+begin_src octave
 help <function>
-#+END_SRC
+#+end_src
 
 ** =load=
 
-#+BEGIN_SRC octave
+#+begin_src octave
 load <file>
-#+END_SRC
+#+end_src
 
 ** =save=
 
-#+BEGIN_SRC octave
+#+begin_src octave
 save <options> <file> <var>
     -ascii  % Save in text file without metadata
     -binary % Save in binary format
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC octave
+#+begin_src octave
 a = [1 2; 3 4; 5 6]
 save a.dat a
-#+END_SRC
+#+end_src
 
 ** =who=
 
-#+BEGIN_SRC octave
+#+begin_src octave
 who
-#+END_SRC
+#+end_src
 
 ** =whos=
 
-#+BEGIN_SRC octave
+#+begin_src octave
 whos
-#+END_SRC
+#+end_src
 
 * 链接
 

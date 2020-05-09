@@ -22,10 +22,10 @@ Chef Client 的默认模式为从 Chef Server 获取配置，可以使用本地�
 
 Chef 安装时会同时安装一个嵌入式 Ruby 环境，独立于系统本身的 Ruby 环境。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 chef exec # 在嵌入式 Ruby 环境中执行命令
 chef gem  # 在嵌入式 Ruby 环境中执行 gem
-#+END_SRC
+#+end_src
 
 * Feature
 ** Search
@@ -46,15 +46,15 @@ chef gem  # 在嵌入式 Ruby 环境中执行 gem
 
 可以在 recipe 中调用。
 
-#+BEGIN_SRC ruby
+#+begin_src ruby
 search('<index>', '<query>')
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC ruby
+#+begin_src ruby
 search('node', 'role:web').each do |web_node|
   ...
 end
-#+END_SRC
+#+end_src
 
 ** Data Bag
 
@@ -67,11 +67,11 @@ Data bag 是以 JSON 形式存储的全局变量，用于节点间共享的数�
 
 [[https://docs.chef.io/run_lists.html][Chef Docs | About Run-lists]]
 
-#+BEGIN_SRC ruby
+#+begin_src ruby
 'recipe[<cookbook>::<recipe>]'
 'recipe[<cookbook>]'           # 不指定 cookbook 则默认为 default cookbook
 'role[<role>]'
-#+END_SRC
+#+end_src
 
 ** Versioning
 
@@ -91,10 +91,10 @@ Data bag 是以 JSON 形式存储的全局变量，用于节点间共享的数�
 |------+--------------------------|
 | =~>= | 接近大于，或 pessimistic |
 
-#+BEGIN_SRC ruby
+#+begin_src ruby
 ~> 2.6   # 2.6 <= version < 3.0
 ~> 2.6.5 # 2.6.5 <= version < 2.7.0
-#+END_SRC
+#+end_src
 
 * Resource
 
@@ -121,17 +121,17 @@ Data bag 是以 JSON 形式存储的全局变量，用于节点间共享的数�
 
 Guard 语句决定是否执行 resource。
 
-#+BEGIN_SRC ruby
+#+begin_src ruby
 <resource> ... do
   not_if|only_if '<bash_script>'
   not_if|only_if do
     <ruby_expr>
   end
 end
-#+END_SRC
+#+end_src
 
 #+CAPTION: =example.ruby=
-#+BEGIN_SRC ruby
+#+begin_src ruby
 bash 'script' do
   code 'mkdir -p /var/www/foo/'
   not_if '[ -d /var/www/foo/ ]'
@@ -140,7 +140,7 @@ bash 'script' do
     File.directory?('/var/www/foo/')
   end
 end
-#+END_SRC
+#+end_src
 
 ** Notifications
 
@@ -150,7 +150,7 @@ end
 
 =notifies= 表示在一个 resource 的状态改变时（如文件被修改），通知另一个 resource 执行某动作。
 
-#+BEGIN_SRC ruby
+#+begin_src ruby
 notifies :<action>, '<resource>[<name>]', :<timer>
   <action>   # 在指定 resource 上执行的动作
   <resource> # 指定 resource 类型
@@ -159,13 +159,13 @@ notifies :<action>, '<resource>[<name>]', :<timer>
     :before    # 在当前 resource 状态发生变化前执行动作
     :delayed   # 在 Chef Client 运行结束前执行动作
     :immediate # 立即执行动作
-#+END_SRC
+#+end_src
 
 *** =subscribes=
 
 =subscribes= 表示在另一个 resource 状态发生变化时（如文件被修改），在当前 resource 执行某动作。
 
-#+BEGIN_SRC ruby
+#+begin_src ruby
 subscribes :<action>, '<resource>[<name>]', :<timer>
   <action>   # 在当前 resource 执行的动作
   <resource> # 指定 resource 类型
@@ -174,13 +174,13 @@ subscribes :<action>, '<resource>[<name>]', :<timer>
     :before    # 在指定 resource 状态发生变化前执行动作
     :delayed   # 在 Chef Client 运行结束前执行动作
     :immediate # 立即执行动作
-#+END_SRC
+#+end_src
 
 ** =bash=
 
 执行 Bash 脚本。
 
-#+BEGIN_SRC ruby
+#+begin_src ruby
 bash '<name>' do
   action :run # 默认
          :nothing
@@ -190,7 +190,7 @@ bash '<name>' do
     <script>
   EOH
 end
-#+END_SRC
+#+end_src
 
 ** =cookbook_file=
 
@@ -198,18 +198,18 @@ end
 
 =cookbook_file= 用于将 cookbook 内的文件复制到指定位置，文件只包含静态内容。
 
-#+BEGIN_SRC ruby
+#+begin_src ruby
 cookbook_file '<path>' do
   action :create  # 默认
   source '<file>' # Chef 在 files/ 目录下查找文件
 end
-#+END_SRC
+#+end_src
 
 ** =directory=
 
 [[https://docs.chef.io/resource_directory.html][Chef Docs | directory Resource]]
 
-#+BEGIN_SRC ruby
+#+begin_src ruby
 directory '<path>' do
   action :create # 默认
          :delete
@@ -218,7 +218,7 @@ directory '<path>' do
   group '<group>'
   recursive <bool>
 end
-#+END_SRC
+#+end_src
 
 ** =execute=
 
@@ -226,7 +226,7 @@ end
 
 执行脚本，但不指定解析方式，由 Chef 决定如何执行。
 
-#+BEGIN_SRC ruby
+#+begin_src ruby
 execute '<name>' do
   action :run # 默认
          :nothing
@@ -236,13 +236,13 @@ execute '<name>' do
     <script>
   EOH
 end
-#+END_SRC
+#+end_src
 
 ** =file=
 
 [[https://docs.chef.io/resource_file.html][Chef Docs | file Resource]]
 
-#+BEGIN_SRC ruby
+#+begin_src ruby
 file '<path>' do
   action :create            # 默认
          :create_if_missing
@@ -251,13 +251,13 @@ file '<path>' do
   owner '<string>'
   group '<string>'
 end
-#+END_SRC
+#+end_src
 
 ** =group=
 
 [[https://docs.chef.io/resource_group.html][Chef Docs | group Resource]]
 
-#+BEGIN_SRC ruby
+#+begin_src ruby
 group '<name>' do
   action :create # 默认
          :remove
@@ -266,18 +266,18 @@ group '<name>' do
   append <bool> # true = 添加成员到组，不影响已有成员
                 # false = 将组中已有成员移除，再添加成员到组。默认
 end
-#+END_SRC
+#+end_src
 
 ** =package=
 
-#+BEGIN_SRC ruby
+#+begin_src ruby
 package '<name>' do
   action :install # 默认
          :remove
          :upgrade
          :nothing
 end
-#+END_SRC
+#+end_src
 
 ** =remote_file=
 
@@ -285,16 +285,16 @@ end
 
 =remote_file= 用于获取远程文件并复制到指定位置。
 
-#+BEGIN_SRC ruby
+#+begin_src ruby
 remote_file '<path>' do
   action :create # 默认
   source '<string>'
 end
-#+END_SRC
+#+end_src
 
 ** =service=
 
-#+BEGIN_SRC ruby
+#+begin_src ruby
 service '<name>' do
   action :enable
          :disable
@@ -305,11 +305,11 @@ service '<name>' do
          :nothing # 默认
   action [:<action>, ...] # 多个 action，如 [:enable, :start]
 end
-#+END_SRC
+#+end_src
 
 ** =template=
 
-#+BEGIN_SRC ruby
+#+begin_src ruby
 template '<path>' do
   action :create          # 默认
   source '<template>.erb' # Chef 在 templates/ 目录下查找模版文件
@@ -317,13 +317,13 @@ template '<path>' do
     :<name> => <value>
   )
 end
-#+END_SRC
+#+end_src
 
 ** =user=
 
 [[https://docs.chef.io/resource_user.html][Chef Docs | user Resource]]
 
-#+BEGIN_SRC ruby
+#+begin_src ruby
 user '<name>' do
   action :create # 默认
          :remove
@@ -334,7 +334,7 @@ user '<name>' do
   shell '<string>' # e.g. '/bin/bash'
   comment '<string>'
 end
-#+END_SRC
+#+end_src
 
 * Recipe
 
@@ -344,9 +344,9 @@ Recipe 是 Ruby 文件，包含一组 resource，resource 按照在 recipe 中�
 
 引用其他 recipe。如果引用其他 cookbook 的 recipe，需要将引用的 cookbook 配置为依赖。
 
-#+BEGIN_SRC ruby
+#+begin_src ruby
 include_recipe '<cookbook>::<recipe>'
-#+END_SRC
+#+end_src
 
 * Template
 
@@ -355,17 +355,17 @@ include_recipe '<cookbook>::<recipe>'
 
 Embedded Ruby (ERB) 模版是嵌入 Ruby 表达式的文本文件，在 recipe 中通过 =template= 资源引用模版，可以生成动态内容的文本文件。
 
-#+BEGIN_SRC erb
+#+begin_src erb
 <% ... %>  // Statement, e.g. <% if ... %> 
 <%= ... %> // Expression, e.g. <%= 1 + 2 %>
 
 <%= node[...] %> // 
 <%= @var %>      // Variable
-#+END_SRC
+#+end_src
 
 * Cookbook
 
-#+BEGIN_SRC sh
+#+begin_src sh
 <cookbook>/    # The cookbook directory
   .kitchen.yml # Kitchen config file
   Berksfile    # Cookbook dependencies
@@ -378,14 +378,14 @@ Embedded Ruby (ERB) 模版是嵌入 Ruby 表达式的文本文件，在 recipe �
   spec/
     unit/     # Unit tests
   test/       # Integration tests
-#+END_SRC
+#+end_src
 
 ** =metadata.rb=
 
-#+BEGIN_SRC ruby
+#+begin_src ruby
 version '<version>'                  # Cookbook 的版本
 depends '<cookbook>', '~> <version>' # 依赖及依赖的版本
-#+END_SRC
+#+end_src
 
 * Role
 
@@ -396,7 +396,7 @@ Role 用于管理节点需要运行的 recipe 列表，相对于手动添加 rec
 Role 配置可以为 Ruby 或 JSON。
 
 #+CAPTION: =<repo>/roles/<role>.rb=
-#+BEGIN_SRC ruby
+#+begin_src ruby
 name '<name>'
 description '<desc>'
 run_list 'recipe[<cookbook>::<recipe>]',...
@@ -404,13 +404,13 @@ default_attributes # 设置 node 对象的属性
 override_attributes({
   '<name>' => <value>
 })
-#+END_SRC
+#+end_src
 
 Role 可以通过 run-list 嵌套：
 
-#+BEGIN_SRC ruby
+#+begin_src ruby
 run_list 'role[base]',...
-#+END_SRC
+#+end_src
 
 * Environment
 
@@ -423,14 +423,14 @@ run_list 'role[base]',...
 Environment 配置可以为 Ruby 或 JSON。
 
 #+CAPTION: =<repo>/environments/<env>.rb=
-#+BEGIN_SRC ruby
+#+begin_src ruby
 name '<name>'
 description '<desc>'
 
 # Cookbook 版本限制，如果为空则默认使用最新版本
 cookbook '<cookbook>', '<version_expr>'
 cookbook ...
-#+END_SRC
+#+end_src
 
 * Ohai
 
@@ -440,21 +440,21 @@ Ohai 在 Chef Client 运行时收集系统信息，如主机名、IP 地址等�
 
 ** =node=
 
-#+BEGIN_SRC ruby
+#+begin_src ruby
 node['<attribute>']...
   ipaddress
   hostname
   memory
     total
-#+END_SRC
+#+end_src
 
 在 recipe 中使用 =node= 对象：
 
-#+BEGIN_SRC ruby
+#+begin_src ruby
 file '/tmp/...' do
   content "Hostname is #{node['hostname']}"
 end
-#+END_SRC
+#+end_src
 
 * Test Kitchen
 
@@ -483,10 +483,10 @@ Berkshelf 是 Chef 的依赖管理器。
 在生成 cookbook 时 Chef 自动生成 Berkshelf 配置文件 =Berksfile= 。
 
 #+CAPTION: =<cookbook>/Berksfile=
-#+BEGIN_SRC sh
+#+begin_src sh
 source '<url>' # 默认为 https://supermarket.chef.io
 metadata # 在 metadata 文件中查找依赖和版本信息
-#+END_SRC
+#+end_src
 
 安装依赖时 Berkshelf 自动生成 =Berkshelf.lock= 文件，记录依赖关系和版本信息。
 
@@ -499,49 +499,49 @@ Berkshelf 将依赖的 cookbook 安装在 =~/.berkshelf/cookbooks/= 目录下。
 
 运行 ChefSpec：
 
-#+BEGIN_SRC sh
+#+begin_src sh
 chef exec rspec <path_to_test>/<test>_spec.rb
-#+END_SRC
+#+end_src
 
 ** =generate=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 chef generate <type> <options>
-#+END_SRC
+#+end_src
 
 *** =cookbook=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 chef generate cookbook <path> <options>
     <path> # e.g. cookbooks/mycookbook
-#+END_SRC
+#+end_src
 
 *** =file=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 chef generate file <path> <name>
     <path> # Cookbook 的路径，不包含 files/
     <name>
-#+END_SRC
+#+end_src
 
 *** =recipe=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 chef generate recipe <path> <name>
     <path> # Cookbook 的路径，不包含 recipes/
     <name> # 不包含 .rb
-#+END_SRC
+#+end_src
 
 *** =template=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 chef generate template <path> <name> <options>
     <path> # Cookbook 的路径，不包含 templates/
-#+END_SRC
+#+end_src
 
 * =chef-client=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 chef-client <options> <recipe>
     -r, --runlist
         "recipe[<cookbook>]"                      # 运行 default recipe
@@ -550,15 +550,15 @@ chef-client <options> <recipe>
         "recipe[<cookbook>::<recipe>],recipe[..." # 运行多个 recipe，注意 runlist 不能包含空格
     -z, --local-mode # 本地模式，不依赖 Chef Server
     <recipe> # 执行 recipe 文件
-#+END_SRC
+#+end_src
 
 * =ohai=
 
 查看系统信息。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 ohai <attribute>/...
-#+END_SRC
+#+end_src
 
 * =kitchen=
 
@@ -572,7 +572,7 @@ ohai <attribute>/...
 * =knife=
 ** =bootstrap=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 knife bootstrap <fqdn> <options>
   -N, --node-name <name> # Node name
   -r, --run-list <list>  # Run list
@@ -583,20 +583,20 @@ knife bootstrap <fqdn> <options>
   -P, --ssh-password <password>
   -p, --ssh-port <port>
   --sudo                 # Execute bootstrap with sudo
-#+END_SRC
+#+end_src
 
 ** =cookbook=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 knife cookbook
   list <options>            # Cookbook 列表
   show <cookbook> <version> # Cookbook 信息
   upload <cookbook>         # 上传 cookbook
-#+END_SRC
+#+end_src
 
 ** =data bag=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 knife data bag
   list                   # Data bag 列表
   show <bag>             # Data bag 信息
@@ -607,21 +607,21 @@ knife data bag
     --secret-file <path> # 密钥文件，用于创建加密的 data bag
   from file <bag> <path> # 从 JSON 文件创建并上传 data bag item
     --secret-file <path> # 密钥文件，用于上传到加密的 data bag
-#+END_SRC
+#+end_src
 
 ** =environment=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 knife environment list             # 环境列表
 knife environment show <env>       # 环境信息
 knife environment from file <path> # 从文件创建或更新
-#+END_SRC
+#+end_src
 
 ** =node=
 
 显示单个节点信息。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 knife node list <options> # Node 列表
 
 knife node show <node> <options> # Node 信息
@@ -634,21 +634,21 @@ knife node run_list
 
 knife node environment
   set <node> <env> # 设置环境
-#+END_SRC
+#+end_src
 
 ** =role=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 knife role list             # Role 列表
 knife role show <name>      # Role 信息
 knife role from file <path> # 从文件创建或更新
-#+END_SRC
+#+end_src
 
 ** =search=
 
 在 Chef Server 的索引中检索节点等信息。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 knife search <index> <query> <options>
   <index>
     client
@@ -662,13 +662,13 @@ knife search <index> <query> <options>
     "*:*" # All
   <options>
     -a, --attribute <attr> # e.g. ipaddress
-#+END_SRC
+#+end_src
 
 ** =ssh=
 
 SSH 连接到节点并运行命令。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 knife ssh <query> <command> <options>
   <query>
     <host>        # e.g. localhost
@@ -680,7 +680,7 @@ knife ssh <query> <command> <options>
     -p, --ssh-port <port>
     -x, --ssh-user <name>
     -i, --ssh-identity-file <path>
-#+END_SRC
+#+end_src
 
 ** =vault=
 
@@ -689,26 +689,26 @@ knife ssh <query> <command> <options>
 * =berks=
 ** =install=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 berks install # 安装依赖到本地
-#+END_SRC
+#+end_src
 
 ** =upload=
 
 上传依赖到 Chef Server。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 berks upload <options>
   --force # 强制上传，默认只上传版本变化的 cookbook
-#+END_SRC
+#+end_src
 
 * =cookstyle=
 
 检查 recipe 语法和样式，基于 Ruby 静态分析器 [[https://github.com/rubocop-hq/rubocop][RuboCop]] 。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 cookstyle <options> <file> ...
-#+END_SRC
+#+end_src
 
 * 链接
 

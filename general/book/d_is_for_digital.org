@@ -134,14 +134,14 @@ One program’s instructions are another program’s data. When you download a new
 #+END_QUOTE
 
 程序一
-#+BEGIN_SRC sh
+#+begin_src sh
 GET
 PRINT
 STOP
-#+END_SRC
+#+end_src
 
 程序二
-#+BEGIN_SRC sh
+#+begin_src sh
 GET
 STORE Mem
 GET
@@ -149,7 +149,7 @@ ADD Mem
 PRINT
 STOP
 Mem -     # RAM 中的一个位置，保存用户输入的第一个数值
-#+END_SRC
+#+end_src
 
 #+BEGIN_QUOTE
 把数据放到程序末尾，所有指令后面，CPU 就不会把它解释成指令了，因为 =STOP= 指令会让 CPU 停下来，不会继续读取下一个位置。
@@ -158,7 +158,7 @@ Mem -     # RAM 中的一个位置，保存用户输入的第一个数值
 #+END_QUOTE
 
 程序三
-#+BEGIN_SRC sh
+#+begin_src sh
 Top GET
     IFZERO Bot
     ADD Sum
@@ -168,7 +168,7 @@ Bot LOAD Sum
     PRINT
     STOP
 Sum 0          # 保存累计和的存储器位置（程序启动时的初始值为 0）
-#+END_SRC
+#+end_src
 
 #+BEGIN_QUOTE
 每条指令都需要一个存储器的位置存储其数值代码，而在该指令引用存储器位置或有一个数据值的情况下，还需要另一个紧随其后的位置。也就是说， =IFZERO= 和 =ADD= 等指令因为引用了存储器位置，所以要占用两个存储器单元，其中第二个单元中保存的是它引用的位置。

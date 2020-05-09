@@ -85,18 +85,18 @@ Git 的 commit 快照之间通过指针相连，每一个快照的指针指向�
 
 ** 创建
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git branch <branch>
-#+END_SRC
+#+end_src
 
 file:../images/git/06.png
 
 ** 切换
 
 #+CAPTION: 切换分支
-#+BEGIN_SRC sh
+#+begin_src sh
 git checkout <branch>
-#+END_SRC
+#+end_src
 
 =branch= 命令不自动切换到新的分支，即不移动 HEAD 指针，需要用 =checkout= 命令移动 HEAD 指针，切换到新分支。
 
@@ -118,10 +118,10 @@ file:../images/git/08.png
 ** 合并
 
 #+CAPTION: 将 A 合并入 B 时，先检出 B，然后运行 =merge= 命令
-#+BEGIN_SRC sh
+#+begin_src sh
 git checkout branch_b
 git merge branch_a
-#+END_SRC
+#+end_src
 
 *** 冲突
 
@@ -161,17 +161,17 @@ file:../images/git/12.png
 
 如果当前分支与远程分支存在追踪关系， =git pull= 就可以省略远程分支名。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git pull <remote> # 本地当前分支与其追踪的指定远程仓库的分支合并
 git pull          # 如果只有一个追踪分支，远程仓库名也可省略
-#+END_SRC
+#+end_src
 
 =git clone= 时所有本地分支默认与远程仓库的同名分支建立追踪关系，比如本地的 =master= 分支自动追踪 =origin/master= 分支。
 
 #+CAPTION: 手动建立追踪
-#+BEGIN_SRC sh
+#+begin_src sh
 git branch --set-upstream <branch> <remote>/<branch>
-#+END_SRC
+#+end_src
 
 ** 分支模式
 *** Long-running 模式
@@ -200,14 +200,14 @@ file:../images/git/05.png
 - 一般包括开发环境文件、临时文件、缓存、日志、第三方库。
 
 #+CAPTION: 示例
-#+BEGIN_SRC sh
+#+begin_src sh
 *.[oa]       # 忽略以 .o 或 .a 结尾的文件
 !lib.a       # 忽略排除条件，上一条规则的特例
 /TODO        # 忽略根目录下指定文件
 build/       # 忽略指定目录下所有文件
 doc/*.txt    # 忽略指定目录下匹配模式的文件，但不递归到子目录
 doc/**/*.txt # 忽略指定目录下匹配模式的文件，递归到子目录
-#+END_SRC
+#+end_src
 
 * 命令
 ** 命令列表
@@ -277,25 +277,25 @@ doc/**/*.txt # 忽略指定目录下匹配模式的文件，递归到子目录
 ** =add=
 <<add>>
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git add <options> <path> ...
     -A # 提交全部修改的文件
     -p # 分次确认、提交多处变化
-#+END_SRC
+#+end_src
 
 - track 一个文件或一个目录下所有文件，使文件从 =untracked= 变为 =tracked= 。
 - stage 一个文件，将一个 =modified= 文件加入到 staging area，使文件从 =modified= 变为 =staged= ；
 
 ** =blame=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git blame <file>
-#+END_SRC
+#+end_src
 
 ** =branch=
 <<branch>>
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git branch    # 列出所有本地分支
 git branch -r # 列出所有远程分支
 git branch -a # 列出所有本地和远程分支
@@ -315,12 +315,12 @@ git branch -M <branch> # 强制移动（重命名）分支
 
 git branch --track <branch> <remote>/<branch>        # 新建分支，并与指定的远程分支建立追踪关系
 git branch --set-upstream <branch> <remote>/<branch> # 在指定分支与远程分支之间建立追踪关系
-#+END_SRC
+#+end_src
 
 ** =checkout=
 <<checkout>>
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git checkout - # 切换到上一个分支
 
 git checkout -b <branch>              # 新建分支并 checkout
@@ -332,47 +332,47 @@ git checkout -f <branch> # 强制切换到分支
 git checkout .               # 恢复暂存区所有文件到工作区
 git checkout <file>          # 从暂存区恢复指定文件到工作区
 git checkout <commit> <file> # 从指定 commit 恢复指定文件到暂存区和工作区
-#+END_SRC
+#+end_src
 
 ** =cherry-pick=
 <<cherry-pick>>
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git cherry-pick <commit>
-#+END_SRC
+#+end_src
 
 ** =clone=
 <<clone>>
 
 下载项目代码库的整个代码历史。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git clone <url>       # 默认生成一个与远程仓库同名的目录
 git clone <url> <dir> # 指定生成的目录名
 
 git clone -o <remote> <url> # 指定远程仓库名，默认为 origin
-#+END_SRC
+#+end_src
 
 ** =commit=
 <<commit>>
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git commit <options> [<path>]
     -a       # stage 所有 tracked 且被修改的文件并提交，省略 git add
     -m <msg> # 添加 commit 信息
     -v       # 显示冗余 commit 信息，加入 git diff 结果
     --amend  # 使用新的 commit 替代上一次提交
              # 如果无变化，则 -m <msg> 修复上一次 commit 信息
-#+END_SRC
+#+end_src
 
 ** =config=
 <<config>>
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git config <options>
     -l, --list                # 显示所有配置
     -e <scope> <name> <value> # 修改配置
-#+END_SRC
+#+end_src
 
 #+CAPTION: =<scope>=
 | =--global= |   |
@@ -393,7 +393,7 @@ git config <options>
 ** =diff=
 <<diff>>
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git diff      # 显示工作区和暂存区的差异，即还未 stage 的修改
 git diff HEAD # 显示工作区和最后一个 commit 的差异
 
@@ -404,33 +404,33 @@ git diff --staged        # 显示暂存区和上一次 commit 的差异，即已
 git diff --cached <file> # 显示指定文件暂存区和上一次 commit 的差异
 
 git diff --shortstat "@{0 day ago}" # 显示今天修改的代码行数
-#+END_SRC
+#+end_src
 
 ** =fetch=
 <<fetch>>
 
 通常用来查看其他人的进程，取回的代码对本地的开发代码没有影响。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git fetch <remote>          # 取回所有分支更新
 git fetch <remote> <branch> # 取回指定分支更新
 
 git fetch --prune <remote> # 如果远程分支被删除，也删除本地分支
 git fetch -p
-#+END_SRC
+#+end_src
 
 ** =init=
 <<init>>
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git init       # 在当前目录新建 Git 代码库
 git init <dir> # 新建目录并将其初始化为 Git 代码库
-#+END_SRC
+#+end_src
 
 ** =log=
 <<log>>
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git log          # 显示当前分支 commit 历史
 git log -<n>     # 显示之前 n 次 commit 历史
 git log --stat   # 显示 commit 历史及对应的变更文件
@@ -444,28 +444,28 @@ git log --follow <file> # 显示指定文件的 commit 历史
 
 git log <commit> HEAD --pretty=format:%s # 显示指定 commit 之后的历史，每个 commit 显示一行
 git log <commit> HEAD --grep <keyword>   # 显示指定 commit 之后的提交信息包含关键词的历史
-#+END_SRC
+#+end_src
 
 ** =merge=
 <<merge>>
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git merge <branch>
-#+END_SRC
+#+end_src
 
 ** =mergetool=
 <<mergetool>>
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git mergetool
-#+END_SRC
+#+end_src
 
 ** =mv=
 <<mv>>
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git mv <old> <new>
-#+END_SRC
+#+end_src
 
 - 等同于 =git rm= 旧文件并 =git add= 新文件。
 - Git 不能自动获知文件被重命名。
@@ -473,19 +473,19 @@ git mv <old> <new>
 ** =pull=
 <<pull>>
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git pull <remote> <remote_branch>                # 与本地当前分支合并
 git pull <remote> <remote_branch>:<local_branch> # 与本地指定分支合并
 
 git pull -p # 如果有远程分支被删除，在本地也删除分支
 
 git pull --rebase <remote> <remote_branch> # 使用 rebase 模式合并
-#+END_SRC
+#+end_src
 
 ** =push=
 <<push>>
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git push                                         # 推送当前分支，到唯一的追踪的远程分支
 git push <remote>                                # 推送当前分支，到追踪的远程分支
 git push <remote> <branch>                       # 推送指定本地分支，到追踪的远程分支
@@ -502,23 +502,23 @@ git push <remote> :<branch>         # 推送空的分支到远程分支，相当
 git push <remote> <tag>             # 推送指定标签
 git push <remote> --tags            # 推送所有标签
 git push <remote> :refs/tags/<tag>  # 删除远程标签
-#+END_SRC
+#+end_src
 
 - Simple 方式：不带参数的 =git push= 只推送当前分支，Git 2.0 之后默认采用。
 - Matching 方式：不带参数的 =git push= 推送所有有对应的远程分支的本地分支，Git 2.0 之前默认采用。
 
 #+CAPTION: 修改 =push= 方式：
-#+BEGIN_SRC sh
+#+begin_src sh
 git config --global push.default matching
 git config --global push.default simple
-#+END_SRC
+#+end_src
 
 ** =rebase=
 <<rebase>>
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git rebase <branch>
-#+END_SRC
+#+end_src
 
 除 =merge= 之外的将一个分支合并进另一个分支的方式，与 =merge= 的结果相同，但 =rebase= 的历史记录更简洁。
 
@@ -527,7 +527,7 @@ git rebase <branch>
 ** =remote=
 <<remote>>
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git remote    # 显示所有远程仓库
 git remote -v # 显示所有远程仓库和地址
 
@@ -537,12 +537,12 @@ git remote remove <name> [<url>]  # 删除远程仓库
 git remote rename <name1> <name2> # 重命名远程仓库
 
 git remote update
-#+END_SRC
+#+end_src
 
 ** =reset=
 <<reset>>
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git reset <file> # 重置暂存区的指定文件到上一次 commit，但工作区保持不变
 
 git reset <options> <commit> # 重置当前分支 HEAD 指针到指定 commit
@@ -551,72 +551,72 @@ git reset <options> <commit> # 重置当前分支 HEAD 指针到指定 commit
     --hard  # 重置缓存区和工作区（丢弃修改）
     --keep  # 缓存区和工作区保持不变
     --merge #
-#+END_SRC
+#+end_src
 
 ** =revert=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git revert <commit>
-#+END_SRC
+#+end_src
 
 ** =rev-parse=
 
 返回 SHA hash。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git rev-parse <branch>|<pointer>
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git rev-parse HEAD
-#+END_SRC
+#+end_src
 
 ** =rm=
 <<rm>>
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git rm <options> <path>/<glob_pattern> ...
     -f       # 强制删除
     --cached # 停止追踪，从 Git 中移除文件，但不从硬盘删除
              # 如用于 .gitignore 中遗漏的文件
-#+END_SRC
+#+end_src
 
 - 取消文件 =tracked= 状态并移出 working 目录（从硬盘删除）。
 - 等同于先 =rm= 文件并 =commit= 。
 
 ** =shortlog=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git shortlog -sn # 显示所有提交过的用户，按提交次数排序
-#+END_SRC
+#+end_src
 
 ** =show=
 <<show>>
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git show <commit>             # 显示指定 commit 的元数据和修改内容
 git show --name-only <commit> # 显示指定 commit 修改的文件
 git show <commit>:<file>      # 显示指定 commit 中指定文件的修改
 
 git show <tag>    # 显示标签信息
-#+END_SRC
+#+end_src
 
 ** =stage=
 <<stage>>
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git stage
-#+END_SRC
+#+end_src
 
 ** =stash=
 <<stash>>
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git stash apply <stash> # 重新应用指定 stash 的修改，不指定时，默认取最近的 stash
 git stash drop <stash>  # 删除指定 stash
 git stash list          # 列出所有 stash
 git stash pop <stash>   # 重新应用指定 stash 的修改，并删除 stash
-#+END_SRC
+#+end_src
 
 - 执行 =stash= 后， =status= 会显示没有需要提交的文件。
 - 在一个分支上执行 =stash= 后，可以在其他分支上用 =stash apply= 应用修改，无法顺利应用的修改会导致合并冲突。
@@ -624,14 +624,14 @@ git stash pop <stash>   # 重新应用指定 stash 的修改，并删除 stash
 ** =status=
 <<status>>
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git status
-#+END_SRC
+#+end_src
 
 ** =tag=
 <<tag>>
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git tag [<options>] <tag> [<commit>]
     <empty>      # 在当前或指定 commit 新建标签
     -a           #
@@ -641,60 +641,60 @@ git tag [<options>]
     <empty> # 列出所有标签
 
 git tag -d <tag> # 删除本地标签
-#+END_SRC
+#+end_src
 
 ** =whatchanged=
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git whatchanged <file>
-#+END_SRC
+#+end_src
 
 * 常用
 ** 创建仓库
 
 #+CAPTION: 将已有项目加入到 Git
-#+BEGIN_SRC sh
+#+begin_src sh
 git init              # 在项目目录下生成 .git/ 子目录和初始文件
 git add <files>       # 加入文件到 Git 并初始提交                       
 git commit -m "..."
-#+END_SRC
+#+end_src
 
 #+CAPTION: 从远程 clone 仓库到本地
-#+BEGIN_SRC sh
+#+begin_src sh
 git clone <url> <dir>
-#+END_SRC
+#+end_src
 
 如果不指定本地目录名，则新建与项目同名的目录，并检出最新工作目录。
 
 ** 重建仓库
 
-#+BEGIN_SRC sh
+#+begin_src sh
 rm -rf .git
 git init
 git add .
 git commit -m "Initial commit"
 git remote add origin <remote_url>
 git push -u --force origin master
-#+END_SRC
+#+end_src
 
 ** 删除已合并分支
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d
-#+END_SRC
+#+end_src
 
 ** 查找删除记录
 
-#+BEGIN_SRC sh
+#+begin_src sh
 git log -c -S "<deleted_text>" /path/to/file
-#+END_SRC
+#+end_src
 
 ** 撤销修改
 
 #+CAPTION: 撤销一个文件的修改到 =HEAD= 。
-#+BEGIN_SRC sh
+#+begin_src sh
 git checkout /path/to/file
-#+END_SRC
+#+end_src
 
 * 词汇表
 

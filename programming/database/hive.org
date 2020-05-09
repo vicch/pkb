@@ -136,18 +136,18 @@ Hive 只需配置在 Hadoop 的 master 节点上。
 | =STRUCT= | 一组命名字段，字段类型可以不同，eg. =Struct('a',1,1,0)= |
 
 #+CAPTION: 声明
-#+BEGIN_SRC sql
+#+begin_src sql
 CREATE TABLE complex(
     col1 ARRAY<INT>,
     col2 MAP<STRING,INT>,
     col3 STRUCT<a:STRING,b:INT,c:DOUBLE>
 );
-#+END_SRC
+#+end_src
 
 #+CAPTION: 查询
-#+BEGIN_SRC sql
+#+begin_src sql
 SELECT col1[0],col2['b'],col3.c FROM complex;
-#+END_SRC
+#+end_src
 
 Hive 不支持日期类型，日期用字符串来表示，常用的日期格式转化操作是通过自定义函数进行操作。
 
@@ -203,7 +203,7 @@ Hive
 * HQL
 ** 创建
 
-#+BEGIN_SRC sql
+#+begin_src sql
 CREATE [EXTERNAL] TABLE [IF NOT EXISTS] <table>
 [(<column> <type> [COMMENT <comment>], ...)]
 [COMMENT <comment>]
@@ -214,7 +214,7 @@ CREATE [EXTERNAL] TABLE [IF NOT EXISTS] <table>
 [ROW FORMAT <format>]
 [STORED AS <format>]
 [LOCATION <path>]
-#+END_SRC
+#+end_src
 
 | =EXTERNAL=                 | 创建外部表                                                                             |
 |----------------------------+----------------------------------------------------------------------------------------|
@@ -230,11 +230,11 @@ CREATE [EXTERNAL] TABLE [IF NOT EXISTS] <table>
 
 ** 加载
 
-#+BEGIN_SRC sql
+#+begin_src sql
 LOAD DATA [LOCAL] INPATH '<path>' [OVERWRITE]
 INTO TABLE <table>
 [PARTITION (<par>=<value>, ...)]
-#+END_SRC
+#+end_src
 
 | =LOCAL=     | 表示在本地文件系统中查找文件，否则使用 HDFS            |
 |-------------+--------------------------------------------------------|
@@ -251,14 +251,14 @@ Hive 在从文件加载数据时，只是把指定文件存储到目的位置，文件按原样存储，Hive 不进
 
 一个 =SELECT= 语句可以是一个 =UNION= 查询或一个子查询的一部分。
 
-#+BEGIN_SRC sql
+#+begin_src sql
 SELECT [ALL|DISTINCT] <expr>, ...
 FROM <table>
 [WHERE <condition>]
 [GROUP BY <column>]
 [CLUSTER BY <column> | [DISTRIBUTE BY <column>] [SORT BY <column>]]
 [LIMIT <number>]
-#+END_SRC
+#+end_src
 
 | =FROM=          | 可以是一个普通表、一个视图、一个 =JOIN= 或一个子查询             |
 |-----------------+------------------------------------------------------------------|
@@ -269,10 +269,10 @@ FROM <table>
 | =CLUSTER BY=    | = =SORT BY= + =DISTRIBUTE BY=                                    |
 
 #+CAPTION: =SELECT= 可以使用正则表达式做列选择
-#+BEGIN_SRC sql
+#+begin_src sql
 ## eg. 查询除了 ds 和 hr 之外的所有列：
 SELECT `(ds|hr)?+.+` FROM sales
-#+END_SRC
+#+end_src
 
 -----
 
@@ -285,41 +285,41 @@ SELECT `(ds|hr)?+.+` FROM sales
 =HAVING=
 - Hive 暂不支持 =HAVING= 子句，可以转化为一个子查询
 
-#+BEGIN_SRC sql
+#+begin_src sql
 SELECT col1 FROM t1 GROUP BY col1 HAVING SUM(col2) > 10;
-#+END_SRC
+#+end_src
 
 #+CAPTION: 转化为
-#+BEGIN_SRC sql
+#+begin_src sql
 SELECT col1 FROM (
     SELECT col1, SUM(col2) AS col2sum
     FROM t1 GROUP BY col1
 ) t2 WHERE t2.col2sum > 10;
-#+END_SRC
+#+end_src
 
 ** 插入
 
-#+BEGIN_SRC sql
+#+begin_src sql
 INSERT [OVERWRITE|INTO] TABLE <table> SELECT ...                // 到另一个 Hive 表
 INSERT [OVERWRITE|INTO] LOCAL DIRECTORY '/path/file' SELECT ... // 到本地文件系统
 INSERT [OVERWRITE|INTO] DIRECTORY '/path/file' SELECT ...       // 到 HDFS
-#+END_SRC
+#+end_src
 
 ** 删除
 
-#+BEGIN_SRC sql
+#+begin_src sql
 DROP TABLE [IF EXISTS] <table> [PURGE];
-#+END_SRC
+#+end_src
 
 ** 示例
 
 #+CAPTION: 通过临时表 =JOIN= 方式实现 =IN= 条件筛选：
-#+BEGIN_SRC sql
+#+begin_src sql
 CREATE TABLE IF NOT EXISTS tmp_filter_ (col STRING);
 LOAD DATA LOCAL INPATH '' OVERWRITE INTO TABLE tmp_filter_;
 SELECT ... FROM ... a JOIN tmp_filter_ ON a.=tmp_filter_.col WHERE ...;
 DROP TABLE IF EXISTS tmp_filter_;
-#+END_SRC
+#+end_src
 
 * 函数
 ** 数学
@@ -333,29 +333,29 @@ DROP TABLE IF EXISTS tmp_filter_;
 |                                           |   |
 
 #+CAPTION: 示例：从 =sample= 列的值 =key1=>val1;...keyN=>valN,...= 中提取 =valN= ，格式为数字
-#+BEGIN_SRC sql
+#+begin_src sql
 regexp_extract(sample, 'keyN=>(\\d*)\;', 1)
-#+END_SRC
+#+end_src
 
 * 命令行
 
-#+BEGIN_SRC sh
+#+begin_src sh
 hive <options>
                  # （为空）启动 Hive shell 环境
     -e <query>   # 运行 SQL
     -f <file>    # 运行文件中的命令
     -S, --silent # 不把运行信息打印到标准错误输出，只打印查询结果
-#+END_SRC
+#+end_src
 
 #+CAPTION: 查询结果放入文件
-#+BEGIN_SRC sh
+#+begin_src sh
 hive -S -e "SELECT ..." > <file>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 终止任务
-#+BEGIN_SRC sh
+#+begin_src sh
 hadoop job -kill <job_id>
-#+END_SRC
+#+end_src
 
 * PHP
 
@@ -365,7 +365,7 @@ hadoop job -kill <job_id>
 3. Hadoop 执行完毕后，返回一个结果 URI
 4. PHP 读取 URI 中的内容
 
-#+BEGIN_SRC php
+#+begin_src php
 // Thrift 依赖包路径
 $GLOBALS['THRIFT_ROOT'] = '/server/www/third_part/thrift-0.5.0';
 
@@ -411,7 +411,7 @@ if($client->isTaskFinished($taskId)) {
 }
 
 $transport->close();
-#+END_SRC
+#+end_src
 
 * 资源
 

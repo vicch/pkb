@@ -33,10 +33,10 @@
 
 *使用 =INT UNSIGNED= 存储 IPv4。* =UNSINGED INT= 存储 IP 地址占用 4 字节， =CHAR(15)= 则占用 15 字节。另外，计算机处理整数类型比字符串类型快。使用 =INT UNSIGNED= 而不是 =CHAR(15)= 来存储IPV4地址，通过 MySQL 函数 =inet_ntoa= 和 =inet_aton= 来进行转化。IPv6 地址目前没有转化函数，需要使用 =DECIMAL= 或两个 =BIGINT= 来存储。
 
-#+BEGIN_SRC sql
+#+begin_src sql
 SELECT INET_ATON('209.207.224.40'); # 3520061480
 SELECT INET_NTOA(3520061480);       # 209.207.224.40
-#+END_SRC
+#+end_src
 
 *使用 =TINYINT= 来代替 =ENUM= 类型。* =ENUM= 类型在需要修改或增加枚举值时，需要在线 =DDL= ，成本较大。 =ENUM= 列值如果含有数字类型，可能会引起默认值混淆。
 
@@ -55,12 +55,12 @@ SELECT INET_NTOA(3520061480);       # 209.207.224.40
 *存储年使用 =YEAR= 类型。存储日期使用 =DATE= 类型。 存储时间（精确到秒）使用 =TIMESTAMP= 类型。* =DATETIME= 和 =TIMESTAMP= 都是精确到秒，但优先选择 =TIMESTAMP= ，因为 =TIMESTAMP= 只有 4 字节，而 =DATETIME= 8 字节。同时 =TIMESTAMP= 具有自动赋值以及自动更新的特性。注意：在 5.5 和之前的版本中，如果一个表中有多个 =TIMESTAMP= 列，那么最多只能有一列能具有自动更新功能。
 
 #+CAPTION: =TIMESTAMP= 初始化与自动更新
-#+BEGIN_SRC sql
+#+begin_src sql
 COLUMN foo TIMESTAMP DEFAULT 0;
 COLUMN foo TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 COLUMN foo TIMESTAMP DEFAULT 0 ON UPDATE CURRENT_TIMESTAMP;
 COLUMN foo TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
-#+END_SRC
+#+end_src
 ** 索引
 
 *表必须有主键，推荐使用 =UNSIGNED= 自增列作为主键。* 表没有主键，InnoDB 会默认设置隐藏的主键列。没有主键的表在定位数据行的时候非常困难，也会降低基于行复制的效率。
@@ -84,12 +84,12 @@ COLUMN foo TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
 *减少与数据库交互次数，尽量采用批量 SQL 语句。*
 
 #+CAPTION: 减少交互次数示例
-#+BEGIN_SRC sql
+#+begin_src sql
 INSERT ON DUPLICATE KEY UPDATE # UNIQUE 索引列或主键值重复时，改为 UPDATE 现有行
 REPLACE INTO                   # 等价于 INSERT，但 UNIQUE 索引列或主键值重复时，先 DELETE 现有行再插入新行
 INSERT IGNORE                  # 忽略 INSERT 时的错误，如 UNIQUE 索引列或主键值重复时，丢弃插入行，也不报错
 INSERT INTO VALUES (...)       # 一次插入多行
-#+END_SRC
+#+end_src
 
 *拆分复杂 SQL，避免大事务。* 简单的 SQL 容易使用到 MySQL 的 query cache，减少锁表时间特别是 MyISAM，可以使用多核 CPU。
 
@@ -103,22 +103,22 @@ INSERT INTO VALUES (...)       # 一次插入多行
 
 *对同一个表的多次 =ALTER= 操作合并为一次操作。* MySQL 对表的修改绝大部分操作都需要锁表并重建表，而锁表则会对线上业务造成影响。为减少这种影响，必须把对表的多次 =ALTER= 操作合并为一次操作。例如，要给表增加一个字段，同时给已有的字段建立索引：
 
-#+BEGIN_SRC sql
+#+begin_src sql
 # 分两步
 ALTER TABLE foo ADD COLUMN bar VARCHAR(10);
 ALTER TABLE foo ADD INDEX idx_baz(baz);
 # 合并为一步
 ALTER TABLE foo ADD COLUMN bar VARCHAR(10), ADD INDEX idx_baz(baz);
-#+END_SRC
+#+end_src
 
 ** 分页
 
 #+CAPTION: 分页方式一
-#+BEGIN_SRC sql
+#+begin_src sql
 SELECT * FROM thread
 WHERE thread_id = 771025 AND deleted = 0
 ORDER BY gmt_create ASC LIMIT 0, 15;
-#+END_SRC
+#+end_src
 
 #+ATTR_HTML: :class no-border dense
 | *原理* | 一次性根据过滤条件取出所有字段进行排序返回。                                               |
@@ -129,14 +129,14 @@ ORDER BY gmt_create ASC LIMIT 0, 15;
 | *适用* | 中间结果集很小（10000 行以下），或者查询条件复杂（涉及多个不同查询字段，或者多表连接）时。 |
 
 #+CAPTION: 分页方式二
-#+BEGIN_SRC sql
+#+begin_src sql
 SELECT thread.* FROM (
     SELECT id FROM thread
     WHERE thread_id = 771025 AND deleted = 0
     ORDER BY gmt_create ASC LIMIT 0, 15
 ) a, thread
 WHERE a.id = thread.id;
-#+END_SRC
+#+end_src
 
 #+ATTR_HTML: :class no-border dense
 | *前提* | 假设 =thread= 表主键是 =id= 列，且有覆盖索引 =secondary key:(thread_id, deleted, gmt_create)=         |

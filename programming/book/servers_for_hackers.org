@@ -11,7 +11,7 @@ Think of servers as disposable or prone to fail is always a pertinent thing to d
 ** Iptables
 
 #+CAPTION: 创建规则链用于记录异常数据包
-#+BEGIN_SRC sh
+#+begin_src sh
 iptables -N LOGGING
 iptables -D INPUT -j DROP    # 删除当前默认目标
 iptables -A INPUT -j LOGGING # 将默认目标指向新的规则链
@@ -19,7 +19,7 @@ iptables -A INPUT -j LOGGING # 将默认目标指向新的规则链
 # 加入记录日志的规则，默认记录到内核日志 /var/log/kern.log
 iptables -A LOGGING -m limit --limit 2/min -j LOG --log-prefix "IPTables Packet Dropped: " --log-level 7
 iptables -A LOGGING -j DROP  # 记录日志之后丢弃数据包
-#+END_SRC
+#+end_src
 * Permissions and User Management
 ** Running Processes
 
@@ -32,7 +32,7 @@ Core processes which need system access are often run as user =root=, but then s
 
 A web server can handle serving more than one web site. _Web server reads the HTTP request's =Host= header and routes incoming requests to the correct web site._ If the =Host= header is not present or doesn't match a defined site, the web server routes the request to a default site.
 
-#+BEGIN_SRC sh
+#+begin_src sh
 $ curl -I 127.0.0.1            # Send request without Host header
 HTTP/1.1 301 Moved Permanently # Nginx sends 301 redirection
 ...                            # Some web servers serve default site directly
@@ -41,7 +41,7 @@ Location: http://foo.com/      # Default site
 $ curl -I -H "Host: foo.com" 127.0.0.1 # Send with Host header
 HTTP/1.1 200 OK
 ...
-#+END_SRC
+#+end_src
 
 ** DNS and Hosts File
 
@@ -164,7 +164,7 @@ Some languages speak HTTP directly, which means the web server can be skipped al
 Apache's =proxy= module is handy for proxying requests to HTTP listeners, which include gateways listening on HTTP, and applications written in NodeJS or Golang.
 
 #+CAPTION: Configure Apache to proxy HTTP requests to a NodeJS application listening at port 9000 of local host
-#+BEGIN_SRC sh
+#+begin_src sh
 # Enable modules
 $ sudo a2enmod proxy proxy_http
 
@@ -184,14 +184,14 @@ $ sudo vim /etc/apache2/sites-available/example.com.conf
         <Location>
     </Directory>
 </VirtualHost>
-#+END_SRC
+#+end_src
 
 Apache should handle requests for static assets. This is easy with PHP, whose files typically end with =.php=, which allows us to pass requests ending in =.php= off to the application. But application of other languages typically don't run through specific files. One popular solution is to put all static assets a specific directory, for example =/static=, and config Apache not to proxy the requests by =ProxyPass !=.
 
 **** Proxy to load balancer
 
 #+CAPTION: Configure Apache to proxy HTTP requests and load balance between multiple backends
-#+BEGIN_SRC sh
+#+begin_src sh
 # Enable modules
 $ sudo a2enmod proxy_balancer lbmethod_byrequests
 
@@ -213,7 +213,7 @@ $ sudo vim /etc/apache2/sites-available/example.com.conf
         <Location>
     </Directory>
 </VirtualHost>
-#+END_SRC
+#+end_src
 
 *** Apache with FastCGI
 **** =mod_fcgi=
@@ -223,11 +223,11 @@ $ sudo vim /etc/apache2/sites-available/example.com.conf
 **** Match file name with =ProxyPassMatch=
 
 #+CAPTION: Proxy to PHP-FPM using =ProxyPassMatch= directive
-#+BEGIN_SRC sh
+#+begin_src sh
 <VirtualHost *:80>
     ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/example/$1
 </VirtualHost>
-#+END_SRC
+#+end_src
 
 - No Unix domain socket support. _Unix domain sockets are slightly faster than TCP sockets_, and are the default used in Debian/Ubuntu for PHP-FPM.
 - Requires the document root set and maintained in the vhost configuration.
@@ -235,7 +235,7 @@ $ sudo vim /etc/apache2/sites-available/example.com.conf
 **** Match file name with =FilesMatch=
 
 #+CAPTION: Handle PHP requests with =FilesMatch= and =SetHandler= directives
-#+BEGIN_SRC sh
+#+begin_src sh
 <VirtualHost *:80>
     <FilesMatch \.php$> # Match files ending in .php
         # Proxy to FastCGI using TCP socket
@@ -244,13 +244,13 @@ $ sudo vim /etc/apache2/sites-available/example.com.conf
         SetHandler "proxy:unix:/var/run/php-fpm.sock|fcgi:"
     </FilesMatch>
 </VirtualHost>
-#+END_SRC
+#+end_src
 
 - No need to pass document root to handler. Configuration can be more dynamic and reusable.
 - Can use TCP or Unix domain socket.
 
 #+CAPTION: Make as a global configuration and include in vhost configuration
-#+BEGIN_SRC sh
+#+begin_src sh
 $ vim /etc/apache2/php-fpm.conf
 <FilesMatch \.php$>
     SetHandler "proxy:unix:/var/run/php5-fpm.sock|fcgi:"
@@ -263,14 +263,14 @@ $ vim /etc/apache2/sites-available/example.com.conf
         Include php-fpm.conf
     </Directory>
 </VirtualHost>
-#+END_SRC
+#+end_src
 
 **** Match file directory with =<Location>=
 
 The problem of matching files with =ProxyPassMatch= or =FilesMatch= is that for PHP contained in non =.php= files, for example =.html=, it takes more work to handle. And for other languages who don't have a file-based point of entry like PHP's =index.php= to which all requests can be routed, URIs can't be matched to files. In these cases, =<Location>= is used to match against directory-style URIs.
 
 #+CAPTION: Configure =proxy_fcgi= similar to =proxy_http=
-#+BEGIN_SRC sh
+#+begin_src sh
 <VirtualHost *:80>
     <Directory /var/www/example.com/public>
         <Proxy *>
@@ -289,11 +289,11 @@ The problem of matching files with =ProxyPassMatch= or =FilesMatch= is that for 
         <Location>
     </Directory>
 </VirtualHost>
-#+END_SRC
+#+end_src
 **** Proxy to load balancer
 
 #+CAPTION: Configure to proxy requests and load balance between multiple FastCGI backends
-#+BEGIN_SRC sh
+#+begin_src sh
 # Enable modules
 $ sudo a2enmod proxy_balancer lbmethod_byrequests
 
@@ -315,7 +315,7 @@ $ sudo vim /etc/apache2/sites-available/example.com.conf
         <Location>
     </Directory>
 </VirtualHost>
-#+END_SRC
+#+end_src
 
 *** Apache with uWSGI
 **** =mod_uwsgi=
@@ -324,7 +324,7 @@ $ sudo vim /etc/apache2/sites-available/example.com.conf
 
 **** Proxy to uWSGI
 
-#+BEGIN_SRC sh
+#+begin_src sh
 # Install and enable module
 $ sudo apt-get install libapache2-mod-proxy-uwsgi
 $ sudo a2enmod proxy proxy_uwsgi
@@ -352,14 +352,14 @@ $ vim /etc/apache2/site-available/example.com.conf
         </Location>
     </Directory>
 </VirtualHost
-#+END_SRC
+#+end_src
 
 **** Proxy to load balancer
 
 Usually there is no need to load balance uWSGI, as uWSGI  manages and load balances by itself multiple processes and threads for Python application.
 
 #+CAPTION: Configure to proxy requests and load balance between multiple uWSGI backends
-#+BEGIN_SRC sh
+#+begin_src sh
 # Enable modules
 $ sudo a2enmod proxy_balancer lbmethod_byrequests
 
@@ -381,7 +381,7 @@ $ sudo vim /etc/apache2/sites-available/example.com.conf
         <Location>
     </Directory>
 </VirtualHost>
-#+END_SRC
+#+end_src
 *** MPM Configuration
 
 A process is an instance of an application being run. It is isolated and separate from other processes.

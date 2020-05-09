@@ -17,7 +17,7 @@
 
 * Structure
 
-#+BEGIN_SRC sh
+#+begin_src sh
 <project>/
   node_modules/     # Dependency files
   public/           # Static files
@@ -28,7 +28,7 @@
     index.js
   package.json      # Dependencies and configurations
   package.lock.json # Exact versions of dependencies
-#+END_SRC
+#+end_src
 
 * JSX
 
@@ -39,7 +39,7 @@ ReactDOM provides built-in DOM-node components with same names as the correspond
 ** ={}=
 
 #+CAPTION: 使用 ={}= 嵌入变量或表达式
-#+BEGIN_SRC js
+#+begin_src js
 const buttonText = 'Foo';
 return <button>{buttonText}</button>
 
@@ -51,24 +51,24 @@ return <button>{foo || 'Default'}</button>
 
 // 嵌入匿名函数
 return <button onClick={e => console.log(e.target.value)}>Submit</button>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 不同类型值转换为字符串输出
-#+BEGIN_SRC js
+#+begin_src js
 const buttonText = 'Foo';          // Foo
 const buttonText = 1234;           // 1234
 const buttonText = ['Foo', 'Bar']; // FooBar
 
 return <button>{buttonText}</button>
-#+END_SRC
+#+end_src
 
 ** =${}=
 
 #+CAPTION: 使用 =${}= 在字符串中嵌入变量
-#+BEGIN_SRC js
+#+begin_src js
 const text = 'foo bar';
 return <div>{`Some text: ${text}`}</div>
-#+END_SRC
+#+end_src
 
 ** =className=
 
@@ -82,40 +82,40 @@ return <div>{`Some text: ${text}`}</div>
 
 =style= 属性的值必须是对象。
 
-#+BEGIN_SRC js
+#+begin_src js
 return <tag style={{ <attr>: <value>; ... }}></tag>
-#+END_SRC
+#+end_src
 
 #+CAPTION: 示例
-#+BEGIN_SRC js
+#+begin_src js
 // CSS 属性名可以使用 camelcase，或者直接使用字符串
 return <div style={{ backgroundColor: 'grey' }}></div>
 return <div style={{ 'background-color': 'grey' }}></div>
 
 const elementStyle = { backgroundColor: 'grey' };
 return <div style={elementStyle}></div>
-#+END_SRC
+#+end_src
 
 * Component
 ** Functional Component
 
-#+BEGIN_SRC js
+#+begin_src js
 const Component = (props) => <tag></tag>;
-#+END_SRC
+#+end_src
 
 ** Class Component
 
-#+BEGIN_SRC js
+#+begin_src js
 class Component extends React.Component {
   render() {
     return <tag></tag>
   }
 }
-#+END_SRC
+#+end_src
 
 ** Props
 
-#+BEGIN_SRC js
+#+begin_src js
 <Foo bar="text" ... />
 
 const Foo = (props) => {
@@ -127,13 +127,13 @@ class Foo extends React.Component {
     return <div>{this.props.bar}</div>
   }
 }
-#+END_SRC
+#+end_src
 
 *** =children=
 
 JSX =<Component>= 标签内的内容可以通过 =props.children= 读取。
 
-#+BEGIN_SRC js
+#+begin_src js
 <ComponentOne>
   <ComponentTwo />
 </ComponentOne>
@@ -141,20 +141,20 @@ JSX =<Component>= 标签内的内容可以通过 =props.children= 读取。
 const ComponentOne = (props) => {
   return <div>{props.children}</div>
 }
-#+END_SRC
+#+end_src
 
 *** =defaultProps=
 
 定义 =<Component>.defaultProps= 可以在未提供 prop 值时使用默认值。
 
-#+BEGIN_SRC js
+#+begin_src js
 const Foo = (props) => {
   return <div>{props.bar}</div>;
 }
 Foo.defaultProps = {
   bar: 'default'
 };
-#+END_SRC
+#+end_src
 
 *** =key=
 
@@ -162,19 +162,19 @@ Foo.defaultProps = {
 
 Keys help React identify which items have changed, are added, or are removed.
 
-#+BEGIN_SRC js
+#+begin_src js
 const numbers = [1, 2, 3, 4, 5];
 const listItems = numbers.map((number) =>
   <li key={number.toString()}>
     {number}
   </li>
 );
-#+END_SRC
+#+end_src
 
 ** State
 *** 用法
 
-#+BEGIN_SRC js
+#+begin_src js
 class Component {
   constructor(props) {
     super(props);
@@ -190,13 +190,13 @@ class Component {
     return <div>{this.state.<name>}</div> // 读取
   }
 }
-#+END_SRC
+#+end_src
 
 *** Controlled element
 
 Controlled element 即将用户输入存储在 state 中，而不是 DOM 中的元素。
 
-#+BEGIN_SRC js
+#+begin_src js
 class Foo extends React.Component {
   state = { bar: '' };
   render() {
@@ -210,7 +210,7 @@ class Foo extends React.Component {
     );
   }
 }
-#+END_SRC
+#+end_src
 
 ** Lifecycle
 
@@ -231,7 +231,7 @@ file:../images/react/01.png
 ** Event Handler
 
 #+CAPTION: 使用箭头函数
-#+BEGIN_SRC js
+#+begin_src js
 class Foo extends React.Component {
   handleSubmit = (event) => { // 箭头函数自动 bind
     event.preventDefault();
@@ -240,10 +240,10 @@ class Foo extends React.Component {
     return <form onSubmit={this.handleSubmit}></form>;
   }
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: 使用普通函数
-#+BEGIN_SRC js
+#+begin_src js
 class Foo extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
@@ -252,14 +252,14 @@ class Foo extends React.Component {
     return <form onSubmit={(event) => this.handleSubmit(event)}></form>; // 设置 handler 时 bind
   }
 }
-#+END_SRC
+#+end_src
 
 * React
 ** =createRef()=
 
 [[https://reactjs.org/docs/react-api.html#reactcreateref][React.createRef() | React]]
 
-#+BEGIN_SRC js
+#+begin_src js
 class Foo extends React.Component {
   constructor(props) {
     super(props);
@@ -274,7 +274,7 @@ class Foo extends React.Component {
     return <input type="text" ref={this.inputRef} />;
   }
 }
-#+END_SRC
+#+end_src
 
 * Redux
 ** Lifecycle
@@ -291,29 +291,29 @@ file:../images/react/04.png
 
 Action 对象表示发生的事件，如用户动作。
 
-#+BEGIN_SRC js
+#+begin_src js
 {
   type: <ACTION_TYPE>,
   <payload> // Optional, A single key/value pair or an object
 }
-#+END_SRC
+#+end_src
 
 ** Action Creator
 
 Action creator 函数返回一个 action 对象。
 
 #+CAPTION: Synchronous action creator
-#+BEGIN_SRC js
+#+begin_src js
 const fooAction = (param, ...) => {
   return {
     type: 'FOO_ACTION',
     payload: ...
   };
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: Asynchronous action creator
-#+BEGIN_SRC js
+#+begin_src js
 const fooAction = (param, ...) => async (dispatch) => {
   const response = await ...
   dispatch({
@@ -321,7 +321,7 @@ const fooAction = (param, ...) => async (dispatch) => {
     payload: ...
   });
 }
-#+END_SRC
+#+end_src
 
 ** Reducer
 
@@ -329,7 +329,7 @@ Reducer 函数定义当 action 发生时，state 如何变化。Reducer 的参�
 
 整个应用的 state 由一个 store 对象表示，每个 reducer 维护此对象的一个元素，reducer 和 state 元素的对应关系在 =combineReducers()= 的调用参数中指定。
 
-#+BEGIN_SRC js
+#+begin_src js
 const initialState = { bar: 1 };
 
 // 调用时传入的 state 为该 reducer 对应的 state
@@ -351,13 +351,13 @@ const fooReducer = (previousState = initialState, action) => {
 export default combineReducers({
   foo: fooReducer
 });
-#+END_SRC
+#+end_src
 
 *** =combineReducers()=
 
 =combineReducers()= 把多个 reducer 函数合并成一个函数，作为 =createStore()= 的参数生成 store。
 
-#+BEGIN_SRC js
+#+begin_src js
 const fooReducer = (state, action) => {}
 const barReducer = (state, action) => {}
 
@@ -365,27 +365,27 @@ const singleReducer = combineReducers({
   fooState: fooReducer,
   barState: barReducer
 });
-#+END_SRC
+#+end_src
 
 *** State mutation
 
 #+CAPTION: Array
-#+BEGIN_SRC js
+#+begin_src js
 const fooReducer(state, action) => {
   return [...state, <v>];                         // Add
   return state.filter((e) => e !== <v>);          // Remove
   return state.map((e) => e === <v1> ? <v2> : e); // Update
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: Object
-#+BEGIN_SRC js
+#+begin_src js
 const fooReducer(state, action) => {
   return {...state, <k>: <v>};       // Add
   return {...state, <k>: undefined}; // Remove
   return {...state, <k>: <v>};       // Update
 }
-#+END_SRC
+#+end_src
 
 ** Store
 
@@ -393,7 +393,7 @@ Store 是整个应用的 state 的集合，store 对象的每个 key 对应一�
 
 *** =createStore()=
 
-#+BEGIN_SRC js
+#+begin_src js
 const fooReducer = (state, action) => {}
 const barReducer = (state, action) => {}
 const singleReducer = combineReducers({
@@ -406,31 +406,31 @@ const store = createStore(singleReducer);
 //   foo: {...},
 //   bar: {...},
 // }
-#+END_SRC
+#+end_src
 
 *** =dispatch()=
 
 =dispatch()= 将遍历调用 store 中的 reducer 函数，传入每个 reducer 函数对应的 state 和当前 action。
 
-#+BEGIN_SRC js
+#+begin_src js
 const store = createStore(singleReducer);
 const action = fooAction('bar');
 store.dispatch(action);
-#+END_SRC
+#+end_src
 
 *** =getState()=
 
 返回 state 集合。
 
-#+BEGIN_SRC js
+#+begin_src js
 const store = createStore(singleReducer);
 store.getState();
-#+END_SRC
+#+end_src
 
 ** Provider
 ** Connect
 
-#+BEGIN_SRC js
+#+begin_src js
 import { connect } from 'react-redux';
 import { fooAction } from '../actions';
 
@@ -455,11 +455,11 @@ const mapStateToProps = (state, props) => {
 // 将 action creator 传递给 store
 // 当 action creator 被调用时，store 会自动调用 dispatch() 将生成的 action 传递给 reducers
 export default connect(mapStateToProps, { fooAction })(Foo);
-#+END_SRC
+#+end_src
 
 ** 示例 1
 
-#+BEGIN_SRC js
+#+begin_src js
 const depositAction = (name, amount) => {
   return {
     type: 'DEPOSIT',
@@ -500,12 +500,12 @@ bank.dispatch(depositAction('Foo', 100)); // bank.getState() = {balance: {Foo: 1
 bank.dispatch(depositAction('Bar', 50));  // bank.getState() = {balance: {Foo: 100, Bar: 50}}
 bank.dispatch(depositAction('Foo', 50));  // bank.getState() = {balance: {Foo: 150, Bar: 50}}
 bank.dispatch(withdrawAction('Bar', 30)); // bank.getState() = {balance: {Foo: 150, Bar: 20}}
-#+END_SRC
+#+end_src
 
 ** 示例 2
 
 #+CAPTION: =index.js=
-#+BEGIN_SRC js
+#+begin_src js
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -519,20 +519,20 @@ ReactDOM.render((
     <App />
   </Provider>
 ), document.querySelector('#root'));
-#+END_SRC
+#+end_src
 
 #+CAPTION: =actions/index.js=
-#+BEGIN_SRC js
+#+begin_src js
 export const fooAction = () => {
   return {
     type: 'FOO_ACTION',
     ...
   }
 }
-#+END_SRC
+#+end_src
 
 #+CAPTION: =reducers/index.js=
-#+BEGIN_SRC js
+#+begin_src js
 import { combineReducers } from 'redux';
 
 const fooReducer = (state = null, action) => {
@@ -547,10 +547,10 @@ const fooReducer = (state = null, action) => {
 export default combineReducers({
   foo: fooReducer
 });
-#+END_SRC
+#+end_src
 
 #+CAPTION: =components/App.js=
-#+BEGIN_SRC js
+#+begin_src js
 import React from 'react';
 import FooComponent from './FooComponent';
 
@@ -559,10 +559,10 @@ const App = () => {
 }
 
 export default App;
-#+END_SRC
+#+end_src
 
 #+CAPTION: =components/FooComponent.js=
-#+BEGIN_SRC js
+#+begin_src js
 import React from 'react';
 import { connect } from 'react-redux';
 import { fooAction } from '../actions';
@@ -581,7 +581,7 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, { fooAction })(Foo);
-#+END_SRC
+#+end_src
 
 * Middleware
 
@@ -597,7 +597,7 @@ Middleware 是在调用 =store.dispatch(action)= 时被调用的函数，可以�
 *** 示例
 
 #+CAPTION: =index.js=
-#+BEGIN_SRC js
+#+begin_src js
 ...
 import { crateStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
@@ -608,10 +608,10 @@ const store = createStore(reducers, applyMiddleware(thunk));
 ...
 <Provider store={store}>
 ...
-#+END_SRC
+#+end_src
 
 #+CAPTION: =actions/index.js=
-#+BEGIN_SRC js
+#+begin_src js
 export const fooAction = () => { // 异步 action creator
   return async (dispatch, getState) => { // action 函数的参数为 dispatch 和 getState 函数
     const response = await ...;
@@ -619,16 +619,16 @@ export const fooAction = () => { // 异步 action creator
     dispatch(action);
   }
 }
-#+END_SRC
+#+end_src
 
 * 命令
 ** =create-react-app=
 
 生成 React 项目目录结构和基础文件。
 
-#+BEGIN_SRC sh
+#+begin_src sh
 create-react-app <name>
-#+END_SRC
+#+end_src
 
 * 链接
 
