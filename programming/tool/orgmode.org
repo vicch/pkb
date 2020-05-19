@@ -75,7 +75,11 @@
 |-----------------+-------------------------------------|
 | =<q= =Tab=      | =#+begin_quote ... #+end_quote=     |
 |-----------------+-------------------------------------|
-| =<e= =Tab=      | =#+BEGIN_EXAMPLE ... #+END_EXAMPLE= |
+| =<e= =Tab=      | =#+begin_example ... #+end_example= |
+|-----------------+-------------------------------------|
+| =<v= =Tab=      | =#+begin_verse ... #+end_verse=     |
+|-----------------+-------------------------------------|
+| =<c= =Tab=      | =#+begin_center ... #+end_center=   |
 |-----------------+-------------------------------------|
 | =C-S-Backspace= | 删除整行                            |
 
@@ -342,12 +346,22 @@ M-x package-install
 <package_name>
 #+end_src
 
-* 修改
+* Customization
+
+表格添加空行（而不是分割线）：
+
+#+caption: =lisp/org-table.el=
+#+begin_src lisp
+(defun org-table-hline-and-move (&optional same-column)
+  ...
+  (progn (insert "\n|") (org-table-align))                              ;; Before change
+  (progn (insert "\n||") (org-table-align) (org-table-goto-column col)) ;; After change
+#+end_src
 
 =<blockquote>= 输出标题：
 
+#+caption: =site-lisp/org/lisp/ox-html.el=
 #+begin_src lisp
-; \site-lisp\org\lisp\ox-html.el line 2979
 (defun org-html-quote-block (quote-block contents info)
   "Transcode a QUOTE-BLOCK element from Org to HTML.
 CONTENTS holds the contents of the block.  INFO is a plist
