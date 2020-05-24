@@ -1,0 +1,249 @@
+#+setupfile: ../../styles/readtheorg.setup
+#+title: PlantUML
+
+* General
+** Base
+
+#+begin_src text
+@startuml
+// Params
+// UMLs
+@enduml
+#+end_src
+
+** Comment
+
+#+begin_src text
+' Single-line comment
+
+/'
+  Block comment
+'/
+#+end_src
+
+** =title=
+
+#+begin_src plantuml :file ../images/plantuml/01.png :exports none
+!include ../../styles/plantuml-style
+
+title Diagram Title
+
+(Node A) -> (Node B)
+#+end_src
+
+file:../images/plantuml/01.png
+
+#+begin_src text
+title Diagram Title
+
+(Node A) -> (Node B)
+#+end_src
+
+** =note=
+*** Syntax
+
+#+begin_src text
+// Directly below an entity
+<style> note <side> : <text>
+
+<style>
+    floating // Available in activity diagram
+#+end_src
+
+*** Example
+
+#+begin_src plantuml :file ../images/plantuml/02.png :exports none
+!include ../../styles/plantuml-style
+
+(Node A)
+note left : This is a node
+
+(Node B)
+note right : This is another node
+#+end_src
+
+file:../images/plantuml/02.png
+
+#+begin_src text
+(Node A)
+note left : This is a node
+
+(Node B)
+note right : This is another node
+#+end_src
+
+* Sequence
+** Participants
+*** Syntax
+
+#+begin_src text
+<type> <name> <options>
+
+<name>
+    // Single word doesn't need ""
+    // Multiple words, or name containing non-letter characters need to be wrapped in ""
+    // Insert line breaks with "\n"
+
+<options>
+    as <alias>
+    <bg_color>
+        <color_name> // E.g. #red
+        <color_hex>  // E.g. #FFFFFF
+    order <int>      // Custom order, otherwise sorted by declaration order
+
+<type>
+    participant // Default type, can be skipped
+    actor
+    boundary
+    control
+    entity
+    database
+    collections
+#+end_src
+
+*** Example
+
+#+begin_src plantuml :file ../images/plantuml/03.png :exports none
+!include ../../styles/plantuml-style
+
+participant A
+participant "Participant with\nlong name" as B
+actor Actor #red
+boundary Boundary #FFFFFF
+control Control
+entity Entity
+database Database
+collections Collections
+#+end_src
+
+file:../images/plantuml/03.png
+
+#+begin_src text
+participant A
+participant "Participant with\nlong name" as B
+actor Actor #red
+boundary Boundary #FFFFFF
+control Control
+entity Entity
+database Database
+collections Collections
+#+end_src
+
+** Messages
+*** Syntax
+
+#+begin_src text
+<name>|<alias> <arrow> <name>|<alias> : <message>
+
+<name>|<alias>
+    // Can be the same participant, to send message to itself
+
+<arrow>
+    <line>
+        -      // Solid line
+        --     // Dotted line
+    <head>
+        left right
+        <    >     // Normal
+        <<   >>    // Thin
+        /    \     // Upper half
+        \    /     // Lower half
+        //   \\    // Thin upper half
+        \\   //    // Thin lower half
+        x<   >x    // Change arrow to cross (lost message)
+        o<   >o    // Add circle, can combine with other styles
+    <direction>
+        -> etc.  // Unidirection
+        <-> etc. // Bidirection
+
+<message>
+    // Insert line breaks with "\n"
+#+end_src
+
+*** Example 1
+
+#+begin_src plantuml :file ../images/plantuml/04.png :exports none
+!include ../../styles/plantuml-style
+
+actor User
+participant Service
+
+User -> User : Message\nto self
+User -> Service : Message to other participant
+User <- Service
+User --> Service
+User <-- Service
+#+end_src 
+
+file:../images/plantuml/04.png
+
+#+begin_src text
+actor User
+participant Service
+
+User -> User : Message\nto self
+User -> Service : Message to other participant
+User <- Service
+User --> Service
+User <-- Service
+#+end_src
+
+*** Example 2
+
+#+begin_src plantuml :file ../images/plantuml/05.png :exports none
+!include ../../styles/plantuml-style
+
+participant "Participant A" as A
+participant "Participant B" as B
+
+A -> B
+A ->> B
+A -\ B
+A -/ B
+A -\\ B
+A -// B
+A ->x B
+A ->>o B
+A o//-//x B
+#+end_src
+
+file:../images/plantuml/05.png
+
+#+begin_src text
+participant "Participant A" as A
+participant "Participant B" as B
+
+A -> B
+A ->> B
+A -\ B
+A -/ B
+A -\\ B
+A -// B
+A ->x B
+A ->>o B
+A o//-//x B
+#+end_src
+
+* Params
+
+#+begin_src text
+skinparam defaultFontName "<Font Name>"
+skinparam defaultFontSize <int>
+skinparam monochrome <bool>
+skinparam shadowing <bool>
+#+end_src
+
+* Install
+
+#+begin_src sh
+brew install graphviz
+brew install plantuml
+#+end_src
+
+* Links
+
+- [[https://plantuml.com][PlantUML]]
+- [[https://github.com/plantuml/plantuml][GitHub | PlantUML]]
+- [[http://wiki.plantuml.net/site/index][PlantUML in A Nutshell]]
+- [[https://github.com/yfuruyama/real-world-plantuml][Real World PlantUML]]
+- [[https://www.planttext.com/][PlantText UML Editor]]

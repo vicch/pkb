@@ -15,6 +15,7 @@ title: ""
 - [解密](/pkb/general/book/jie_mi.html)
 - [浪潮之巅](/pkb/general/book/lang_chao_zhi_dian.html)
 - [冷浪漫](/pkb/general/book/leng_lang_man.html)
+- [毛泽东：鲜为人知的故事](/pkb/general/book/mao_ze_dong.html)
 - [Methuselah's Children](/pkb/general/book/methuselah's_children.html)
 - [Pale Blue Dot](/pkb/general/book/pale_blue_dot.html)
 - [Physics for Future Presidents](/pkb/general/book/physics_for_future_presidents.html)
