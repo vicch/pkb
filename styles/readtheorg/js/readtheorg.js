@@ -90,42 +90,46 @@ $(function(){
             });
         }
 
-        // // 测量原始宽度
-        // $(this).css('position', 'absolute');
-        // $(this).css('width', 'auto');
-        // var oldWidth = $(this)[0].offsetWidth;
+        // Start: expand wide table
+
+        // 测量原始宽度
+        $(this).css('position', 'absolute');
+        $(this).css('width', 'auto');
+        var oldWidth = $(this)[0].offsetWidth;
               
-        // if (oldWidth >= 835) {
+        if (oldWidth >= 835) {
 
-        //     $(this).addClass('float-table');
+            $(this).addClass('float-table');
 
-        //     // 将表格移动至最左侧，测量自由展开的宽度
-        //     $(this).css('left', '0px');
-        //     var newWidth = $(this)[0].offsetWidth;
-        //     // 如果自由展开宽度过大，则规定一个宽度
-        //     if (newWidth >= ($(window).width() - 60)) {
-        //         $(this).css('width', $(window).width() - 60);
-        //     }
+            // 将表格移动至最左侧，测量自由展开的宽度
+            $(this).css('left', '0px');
+            var newWidth = $(this)[0].offsetWidth;
+            // 如果自由展开宽度过大，则规定一个宽度
+            if (newWidth >= ($(window).width() - 60)) {
+                $(this).css('width', $(window).width() - 60);
+            }
 
-        //     // 水平居中
-        //     // var newWidth = $(this)[0].offsetWidth;
-        //     // var left = ($(window).width() - newWidth) / 2;
-        //     // var left = 387;
-        //     // $(this).css('left', left + 'px');
-        //     $(this).css('left', 'auto');
+            // 水平居中
+            // var newWidth = $(this)[0].offsetWidth;
+            // var left = ($(window).width() - newWidth) / 2;
+            // var left = 387;
+            // $(this).css('left', left + 'px');
+            $(this).css('left', 'auto');
 
-        //     // 表格后填充一个空白
-        //     if (!$(this).next('.table-placeholder').length) {
-        //         var newHeight = $(this)[0].offsetHeight + 36;
-        //         if ($(this).find('caption').length) {
-        //             newHeight += 32;
-        //         }
-        //         $(this).after('<div class="table-placeholder" style="height:' + (newHeight)+ 'px;margin:36px 0;">');
-        //     }
+            // 表格后填充一个空白
+            if (!$(this).next('.table-placeholder').length) {
+                var newHeight = $(this)[0].offsetHeight + 36;
+                if ($(this).find('caption').length) {
+                    newHeight += 32;
+                }
+                $(this).after('<div class="table-placeholder" style="height:' + (newHeight)+ 'px;margin:36px 0;">');
+            }
         
-        // } else {
-        //     $(this).css('position', 'static');
-        // }
+        } else {
+            $(this).css('position', 'static');
+        }
+
+        // End: expand wide table
     });
 
     $('.outline-2 a[href^="#"]').click(function(e) {
