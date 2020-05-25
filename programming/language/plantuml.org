@@ -224,6 +224,70 @@ A ->>o B
 A o//-//x B
 #+end_src
 
+* Work Breakdown Structure
+** Syntax
+
+#+begin_src text
++ <Name>
+ + <Name>   // Each level indents 1 space
+  + <Name>  // Branch to right
+  - <Name>  // Branch to left
+ + <Name>
+  +_ <Name> // Branch to right, boxless
+  -_ <Name> // Branch to left, boxless
+#+end_src
+
+** Example
+
+#+begin_src plantuml :file ../images/plantuml/06.png :exports none
+@startwbs
+!include ../../styles/plantuml-style
+
++ Project
+ + Part One
+  + Task 1.1
+   - Task 1.2
+   + Task 1.3
+  + Part Two
+   + Task 2.1
+   + Task 2.2
+   -_ Task 2.2.1 To the left, boxless
+   -_ Task 2.2.2 To the left, boxless
+   +_ Task 2.2.3 To the right, boxless
+ + Part Three
+@endwbs
+#+end_src
+
+file:../images/plantuml/06.png
+
+#+begin_src text
+@startwbs
++ Project
+ + Part One
+  + Task 1.1
+   - Task 1.2
+   + Task 1.3
+  + Part Two
+   + Task 2.1
+   + Task 2.2
+   -_ Task 2.2.1 To the left, boxless
+   -_ Task 2.2.2 To the left, boxless
+   +_ Task 2.2.3 To the right, boxless
+ + Part Three
+@endwbs
+#+end_src
+
+* Graphviz DOT
+** Syntax
+
+#+begin_src text
+@startdot
+diagraph <Name> {
+    ...
+}
+@enddot
+#+end_src
+
 * Params
 
 #+begin_src text
@@ -245,5 +309,6 @@ brew install plantuml
 - [[https://plantuml.com][PlantUML]]
 - [[https://github.com/plantuml/plantuml][GitHub | PlantUML]]
 - [[http://wiki.plantuml.net/site/index][PlantUML in A Nutshell]]
+- [[https://plantuml-documentation.readthedocs.io/en/latest/formatting/all-skin-params.html][PlantUML All Skin Parameters]]
 - [[https://github.com/yfuruyama/real-world-plantuml][Real World PlantUML]]
-- [[https://www.planttext.com/][PlantText UML Editor]]
+- [[https://graphviz.gitlab.io/documentation][Graphviz | Documentation]]
