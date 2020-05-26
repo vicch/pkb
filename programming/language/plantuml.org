@@ -1,7 +1,7 @@
 #+setupfile: ../../styles/readtheorg.setup
 #+title: PlantUML
 
-* General
+* Global
 ** Base
 
 #+begin_src text
@@ -21,20 +21,64 @@
 '/
 #+end_src
 
-** =title=
-
-#+begin_src plantuml :file ../images/plantuml/01.png :exports none
-!include ../../styles/plantuml-style
-
-title Diagram Title
-
-(Node A) -> (Node B)
-#+end_src
-
-file:../images/plantuml/01.png
+** Annotations
+*** Syntax
 
 #+begin_src text
-title Diagram Title
+title|caption <Text>
+title|caption
+    <Text>
+    <Text>
+endtitle|endcaption
+
+legend [left|right|center]
+    <Text>
+    <Text>
+endlegend
+
+[left|right|center] header|footer <Text>
+[left|right|center] header|footer
+    <Text>
+    <Text>
+endheader|endfooter
+#+end_src
+
+*** Example
+
+#+begin_src plantuml :file ../images/plantuml/annotations.png :exports none
+@startuml
+!include ../../styles/plantuml-style
+
+title This Is Title
+caption This is caption
+legend
+  This is
+  legend
+endlegend
+right header This is header
+left footer
+  This is
+  footer
+endfooter
+
+(Node A) -> (Node B)
+@enduml
+#+end_src
+
+file:../images/plantuml/annotations.png
+
+#+begin_src text
+title This Is Title
+caption This is caption
+legend
+  This is
+  legend
+endlegend
+right header This is header
+left footer
+  This is
+  footer
+endfooter
 
 (Node A) -> (Node B)
 #+end_src
@@ -224,17 +268,74 @@ A ->>o B
 A o//-//x B
 #+end_src
 
+* Mind Map
+** Syntax
+
+#+begin_src text
+@startmindmap
++ <Root>
+++ <Text>   // Each level indents 1 char
+++ <Text>   // Branch to right
+-- <Text>   // Branch to left
+---_ <Text> // Boxless
+@endmindmap
+#+end_src
+
+*** Example
+
+#+begin_src plantuml :file ../images/plantuml/07.png :exports none
+@startmindmap
+!include ../../styles/plantuml-style
+
++ OS
+++ Ubuntu
++++_ Kubuntu
++++_ Lubuntu
++++_ KDE Neon
++++_ Linux Mint
+++ LMDE
+++ SolydXK
+++ SteamOS
+++ Raspbian
+-- Win 95
+-- Win 98
+-- Win NT
+---_ Win 8
+---_ Win 10
+@endmindmap
+#+end_src
+
+file:../images/plantuml/07.png
+
+#+begin_src text
++ OS
+++ Ubuntu
++++_ Kubuntu
++++_ Lubuntu
++++_ KDE Neon
++++_ Linux Mint
+++ LMDE
+++ SolydXK
+++ SteamOS
+++ Raspbian
+-- Win 95
+-- Win 98
+-- Win NT
+---_ Win 8
+---_ Win 10
+#+end_src
+
 * Work Breakdown Structure
 ** Syntax
 
 #+begin_src text
-+ <Name>
- + <Name>   // Each level indents 1 space
-  + <Name>  // Branch to right
-  - <Name>  // Branch to left
- + <Name>
-  +_ <Name> // Branch to right, boxless
-  -_ <Name> // Branch to left, boxless
++ <Root>
+ + <Text>   // Each level indents 1 space
+  + <Text>  // Branch to right
+  - <Text>  // Branch to left
+ + <Text>
+  +_ <Text> // Branch to right, boxless
+  -_ <Text> // Branch to left, boxless
 #+end_src
 
 ** Example

@@ -78,7 +78,7 @@ window.SphinxRtdTheme = (function (jquery) {
 $(function(){
     $('table').each(function(){
 
-        // 表格隔行背景色
+        // Set table row background color
         if ($(this).children('tbody').size() > 0) {
             $i = 0;
             $(this).children('tbody').each(function(){
@@ -90,35 +90,40 @@ $(function(){
             });
         }
 
-        // Start: expand wide table
+        // Start: stretch wide table
 
-        // 测量原始宽度
+        // Measure table width if it is fully stretched
         $(this).css('position', 'absolute');
         $(this).css('width', 'auto');
         var oldWidth = $(this)[0].offsetWidth;
-              
+
+        // If full width is wider than the width of the page column (meaning the table is currently being shrinked by
+        // multi-lining some of the cells), stretch the table
         if (oldWidth >= 835) {
 
             $(this).addClass('float-table');
 
-            // 将表格移动至最左侧，测量自由展开的宽度
+            // Move table to left border, measure its width
             $(this).css('left', '0px');
             var newWidth = $(this)[0].offsetWidth;
-            // 如果自由展开宽度过大，则规定一个宽度
+
+            // If the table will stretch beyond window width, give it a hard limit
             if (newWidth >= ($(window).width() - 60)) {
                 $(this).css('width', $(window).width() - 60);
             }
 
-            // 水平居中
             // var newWidth = $(this)[0].offsetWidth;
             // var left = ($(window).width() - newWidth) / 2;
             // var left = 387;
             // $(this).css('left', left + 'px');
             $(this).css('left', 'auto');
 
-            // 表格后填充一个空白
+            // Remove top margin
+            $(this).css('margin-top', '0px');
+
+            // Create a blank placeholder to hold the vertical space of the table
             if (!$(this).next('.table-placeholder').length) {
-                var newHeight = $(this)[0].offsetHeight + 36;
+                var newHeight = $(this)[0].offsetHeight;
                 if ($(this).find('caption').length) {
                     newHeight += 32;
                 }
@@ -129,7 +134,7 @@ $(function(){
             $(this).css('position', 'static');
         }
 
-        // End: expand wide table
+        // End: stretch wide table
     });
 
     $('.outline-2 a[href^="#"]').click(function(e) {
