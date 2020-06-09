@@ -7,29 +7,29 @@
 
 [[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Integer.html][java.base | java.land.Integer]]
 
-| *Type*  | *Byte* |                      *Min* |                     *Max* |
-|         |        |                        <r> |                       <r> |
-|---------+--------+----------------------------+---------------------------|
-| =byte=  |      1 |                       -128 |                       127 |
-|---------+--------+----------------------------+---------------------------|
-| =short= |      2 |                    -32,768 |                    32,767 |
-|---------+--------+----------------------------+---------------------------|
-| =int=   |      4 |             -2,147,483,648 |             2,147,483,647 |
-|---------+--------+----------------------------+---------------------------|
-| =long=  |      8 | -9,223,372,036,854,775,808 | 9,223,372,036,854,775,807 |
+| *Type*  | *Byte* |                      *Min* |                     *Max* | *Default Value* |
+|         |        |                        <r> |                       <r> |             <r> |
+|---------+--------+----------------------------+---------------------------+-----------------|
+| =byte=  |      1 |                       -128 |                       127 |               0 |
+|---------+--------+----------------------------+---------------------------+-----------------|
+| =short= |      2 |                    -32,768 |                    32,767 |               0 |
+|---------+--------+----------------------------+---------------------------+-----------------|
+| =int=   |      4 |             -2,147,483,648 |             2,147,483,647 |               0 |
+|---------+--------+----------------------------+---------------------------+-----------------|
+| =long=  |      8 | -9,223,372,036,854,775,808 | 9,223,372,036,854,775,807 |              0L |
 
 *** Float
 
 [[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Float.html][java.base | java.lang.Float]]
 
-| *Type*   | *Byte* |                     *Min* |                         *Max* |
-|          |        |                       <r> |                           <r> |
-|----------+--------+---------------------------+-------------------------------|
-| =float=  |      4 |                $2^{-149}$ |  $(2-2^{-23}) \times 2^{127}$ |
-|          |        |        =0x0.000002P-126f= |            =0x1.fffffeP+127f= |
-|----------+--------+---------------------------+-------------------------------|
-| =double= |      8 |               $2^{-1074}$ | $(2-2^{-52}) \times 2^{1023}$ |
-|          |        | =0x0.0000000000001P-1022= |     =0x1.fffffffffffffP+1023= |
+| *Type*   | *Byte* |                     *Min* |                         *Max* | *Default Value* |
+|          |        |                       <r> |                           <r> |             <r> |
+|----------+--------+---------------------------+-------------------------------+-----------------|
+| =float=  |      4 |                $2^{-149}$ |  $(2-2^{-23}) \times 2^{127}$ |            0.0f |
+|          |        |        =0x0.000002P-126f= |            =0x1.fffffeP+127f= |                 |
+|----------+--------+---------------------------+-------------------------------+-----------------|
+| =double= |      8 |               $2^{-1074}$ | $(2-2^{-52}) \times 2^{1023}$ |            0.0d |
+|          |        | =0x0.0000000000001P-1022= |     =0x1.fffffffffffffP+1023= |                 |
 
 *** Suffix
 
@@ -55,6 +55,7 @@ float foo = 234.5F;
 
 #+begin_src java
 char foo = 'A';
+char bar;       // Default value is \u0000
 #+end_src
 
 ** String
@@ -163,6 +164,19 @@ public static void main(String[] args) {}
 #+end_src
 
 * OOP
+** Property
+
+[[https://docs.oracle.com/javase/tutorial/java/javaOO/variables.html][The Java Tutorials | Classes and Objects | Declaring Member Variables]]
+
+#+begin_src java
+<access> [static] <type> <name> [= <value>];
+#+end_src
+
+#+begin_src java
+public static int capacity = 10;
+private boolean isFull;
+#+end_src
+
 ** Constructor
 *** =this()=
 
@@ -188,6 +202,71 @@ public class Rectangle {
 }
 #+end_src
 
+*** Implicit Constructor
+
+If a class has no constructor, Java compiler will implicit generate a constructor.
+
+** Initialization Block
+
+[[https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html][The Java Tutorials | Classes and Objects | Initializing Fields]]
+
+#+begin_src java
+{
+    // Initialization code
+}
+#+end_src
+
+Content of initilization block is copied into every contructor (and placed before the contructor code) by compiler.
+
+An alternative is to use a private (or protected) final method:
+
+#+begin_src java
+private Type var = initVar();
+private final Type initVar() { ... }
+#+end_src
+
+** Static Initialization Block
+
+[[https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html][The Java Tutorials | Classes and Objects | Initializing Fields]]
+
+#+begin_src java
+static {
+    // Initialization code
+}
+#+end_src
+
+An alternative is to use a private static method:
+
+#+begin_src java
+private static Type var = initVar();
+private static Type initVar() { ... }
+#+end_src
+
+* Functional Programming
+** Functional Interface
+
+[[https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html#approach6][The Java Tutorials | Classes and Objects | Lambda Expressions | Use Standard Functional Interfaces with Lambda Expressions]]
+
+file:../images/java/functional_interface.png
+
+#+begin_src java
+// 1. Functional interface
+public interface Runnable () {
+    void run();
+}
+
+// 2. Method that expects an object which implements the functional interface,
+//    and invokes its method
+public void runThis(final Runnable r) {
+    r.run();
+}
+
+// 3. Pass lambda expression which implements the functional interface
+runThis(() -> System.out.println("Done"));
+// void run():                 no param, returns void
+// () -> System.out.println(): no param, returns void
+#+end_src
+
 * Package
 ** =import=
 
@@ -199,6 +278,24 @@ import foo.*;   // Import all classes inside package
 * Module
 
 A module is one or more packages that belong together.
+
+* Command
+** =javac=
+
+#+begin_src sh
+javac <options> <src_file> ...
+
+<options>
+
+<src_file>
+    <class>.java
+#+end_src
+
+** =java=
+
+#+begin_src sh
+java <options> <class> <arg> ...
+#+end_src
 
 * Links
 

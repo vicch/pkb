@@ -268,6 +268,84 @@ A ->>o B
 A o//-//x B
 #+end_src
 
+* Component
+** Example
+
+#+begin_src plantuml :file ../images/plantuml/component_example.png :exports none
+@startuml
+!include ../../styles/plantuml-style
+!include <aws/common>
+!include <aws/general/users/users>
+
+skinparam DefaultTextAlignment center
+skinparam rectangle {
+  RoundCorner<<round>> 20
+}
+skinparam agent<<users>> {
+  BackgroundColor transparent
+  Shadowing false
+}
+hide stereotype
+
+database "\nData\nWarehouse\n" as DW
+database "\nS3\nData Bucket\n\n" as S3
+database "\nMySQL RDS\n Instance\n\n" as RDS
+
+rectangle "\nFooBarETL\n(FOO-BAR-ETL-*)\n" as ETL
+rectangle "\nFooBarWebsite\n(FOO-BAR-WEBSITE)\n" as WEB
+rectangle "FooBarService" as SERVICE
+rectangle "portal.foobar.com" <<round>> as URL
+
+USERS(USER, " ")
+
+DW -> ETL
+ETL --> S3
+ETL --> RDS
+S3 --> WEB
+RDS --> WEB
+SERVICE -> WEB
+WEB --> URL
+URL -left-> USER
+@enduml
+#+end_src
+
+file:../images/plantuml/component_example.png
+
+#+begin_src text
+!include <aws/common>
+!include <aws/general/users/users>
+
+skinparam DefaultTextAlignment center
+skinparam rectangle {
+  RoundCorner<<round>> 20
+}
+skinparam agent<<users>> {
+  BackgroundColor transparent
+  Shadowing false
+}
+hide stereotype
+
+database "\nData\nWarehouse\n" as DW
+database "\nS3\nData Bucket\n\n" as S3
+database "\nMySQL RDS\n Instance\n\n" as RDS
+
+rectangle "\nFooBarETL\n(FOO-BAR-ETL-*)\n" as ETL
+rectangle "\nFooBarWebsite\n(FOO-BAR-WEBSITE)\n" as WEB
+rectangle "FooBarService" as SERVICE
+rectangle "portal.foobar.com" <<round>> as URL
+
+USERS(USER, " ")
+
+DW -> ETL
+ETL --> S3
+ETL --> RDS
+S3 --> WEB
+RDS --> WEB
+SERVICE -> WEB
+WEB --> URL
+URL -left-> USER
+#+end_src
+
 * Mind Map
 ** Syntax
 
@@ -390,12 +468,45 @@ diagraph <Name> {
 #+end_src
 
 * Params
+** Style
 
 #+begin_src text
-skinparam defaultFontName "<Font Name>"
-skinparam defaultFontSize <int>
-skinparam monochrome <bool>
+skinparam monochrome true|reverse
 skinparam shadowing <bool>
+#+end_src
+
+** Font
+
+#+begin_src text
+skinparam defaultfontname "<font_name>"
+skinparam defaultfontsize <int>
+#+end_src
+
+** Line
+
+#+begin_src text
+skinparam linetype ortho|polyline
+#+end_src
+
+** Component
+
+#+begin_src text
+skinparam <component> {
+    <param> <value>
+}
+#+end_src
+
+#+begin_src text
+skinparam rectangle {
+    roundcorner 10
+}
+#+end_src
+
+** Stereotype
+
+#+begin_src text
+hide stereotype         // Hide all stereotypes
+show <<foo>> stereotype // Show specific stereotypes as exceptions
 #+end_src
 
 * Install
@@ -408,8 +519,9 @@ brew install plantuml
 * Links
 
 - [[https://plantuml.com][PlantUML]]
-- [[https://github.com/plantuml/plantuml][GitHub | PlantUML]]
-- [[http://wiki.plantuml.net/site/index][PlantUML in A Nutshell]]
-- [[https://plantuml-documentation.readthedocs.io/en/latest/formatting/all-skin-params.html][PlantUML All Skin Parameters]]
+- [[http://wiki.plantuml.net/site/index][PlantUML Wiki]]
+- [[http://plantuml.com/guide][PlantUML Guide]]
+- [[https://plantuml-documentation.readthedocs.io/en/latest/formatting/all-skin-params.html][Ashley's PlantUML Documentation]]
+- [[https://github.com/plantuml/plantuml][PlantUML GitHub Repo]]
 - [[https://github.com/yfuruyama/real-world-plantuml][Real World PlantUML]]
 - [[https://graphviz.gitlab.io/documentation][Graphviz | Documentation]]
