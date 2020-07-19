@@ -1,0 +1,900 @@
+---
+title: "GraphQL with React: The Complete Developers Guide"
+---
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-07-05 Sun 17:37 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GraphQL with React: The Complete Developers Guide</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Chen" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/font.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="../../styles/readtheorg/css/htmlize.css"/>
+<script type="text/javascript" src="../../styles/readtheorg/js/jquery.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">GraphQL with React: The Complete Developers Guide</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org59e5926">1. A RESTful Routing Primer</a>
+<ul>
+<li><a href="#org7216560">1.1. Shortcomings of RESTful Routing</a></li>
+</ul>
+</li>
+<li><a href="#org857671c">2. On to GraphQL</a>
+<ul>
+<li><a href="#org0a0223a">2.1. What is GraphQL?</a></li>
+<li><a href="#orgd62f3d7">2.2. Working with GraphQL</a></li>
+<li><a href="#org7d7712c">2.3. Registering GraphQL with Express</a></li>
+<li><a href="#orge31bba6">2.4. GraphQL Schema</a></li>
+<li><a href="#orgc78f599">2.5. Root Query</a></li>
+<li><a href="#org47c1114">2.6. GraphiQL Tool</a></li>
+<li><a href="#org8c14caa">2.7. Realistic Data Source</a></li>
+<li><a href="#org3e9d664">2.8. Async Resolve Functions</a></li>
+<li><a href="#org78371c4">2.9. Nodemon Hookup</a></li>
+</ul>
+</li>
+<li><a href="#org99e118f">3. Fetching Data with Queries</a>
+<ul>
+<li><a href="#orgb1e49ab">3.1. Nested Queries</a></li>
+<li><a href="#org841b866">3.2. Bidirectional Relations</a></li>
+<li><a href="#org59c2afc">3.3. Query Fragments</a>
+<ul>
+<li><a href="#orgaa9a329">3.3.1. Query Names</a></li>
+<li><a href="#org237d51b">3.3.2. Query Field Names</a></li>
+<li><a href="#orgc7e0da6">3.3.3. Query Fragments</a></li>
+</ul>
+</li>
+<li><a href="#org97538a7">3.4. Introduction to Mutations</a></li>
+<li><a href="#org711999a">3.5. Edit Mutation</a></li>
+</ul>
+</li>
+<li><a href="#org787a8f4">4. Links</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org59e5926" class="outline-2">
+<h2 id="org59e5926"><span class="section-number-2">1</span> A RESTful Routing Primer</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org7216560" class="outline-3">
+<h3 id="org7216560"><span class="section-number-3">1.1</span> Shortcomings of RESTful Routing</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+RESTful routing conventions (URL schemas) become unhandy when working with highly relational data. E.g.
+</p>
+
+<ul class="org-ul">
+<li>A <code>user</code> has multiple friends (each <code>friend</code> is also a <code>user</code>).</li>
+<li>Each <code>friend</code> is associated with a <code>company</code>.</li>
+</ul>
+
+<p>
+To get a user's friends and their companies data, the routing patterns can be:
+</p>
+
+<ul class="org-ul">
+<li><code>/users/:id/friends</code> and <code>/users/:id/companies</code></li>
+<li><code>/users/:id/friends/companies</code></li>
+<li><code>/users/:id/friends_with_companies</code></li>
+</ul>
+
+<p>
+The problems with these patterns:
+</p>
+
+<ul class="org-ul">
+<li>Multiple HTTP requests are needed to fetch all data.</li>
+<li>Endpoints are customized and tightly coupled with the use cases.</li>
+<li>Responses contain unknown structures or unnecessary data.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org857671c" class="outline-2">
+<h2 id="org857671c"><span class="section-number-2">2</span> On to GraphQL</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org0a0223a" class="outline-3">
+<h3 id="org0a0223a"><span class="section-number-3">2.1</span> What is GraphQL?</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Relational data like:
+</p>
+
+
+<div class="figure">
+<p><img src="../images/graphql_with_react/relational_data_example.png" alt="relational_data_example.png" />
+</p>
+</div>
+
+<p>
+Can be considered as a graph like:
+</p>
+
+
+<div class="figure">
+<p><img src="../images/graphql_with_react/graph_data_example.png" alt="graph_data_example.png" />
+</p>
+</div>
+
+<p>
+And GraphQL is the language used to write queries that work on such data graphs.
+</p>
+
+<p>
+For example, to query a certain user's friends' company names from the graph above:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-graphql">query {
+  user(<span class="org-variable-name">id</span>: <span class="org-string">"23"</span>) {
+    friends() {
+      company {
+        name
+      }
+    }
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd62f3d7" class="outline-3">
+<h3 id="orgd62f3d7"><span class="section-number-3">2.2</span> Working with GraphQL</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+A simple GraphQL app is composed of:
+</p>
+
+<ul class="org-ul">
+<li>GraphiQL: An in-browser IDE used to test the GraphQL server in development (shouldn't use in production).</li>
+<li>GraphQL server</li>
+<li>Database</li>
+</ul>
+
+<p>
+Create the app and install dependencies:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">mkdir users
+<span class="org-builtin">cd</span> users
+npm init
+npm install --save graphql express express-graphql lodash
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7d7712c" class="outline-3">
+<h3 id="org7d7712c"><span class="section-number-3">2.3</span> Registering GraphQL with Express</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+High-level structure and logic of the simple Express app:
+</p>
+
+
+<div class="figure">
+<p><img src="../images/graphql_with_react/express_app_structure.png" alt="express_app_structure.png" />
+</p>
+</div>
+
+<p>
+Entry point of the app:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 1: </span><code>users/server.js</code></label><pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">express</span> = require(<span class="org-string">'express'</span>);
+<span class="org-keyword">const</span> <span class="org-variable-name">expressGraphQL</span> = require(<span class="org-string">'express-graphql'</span>);
+
+<span class="org-keyword">const</span> <span class="org-variable-name">app</span> = express();
+
+app.use(<span class="org-string">'/graphql'</span>, expressGraphQL({
+  graphiql: <span class="org-constant">true</span>
+}));
+
+app.listen(4000, () =&gt; {
+  console.log(<span class="org-string">'Listening'</span>);
+});
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge31bba6" class="outline-3">
+<h3 id="orge31bba6"><span class="section-number-3">2.4</span> GraphQL Schema</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+To work on a data graph, GraphQL requires data schema which specifies:
+</p>
+
+<ul class="org-ul">
+<li>data types and properties</li>
+<li>relations between the data types</li>
+</ul>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 2: </span><code>users/schema/schema.js</code></label><pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">graphql</span> = require(<span class="org-string">'graphql'</span>);
+<span class="org-keyword">const</span> {
+    GraphQLObjectType,
+    GraphQLString,
+    GraphQLInt
+} = graphql;
+
+<span class="org-keyword">const</span> <span class="org-variable-name">UserType</span> = <span class="org-keyword">new</span> <span class="org-type">GraphQLObjectType</span>({
+    name: <span class="org-string">'User'</span>,
+    fields: {
+        id: { type: GraphQLString },
+        name: { type: GraphQLString },
+        age: { type: GraphQLInt }
+    }
+});
+</pre>
+</div>
+
+<p>
+Schema needs to be imported into GraphQL app:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 3: </span><code>users/server.js</code></label><pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">schema</span> = require(<span class="org-string">'./schema/schema'</span>);
+
+app.use(<span class="org-string">'/graphql'</span>, expressGraphQL({
+    schema,
+    graphiql: <span class="org-constant">true</span>
+}));
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc78f599" class="outline-3">
+<h3 id="orgc78f599"><span class="section-number-3">2.5</span> Root Query</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+Root query is the mapping from a query to the corresponding data type defined in schema. It specifies the query's entry point in the data graph, e.g. for a <code>user</code> query, the <code>UserType</code> data type is the entry point:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 4: </span><code>users/schema/schema.js</code></label><pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">RootQuery</span> = <span class="org-keyword">new</span> <span class="org-type">GraphQLObjectType</span>({
+    name: <span class="org-string">'RootQueryType'</span>,
+    fields: {
+        user: {                                    <span class="org-comment-delimiter">// </span><span class="org-comment">Query keyword</span>
+            type: UserType,                        <span class="org-comment-delimiter">// </span><span class="org-comment">Query output</span>
+            args: { id: { type: GraphQLString } }, <span class="org-comment-delimiter">// </span><span class="org-comment">Query input</span>
+            resolve(parentValue, args) {           <span class="org-comment-delimiter">// </span><span class="org-comment">Data lookup logic</span>
+                <span class="org-comment-delimiter">// </span><span class="org-comment">Return user whose id == args.id</span>
+            }
+        }
+    }
+});
+
+module.exports = <span class="org-keyword">new</span> <span class="org-type">GraphQLSchema</span>({
+    query: RootQuery
+});
+</pre>
+</div>
+
+<p>
+GraphQL depends on <code>resolve()</code> to resolve the data types. <code>resolve()</code> essentially serves as link between:
+</p>
+
+<ul class="org-ul">
+<li>root query and the corresponding data type, and</li>
+<li>one data type and its relational data types</li>
+</ul>
+
+<p>
+The resolving logic is normally RDB lookup using the input params.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org47c1114" class="outline-3">
+<h3 id="org47c1114"><span class="section-number-3">2.6</span> GraphiQL Tool</h3>
+<div class="outline-text-3" id="text-2-6">
+<p>
+Start the server:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">node server.js
+</pre>
+</div>
+
+<p>
+And open <a href="http://localhost:4000/graphql">http://localhost:4000/graphql</a>, the GraphiQL UI should be displayed. Run query:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-graphql">{
+    user(<span class="org-variable-name">id</span>: <span class="org-string">"1"</span>) {
+        id, firstName, age
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8c14caa" class="outline-3">
+<h3 id="org8c14caa"><span class="section-number-3">2.7</span> Realistic Data Source</h3>
+<div class="outline-text-3" id="text-2-7">
+<p>
+To replace the hard-coded user data, <a href="https://github.com/typicode/json-server">json-server</a> can be used to run a local HTTP server which serves configured JSON data.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3e9d664" class="outline-3">
+<h3 id="org3e9d664"><span class="section-number-3">2.8</span> Async Resolve Functions</h3>
+<div class="outline-text-3" id="text-2-8">
+<p>
+To load data in async, wrap the request to local json-server in a promise, e.g. via <a href="https://github.com/axios/axios">axios</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org78371c4" class="outline-3">
+<h3 id="org78371c4"><span class="section-number-3">2.9</span> Nodemon Hookup</h3>
+<div class="outline-text-3" id="text-2-9">
+<p>
+To avoid restarting the Node server every time the code is change, use <a href="https://github.com/remy/nodemon">nodemon</a>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org99e118f" class="outline-2">
+<h2 id="org99e118f"><span class="section-number-2">3</span> Fetching Data with Queries</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-orgb1e49ab" class="outline-3">
+<h3 id="orgb1e49ab"><span class="section-number-3">3.1</span> Nested Queries</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+To declare relation between 2 data types, e.g. a <code>user</code> belonging to a <code>company</code>, update the schema:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 5: </span><code>users/schema/schema.js</code></label><pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">CompanyType</span> = <span class="org-keyword">new</span> <span class="org-type">GraphQLObjectType</span>({ <span class="org-comment-delimiter">// </span><span class="org-comment">Add data type</span>
+    name: <span class="org-string">'Company'</span>,
+    fields: () =&gt; ({
+        ...
+    })
+});
+
+<span class="org-keyword">const</span> <span class="org-variable-name">UserType</span> = <span class="org-keyword">new</span> <span class="org-type">GraphQLObjectType</span>({
+    name: <span class="org-string">'User'</span>,
+    fields: () =&gt; ({
+        ...
+        company: { <span class="org-comment-delimiter">// </span><span class="org-comment">Add data field</span>
+            type: CompanyType,
+            resolve(parentValue, args) {
+                <span class="org-comment-delimiter">// </span><span class="org-comment">Return company whose id == parentValues.companyId</span>
+            }
+        }
+    })
+});
+</pre>
+</div>
+
+<p>
+Stored data of <code>user</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-json">{ <span class="org-keyword">"id"</span>: <span class="org-string">""</span>, ..., <span class="org-keyword">"companyId"</span>: <span class="org-string">""</span> }
+</pre>
+</div>
+
+<p>
+In other words, the <code>company</code> field of the <b>data type</b> is resolved with the <code>companyId</code> field of the <b>data model</b>:
+</p>
+
+
+<div class="figure">
+<p><img src="../images/graphql_with_react/resolve_user_company.png" alt="resolve_user_company.png" />
+</p>
+</div>
+
+<p>
+The query to fetch user's company data:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-graphql">{
+    user(<span class="org-variable-name">id</span>: <span class="org-string">"1"</span>) {
+        name
+        company {
+            name
+        }
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org841b866" class="outline-3">
+<h3 id="org841b866"><span class="section-number-3">3.2</span> Bidirectional Relations</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+One <code>company</code> has multiple <code>user</code>. To fetch all <code>user</code> belonging to a <code>company</code>, add data field (which is a list of <code>user</code>) and resolving logic:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 6: </span><code>users/schema/schema.js</code></label><pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">CompanyType</span> = <span class="org-keyword">new</span> <span class="org-type">GraphQLObjectType</span>({
+    name: <span class="org-string">'Company'</span>,
+    fields: {
+        ...
+        users: {
+            type: <span class="org-keyword">new</span> <span class="org-type">GraphQLList</span>(UserType),
+            resolve(parentValue, args) {
+                <span class="org-comment-delimiter">// </span><span class="org-comment">Return all users whose companyId == parentValue.id</span>
+            }
+        }
+    }
+});
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org59c2afc" class="outline-3">
+<h3 id="org59c2afc"><span class="section-number-3">3.3</span> Query Fragments</h3>
+<div class="outline-text-3" id="text-3-3">
+</div>
+<div id="outline-container-orgaa9a329" class="outline-4">
+<h4 id="orgaa9a329"><span class="section-number-4">3.3.1</span> Query Names</h4>
+<div class="outline-text-4" id="text-3-3-1">
+<p>
+Queries can be named, so that it can be reused:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-graphql"><span class="org-keyword">query</span> <span class="org-function-name">findCompnay</span> {
+    company(<span class="org-variable-name">id</span>: <span class="org-string">"1"</span>) {
+        ...
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org237d51b" class="outline-4">
+<h4 id="org237d51b"><span class="section-number-4">3.3.2</span> Query Field Names</h4>
+<div class="outline-text-4" id="text-3-3-2">
+<p>
+When querying the same data type multiple times, each field needs to be named:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-graphql">{
+    first: <span class="org-type">company</span>(<span class="org-variable-name">id</span>: <span class="org-string">"1"</span>) { ... }
+    second: <span class="org-type">company</span>(<span class="org-variable-name">id</span>: <span class="org-string">"2"</span>) { ... }
+}
+</pre>
+</div>
+
+<p>
+The result:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-json">{
+    <span class="org-keyword">"data"</span>: {
+        <span class="org-keyword">"first"</span>: { ... },
+        <span class="org-keyword">"second"</span>: { ... }
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc7e0da6" class="outline-4">
+<h4 id="orgc7e0da6"><span class="section-number-4">3.3.3</span> Query Fragments</h4>
+<div class="outline-text-4" id="text-3-3-3">
+<p>
+Query fragments are lists of fields that can be reused between queries. E.g. instead of:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-graphql">{
+    company(<span class="org-variable-name">id</span>: <span class="org-string">"1"</span>) {
+        id
+        name
+        description
+    }
+}
+</pre>
+</div>
+
+<p>
+By using query fragments, it becomes:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-graphql"><span class="org-keyword">fragment</span> <span class="org-function-name">companyDetails</span> on Company {
+    id
+    name
+    description
+}
+
+{
+    company(<span class="org-variable-name">id</span>: <span class="org-string">"1"</span>) {
+        ...companyDetails
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org97538a7" class="outline-3">
+<h3 id="org97538a7"><span class="section-number-3">3.4</span> Introduction to Mutations</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+GraphQL mutations are used to represent modifications (in contrast to reading) to the data.
+</p>
+
+
+<div class="figure">
+<p><img src="../images/graphql_with_react/query_and_mutation.png" alt="query_and_mutation.png" />
+</p>
+</div>
+
+<p>
+Similar to root query, mutation is defined as an object and attached to the schema object:
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 7: </span><code>users/schema/schema.js</code></label><pre class="src src-js"><span class="org-keyword">const</span> <span class="org-variable-name">mutation</span> = <span class="org-keyword">new</span> <span class="org-type">GraphQLObjectType</span>({
+    name: <span class="org-string">'Mutation'</span>,
+    fields: {
+        addUser: {
+            type: UserType,
+            args: {
+                firstName: { type: GraphQLString },
+                ...
+            },
+            resolve(parentValue, { firstName, age, companyId }) {
+                <span class="org-comment-delimiter">// </span><span class="org-comment">Create user using input params, and return the created object</span>
+            }
+        }
+    }
+});
+
+module.exports = <span class="org-keyword">new</span> <span class="org-type">GraphQLSchema</span>({
+    mutation,
+    query: RootQuery
+});
+</pre>
+</div>
+
+<p>
+GraphQL mutation syntax:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-graphql">mutation {
+    addUser(<span class="org-variable-name">firstName</span>: <span class="org-string">""</span>, ...) { <span class="org-comment-delimiter"># </span><span class="org-comment">Input params</span>
+        id                        <span class="org-comment-delimiter"># </span><span class="org-comment">Output fields</span>
+        firstName
+        ...
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org711999a" class="outline-3">
+<h3 id="org711999a"><span class="section-number-3">3.5</span> Edit Mutation</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+Difference between these methods:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="no-border">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><code>POST</code></th>
+<th scope="col" class="org-left">Create a new record</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>PUT</code></td>
+<td class="org-left">Replace an existing record</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left"><code>PATCH</code></td>
+<td class="org-left">Partially update an existing record</td>
+</tr>
+</tbody>
+</table>
+
+
+<div class="figure">
+<p><img src="../images/graphql_with_react/put_and_patch.png" alt="put_and_patch.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org787a8f4" class="outline-2">
+<h2 id="org787a8f4"><span class="section-number-2">4</span> Links</h2>
+<div class="outline-text-2" id="text-4">
+<ul class="org-ul">
+<li><a href="https://www.udemy.com/course/graphql-with-react-course">Udemy | GraphQL with React: The Complete Developers Guide</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Chen</p>
+<p class="date">Created: 2020-07-05 Sun 17:37</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,386 @@
+#+setupfile: ../../styles/readtheorg.setup
+#+title: GraphQL with React: The Complete Developers Guide
+
+* A RESTful Routing Primer
+** Shortcomings of RESTful Routing
+
+RESTful routing conventions (URL schemas) become unhandy when working with highly relational data. E.g.
+
+- A =user= has multiple friends (each =friend= is also a =user=).
+- Each =friend= is associated with a =company=.
+
+To get a user's friends and their companies data, the routing patterns can be:
+
+- =/users/:id/friends= and =/users/:id/companies=
+- =/users/:id/friends/companies=
+- =/users/:id/friends_with_companies=
+
+The problems with these patterns:
+
+- Multiple HTTP requests are needed to fetch all data.
+- Endpoints are customized and tightly coupled with the use cases.
+- Responses contain unknown structures or unnecessary data.
+
+* On to GraphQL
+** What is GraphQL?
+
+Relational data like:
+
+file:../images/graphql_with_react/relational_data_example.png
+
+Can be considered as a graph like:
+
+file:../images/graphql_with_react/graph_data_example.png
+
+And GraphQL is the language used to write queries that work on such data graphs.
+
+For example, to query a certain user's friends' company names from the graph above:
+
+#+begin_src graphql
+query {
+  user(id: "23") {
+    friends() {
+      company {
+        name
+      }
+    }
+  }
+}
+#+end_src
+
+** Working with GraphQL
+
+A simple GraphQL app is composed of:
+
+- GraphiQL: An in-browser IDE used to test the GraphQL server in development (shouldn't use in production).
+- GraphQL server
+- Database
+
+Create the app and install dependencies:
+
+#+begin_src sh
+mkdir users
+cd users
+npm init
+npm install --save graphql express express-graphql lodash
+#+end_src
+
+** Registering GraphQL with Express
+
+High-level structure and logic of the simple Express app:
+
+file:../images/graphql_with_react/express_app_structure.png
+
+Entry point of the app:
+
+#+caption: =users/server.js=
+#+begin_src js
+const express = require('express');
+const expressGraphQL = require('express-graphql');
+
+const app = express();
+
+app.use('/graphql', expressGraphQL({
+  graphiql: true
+}));
+
+app.listen(4000, () => {
+  console.log('Listening');
+});
+#+end_src
+
+** GraphQL Schema
+
+To work on a data graph, GraphQL requires data schema which specifies:
+
+- data types and properties
+- relations between the data types
+
+#+caption: =users/schema/schema.js=
+#+begin_src js
+const graphql = require('graphql');
+const {
+    GraphQLObjectType,
+    GraphQLString,
+    GraphQLInt
+} = graphql;
+
+const UserType = new GraphQLObjectType({
+    name: 'User',
+    fields: {
+        id: { type: GraphQLString },
+        name: { type: GraphQLString },
+        age: { type: GraphQLInt }
+    }
+});
+#+end_src
+
+Schema needs to be imported into GraphQL app:
+
+#+caption: =users/server.js=
+#+begin_src js
+const schema = require('./schema/schema');
+
+app.use('/graphql', expressGraphQL({
+    schema,
+    graphiql: true
+}));
+#+end_src
+
+** Root Query
+
+Root query is the mapping from a query to the corresponding data type defined in schema. It specifies the query's entry point in the data graph, e.g. for a =user= query, the =UserType= data type is the entry point:
+
+#+caption: =users/schema/schema.js=
+#+begin_src js
+const RootQuery = new GraphQLObjectType({
+    name: 'RootQueryType',
+    fields: {
+        user: {                                    // Query keyword
+            type: UserType,                        // Query output
+            args: { id: { type: GraphQLString } }, // Query input
+            resolve(parentValue, args) {           // Data lookup logic
+                // Return user whose id == args.id
+            }
+        }
+    }
+});
+
+module.exports = new GraphQLSchema({
+    query: RootQuery
+});
+#+end_src
+
+GraphQL depends on =resolve()= to resolve the data types. =resolve()= essentially serves as link between:
+
+- root query and the corresponding data type, and
+- one data type and its relational data types
+
+The resolving logic is normally RDB lookup using the input params.
+
+** GraphiQL Tool
+
+Start the server:
+
+#+begin_src sh
+node server.js
+#+end_src
+
+And open http://localhost:4000/graphql, the GraphiQL UI should be displayed. Run query:
+
+#+begin_src graphql
+{
+    user(id: "1") {
+        id, firstName, age
+    }
+}
+#+end_src
+
+** Realistic Data Source
+
+To replace the hard-coded user data, [[https://github.com/typicode/json-server][json-server]] can be used to run a local HTTP server which serves configured JSON data.
+
+** Async Resolve Functions
+
+To load data in async, wrap the request to local json-server in a promise, e.g. via [[https://github.com/axios/axios][axios]].
+
+** Nodemon Hookup
+
+To avoid restarting the Node server every time the code is change, use [[https://github.com/remy/nodemon][nodemon]].
+
+* Fetching Data with Queries
+** Nested Queries
+
+To declare relation between 2 data types, e.g. a =user= belonging to a =company=, update the schema:
+
+#+caption: =users/schema/schema.js=
+#+begin_src js
+const CompanyType = new GraphQLObjectType({ // Add data type
+    name: 'Company',
+    fields: () => ({
+        ...
+    })
+});
+
+const UserType = new GraphQLObjectType({
+    name: 'User',
+    fields: () => ({
+        ...
+        company: { // Add data field
+            type: CompanyType,
+            resolve(parentValue, args) {
+                // Return company whose id == parentValues.companyId
+            }
+        }
+    })
+});
+#+end_src
+
+Stored data of =user=:
+
+#+begin_src json
+{ "id": "", ..., "companyId": "" }
+#+end_src
+
+In other words, the =company= field of the *data type* is resolved with the =companyId= field of the *data model*:
+
+file:../images/graphql_with_react/resolve_user_company.png
+
+The query to fetch user's company data:
+
+#+begin_src graphql
+{
+    user(id: "1") {
+        name
+        company {
+            name
+        }
+    }
+}
+#+end_src
+
+** Bidirectional Relations
+
+One =company= has multiple =user=. To fetch all =user= belonging to a =company=, add data field (which is a list of =user=) and resolving logic:
+
+#+caption: =users/schema/schema.js=
+#+begin_src js
+const CompanyType = new GraphQLObjectType({
+    name: 'Company',
+    fields: {
+        ...
+        users: {
+            type: new GraphQLList(UserType),
+            resolve(parentValue, args) {
+                // Return all users whose companyId == parentValue.id
+            }
+        }
+    }
+});
+#+end_src
+
+** Query Fragments
+*** Query Names
+
+Queries can be named, so that it can be reused:
+
+#+begin_src graphql
+query findCompnay {
+    company(id: "1") {
+        ...
+    }
+}
+#+end_src
+
+*** Query Field Names
+
+When querying the same data type multiple times, each field needs to be named:
+
+#+begin_src graphql
+{
+    first: company(id: "1") { ... }
+    second: company(id: "2") { ... }
+}
+#+end_src
+
+The result:
+
+#+begin_src json
+{
+    "data": {
+        "first": { ... },
+        "second": { ... }
+    }
+}
+#+end_src
+
+*** Query Fragments
+
+Query fragments are lists of fields that can be reused between queries. E.g. instead of:
+
+#+begin_src graphql
+{
+    company(id: "1") {
+        id
+        name
+        description
+    }
+}
+#+end_src
+
+By using query fragments, it becomes:
+
+#+begin_src graphql
+fragment companyDetails on Company {
+    id
+    name
+    description
+}
+
+{
+    company(id: "1") {
+        ...companyDetails
+    }
+}
+#+end_src
+
+** Introduction to Mutations
+
+GraphQL mutations are used to represent modifications (in contrast to reading) to the data.
+
+file:../images/graphql_with_react/query_and_mutation.png
+
+Similar to root query, mutation is defined as an object and attached to the schema object:
+
+#+caption: =users/schema/schema.js=
+#+begin_src js
+const mutation = new GraphQLObjectType({
+    name: 'Mutation',
+    fields: {
+        addUser: {
+            type: UserType,
+            args: {
+                firstName: { type: GraphQLString },
+                ...
+            },
+            resolve(parentValue, { firstName, age, companyId }) {
+                // Create user using input params, and return the created object
+            }
+        }
+    }
+});
+
+module.exports = new GraphQLSchema({
+    mutation,
+    query: RootQuery
+});
+#+end_src
+
+GraphQL mutation syntax:
+
+#+begin_src graphql
+mutation {
+    addUser(firstName: "", ...) { # Input params
+        id                        # Output fields
+        firstName
+        ...
+    }
+}
+#+end_src
+
+** Edit Mutation
+
+Difference between these methods:
+
+#+attr_html: :class no-border
+| =POST=  | Create a new record                 |
+|---------+-------------------------------------|
+| =PUT=   | Replace an existing record          |
+|---------+-------------------------------------|
+| =PATCH= | Partially update an existing record |
+
+file:../images/graphql_with_react/put_and_patch.png
+
+* Links
+
+- [[https://www.udemy.com/course/graphql-with-react-course][Udemy | GraphQL with React: The Complete Developers Guide]]

@@ -49,13 +49,18 @@ float foo = 234.5F;
 
 [[https://docs.oracle.com/javase/8/docs/technotes/guides/language/underscores-literals.html][Java Documentation | Underscores in Numeric Literals]]
 
+#+begin_src java
+Integer foo = 1000000;
+Integer bar = 1_000_000;
+#+end_src
+
 ** Character
 
 16-bit unsigned integer value used to store Unicode character.
 
 #+begin_src java
 char foo = 'A';
-char bar;       // Default value is \u0000
+char bar; // Empty value is \u0000
 #+end_src
 
 ** String
@@ -280,6 +285,12 @@ import foo.*;   // Import all classes inside package
 A module is one or more packages that belong together.
 
 * Command
+** =java=
+
+#+begin_src sh
+java <options> <class> <arg> ...
+#+end_src
+
 ** =javac=
 
 #+begin_src sh
@@ -291,10 +302,25 @@ javac <options> <src_file> ...
     <class>.java
 #+end_src
 
-** =java=
+** =javadoc=
+
+[[https://docs.oracle.com/javase/8/docs/technotes/tools/unix/javadoc.html][Java Documentation | Tools | javadoc]]
 
 #+begin_src sh
-java <options> <class> <arg> ...
+javadoc <options> <package> ... <src_file> ...
+
+<options>
+    -sourcepath <path>:...     # Location(s) of source files
+    -classpath <path>:...      # Location(s) of user class files
+    -subpackages <package>:... # Subpackages to load recursively
+
+    -public    # Only public classes and members
+    -protected # Protected and public classes and members (default)
+    -private   # All classes and members
+
+    -d <path>          # Location of output files
+    -doclet <class>    # Generate output via alternate doclet
+    -docletpath <path> # Location of doclet class files
 #+end_src
 
 * Links

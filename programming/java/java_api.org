@@ -107,13 +107,17 @@ floorMod(10, 4); // 2 = 10 % 4
 |--------------+-----------------+----------------------------------------------------------------|
 |              | =isEmpty()=     | Returns =true= if empty.                                       |
 |--------------+-----------------+----------------------------------------------------------------|
-| *Formatting* | =format()=      | Returns formatted string.                                      |
+| *Generation* | =valueOf()=     | Returns string representation of the argument.                 |
+|--------------+-----------------+----------------------------------------------------------------|
+| *Mutation*   | =concat()=      | Concatenates input string to the end of this string.           |
+|--------------+-----------------+----------------------------------------------------------------|
+|              | =format()=      | Returns formatted string.                                      |
+|--------------+-----------------+----------------------------------------------------------------|
+|              | =replace()=     |                                                                |
 |--------------+-----------------+----------------------------------------------------------------|
 |              | =toLowerCase()= |                                                                |
 |--------------+-----------------+----------------------------------------------------------------|
 |              | =toUpperCase()= |                                                                |
-|--------------+-----------------+----------------------------------------------------------------|
-| *Conversion* | =valueOf()=     | Returns string representation of the argument.                 |
 |--------------+-----------------+----------------------------------------------------------------|
 | *Characters* | =toCharArray()= | Converts to character array.                                   |
 |--------------+-----------------+----------------------------------------------------------------|
@@ -244,6 +248,8 @@ public BigInteger​(String val); // Translates decimal String representation in
 |          | =HashSet<E>=   | Implements =Set= interface, backed by hash table (actually =HashMap= instance). |
 |----------+----------------+---------------------------------------------------------------------------------|
 | *Other*  | =Random=       | Generates stream of pseudorandom numbers.                                       |
+|----------+----------------+---------------------------------------------------------------------------------|
+|          | =Scanner=      | Simple text scanner.                                                            |
 
 ** =ArrayList<E>=
 
@@ -385,6 +391,22 @@ public int nextInt​(int bound)
 #+begin_src java
 Random rand = new Random();
 int foo = rand.nextInt(6); // Random int between 0 and 5
+#+end_src
+
+** =Scanner=
+
+[[https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Scanner.html][java.base | java.util.Scanner]]
+
+*** =tokens()=
+
+To scan a list of input names and output them one per line in reverse order:
+
+#+begin_src java
+new Scanner(System.in)
+        .tokens()
+        .collect(Collectors.toCollection(ArrayDeque::new))
+        .descendingIterator()
+        .forEachRemaining(System.out::println);
 #+end_src
 
 ** =Set<E>=

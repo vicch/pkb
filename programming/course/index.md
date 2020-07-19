@@ -10,6 +10,7 @@ title: ""
 - [Chef Fundamentals](/pkb/programming/course/chef_fundamentals.html)
 - [Docker and Kubernetes](/pkb/programming/course/docker_and_kubernetes.html)
 - [Go: The Complete Developer's Guide](/pkb/programming/course/go_complete_developers_guide.html)
+- [GraphQL with React: The Complete Developers Guide](/pkb/programming/course/graphql_with_react.html)
 - [Learv DevOps: The Complete Kubernetes Course](/pkb/programming/course/learn_devops_the_complete_kubernetes_course.html)
 - [Machine Learning](/pkb/programming/course/machine_learning.html)
 - [](/pkb/programming/course/master_microservices_with_spring_boot_and_spring_cloud.html)
