@@ -6,7 +6,7 @@ title: "GraphQL with React: The Complete Developers Guide"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-05 Sun 17:37 -->
+<!-- 2020-07-19 Sun 17:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>GraphQL with React: The Complete Developers Guide</title>
@@ -258,50 +258,50 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org59e5926">1. A RESTful Routing Primer</a>
+<li><a href="#org0ca06a5">1. A RESTful Routing Primer</a>
 <ul>
-<li><a href="#org7216560">1.1. Shortcomings of RESTful Routing</a></li>
+<li><a href="#org4784dfe">1.1. Shortcomings of RESTful Routing</a></li>
 </ul>
 </li>
-<li><a href="#org857671c">2. On to GraphQL</a>
+<li><a href="#orgfc11ca3">2. On to GraphQL</a>
 <ul>
-<li><a href="#org0a0223a">2.1. What is GraphQL?</a></li>
-<li><a href="#orgd62f3d7">2.2. Working with GraphQL</a></li>
-<li><a href="#org7d7712c">2.3. Registering GraphQL with Express</a></li>
-<li><a href="#orge31bba6">2.4. GraphQL Schema</a></li>
-<li><a href="#orgc78f599">2.5. Root Query</a></li>
-<li><a href="#org47c1114">2.6. GraphiQL Tool</a></li>
-<li><a href="#org8c14caa">2.7. Realistic Data Source</a></li>
-<li><a href="#org3e9d664">2.8. Async Resolve Functions</a></li>
-<li><a href="#org78371c4">2.9. Nodemon Hookup</a></li>
+<li><a href="#orga7180de">2.1. What is GraphQL?</a></li>
+<li><a href="#org9a0a3e7">2.2. Working with GraphQL</a></li>
+<li><a href="#orge34d363">2.3. Registering GraphQL with Express</a></li>
+<li><a href="#orgf9cc6f0">2.4. GraphQL Schema</a></li>
+<li><a href="#org438aa7b">2.5. Root Query</a></li>
+<li><a href="#org996907d">2.6. GraphiQL Tool</a></li>
+<li><a href="#orgce50cd4">2.7. Realistic Data Source</a></li>
+<li><a href="#org9af4038">2.8. Async Resolve Functions</a></li>
+<li><a href="#orga2f8d12">2.9. Nodemon Hookup</a></li>
 </ul>
 </li>
-<li><a href="#org99e118f">3. Fetching Data with Queries</a>
+<li><a href="#org65de4ad">3. Fetching Data with Queries</a>
 <ul>
-<li><a href="#orgb1e49ab">3.1. Nested Queries</a></li>
-<li><a href="#org841b866">3.2. Bidirectional Relations</a></li>
-<li><a href="#org59c2afc">3.3. Query Fragments</a>
+<li><a href="#org0b0af77">3.1. Nested Queries</a></li>
+<li><a href="#org6759cef">3.2. Bidirectional Relations</a></li>
+<li><a href="#orgaa9a974">3.3. Query Fragments</a>
 <ul>
-<li><a href="#orgaa9a329">3.3.1. Query Names</a></li>
-<li><a href="#org237d51b">3.3.2. Query Field Names</a></li>
-<li><a href="#orgc7e0da6">3.3.3. Query Fragments</a></li>
+<li><a href="#org0e9131e">3.3.1. Query Names</a></li>
+<li><a href="#orgfee981b">3.3.2. Query Field Names</a></li>
+<li><a href="#org9b94591">3.3.3. Query Fragments</a></li>
 </ul>
 </li>
-<li><a href="#org97538a7">3.4. Introduction to Mutations</a></li>
-<li><a href="#org711999a">3.5. Edit Mutation</a></li>
+<li><a href="#orgc57fe92">3.4. Introduction to Mutations</a></li>
+<li><a href="#org6f85a49">3.5. Edit Mutation</a></li>
 </ul>
 </li>
-<li><a href="#org787a8f4">4. Links</a></li>
+<li><a href="#org7adbe59">4. Links</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org59e5926" class="outline-2">
-<h2 id="org59e5926"><span class="section-number-2">1</span> A RESTful Routing Primer</h2>
+<div id="outline-container-org0ca06a5" class="outline-2">
+<h2 id="org0ca06a5"><span class="section-number-2">1</span> A RESTful Routing Primer</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org7216560" class="outline-3">
-<h3 id="org7216560"><span class="section-number-3">1.1</span> Shortcomings of RESTful Routing</h3>
+<div id="outline-container-org4784dfe" class="outline-3">
+<h3 id="org4784dfe"><span class="section-number-3">1.1</span> Shortcomings of RESTful Routing</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 RESTful routing conventions (URL schemas) become unhandy when working with highly relational data. E.g.
@@ -335,12 +335,12 @@ The problems with these patterns:
 </div>
 </div>
 
-<div id="outline-container-org857671c" class="outline-2">
-<h2 id="org857671c"><span class="section-number-2">2</span> On to GraphQL</h2>
+<div id="outline-container-orgfc11ca3" class="outline-2">
+<h2 id="orgfc11ca3"><span class="section-number-2">2</span> On to GraphQL</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org0a0223a" class="outline-3">
-<h3 id="org0a0223a"><span class="section-number-3">2.1</span> What is GraphQL?</h3>
+<div id="outline-container-orga7180de" class="outline-3">
+<h3 id="orga7180de"><span class="section-number-3">2.1</span> What is GraphQL?</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Relational data like:
@@ -385,8 +385,8 @@ For example, to query a certain user's friends' company names from the graph abo
 </div>
 </div>
 
-<div id="outline-container-orgd62f3d7" class="outline-3">
-<h3 id="orgd62f3d7"><span class="section-number-3">2.2</span> Working with GraphQL</h3>
+<div id="outline-container-org9a0a3e7" class="outline-3">
+<h3 id="org9a0a3e7"><span class="section-number-3">2.2</span> Working with GraphQL</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 A simple GraphQL app is composed of:
@@ -412,8 +412,8 @@ npm install --save graphql express express-graphql lodash
 </div>
 </div>
 
-<div id="outline-container-org7d7712c" class="outline-3">
-<h3 id="org7d7712c"><span class="section-number-3">2.3</span> Registering GraphQL with Express</h3>
+<div id="outline-container-orge34d363" class="outline-3">
+<h3 id="orge34d363"><span class="section-number-3">2.3</span> Registering GraphQL with Express</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 High-level structure and logic of the simple Express app:
@@ -447,8 +447,8 @@ app.listen(4000, () =&gt; {
 </div>
 </div>
 
-<div id="outline-container-orge31bba6" class="outline-3">
-<h3 id="orge31bba6"><span class="section-number-3">2.4</span> GraphQL Schema</h3>
+<div id="outline-container-orgf9cc6f0" class="outline-3">
+<h3 id="orgf9cc6f0"><span class="section-number-3">2.4</span> GraphQL Schema</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 To work on a data graph, GraphQL requires data schema which specifies:
@@ -494,8 +494,8 @@ app.use(<span class="org-string">'/graphql'</span>, expressGraphQL({
 </div>
 </div>
 
-<div id="outline-container-orgc78f599" class="outline-3">
-<h3 id="orgc78f599"><span class="section-number-3">2.5</span> Root Query</h3>
+<div id="outline-container-org438aa7b" class="outline-3">
+<h3 id="org438aa7b"><span class="section-number-3">2.5</span> Root Query</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 Root query is the mapping from a query to the corresponding data type defined in schema. It specifies the query's entry point in the data graph, e.g. for a <code>user</code> query, the <code>UserType</code> data type is the entry point:
@@ -536,8 +536,8 @@ The resolving logic is normally RDB lookup using the input params.
 </div>
 </div>
 
-<div id="outline-container-org47c1114" class="outline-3">
-<h3 id="org47c1114"><span class="section-number-3">2.6</span> GraphiQL Tool</h3>
+<div id="outline-container-org996907d" class="outline-3">
+<h3 id="org996907d"><span class="section-number-3">2.6</span> GraphiQL Tool</h3>
 <div class="outline-text-3" id="text-2-6">
 <p>
 Start the server:
@@ -563,8 +563,8 @@ And open <a href="http://localhost:4000/graphql">http://localhost:4000/graphql</
 </div>
 </div>
 
-<div id="outline-container-org8c14caa" class="outline-3">
-<h3 id="org8c14caa"><span class="section-number-3">2.7</span> Realistic Data Source</h3>
+<div id="outline-container-orgce50cd4" class="outline-3">
+<h3 id="orgce50cd4"><span class="section-number-3">2.7</span> Realistic Data Source</h3>
 <div class="outline-text-3" id="text-2-7">
 <p>
 To replace the hard-coded user data, <a href="https://github.com/typicode/json-server">json-server</a> can be used to run a local HTTP server which serves configured JSON data.
@@ -572,8 +572,8 @@ To replace the hard-coded user data, <a href="https://github.com/typicode/json-s
 </div>
 </div>
 
-<div id="outline-container-org3e9d664" class="outline-3">
-<h3 id="org3e9d664"><span class="section-number-3">2.8</span> Async Resolve Functions</h3>
+<div id="outline-container-org9af4038" class="outline-3">
+<h3 id="org9af4038"><span class="section-number-3">2.8</span> Async Resolve Functions</h3>
 <div class="outline-text-3" id="text-2-8">
 <p>
 To load data in async, wrap the request to local json-server in a promise, e.g. via <a href="https://github.com/axios/axios">axios</a>.
@@ -581,8 +581,8 @@ To load data in async, wrap the request to local json-server in a promise, e.g. 
 </div>
 </div>
 
-<div id="outline-container-org78371c4" class="outline-3">
-<h3 id="org78371c4"><span class="section-number-3">2.9</span> Nodemon Hookup</h3>
+<div id="outline-container-orga2f8d12" class="outline-3">
+<h3 id="orga2f8d12"><span class="section-number-3">2.9</span> Nodemon Hookup</h3>
 <div class="outline-text-3" id="text-2-9">
 <p>
 To avoid restarting the Node server every time the code is change, use <a href="https://github.com/remy/nodemon">nodemon</a>.
@@ -591,12 +591,12 @@ To avoid restarting the Node server every time the code is change, use <a href="
 </div>
 </div>
 
-<div id="outline-container-org99e118f" class="outline-2">
-<h2 id="org99e118f"><span class="section-number-2">3</span> Fetching Data with Queries</h2>
+<div id="outline-container-org65de4ad" class="outline-2">
+<h2 id="org65de4ad"><span class="section-number-2">3</span> Fetching Data with Queries</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-orgb1e49ab" class="outline-3">
-<h3 id="orgb1e49ab"><span class="section-number-3">3.1</span> Nested Queries</h3>
+<div id="outline-container-org0b0af77" class="outline-3">
+<h3 id="org0b0af77"><span class="section-number-3">3.1</span> Nested Queries</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 To declare relation between 2 data types, e.g. a <code>user</code> belonging to a <code>company</code>, update the schema:
@@ -662,8 +662,8 @@ The query to fetch user's company data:
 </div>
 </div>
 
-<div id="outline-container-org841b866" class="outline-3">
-<h3 id="org841b866"><span class="section-number-3">3.2</span> Bidirectional Relations</h3>
+<div id="outline-container-org6759cef" class="outline-3">
+<h3 id="org6759cef"><span class="section-number-3">3.2</span> Bidirectional Relations</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 One <code>company</code> has multiple <code>user</code>. To fetch all <code>user</code> belonging to a <code>company</code>, add data field (which is a list of <code>user</code>) and resolving logic:
@@ -687,12 +687,12 @@ One <code>company</code> has multiple <code>user</code>. To fetch all <code>user
 </div>
 </div>
 
-<div id="outline-container-org59c2afc" class="outline-3">
-<h3 id="org59c2afc"><span class="section-number-3">3.3</span> Query Fragments</h3>
+<div id="outline-container-orgaa9a974" class="outline-3">
+<h3 id="orgaa9a974"><span class="section-number-3">3.3</span> Query Fragments</h3>
 <div class="outline-text-3" id="text-3-3">
 </div>
-<div id="outline-container-orgaa9a329" class="outline-4">
-<h4 id="orgaa9a329"><span class="section-number-4">3.3.1</span> Query Names</h4>
+<div id="outline-container-org0e9131e" class="outline-4">
+<h4 id="org0e9131e"><span class="section-number-4">3.3.1</span> Query Names</h4>
 <div class="outline-text-4" id="text-3-3-1">
 <p>
 Queries can be named, so that it can be reused:
@@ -709,8 +709,8 @@ Queries can be named, so that it can be reused:
 </div>
 </div>
 
-<div id="outline-container-org237d51b" class="outline-4">
-<h4 id="org237d51b"><span class="section-number-4">3.3.2</span> Query Field Names</h4>
+<div id="outline-container-orgfee981b" class="outline-4">
+<h4 id="orgfee981b"><span class="section-number-4">3.3.2</span> Query Field Names</h4>
 <div class="outline-text-4" id="text-3-3-2">
 <p>
 When querying the same data type multiple times, each field needs to be named:
@@ -740,8 +740,8 @@ The result:
 </div>
 </div>
 
-<div id="outline-container-orgc7e0da6" class="outline-4">
-<h4 id="orgc7e0da6"><span class="section-number-4">3.3.3</span> Query Fragments</h4>
+<div id="outline-container-org9b94591" class="outline-4">
+<h4 id="org9b94591"><span class="section-number-4">3.3.3</span> Query Fragments</h4>
 <div class="outline-text-4" id="text-3-3-3">
 <p>
 Query fragments are lists of fields that can be reused between queries. E.g. instead of:
@@ -780,8 +780,8 @@ By using query fragments, it becomes:
 </div>
 </div>
 
-<div id="outline-container-org97538a7" class="outline-3">
-<h3 id="org97538a7"><span class="section-number-3">3.4</span> Introduction to Mutations</h3>
+<div id="outline-container-orgc57fe92" class="outline-3">
+<h3 id="orgc57fe92"><span class="section-number-3">3.4</span> Introduction to Mutations</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 GraphQL mutations are used to represent modifications (in contrast to reading) to the data.
@@ -838,8 +838,8 @@ GraphQL mutation syntax:
 </div>
 </div>
 
-<div id="outline-container-org711999a" class="outline-3">
-<h3 id="org711999a"><span class="section-number-3">3.5</span> Edit Mutation</h3>
+<div id="outline-container-org6f85a49" class="outline-3">
+<h3 id="org6f85a49"><span class="section-number-3">3.5</span> Edit Mutation</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
 Difference between these methods:
@@ -882,8 +882,8 @@ Difference between these methods:
 </div>
 </div>
 
-<div id="outline-container-org787a8f4" class="outline-2">
-<h2 id="org787a8f4"><span class="section-number-2">4</span> Links</h2>
+<div id="outline-container-org7adbe59" class="outline-2">
+<h2 id="org7adbe59"><span class="section-number-2">4</span> Links</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://www.udemy.com/course/graphql-with-react-course">Udemy | GraphQL with React: The Complete Developers Guide</a></li>
@@ -893,7 +893,7 @@ Difference between these methods:
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Chen</p>
-<p class="date">Created: 2020-07-05 Sun 17:37</p>
+<p class="date">Created: 2020-07-19 Sun 17:15</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
