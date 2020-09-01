@@ -1,0 +1,555 @@
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Java Scrap
+
+* POJO vs JavaBean
+
+[[https://www.baeldung.com/java-pojo-class][Baeldung | What is a POJO Class?]]
+
+** POJO
+
+POJO stands for Plain Old Java Object. A POJO is a straightforward type without:
+
+- references to any framework, or
+- naming or access convention on properties or methods.
+
+This lack of convention causes two problems:
+
+- It increases the learning curve to understand how to use it.
+- It limits the ability to favor convention over configuration.
+
+*** POJO Example
+
+#+begin_src java
+public class EmployeePojo {
+ 
+    public String firstName;
+    public String lastName;
+    private LocalDate startDate;
+ 
+    public EmployeePojo(String firstName, String lastName, LocalDate startDate) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.startDate = startDate;
+    }
+ 
+    public String name() {
+        return this.firstName + " " + this.lastName;
+    }
+ 
+    public LocalDate getStart() {
+        return this.startDate;
+    }
+}
+#+end_src
+
+** JavaBean
+
+A JavaBean is still a POJO, but with a strict set of rules:
+
+#+attr_html: :class no-border
+| *Access level*        | Properties are private, exposed only via getters and setters. |
+|-----------------------+---------------------------------------------------------------|
+| *Naming convention*   | Methods are named as =getProp=, =setProp=, =isProp= etc.      |
+|-----------------------+---------------------------------------------------------------|
+| *Default constructor* | Has a no-argument constructor.                                |
+|-----------------------+---------------------------------------------------------------|
+| *Serializable*        | Implements =Serializable= interface for data persistence.     |
+
+JavaBeans have some potential disadvantages:
+
+- JavaBeans are mutable (via setters), which could lead to concurrency or consistency issues.
+- JavaBeans contain a lot of boilerplate code, e.g. getter and setters for all properties.
+
+*** JavaBean Example
+
+#+begin_src java
+public class EmployeeBean implements Serializable {
+ 
+    private static final long serialVersionUID = -3760445487636086034L;
+    private String firstName;
+    private String lastName;
+    private LocalDate startDate;
+ 
+    public EmployeeBean() {
+    }
+ 
+    public EmployeeBean(String firstName, String lastName, LocalDate startDate) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.startDate = startDate;
+    }
+ 
+    public String getFirstName() {
+        return firstName;
+    }
+ 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+ 
+    // Other getters and setters
+}
+#+end_src
+* Comparison Methods
+
+[[https://www.baeldung.com/java-8-sort-lambda][Baeldung | Java 8 – Powerful Comparison with Lambdas]]
+
+** Scenario
+
+Model class:
+
+#+begin_src java
+@Value.Immutable
+public interface Human {
+    @Value.Parameter String name();
+    @Value.Parameter int age();
+}
+#+end_src
+
+Create object list:
+
+#+begin_src java
+List<Human> humans = Lists.newArrayList(
+        ImmutableHuman.of("foo", 15),
+        ImmutableHuman.of("bar", 20),
+        ImmutableHuman.of("foo", 10)
+);
+#+end_src
+
+** Anonymous Comparator
+
+Single condition:
+
+#+begin_src java
+Collections.sort(humans, new Comparator<Human>() {
+    @Override
+    public int compare(Human h1, Human h2) {
+        return h1.name().compareTo(h2.name());
+    }
+});
+
+humans.sort(new Comparator<Human>() {
+    // Same as above
+});
+
+List<Human> sortedHumans = humans.stream().sorted(new Comparator<Human>() {
+    // Same as above
+}).collect(Collectors.toList());
+#+end_src
+
+Multiple conditions:
+
+#+begin_src java
+Collections.sort(humans, new Comparator<Human>() {
+    @Override
+    public int compare(Human h1, Human h2) {
+        if (h1.name().equals(h2.name())) {
+            return Integer.compare(h1.age(), h2.age());
+        } else {
+            return h1.name().compareTo(h2.name());
+        }
+    }
+});
+
+humans.sort(new Comparator<Human>() {
+    // Same as above
+});
+
+List<Human> sortedHumans = humans.stream().sorted(new Comparator<Human>() {
+    // Same as above
+}).collect(Collectors.toList());
+#+end_src
+
+** Named Comparator
+
+Single condition:
+
+#+begin_src java
+Comparator<Human> comparator = new Comparator<Human>() {
+    @Override
+    public int compare(Human h1, Human h2) {
+        return h1.name().compareTo(h2.name());
+    }
+};
+
+Collections.sort(humans, comparator);
+Collections.sort(humans, comparator.reversed()); // Reverse order
+
+humans.sort(comparator);
+humans.sort(comparator.reversed()); // Reverse order
+
+List<Human> sortedHumans = humans.stream().sorted(comparator).collect(Collectors.toList());
+List<Human> sortedHumans = humans.stream().sorted(comparator.reversed()).collect(Collectors.toList()); // Reverse order
+#+end_src
+
+Multiple conditions:
+
+#+begin_src java
+Comparator<Human> comparator = (h1, h2) -> {
+    if (h1.name().equals(h2.name())) {
+        return Integer.compare(h1.age(), h2.age());
+    } else {
+        return h1.name().compareTo(h2.name());
+    }
+};
+
+Collections.sort(humans, comparator);
+Collections.sort(humans, comparator.reversed()); // Reverse sort
+
+humans.sort(comparator);
+humans.sort(comparator.reversed()); // Reverse sort
+
+List<Human> sortedHumans = humans.stream().sorted(comparator).collect(Collectors.toList());
+List<Human> sortedHumans = humans.stream().sorted(comparator.reversed()).collect(Collectors.toList()); // Reverse order
+#+end_src
+
+** Static Method Reference
+
+Single condition:
+
+#+begin_src java
+public class HumanHelper {
+    public static int compareByName(Human h1, Human h2) {
+        return h1.name().compareTo(h2.name());
+    }
+}
+
+Collections.sort(humans, HumanHelper::compareByName);
+
+humans.sort(HumanHelper::compareByName);
+
+List<Human> sortedHumans = humans.stream().sorted(HumanHelper::compareByName).collect(Collectors.toList());
+#+end_src
+
+Multiple conditions:
+
+#+begin_src java
+public class HumanHelper {
+    public static int compareByNameAndAge(Human h1, Human h2) {
+        if (h1.name().equals(h2.name())) {
+            return Integer.compare(h1.age(), h2.age());
+        } else {
+            return h1.name().compareTo(h2.name());
+        }
+    }
+}
+
+Collections.sort(humans, HumanHelper::compareByNameAndAge);
+
+humans.sort(HumanHelper::compareByNameAndAge);
+
+List<Human> sortedHumans = humans.stream().sorted(HumanHelper::compareByNameAndAge).collect(Collectors.toList());
+#+end_src
+
+** Lambda
+
+Single condition:
+
+#+begin_src java
+Collections.sort(humans, (Human h1, Human h2) -> h1.name().compareTo(h2.name()));
+Collections.sort(humans, (h1, h2) -> h1.name().compareTo(h2.name())); // Compiler can infer types
+
+humans.sort((Human h1, Human h2) -> h1.name().compareTo(h2.name()));
+humans.sort((h1, h2) -> h1.name().compareTo(h2.name())); // Compiler can infer types
+
+List<Human> sortedHumans = humans.stream().sorted((Human h1, Human h2) -> h1.name().compareTo(h2.name())).collect(Collectors.toList());
+List<Human> sortedHumans = humans.stream().sorted((h1, h2) -> h1.name().compareTo(h2.name())).collect(Collectors.toList()); // Compiler can infer types
+#+end_src
+
+Multiple conditions:
+
+#+begin_src java
+Collections.sort(humans, (h1, h2) -> {
+    if (h1.name().equals(h2.name())) {
+        return Integer.compare(h1.age(), h2.age());
+    } else {
+        return h1.name().compareTo(h2.name());
+    }
+});
+
+humans.sort((h1, h2) -> {
+    // Same as above
+});
+
+List<Human> sortedHumans = humans.stream().sorted((h1, h2) -> {
+    // Same as above
+}).collect(Collectors.toList());
+#+end_src
+
+** Extracted Comparator
+
+Single condition:
+
+#+begin_src java
+Collections.sort(humans, Comparator.comparing(Human::name));
+Collections.sort(humans, Comparator.comparing(Human::name, Comparator.reverseOrder())); // Reverse order
+
+humans.sort(Comparator.comparing(Human::name));
+humans.sort(Comparator.comparing(Human::name, Comparator.reverseOrder())); // Reverse order
+
+List<Human> sortedHumans = humans.stream().sorted(Comparator.comparing(Human::name)).collect(Collectors.toList());
+List<Human> sortedHumans = humans.stream().sorted(Comparator.comparing(Human::name, Comparator.reverseOrder())).collect(Collectors.toList()); // Reverse order
+#+end_src
+
+Multiple conditions:
+
+#+begin_src java
+Collections.sort(humans, Comparator.comparing(Human::name).thenComparing(Human::age));
+
+humans.sort(Comparator.comparing(Human::name).thenComparing(Human::age));
+
+List<Human> sortedHumans = humans.stream().sorted(Comparator.comparing(Human::name).thenComparing(Human::age)).collect(Collectors.toList());
+#+end_src
+** Null Values
+
+If the collection contains at least one =null= element, the =sort()= method throws a =NullPointerException=:
+
+#+begin_src java
+List<Human> humans = Lists.newArrayList(null, ImmutableHuman.of("foo", 15));
+humans.sort((h1, h2) -> h1.name().compareTo(h2.name()));
+#+end_src
+
+One solution is to handle =null= values manually (e.g. put =null= values towards the end) in =Comparator= implementation:
+
+#+begin_src java
+Comparator<Human> comparator = new Comparator<Human>() {
+    @Override
+    public int compare(Human h1, Human h2) {
+        if (h1 == null) {
+            return h2 == null ? 0 : 1;
+        }
+        else if (h2 == null) {
+            return -1;
+        }
+        return h1.name().compareTo(h2.name());
+    }
+};
+#+end_src
+
+Another solution is to use =Comparator.nullsLast()= or =Comparator.nullsFirst()=:
+
+#+begin_src java
+humans.sort(Comparator.nullsLast(Comparator.comparing(Human::name)));
+humans.sort(Comparator.nullsFirst(Comparator.comparing(Human::name)));
+#+end_src
+* Stream API Tutorial
+
+[[https://www.baeldung.com/java-8-streams][Baeldung | The Java 8 Stream API Tutorial]]
+
+** Stream Creation
+*** Empty Stream
+
+#+begin_src java
+Stream<String> empty = Stream.empty();
+#+end_src
+
+Empty stream can be used to avoid returning =null= for streams with no element:
+
+#+begin_src java
+public Stream<String> streamOf(List<String> list) {
+    return list == null || list.isEmpty() ? Stream.empty() : list.stream();
+}
+#+end_src
+
+*** From Enumerated Elements
+
+#+begin_src java
+Stream<String> letters = Stream.of("a", "b", "c");
+#+end_src
+
+*** From Array
+
+#+begin_src java
+String[] array = new String[]{"a", "b", "c"};
+Stream<String> lettersFull = Arrays.stream(array);
+Stream<String> lettersSlice = Arrays.stream(array, 1, 3);
+#+end_src
+
+*** From Collection
+
+#+begin_src java
+Collection<String> collection = Arrays.asList("a", "b", "c");
+Stream<String> letters = collection.stream();
+#+end_src
+
+*** Stream Builder
+
+#+begin_src java
+Stream<String> letters = Stream.<String>builder().add("a").add("b").add("c").build();
+#+end_src
+
+*** Stream Generator
+
+=Stream.generate()= accepts a =Supplier<T>= for element generation. The resulting stream is infinite (will continue until memory limit is reached) unless a desired size is specified:
+
+#+begin_src java
+Stream<String> letters = Stream.generate(() -> "a").limit(3); // Result: ["a", "a", "a"]
+#+end_src
+
+*** Stream Iterator
+
+#+begin_src java
+Stream<Integer> numbers = Stream.iterate(
+        1,         // The starting value
+        n -> n + 1 // The method that generates the next element
+).limit(3);        // Result: [1, 2, 3]
+#+end_src
+** Stream Pipeline
+
+A stream by itself is worthless, what's meaningful is the end result (e.g. an aggregated value, or an action applied to every element of the stream) of the stream pipeline. A stream pipeline has 3 parts:
+
+#+attr_html: :class no-border
+| *Source*                 | Only one, e.g. =of()=, =stream()=                        |
+|--------------------------+----------------------------------------------------------|
+| *Intermediate operation* | Can be multiple and chained up, e.g. =filter()=, =map()= |
+|--------------------------+----------------------------------------------------------|
+| *Terminal operation*     | Only one, e.g. =count()=, =sum()=                        |
+
+** Stream Reusability
+
+Streams were designed to apply a finite sequence of operations to the source of elements in a functional style. It is not designed to store elements. Executing a terminal operation on a stream makes it inaccessible. An attempt to reuse the same stream reference after a terminal operation triggers =IllegalStateException=:
+
+#+begin_src java
+Stream<String> stream = Stream.of("a", "b", "c")
+        .filter(element -> element.contains("b"));
+Optional<String> anyElement = stream.findAny();     // This is bad practice in general, stream operations should be chained up
+Optional<String> firstElement = stream.findFirst(); // This will throw IllegalStateException because it tries to reuse the stream reference
+#+end_src
+
+Rewrite this code to make it work properly:
+
+#+begin_src java
+List<String> elements = Stream.of("a", "b", "c")
+        .filter(element -> element.contains("b"))
+        .collect(Collectors.toList());
+Optional<String> anyElement = elements.stream().findAny();
+Optional<String> firstElement = elements.stream().findFirst();
+#+end_src
+
+** Operations Invocation
+
+Stream's intermediate operations are executed:
+
+- lazily, they are invoked only if it is necessary,
+- vertically, each element of the stream passes the pipeline sperately, each element may return early by skipping all following operations.
+
+For example:
+
+#+begin_src java
+Arrays.asList("a", "b", "c").stream()
+        .filter(l -> { // filter() will never be called because there is no terminal operation
+            System.out.println("Filtering letter " + l);
+            return l.equals("b");
+        });
+
+// Result: (empty)
+#+end_src
+
+Adding an intermediate operation and a terminal operation:
+
+#+begin_src java
+Arrays.asList("a", "b", "c").stream()
+        .filter(l -> { // filter() is called on "a" and "b"
+            System.out.println("Filtering letter " + l);
+            return l.equals("b");
+        })
+        .map(l -> {
+            System.out.println("Mapping letter " + l);
+            return l.toUpperCase();
+        })
+        .findFirst(); // When "b" passes filter(), findFirst() is called and stream pipeline returns, so "c" is not processed at all
+
+// Result:
+// Filtering letter a
+// Filtering letter b
+// Mapping letter b
+#+end_src
+
+** Operations Ordering
+
+Because of how imtermediate operations are executed, the ordering of the operations will change the result:
+
+#+begin_src java
+Arrays.asList("a", "b", "c").stream()
+        .map(l -> {
+            System.out.println("Mapping letter " + l);
+            return l.toUpperCase();
+        })
+        .skip(2)
+        .collect(Collectors.toList());
+
+// Result:
+// Mapping letter a
+// Mapping letter b
+// Mapping letter c
+
+Arrays.asList("a", "b", "c").stream()
+        .skip(2)
+        .map(l -> {
+            System.out.println("Mapping letter " + l);
+            return l.toUpperCase();
+        })
+        .collect(Collectors.toList());
+
+// Result:
+// Mapping letter c
+#+end_src
+
+Therefore, intermediate operations which reduce the size of the stream (e.g. =filter()=, =distinct()=, =skip()=) should be placed at the top of the stream pipeline, before operations that apply to each element.
+
+** Stream Reduction
+
+Stream API provides predifined terminal operations which aggregate a stream to a type or primitive, e.g. =count()=, =max()=, =sum()=. To implement custom reduction logic, =reduce()= method can be used. There are 3 variants of =reduce()= differ by signatures and return types:
+
+*** Accumulator Only
+
+There is no initial value, only an accumulator function:
+
+#+begin_src java
+OptionalInt n = IntStream.range(1, 4)
+        .reduce((a, b) -> {
+            System.out.println("a = " + a + ", b = " + b + ", a + b = " + (a + b));
+            return a + b;
+        });
+
+// Result:
+// a = 1, b = 2, a + b = 3
+// a = 3, b = 3, a + b = 6
+#+end_src
+
+*** With Initial Value
+
+#+begin_src java
+int n = IntStream.range(1, 4)
+        .reduce(10, (a, b) -> {
+            System.out.println("a = " + a + ", b = " + b + ", a + b = " + (a + b));
+            return a + b;
+        });
+
+// Result:
+// a = 10, b = 1, a + b = 11
+// a = 11, b = 2, a + b = 13
+// a = 13, b = 3, a + b = 16
+#+end_src
+
+*** With Combiner
+
+Combiner function works only in parallel stream. It reduces the results of accumulator function from different threads:
+
+#+begin_src java
+int n = Arrays.asList(1, 2, 3).parallelStream()
+        .reduce(10, (a, b) -> { // Accumulator
+            System.out.println("a = " + a + ", b = " + b + ", a + b = " + (a + b));
+            return a + b;
+        }, (c, d) -> { // Combiner
+            System.out.println("c = " + c + ", d = " + d + ", c + d = " + (c + d));
+            return c + d;
+        });
+
+// Result:
+// a = 10, b = 2, a + b = 12 // Ordering of the first 3 lines is uncertain, as they run in parallel
+// a = 10, b = 1, a + b = 11
+// a = 10, b = 3, a + b = 13
+// c = 12, d = 13, c + d = 25
+// c = 11, d = 25, c + d = 36
+#+end_src

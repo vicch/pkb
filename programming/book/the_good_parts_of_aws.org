@@ -1,0 +1,209 @@
+#+setupfile: ../../styles/readtheorg.setup
+#+title: The Good Parts of AWS
+
+* The Default Heuristic
+
+*What is the problem of searching for the best tool?*
+
+The relentless search for the best tool is an optimization fallacy, in the same category as any other premature optimization. Searching for the optimal option is expensive. Any belief that we can easily discover the best option by exhaustively testing each one is delusional.
+
+*What should we do if we can't find the best tool?*
+
+We recommend a technique called the default heuristic: when the cost of acquiring new information is high and the consequence of deviating from a default choice is low, sticking with the default will likely be the optimal choice.
+
+*What is a default choice?*
+
+A default choice is any option that gives you very high confidence that it will work. Most of the time, it is something that:
+
+- you’ve used before,
+- you understand well,
+- has proven itself to be reliable for getting things done (in the space you’re operating in).
+
+A default choice doesn’t have to be the theoretical best, or the most efficient, or the latest and greatest choice. A default choice simply needs to be a reliable option to get the ultimate desirable outcome.
+
+* DynamoDB
+
+*What is the essence of DynamoDB?*
+
+DynamoDB is best seen as a highly-durable data structure (a partitioned B-tree, to be precise) in the cloud.
+
+*What's the differences between DynamoDB, Redis and MySQL?*
+
+DynamoDB is much more similar to Redis than it is to MySQL. But, unlike Redis, it is immediately consistent and highly-durable.
+
+*What's the limitation of DynamoDB when comparing with RDB? How should it affect your decision?*
+
+Compared to a RDB, DynamoDB requires you to do most of the data querying within the application. You can either:
+
+- read a single value out of DynamoDB, or
+- get a contiguous range of data.
+
+But if you want to aggregate, filter, or sort, it has to be done by yourself after receiving the requested data range.
+
+It also comes with performance implications. RDB runs queries close to the data, e.g. when calculating the sum total value of orders per customer, the rollup gets done while reading the data, and only the final summary data gets sent over the network.
+
+With DynamoDB, you have to get all the customer orders (one row per order), which involves a lot more data over the network, and then do the rollup in the application, which is far away from the data. This characteristic is one of the most important aspects of determining whether DynamoDB is a viable choice for your needs.
+
+*What's the difference in storage cost between DynamoDB and S3? Is it important?*
+
+Storing 1 TB in DynamoDB costs $256/month. For comparison, storing 1 TB in S3 costs $23.55/month. Data can also be compressed much more efficiently in S3. However, storage cost is rarely a large factor when deciding whether DynamoDB is a viable option. Instead, it’s generally request pricing that matters most.
+
+*How to estimate the cost of DynamoDB request?*
+
+Since DynamoDB is such a simple data structure, it’s often not that hard to estimate how many requests you will need. You will likely be able to inspect your application and map every logical operation to a number of DynamoDB requests.
+
+*What's the pros and cons of provisioned capacity?*
+
+On paper, that same workload that cost $1/day to serve 1 million pages would only cost $0.14/day with provisioned capacity. However, this calculation assumes both that requests are evenly distributed over the course of the day and that there is absolutely zero capacity headroom.
+
+With provisioned capacity, you will have the burden to monitor your utilization and proactively provision the necessary capacity. You have to provision abundant headroom in order to deal with the peak request rate, as well as to handle any general uncertainty in demand.
+
+*In what situations should you consider choosing provisioned capacity?*
+
+With on-demand pricing, the capacity you get is not perfectly on-demand. Behind the scenes, DynamoDB adjusts a limit on the number of reads and writes per second, and these limits change based on your usage. This is an opaque process, so if you want to ensure that you reserve capacity for big fluctuations in usage, you may want to consider using provisioned capacity for peace of mind.
+
+*What's the pros and cons of local index?*
+
+Pros: local indexes is immediately consistent.
+
+Cons: local index forbids a table to grow indefinitely. It comes with the constraint that all the records that share the same partition key can fit in 10 GB. Once that allocation gets exhausted, all writes with that partition key will start failing. Unless you know for sure that you won’t ever exceed this limit, we recommend avoiding local indexes.
+
+*What's the pros and cons of global index?*
+
+Pros: global indexes don’t constrain table size.
+
+Cons: reading is eventually consistent (although the delay is almost always unnoticeable).
+
+*Why high throughput on global index might cause problem? And how to prevent it?* 
+
+DynamoDB has an internal queue-like system between the main table and the global index, and this queue has a fixed (but opaque) size. Therefore, if the provisioned throughput of a global index happens to be insufficient to keep up with updates on the main table, then that queue can get full. When this happens, all write operations on the main table will fail.
+
+There’s no way to monitor the state of this internal queue. So, the only way to prevent it is to monitor the throttled request count on all global indexes, and react quickly to any throttling by provisioning additional capacity on the affected indexes.
+* S3
+
+*What is the essence of S3?*
+
+You can think of S3 as a hash table in the cloud. The key can be any string, and the value any blob of data up to 5 TB.
+
+*What are the features that make S3 the best choice for data storage?*
+
+- Easy to use
+- Highly durable
+- Infinite storage space
+- Infinite bandwidth (you can have as many parallel uploads and downloads)
+- Requires no capacity management (no need to provision capacity in advance, and won't experience any performance degradation as the scale increases)
+
+*How different use cases affect S3 request costs?*
+
+While S3 storage costs are practically unbeatable, request pricing can become expensive in certain situations. When your S3 usage is the result of a human operation, such as somebody uploading a file, or requesting an image from a website, this cost tends to be acceptable. However, when your S3 usage is driven by other computers which touch S3 objects at a high frequency (millions of times a day), request pricing becomes an important aspect of S3’s viability.
+
+*What use case makes the data less durable when using S3?*
+
+One limitation of S3 is that you cannot append to objects. For something that changes rapidly (such as a log file), you have to buffer updates on your side for a while, and then periodically flush chunks to S3 as new objects. This buffering can reduce the overall data durability, because the buffered data will typically sit in a single place without any replication. A solution for this issue is to buffer data in a durable queue, such as SQS or Kinesis streams.
+
+*What is the problem of hosting static websites on S3?*
+
+S3 doesn’t support HTTPS when used as a static website host. Web browsers will display a warning, and search engines will penalize you in the rankings. You could set up HTTPS using CloudFront, but it’s probably much more trouble than it’s worth.
+
+*How to name S3 buckets to avoid collisionin global namespace?*
+
+Bucket names are globally unique across all AWS customers and across all AWS regions. A common mitigation is to always add your AWS account ID to the bucket name.
+
+*What security risk does global namespace have? And how to avoid it?*
+
+The global bucket namespace also has an important security implication. If your application tries to use an S3 bucket without checking its owner, you might upload data to someone else’s bucket. S3 has an API to check if you own the bucket, and this should always be done before interacting with an existing S3 bucket.
+
+* EC2
+
+*What is the advantage of EC2 in terms of software portability?*
+
+EC2’s main advantages compared to other types of compute platforms (such as Lambda): you don’t have to adapt the application to the host, the computer you get will be very similar to the computer you use to develop the software.
+
+*What are reserved instances? And why are they obselete?*
+
+By using reserved instances, you make 1- or 3-year commitments on a specific instance type in exchange for a substantial price reduction. However, a recently released option called savings plans offers equivalent cost savings with some additional flexibility in switching instance types during the period under contract. Therefore, we don’t see any reason to use reserved instances anymore.
+
+*What are the benefits and issues of using spot instances?*
+
+Spot instances are another cost saving option, where you save money by allowing EC2 to take away instance whenever it wants. But not every use case can tolerate having compute capacity taken away from it randomly.
+
+*What to remember when choosing the pricing model?*
+
+These are not free discounts. They come at the cost of more complicated capacity management and less optionality.
+
+*What important concepts you need to know about EC2 network security?*
+
+Two important concepts that you will likely have to modify:
+
+#+attr_html: :class no-border
+| *Security groups* | Can be thought as individual firewalls for the instances. |
+|                   | Controls ingress and egress of the instances.             |
+|-------------------+-----------------------------------------------------------|
+| *VPC ACL*         | Can be thought as a network firewall.                     |
+|                   | Controls ingress and egress of the network.               |
+
+* EC2 Auto Scaling
+
+*How does EC2 Auto Scaling support flunctuating traffic?*
+
+The main premise of Auto Scaling is that once you decide how much headroom is needed (on top of adequate capacity), you can make that headroom a constant size, even as the demand for instances fluctuates.
+
+*How to decide if the cost reduction from Auto Scaling is worthwhile?*
+
+If your EC2 costs are high enough that a reduction in usage, e.g. 30% of EC2 bill, is materially significant for your business, then Auto Scaling is needed. If not, the effort and complexity of getting Auto Scaling working properly is probably not going to be worth it.
+
+*What kinds of traffic are not suitable for Auto Scaling?*
+
+If the fluctuations are:
+
+- insignificant
+- abrupt
+- not smooth
+
+*How to use health check for Auto Scaling?*
+
+If you are already using a load balancer, the same health checks can be used for both the load balancer and Auto Scaling. You can also send health check signals using the Auto Scaling API, either directly from the instances (which isn’t necessarily reliable) or from some service that monitors the instances from the outside.
+
+*What is the fastest way to manually tune the number of running instances?*
+
+Auto Scaling provides the ability to add or remove instances by updating the desired capacity setting.
+
+* Lambda
+
+*What are the differences between EC2 and Lambda?*
+
+EC2 is a complete computer in the cloud. With EC2 you get an operating system, a file system, access to the server’s hardware, etc. Lambda is a code runner in the cloud. With Lambda, you just upload some code and AWS runs it.
+
+*What's the essence of Lambda?*
+
+It’s the simplest way to run code in the cloud. It abstracts away everything except for a function interface, which you can fill in with the code to run.
+
+*What kind of code is most suitable to be run by Lambda?*
+
+Our rule of thumb: Lambda is a very good default choice for a small piece of code that will rarely need to be changed and that needs to run in response to something that happens in your AWS account.
+
+*What are the correct and incorrect ways of using Lambda?*
+
+Think of Lambda functions as part of the infrastructure rather than part of the application.
+
+People sometimes mistake Lambda for a general-purpose application host. Unlike EC2, it is very hard to run a sophisticated piece of software on Lambda without making drastic changes to the application, and accepting significant limitations from the platform.
+
+*How can Lambda be used in companion with other AWS services?*
+
+Lambda is a great way to extend existing AWS features. Treat it as a plugin system for other AWS services. For examples, Lambda can be used to fill in these feature gaps:
+
+- Make S3 resize an image after uploading it to a bucket.
+- Make CloudFront rewrite a request URL based on request cookies (which is useful for A/B testing).
+- Make CloudWatch support regex-based alerting on application logs.
+- Make Kinesis filter records and write them to DynamoDB.
+- Make CloudFormation create and validate a new TLS certificate from the AWS Certificate Manager.
+
+*What limitations of Lambda are likely to be eliminated in the future?*
+
+- The cold start when a function is invoked after a period of inactivity or when Lambda decides to start running a function on new backend workers.
+- The limit of 250 MB for code bundle, including all dependencies.
+- The network bandwidth from Lambda functions seems to be very limited and unpredictable.
+
+*What limitations of Lambda are inherent and are not likely to eliminated? What problem it may cause?*
+
+You have to assume that every Lambda invocation is stateless. If you need to access some state, something like S3 or DynamoDB has to be used. This can quickly become prohibitively expensive. For example, handling a WebSocket connection on Lambda will likely require a read and write to DynamoDB for every exchanged packet, which can quickly result in a spectacularly large DynamoDB bill.

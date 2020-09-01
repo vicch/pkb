@@ -134,21 +134,19 @@ String s;
 final int l = s.length(); // Use "final" to indicate the value is immutable
 #+end_src
 
-* Control
+* Statement
 ** =for=
 
 #+begin_src java
-for (int i = 0; i < 10; i++) {
-    ...
-}
+for (int i = 0; i < 10; i++) {}
 
 int[] nums = {1, 2, 3};
-for (int n : nums) {
-    ...
-}
+for (int n : nums) {}
 #+end_src
 
 ** =break=
+
+Break multiple loops:
 
 #+begin_src java
 outer:
@@ -159,6 +157,75 @@ for (int i = 0; i < 10; i++) {
         }
     }
 }
+#+end_src
+
+** =try=
+*** =try= with Resource
+
+If a resource type implements =AutoClosable= interface, it can be initialized within the =try= statement. The resource is guaranteed to be closed if any exception is thrown from the =try= block. This is equivalent to (but less verbose than) the =finally= syntax.
+
+If multiple resources are initialized, the first initialized resource will be closed lastly.
+
+**** Example
+
+Define 2 resource types:
+
+#+begin_src java
+public abstract class Resource implements AutoCloseable {
+
+    protected abstract String getName();
+
+    public Resource() {
+        System.out.println("Creating " + getName());
+    }
+
+    public void use() throws Exception {
+        System.out.println("Using " + getName());
+        throw new Exception("Throwing exception on " + getName());
+    }
+
+    @Override
+    public void close() {
+        System.out.println("Closing " + getName());
+    }
+}
+
+public class FooResource extends Resource {
+
+    @Override
+    protected String getName() { return "foo"; }
+}
+
+public class BarResource extends Resource {
+
+    @Override
+    protected String getName() { return "bar"; }
+}
+#+end_src
+
+Init the resource object in =try= statement:
+
+#+begin_src java
+try (
+        FooResource foo = new FooResource();
+        BarResource bar = new BarResource()
+) {
+    foo.use();
+    bar.use();
+} catch (Exception e) {
+    System.out.println(e.getMessage());
+}
+#+end_src
+
+Output:
+
+#+begin_src sh
+Creating foo
+Creating bar
+Using foo   # Throws exception on foo, bar is never used
+Closing bar # Last initialized resource is closed first
+Closing foo
+Throwing exception on foo
 #+end_src
 
 * Method
@@ -289,17 +356,13 @@ A module is one or more packages that belong together.
 
 #+begin_src sh
 java <options> <class> <arg> ...
+    -version
 #+end_src
 
 ** =javac=
 
 #+begin_src sh
-javac <options> <src_file> ...
-
-<options>
-
-<src_file>
-    <class>.java
+javac <options> <class>.java ...
 #+end_src
 
 ** =javadoc=

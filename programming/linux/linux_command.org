@@ -420,20 +420,21 @@ grep <options> <pattern> <file>
     -A, --after-context <n>  # 输出匹配行及后 n 行
     -B, --before-context <n> # 输出匹配行及前 n 行
     -C, --context <n>        # 输出匹配行及前后 n 行
+
+    --line-buffered
 #+end_src
 
-*** 正则
+*** 示例
+
+正则：
 
 #+begin_src sh
-# 正则「或」逻辑
+# 或
 grep "<pattern>\|<pattern>" <file>
 
 # 连续两位相同数字
 grep "\([0-9]\)\1"
-#+end_src
 
-#+caption: =-P= 正则
-#+begin_src sh
 # 包含 tab
 grep -P "\t0$"
 
@@ -441,19 +442,26 @@ grep -P "\t0$"
 grep -P '^(\d{3}-|\(\d{3}\) )\d{3}-\d{4}$'
 #+end_src
 
-*** 示例
+遍历目录下文件：
 
-#+caption: 遍历目录下文件
 #+begin_src sh
 grep -R <pattern> *
 #+end_src
 
-#+caption: 保留数字行
+结合 =tail -f= 自动刷新文件：
+
+#+begin_src sh
+tail -f <file> | grep --line-buffered ...
+#+end_src
+
+保留数字行：
+
 #+begin_src sh
 cat <file> | grep -o '^[0-9.]\+$'
 #+end_src
 
-#+caption: 统计文本中某字符串出现的次数（假设一行最多出现一次）
+统计文本中某字符串出现的次数（假设一行最多出现一次）：
+
 #+begin_src sh
 grep -o <str> <file> | wc -l
 #+end_src

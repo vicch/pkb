@@ -22,4 +22,5 @@ title: ""
 - [The C Programming Language](/pkb/programming/book/the_c_programming_language.html)
 - [The Docker Book](/pkb/programming/book/the_docker_book.html)
 - [The Go Programming Language Phrasebook](/pkb/programming/book/the_go_programming_language_phrasebook.html)
+- [The Good Parts of AWS](/pkb/programming/book/the_good_parts_of_aws.html)
 - [Wicked Cool Shell Scripts](/pkb/programming/book/wicked_cool_shell_scripts.html)

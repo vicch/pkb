@@ -1,9 +1,107 @@
 #+setupfile: ../../styles/readtheorg.setup
 #+title: Java Library
 
-* Jackson
-* Lombok
-* Links
+* Guava
 
-- [[https://javadoc.io/doc/com.fasterxml.jackson.core][Jackson API]]
-- [[https://projectlombok.org/api][Lombok API]]
+[[https://guava.dev/releases/snapshot-jre/api/docs][Guava Javadoc]]
+
+** =com.google.common.collect=
+
+[[https://guava.dev/releases/snapshot-jre/api/docs/com/google/common/collect/package-summary.html][Guava | com.google.common.collect]]
+
+* Immutables
+
+[[https://immutables.github.io][Immutables]]
+
+** =@Value.Immutable=
+
+Generates an immutable version of an annotated type (abstract class, interface), and prefixes its name with =Immutable=.
+
+*** Example
+
+#+begin_src java
+@Value.Immutable
+public interface Item {
+    String name();
+}
+#+end_src
+
+When compiled, an =ImmutableItem= class is generated:
+
+#+begin_src java
+public final class ImmutableItem implements Item {
+    ...
+}
+#+end_src
+
+Use the immutable class:
+
+#+begin_src java
+// Build an object
+ImmutableItem item = ImmutableItem.builder()
+        .name("Foo")
+        .build();
+System.out.println(item.name());
+#+end_src
+
+** =@Value.Parameter=
+
+Generates these methods for the specified property:
+
+- =of()= method taking argument to construct object.
+- =with<Prop>()= method to generate a mutated object.
+
+*** Example
+
+#+begin_src java
+@Value.Immutable
+public interface Item {
+    @Value.Parameter
+    String name();
+}
+#+end_src
+
+Use the immutable class:
+
+#+begin_src java
+// Instantiate an object
+ImmutableItem itemFoo = ImmutableItem.of("Foo");
+// Generate a mutated object
+ImmutableItem itemBar = itemFoo.withName("Bar");
+#+end_src
+
+** =@Value.Default=
+
+Sets default value for the specified property.
+
+*** Example
+
+#+begin_src java
+@Value.Immutable
+public interface Item {
+    @Value.Parameter
+    String name();
+
+    @Value.Default
+    default String type() {
+        return "Default";
+    }
+}
+#+end_src
+
+Use the immutable class:
+
+#+begin_src java
+// Instantiate an object
+ImmutableItem itemFoo = ImmutableItem.of("Foo");
+System.out.println(itemFoo); // Item{name=Foo, type=Default}
+#+end_src
+
+* Jackson
+
+[[https://javadoc.io/doc/com.fasterxml.jackson.core][javadoc.io | com.fasterxml.jackson.core]]
+
+* Lombok
+
+[[https://projectlombok.org/api][Project Lombok Javadoc]]
+

@@ -1,22 +1,106 @@
 #+setupfile: ../../styles/readtheorg.setup
 #+title: Intellij IDEA
 
-* Preferences
+* Keymap
 
-#+attr_html: :class no-border
-| *Editor > General > Auto Import* | Check "Add unambiguous imports on the fly". |
-|                                  | Check "Optimize imports on the fly".        |
+| =⇧= | Shift   |
+|-----+---------|
+| =⌃= | Control |
+|-----+---------|
+| =⌥= | Option  |
+|-----+---------|
+| =⌘= | Command |
+|-----+---------|
+| =⌫= | Delete  |
+
+| *Editor Actions* | =⌥= =↑=     | Extend selection                     |
+|                  | =⌥= =↓=     | Shrink selection                     |
+|------------------+-------------+--------------------------------------|
+|                  | =⌘= =⌫=     | Delete line                          |
+|------------------+-------------+--------------------------------------|
+| *Edit*           | =⌘= =F=     | Find                                 |
+|                  | =⇧= =⌘= =F= | Find in path                         |
+|------------------+-------------+--------------------------------------|
+|                  | =⌥= =F7=    | Find usages                          |
+|------------------+-------------+--------------------------------------|
+|                  | =⌘= =D=     | Duplicate line                       |
+|------------------+-------------+--------------------------------------|
+| *View*           | =⌘= =E=     | Recent files                         |
+|                  | =⌃= =⌘= =E= | Recent changed files (custom keymap) |
+|                  | =⇧= =⌘= =E= | Recent locations                     |
+|------------------+-------------+--------------------------------------|
+| *Navigate*       | =⇧= =⇧=     | Everything                           |
+|------------------+-------------+--------------------------------------|
+|                  | =⌘= =O=     | Class                                |
+|                  | =⇧= =⌘= =O= | File                                 |
+|                  | =⌥= =⌘= =O= | Symbol                               |
+|------------------+-------------+--------------------------------------|
+|                  | =⌥= =1=     | Select in (override of =⌥= =F1=)     |
+|------------------+-------------+--------------------------------------|
+|                  | =⇧= =⌘= =T= | Test (or test subject)               |
+|------------------+-------------+--------------------------------------|
+|                  | =⌃= =H=     | Type hierarchy                       |
+|                  | =⌃= =⌥= =H= | Call hierarchy                       |
+|                  | =⇧= =⌘= =H= | Method hierarchy                     |
+|------------------+-------------+--------------------------------------|
+| *Code*           | =⌘= =N=     | Generate                             |
+|------------------+-------------+--------------------------------------|
+|                  | =⌃= =O=     | Override method                      |
+|                  | =⌃= =I=     | Implement method                     |
+|------------------+-------------+--------------------------------------|
+|                  | =⌥= =⌘= =T= | Surround with                        |
+|------------------+-------------+--------------------------------------|
+|                  | =⇧= =⌘= =↑= | Move statement up                    |
+|                  | =⇧= =⌘= =↓= | Move statement down                  |
+|------------------+-------------+--------------------------------------|
+| *Refactor*       | =⌥= =⌘= =V= | Introduce variable                   |
+|                  | =⌥= =⌘= =C= | Introduce constant                   |
+|                  | =⌥= =⌘= =F= | Introduce field                      |
+|                  | =⌥= =⌘= =P= | Introduce parameter                  |
+|                  | =⌥= =⌘= =M= | Introduce method                     |
+|------------------+-------------+--------------------------------------|
+|                  | =⌥= =⌘= =N= | Inline variable                      |
+|------------------+-------------+--------------------------------------|
+| *VCS*            | =⌃= =V=     | VCS operations popup                 |
+|------------------+-------------+--------------------------------------|
+| *Window*         | =⌘= =W=     | Close                                |
+|                  | =⇧= =⌘= =W= | Close other (custom keymap)          |
+|                  | =⌃= =⌘= =W= | Close all (custom keymap)            |
+|------------------+-------------+--------------------------------------|
+| *Tool Windows*   | =⌘= =1=     | Project                              |
+|                  | =⌘= =3=     | Find                                 |
+|                  | =⌘= =7=     | Structure                            |
+
+* Code Alias
+
+| =sout=  | =System.out.println();=                                     |
+|---------+-------------------------------------------------------------|
+| =souf=  | =System.out.printf("");=                                    |
+|---------+-------------------------------------------------------------|
+| =soutm= | =System.out.println("<current_class>.<current_method>");=   |
+|---------+-------------------------------------------------------------|
+| =soutp= | =System.out.println("<current_args> = " + <current_args>);= |
 
 * Project Structure
 
-#+attr_html: :class no-border
-| *Modules* | Mark source code dir as "Sources" to enable syntax highlighting. |
+| *Project* | *Project SDK*            | Sets the Java SDK              |
+|-----------+--------------------------+--------------------------------|
+|           | *Project language level* | Sets the Java language version |
+* Tasks
+** Create Minimal Java Project
 
-* Shortcuts
+IntelliJ > Create new project:
 
-#+attr_html: :class no-border
-| =Ctrl= =Alt= =Shift= =C= | Hovering on token: copy fully qualified name               |
-|                          | Hovering on non-token: copy file path and line number      |
-|--------------------------+------------------------------------------------------------|
-| =Alt= =F1=               | Select in (project view etc.)                              |
-|                          | Conflict with system pref on Mac, use Navigate > Select In |
+- Type: Java
+- Project SDK: Java 1.8
+- Additional libraries and frameworks: (Empty)
+- Create project from template: Command line app
+- Base package: =com.<custom>=
+
+** Add Library
+
+Project structure > Libraries > New project library (the =+= button) > From Maven:
+
+- Keyword: =org.<library>=
+
+
