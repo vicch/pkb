@@ -17,3 +17,4 @@ title: ""
 - [Schaum's Outline of Japanese Grammar](/pkb/general/japanese/schaums_outline_of_japanese_grammar.html)
 - [音速語言學習](/pkb/general/japanese/sonic_learning.html)
 - [新版中日交流标准日本语](/pkb/general/japanese/xin_biao_ri.html)
+- [新版中日交流标准日本语笔记](/pkb/general/japanese/xin_biao_ri_note.html)
