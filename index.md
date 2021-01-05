@@ -29,7 +29,6 @@ title: ""
 
 - [Book](/pkb/general/book/index)
 - [English](/pkb/general/english/index)
-- [French](/pkb/general/french/index)
 - [Japanese](/pkb/general/japanese/index)
 - [Misc](/pkb/general/misc/index)
 - [Photography](/pkb/general/photography/index)
