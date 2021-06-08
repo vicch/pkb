@@ -9,6 +9,7 @@ title: ""
 - [Git Scrap](/pkb/programming/tool/git_scrap.html)
 - [GitHub](/pkb/programming/tool/github.html)
 - [Intellij IDEA](/pkb/programming/tool/intellij_idea.html)
+- [Jekyll](/pkb/programming/tool/jekyll.html)
 - [Latex](/pkb/programming/tool/latex.html)
 - [Org-mode](/pkb/programming/tool/orgmode.html)
 - [PhpStorm](/pkb/programming/tool/phpstorm.html)

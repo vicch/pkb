@@ -1,0 +1,54 @@
+#+setupfile: ../../styles/readtheorg.setup
+#+title: Jekyll
+
+* Setup
+
+#1 Install RVM
+
+- [[https://medium.com/@IanRahman/how-to-upgrade-ruby-on-a-mac-a592c6085c63][How to Upgrade Ruby on a Mac]]
+- [[https://rvm.io][Ruby Version Manager (RVM)]]
+
+#+begin_src sh
+cd ~
+brew install gnupg2
+gpg --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+\curl -sSL https://get.rvm.io | bash -s stable
+#+end_src
+
+#2 Install Ruby 2.4
+
+- [[https://help.learn.co/en/articles/2789231-how-to-upgrade-from-ruby-2-3-to-2-6][How to Upgrade from Ruby 2.3 to 2.6]]
+
+#+begin_src sh
+rvm install 2.4.0
+rvm use --default 2.4.0
+gem update --system
+#+end_src
+
+#3 Install Jekyll
+
+- [[https://jekyllrb.com/docs/installation/macos][Jekyll on macOS]]
+
+#+begin_src sh
+gem install --user-install bundler jekyll
+
+# Add line to ~/.zshrc
+export PATH="$PATH:$HOME/.gem/ruby/2.4.0/bin"
+#+end_src
+
+#4 Setup GitHub Pages site
+
+- [[https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/creating-a-github-pages-site-with-jekyll][Creating a GitHub Pages site with Jekyll]]
+
+#+begin_src sh
+# Create a GitHub repo and checkout locally
+
+cd *.github.io
+sudo jekyll new .
+
+# Update Gemfile following the link above
+
+sudo bundle update
+
+# Push to remote
+#+end_src
