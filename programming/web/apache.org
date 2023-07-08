@@ -4,22 +4,7 @@
 * 概念
 ** 虚拟主机
 
-- Apache 通过虚拟主机配置多个网站。
-- 虚拟主机的匹配可以基于 IP 地址或主机名。
-
-*** 基于 IP 地址
-
-基于 IP 地址的虚拟主机很少见，服务器通常只有一个公网地址，特殊情况是使用 SSL 证书要求每个域名有独立的 IP 地址。
-
-#+caption: 每一个 IP 地址和端口组合能且只能对应一个 =<VirtualHost>=
-#+begin_src sh
-<VirtualHost 0.0.0.0:80>
-</VirtualHost>
-#+end_src
-
-*** 基于主机名
-
-Apache 按照虚拟主机在配置文件中的顺序，将被 HTTP header 的 =Host= 值与 =ServerName= 或 =ServerAlias= 进行匹配，第一个匹配的虚拟主机接收请求。
+虚拟主机用于在一台服务器上配置多个网站，匹配可以基于 IP 地址或主机名。
 
 ** MPM
 
