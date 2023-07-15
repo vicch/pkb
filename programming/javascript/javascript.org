@@ -1,60 +1,6 @@
 #+setupfile: ../../styles/readtheorg.setup
 #+title: Javascript
 
-* Type
-** String
-*** Template Literals
-
-[[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals][MDN | JavaScript | Reference | Template Literals]]
-
-Template literal 是可换行、可嵌入表达式的字符串：
-
-#+begin_src js
-`line 1
-line 2`
-
-`string foo is ${foo}`
-#+end_src
-
-** Object
-
-#+begin_src js
-const obj = { foo: 1, bar: 2 };
-const foo = obj.foo;  // 1
-const str = 'bar';
-const bar = obj[str]; // 2
-#+end_src
-
-动态对象 key：
-
-#+begin_src js
-const key = 'foo';
-const map = { [key]: 'bar' };
-#+end_src
-
-*** Iteration
-
-#+begin_src js
-let obj = { foo: 1, bar: 2 };
-for (let k in obj) {
-  console.log(k + ':' + obj[k]);
-}
-#+end_src
-
-*** Equality
-
-使用 ~===~ 比较对象时，比较的是对象地址。
-
-#+begin_src js
-function update(obj, key, val) {
-  obj[key] = val;
-  return obj;
-}
-const a = { foo: 1, bar: 2 };
-const b = update(a, 'foo', 3); // Object is passed by reference
-const c = (a === b);           // True
-#+end_src
-
 * Expression
 ** =async=
 
